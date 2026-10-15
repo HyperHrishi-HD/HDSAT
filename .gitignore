@@ -12,3 +12,4 @@ venv/
 .coverage
 .pytest_cache/
 *.tsbuildinfo
+*.zip

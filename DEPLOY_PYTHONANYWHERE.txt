@@ -1,0 +1,56 @@
+HDSAT — PYTHONANYWHERE QUICK DEPLOY (account: https://www.pythonanywhere.com/user/HDSAT/)
+=========================================================================================
+Target site URL after deployment: https://hdsat.pythonanywhere.com
+
+1. UPLOAD
+   - Dashboard -> Files: upload hdsat-deploy.zip to /home/HDSAT/
+   - Open a Bash console and run:
+       cd /home/HDSAT
+       unzip hdsat-deploy.zip -d HDSAT
+       cd HDSAT
+
+2. VIRTUALENV + DEPENDENCIES
+       mkvirtualenv hdsat --python=/usr/bin/python3.10
+       pip install -r requirements.txt
+   (On consoles you open later, run `workon hdsat` first.)
+
+3. WEB APP CONFIG (Dashboard -> Web -> Add a new web app -> Manual configuration -> Python 3.10)
+   - Source code:      /home/HDSAT/HDSAT
+   - Working directory: /home/HDSAT/HDSAT
+   - Virtualenv:       /home/HDSAT/.virtualenvs/hdsat
+   - WSGI file: replace the ENTIRE contents of the pre-filled WSGI config with:
+
+       import sys
+       project_home = '/home/HDSAT/HDSAT'
+       if project_home not in sys.path:
+           sys.path.insert(0, project_home)
+       from wsgi import application
+
+   - Static files mapping (optional but recommended), under "Static files":
+       URL: /assets/    Directory: /home/HDSAT/HDSAT/dist/assets/
+
+4. ENVIRONMENT (Dashboard -> Web -> Environment variables, or WSGI file)
+       HDSAT_ENV          = production
+       HDSAT_SITE_NAME    = HDSAT
+       VITE_SUPABASE_URL      = https://qijfmwjcaminecxmbtcf.supabase.co
+       VITE_SUPABASE_ANON_KEY = (your Supabase anon/publishable key — never the service_role key)
+   NOTE: values set in the Web environment are read at runtime by /api/health and /api/config.
+   The React bundle is already built; if you change VITE_* values, run `npm run build` locally
+   and re-upload dist/ (the prebuilt bundle in this zip works fine in guest mode without them).
+
+5. SUPABASE (one time, in https://supabase.com/dashboard/project/qijfmwjcaminecxmbtcf)
+   - SQL Editor: run supabase/migrations/20261014000100_init_hdsat_schema.sql
+   - SQL Editor: run supabase/seed/0001_seed_hdsat.sql
+   - Authentication -> Providers -> Email: confirm Email/Password sign-in is enabled.
+
+6. RELOAD + VERIFY
+   - Dashboard -> Web -> Reload
+   - Check:  https://hdsat.pythonanywhere.com/api/health   -> JSON with "status": "ok"
+   - Check:  https://hdsat.pythonanywhere.com/              -> HDSAT dashboard loads
+   - Check a deep link, e.g. .../practice (HashRouter SPA, so any path serves the app)
+
+TROUBLESHOOTING
+   - 500 error: open the Error log on the Web tab; the most common cause is the WSGI file
+     still containing PythonAnywhere's template code instead of the 4 lines above.
+   - "No module named backend": the WSGI sys.path block is missing project_home.
+   - Blank page with 404 assets: add the /assets/ static-files mapping from step 3.
