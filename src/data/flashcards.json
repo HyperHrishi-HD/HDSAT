@@ -1,0 +1,446 @@
+{
+  "deck_version": "2026.10.14-open-core-1",
+  "generated_at": "2026-10-15T00:23:31.465472+00:00",
+  "license": "CC-BY-4.0",
+  "attribution": "HDSAT Study Deck (CC-BY-4.0)",
+  "cards": [
+    {
+      "id": "V-001",
+      "deck": "vocabulary",
+      "front": "abate (verb)",
+      "back": "To become less intense or widespread; to lessen.",
+      "tags": [
+        "change",
+        "reduce"
+      ]
+    },
+    {
+      "id": "V-002",
+      "deck": "vocabulary",
+      "front": "candid (adj.)",
+      "back": "Honest and direct, especially about something difficult.",
+      "tags": [
+        "tone"
+      ]
+    },
+    {
+      "id": "V-003",
+      "deck": "vocabulary",
+      "front": "corroborate (verb)",
+      "back": "To confirm or support a claim with additional evidence.",
+      "tags": [
+        "evidence"
+      ]
+    },
+    {
+      "id": "V-004",
+      "deck": "vocabulary",
+      "front": "dissent (noun)",
+      "back": "Disagreement with an established opinion or authority.",
+      "tags": [
+        "argument"
+      ]
+    },
+    {
+      "id": "V-005",
+      "deck": "vocabulary",
+      "front": "empirical (adj.)",
+      "back": "Based on observation or experiment rather than theory alone.",
+      "tags": [
+        "evidence"
+      ]
+    },
+    {
+      "id": "V-006",
+      "deck": "vocabulary",
+      "front": "exacerbate (verb)",
+      "back": "To make a problem or bad situation worse.",
+      "tags": [
+        "cause-effect"
+      ]
+    },
+    {
+      "id": "V-007",
+      "deck": "vocabulary",
+      "front": "frugal (adj.)",
+      "back": "Careful and economical with money or resources.",
+      "tags": [
+        "character"
+      ]
+    },
+    {
+      "id": "V-008",
+      "deck": "vocabulary",
+      "front": "hinder (verb)",
+      "back": "To create difficulty that slows or prevents progress.",
+      "tags": [
+        "cause-effect"
+      ]
+    },
+    {
+      "id": "V-009",
+      "deck": "vocabulary",
+      "front": "impartial (adj.)",
+      "back": "Treating all sides equally; not favouring one party.",
+      "tags": [
+        "argument"
+      ]
+    },
+    {
+      "id": "V-010",
+      "deck": "vocabulary",
+      "front": "inevitable (adj.)",
+      "back": "Certain to happen; unavoidable.",
+      "tags": [
+        "certainty"
+      ]
+    },
+    {
+      "id": "V-011",
+      "deck": "vocabulary",
+      "front": "lucid (adj.)",
+      "back": "Expressed clearly and easy to understand.",
+      "tags": [
+        "style"
+      ]
+    },
+    {
+      "id": "V-012",
+      "deck": "vocabulary",
+      "front": "mitigate (verb)",
+      "back": "To make something less severe or harmful.",
+      "tags": [
+        "change",
+        "reduce"
+      ]
+    },
+    {
+      "id": "V-013",
+      "deck": "vocabulary",
+      "front": "nuance (noun)",
+      "back": "A subtle difference in meaning, tone, or expression.",
+      "tags": [
+        "style"
+      ]
+    },
+    {
+      "id": "V-014",
+      "deck": "vocabulary",
+      "front": "obsolete (adj.)",
+      "back": "No longer in use because something newer replaced it.",
+      "tags": [
+        "change"
+      ]
+    },
+    {
+      "id": "V-015",
+      "deck": "vocabulary",
+      "front": "plausible (adj.)",
+      "back": "Seeming reasonable or believable, though not proven.",
+      "tags": [
+        "argument"
+      ]
+    },
+    {
+      "id": "V-016",
+      "deck": "vocabulary",
+      "front": "pragmatic (adj.)",
+      "back": "Guided by practical results rather than ideals.",
+      "tags": [
+        "character"
+      ]
+    },
+    {
+      "id": "V-017",
+      "deck": "vocabulary",
+      "front": "proponent (noun)",
+      "back": "A person who argues in favour of something.",
+      "tags": [
+        "argument"
+      ]
+    },
+    {
+      "id": "V-018",
+      "deck": "vocabulary",
+      "front": "reluctant (adj.)",
+      "back": "Unwilling and hesitant to act.",
+      "tags": [
+        "character"
+      ]
+    },
+    {
+      "id": "V-019",
+      "deck": "vocabulary",
+      "front": "scrupulous (adj.)",
+      "back": "Very careful to be honest and thorough.",
+      "tags": [
+        "character"
+      ]
+    },
+    {
+      "id": "V-020",
+      "deck": "vocabulary",
+      "front": "speculate (verb)",
+      "back": "To form a conclusion without firm evidence.",
+      "tags": [
+        "evidence"
+      ]
+    },
+    {
+      "id": "V-021",
+      "deck": "vocabulary",
+      "front": "substantiate (verb)",
+      "back": "To provide evidence that proves a claim.",
+      "tags": [
+        "evidence"
+      ]
+    },
+    {
+      "id": "V-022",
+      "deck": "vocabulary",
+      "front": "tentative (adj.)",
+      "back": "Uncertain or not yet final; offered with hesitation.",
+      "tags": [
+        "certainty"
+      ]
+    },
+    {
+      "id": "V-023",
+      "deck": "vocabulary",
+      "front": "undermine (verb)",
+      "back": "To weaken something gradually, often an argument or position.",
+      "tags": [
+        "cause-effect"
+      ]
+    },
+    {
+      "id": "V-024",
+      "deck": "vocabulary",
+      "front": "volatile (adj.)",
+      "back": "Liable to change rapidly and unpredictably.",
+      "tags": [
+        "change"
+      ]
+    },
+    {
+      "id": "F-001",
+      "deck": "math_formula",
+      "front": "Slope between two points",
+      "latex": "m=\\dfrac{y_2-y_1}{x_2-x_1}",
+      "back": "Slope equals rise over run; the denominator cannot be zero.",
+      "tags": [
+        "algebra"
+      ]
+    },
+    {
+      "id": "F-002",
+      "deck": "math_formula",
+      "front": "Slope-intercept form",
+      "latex": "y=mx+b",
+      "back": "m is the slope and b is the y-intercept.",
+      "tags": [
+        "algebra"
+      ]
+    },
+    {
+      "id": "F-003",
+      "deck": "math_formula",
+      "front": "Quadratic formula",
+      "latex": "x=\\dfrac{-b\\pm\\sqrt{b^2-4ac}}{2a}",
+      "back": "Solves ax^2+bx+c=0. The expression under the radical is the discriminant.",
+      "tags": [
+        "advanced-math"
+      ]
+    },
+    {
+      "id": "F-004",
+      "deck": "math_formula",
+      "front": "Vertex of a parabola",
+      "latex": "x=-\\dfrac{b}{2a}",
+      "back": "The x-coordinate of the vertex of y = ax^2 + bx + c (also the axis of symmetry).",
+      "tags": [
+        "advanced-math"
+      ]
+    },
+    {
+      "id": "F-005",
+      "deck": "math_formula",
+      "front": "Difference of squares",
+      "latex": "a^2-b^2=(a+b)(a-b)",
+      "back": "Factors any difference of two perfect squares.",
+      "tags": [
+        "advanced-math"
+      ]
+    },
+    {
+      "id": "F-006",
+      "deck": "math_formula",
+      "front": "Perfect square trinomials",
+      "latex": "a^2\\pm2ab+b^2=(a\\pm b)^2",
+      "back": "Recognise these to factor quickly without expanding.",
+      "tags": [
+        "advanced-math"
+      ]
+    },
+    {
+      "id": "F-007",
+      "deck": "math_formula",
+      "front": "Exponent rules",
+      "latex": "x^a x^b = x^{a+b}, \\quad \\dfrac{x^a}{x^b}=x^{a-b}, \\quad (x^a)^b=x^{ab}",
+      "back": "Add exponents when multiplying like bases, subtract when dividing, multiply when raising a power to a power.",
+      "tags": [
+        "advanced-math"
+      ]
+    },
+    {
+      "id": "F-008",
+      "deck": "math_formula",
+      "front": "Percent change",
+      "latex": "\\%\\Delta=\\dfrac{\\text{new}-\\text{old}}{\\text{old}}\\times100",
+      "back": "A positive result is an increase; a negative result is a decrease.",
+      "tags": [
+        "problem-solving"
+      ]
+    },
+    {
+      "id": "F-009",
+      "deck": "math_formula",
+      "front": "Exponential growth and decay",
+      "latex": "y=a(1\\pm r)^t",
+      "back": "a is the initial amount, r the rate per period, t the number of periods.",
+      "tags": [
+        "problem-solving"
+      ]
+    },
+    {
+      "id": "F-010",
+      "deck": "math_formula",
+      "front": "Compound interest",
+      "latex": "A=P\\left(1+\\dfrac{r}{n}\\right)^{nt}",
+      "back": "P principal, r annual rate, n compounds per year, t years.",
+      "tags": [
+        "problem-solving"
+      ]
+    },
+    {
+      "id": "F-011",
+      "deck": "math_formula",
+      "front": "Distance, rate, time",
+      "latex": "d=rt",
+      "back": "Distance equals rate multiplied by time; rearrange for the unknown.",
+      "tags": [
+        "problem-solving"
+      ]
+    },
+    {
+      "id": "F-012",
+      "deck": "math_formula",
+      "front": "Average (arithmetic mean)",
+      "latex": "\\bar{x}=\\dfrac{\\text{sum of values}}{\\text{number of values}}",
+      "back": "Use sum = mean x count to find a missing value.",
+      "tags": [
+        "problem-solving"
+      ]
+    },
+    {
+      "id": "F-013",
+      "deck": "math_formula",
+      "front": "Pythagorean theorem",
+      "latex": "a^2+b^2=c^2",
+      "back": "For a right triangle, c is the hypotenuse.",
+      "tags": [
+        "geometry"
+      ]
+    },
+    {
+      "id": "F-014",
+      "deck": "math_formula",
+      "front": "Special right triangles",
+      "latex": "45\\text{-}45\\text{-}90:\\; x, x, x\\sqrt2 \\qquad 30\\text{-}60\\text{-}90:\\; x, x\\sqrt3, 2x",
+      "back": "Sides are in a fixed ratio, so one known side gives the others.",
+      "tags": [
+        "geometry"
+      ]
+    },
+    {
+      "id": "F-015",
+      "deck": "math_formula",
+      "front": "Circle: area and circumference",
+      "latex": "A=\\pi r^2, \\qquad C=2\\pi r",
+      "back": "Area uses the square of the radius; circumference is the full distance around.",
+      "tags": [
+        "geometry"
+      ]
+    },
+    {
+      "id": "F-016",
+      "deck": "math_formula",
+      "front": "Circle equation (centre–radius form)",
+      "latex": "(x-h)^2+(y-k)^2=r^2",
+      "back": "Centre (h, k) and radius r.",
+      "tags": [
+        "geometry"
+      ]
+    },
+    {
+      "id": "F-017",
+      "deck": "math_formula",
+      "front": "Sector and arc of a circle",
+      "latex": "\\text{arc}=\\dfrac{\\theta}{360}2\\pi r, \\qquad \\text{sector}=\\dfrac{\\theta}{360}\\pi r^2",
+      "back": "The fraction of the circle is central angle divided by 360 degrees.",
+      "tags": [
+        "geometry"
+      ]
+    },
+    {
+      "id": "F-018",
+      "deck": "math_formula",
+      "front": "Volume and surface area",
+      "latex": "V_{box}=lwh,\\; V_{cyl}=\\pi r^2h,\\; V_{sph}=\\tfrac43\\pi r^3,\\; V_{cone}=\\tfrac13\\pi r^2h",
+      "back": "The reference sheet supplies these; know which one each problem needs.",
+      "tags": [
+        "geometry"
+      ]
+    },
+    {
+      "id": "F-019",
+      "deck": "math_formula",
+      "front": "Right-triangle trigonometry",
+      "latex": "\\sin\\theta=\\dfrac{\\text{opp}}{\\text{hyp}},\\; \\cos\\theta=\\dfrac{\\text{adj}}{\\text{hyp}},\\; \\tan\\theta=\\dfrac{\\text{opp}}{\\text{adj}}",
+      "back": "The reference sheet lists both degree and radian values for common angles.",
+      "tags": [
+        "trigonometry"
+      ]
+    },
+    {
+      "id": "F-020",
+      "deck": "math_formula",
+      "front": "Sine, cosine and tangent identities",
+      "latex": "\\sin^2\\theta+\\cos^2\\theta=1, \\quad \\tan\\theta=\\dfrac{\\sin\\theta}{\\cos\\theta}",
+      "back": "The Pythagorean identity lets you convert between sine and cosine.",
+      "tags": [
+        "trigonometry"
+      ]
+    },
+    {
+      "id": "F-021",
+      "deck": "math_formula",
+      "front": "Radians and degrees",
+      "latex": "\\pi \\text{ rad}=180^\\circ",
+      "back": "Multiply by pi/180 for degrees to radians; by 180/pi for radians to degrees.",
+      "tags": [
+        "trigonometry"
+      ]
+    },
+    {
+      "id": "F-022",
+      "deck": "math_formula",
+      "front": "Systems: substitution and elimination",
+      "latex": "\\text{inconsistent}\\Rightarrow \\text{no solution}, \\quad \\text{dependent}\\Rightarrow \\text{infinitely many}",
+      "back": "Parallel lines give no solution; identical lines give infinitely many.",
+      "tags": [
+        "algebra"
+      ]
+    }
+  ]
+}

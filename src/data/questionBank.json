@@ -1,0 +1,1800 @@
+{
+  "bank_version": "2026.10.14-open-core-1",
+  "generated_at": "2026-10-15T00:23:31.465472+00:00",
+  "licensing_note": "Open Core bank: original HDSAT practice items (AI-assisted drafting, human review checklist). Not official College Board material. Answer keys are shipped to the client only so that guest/offline mode can grade attempts; server-side grading via the submit_question_attempt RPC remains authoritative in cloud mode.",
+  "sources": [
+    {
+      "source_id": "hdsat-open-core-2026",
+      "name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "provenance_summary": "HDSAT original practice items drafted for HDSAT against the publicly published SAT Suite domain/skill blueprint (collegeboard.org). AI-assisted drafting with a human review checklist (see supabase/import/REVIEW_CHECKLIST.md). NOT official College Board material and NOT derived from any College Board test form.",
+      "is_released_practice_set": false,
+      "is_official_college_board": false,
+      "record_count": 29
+    },
+    {
+      "source_id": "hdsat-benchmark-sim-1",
+      "name": "HDSAT Benchmark Simulation Set A (Released Practice Form)",
+      "license": "CC-BY-4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "provenance_summary": "HDSAT original practice items reserved for the HDSAT Benchmark Form A simulation. Deliberately tagged is_released_practice_set=true so students can exclude benchmark-simulation items while drilling in the Question Bank or Practice Rush. NOT official College Board material.",
+      "is_released_practice_set": true,
+      "is_official_college_board": false,
+      "record_count": 7
+    }
+  ],
+  "questions": [
+    {
+      "id": "RW-INF-001",
+      "external_id": "HDSAT-RW-INF-001",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Information and Ideas",
+      "skill": "Central Ideas and Details",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "Marine biologist Adriana Vergés and her colleagues have documented how warming ocean temperatures allow tropical herbivorous fish to expand their ranges into temperate kelp forests. Unlike native temperate species, these tropical browsers consume kelp blades at rates that exceed the algae's seasonal regrowth capacity, gradually transforming dense canopy habitats into sparse rocky reefs.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "Range expansion by tropical herbivorous fish into warming temperate waters can deplete kelp forests faster than the kelp can regenerate."
+        },
+        {
+          "id": "B",
+          "text": "Ocean warming affects rocky reefs more severely than it affects shallow coastal waters."
+        },
+        {
+          "id": "C",
+          "text": "Temperate kelp forests grow more rapidly during warm seasons than tropical coral reefs do."
+        },
+        {
+          "id": "D",
+          "text": "Native temperate fish species have adapted their diets to compete with arriving tropical browsers."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "A",
+      "acceptable_answers": [
+        "A"
+      ],
+      "explanation": "Choice A accurately captures the central claim: warming temperatures enable tropical herbivorous fish to move into temperate kelp habitats, where their grazing outpaces kelp regrowth and converts dense canopies into sparse reefs. Choices C and D, and D introduce claims unsupported by the passage.",
+      "distractor_rationales": {
+        "C": "The text never compares the growth rate of temperate kelp forests with that of tropical coral reefs.",
+        "D": "The text contrasts native temperate species with tropical browsers rather than stating native fish changed their diets.",
+        "B": "Rocky reefs are described as the result of kelp loss, not as a pre-existing habitat more severely warmed."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-INF-001"
+    },
+    {
+      "id": "RW-INF-002",
+      "external_id": "HDSAT-RW-INF-002",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Information and Ideas",
+      "skill": "Inferences",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "In medieval European scriptoria, parchment made from calfskin (vellum) was prized for illuminated manuscripts because its smooth, low-lipid surface accepted gold leaf and mineral pigments evenly. However, archival multispectral imaging of twelfth-century parish registries—documents intended for routine administrative tracking rather than liturgical display—shows that scribes overwhelmingly selected coarser sheepskin parchment, which split easily if scraped to remove ink.",
+      "prompt": "Which choice most logically completes the text?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "Because parish registries did not require decorative illumination, scribes prioritized sheepskin's resistance to undetected erasure and lower cost over vellum's smooth finish."
+        },
+        {
+          "id": "B",
+          "text": "Multispectral imaging cannot distinguish between calfskin and sheepskin in illuminated liturgical manuscripts."
+        },
+        {
+          "id": "C",
+          "text": "Twelfth-century scribes lacked access to mineral pigments when compiling administrative parish registries."
+        },
+        {
+          "id": "D",
+          "text": "Vellum manuscripts deteriorated more rapidly in parish archives than sheepskin registries did."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "A",
+      "acceptable_answers": [
+        "A"
+      ],
+      "explanation": "The passage contrasts vellum (prized for decorative illumination) with sheepskin (used for administrative registries and prone to splitting if someone tried to scrape off ink). Thus, for administrative records where preventing tampering mattered more than gold leaf, sheepskin was advantageous.",
+      "distractor_rationales": {
+        "C": "The passage notes registries were not intended for liturgical display, not that pigments were unavailable.",
+        "D": "Durability over centuries is not compared in the passage.",
+        "B": "Multispectral imaging was successfully used to identify the parchment type."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-INF-002"
+    },
+    {
+      "id": "RW-INF-003",
+      "external_id": "HDSAT-RW-INF-003",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Information and Ideas",
+      "skill": "Command of Evidence (Quantitative)",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "Agronomists tested four cover-crop mixtures across 120 days to evaluate soil nitrogen retention and late-season weed suppression in upper Midwest plots.\n\nCover Crop Trial Summary:\n- Crimson Clover alone: 68 kg/ha nitrogen retained | 54% weed suppression\n- Winter Rye alone: 42 kg/ha nitrogen retained | 89% weed suppression\n- Clover + Winter Rye (50/50 mix): 64 kg/ha nitrogen retained | 86% weed suppression\n- Tillage Radish alone: 51 kg/ha nitrogen retained | 72% weed suppression\n\nThe researchers concluded that pairing a legume with a cereal grass allows farmers to capture nearly the full weed-suppression benefit of the grass without sacrificing the high nitrogen retention of the legume.",
+      "prompt": "Which choice most effectively uses data from the table to support the researchers' conclusion?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "The Clover + Winter Rye mix achieved 86% weed suppression (close to Winter Rye's 89%) while retaining 64 kg/ha of nitrogen (close to Crimson Clover's 68 kg/ha)."
+        },
+        {
+          "id": "B",
+          "text": "Tillage Radish retained 51 kg/ha of nitrogen and suppressed 72% of weeds, outperforming Winter Rye in nitrogen retention."
+        },
+        {
+          "id": "C",
+          "text": "Crimson Clover retained 68 kg/ha of nitrogen, the highest amount of any treatment in the 120-day trial."
+        },
+        {
+          "id": "D",
+          "text": "Winter Rye alone suppressed 89% of weeds, whereas Crimson Clover alone suppressed only 54% of weeds."
+        }
+      ],
+      "figure_metadata": {
+        "type": "table",
+        "caption": "120-Day Cover Crop Trial Results",
+        "headers": [
+          "Cover Crop Treatment",
+          "Soil Nitrogen Retained (kg/ha)",
+          "Weed Suppression (%)"
+        ],
+        "rows": [
+          [
+            "Crimson Clover (legume)",
+            "68",
+            "54%"
+          ],
+          [
+            "Winter Rye (cereal grass)",
+            "42",
+            "89%"
+          ],
+          [
+            "Clover + Winter Rye (50/50)",
+            "64",
+            "86%"
+          ],
+          [
+            "Tillage Radish (brassica)",
+            "51",
+            "72%"
+          ]
+        ]
+      },
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "A",
+      "acceptable_answers": [
+        "A"
+      ],
+      "explanation": "To support the claim that the pairing captures nearly the full weed-suppression benefit of the cereal grass without sacrificing the legume's nitrogen retention, Choice A directly cites the 50/50 mix's metrics (86% and 64 kg/ha) alongside the single-crop benchmarks (89% and 68 kg/ha).",
+      "distractor_rationales": {
+        "D": "Mentions only the single-crop extremes without citing the paired mixture.",
+        "B": "Focuses on Tillage Radish, which is neither the legume nor the cereal grass in the conclusion.",
+        "C": "Cites only Crimson Clover's nitrogen retention."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-INF-003"
+    },
+    {
+      "id": "RW-INF-004",
+      "external_id": "HDSAT-RW-INF-004",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Information and Ideas",
+      "skill": "Command of Evidence (Textual)",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "Literary critic Priya Nair argues that in nineteenth-century industrial novels, depictions of railway schedules do not merely provide realistic background detail; rather, they dramatize how standardized mechanical time reshaped characters' intimate perception of memory and obligation.",
+      "prompt": "Which quotation from a nineteenth-century novel would most directly illustrate Nair's claim?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "\"Passengers waiting on the windy platform consulted the printed timetable nailed beside the ticket window before stowing their trunks.\""
+        },
+        {
+          "id": "B",
+          "text": "\"The new viaduct spanned forty arches of dressed limestone, carrying the morning express high above the canal barges that had served the valley for a century.\""
+        },
+        {
+          "id": "C",
+          "text": "\"Because the locomotive required fresh water every thirty miles, the company constructed iron tanks at each market town along the route.\""
+        },
+        {
+          "id": "D",
+          "text": "\"Even in the quiet parlor of his childhood home, Julian found himself measuring his father's pauses by the six-minute intervals of the junction bell, as though affection itself were a connection to be missed.\""
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "D",
+      "acceptable_answers": [
+        "D"
+      ],
+      "explanation": "Choice D directly shows railway scheduling ('six-minute intervals of the junction bell') reshaping a character's intimate emotional and familial perception ('measuring his father's pauses... as though affection itself were a connection to be missed').",
+      "distractor_rationales": {
+        "B": "Describes physical infrastructure and engineering rather than internal perception.",
+        "A": "Provides literal background detail of passengers checking a timetable.",
+        "C": "Describes mechanical logistics of steam locomotives."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-INF-004"
+    },
+    {
+      "id": "RW-INF-005",
+      "external_id": "HDSAT-RW-INF-005",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Information and Ideas",
+      "skill": "Central Ideas and Details",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "Unlike traditional concrete, which releases carbon dioxide during limestone calcination, mycelium-based acoustic panels are grown by binding agricultural agricultural byproducts—such as hemp hurds or oat hulls—with the root-like fungal network of Ganoderma lucidum. Once heat-cured, the panels are fire-retardant, biodegradable, and absorb midrange office noise more effectively than fiberglass tiles.",
+      "prompt": "According to the text, how are mycelium-based acoustic panels produced?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "By heating limestone with fiberglass tiles to reduce midrange office noise."
+        },
+        {
+          "id": "B",
+          "text": "By extracting carbon dioxide from traditional concrete during calcination."
+        },
+        {
+          "id": "C",
+          "text": "By compressing synthetic polymers around live hemp plants."
+        },
+        {
+          "id": "D",
+          "text": "By using fungal networks to bind agricultural plant byproducts and then heat-curing the material."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-benchmark-sim-1",
+      "source_name": "HDSAT Benchmark Simulation Set A (Released Practice Form)",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Benchmark Simulation Set A (Released Practice Form) (CC-BY-4.0)",
+      "is_released_practice_set": true,
+      "correct_answer": "D",
+      "acceptable_answers": [
+        "D"
+      ],
+      "explanation": "The text explicitly states that the panels are grown by binding agricultural byproducts with the root-like fungal network and then heat-cured.",
+      "distractor_rationales": {
+        "A": "Limestone calcination and fiberglass tiles are mentioned as contrasting traditional materials.",
+        "C": "Synthetic polymers are never mentioned.",
+        "B": "Calcination is mentioned as releasing CO2 in traditional concrete."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-INF-005"
+    },
+    {
+      "id": "RW-INF-006",
+      "external_id": "HDSAT-RW-INF-006",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Information and Ideas",
+      "skill": "Inferences",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "Paleoclimatologists reconstructing monsoon intensity from stalagmite oxygen-isotope ratios ($\\delta^{18}\\text{O}$) long assumed that lower $\\delta^{18}\\text{O}$ values in cave calcite strictly reflect higher local rainfall volume. Recently, however, atmospheric tracer models demonstrated that shifts in the geographic moisture source—from the Arabian Sea to the Bay of Bengal—can lower precipitation $\\delta^{18}\\text{O}$ by up to 3 per mil even when total local rainfall remains constant.",
+      "prompt": "Which choice most logically completes the text?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "Oxygen-isotope ratios in cave calcite remain constant regardless of changes in regional monsoon circulation."
+        },
+        {
+          "id": "B",
+          "text": "Stalagmites formed near the Arabian Sea grow more rapidly than those formed near the Bay of Bengal."
+        },
+        {
+          "id": "C",
+          "text": "Atmospheric tracer models are less reliable than stalagmite calcite measurements for dating ancient cave formations."
+        },
+        {
+          "id": "D",
+          "text": "Interpreting stalagmite $\\delta^{18}\\text{O}$ records as a direct measure of local rainfall volume may be inaccurate if concurrent changes in moisture-source pathways are not accounted for."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "D",
+      "acceptable_answers": [
+        "D"
+      ],
+      "explanation": "Because changes in the geographic moisture source can alter $\\delta^{18}\\text{O}$ by up to 3 per mil without any change in local rainfall volume, attributing lower $\\delta^{18}\\text{O}$ solely to local rainfall volume can be misleading unless source-pathway changes are considered.",
+      "distractor_rationales": {
+        "B": "Stalagmite growth rate is not discussed.",
+        "A": "Contradicts the text, which explains two different factors that change $\\delta^{18}\\text{O}$.",
+        "C": "Radiometric dating of caves is not the subject of the passage."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-INF-006"
+    },
+    {
+      "id": "RW-CRF-001",
+      "external_id": "HDSAT-RW-CRF-001",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Craft and Structure",
+      "skill": "Words in Context",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "Whereas early portable seismographs required delicate mechanical pendulums that could be disrupted by minor jostling during transport, modern solid-state accelerometers are remarkably _______, functioning reliably even when dropped from reconnaissance aircraft into volcanic craters.",
+      "prompt": "Which choice completes the text with the most logical and precise word or phrase?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "tentative"
+        },
+        {
+          "id": "B",
+          "text": "resilient"
+        },
+        {
+          "id": "C",
+          "text": "ambiguous"
+        },
+        {
+          "id": "D",
+          "text": "ephemeral"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B"
+      ],
+      "explanation": "'Resilient' means able to withstand shock or rough conditions, which contrasts directly with 'delicate' pendulums and matches 'functioning reliably even when dropped from reconnaissance aircraft'.",
+      "distractor_rationales": {
+        "C": "'Ambiguous' means open to multiple interpretations.",
+        "D": "'Ephemeral' means short-lived.",
+        "A": "'Tentative' means hesitant or provisional."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-CRF-001"
+    },
+    {
+      "id": "RW-CRF-002",
+      "external_id": "HDSAT-RW-CRF-002",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Craft and Structure",
+      "skill": "Words in Context",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "Architect Lina Bo Bardi rejected the notion that museum display cases should isolate artworks from everyday life; instead, at the São Paulo Museum of Art, she mounted paintings on transparent tempered-glass easels so visitors could move freely among the works in a _______ spatial arrangement.",
+      "prompt": "Which choice completes the text with the most logical and precise word or phrase?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "perfunctory"
+        },
+        {
+          "id": "B",
+          "text": "clandestine"
+        },
+        {
+          "id": "C",
+          "text": "nonhierarchical"
+        },
+        {
+          "id": "D",
+          "text": "redundant"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "'Nonhierarchical' describes an arrangement without fixed rank or forced sequence, matching Bo Bardi's rejection of isolating walls and her support for visitors moving freely among transparent easels.",
+      "distractor_rationales": {
+        "B": "'Clandestine' means secretive.",
+        "D": "'Redundant' means repetitive or unnecessary.",
+        "A": "'Perfunctory' means carried out with minimal effort."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-CRF-002"
+    },
+    {
+      "id": "RW-CRF-003",
+      "external_id": "HDSAT-RW-CRF-003",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Craft and Structure",
+      "skill": "Words in Context",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "Far from offering a _______ endorsement of algorithmic credit scoring, economist Safiya Patel demonstrates that while automated underwriting reduces processing delays for standard mortgages, it systematically amplifies historical data gaps for first-generation rural borrowers.",
+      "prompt": "Which choice completes the text with the most logical and precise word or phrase?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "mendacious"
+        },
+        {
+          "id": "B",
+          "text": "parsimonious"
+        },
+        {
+          "id": "C",
+          "text": "derivative"
+        },
+        {
+          "id": "D",
+          "text": "univocal"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "D",
+      "acceptable_answers": [
+        "D"
+      ],
+      "explanation": "'Univocal' (or unqualified/unambiguous) fits the contrast: Patel does not give a single-sided endorsement, because she highlights both a benefit (faster processing) and a systemic flaw (amplifying data gaps).",
+      "distractor_rationales": {
+        "A": "'Mendacious' means untruthful.",
+        "B": "'Parsimonious' means stingy or sparing.",
+        "C": "'Derivative' means unoriginal."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-CRF-003"
+    },
+    {
+      "id": "RW-CRF-004",
+      "external_id": "HDSAT-RW-CRF-004",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Craft and Structure",
+      "skill": "Text Structure and Purpose",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "Many popular accounts of the 1925 serum run to Nome credit a single lead sled dog, Balto, with saving the isolated Alaskan town from a diphtheria outbreak. Historian Gay Salisbury and Laney Salisbury, however, emphasize that the 674-mile relay involved twenty mushers and roughly 150 dogs, with Leonhard Seppala's team—led by Togo—covering the longest and most hazardous crossing over Norton Sound.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "It chronicles the chronological stages of a medical emergency and then proposes a policy to prevent future outbreaks."
+        },
+        {
+          "id": "B",
+          "text": "It compares two competing scientific explanations for a phenomenon and argues that neither is complete."
+        },
+        {
+          "id": "C",
+          "text": "It presents a widely held simplified view of a historical event and then offers historical details that complicate that view."
+        },
+        {
+          "id": "D",
+          "text": "It praises an individual achievement and then explains why contemporary observers ignored it."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "The first sentence states a popular simplified narrative (crediting a single dog, Balto), and the second sentence introduces historians' broader evidence (20 mushers, 150 dogs, and Togo's longest hazardous leg) that complicates that simplified view.",
+      "distractor_rationales": {
+        "A": "No future public health policy is proposed.",
+        "B": "The passage is historical, not a comparison of competing scientific theories.",
+        "D": "The passage corrects a narrow popular focus rather than claiming the event was ignored."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-CRF-004"
+    },
+    {
+      "id": "RW-CRF-005",
+      "external_id": "HDSAT-RW-CRF-005",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Craft and Structure",
+      "skill": "Cross-Text Connections",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "Text 1\nUrban ecologist Marcus Vance contends that planting non-native drought-tolerant street trees in arid cities is an ecological mistake. Because native insect herbivores have not co-evolved with exotic foliage, non-native canopies support up to 70% fewer caterpillar species, depriving migratory songbirds of essential protein during spring stopovers.\n\nText 2\nLandscape hydrologist Elena Rostova notes that in heavily paved metropolitan heat islands, soil compaction and radiant heat create microclimates several degrees hotter and drier than the surrounding native desert. In her multi-year survey of Phoenix boulevards, several native riparian tree species suffered high canopy dieback, whereas selected non-native Mediterranean oaks maintained dense shade that cooled adjacent sidewalks by 6°C and allowed understory native shrubs to survive.",
+      "prompt": "Based on the texts, how would Rostova (Text 2) most likely respond to Vance's argument (Text 1)?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "By disputing Vance's finding that migratory songbirds rely on caterpillars during spring stopovers."
+        },
+        {
+          "id": "B",
+          "text": "By arguing that urban planners should replace all street trees with artificial shade structures to conserve water."
+        },
+        {
+          "id": "C",
+          "text": "By agreeing that non-native Mediterranean oaks should be removed from arid cities immediately."
+        },
+        {
+          "id": "D",
+          "text": "By pointing out that in extreme urban microclimates where native trees struggle to survive, resilient non-native trees can provide microclimate cooling that indirectly supports native understory plants."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-benchmark-sim-1",
+      "source_name": "HDSAT Benchmark Simulation Set A (Released Practice Form)",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Benchmark Simulation Set A (Released Practice Form) (CC-BY-4.0)",
+      "is_released_practice_set": true,
+      "correct_answer": "D",
+      "acceptable_answers": [
+        "D"
+      ],
+      "explanation": "Rostova shows that paved urban heat islands are harsher than surrounding deserts, causing some native trees to die back while hardy non-native trees provide shade that cools sidewalks and helps native understory shrubs survive.",
+      "distractor_rationales": {
+        "A": "Rostova does not address or dispute songbird diet.",
+        "B": "Artificial shade structures are never mentioned.",
+        "C": "Rostova highlights the benefits of Mediterranean oaks in Phoenix boulevards."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-CRF-005"
+    },
+    {
+      "id": "RW-SEC-001",
+      "external_id": "HDSAT-RW-SEC-001",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Standard English Conventions",
+      "skill": "Boundaries",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "In 1899, physicist Hertha Ayrton read her paper on the behavior of electric arcs before the Institution of Electrical Engineers in _______ she became the first woman invited to become a full member of the prestigious society.",
+      "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "London, shortly thereafter"
+        },
+        {
+          "id": "B",
+          "text": "London; shortly thereafter,"
+        },
+        {
+          "id": "C",
+          "text": "London, shortly thereafter,"
+        },
+        {
+          "id": "D",
+          "text": "London shortly thereafter"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B"
+      ],
+      "explanation": "The text contains two independent clauses: 'In 1899, physicist Hertha Ayrton read her paper... in London' and 'shortly thereafter, she became the first woman...'. A semicolon properly joins the two independent clauses, followed by a comma after the introductory transition phrase 'shortly thereafter'.",
+      "distractor_rationales": {
+        "C": "Creates a comma splice between two independent clauses.",
+        "D": "Creates a fused (run-on) sentence with no punctuation between independent clauses.",
+        "A": "Creates a comma splice."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-SEC-001"
+    },
+    {
+      "id": "RW-SEC-002",
+      "external_id": "HDSAT-RW-SEC-002",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Standard English Conventions",
+      "skill": "Form, Structure, and Sense",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "The acoustics of ancient Greek amphitheaters—most notably Epidaurus, whose limestone seating tiers filter out low-frequency background wind noise while amplifying high-frequency vocal consonants—_______ modern architectural engineers for decades.",
+      "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "have intrigued"
+        },
+        {
+          "id": "B",
+          "text": "intrigues"
+        },
+        {
+          "id": "C",
+          "text": "has intrigued"
+        },
+        {
+          "id": "D",
+          "text": "is intriguing"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "A",
+      "acceptable_answers": [
+        "A"
+      ],
+      "explanation": "The plural subject 'The acoustics' requires a plural verb, and the temporal phrase 'for decades' calls for the present perfect tense ('have intrigued'). Choices C and D, and D are all singular verbs.",
+      "distractor_rationales": {
+        "C": "Singular verb 'has' does not agree with plural subject 'acoustics'.",
+        "D": "Singular verb 'is' does not agree with 'acoustics' or fit 'for decades'.",
+        "B": "Singular verb 'intrigues' does not agree with 'acoustics'."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-SEC-002"
+    },
+    {
+      "id": "RW-SEC-003",
+      "external_id": "HDSAT-RW-SEC-003",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Standard English Conventions",
+      "skill": "Form, Structure, and Sense",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "Calibrated using laser interferometry in an underground vacuum chamber, _______ can detect gravitational-wave strain amplitudes smaller than one ten-thousandth the diameter of a proton.",
+      "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "gravitational-wave strain amplitudes at the LIGO observatory"
+        },
+        {
+          "id": "B",
+          "text": "physicists' measurements of the LIGO observatory's silica mirrors"
+        },
+        {
+          "id": "C",
+          "text": "it is the LIGO observatory's suspended silica mirrors that"
+        },
+        {
+          "id": "D",
+          "text": "the suspended silica mirrors of the LIGO observatory"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "D",
+      "acceptable_answers": [
+        "D"
+      ],
+      "explanation": "The introductory participial phrase 'Calibrated using laser interferometry in an underground vacuum chamber' must modify the noun immediately following the comma. 'The suspended silica mirrors of the LIGO observatory' are what are calibrated and can detect the strain amplitudes.",
+      "distractor_rationales": {
+        "A": "Creates a dangling modifier: strain amplitudes are not calibrated in a vacuum chamber.",
+        "B": "Measurements are not physical objects calibrated in an underground vacuum chamber that themselves detect strain.",
+        "C": "Expletive 'it' cannot be modified by 'Calibrated using laser interferometry'."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-SEC-003"
+    },
+    {
+      "id": "RW-SEC-004",
+      "external_id": "HDSAT-RW-SEC-004",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Standard English Conventions",
+      "skill": "Boundaries",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "Botanist Robin Wall Kimmerer observes that when sweetgrass (Hierochloe odorata) is harvested selectively by _______ the plant responds with vigorous compensatory tillering, producing denser shoots the following spring than unharvested plots do.",
+      "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "hand"
+        },
+        {
+          "id": "B",
+          "text": "hand;"
+        },
+        {
+          "id": "C",
+          "text": "hand,"
+        },
+        {
+          "id": "D",
+          "text": "hand—"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-benchmark-sim-1",
+      "source_name": "HDSAT Benchmark Simulation Set A (Released Practice Form)",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Benchmark Simulation Set A (Released Practice Form) (CC-BY-4.0)",
+      "is_released_practice_set": true,
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "Within the 'that' clause, 'when sweetgrass (Hierochloe odorata) is harvested selectively by hand' is a dependent adverbial clause preceding the main clause 'the plant responds...'. A comma is required after 'hand' to separate the dependent clause from the independent clause.",
+      "distractor_rationales": {
+        "B": "A semicolon cannot separate a dependent 'when' clause from its main clause.",
+        "A": "Omits the necessary comma after an introductory dependent clause.",
+        "D": "An em dash is inappropriate when no paired dash or abrupt break exists."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-SEC-004"
+    },
+    {
+      "id": "RW-EXP-001",
+      "external_id": "HDSAT-RW-EXP-001",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Expression of Ideas",
+      "skill": "Transitions",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "Early twentieth-century glacialogists assumed that subglacial lakes beneath the Antarctic ice sheet were hydrologically isolated basins that remained stagnant for millions of years. _______ satellite laser altimetry in the 2000s revealed rapid rises and falls in the ice surface above Lake Whillans, proving that subglacial water periodically flushes through interconnected channels.",
+      "prompt": "Which choice completes the text with the most logical transition?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "However,"
+        },
+        {
+          "id": "B",
+          "text": "Similarly,"
+        },
+        {
+          "id": "C",
+          "text": "Consequently,"
+        },
+        {
+          "id": "D",
+          "text": "For instance,"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "A",
+      "acceptable_answers": [
+        "A"
+      ],
+      "explanation": "The second sentence overturns the assumption described in the first sentence ('hydrologically isolated... stagnant' vs. 'periodically flushes through interconnected channels'). 'However,' signals this contrast.",
+      "distractor_rationales": {
+        "C": "'Consequently,' indicates cause and effect.",
+        "B": "'Similarly,' indicates comparison of alike ideas.",
+        "D": "'For instance,' introduces an example of the preceding claim rather than a refutation."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-EXP-001"
+    },
+    {
+      "id": "RW-EXP-002",
+      "external_id": "HDSAT-RW-EXP-002",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Expression of Ideas",
+      "skill": "Rhetorical Synthesis",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "While researching a topic, a student has taken the following notes:\n- Sodium-ion batteries use abundant sodium salts rather than lithium and cobalt.\n- Current commercial sodium-ion cells have a gravimetric energy density of 140–160 Wh/kg, compared with 240–280 Wh/kg for nickel-manganese-cobalt (NMC) lithium-ion cells.\n- Sodium-ion cells retain over 88% of their discharge capacity at -20°C, whereas standard lithium-ion cells often drop below 65% capacity at that temperature.\n- Because stationary grid storage facilities do not move, battery weight is far less important than cold-weather reliability and raw-material cost.",
+      "prompt": "The student wants to explain why sodium-ion batteries are particularly well suited for stationary cold-climate grid storage despite having lower energy density than NMC lithium-ion cells. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "At -20°C, standard lithium-ion cells often drop below 65% discharge capacity, while sodium-ion batteries have an energy density of 140–160 Wh/kg."
+        },
+        {
+          "id": "B",
+          "text": "NMC lithium-ion cells achieve an energy density of 240–280 Wh/kg, whereas sodium-ion cells use abundant sodium salts instead of lithium and cobalt."
+        },
+        {
+          "id": "C",
+          "text": "Although sodium-ion batteries have a lower energy density (140–160 Wh/kg) than NMC lithium-ion cells, their heavier weight matters little in stationary grid facilities, where their low-cost sodium materials and >88% capacity retention at -20°C are major advantages."
+        },
+        {
+          "id": "D",
+          "text": "Stationary grid storage facilities do not move, so engineers must choose between NMC lithium-ion batteries and sodium-ion batteries."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "Choice C synthesizes all parts of the prompt: acknowledging the lower energy density, explaining why weight is unimportant for stationary storage, and highlighting both cold-weather retention (>88% at -20°C) and abundant sodium materials.",
+      "distractor_rationales": {
+        "B": "Omits cold-weather performance and stationary grid storage altogether.",
+        "A": "Juxtaposes statistics without explaining why stationary grid storage favors sodium-ion.",
+        "D": "Fails to mention energy density, cold-weather performance, or material cost."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-EXP-002"
+    },
+    {
+      "id": "RW-EXP-003",
+      "external_id": "HDSAT-RW-EXP-003",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Expression of Ideas",
+      "skill": "Rhetorical Synthesis",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "While researching a topic, a student has taken the following notes:\n- In 1977, the Voyager 1 and 2 spacecraft launched carrying the Golden Record, a 12-inch gold-plated copper phonograph disc.\n- The committee led by Carl Sagan selected 115 analog-encoded images and 90 minutes of audio.\n- Acoustic engineer Timothy Ferris oversaw the mastering of the record at 16 2/3 revolutions per minute (rpm) rather than the standard 33 1/3 rpm LP speed.\n- Halving the rotational speed doubled the playing time that could fit into the disc's physical grooves, though it slightly reduced high-frequency audio fidelity.",
+      "prompt": "The student wants to emphasize the engineering trade-off involved in mastering the Voyager Golden Record. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "Timothy Ferris oversaw the mastering of the Golden Record, which spun at 16 2/3 revolutions per minute rather than the standard 33 1/3 rpm."
+        },
+        {
+          "id": "B",
+          "text": "Carl Sagan's committee included both analog-encoded images and audio recordings on the 12-inch copper phonograph disc."
+        },
+        {
+          "id": "C",
+          "text": "By mastering the Voyager Golden Record at 16 2/3 rpm instead of 33 1/3 rpm, Timothy Ferris doubled the audio duration that could fit on the disc at the cost of a slight reduction in high-frequency fidelity."
+        },
+        {
+          "id": "D",
+          "text": "Launched in 1977 aboard Voyager 1 and 2, the 12-inch gold-plated copper Golden Record contained 115 images and 90 minutes of audio selected by Carl Sagan's committee."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-benchmark-sim-1",
+      "source_name": "HDSAT Benchmark Simulation Set A (Released Practice Form)",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Benchmark Simulation Set A (Released Practice Form) (CC-BY-4.0)",
+      "is_released_practice_set": true,
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "Choice C explicitly states the engineering trade-off: halving the speed from 33 1/3 rpm to 16 2/3 rpm doubled the audio capacity while sacrificing some high-frequency fidelity.",
+      "distractor_rationales": {
+        "D": "Provides general background without mentioning the engineering trade-off.",
+        "A": "States the speed difference without explaining the benefit or cost.",
+        "B": "Describes the contents without mentioning any trade-off."
+      },
+      "choice_order_seed": "hdsat-choice-order:RW-EXP-003"
+    },
+    {
+      "id": "M-ALG-001",
+      "external_id": "HDSAT-M-ALG-001",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Algebra",
+      "skill": "Linear equations in one variable",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "A botanical conservatory maintains a tropical orchid room by running a misting system. The reservoir starts the day with $480$ liters of distilled water and releases $15$ liters per hour. If $W$ represents the volume of water remaining after $t$ hours, and $W = 480 - 15t$, after how many hours will exactly $195$ liters remain?",
+      "prompt": "What is the value of $t$ when $W = 195$?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "$32$"
+        },
+        {
+          "id": "B",
+          "text": "$19$"
+        },
+        {
+          "id": "C",
+          "text": "$17$"
+        },
+        {
+          "id": "D",
+          "text": "$21$"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B",
+        "19"
+      ],
+      "explanation": "Substitute $W = 195$ into the linear equation: $195 = 480 - 15t$. Subtract $195$ from $480$: $15t = 285$. Divide both sides by $15$: $t = 285 / 15 = 19$ hours.",
+      "distractor_rationales": {
+        "C": "Result of arithmetic error $255 / 15 = 17$.",
+        "D": "Result of $315 / 15 = 21$.",
+        "A": "Total time to empty the entire $480$-liter tank ($480 / 15 = 32$)."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-ALG-001"
+    },
+    {
+      "id": "M-ALG-002",
+      "external_id": "HDSAT-M-ALG-002",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Algebra",
+      "skill": "Systems of two linear equations in two variables",
+      "difficulty": "Medium",
+      "format": "spr",
+      "stimulus": "$$3x + 4y = 31$$\n$$5x - 2y = 17$$",
+      "prompt": "If $(x, y)$ is the solution to the given system of equations, what is the value of $x + y$?",
+      "choices": null,
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "9",
+      "acceptable_answers": [
+        "9",
+        "9.0"
+      ],
+      "explanation": "Multiply the second equation by $2$ to eliminate $y$: $10x - 4y = 34$. Adding this to the first equation gives $13x = 65$, so $x = 5$. Substituting $x = 5$ into $3x + 4y = 31$ gives $15 + 4y = 31$, so $y = 4$. Therefore $x + y = 5 + 4 = 9$.",
+      "distractor_rationales": {},
+      "choice_order_seed": null
+    },
+    {
+      "id": "M-ALG-003",
+      "external_id": "HDSAT-M-ALG-003",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Algebra",
+      "skill": "Linear functions",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "A municipal bike-share program charges a monthly membership fee plus a constant usage rate per minute for rides exceeding $30$ minutes. The function $C(m) = 18 + 0.15m$ gives the total monthly cost $C(m)$, in dollars, for a member who accumulates $m$ overage minutes during the month.",
+      "prompt": "What is the best interpretation of the number $18$ in this context?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "The total cost, in dollars, of an $18$-minute bike ride."
+        },
+        {
+          "id": "B",
+          "text": "The charge, in dollars, for each additional minute beyond $30$ minutes."
+        },
+        {
+          "id": "C",
+          "text": "The fixed monthly membership fee, in dollars, when a member has $0$ overage minutes."
+        },
+        {
+          "id": "D",
+          "text": "The maximum number of overage minutes included in the base plan."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "In the linear model $C(m) = 18 + 0.15m$, the constant term $18$ is the $y$-intercept $C(0)$, representing the fixed monthly membership fee before any overage minutes are incurred.",
+      "distractor_rationales": {
+        "B": "The per-minute overage rate is $0.15$, the slope of the linear function.",
+        "D": "The variable $m$ counts overage minutes; $18$ is measured in dollars.",
+        "A": "The function models monthly cost for $m$ overage minutes, not the cost of an $18$-minute trip."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-ALG-003"
+    },
+    {
+      "id": "M-ALG-004",
+      "external_id": "HDSAT-M-ALG-004",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Algebra",
+      "skill": "Linear inequalities in one or two variables",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "A bakery produces loaves of sourdough bread that each require $0.6$ kilograms of flour and batches of brioche rolls that each require $0.4$ kilograms of flour. The bakery has at most $36$ kilograms of flour available for the morning bake and must prepare at least $30$ loaves of sourdough bread to fulfill standing restaurant orders.",
+      "prompt": "If $s$ represents the number of sourdough loaves and $b$ represents the number of brioche batches, what is the maximum number of brioche batches the bakery can produce?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "$90$"
+        },
+        {
+          "id": "B",
+          "text": "$45$"
+        },
+        {
+          "id": "C",
+          "text": "$30$"
+        },
+        {
+          "id": "D",
+          "text": "$60$"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B",
+        "45"
+      ],
+      "explanation": "The flour constraint is $0.6s + 0.4b \\le 36$ with $s \\ge 30$. To maximize $b$, use the minimum required sourdough loaves $s = 30$: $0.6(30) + 0.4b \\le 36 \\Rightarrow 18 + 0.4b \\le 36 \\Rightarrow 0.4b \\le 18 \\Rightarrow b \\le 45$.",
+      "distractor_rationales": {
+        "C": "This is the minimum number of sourdough loaves required, not the maximum number of brioche batches.",
+        "D": "Divides $36$ by $0.6$ instead of accounting for the sourdough requirement.",
+        "A": "Assumes $s = 0$, ignoring the constraint $s \\ge 30$."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-ALG-004"
+    },
+    {
+      "id": "M-ALG-005",
+      "external_id": "HDSAT-M-ALG-005",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Math",
+      "domain": "Algebra",
+      "skill": "Systems of two linear equations in two variables",
+      "difficulty": "Hard",
+      "format": "spr",
+      "stimulus": "$$kx - 6y = 14$$\n$$15x - 18y = 42$$",
+      "prompt": "In the system of equations above, $k$ is a constant. If the system has infinitely many solutions, what is the value of $k$?",
+      "choices": null,
+      "figure_metadata": null,
+      "source_id": "hdsat-benchmark-sim-1",
+      "source_name": "HDSAT Benchmark Simulation Set A (Released Practice Form)",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Benchmark Simulation Set A (Released Practice Form) (CC-BY-4.0)",
+      "is_released_practice_set": true,
+      "correct_answer": "5",
+      "acceptable_answers": [
+        "5",
+        "5.0"
+      ],
+      "explanation": "A system of two linear equations has infinitely many solutions when one equation is a non-zero constant multiple of the other. Comparing the $y$-coefficients and constant terms, $-18 = 3(-6)$ and $42 = 3(14)$. Therefore the second equation is $3$ times the first equation, so $15 = 3k$, which gives $k = 5$.",
+      "distractor_rationales": {},
+      "choice_order_seed": null
+    },
+    {
+      "id": "M-ADV-001",
+      "external_id": "HDSAT-M-ADV-001",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Advanced Math",
+      "skill": "Equivalent expressions",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "$$(2x^2 - 5x + 3) - (x^2 - 4x - 7)$$",
+      "prompt": "Which of the following is equivalent to the given expression?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "$x^2 - 9x - 4$"
+        },
+        {
+          "id": "B",
+          "text": "$x^2 - x - 4$"
+        },
+        {
+          "id": "C",
+          "text": "$x^2 - x + 10$"
+        },
+        {
+          "id": "D",
+          "text": "$3x^2 - 9x + 10$"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "Distribute the subtraction sign across the second polynomial: $2x^2 - 5x + 3 - x^2 + 4x + 7$. Combine like terms: $(2x^2 - x^2) + (-5x + 4x) + (3 + 7) = x^2 - x + 10$.",
+      "distractor_rationales": {
+        "A": "Fails to distribute the negative sign to $-4x$ and $-7$.",
+        "B": "Distributes the negative sign to $-4x$ but not to $-7$.",
+        "D": "Adds the $x^2$ terms instead of subtracting."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-ADV-001"
+    },
+    {
+      "id": "M-ADV-002",
+      "external_id": "HDSAT-M-ADV-002",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Math",
+      "domain": "Advanced Math",
+      "skill": "Nonlinear functions",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "The height $h(t)$, in meters above the ground, of a weather probe launched vertically from a platform is modeled by the function $h(t) = -5t^2 + 40t + 12$, where $t$ is the time in seconds after launch.",
+      "prompt": "What is the maximum height, in meters, reached by the probe?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "$52$"
+        },
+        {
+          "id": "B",
+          "text": "$92$"
+        },
+        {
+          "id": "C",
+          "text": "$4$"
+        },
+        {
+          "id": "D",
+          "text": "$80$"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B",
+        "92"
+      ],
+      "explanation": "For a quadratic function $h(t) = at^2 + bt + c$ with $a < 0$, the maximum occurs at the vertex $t = -b/(2a) = -40 / (2 \\cdot (-5)) = 4$ seconds. Evaluating $h(4) = -5(4)^2 + 40(4) + 12 = -80 + 160 + 12 = 92$ meters.",
+      "distractor_rationales": {
+        "D": "Omits the initial platform height of $12$ meters.",
+        "A": "Evaluates $h(2)$ instead of the vertex $h(4)$.",
+        "C": "Gives the time $t = 4$ seconds at which the maximum occurs rather than the maximum height."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-ADV-002"
+    },
+    {
+      "id": "M-ADV-003",
+      "external_id": "HDSAT-M-ADV-003",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Math",
+      "domain": "Advanced Math",
+      "skill": "Nonlinear equations in one variable and systems of equations in two variables",
+      "difficulty": "Medium",
+      "format": "spr",
+      "stimulus": "$$x^2 - 11x + 24 = 0$$",
+      "prompt": "What is the positive difference between the two solutions to the given quadratic equation?",
+      "choices": null,
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "5",
+      "acceptable_answers": [
+        "5",
+        "5.0"
+      ],
+      "explanation": "Factor the quadratic expression: $(x - 3)(x - 8) = 0$. The solutions are $x = 8$ and $x = 3$. The positive difference between the two solutions is $8 - 3 = 5$.",
+      "distractor_rationales": {},
+      "choice_order_seed": null
+    },
+    {
+      "id": "M-ADV-004",
+      "external_id": "HDSAT-M-ADV-004",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Math",
+      "domain": "Advanced Math",
+      "skill": "Nonlinear functions",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "A culture of bioluminescent bacteria initially contains $2{,}500$ cells. Under controlled nutrient conditions, the population doubles every $3$ hours.",
+      "prompt": "Which function $P(t)$ best models the number of bacteria in the culture $t$ hours after the start of the observation?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "$P(t) = 2{,}500(3)^{t/2}$"
+        },
+        {
+          "id": "B",
+          "text": "$P(t) = 2{,}500(2)^{t/3}$"
+        },
+        {
+          "id": "C",
+          "text": "$P(t) = 2{,}500 + 2^{t/3}$"
+        },
+        {
+          "id": "D",
+          "text": "$P(t) = 2{,}500(2)^{3t}$"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B"
+      ],
+      "explanation": "Because the population doubles every $3$ hours, the growth factor per $3$-hour period is $2$, and the number of $3$-hour doubling periods in $t$ hours is $t/3$. Thus $P(t) = 2{,}500(2)^{t/3}$.",
+      "distractor_rationales": {
+        "D": "Models a population that doubles $3$ times per hour (every $20$ minutes).",
+        "A": "Uses base $3$ (tripling) instead of base $2$ (doubling).",
+        "C": "Adds the exponential term instead of multiplying the initial population."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-ADV-004"
+    },
+    {
+      "id": "M-ADV-005",
+      "external_id": "HDSAT-M-ADV-005",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT"
+      ],
+      "section": "Math",
+      "domain": "Advanced Math",
+      "skill": "Nonlinear equations in one variable and systems of equations in two variables",
+      "difficulty": "Hard",
+      "format": "spr",
+      "stimulus": "$$2x^2 - 12x + c = 0$$",
+      "prompt": "In the given equation, $c$ is a constant. If the equation has exactly one real solution, what is the value of $c$?",
+      "choices": null,
+      "figure_metadata": null,
+      "source_id": "hdsat-benchmark-sim-1",
+      "source_name": "HDSAT Benchmark Simulation Set A (Released Practice Form)",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Benchmark Simulation Set A (Released Practice Form) (CC-BY-4.0)",
+      "is_released_practice_set": true,
+      "correct_answer": "18",
+      "acceptable_answers": [
+        "18",
+        "18.0"
+      ],
+      "explanation": "A quadratic equation $ax^2 + bx + c = 0$ has exactly one real solution when its discriminant $b^2 - 4ac$ equals $0$. Here $a = 2$ and $b = -12$, so $(-12)^2 - 4(2)(c) = 0 \\Rightarrow 144 - 8c = 0 \\Rightarrow c = 18$.",
+      "distractor_rationales": {},
+      "choice_order_seed": null
+    },
+    {
+      "id": "M-PSD-001",
+      "external_id": "HDSAT-M-PSD-001",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Problem-Solving and Data Analysis",
+      "skill": "Percentages",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "During an annual clearance sale, a scientific instrument supplier reduces the price of a digital oscilloscope by $20\\%$. A university laboratory also applies an educational grant discount that takes an additional $10\\%$ off the sale price.",
+      "prompt": "If the original list price of the oscilloscope was $\\$650$, what is the final price paid by the laboratory, before tax?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "$\\$468$"
+        },
+        {
+          "id": "B",
+          "text": "$\\$520$"
+        },
+        {
+          "id": "C",
+          "text": "$\\$585$"
+        },
+        {
+          "id": "D",
+          "text": "$\\$455$"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "A",
+      "acceptable_answers": [
+        "A",
+        "468"
+      ],
+      "explanation": "After the $20\\%$ reduction, the sale price is $650 \\times 0.80 = \\$520$. Taking an additional $10\\%$ off the sale price yields $520 \\times 0.90 = \\$468$.",
+      "distractor_rationales": {
+        "D": "Adds the two percentages ($30\\%$) and computes $650 \\times 0.70 = 455$.",
+        "B": "Applies only the initial $20\\%$ discount.",
+        "C": "Applies only a $10\\%$ discount."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-PSD-001"
+    },
+    {
+      "id": "M-PSD-002",
+      "external_id": "HDSAT-M-PSD-002",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Problem-Solving and Data Analysis",
+      "skill": "One-variable data: distributions and measures of center and spread",
+      "difficulty": "Medium",
+      "format": "spr",
+      "stimulus": "The table shows the daily particulate matter readings (in micrograms per cubic meter) recorded at an air-quality station over $6$ days: $14, 18, 21, 21, 25, 33$. On the seventh day, a reading of $92$ micrograms per cubic meter is recorded due to a regional dust event.",
+      "prompt": "By how much does the mean of the $7$-day dataset exceed the median of the $7$-day dataset?",
+      "choices": null,
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "11",
+      "acceptable_answers": [
+        "11",
+        "11.0"
+      ],
+      "explanation": "The ordered $7$-day dataset is $14, 18, 21, 21, 25, 33, 92$. The median (fourth value) is $21$. The sum of all $7$ readings is $14 + 18 + 21 + 21 + 25 + 33 + 92 = 224$, so the mean is $224 / 7 = 32$. The mean exceeds the median by $32 - 21 = 11$.",
+      "distractor_rationales": {},
+      "choice_order_seed": null
+    },
+    {
+      "id": "M-PSD-003",
+      "external_id": "HDSAT-M-PSD-003",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Problem-Solving and Data Analysis",
+      "skill": "Probability and conditional probability",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "A quality-control engineer inspected $240$ solar panels from two production lines.\n\nInspection Summary:\n- Line A: $132$ passed | $8$ failed | $140$ total\n- Line B: $93$ passed | $7$ failed | $100$ total\n- Combined: $225$ passed | $15$ failed | $240$ total",
+      "prompt": "If one of the panels that passed inspection is selected at random, what is the probability that it was manufactured on Line A?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "$\\dfrac{7}{12}$"
+        },
+        {
+          "id": "B",
+          "text": "$\\dfrac{44}{75}$"
+        },
+        {
+          "id": "C",
+          "text": "$\\dfrac{11}{20}$"
+        },
+        {
+          "id": "D",
+          "text": "$\\dfrac{33}{35}$"
+        }
+      ],
+      "figure_metadata": {
+        "type": "table",
+        "caption": "Solar Panel Quality Inspection",
+        "headers": [
+          "Production Line",
+          "Passed",
+          "Failed",
+          "Total"
+        ],
+        "rows": [
+          [
+            "Line A",
+            "132",
+            "8",
+            "140"
+          ],
+          [
+            "Line B",
+            "93",
+            "7",
+            "100"
+          ],
+          [
+            "Total",
+            "225",
+            "15",
+            "240"
+          ]
+        ]
+      },
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B"
+      ],
+      "explanation": "The condition restricts the sample space to the $225$ panels that passed inspection. Of those, $132$ came from Line A. The conditional probability is $132 / 225 = 44 / 75$ (dividing numerator and denominator by $3$).",
+      "distractor_rationales": {
+        "D": "Computes $132 / 140$, the probability that a Line A panel passed.",
+        "C": "Computes $132 / 240$, the unconditional proportion of all panels that came from Line A and passed.",
+        "A": "Computes $140 / 240$, the proportion of all panels produced on Line A."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-PSD-003"
+    },
+    {
+      "id": "M-PSD-004",
+      "external_id": "HDSAT-M-PSD-004",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Math",
+      "domain": "Problem-Solving and Data Analysis",
+      "skill": "Inference from sample statistics and margin of error",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "A transit authority surveyed a random sample of $400$ weekday commuter-rail riders in a metropolitan region. Based on the sample, the authority estimated that $64\\%$ of all weekday commuter-rail riders in the region use mobile ticketing, with an associated margin of error of $4.5\\%$ at the $95\\%$ confidence level.",
+      "prompt": "Which of the following is the most appropriate conclusion from the survey?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "It is plausible that the actual percentage of all weekday commuter-rail riders in the region who use mobile ticketing is between $59.5\\%$ and $68.5\\%$."
+        },
+        {
+          "id": "B",
+          "text": "If the transit authority surveyed another $400$ riders, the new sample proportion would be guaranteed to equal $64\\%$."
+        },
+        {
+          "id": "C",
+          "text": "Among the $400$ sampled riders, between $59.5\\%$ and $68.5\\%$ stated that they were $95\\%$ satisfied with mobile ticketing."
+        },
+        {
+          "id": "D",
+          "text": "Exactly $64\\%$ of all transit riders across every mode of transportation in the region use mobile ticketing."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "A",
+      "acceptable_answers": [
+        "A"
+      ],
+      "explanation": "A sample estimate of $64\\%$ with a margin of error of $\\pm 4.5\\%$ yields a plausible interval of $64\\% - 4.5\\% = 59.5\\%$ to $64\\% + 4.5\\% = 68.5\\%$ for the population from which the random sample was drawn (weekday commuter-rail riders in the region).",
+      "distractor_rationales": {
+        "D": "Overgeneralizes beyond commuter-rail riders and treats the sample estimate as an exact population value.",
+        "C": "Confuses the confidence level and margin of error with individual rider satisfaction.",
+        "B": "New random samples vary due to sampling variability; they are not guaranteed to match $64\\%$."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-PSD-004"
+    },
+    {
+      "id": "M-GEO-001",
+      "external_id": "HDSAT-M-GEO-001",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Geometry and Trigonometry",
+      "skill": "Area and volume",
+      "difficulty": "Easy",
+      "format": "spr",
+      "stimulus": "A right circular cylinder has a base radius of $4$ centimeters and a height of $9$ centimeters. The volume of the cylinder can be written in the form $k\\pi$ cubic centimeters, where $k$ is a constant.",
+      "prompt": "What is the value of $k$?",
+      "choices": null,
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "144",
+      "acceptable_answers": [
+        "144",
+        "144.0"
+      ],
+      "explanation": "The volume of a right circular cylinder is $V = \\pi r^2 h$. Substituting $r = 4$ and $h = 9$ gives $V = \\pi (4)^2 (9) = 144\\pi$ cubic centimeters, so $k = 144$.",
+      "distractor_rationales": {},
+      "choice_order_seed": null
+    },
+    {
+      "id": "M-GEO-002",
+      "external_id": "HDSAT-M-GEO-002",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Geometry and Trigonometry",
+      "skill": "Right triangles and trigonometry",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "In right triangle $ABC$, angle $C$ is a right angle, the length of side $AC$ is $12$, and the length of hypotenuse $AB$ is $15$.",
+      "prompt": "What is the value of $\\sin A$?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "$\\dfrac{4}{5}$"
+        },
+        {
+          "id": "B",
+          "text": "$\\dfrac{3}{4}$"
+        },
+        {
+          "id": "C",
+          "text": "$\\dfrac{3}{5}$"
+        },
+        {
+          "id": "D",
+          "text": "$\\dfrac{4}{3}$"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "By the Pythagorean theorem, $BC = \\sqrt{15^2 - 12^2} = \\sqrt{225 - 144} = \\sqrt{81} = 9$. Side $BC$ is opposite angle $A$, so $\\sin A = \\text{opposite}/\\text{hypotenuse} = 9 / 15 = 3 / 5$.",
+      "distractor_rationales": {
+        "A": "Equals $\\cos A = 12/15 = 4/5$.",
+        "B": "Equals $\\tan A = 9/12 = 3/4$.",
+        "D": "Equals $\\cot A = 12/9 = 4/3$, which is greater than $1$."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-GEO-002"
+    },
+    {
+      "id": "M-GEO-003",
+      "external_id": "HDSAT-M-GEO-003",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Math",
+      "domain": "Geometry and Trigonometry",
+      "skill": "Circles",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "$$x^2 + y^2 - 6x + 8y - 11 = 0$$",
+      "prompt": "The equation above represents a circle in the $xy$-plane. What is the radius of the circle?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "$\\sqrt{11}$"
+        },
+        {
+          "id": "B",
+          "text": "$36$"
+        },
+        {
+          "id": "C",
+          "text": "$6$"
+        },
+        {
+          "id": "D",
+          "text": "$5$"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C",
+        "6"
+      ],
+      "explanation": "Complete the square for $x$ and $y$: $(x^2 - 6x + 9) + (y^2 + 8y + 16) = 11 + 9 + 16 \\Rightarrow (x - 3)^2 + (y + 4)^2 = 36$. In standard form $(x - h)^2 + (y - k)^2 = r^2$, we have $r^2 = 36$, so the radius is $r = 6$.",
+      "distractor_rationales": {
+        "B": "Gives $r^2 = 36$ instead of $r = 6$.",
+        "A": "Takes the square root of the constant term before completing the square.",
+        "D": "Finds $\\sqrt{9 + 16} = 5$, omitting the $11$ on the right-hand side."
+      },
+      "choice_order_seed": "hdsat-choice-order:M-GEO-003"
+    },
+    {
+      "id": "M-GEO-004",
+      "external_id": "HDSAT-M-GEO-004",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10"
+      ],
+      "section": "Math",
+      "domain": "Geometry and Trigonometry",
+      "skill": "Circles",
+      "difficulty": "Hard",
+      "format": "spr",
+      "stimulus": "A circle in the $xy$-plane has radius $10$. Sector $AOB$ of the circle has a central angle of $\\dfrac{2\\pi}{5}$ radians. The area of sector $AOB$ can be written as $m\\pi$, where $m$ is a constant.",
+      "prompt": "What is the value of $m$?",
+      "choices": null,
+      "figure_metadata": null,
+      "source_id": "hdsat-benchmark-sim-1",
+      "source_name": "HDSAT Benchmark Simulation Set A (Released Practice Form)",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Benchmark Simulation Set A (Released Practice Form) (CC-BY-4.0)",
+      "is_released_practice_set": true,
+      "correct_answer": "20",
+      "acceptable_answers": [
+        "20",
+        "20.0"
+      ],
+      "explanation": "The area of a sector with central angle $\\theta$ radians is $\\frac{1}{2}r^2\\theta$. Substituting $r = 10$ and $\\theta = \\frac{2\\pi}{5}$ gives $\\text{Area} = \\frac{1}{2}(100)\\left(\\frac{2\\pi}{5}\\right) = 20\\pi$. Thus $m = 20$.",
+      "distractor_rationales": {},
+      "choice_order_seed": null
+    }
+  ]
+}
