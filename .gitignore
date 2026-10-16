@@ -13,3 +13,7 @@ venv/
 .pytest_cache/
 *.tsbuildinfo
 *.zip
+
+# Local PythonAnywhere MCP driver + credentials (never commit)
+.pa/
+hdsat-deploy.zip
