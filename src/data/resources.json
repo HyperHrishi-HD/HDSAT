@@ -1,0 +1,261 @@
+{
+  "generated_at": "2026-10-18T21:30:01.339431+00:00",
+  "resources": [
+    {
+      "id": "R-001",
+      "title": "Official SAT Practice (Khan Academy)",
+      "provider": "Khan Academy / College Board",
+      "url": "https://www.khanacademy.org/digital-sat",
+      "type": "course",
+      "cost": "free",
+      "description": "Full-length practice and skill drills built with College Board. Khan Academy content is published under CC BY-NC-SA.",
+      "tags": [
+        "sat",
+        "full-length",
+        "math",
+        "reading"
+      ]
+    },
+    {
+      "id": "R-002",
+      "title": "Bluebook: digital test app",
+      "provider": "College Board",
+      "url": "https://bluebook.app.collegeboard.org/",
+      "type": "tool",
+      "cost": "free",
+      "description": "The official application used on test day. Install it to rehearse the exact digital test interface.",
+      "tags": [
+        "sat",
+        "digital",
+        "official"
+      ]
+    },
+    {
+      "id": "R-003",
+      "title": "Digital SAT Suite: what to expect",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/digital/what-to-expect",
+      "type": "reference",
+      "cost": "free",
+      "description": "Official structure: module lengths, timing, adaptive second modules and the built-in calculator.",
+      "tags": [
+        "sat",
+        "structure",
+        "official"
+      ]
+    },
+    {
+      "id": "R-004",
+      "title": "PSAT/NMSQT and PSAT 10 overview",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/psat-nmsqt",
+      "type": "reference",
+      "cost": "free",
+      "description": "Assessment structure, timing and scoring for the PSAT/NMSQT; a useful companion for PSAT 10 and PSAT 8/9 practice.",
+      "tags": [
+        "psat",
+        "structure",
+        "official"
+      ]
+    },
+    {
+      "id": "R-005",
+      "title": "SAT Suite Question Bank",
+      "provider": "College Board",
+      "url": "https://satsuitequestionbank.collegeboard.org/",
+      "type": "reference",
+      "cost": "free",
+      "description": "Searchable bank of real released questions. Read-only: College Board's terms do not permit re-hosting these items, so HDSAT links to it instead of importing it.",
+      "tags": [
+        "sat",
+        "question-bank",
+        "official",
+        "licensing"
+      ]
+    },
+    {
+      "id": "R-006",
+      "title": "Desmos Graphing Calculator",
+      "provider": "Desmos",
+      "url": "https://www.desmos.com/calculator",
+      "type": "tool",
+      "cost": "free",
+      "description": "The same graphing calculator embedded in Bluebook. Practise with it here, or use the HDSAT Desmos Lab page.",
+      "tags": [
+        "math",
+        "calculator",
+        "tool"
+      ]
+    },
+    {
+      "id": "R-007",
+      "title": "Desmos API documentation",
+      "provider": "Desmos",
+      "url": "https://www.desmos.com/api/v1.12/docs/index.html",
+      "type": "reference",
+      "cost": "free",
+      "description": "How the embeddable calculator API works, including the options HDSAT's Desmos Lab uses.",
+      "tags": [
+        "math",
+        "calculator",
+        "developers"
+      ]
+    },
+    {
+      "id": "R-008",
+      "title": "Digital SAT Math reference sheet",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/media/pdf/digital-sat-math-reference-sheet.pdf",
+      "type": "reference",
+      "cost": "free",
+      "description": "The reference sheet provided inside the digital test. HDSAT renders the same formulas in its in-test reference panel.",
+      "tags": [
+        "math",
+        "formulas",
+        "official"
+      ]
+    },
+    {
+      "id": "R-009",
+      "title": "OpenStax College Algebra 2e",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/college-algebra-2e",
+      "type": "textbook",
+      "cost": "free",
+      "description": "Peer-reviewed open textbook, CC BY 4.0. Chapters 2, 5 and 7 map closely onto the Algebra and Advanced Math domains.",
+      "tags": [
+        "math",
+        "algebra",
+        "textbook",
+        "open-license"
+      ]
+    },
+    {
+      "id": "R-010",
+      "title": "OpenStax Statistics",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/statistics",
+      "type": "textbook",
+      "cost": "free",
+      "description": "CC BY 4.0 coverage of data displays, probability and inference for the Problem-Solving and Data Analysis domain.",
+      "tags": [
+        "math",
+        "statistics",
+        "textbook",
+        "open-license"
+      ]
+    },
+    {
+      "id": "R-011",
+      "title": "OpenStax Writing Guide with Handbook",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/writing-guide",
+      "type": "textbook",
+      "cost": "free",
+      "description": "CC BY 4.0 guidance on argument, evidence and revision for the Reading and Writing section.",
+      "tags": [
+        "reading",
+        "writing",
+        "textbook",
+        "open-license"
+      ]
+    },
+    {
+      "id": "R-012",
+      "title": "Purdue OWL: grammar and punctuation",
+      "provider": "Purdue University",
+      "url": "https://owl.purdue.edu/owl/general_writing/grammar/index.html",
+      "type": "course",
+      "cost": "free",
+      "description": "Clear reference pages on sentence boundaries, pronoun agreement, modifiers and verb forms for Standard English Conventions.",
+      "tags": [
+        "writing",
+        "grammar",
+        "conventions"
+      ]
+    },
+    {
+      "id": "R-013",
+      "title": "Purdue OWL: using evidence and citation",
+      "provider": "Purdue University",
+      "url": "https://owl.purdue.edu/owl/research_and_citation/using_research/index.html",
+      "type": "course",
+      "cost": "free",
+      "description": "How to integrate evidence into an argument, useful for Information and Ideas and Expression of Ideas questions.",
+      "tags": [
+        "reading",
+        "evidence",
+        "argument"
+      ]
+    },
+    {
+      "id": "R-014",
+      "title": "Khan Academy: Grammar",
+      "provider": "Khan Academy",
+      "url": "https://www.khanacademy.org/humanities/grammar",
+      "type": "course",
+      "cost": "free",
+      "description": "Video and practice sequence for the conventions tested in the Writing portion of the digital Reading and Writing module.",
+      "tags": [
+        "writing",
+        "grammar",
+        "conventions"
+      ]
+    },
+    {
+      "id": "R-015",
+      "title": "Khan Academy: Statistics and probability",
+      "provider": "Khan Academy",
+      "url": "https://www.khanacademy.org/math/statistics-probability",
+      "type": "course",
+      "cost": "free",
+      "description": "Interactive units on scatterplots, two-way tables, probability and sampling.",
+      "tags": [
+        "math",
+        "statistics",
+        "problem-solving"
+      ]
+    },
+    {
+      "id": "R-016",
+      "title": "Khan Academy: Algebra 2",
+      "provider": "Khan Academy",
+      "url": "https://www.khanacademy.org/math/algebra2",
+      "type": "course",
+      "cost": "free",
+      "description": "Sequences, polynomial and rational functions, exponentials, logarithms and trigonometry.",
+      "tags": [
+        "math",
+        "advanced-math",
+        "trigonometry"
+      ]
+    },
+    {
+      "id": "R-017",
+      "title": "Wolfram MathWorld",
+      "provider": "Wolfram Research",
+      "url": "https://mathworld.wolfram.com/",
+      "type": "reference",
+      "cost": "free",
+      "description": "Reliable definitions and identities when a formula reference sheet is not enough.",
+      "tags": [
+        "math",
+        "reference"
+      ]
+    },
+    {
+      "id": "R-018",
+      "title": "College Board: SAT fee waivers and test-day policies",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/sat/registration/fee-waivers",
+      "type": "reference",
+      "cost": "free",
+      "description": "Official registration, accommodation and fee-waiver information so practice planning matches real test logistics.",
+      "tags": [
+        "sat",
+        "logistics",
+        "official"
+      ]
+    }
+  ]
+}
