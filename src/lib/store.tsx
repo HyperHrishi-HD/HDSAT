@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import bankJson from '../data/questionBank.json';
 import flashcardsJson from '../data/flashcards.json';
 import resourcesJson from '../data/resources.json';
@@ -41,6 +41,9 @@ export interface AppValue {
   mode: Mode;
   cloudConfigured: boolean;
   user: { id: string; email: string; displayName: string } | null;
+  /** 'pending' means an account exists but the email is not confirmed yet. */
+  accountStatus: 'guest' | 'pending' | 'cloud';
+  pendingAccount: local.PendingAccount | null;
   bankVersion: string;
   licensingNote: string;
   sources: DatasetSource[];
@@ -73,7 +76,12 @@ export interface AppValue {
   notice: string | null;
   actions: {
     signIn: (email: string, password: string) => Promise<void>;
-    signUp: (email: string, password: string, displayName: string) => Promise<string>;
+    signUp: (
+      email: string,
+      password: string,
+      displayName: string,
+      consent?: Record<string, string | boolean>
+    ) => Promise<string>;
     signOut: () => Promise<void>;
     continueAsGuest: () => void;
     submitAttempt: (
@@ -92,6 +100,8 @@ export interface AppValue {
       timeSpentSeconds: number;
     }) => Promise<void>;
     recordTest: (attempt: TestAttempt, clientSessionId: string) => Promise<void>;
+    verifySignupCode: (email: string, token: string) => Promise<void>;
+    resendVerification: (email: string) => Promise<void>;
     syncGuestData: () => Promise<void>;
     updateSettings: (patch: Partial<UserSettings>) => void;
     dismissMessages: () => void;
@@ -117,13 +127,27 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<LocalProfile>(() => local.loadProfile());
   const [snapshot, setSnapshot] = useState<cloud.CloudSnapshot | null>(null);
   const [user, setUser] = useState<AppValue['user']>(null);
+  const [pendingAccount, setPendingAccount] = useState<local.PendingAccount | null>(() =>
+    local.loadPendingAccount()
+  );
   const [ready, setReady] = useState(false);
   const [syncing, setSyncing] = useState(false);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
 
+  // Module submissions run many attempts in one loop (27 R&W / 22 Math items),
+  // so mutating actions must read the freshest profile rather than the closure
+  // captured at the start of the run. The ref keeps the sequential writes exact.
+  const profileRef = useRef<LocalProfile>(profile);
+
+  // Auth events can fire before the import callback below is created, so the
+  // handler reads it through a ref instead of a stale closure.
+  const importLocalRef = useRef<(userId: string) => Promise<void>>(async () => {});
+  const importingRef = useRef<Set<string>>(new Set());
+
   const persist = useCallback((next: LocalProfile) => {
+    profileRef.current = next;
     setProfile(next);
     local.saveProfile(next);
   }, []);
@@ -170,6 +194,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         email: session.user.email ?? '',
         displayName: (session.user.user_metadata?.display_name as string) ?? 'Student',
       });
+      setPendingAccount(null);
+      local.clearPendingAccount();
+      // Confirmation links land here with a live session; back up whatever this
+      // device practised before the account existed.
+      void importLocalRef.current(session.user.id);
     });
 
     return () => {
@@ -229,7 +258,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const submitAttempt = useCallback<AppValue['actions']['submitAttempt']>(
     async (question, response, meta) => {
-      const outcome = local.applyAttempt(profile, question, response, {
+      const outcome = local.applyAttempt(profileRef.current, question, response, {
         mode: meta.mode,
         timeSpentSeconds: meta.timeSpentSeconds,
         sessionId: meta.sessionId ?? null,
@@ -264,12 +293,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       }
       return { isCorrect: outcome.isCorrect, coinsAwarded: outcome.coinsAwarded, duplicate: false };
     },
-    [mode, persist, profile, refreshSnapshot]
+    [mode, persist, refreshSnapshot]
   );
 
   const reviewFlashcard = useCallback(
     async (cardId: string, quality: number) => {
-      const outcome = local.applyFlashcardReview(profile, cardId, quality);
+      const outcome = local.applyFlashcardReview(profileRef.current, cardId, quality);
       persist(outcome.profile);
       if (mode === 'cloud') {
         try {
@@ -285,7 +314,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const toggleSaved = useCallback(
     async (questionId: string) => {
-      const next = local.toggleSaved(profile, questionId);
+      const next = local.toggleSaved(profileRef.current, questionId);
       persist(next);
       if (mode === 'cloud') {
         try {
@@ -312,7 +341,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           return { ok: false, reason: (err as Error).message };
         }
       }
-      const result = local.purchaseItem(profile, itemId, cost);
+      const result = local.purchaseItem(profileRef.current, itemId, cost);
       persist(result.profile);
       return { ok: result.ok, reason: result.reason };
     },
@@ -335,23 +364,24 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const recordTest = useCallback(
     async (attempt: TestAttempt, clientSessionId: string) => {
-      persist(local.recordTestAttempt(profile, attempt));
+      persist(local.recordTestAttempt(profileRef.current, attempt));
       if (mode === 'cloud') {
         try {
           await cloud.recordTestCloud(attempt, {
             clientSessionId,
             assessment: attempt.assessment,
             durationSeconds: attempt.durationSeconds,
+            status: attempt.status,
           });
           await refreshSnapshot();
         } catch (err) {
           setError(`Test result kept locally; saving it to your account failed: ${(err as Error).message}`);
         }
       }
-      const next = local.perfectModuleAchievement(profile, attempt.modules);
-      if (next !== profile) persist(next);
+      const next = local.perfectModuleAchievement(profileRef.current, attempt.modules);
+      if (next !== profileRef.current) persist(next);
     },
-    [mode, persist, profile, refreshSnapshot]
+    [mode, persist, refreshSnapshot]
   );
 
   const syncGuestData = useCallback(async () => {
@@ -362,7 +392,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setSyncing(true);
     setSyncMessage(null);
     try {
-      const report = await cloud.syncGuestProfile(profile, (done, total) => {
+      const report = await cloud.syncGuestProfile(profileRef.current, (done, total) => {
         setSyncMessage(`Syncing ${done} of ${total} guest attempts...`);
       });
       await refreshSnapshot();
@@ -377,26 +407,106 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     }
   }, [mode, profile, refreshSnapshot]);
 
-  const signIn = useCallback(
-    async (email: string, password: string) => {
-      setError(null);
-      await cloud.signIn(email, password);
-      await refreshSnapshot();
+  /**
+   * First meaningful sign-in imports this device's guest history exactly once.
+   * Replays are idempotent, but the guard keeps later logins from re-uploading
+   * a long local history on every device that happens to share a browser.
+   */
+  const importLocalHistoryOnce = useCallback(
+    async (userId: string) => {
+      if (typeof localStorage === 'undefined') return;
+      const key = `hdsat.imported.${userId}`;
+      if (
+        localStorage.getItem(key) ||
+        profileRef.current.attempts.length === 0 ||
+        importingRef.current.has(userId)
+      ) {
+        return;
+      }
+      importingRef.current.add(userId);
+      try {
+        setSyncMessage('Importing your device practice history into your account...');
+        const report = await cloud.syncGuestProfile(profileRef.current, (done, total) =>
+          setSyncMessage(`Importing device history: ${done} of ${total} attempts...`)
+        );
+        localStorage.setItem(key, new Date().toISOString());
+        await refreshSnapshot();
+        setNotice(
+          `Imported ${report.attempts} practice attempt(s), ${report.saved} saved question(s) and ${report.flashcards} flashcard review(s) from this device.`
+        );
+      } catch (err) {
+        setError(`Signed in, but importing this device's history failed: ${(err as Error).message}`);
+      } finally {
+        importingRef.current.delete(userId);
+        setSyncMessage(null);
+      }
     },
     [refreshSnapshot]
   );
 
-  const signUp = useCallback(
-    async (email: string, password: string, displayName: string) => {
+  const signIn = useCallback(
+    async (email: string, password: string) => {
       setError(null);
-      const data = await cloud.signUp(email, password, displayName);
-      if (data.session) {
-        await refreshSnapshot();
-        return 'Account created and signed in.';
-      }
-      return 'Account created. Check your email to confirm the address, then sign in.';
+      const data = await cloud.signIn(email, password);
+      await refreshSnapshot();
+      setPendingAccount(null);
+      local.clearPendingAccount();
+      if (data.user?.id) await importLocalHistoryOnce(data.user.id);
     },
-    [refreshSnapshot]
+    [importLocalHistoryOnce, refreshSnapshot]
+  );
+
+  const verifySignupCode = useCallback(
+    async (email: string, token: string) => {
+      setError(null);
+      const data = await cloud.verifySignupCode(email, token);
+      if (!data.session) {
+        throw new Error('That code was not accepted. Check the email and try again.');
+      }
+      local.clearPendingAccount();
+      setPendingAccount(null);
+      await refreshSnapshot();
+      if (data.user?.id) await importLocalHistoryOnce(data.user.id);
+      setNotice('Email confirmed — you are signed in and your device history is backed up.');
+    },
+    [importLocalHistoryOnce, refreshSnapshot]
+  );
+
+  const resendVerification = useCallback(async (email: string) => {
+    setError(null);
+    await cloud.resendConfirmation(email);
+    setNotice('Confirmation email sent again. Check your inbox and spam folder.');
+  }, []);
+
+  const signUp = useCallback(
+    async (
+      email: string,
+      password: string,
+      displayName: string,
+      consent: Record<string, string | boolean> = {}
+    ) => {
+      setError(null);
+      const data = await cloud.signUp(email, password, displayName, consent);
+      if (data.session) {
+        local.clearPendingAccount();
+        setPendingAccount(null);
+        await refreshSnapshot();
+        if (data.user?.id) await importLocalHistoryOnce(data.user.id);
+        return 'Account created and signed in. Your device history is now backed up to the cloud.';
+      }
+      // Supabase requires email confirmation before it issues a session. The
+      // account exists now, so the student keeps studying on this device and we
+      // remember the address to explain what confirmation unlocks.
+      const record = {
+        email,
+        displayName: displayName || 'Student',
+        createdAt: new Date().toISOString(),
+      };
+      local.savePendingAccount(record);
+      setPendingAccount(record);
+      return `Account created for ${email}. We emailed a confirmation link — until you confirm, your work stays on this device and HDCoins are provisional.`;
+    },
+    [importLocalHistoryOnce, refreshSnapshot]
   );
 
   const signOut = useCallback(async () => {
@@ -405,9 +515,21 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setSnapshot(null);
   }, []);
 
+  // Keep the import ref pointed at the latest callback (see onAuthStateChange).
+  importLocalRef.current = importLocalHistoryOnce;
+
+  const accountStatus: AppValue['accountStatus'] = user
+    ? 'cloud'
+    : pendingAccount
+    ? 'pending'
+    : 'guest';
+
   const updateSettings = useCallback(
     (patch: Partial<UserSettings>) => {
-      const next: LocalProfile = { ...profile, settings: { ...profile.settings, ...patch } };
+      const next: LocalProfile = {
+        ...profileRef.current,
+        settings: { ...profileRef.current.settings, ...patch },
+      };
       persist(next);
       if (mode === 'cloud' && patch.assessment) {
         cloud.setPreferredExamCloud(patch.assessment).catch((err: Error) =>
@@ -423,6 +545,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     mode,
     cloudConfigured: isCloudConfigured,
     user,
+    accountStatus,
+    pendingAccount,
     bankVersion: bank.bank_version,
     licensingNote: bank.licensing_note,
     sources: bank.sources,
@@ -458,6 +582,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       purchase,
       completeSession,
       recordTest,
+      verifySignupCode,
+      resendVerification,
       syncGuestData,
       updateSettings,
       dismissMessages: () => {
@@ -466,7 +592,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       },
       resetGuestProgress: () => {
         local.clearProfile();
-        setProfile(local.emptyProfile());
+        const cleared = local.emptyProfile();
+        profileRef.current = cleared;
+        setProfile(cleared);
         setNotice('Local guest progress cleared.');
       },
     },

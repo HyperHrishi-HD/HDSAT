@@ -32,6 +32,13 @@ export function RewardsPage() {
           </div>
           <Badge tone="good">{app.hdCoins} HDCoins available</Badge>
         </div>
+        {app.mode === 'guest' ? (
+          <p className="muted" style={{ marginTop: 8 }}>
+            Guest HDCoins live in this browser. They show correctly here and sync to your account on your
+            first sign-in — until then they are not stored in the cloud and are lost if you clear browser
+            data.
+          </p>
+        ) : null}
 
         <div className="card-grid" style={{ marginTop: 12 }}>
           <Stat label="HDCoins Balance" value={app.hdCoins} hint={`${today?.coinsEarned ?? 0} earned today`} />

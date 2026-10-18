@@ -1,9 +1,119 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { StimulusView } from '../components/FigureView';
 import { CalculatorPanel } from '../components/MathTools';
 import { MathText } from '../components/MathText';
 import { Badge, Button, Card, Stat } from '../components/ui';
+import { seededShuffle } from '../lib/examEngine';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
+
+/* ---------------------------------------------------------------------------
+ Arcade games: timed, streak-multiplied quiz runs drawn fresh from the live
+ question bank and vocabulary deck. Personal best scores persist locally.
+--------------------------------------------------------------------------- */
+
+type GameId = 'sprint' | 'transitions' | 'vocab';
+
+interface GameQuestion {
+  key: string;
+  prompt: string;
+  stimulus?: string;
+  options: string[];
+  correct: string;
+}
+
+interface BestScores {
+  sprint: number;
+  transitions: number;
+  vocab: number;
+}
+
+const BEST_KEY = 'hdsat.arcade.best.v1';
+const GAME_SECONDS = 75;
+const MAX_COMBO = 5;
+
+function loadBest(): BestScores {
+  try {
+    const raw = localStorage.getItem(BEST_KEY);
+    if (raw) return { sprint: 0, transitions: 0, vocab: 0, ...JSON.parse(raw) };
+  } catch {
+    /* storage unavailable - bests simply do not persist */
+  }
+  return { sprint: 0, transitions: 0, vocab: 0 };
+}
+
+function buildSprintPool(questions: ReturnType<typeof useApp>['questions'], seed: string): GameQuestion[] {
+  const pool = questions.filter(
+    (q) =>
+      q.format === 'multiple_choice' &&
+      q.choices &&
+      q.choices.length === 4 &&
+      !q.figure_metadata
+  );
+  return seededShuffle(pool, seed)
+    .slice(0, 60)
+    .map((q) => {
+      const opts = seededShuffle(q.choices as { id: string; text: string }[], seed + q.id);
+      const correctText = (q.choices as { id: string; text: string }[]).find(
+        (c) => c.id === q.correct_answer
+      )?.text;
+      return {
+        key: `sprint-${q.id}-${seed}`,
+        prompt: q.prompt,
+        stimulus: q.stimulus ?? undefined,
+        options: opts.map((o) => o.text),
+        correct: correctText ?? opts[0].text,
+      };
+    });
+}
+
+function buildTransitionsPool(questions: ReturnType<typeof useApp>['questions'], seed: string): GameQuestion[] {
+  const pool = questions.filter(
+    (q) =>
+      q.skill === 'Transitions' &&
+      q.format === 'multiple_choice' &&
+      q.choices &&
+      (q.choices as unknown[]).length >= 3
+  );
+  return seededShuffle(pool, seed)
+    .slice(0, 40)
+    .map((q) => {
+      const choices = q.choices as { id: string; text: string }[];
+      const correctText = choices.find((c) => c.id === q.correct_answer)?.text ?? '';
+      const options = seededShuffle(choices, seed + q.id).map((c) => c.text);
+      return {
+        key: `tr-${q.id}-${seed}`,
+        prompt: 'Which transition completes the text as written?',
+        stimulus: q.stimulus ?? undefined,
+        options,
+        correct: correctText,
+      };
+    });
+}
+
+function buildVocabPool(cards: ReturnType<typeof useApp>['flashcards'], seed: string): GameQuestion[] {
+  const deck = cards.filter((c) => c.deck === 'vocabulary');
+  if (deck.length < 4) return [];
+  const picked = seededShuffle(deck, seed).slice(0, 60);
+  return picked.map((card, i) => {
+    const distractors: string[] = [];
+    const seenDefs = new Set<string>([card.back]);
+    for (let j = 1; distractors.length < 3 && j < deck.length; j += 1) {
+      const cand = deck[(i * 977 + j * 131) % deck.length];
+      if (cand.id !== card.id && !seenDefs.has(cand.back)) {
+        seenDefs.add(cand.back);
+        distractors.push(cand.back);
+      }
+    }
+    return {
+      key: `vb-${card.id}-${seed}`,
+      prompt: `What does “${card.front}” mean?`,
+      stimulus: undefined,
+      options: seededShuffle([card.back, ...distractors], seed + card.id),
+      correct: card.back,
+    };
+  });
+}
 
 interface DesmosChallenge {
   id: string;
@@ -25,10 +135,11 @@ const DESMOS_LAB_LESSONS: DesmosChallenge[] = [
     f1: 'x^2 - 4x + 3',
     f2: '2x - 2',
     prompt:
-      'Plot $f(x) = x^2 - 4x + 3$ and $g(x) = 2x - 2$ in the graphing calculator below. What is the larger $x$-coordinate where the two graphs intersect?',
-    expectedAnswer: '5',
-    hint: 'Set x^2 - 4x + 3 = 2x - 2, or inspect x = 1 and x = 5 on the calculator probe.',
-    explanation: 'At $x = 5$, $f(5) = 25 - 20 + 3 = 8$ and $g(5) = 10 - 2 = 8$. The two intersections are $(1, 0)$ and $(5, 8)$, so the larger $x$-coordinate is $5$.',
+      'Plot $f(x) = x^2 - 4x + 3$ and $g(x) = 2x - 2$ in the graphing calculator below. Which is the larger $x$-coordinate where the two graphs intersect?',
+    expectedAnswer: '3',
+    hint: 'Set x^2 - 4x + 3 = 2x - 2, or graph both functions in Desmos and read the intersection points.',
+    explanation: 'Solving gives $(x-1)(x-3)=0$, so the intersections are $(1,0)$ and $(3,4)$; the larger $x$-coordinate is $3$.'
+      .replace('$(3,4)$', '$(3, 4)$'),
   },
   {
     id: 'DL-2',
@@ -37,10 +148,10 @@ const DESMOS_LAB_LESSONS: DesmosChallenge[] = [
     f1: '-2x^2 + 12x - 10',
     f2: '8',
     prompt:
-      'For the parabola $f(x) = -2x^2 + 12x - 10$, use the graph or vertex probe to find the maximum value of $f(x)$.',
+      'For the parabola $f(x) = -2x^2 + 12x - 10$, graph the function in Desmos and find the maximum value of $f(x)$.',
     expectedAnswer: '8',
-    hint: 'The vertex occurs at x = -b/(2a) = -12 / (2 * -2) = 3. Inspect f(3).',
-    explanation: 'The axis of symmetry is $x = 3$. Evaluating $f(3) = -2(9) + 12(3) - 10 = -18 + 36 - 10 = 8$.',
+    hint: 'The vertex occurs at x = -b/(2a) = -12 / (2 * -2) = 3. Check f(3).',
+    explanation: 'The axis of symmetry is $x = 3$. Evaluating: $f(3) = -2(9) + 12(3) - 10 = -18 + 36 - 10 = 8$.',
   },
   {
     id: 'DL-3',
@@ -49,69 +160,124 @@ const DESMOS_LAB_LESSONS: DesmosChallenge[] = [
     f1: 'x^2 - 6x + 9',
     f2: '0',
     prompt:
-      'Inspect the graph of $f(x) = x^2 - 6x + 9$. At what $x$-value does the parabola touch the $x$-axis ($y = 0$)?',
+      'Inspect the graph of $f(x) = x^2 - 6x + 9$. At which $x$-value does the parabola touch the $x$-axis?',
     expectedAnswer: '3',
-    hint: 'Factor (x - 3)^2 = 0 or inspect x = 3 in the calculator.',
-    explanation: 'Because $x^2 - 6x + 9 = (x - 3)^2$, the vertex $(3, 0)$ lies directly on the $x$-axis.',
-  },
-];
-
-const EQUATION_SPRINT_ITEMS = [
-  { id: 'ES-1', prompt: 'Solve for $x$: $4x - 7 = 21$', answer: '7', options: ['5', '6', '7', '8'] },
-  { id: 'ES-2', prompt: 'If $3(x + 2) = 27$, what is $x$?', answer: '7', options: ['6', '7', '8', '9'] },
-  { id: 'ES-3', prompt: 'Positive root of $x^2 - 9 = 0$:', answer: '3', options: ['0', '3', '6', '9'] },
-  { id: 'ES-4', prompt: 'Slope of the line $6x - 2y = 10$:', answer: '3', options: ['-3', '2', '3', '5'] },
-  { id: 'ES-5', prompt: 'If $2^x = 32$, what is $x$?', answer: '5', options: ['4', '5', '6', '16'] },
-  { id: 'ES-6', prompt: 'Vertex $x$-coordinate of $y = x^2 - 8x + 15$:', answer: '4', options: ['2', '4', '8', '15'] },
-];
-
-const TRANSITION_MATCH_ITEMS = [
-  {
-    id: 'TM-1',
-    sentence:
-      'High-altitude observatories enjoy low atmospheric water vapor; _____, their remote mountain peaks complicate equipment transport.',
-    answer: 'however',
-    options: ['however', 'for example', 'consequently', 'similarly'],
-  },
-  {
-    id: 'TM-2',
-    sentence:
-      'Urban street trees shade asphalt surfaces during heat waves; _____, neighborhoods with dense canopy cover record lower afternoon air temperatures.',
-    answer: 'consequently',
-    options: ['consequently', 'nevertheless', 'meanwhile', 'alternatively'],
-  },
-  {
-    id: 'TM-3',
-    sentence:
-      'Several archival inventories listed the 1894 score as lost; _____, musicologists recently located a complete autographed copy in Vienna.',
-    answer: 'nevertheless',
-    options: ['nevertheless', 'therefore', 'furthermore', 'specifically'],
-  },
-  {
-    id: 'TM-4',
-    sentence:
-      'Bivalve mollusks filter suspended particles from estuarine water; oysters in Chesapeake Bay, _____, can clarify puluhan liters per day.',
-    answer: 'for instance',
-    options: ['for instance', 'by contrast', 'subsequently', 'instead'],
+    hint: 'Factor (x - 3)^2 = 0, or graph it in Desmos and look for where the curve touches the x-axis.',
+    explanation: 'Because $x^2 - 6x + 9 = (x - 3)^2$, the vertex $(3, 0)$ lies exactly on the $x$-axis.',
   },
 ];
 
 export function ArcadePage() {
   const app = useApp();
-  const [mode, setMode] = useState<'desmos' | 'sprint' | 'transitions' | 'vocab'>('desmos');
+  const [mode, setMode] = useState<'desmos' | GameId>('desmos');
+  const [runSeed, setRunSeed] = useState<string>(() => `arc:${Date.now()}`);
 
   // Desmos Lab state
   const [lessonIdx, setLessonIdx] = useState(0);
   const [labAnswer, setLabAnswer] = useState('');
   const [labFeedback, setLabFeedback] = useState<{ ok: boolean; text: string } | null>(null);
 
-  // Mini-game state
+  // Shared game-run state
   const [gameIndex, setGameIndex] = useState(0);
   const [gameScore, setGameScore] = useState(0);
+  const [combo, setCombo] = useState(0);
+  const [bestCombo, setBestCombo] = useState(0);
+  const [answered, setAnswered] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [secondsLeft, setSecondsLeft] = useState(GAME_SECONDS);
+  const [running, setRunning] = useState(false);
   const [gameDone, setGameDone] = useState(false);
-  const [gameNote, setGameNote] = useState<string | null>(null);
+  const [lastFeedback, setLastFeedback] = useState<string | null>(null);
+  const [best, setBest] = useState<BestScores>(() => loadBest());
+
+  const startRef = useRef<number>(0);
+  // Live values for the countdown ticker (avoids stale-closure state).
+  const scoreRef = useRef(0);
+  const answeredRef = useRef(0);
+  const correctRef = useRef(0);
+
+  const items: GameQuestion[] = useMemo(() => {
+    if (mode === 'sprint') return buildSprintPool(app.questions, runSeed);
+    if (mode === 'transitions') return buildTransitionsPool(app.questions, runSeed);
+    if (mode === 'vocab') return buildVocabPool(app.flashcards, runSeed);
+    return [];
+  }, [mode, app.questions, app.flashcards, runSeed]);
 
   const activeLesson = DESMOS_LAB_LESSONS[lessonIdx];
+
+  const persistBest = useCallback((key: GameId, score: number) => {
+    setBest((prev) => {
+      if (score <= prev[key]) return prev;
+      const next = { ...prev, [key]: score };
+      try {
+        localStorage.setItem(BEST_KEY, JSON.stringify(next));
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  }, []);
+
+  const endRun = useCallback(
+    async (finalScore: number, answeredCount: number, corr: number) => {
+      setGameDone(true);
+      setRunning(false);
+      persistBest(mode as GameId, finalScore);
+      const timeSpent = Math.max(1, Math.round((Date.now() - startRef.current) / 1000));
+      if (answeredCount > 0) {
+        await app.actions.completeSession({
+          activityType: 'mini_game',
+          sessionId: newEventId(),
+          questions: answeredCount,
+          correct: corr,
+          timeSpentSeconds: timeSpent,
+        });
+      }
+    },
+    [app.actions, mode, persistBest]
+  );
+
+  // Countdown ticker ending the run at 0.
+  useEffect(() => {
+    if (!running || gameDone) return;
+    const timer = window.setInterval(() => {
+      setSecondsLeft((prev) => {
+        if (prev <= 1) {
+          window.clearInterval(timer);
+          void endRun(scoreRef.current, answeredRef.current, correctRef.current);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => window.clearInterval(timer);
+  }, [running, gameDone, endRun]);
+
+  const startGame = (nextMode: GameId) => {
+    setMode(nextMode);
+    setRunSeed(`arc:${Date.now()}`);
+    setGameIndex(0);
+    setGameScore(0);
+    scoreRef.current = 0;
+    setCombo(0);
+    setBestCombo(0);
+    setAnswered(0);
+    answeredRef.current = 0;
+    setCorrectCount(0);
+    correctRef.current = 0;
+    setSecondsLeft(GAME_SECONDS);
+    setLastFeedback(null);
+    setGameDone(false);
+    startRef.current = Date.now();
+    setRunning(true);
+  };
+
+  const resetTo = (nextMode: 'desmos' | GameId) => {
+    setMode(nextMode);
+    setRunning(false);
+    setGameDone(false);
+    setLastFeedback(null);
+  };
 
   const handleCheckLab = () => {
     const clean = labAnswer.trim();
@@ -122,78 +288,35 @@ export function ArcadePage() {
     });
   };
 
-  const resetMiniGame = (nextMode: typeof mode) => {
-    setMode(nextMode);
-    setGameIndex(0);
-    setGameScore(0);
-    setGameDone(false);
-    setGameNote(null);
-  };
+  const handlePick = async (optionText: string) => {
+    if (!running || gameDone || !items[gameIndex]) return;
+    const isCorrect = optionText === items[gameIndex].correct;
+    const nextAnswered = answeredRef.current + 1;
+    const nextCorrect = correctRef.current + (isCorrect ? 1 : 0);
+    const nextCombo = isCorrect ? Math.min(combo + 1, MAX_COMBO) : 0;
+    const delta = isCorrect ? 10 * Math.max(1, nextCombo) : 0;
+    const nextScore = scoreRef.current + delta;
 
-  const handleSprintPick = async (choice: string) => {
-    const item = EQUATION_SPRINT_ITEMS[gameIndex];
-    const isCorrect = choice === item.answer;
-    const nextScore = gameScore + (isCorrect ? 1 : 0);
+    answeredRef.current = nextAnswered;
+    correctRef.current = nextCorrect;
+    scoreRef.current = nextScore;
+    setAnswered(nextAnswered);
+    setCorrectCount(nextCorrect);
+    setCombo(nextCombo);
+    setBestCombo((b) => Math.max(b, nextCombo));
     setGameScore(nextScore);
-    setGameNote(isCorrect ? 'Correct!' : `Answer was ${item.answer}`);
+    setLastFeedback(isCorrect ? (delta > 10 ? `Correct! +${delta} (streak ×${nextCombo})` : 'Correct! +10') : `The answer was: ${items[gameIndex].correct}`);
 
-    if (gameIndex + 1 >= EQUATION_SPRINT_ITEMS.length) {
-      setGameDone(true);
-      await app.actions.completeSession({
-        activityType: 'mini_game',
-        sessionId: newEventId(),
-        questions: EQUATION_SPRINT_ITEMS.length,
-        correct: nextScore,
-        timeSpentSeconds: 30,
-      });
-    } else {
-      setGameIndex((i) => i + 1);
+    const isLast = gameIndex + 1 >= items.length;
+    setGameIndex((i) => i + 1);
+    if (isLast) {
+      await endRun(nextScore, nextAnswered, nextCorrect);
     }
   };
 
-  const handleTransitionPick = async (choice: string) => {
-    const item = TRANSITION_MATCH_ITEMS[gameIndex];
-    const isCorrect = choice === item.answer;
-    const nextScore = gameScore + (isCorrect ? 1 : 0);
-    setGameScore(nextScore);
-    setGameNote(isCorrect ? 'Correct logical transition!' : `Expected "${item.answer}"`);
-
-    if (gameIndex + 1 >= TRANSITION_MATCH_ITEMS.length) {
-      setGameDone(true);
-      await app.actions.completeSession({
-        activityType: 'mini_game',
-        sessionId: newEventId(),
-        questions: TRANSITION_MATCH_ITEMS.length,
-        correct: nextScore,
-        timeSpentSeconds: 30,
-      });
-    } else {
-      setGameIndex((i) => i + 1);
-    }
-  };
-
-  const vocabItems = app.flashcards.filter((c) => c.deck === 'vocabulary').slice(0, 6);
-
-  const handleVocabPick = async (pickedBack: string) => {
-    const card = vocabItems[gameIndex];
-    const isCorrect = pickedBack === card.back;
-    const nextScore = gameScore + (isCorrect ? 1 : 0);
-    setGameScore(nextScore);
-    setGameNote(isCorrect ? 'Matched!' : `Definition: ${card.back}`);
-
-    if (gameIndex + 1 >= vocabItems.length) {
-      setGameDone(true);
-      await app.actions.completeSession({
-        activityType: 'mini_game',
-        sessionId: newEventId(),
-        questions: vocabItems.length,
-        correct: nextScore,
-        timeSpentSeconds: 30,
-      });
-    } else {
-      setGameIndex((i) => i + 1);
-    }
-  };
+  const current = items[gameIndex];
+  const showRun = mode !== 'desmos' && (running || gameDone);
+  const isRecord = gameDone && gameScore > 0 && gameScore >= best[mode as GameId];
 
   return (
     <div>
@@ -202,25 +325,25 @@ export function ArcadePage() {
           <div>
             <h1>Desmos Lab &amp; SAT Skill Mini-Games</h1>
             <p className="muted">
-              Interactive graphing calculator lessons and focused SAT skill games that reinforce algebraic fluency,
-              rhetorical transitions, and vocabulary in context.
+              Each run draws fresh randomized items from the live bank and vocabulary deck. Correct answers in a row
+              raise a streak multiplier (up to ×{MAX_COMBO}); best scores are saved on this device.
             </p>
           </div>
           <div className="row">
-            <Button variant={mode === 'desmos' ? 'primary' : 'outline'} size="sm" onClick={() => resetMiniGame('desmos')}>
+            <Button variant={mode === 'desmos' ? 'primary' : 'outline'} size="sm" onClick={() => resetTo('desmos')}>
               Desmos Lab
             </Button>
-            <Button variant={mode === 'sprint' ? 'primary' : 'outline'} size="sm" onClick={() => resetMiniGame('sprint')}>
+            <Button variant={mode === 'sprint' ? 'primary' : 'outline'} size="sm" onClick={() => startGame('sprint')}>
               Equation Sprint
             </Button>
             <Button
               variant={mode === 'transitions' ? 'primary' : 'outline'}
               size="sm"
-              onClick={() => resetMiniGame('transitions')}
+              onClick={() => startGame('transitions')}
             >
               Transition Match
             </Button>
-            <Button variant={mode === 'vocab' ? 'primary' : 'outline'} size="sm" onClick={() => resetMiniGame('vocab')}>
+            <Button variant={mode === 'vocab' ? 'primary' : 'outline'} size="sm" onClick={() => startGame('vocab')}>
               Vocab Precision
             </Button>
           </div>
@@ -274,120 +397,87 @@ export function ArcadePage() {
             ) : null}
           </Card>
 
-          <CalculatorPanel key={activeLesson.id} defaultFunctions={[activeLesson.f1, activeLesson.f2]} />
+          <CalculatorPanel key={activeLesson.id} />
         </div>
       ) : null}
 
-      {mode === 'sprint' ? (
-        <Card>
-          <div className="row-between">
-            <h2>Equation Sprint</h2>
-            <Badge tone="info">
-              Score: {gameScore} / {EQUATION_SPRINT_ITEMS.length}
-            </Badge>
-          </div>
-          {gameNote ? <p className="muted">{gameNote}</p> : null}
+      {showRun && !running && !gameDone ? null : null}
 
-          {!gameDone ? (
-            <div style={{ marginTop: 14 }}>
-              <div className="prompt">
-                <MathText text={EQUATION_SPRINT_ITEMS[gameIndex].prompt} />
-              </div>
-              <div className="card-grid" style={{ marginTop: 12 }}>
-                {EQUATION_SPRINT_ITEMS[gameIndex].options.map((opt) => (
-                  <button
-                    key={opt}
-                    type="button"
-                    className="rush-option"
-                    onClick={() => handleSprintPick(opt)}
-                  >
-                    <MathText text={`$${opt}$`} />
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div style={{ marginTop: 14 }}>
-              <Stat label="Final Sprint Score" value={`${gameScore} / ${EQUATION_SPRINT_ITEMS.length}`} />
-              <div style={{ marginTop: 12 }}>
-                <Button onClick={() => resetMiniGame('sprint')}>Play Again</Button>
-              </div>
-            </div>
-          )}
+      {mode !== 'desmos' && !running && !gameDone ? (
+        <Card>
+          <h2>Ready to play?</h2>
+          <p className="muted" style={{ margin: '12px 0' }}>
+            <strong>Equation Sprint</strong> speed-solves dozens of fresh bank items ·{' '}
+            <strong>Transition Match</strong> trains rhetorical transitions · <strong>Vocab Precision</strong> drills
+            the entire vocabulary deck. Every run lasts {GAME_SECONDS} seconds.
+          </p>
+          <div className="row">
+            <Button onClick={() => startGame(mode as GameId)}>Start {GAME_SECONDS}-second run</Button>
+          </div>
+          <div className="card-grid" style={{ marginTop: 14 }}>
+            <Stat label="Equation Sprint best" value={best.sprint.toLocaleString()} />
+            <Stat label="Transition Match best" value={best.transitions.toLocaleString()} />
+            <Stat label="Vocab Precision best" value={best.vocab.toLocaleString()} />
+          </div>
         </Card>
       ) : null}
 
-      {mode === 'transitions' ? (
+      {showRun && gameDone ? (
         <Card>
           <div className="row-between">
-            <h2>Rhetorical Transition Match</h2>
-            <Badge tone="info">
-              Score: {gameScore} / {TRANSITION_MATCH_ITEMS.length}
-            </Badge>
+            <h2>Run complete</h2>
+            {isRecord ? <Badge tone="good">New personal best!</Badge> : <Badge tone="info">Best: {best[mode as GameId].toLocaleString()}</Badge>}
           </div>
-          {gameNote ? <p className="muted">{gameNote}</p> : null}
-
-          {!gameDone ? (
-            <div style={{ marginTop: 14 }}>
-              <div className="stimulus">{TRANSITION_MATCH_ITEMS[gameIndex].sentence}</div>
-              <div className="card-grid">
-                {TRANSITION_MATCH_ITEMS[gameIndex].options.map((opt) => (
-                  <button
-                    key={opt}
-                    type="button"
-                    className="rush-option"
-                    onClick={() => handleTransitionPick(opt)}
-                  >
-                    <strong>{opt}</strong>
-                  </button>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <div style={{ marginTop: 14 }}>
-              <Stat label="Final Transition Score" value={`${gameScore} / ${TRANSITION_MATCH_ITEMS.length}`} />
-              <div style={{ marginTop: 12 }}>
-                <Button onClick={() => resetMiniGame('transitions')}>Play Again</Button>
-              </div>
-            </div>
-          )}
+          <div className="card-grid" style={{ margin: '12px 0' }}>
+            <Stat label="Score" value={gameScore.toLocaleString()} />
+            <Stat label="Answered" value={answered} />
+            <Stat label="Accuracy" value={answered ? `${Math.round((correctCount / answered) * 100)}%` : '—'} />
+            <Stat label="Best streak" value={`×${bestCombo}`} />
+          </div>
+          <div className="row">
+            <Button onClick={() => startGame(mode as GameId)}>Play again</Button>
+            <Button variant="outline" onClick={() => resetTo(mode as GameId)}>
+              Back to briefing
+            </Button>
+          </div>
         </Card>
       ) : null}
 
-      {mode === 'vocab' ? (
+      {showRun && running && current ? (
         <Card>
-          <div className="row-between">
-            <h2>Vocabulary Precision Match</h2>
-            <Badge tone="info">
-              Score: {gameScore} / {vocabItems.length}
-            </Badge>
+          <div className="row-between" style={{ marginBottom: 8 }}>
+            <h2>
+              {mode === 'sprint' ? 'Equation Sprint' : mode === 'transitions' ? 'Transition Match' : 'Vocab Precision'}
+            </h2>
+            <div className="row">
+              <span className={`timer${secondsLeft < 15 ? ' is-low' : ''}`}>{String(secondsLeft).padStart(2, '0')}s</span>
+              <Badge tone="info">Score {gameScore.toLocaleString()}</Badge>
+              {combo > 1 ? <Badge tone="good">Streak ×{combo}</Badge> : null}
+            </div>
           </div>
-          {gameNote ? <p className="muted">{gameNote}</p> : null}
 
-          {!gameDone && vocabItems[gameIndex] ? (
-            <div style={{ marginTop: 14 }}>
-              <div className="prompt">Select the precise definition for: {vocabItems[gameIndex].front}</div>
-              <div className="stack" style={{ marginTop: 10 }}>
-                {vocabItems.slice(0, 4).map((choiceCard) => (
-                  <button
-                    key={choiceCard.id}
-                    type="button"
-                    className="rush-option"
-                    onClick={() => handleVocabPick(choiceCard.back)}
-                  >
-                    {choiceCard.back}
-                  </button>
-                ))}
-              </div>
+          {current.stimulus ? (
+            <div className="stimulus">
+              <StimulusView stimulus={current.stimulus} />
             </div>
-          ) : (
-            <div style={{ marginTop: 14 }}>
-              <Stat label="Final Vocab Score" value={`${gameScore} / ${vocabItems.length}`} />
-              <div style={{ marginTop: 12 }}>
-                <Button onClick={() => resetMiniGame('vocab')}>Play Again</Button>
-              </div>
-            </div>
-          )}
+          ) : null}
+          <div className="prompt" style={{ marginTop: 8 }}>
+            <MathText text={current.prompt} />
+          </div>
+
+          <div className="card-grid" style={{ marginTop: 12 }}>
+            {current.options.map((opt) => (
+              <button key={opt} type="button" className="rush-option" onClick={() => void handlePick(opt)}>
+                <MathText text={opt} />
+              </button>
+            ))}
+          </div>
+
+          {lastFeedback ? (
+            <p className="muted" style={{ marginTop: 10 }}>
+              {lastFeedback}
+            </p>
+          ) : null}
         </Card>
       ) : null}
     </div>

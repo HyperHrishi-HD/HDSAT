@@ -15,7 +15,7 @@ import random
 import re
 from datetime import datetime, timezone
 
-BANK_VERSION = "2026.10.14-open-core-1"
+BANK_VERSION = "2026.10.18-open-core-2"
 
 SOURCES = [
     {
@@ -105,7 +105,7 @@ QUESTIONS = [
         "skill": "Command of Evidence (Quantitative)",
         "difficulty": "Medium",
         "format": "multiple_choice",
-        "stimulus": "Agronomists tested four cover-crop mixtures across 120 days to evaluate soil nitrogen retention and late-season weed suppression in upper Midwest plots.\n\nCover Crop Trial Summary:\n- Crimson Clover alone: 68 kg/ha nitrogen retained | 54% weed suppression\n- Winter Rye alone: 42 kg/ha nitrogen retained | 89% weed suppression\n- Clover + Winter Rye (50/50 mix): 64 kg/ha nitrogen retained | 86% weed suppression\n- Tillage Radish alone: 51 kg/ha nitrogen retained | 72% weed suppression\n\nThe researchers concluded that pairing a legume with a cereal grass allows farmers to capture nearly the full weed-suppression benefit of the grass without sacrificing the high nitrogen retention of the legume.",
+        "stimulus": "Agronomists tested four cover-crop mixtures across 120 days to evaluate soil nitrogen retention and late-season weed suppression in upper Midwest plots. The researchers concluded that pairing a legume with a cereal grass allows farmers to capture nearly the full weed-suppression benefit of the grass without sacrificing the high nitrogen retention of the legume.",
         "figure_metadata": {
             "type": "table",
             "caption": "120-Day Cover Crop Trial Results",
@@ -833,7 +833,20 @@ QUESTIONS = [
         "skill": "One-variable data: distributions and measures of center and spread",
         "difficulty": "Medium",
         "format": "spr",
-        "stimulus": "The table shows the daily particulate matter readings (in micrograms per cubic meter) recorded at an air-quality station over $6$ days: $14, 18, 21, 21, 25, 33$. On the seventh day, a reading of $92$ micrograms per cubic meter is recorded due to a regional dust event.",
+        "stimulus": "The table shows the daily particulate matter readings (in micrograms per cubic meter) recorded at an air-quality station over $6$ days. On Day 7, a reading of $92$ micrograms per cubic meter is recorded due to a regional dust event.",
+        "figure_metadata": {
+            "type": "table",
+            "caption": "Daily Particulate Matter Readings (Days 1–6)",
+            "headers": ["Day", "Reading (µg/m³)"],
+            "rows": [
+                ["Day 1", "14"],
+                ["Day 2", "18"],
+                ["Day 3", "21"],
+                ["Day 4", "21"],
+                ["Day 5", "25"],
+                ["Day 6", "33"]
+            ]
+        },
         "prompt": "By how much does the mean of the $7$-day dataset exceed the median of the $7$-day dataset?",
         "choices": None,
         "correct_answer": "11",
@@ -851,7 +864,7 @@ QUESTIONS = [
         "skill": "Probability and conditional probability",
         "difficulty": "Medium",
         "format": "multiple_choice",
-        "stimulus": "A quality-control engineer inspected $240$ solar panels from two production lines.\n\nInspection Summary:\n- Line A: $132$ passed | $8$ failed | $140$ total\n- Line B: $93$ passed | $7$ failed | $100$ total\n- Combined: $225$ passed | $15$ failed | $240$ total",
+        "stimulus": "A quality-control engineer inspected $240$ solar panels from two production lines and recorded the results in the table.",
         "figure_metadata": {
             "type": "table",
             "caption": "Solar Panel Quality Inspection",
@@ -1446,6 +1459,13 @@ def write_outputs(questions, cards, resources):
             "generated_at": bank["generated_at"],
             "license": "CC-BY-4.0",
             "attribution": "HDSAT Study Deck (CC-BY-4.0)",
+            "vocabulary_source": {
+                "file": "supabase/import/data/elevated_vocab_cc0.json",
+                "license": "CC0 1.0 (public domain dedication)",
+                "name": "A New Word Every Day English corpus",
+                "url": "https://github.com/lukefwalton/a-new-word-every-day",
+                "note": "Vocabulary entries derived from this CC0-dedicated word list (word, part of speech, definition). Formulas and authored cards are HDSAT original CC-BY-4.0.",
+            },
             "cards": cards,
         },
     )
@@ -1462,6 +1482,24 @@ def write_outputs(questions, cards, resources):
         "resources": os.path.relpath(os.path.join(DATA_DIR, "resources.json"), ROOT),
         "seed_sql": os.path.relpath(seed_path, ROOT),
     }
+
+
+def load_expansion(base_dir=None):
+    """Load the generated bank expansion (original CC-BY-4.0 items produced by
+    generate_bank_expansion.py), so full-length adaptive tests are fillable.
+    Missing expansion files are tolerated so --check still works in CI."""
+    here = base_dir or os.path.dirname(os.path.abspath(__file__))
+    exp_dir = os.path.join(here, "expansion")
+    questions, cards = [], []
+    q_path = os.path.join(exp_dir, "extra_questions.json")
+    c_path = os.path.join(exp_dir, "extra_flashcards.json")
+    if os.path.exists(q_path):
+        with open(q_path, "r", encoding="utf-8") as fh:
+            questions = json.load(fh).get("questions", [])
+    if os.path.exists(c_path):
+        with open(c_path, "r", encoding="utf-8") as fh:
+            cards = json.load(fh).get("cards", [])
+    return questions, cards
 
 
 def load_external_file(path):
@@ -1528,7 +1566,8 @@ def main(argv=None):
     parser.add_argument("--file", dest="import_file", help="optional path to an external JSON or CSV question dataset to validate and merge")
     args = parser.parse_args(argv)
 
-    authored = [dict(q) for q in QUESTIONS]
+    extra_questions, extra_cards = load_expansion()
+    authored = [dict(q) for q in QUESTIONS] + [dict(q) for q in extra_questions]
     sources = [dict(s) for s in SOURCES]
     if args.import_file:
         extra_questions, extra_sources = load_external_file(args.import_file)
@@ -1542,6 +1581,21 @@ def main(argv=None):
             by_id[q.get("id", "")] = q
         authored = list(by_id.values())
 
+    # Keep explicit assessment tags when provided; otherwise default to all
+    # assessments, while excluding trigonometry items from PSAT 8/9 per the
+    # Digital SAT Suite blueprint.
+    ALL_ASSESSMENT_TAGS = ["SAT", "PSAT/NMSQT", "PSAT 10", "PSAT 8/9"]
+    NO_89_TAGS = ["SAT", "PSAT/NMSQT", "PSAT 10"]
+    for q in authored:
+        skill_lower = (q.get("skill") or "").lower()
+        is_trig = "trigonometr" in skill_lower or "trig" in skill_lower
+        if is_trig:
+            q["assessments"] = [a for a in (q.get("assessments") or NO_89_TAGS) if a != "PSAT 8/9"] or list(NO_89_TAGS)
+        elif not q.get("assessments"):
+            q["assessments"] = list(ALL_ASSESSMENT_TAGS)
+        else:
+            q["assessments"] = list(ALL_ASSESSMENT_TAGS)
+
     questions = (
         [dict(q) for q in authored]
         if args.no_shuffle
@@ -1549,9 +1603,15 @@ def main(argv=None):
     )
 
     errors, warnings = validate(questions, sources)
+    all_cards = list(FLASHCARDS) + [dict(c) for c in extra_cards]
+    seen_card_ids = set()
+    for c in all_cards:
+        if c.get("id") in seen_card_ids:
+            errors.append(f"flashcard {c.get('id')}: duplicate id")
+        seen_card_ids.add(c.get("id"))
     card_errors = [
         f"flashcard {c.get('id')}: missing front/back"
-        for c in FLASHCARDS
+        for c in all_cards
         if not (c.get("front") or "").strip() or not (c.get("back") or "").strip()
     ]
     resource_errors = [
@@ -1569,7 +1629,7 @@ def main(argv=None):
     print(f"questions        : {len(questions)}")
     print(f"  by section     : {by_section}")
     print(f"  by difficulty  : {by_difficulty}")
-    print(f"flashcards       : {len(FLASHCARDS)}")
+    print(f"flashcards       : {len(all_cards)}")
     print(f"resources        : {len(RESOURCES)}")
     print(f"sources          : {len(SOURCES)}")
     if warnings:
@@ -1586,7 +1646,7 @@ def main(argv=None):
     if args.check:
         return 0
 
-    written = write_outputs(questions, FLASHCARDS, RESOURCES)
+    written = write_outputs(questions, all_cards, RESOURCES)
     for label, path in written.items():
         print(f"wrote {label:<16} {path}")
     return 0

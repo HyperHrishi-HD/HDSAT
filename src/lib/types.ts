@@ -136,6 +136,8 @@ export interface TestModuleResult {
 export interface TestAttempt {
   id: string;
   assessment: string;
+  /** Saved simulations are `completed`; tests left through Exit keep `incomplete`. */
+  status?: 'completed' | 'incomplete';
   createdAt: string;
   modules: TestModuleResult[];
   rwEstimate: number | null;

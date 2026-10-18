@@ -17,3 +17,6 @@ venv/
 # Local PythonAnywhere MCP driver + credentials (never commit)
 .pa/
 hdsat-deploy.zip
+
+supabase/.temp/
+supabase/import/expansion/

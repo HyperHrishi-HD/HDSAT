@@ -8,16 +8,23 @@ import type {
 } from './types';
 
 /**
- * Digital SAT Suite structure, taken from the public College Board description:
- * Reading and Writing 27 items / 32 minutes per module, Math 22 items /
- * 35 minutes per module, two modules per section with the second module routed
- * by first-module performance. HDSAT scales module length and time down when the
- * available licensed bank cannot fill a module, and says so in the interface.
+ * Official Digital SAT Suite Test Specifications & Timing:
+ * - Total Duration: 134 minutes (plus a 10-minute break between sections).
+ * - Total Questions: 98 items (92 operational items used for scoring +
+ *   6 unscored experimental/pretest items randomly distributed: 2 per R&W module,
+ *   1 per Math module).
+ * - Section 1: Reading & Writing — 54 items, 64 min (Module 1: 27 Qs / 32 min, Module 2: 27 Qs / 32 min)
+ * - Section 2: Math — 44 items, 70 min (Module 1: 22 Qs / 35 min, Module 2: 22 Qs / 35 min)
  */
-export const SECTION_SPECS: Record<Section, { fullItems: number; fullMinutes: number }> = {
-  'Reading and Writing': { fullItems: 27, fullMinutes: 32 },
-  Math: { fullItems: 22, fullMinutes: 35 },
+export const SECTION_SPECS: Record<
+  Section,
+  { fullItems: number; fullMinutes: number; operationalItems: number; unscoredItems: number }
+> = {
+  'Reading and Writing': { fullItems: 27, fullMinutes: 32, operationalItems: 25, unscoredItems: 2 },
+  Math: { fullItems: 22, fullMinutes: 35, operationalItems: 21, unscoredItems: 1 },
 };
+
+export const SECTION_BREAK_MINUTES = 10;
 
 export const SECTION_ORDER: Section[] = ['Reading and Writing', 'Math'];
 
@@ -55,6 +62,8 @@ export interface ModulePlan {
   section: Section;
   tier: ModuleTier;
   questions: Question[];
+  /** IDs of the unscored experimental/pretest items in this module (2 in R&W, 1 in Math). */
+  unscoredQuestionIds: string[];
   targetItems: number;
   minutes: number;
 }
@@ -74,33 +83,432 @@ export interface TestPlan {
   sections: SectionPlan[];
   warnings: string[];
   seed: string;
+  breakMinutes: number;
 }
 
 export interface TestPlanOptions {
   assessment: Assessment | string;
   excludeReleasedPracticeSet?: boolean;
-  /** Maximum items per module; defaults to the real full-length module size. */
+  /** Maximum items per module; defaults to the real full-length module size (27 R&W / 22 Math). */
   itemCap?: number;
   seed?: string;
+  /**
+   * IDs the student has already attempted. Full-length simulations run in
+   * fresh-item mode: they draw only unseen items, repeating old ones solely
+   * when the leftover supply cannot fill every adaptive module.
+   */
+  seenQuestionIds?: Iterable<string>;
 }
 
-function pickByPreference(pool: Question[], count: number, preference: Difficulty[]): Question[] {
-  const buckets: Record<Difficulty, Question[]> = { Easy: [], Medium: [], Hard: [] };
-  pool.forEach((q) => buckets[q.difficulty].push(q));
-  const chosen: Question[] = [];
-  for (const difficulty of preference) {
-    while (chosen.length < count && buckets[difficulty].length > 0) {
-      chosen.push(buckets[difficulty].shift() as Question);
+/**
+ * PSAT/NMSQT and PSAT 10 share one blueprint and one difficulty ceiling, so the
+ * full-length simulation blends them into a single track. Practice drills keep
+ * the original per-assessment labels.
+ */
+export const BLENDED_PSAT = 'PSAT/NMSQT & PSAT 10';
+
+const ASSESSMENT_ALIASES: Record<string, string[]> = {
+  [BLENDED_PSAT]: ['PSAT/NMSQT', 'PSAT 10'],
+};
+
+/** True when a bank item belongs to the selected assessment (or blended track). */
+export function assessmentMatches(question: Question, assessment: string): boolean {
+  const keys = ASSESSMENT_ALIASES[assessment] ?? [assessment];
+  return keys.some((key) => question.assessments.includes(key));
+}
+
+interface AssessmentDifficultyPolicy {
+  /** False excludes hard items from the assessment entirely (PSAT 8/9). */
+  hardAllowed: boolean;
+  /** Share of each module that may be Hard when hard items are allowed. */
+  maxHardShare: number;
+}
+
+const ASSESSMENT_DIFFICULTY: Record<string, AssessmentDifficultyPolicy> = {
+  SAT: { hardAllowed: true, maxHardShare: 1 },
+  [BLENDED_PSAT]: { hardAllowed: true, maxHardShare: 0.25 },
+  'PSAT/NMSQT': { hardAllowed: true, maxHardShare: 0.25 },
+  'PSAT 10': { hardAllowed: true, maxHardShare: 0.25 },
+  'PSAT 8/9': { hardAllowed: false, maxHardShare: 0 },
+};
+
+export function assessmentDifficultyPolicy(assessment: string): AssessmentDifficultyPolicy {
+  return ASSESSMENT_DIFFICULTY[assessment] ?? { hardAllowed: true, maxHardShare: 1 };
+}
+
+function maxHardForModule(assessment: string, target: number): number {
+  const policy = assessmentDifficultyPolicy(assessment);
+  if (!policy.hardAllowed) return 0;
+  return Math.max(0, Math.round(target * policy.maxHardShare));
+}
+
+/**
+ * Target difficulty mix by tier:
+ * - Module 1 (Routing): 30% Easy, 40% Medium, 30% Hard
+ * - Module 2 Lower (Easy/Medium): ~55% Easy, ~35% Medium, ~10% Hard
+ * - Module 2 Upper (Medium/Hard): ~10% Easy, ~45% Medium, ~45% Hard
+ */
+function tierDifficultyOrder(tier: ModuleTier, index: number, total: number): Difficulty[] {
+  const ratio = total <= 1 ? 0.5 : index / (total - 1);
+  if (tier === 'module1') {
+    if (ratio < 0.3) return ['Easy', 'Medium', 'Hard'];
+    if (ratio < 0.7) return ['Medium', 'Easy', 'Hard'];
+    return ['Hard', 'Medium', 'Easy'];
+  }
+  if (tier === 'lower') {
+    if (ratio < 0.55) return ['Easy', 'Medium', 'Hard'];
+    if (ratio < 0.9) return ['Medium', 'Easy', 'Hard'];
+    return ['Hard', 'Medium', 'Easy'];
+  }
+  // upper
+  if (ratio < 0.12) return ['Easy', 'Medium', 'Hard'];
+  if (ratio < 0.52) return ['Medium', 'Hard', 'Easy'];
+  return ['Hard', 'Medium', 'Easy'];
+}
+
+function takeMatching(
+  pool: Question[],
+  used: Set<string>,
+  predicate: (q: Question) => boolean,
+  preferredDiffs: Difficulty[]
+): Question | null {
+  for (const diff of preferredDiffs) {
+    const found = pool.find((q) => !used.has(q.id) && q.difficulty === diff && predicate(q));
+    if (found) {
+      used.add(found.id);
+      return found;
     }
   }
-  if (chosen.length < count) {
-    for (const difficulty of (['Easy', 'Medium', 'Hard'] as Difficulty[])) {
-      while (chosen.length < count && buckets[difficulty].length > 0) {
-        chosen.push(buckets[difficulty].shift() as Question);
+  const fallback = pool.find((q) => !used.has(q.id) && predicate(q));
+  if (fallback) {
+    used.add(fallback.id);
+    return fallback;
+  }
+  return null;
+}
+
+/**
+ * Exact 27-item Reading & Writing Module Blueprint:
+ * Domain 1: Craft and Structure (Items 1-7)
+ *   - Items 1-4: Words in Context (4)
+ *   - Items 5-6: Text Structure and Purpose (2)
+ *   - Item 7:    Cross-Text Connections (1)
+ * Domain 2: Information and Ideas (Items 8-13)
+ *   - Items 8-10:  Central Ideas and Details (3)
+ *   - Items 11-12: Command of Evidence (Textual or Quantitative) (2)
+ *   - Item 13:     Inferences (1)
+ * Domain 3: Standard English Conventions (Items 14-20)
+ *   - Items 14-17: Boundaries (4)
+ *   - Items 18-20: Form, Structure, and Sense (3)
+ * Domain 4: Expression of Ideas (Items 21-27)
+ *   - Items 21-23: Transitions (3)
+ *   - Items 24-27: Rhetorical Synthesis (4)
+ *
+ * Within each discrete domain subset, difficulty scales linearly from easier to
+ * harder, resetting when transitioning to the next domain.
+ *
+ * The four domain bands follow that order but are not frozen to the nominal
+ * 1-7 / 8-13 / 14-20 / 21-27 windows: adjacent bands may interleave by up to
+ * three items, so a domain can begin a few positions early (Information &
+ * Ideas starting around item 5-8) or trail a few positions late while the
+ * overall domain order is preserved. Skill order and intra-domain difficulty
+ * progression always survive the drift.
+ */
+const RW_BAND_JITTER_MAX = 3;
+
+/** Deterministic integer in [0, maxInclusive] derived from a seed string. */
+function seededInt(seed: string, maxInclusive: number): number {
+  return hashSeed(seed) % (maxInclusive + 1);
+}
+
+/**
+ * Lets two adjacent domain bands trade up to `RW_BAND_JITTER_MAX` items across
+ * their shared boundary. Each band's items keep their relative order, so the
+ * canonical domain order, per-domain skill order, and intra-domain difficulty
+ * curve all remain intact while the visible band edges drift.
+ */
+function interleaveDomainBands(blocks: Question[][], seed: string): Question[] {
+  const flat = blocks.flat();
+  const offsets: number[] = [0];
+  blocks.forEach((block) => offsets.push(offsets[offsets.length - 1] + block.length));
+
+  for (let i = 0; i < blocks.length - 1; i += 1) {
+    const k = seededInt(`${seed}:band:${i}`, RW_BAND_JITTER_MAX);
+    if (k === 0) continue;
+    const earlier = blocks[i];
+    const later = blocks[i + 1];
+    if (earlier.length < k || later.length < k) continue;
+    const boundary = offsets[i + 1];
+    const earlierTail = flat.slice(boundary - k, boundary);
+    const laterHead = flat.slice(boundary, boundary + k);
+    flat.splice(boundary - k, k * 2, ...laterHead, ...earlierTail);
+  }
+
+  return flat;
+}
+interface RwSlotSpec {
+  domain: string;
+  skillMatch: (skill: string) => boolean;
+  count: number;
+}
+
+const RW_BLUEPRINT_SLOTS: RwSlotSpec[] = [
+  { domain: 'Craft and Structure', skillMatch: (s) => s === 'Words in Context', count: 4 },
+  { domain: 'Craft and Structure', skillMatch: (s) => s === 'Text Structure and Purpose', count: 2 },
+  { domain: 'Craft and Structure', skillMatch: (s) => s === 'Cross-Text Connections', count: 1 },
+  { domain: 'Information and Ideas', skillMatch: (s) => s === 'Central Ideas and Details', count: 3 },
+  {
+    domain: 'Information and Ideas',
+    skillMatch: (s) => s.startsWith('Command of Evidence'),
+    count: 2,
+  },
+  { domain: 'Information and Ideas', skillMatch: (s) => s === 'Inferences', count: 1 },
+  { domain: 'Standard English Conventions', skillMatch: (s) => s === 'Boundaries', count: 4 },
+  {
+    domain: 'Standard English Conventions',
+    skillMatch: (s) => s === 'Form, Structure, and Sense',
+    count: 3,
+  },
+  { domain: 'Expression of Ideas', skillMatch: (s) => s === 'Transitions', count: 3 },
+  { domain: 'Expression of Ideas', skillMatch: (s) => s === 'Rhetorical Synthesis', count: 4 },
+];
+
+const RW_DOMAIN_SEQUENCE = [
+  'Craft and Structure',
+  'Information and Ideas',
+  'Standard English Conventions',
+  'Expression of Ideas',
+] as const;
+
+const RW_SKILL_RANK: Record<string, number> = {
+  'Words in Context': 0,
+  'Text Structure and Purpose': 1,
+  'Cross-Text Connections': 2,
+  'Central Ideas and Details': 3,
+  'Command of Evidence (Textual)': 4,
+  'Command of Evidence (Quantitative)': 4,
+  Inferences: 5,
+  Boundaries: 6,
+  'Form, Structure, and Sense': 7,
+  Transitions: 8,
+  'Rhetorical Synthesis': 9,
+};
+
+function buildRwModuleQuestions(
+  pool: Question[],
+  used: Set<string>,
+  tier: ModuleTier,
+  target: number,
+  seed: string,
+  maxHard = Number.POSITIVE_INFINITY
+): Question[] {
+  let hardPicked = 0;
+  const withinHardCap = (q: Question) => q.difficulty !== 'Hard' || hardPicked < maxHard;
+  const prefsFor = (index: number, total: number): Difficulty[] => {
+    const prefs = tierDifficultyOrder(tier, index, total);
+    return hardPicked >= maxHard ? prefs.filter((d) => d !== 'Hard') : prefs;
+  };
+
+  if (target < 27) {
+    // Scaled-down module when an explicit small itemCap is passed in unit tests
+    const picked: Question[] = [];
+    for (let i = 0; i < target; i += 1) {
+      const q = takeMatching(pool, used, withinHardCap, prefsFor(i, target));
+      if (q) {
+        if (q.difficulty === 'Hard') hardPicked += 1;
+        picked.push(q);
+      }
+    }
+    return orderModuleQuestions(picked, 'Reading and Writing');
+  }
+
+  // Group slots by domain so we can assign intra-domain difficulty curves
+  const byDomain = new Map<string, RwSlotSpec[]>();
+  for (const slot of RW_BLUEPRINT_SLOTS) {
+    const list = byDomain.get(slot.domain) ?? [];
+    list.push(slot);
+    byDomain.set(slot.domain, list);
+  }
+
+  const domainBlocks: Question[][] = [];
+  for (const domain of RW_DOMAIN_SEQUENCE) {
+    const slots = byDomain.get(domain) ?? [];
+    const domainTotal = slots.reduce((acc, s) => acc + s.count, 0);
+    const domainPicked: Question[] = [];
+    let idxInDomain = 0;
+
+    for (const slot of slots) {
+      const slotItems: Question[] = [];
+      for (let k = 0; k < slot.count; k += 1) {
+        const prefs = prefsFor(idxInDomain, domainTotal);
+        idxInDomain += 1;
+        // First try exact domain + skill, then any skill Match, then same domain, then any R&W item
+        const item =
+          takeMatching(
+            pool,
+            used,
+            (q) => withinHardCap(q) && q.domain === slot.domain && slot.skillMatch(q.skill),
+            prefs
+          ) ??
+          takeMatching(pool, used, (q) => withinHardCap(q) && slot.skillMatch(q.skill), prefs) ??
+          takeMatching(pool, used, (q) => withinHardCap(q) && q.domain === slot.domain, prefs) ??
+          takeMatching(pool, used, withinHardCap, prefs);
+        if (item) {
+          if (item.difficulty === 'Hard') hardPicked += 1;
+          // Ensure the item carries the canonical blueprint domain for this slot
+          slotItems.push(item.domain === slot.domain ? item : { ...item, domain: slot.domain });
+        }
+      }
+      domainPicked.push(...slotItems);
+    }
+
+    // Within each discrete domain subset, sort by ascending difficulty while preserving
+    // the exact skill sequence (Items 1-4 WIC, 5-6 TSP, 7 CTC, etc.)
+    const orderedDomain = domainPicked
+      .map((q, idx) => ({ q, idx }))
+      .sort((a, b) => {
+        const skA = RW_SKILL_RANK[a.q.skill] ?? 99;
+        const skB = RW_SKILL_RANK[b.q.skill] ?? 99;
+        if (skA !== skB) return skA - skB;
+        const dA = DIFFICULTY_WEIGHT[a.q.difficulty] ?? 1;
+        const dB = DIFFICULTY_WEIGHT[b.q.difficulty] ?? 1;
+        if (dA !== dB) return dA - dB;
+        return a.idx - b.idx;
+      })
+      .map(({ q }) => q);
+
+    domainBlocks.push(orderedDomain);
+  }
+
+  return interleaveDomainBands(domainBlocks, seed);
+}
+
+/**
+ * Exact 22-item Math Module Blueprint:
+ * 1. Content Distribution Matrix:
+ *    - Algebra (~35% / 8 items)
+ *    - Advanced Math (~35% / 7 items)
+ *    - Problem-Solving and Data Analysis (~15% / 4 items)
+ *    - Geometry and Trigonometry (~15% / 3 items; trigonometry excluded on PSAT 8/9)
+ * 2. Format Intermingling:
+ *    - ~75% Multiple-Choice (16–17 items) and ~25% SPR (5–6 items), intermixed across the module.
+ * 3. Linear Difficulty Curve:
+ *    - Items 1 through 22 arranged in a single continuous progression of ascending
+ *      difficulty (Easy -> Medium -> Hard) with no format-based or domain-based reset.
+ */
+const MATH_DOMAIN_QUOTAS: { domain: string; count: number }[] = [
+  { domain: 'Algebra', count: 8 },
+  { domain: 'Advanced Math', count: 7 },
+  { domain: 'Problem-Solving and Data Analysis', count: 4 },
+  { domain: 'Geometry and Trigonometry', count: 3 },
+];
+
+const TARGET_MATH_SPR_COUNT = 5; // ~23-25% of 22 (17 MC + 5 SPR)
+
+function isTrigQuestion(q: Question): boolean {
+  const s = `${q.skill} ${q.prompt} ${q.stimulus ?? ''}`.toLowerCase();
+  return (
+    s.includes('trigonometr') ||
+    s.includes('\\sin') ||
+    s.includes('\\cos') ||
+    s.includes('\\tan') ||
+    s.includes('sine') ||
+    s.includes('cosine')
+  );
+}
+
+function buildMathModuleQuestions(
+  pool: Question[],
+  used: Set<string>,
+  tier: ModuleTier,
+  target: number,
+  assessment: string,
+  maxHard = Number.POSITIVE_INFINITY
+): Question[] {
+  const filteredPool =
+    assessment === 'PSAT 8/9' ? pool.filter((q) => !isTrigQuestion(q)) : pool;
+  const hardCap = Number.isFinite(maxHard) ? maxHard : Number.MAX_SAFE_INTEGER;
+
+  if (target < 22) {
+    const picked: Question[] = [];
+    let hardPicked = 0;
+    for (let i = 0; i < target; i += 1) {
+      const prefs = tierDifficultyOrder(tier, i, target).filter(
+        (d) => d !== 'Hard' || hardPicked < hardCap
+      );
+      const q = takeMatching(
+        filteredPool,
+        used,
+        (item) => item.difficulty !== 'Hard' || hardPicked < hardCap,
+        prefs
+      );
+      if (q) {
+        if (q.difficulty === 'Hard') hardPicked += 1;
+        picked.push(q);
+      }
+    }
+    return orderModuleQuestions(picked, 'Math');
+  }
+
+  // Target difficulty counts for the 22-question module:
+  // Module 1: 30% Easy (7), 40% Medium (9), 30% Hard (6) = 22
+  // Lower:    12 Easy, 8 Medium, 2 Hard = 22
+  // Upper:    2 Easy, 10 Medium, 10 Hard = 22
+  // When the assessment caps hard items (PSAT/NMSQT & PSAT 10 at 25%), the
+  // trimmed hard slots are reassigned to Medium so the module still fills.
+  const baseHard = tier === 'module1' ? 6 : tier === 'lower' ? 2 : 10;
+  const hardCount = Math.min(baseHard, hardCap);
+  const hardDeficit = baseHard - hardCount;
+  const diffTargets: Record<Difficulty, number> =
+    tier === 'module1'
+      ? { Easy: 7, Medium: 9 + hardDeficit, Hard: hardCount }
+      : tier === 'lower'
+      ? { Easy: 12, Medium: 8 + hardDeficit, Hard: hardCount }
+      : { Easy: 2, Medium: 10 + hardDeficit, Hard: hardCount };
+
+  const diffRemaining: Record<Difficulty, number> = { ...diffTargets };
+  let sprRemaining = TARGET_MATH_SPR_COUNT;
+  let mcRemaining = target - TARGET_MATH_SPR_COUNT;
+
+  const picked: Question[] = [];
+
+  for (const { domain, count } of MATH_DOMAIN_QUOTAS) {
+    for (let i = 0; i < count; i += 1) {
+      // Decide desired format for this pick to keep ~75% MC / ~25% SPR balanced across domains
+      const wantSpr = sprRemaining > 0 && (i % 4 === 1 || mcRemaining <= 0);
+      const desiredFormat = wantSpr ? 'spr' : 'multiple_choice';
+
+      // Order difficulties by which bucket still needs the most items
+      const sortedDiffs = (['Easy', 'Medium', 'Hard'] as Difficulty[]).sort(
+        (a, b) => diffRemaining[b] - diffRemaining[a]
+      );
+
+      const q =
+        takeMatching(
+          filteredPool,
+          used,
+          (item) => item.domain === domain && item.format === desiredFormat,
+          sortedDiffs
+        ) ??
+        takeMatching(filteredPool, used, (item) => item.domain === domain, sortedDiffs) ??
+        takeMatching(filteredPool, used, () => true, sortedDiffs);
+
+      if (q) {
+        picked.push(q);
+        diffRemaining[q.difficulty] = Math.max(0, diffRemaining[q.difficulty] - 1);
+        if (q.format === 'spr') sprRemaining = Math.max(0, sprRemaining - 1);
+        else mcRemaining = Math.max(0, mcRemaining - 1);
       }
     }
   }
-  return chosen;
+
+  return orderModuleQuestions(picked, 'Math');
+}
+
+function pickUnscoredIds(questions: Question[], count: number, seed: string): string[] {
+  if (questions.length <= count) return [];
+  const shuffled = seededShuffle(questions, `${seed}:unscored`);
+  return shuffled.slice(0, count).map((q) => q.id);
 }
 
 function buildModulePlan(
@@ -108,13 +516,17 @@ function buildModulePlan(
   tier: ModuleTier,
   questions: Question[],
   targetItems: number,
-  minutes: number
+  minutes: number,
+  seed: string
 ): ModulePlan {
+  const spec = SECTION_SPECS[section];
+  const unscoredCount = questions.length >= spec.fullItems ? spec.unscoredItems : 0;
   return {
     id: `${section === 'Math' ? 'math' : 'rw'}-${tier}`,
     section,
     tier,
     questions,
+    unscoredQuestionIds: pickUnscoredIds(questions, unscoredCount, `${seed}:${section}:${tier}`),
     targetItems,
     minutes,
   };
@@ -124,31 +536,64 @@ export function buildTestPlan(all: Question[], options: TestPlanOptions): TestPl
   const seed = options.seed ?? 'hdsat-test';
   const warnings: string[] = [];
   const sections: SectionPlan[] = [];
+  const assessmentStr = String(options.assessment);
+  const difficultyPolicy = assessmentDifficultyPolicy(assessmentStr);
+  const seen = new Set(options.seenQuestionIds ?? []);
 
   for (const section of SECTION_ORDER) {
     const spec = SECTION_SPECS[section];
     const target = Math.max(4, Math.min(spec.fullItems, options.itemCap ?? spec.fullItems));
-    const pool = seededShuffle(
-      all.filter(
-        (q) =>
-          q.section === section &&
-          q.assessments.includes(options.assessment) &&
-          !(options.excludeReleasedPracticeSet && q.is_released_practice_set)
-      ),
-      `${seed}:${section}`
+    const maxHard = maxHardForModule(assessmentStr, target);
+    const eligible = all.filter(
+      (q) =>
+        q.section === section &&
+        assessmentMatches(q, assessmentStr) &&
+        (difficultyPolicy.hardAllowed || q.difficulty !== 'Hard') &&
+        !(options.excludeReleasedPracticeSet && q.is_released_practice_set) &&
+        !(assessmentStr === 'PSAT 8/9' && section === 'Math' && isTrigQuestion(q))
     );
 
-    const module1 = pickByPreference(pool, target, ['Medium', 'Easy', 'Hard']);
-    const used = new Set(module1.map((q) => q.id));
-    const remaining = pool.filter((q) => !used.has(q.id));
-
-    const upper = pickByPreference(remaining, target, ['Hard', 'Medium', 'Easy']);
-    const usedUpper = new Set(upper.map((q) => q.id));
-    const lower = pickByPreference(
-      remaining.filter((q) => !usedUpper.has(q.id)),
-      target,
-      ['Easy', 'Medium', 'Hard']
+    // Fresh-item mode: a full run needs target * 3 unique items (module 1 plus
+    // whichever routed module is used). Draw only unseen items while the supply
+    // allows it, then fall back to repeats with a transparent warning.
+    const needed = target * 3;
+    const unseen = eligible.filter((q) => !seen.has(q.id));
+    const repeated = eligible.filter((q) => seen.has(q.id));
+    let poolSources: Question[][];
+    if (seen.size === 0) {
+      poolSources = [eligible];
+    } else if (unseen.length >= needed) {
+      poolSources = [unseen];
+    } else {
+      warnings.push(
+        `${section}: fresh-item mode found only ${unseen.length} unanswered item(s) for this assessment, so ${Math.min(
+          repeated.length,
+          needed - unseen.length
+        )} previously attempted item(s) are repeated to fill the adaptive modules.`
+      );
+      poolSources = [unseen, repeated];
+    }
+    const pool = poolSources.flatMap((source, idx) =>
+      seededShuffle(source, `${seed}:${section}:${idx}`)
     );
+
+    const usedM1 = new Set<string>();
+    const module1 =
+      section === 'Reading and Writing'
+        ? buildRwModuleQuestions(pool, usedM1, 'module1', target, `${seed}:${section}:module1`, maxHard)
+        : buildMathModuleQuestions(pool, usedM1, 'module1', target, assessmentStr, maxHard);
+
+    const usedUpper = new Set<string>(usedM1);
+    const upper =
+      section === 'Reading and Writing'
+        ? buildRwModuleQuestions(pool, usedUpper, 'upper', target, `${seed}:${section}:upper`, maxHard)
+        : buildMathModuleQuestions(pool, usedUpper, 'upper', target, assessmentStr, maxHard);
+
+    const usedLower = new Set<string>(usedUpper);
+    const lower =
+      section === 'Reading and Writing'
+        ? buildRwModuleQuestions(pool, usedLower, 'lower', target, `${seed}:${section}:lower`, maxHard)
+        : buildMathModuleQuestions(pool, usedLower, 'lower', target, assessmentStr, maxHard);
 
     const coverageRatio = module1.length / target;
     const minutesFor = (items: number) =>
@@ -171,13 +616,20 @@ export function buildTestPlan(all: Question[], options: TestPlanOptions): TestPl
       section,
       availableItems: pool.length,
       targetItems: target,
-      module1: buildModulePlan(section, 'module1', module1, target, minutesFor(module1.length)),
-      upper: buildModulePlan(section, 'upper', upper, target, minutesFor(upper.length)),
-      lower: buildModulePlan(section, 'lower', lower, target, minutesFor(lower.length)),
+      module1: buildModulePlan(section, 'module1', module1, target, minutesFor(module1.length), seed),
+      upper: buildModulePlan(section, 'upper', upper, target, minutesFor(upper.length), seed),
+      lower: buildModulePlan(section, 'lower', lower, target, minutesFor(lower.length), seed),
     });
   }
 
-  return { assessment: String(options.assessment), createdAt: new Date().toISOString(), sections, warnings, seed };
+  return {
+    assessment: assessmentStr,
+    createdAt: new Date().toISOString(),
+    sections,
+    warnings,
+    seed,
+    breakMinutes: SECTION_BREAK_MINUTES,
+  };
 }
 
 export function routeModule(module1Correct: number, module1Total: number): 'upper' | 'lower' {
@@ -185,11 +637,63 @@ export function routeModule(module1Correct: number, module1Total: number): 'uppe
   return module1Correct / module1Total >= ROUTING_THRESHOLD ? 'upper' : 'lower';
 }
 
+/* ------------------------------------------------------------------------
+ * Module flow ordering:
+ * - Reading & Writing: canonical 4-domain sequence whose band boundaries may
+ *   drift by up to three items (see interleaveDomainBands):
+ *     0: Craft and Structure (Words in Context -> Text Structure and Purpose -> Cross-Text Connections)
+ *     1: Information and Ideas (Central Ideas and Details -> Command of Evidence -> Inferences)
+ *     2: Standard English Conventions (Boundaries -> Form, Structure, and Sense)
+ *     3: Expression of Ideas (Transitions -> Rhetorical Synthesis)
+ *   Within each discrete domain/skill group, difficulty scales Easy -> Medium -> Hard.
+ * - Math: continuous linear difficulty progression from Item 1 (Easiest) to Item 22 (Hardest)
+ *   across the entire module, with domains and MC/SPR formats intermixed.
+ * --------------------------------------------------------------------- */
+
+export const RW_DOMAIN_ORDER: Record<string, number> = {
+  'Craft and Structure': 0,
+  'Information and Ideas': 1,
+  'Standard English Conventions': 2,
+  'Expression of Ideas': 3,
+};
+
+const DIFFICULTY_ORDER: Record<Difficulty, number> = { Easy: 0, Medium: 1, Hard: 2 };
+
+export function orderModuleQuestions(questions: Question[], section: Section): Question[] {
+  if (section === 'Reading and Writing') {
+    return questions
+      .map((q, i) => ({ q, i }))
+      .sort((a, b) => {
+        const dA = RW_DOMAIN_ORDER[a.q.domain] ?? 1;
+        const dB = RW_DOMAIN_ORDER[b.q.domain] ?? 1;
+        if (dA !== dB) return dA - dB;
+        const sA = RW_SKILL_RANK[a.q.skill] ?? 99;
+        const sB = RW_SKILL_RANK[b.q.skill] ?? 99;
+        if (sA !== sB) return sA - sB;
+        const diffA = DIFFICULTY_ORDER[a.q.difficulty] ?? 1;
+        const diffB = DIFFICULTY_ORDER[b.q.difficulty] ?? 1;
+        if (diffA !== diffB) return diffA - diffB;
+        return a.i - b.i;
+      })
+      .map(({ q }) => q);
+  }
+
+  // Math: continuous linear difficulty progression Easy -> Medium -> Hard across all 22 items
+  return questions
+    .map((q, i) => ({ q, i }))
+    .sort((a, b) => {
+      const diffA = DIFFICULTY_ORDER[a.q.difficulty] ?? 1;
+      const diffB = DIFFICULTY_ORDER[b.q.difficulty] ?? 1;
+      if (diffA !== diffB) return diffA - diffB;
+      return a.i - b.i;
+    })
+    .map(({ q }) => q);
+}
+
 /**
- * HDSAT scaled-score estimate. Both sections are reported on the real SAT
- * 200-800 scale; the value is derived from accuracy plus the difficulty tier the
- * student was routed to. It is an HDSAT practice estimate, not an official
- * College Board score.
+ * HDSAT scaled-score estimate (200-800 per section).
+ * Routing to the lower-difficulty Module 2 caps the maximum achievable scaled score,
+ * whereas routing to the upper-difficulty Module 2 unlocks the highest scaled scores (up to 800).
  */
 export function estimateScaledScore(
   tier: 'upper' | 'lower',
@@ -201,7 +705,8 @@ export function estimateScaledScore(
   let score = 200 + 600 * accuracy;
   const tierBoost = tier === 'upper' ? (accuracy >= 0.5 ? 40 : -10) : accuracy >= 0.5 ? -30 : -60;
   score += tierBoost;
-  const clamped = Math.max(200, Math.min(800, score));
+  const maxCap = tier === 'lower' ? 620 : 800;
+  const clamped = Math.max(200, Math.min(maxCap, score));
   return Math.round(clamped / 10) * 10;
 }
 
@@ -262,6 +767,13 @@ export function filterQuestions(
   const savedSet = new Set(savedIds);
   return all.filter((q) => {
     if (filters.assessment && !q.assessments.includes(String(filters.assessment))) return false;
+    if (
+      filters.assessment === 'PSAT 8/9' &&
+      q.section === 'Math' &&
+      isTrigQuestion(q)
+    ) {
+      return false;
+    }
     if (filters.section && filters.section !== 'all' && q.section !== filters.section) return false;
     if (filters.domain && filters.domain !== 'all' && q.domain !== filters.domain) return false;
     if (filters.difficulty && filters.difficulty !== 'all' && q.difficulty !== filters.difficulty) return false;
@@ -284,7 +796,6 @@ export function buildPracticeSession(
     pool = pool.filter((q) => q.format === options.format);
   }
   const ordered = seededShuffle(pool, options.seed ?? `practice:${Date.now()}`);
-  // Balance sections when both are requested so a mixed session is not all one section.
   if (!filters.section || filters.section === 'all') {
     const rw = ordered.filter((q) => q.section === 'Reading and Writing');
     const math = ordered.filter((q) => q.section === 'Math');

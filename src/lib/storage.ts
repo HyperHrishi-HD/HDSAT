@@ -19,10 +19,13 @@ import type {
  * history produces the same coins, streaks and mastery states after sync.
  */
 export const STORAGE_KEY = 'hdsat.profile.v1';
+export const PENDING_ACCOUNT_KEY = 'hdsat.pending-account.v1';
+export const WELCOME_SEEN_KEY = 'hdsat.welcome-seen.v1';
 export const DAILY_QUESTION_COIN_CAP = 60;
 export const DAILY_FLASHCARD_COIN_CAP = 15;
 const PROFILE_VERSION = 1;
 const MAX_LOCAL_ATTEMPTS = 2000;
+const MAX_LOCAL_TESTS = 2000;
 
 export function todayKey(date: Date = new Date()): string {
   const year = date.getFullYear();
@@ -105,7 +108,7 @@ export function saveProfile(profile: LocalProfile): void {
     const trimmed: LocalProfile = {
       ...profile,
       attempts: profile.attempts.slice(-MAX_LOCAL_ATTEMPTS),
-      testAttempts: profile.testAttempts.slice(-50),
+      testAttempts: profile.testAttempts.slice(-MAX_LOCAL_TESTS),
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
   } catch {
@@ -116,6 +119,62 @@ export function saveProfile(profile: LocalProfile): void {
 export function clearProfile(): void {
   if (typeof localStorage === 'undefined') return;
   localStorage.removeItem(STORAGE_KEY);
+}
+
+/**
+ * An account created with a password but not yet email-confirmed. The student
+ * keeps practising on this device; the address is remembered so the app can
+ * explain that cloud sync and the cloud coin balance start after confirmation.
+ */
+export interface PendingAccount {
+  email: string;
+  displayName: string;
+  createdAt: string;
+}
+
+export function loadPendingAccount(): PendingAccount | null {
+  if (typeof localStorage === 'undefined') return null;
+  try {
+    const raw = localStorage.getItem(PENDING_ACCOUNT_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as Partial<PendingAccount>;
+    if (!parsed.email) return null;
+    return {
+      email: String(parsed.email),
+      displayName: String(parsed.displayName ?? 'Student'),
+      createdAt: String(parsed.createdAt ?? new Date().toISOString()),
+    };
+  } catch {
+    return null;
+  }
+}
+
+export function savePendingAccount(account: PendingAccount): void {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(PENDING_ACCOUNT_KEY, JSON.stringify(account));
+  } catch {
+    /* storage unavailable: the in-memory state still explains the situation */
+  }
+}
+
+export function clearPendingAccount(): void {
+  if (typeof localStorage === 'undefined') return;
+  localStorage.removeItem(PENDING_ACCOUNT_KEY);
+}
+
+export function hasSeenWelcome(): boolean {
+  if (typeof localStorage === 'undefined') return true;
+  return Boolean(localStorage.getItem(WELCOME_SEEN_KEY));
+}
+
+export function markWelcomeSeen(): void {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(WELCOME_SEEN_KEY, new Date().toISOString());
+  } catch {
+    /* ignore quota errors */
+  }
 }
 
 function withDay(profile: LocalProfile, date: string): LocalProfile {

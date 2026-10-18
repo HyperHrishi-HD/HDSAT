@@ -19,6 +19,18 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 DIST_DIR = ROOT_DIR / "dist"
 DATA_DIR = ROOT_DIR / "src" / "data"
 
+# Compliance defaults surfaced by /api/legal so the published policies can be
+# audited from the running deployment without reading the bundle.
+LEGAL_VERSION = os.environ.get("HDSAT_LEGAL_VERSION", "1.0")
+MIN_AGE = 13
+APPEAL_SLA_HOURS = 72
+POLICY_PATHS = {
+    "terms": "/#/terms",
+    "privacy": "/#/privacy",
+    "copyright": "/#/copyright",
+    "appeals": "/#/account",
+}
+
 
 def _load_json(path: Path, default: Any) -> Any:
     if not path.exists():
@@ -38,7 +50,35 @@ def create_app() -> Flask:
         response.headers.setdefault("X-Content-Type-Options", "nosniff")
         response.headers.setdefault("X-Frame-Options", "SAMEORIGIN")
         response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
+        response.headers.setdefault(
+            "Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
+        )
+        response.headers.setdefault("X-Permitted-Cross-Domain-Policies", "none")
+        response.headers.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
+        if response.mimetype == "application/json":
+            # Student data and configuration must never be cached by proxies.
+            response.headers.setdefault("Cache-Control", "no-store")
         return response
+
+    @app.get("/api/legal")
+    def api_legal():
+        """Public compliance metadata: policy version, paths and age policy."""
+        return jsonify(
+            {
+                "site_name": os.environ.get("HDSAT_SITE_NAME", "HDSAT"),
+                "legal_version": LEGAL_VERSION,
+                "min_age": MIN_AGE,
+                "appeal_sla_hours": APPEAL_SLA_HOURS,
+                "policies": POLICY_PATHS,
+                "support_email": os.environ.get("VITE_SUPPORT_EMAIL", ""),
+                "under_13_accounts_allowed": False,
+                "guardian_consent_required_under_18": True,
+                "self_serve_data_export": True,
+                "self_serve_account_deletion": True,
+                "advertising_trackers": False,
+                "sells_personal_data": False,
+            }
+        )
 
     @app.get("/api/health")
     def api_health():

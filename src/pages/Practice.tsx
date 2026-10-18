@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { FigureView, StimulusView } from '../components/FigureView';
 import { CalculatorPanel, MathReferenceSheet } from '../components/MathTools';
 import { MathText } from '../components/MathText';
 import { QuestionView, type Feedback } from '../components/QuestionView';
@@ -710,9 +711,10 @@ export function PracticePage() {
                       <Badge tone="info">{q.section}</Badge>
                       <Badge>{q.domain}</Badge>
                     </div>
+                    <FigureView question={q} />
                     {q.stimulus ? (
                       <div className="stimulus">
-                        <MathText text={q.stimulus} />
+                        <StimulusView stimulus={q.stimulus} />
                       </div>
                     ) : null}
                     <div className="prompt">

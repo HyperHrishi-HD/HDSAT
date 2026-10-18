@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import { FigureView, StimulusView } from './FigureView';
 import { MathText } from './MathText';
+import { ReportQuestion } from './ReportQuestion';
 import { Badge, Button } from './ui';
 import type { Question } from '../lib/types';
 
@@ -52,10 +54,20 @@ export function QuestionView({
           {showMeta ? (
             <>
               <Badge tone="info">{question.section === 'Math' ? 'Math' : 'Reading & Writing'}</Badge>
-              <Badge tone={question.difficulty === 'Hard' ? 'bad' : question.difficulty === 'Medium' ? 'warn' : 'good'}>
+              <Badge
+                tone={
+                  question.difficulty === 'Hard'
+                    ? 'bad'
+                    : question.difficulty === 'Medium'
+                    ? 'warn'
+                    : 'good'
+                }
+              >
                 {question.difficulty}
               </Badge>
-              <Badge>{question.format === 'spr' ? 'Student-produced response' : 'Multiple choice'}</Badge>
+              <Badge>
+                {question.format === 'spr' ? 'Student-produced response' : 'Multiple choice'}
+              </Badge>
             </>
           ) : null}
         </div>
@@ -71,39 +83,11 @@ export function QuestionView({
         ) : null}
       </header>
 
+      <FigureView question={question} />
+
       {question.stimulus ? (
         <div className="stimulus">
-          <MathText text={question.stimulus} />
-        </div>
-      ) : null}
-
-      {question.figure_metadata &&
-      typeof question.figure_metadata === 'object' &&
-      (question.figure_metadata as { type?: string }).type === 'table' ? (
-        <div className="muted-block" style={{ marginBottom: 12, overflowX: 'auto' }}>
-          {(question.figure_metadata as { caption?: string }).caption ? (
-            <div className="muted" style={{ fontWeight: 600, marginBottom: 6 }}>
-              {(question.figure_metadata as { caption?: string }).caption}
-            </div>
-          ) : null}
-          <table>
-            <thead>
-              <tr>
-                {((question.figure_metadata as { headers?: string[] }).headers ?? []).map((h, i) => (
-                  <th key={i}>{h}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {((question.figure_metadata as { rows?: string[][] }).rows ?? []).map((r, ri) => (
-                <tr key={ri}>
-                  {r.map((cell, ci) => (
-                    <td key={ci}>{cell}</td>
-                  ))}
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <StimulusView stimulus={question.stimulus} />
         </div>
       ) : null}
 
@@ -167,20 +151,30 @@ export function QuestionView({
             aria-label="Your answer"
           />
           <p className="field-hint">
-            Fractions such as 3/4 and decimals such as 0.75 are both accepted when they are equivalent.
+            Fractions such as 3/4 and decimals such as 0.75 are both accepted when they are
+            equivalent.
           </p>
         </div>
       )}
 
       {feedback ? (
         <div className={`feedback${feedback.isCorrect ? ' is-correct' : ' is-incorrect'}`}>
-          <strong>{feedback.isCorrect ? 'Correct' : `Not quite. Correct answer: ${feedback.correctAnswer}`}</strong>
+          <strong>
+            {feedback.isCorrect ? 'Correct' : `Not quite. Correct answer: ${feedback.correctAnswer}`}
+          </strong>
           <p>
             <MathText text={feedback.explanation} />
           </p>
-          {feedback.distractorRationales && Object.keys(feedback.distractorRationales).length > 0 ? (
-            <button type="button" className="link-button" onClick={() => setShowRationales((value) => !value)}>
-              {showRationales ? 'Hide option-by-option explanations' : 'Show option-by-option explanations'}
+          {feedback.distractorRationales &&
+          Object.keys(feedback.distractorRationales).length > 0 ? (
+            <button
+              type="button"
+              className="link-button"
+              onClick={() => setShowRationales((value) => !value)}
+            >
+              {showRationales
+                ? 'Hide option-by-option explanations'
+                : 'Show option-by-option explanations'}
             </button>
           ) : null}
         </div>
@@ -200,8 +194,9 @@ export function QuestionView({
           {question.is_released_practice_set ? ' · benchmark simulation set' : ''}
         </span>
         <span>
-          {question.domain} · {question.skill}
+          {question.domain} · {question.skill} · <code>{question.id}</code>
         </span>
+        <ReportQuestion questionId={question.id} />
       </footer>
     </article>
   );

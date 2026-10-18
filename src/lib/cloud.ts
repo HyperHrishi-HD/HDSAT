@@ -72,12 +72,57 @@ export async function getUserId(): Promise<string | null> {
   return data.user?.id ?? null;
 }
 
-export async function signUp(email: string, password: string, displayName: string) {
+/**
+ * Where Supabase should send the confirmation link. The production URL is
+ * configured explicitly (VITE_SITE_URL) instead of being derived from the page
+ * origin, so a signup started on localhost never emails a link that only works
+ * on the developer's machine. The destination must also be present in the
+ * project's Redirect URLs allowlist (see supabase/email-templates/README.md).
+ */
+export function authRedirectUrl(): string {
+  const configured = String(import.meta.env.VITE_SITE_URL ?? '').trim().replace(/\/$/, '');
+  const origin = typeof window !== 'undefined' ? window.location.origin.replace(/\/$/, '') : '';
+  const target = configured || origin;
+  // Plain origin: Supabase appends its own #access_token / ?code payload, and
+  // main.tsx consumes it before the hash router sees it.
+  return `${target}/`;
+}
+
+/** True when Supabase has confirmed this address (cloud data may be written). */
+export function isConfirmedUser(user: { email_confirmed_at?: string | null; confirmed_at?: string | null } | null): boolean {
+  return Boolean(user && (user.email_confirmed_at || user.confirmed_at));
+}
+
+export async function signUp(
+  email: string,
+  password: string,
+  displayName: string,
+  consent: Record<string, string | boolean> = {}
+) {
   const supabase = client();
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
-    options: { data: { display_name: displayName || 'Student' } },
+    options: {
+      data: { display_name: displayName || 'Student', ...consent },
+      emailRedirectTo: authRedirectUrl(),
+    },
+  });
+  if (error) throw error;
+  return data;
+}
+
+/**
+ * Confirms a signup with the 6-digit token from the branded email. Works even
+ * when the confirmation link cannot open on this device, and signs the student
+ * in on success so their device-only practice can sync.
+ */
+export async function verifySignupCode(email: string, token: string) {
+  const supabase = client();
+  const { data, error } = await supabase.auth.verifyOtp({
+    email,
+    token: token.trim(),
+    type: 'signup',
   });
   if (error) throw error;
   return data;
@@ -98,7 +143,11 @@ export async function signOutCloud() {
 
 export async function resendConfirmation(email: string) {
   const supabase = client();
-  const { error } = await supabase.auth.resend({ type: 'signup', email });
+  const { error } = await supabase.auth.resend({
+    type: 'signup',
+    email,
+    options: { emailRedirectTo: authRedirectUrl() },
+  });
   if (error) throw error;
 }
 
@@ -119,9 +168,9 @@ export async function fetchSnapshot(): Promise<CloudSnapshot> {
         .from('test_attempts')
         .select('*')
         .eq('user_id', userId)
-        .eq('status', 'completed')
+        .in('status', ['completed', 'abandoned'])
         .order('completed_at', { ascending: false })
-        .limit(20),
+        .limit(1000),
       supabase.from('profiles').select('display_name, preferred_exam, unlocked_cosmetics').eq('user_id', userId).maybeSingle(),
     ]);
 
@@ -172,14 +221,20 @@ export async function fetchSnapshot(): Promise<CloudSnapshot> {
 
   const testAttempts: TestAttempt[] = (testsRes.data ?? []).map((row: Record<string, unknown>) => {
     const payload = (row.modules ?? {}) as { modules?: TestAttempt['modules'] };
+    const estimates = (row.estimated_score_range ?? {}) as {
+      rw?: number | null;
+      math?: number | null;
+      total?: number | null;
+    };
     return {
       id: String(row.id),
       assessment: String(row.assessment ?? 'SAT'),
+      status: String(row.status) === 'abandoned' ? 'incomplete' : 'completed',
       createdAt: String(row.completed_at ?? row.started_at ?? new Date().toISOString()),
       modules: Array.isArray(payload.modules) ? (payload.modules as TestAttempt['modules']) : [],
-      rwEstimate: null,
-      mathEstimate: null,
-      totalEstimate: null,
+      rwEstimate: estimates.rw ?? null,
+      mathEstimate: estimates.math ?? null,
+      totalEstimate: estimates.total ?? null,
       durationSeconds: Number(row.time_spent_seconds ?? 0),
     };
   });
@@ -318,9 +373,25 @@ export async function unsaveQuestionCloud(questionId: string) {
   if (error) throw error;
 }
 
+/**
+ * test_attempts.assessment is constrained by the database to the four official
+ * form names, so the blended full-test track is stored under its NMSQT key.
+ */
+export function toDbAssessment(assessment: string): string {
+  if (assessment.includes('PSAT/NMSQT') && assessment.includes('10')) return 'PSAT/NMSQT';
+  return ['SAT', 'PSAT/NMSQT', 'PSAT 10', 'PSAT 8/9'].includes(assessment)
+    ? assessment
+    : 'SAT';
+}
+
 export async function recordTestCloud(
   attempt: TestAttempt,
-  options: { clientSessionId: string; assessment: string; durationSeconds: number }
+  options: {
+    clientSessionId: string;
+    assessment: string;
+    durationSeconds: number;
+    status?: 'completed' | 'incomplete';
+  }
 ) {
   const supabase = client();
   const userId = await getUserId();
@@ -336,9 +407,9 @@ export async function recordTestCloud(
       {
         user_id: userId,
         client_session_id: options.clientSessionId,
-        assessment: options.assessment,
+        assessment: toDbAssessment(options.assessment),
         mode: 'full_adaptive',
-        status: 'completed',
+        status: options.status === 'incomplete' ? 'abandoned' : 'completed',
         modules: { modules: attempt.modules },
         rw_route: rwModules.some((m) => m.tier === 'upper') ? 'higher' : 'lower',
         math_route: mathModules.some((m) => m.tier === 'upper') ? 'higher' : 'lower',
@@ -438,4 +509,134 @@ export async function syncGuestProfile(
   }
 
   return { attempts, saved, flashcards, errors };
+}
+
+/* -------------------------------------------------------------------------
+ * Safety, content-quality and data-rights writes.
+ *
+ * These are the user-facing "failsafe" endpoints: report a bad question, send
+ * a safety/copyright/access appeal, export personal data, and delete an
+ * account. Reports and appeals are insert-only for the reporter and readable
+ * only by the reporter; only the operator (service role) can triage them.
+ * ---------------------------------------------------------------------- */
+
+/**
+ * True when PostgREST rejects a write because a column from the safety
+ * migration is not present in this project yet (PGRST204, schema cache miss).
+ */
+export function isMissingColumnError(message: string, column: string): boolean {
+  const text = String(message).toLowerCase();
+  return (
+    text.includes(column.toLowerCase()) &&
+    /pgrst204|could not find the|schema cache|column .* does not exist/.test(text)
+  );
+}
+
+/** True when a table from the safety migration is missing (PGRST205). */
+export function isMissingRelationError(message: string, relation: string): boolean {
+  const text = String(message).toLowerCase();
+  return (
+    text.includes(relation.toLowerCase()) &&
+    /pgrst205|could not find the table|schema cache|does not exist/.test(text)
+  );
+}
+
+/** True when a security-definer RPC from the safety migration is missing. */
+export function isMissingRoutineError(message: string, routine: string): boolean {
+  const text = String(message).toLowerCase();
+  return (
+    text.includes(routine.toLowerCase()) &&
+    /pgrst202|could not find the function|schema cache|does not exist/.test(text)
+  );
+}
+
+export async function reportQuestion(args: {
+  questionId: string;
+  reason: string;
+  details?: string;
+  contactEmail?: string;
+}): Promise<void> {
+  const supabase = client();
+  const userId = await getUserId();
+  const row = {
+    user_id: userId,
+    question_id: args.questionId,
+    reason: args.reason,
+    details: args.details?.trim() ? args.details.trim() : null,
+  };
+  const email = args.contactEmail?.trim();
+
+  if (email) {
+    const withEmail = await supabase
+      .from('question_reports')
+      .insert({ ...row, contact_email: email });
+    if (!withEmail.error) return;
+    // A project that has not yet run the safety migration has no contact_email
+    // column. The report itself is still valuable, so fall through and file it
+    // without the optional reply address instead of losing the report.
+    if (!isMissingColumnError(withEmail.error.message, 'contact_email')) {
+      throw withEmail.error;
+    }
+  }
+
+  const plain = await supabase.from('question_reports').insert(row);
+  if (plain.error) throw plain.error;
+}
+
+export async function submitAppeal(args: {
+  category: string;
+  subject: string;
+  details: string;
+  contactEmail?: string;
+}): Promise<string> {
+  const supabase = client();
+  const userId = await getUserId();
+  const { data, error } = await supabase
+    .from('user_appeals')
+    .insert({
+      user_id: userId,
+      contact_email: args.contactEmail?.trim() ? args.contactEmail.trim() : null,
+      category: args.category,
+      subject: args.subject.trim().slice(0, 200),
+      details: args.details.trim().slice(0, 8000),
+    })
+    .select('reference')
+    .single();
+  if (error) throw error;
+  return String((data as { reference: string }).reference);
+}
+
+/**
+ * Permanently deletes the signed-in account and every row that belongs to it.
+ * Runs as a SECURITY DEFINER RPC so the browser never needs elevated keys.
+ */
+export async function deleteMyAccount(): Promise<{ deleted: boolean; deleted_at: string }> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('delete_own_account');
+  if (error) {
+    if (isMissingRoutineError(error.message, 'delete_own_account')) {
+      throw new Error(
+        'Self-serve account deletion is not enabled on this deployment yet, so nothing was deleted. ' +
+          'Please file an appeal instead and we will delete your account for you.'
+      );
+    }
+    throw error;
+  }
+  await supabase.auth.signOut();
+  return data as { deleted: boolean; deleted_at: string };
+}
+
+export async function fetchMyReports(): Promise<
+  { id: string; question_id: string; reason: string; details: string | null; created_at: string }[]
+> {
+  const supabase = client();
+  const userId = await getUserId();
+  if (!userId) return [];
+  const { data, error } = await supabase
+    .from('question_reports')
+    .select('id, question_id, reason, details, created_at')
+    .order('created_at', { ascending: false })
+    .limit(25);
+  if (error) throw error;
+  return (data ?? []) as { id: string; question_id: string; reason: string; details: string | null; created_at: string }[];
 }

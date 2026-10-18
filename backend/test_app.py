@@ -40,6 +40,46 @@ def test_spa_root_and_client_route_fallback():
         assert b"HDSAT" in res.data
 
 
+def test_spa_fallback_covers_policy_routes():
+    app = create_app()
+    client = app.test_client()
+    for route in ["/terms", "/privacy", "/copyright"]:
+        res = client.get(route)
+        assert res.status_code == 200
+        assert b"HDSAT" in res.data
+
+
+def test_legal_endpoint_publishes_compliance_metadata():
+    app = create_app()
+    client = app.test_client()
+    res = client.get("/api/legal")
+    assert res.status_code == 200
+    data = res.get_json()
+    assert data["min_age"] == 13
+    assert data["under_13_accounts_allowed"] is False
+    assert data["guardian_consent_required_under_18"] is True
+    assert data["self_serve_account_deletion"] is True
+    assert data["self_serve_data_export"] is True
+    assert data["advertising_trackers"] is False
+    assert data["sells_personal_data"] is False
+    assert data["appeal_sla_hours"] > 0
+    assert set(data["policies"]) == {"terms", "privacy", "copyright", "appeals"}
+    assert data["legal_version"]
+
+
+def test_security_headers_present_on_all_responses():
+    app = create_app()
+    client = app.test_client()
+    for route in ["/", "/api/health", "/api/legal"]:
+        res = client.get(route)
+        assert res.headers["X-Content-Type-Options"] == "nosniff"
+        assert res.headers["X-Frame-Options"] == "SAMEORIGIN"
+        assert "camera=()" in res.headers["Permissions-Policy"]
+        assert res.headers["X-Permitted-Cross-Domain-Policies"] == "none"
+        assert res.headers["Strict-Transport-Security"].startswith("max-age=")
+    assert client.get("/api/health").headers["Cache-Control"] == "no-store"
+
+
 def test_unknown_api_route_returns_404():
     app = create_app()
     client = app.test_client()

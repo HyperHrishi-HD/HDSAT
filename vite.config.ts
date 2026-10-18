@@ -19,10 +19,11 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: false,
-    chunkSizeWarningLimit: 1200,
+    // The ~5,000-item bank inlines into the main chunk; gzip transfers a small fraction.
+    chunkSizeWarningLimit: 9500,
   },
   test: {
     environment: 'node',
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.ts', 'src/**/*.test.tsx'],
   },
 });
