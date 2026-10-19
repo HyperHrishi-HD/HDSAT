@@ -1,26 +1,37 @@
 # HDSAT confirmation email and auth URLs
 
-Supabase's project email templates and redirect allowlist live in the Supabase
-dashboard, not in this repository, so they have to be applied once by hand.
-Everything the app can control (the `emailRedirectTo` value, code verification,
-and the post-confirmation import) is already implemented.
+The app-side auth flow is implemented here; two project settings are managed in
+the Supabase dashboard. Site URL, the redirect allowlist and the six-digit OTP
+length have already been applied to the live project through the Management API.
+The branded template and reliable delivery still need a custom SMTP provider.
+
+**Why custom SMTP is required:** with Supabase's built-in email service, Auth
+refuses to deliver to addresses that are not on the project team, caps sending
+at `rate_limit_email_sent = 2`, and blocks template editing. Ordinary students
+will never receive a confirmation email until SMTP is configured.
 
 ## 1. Stop links from pointing at localhost
 
-Supabase Dashboard → **Authentication → URL Configuration**
+Already applied live:
 
 - **Site URL:** `https://hdsat.pythonanywhere.com`
-- **Redirect URLs** (add each on its own line):
-  - `https://hdsat.pythonanywhere.com/**`
-  - `http://localhost:5173/**` (Vite dev only)
-  - `http://localhost:3000/**` (if you use port 3000)
+- **Redirect URLs:** `https://hdsat.pythonanywhere.com/**`,
+  `http://localhost:3010/**`, `http://localhost:5173/**`,
+  `http://localhost:3000/**`
+- **Email OTP length:** 6 digits (matches the Account page input)
 
-The app now sends `emailRedirectTo=https://hdsat.pythonanywhere.com/`
+The app sends `emailRedirectTo=https://hdsat.pythonanywhere.com/`
 (`VITE_SITE_URL`), so new confirmation emails return to production. If the URL
-is missing from the allowlist, Supabase silently falls back to **Site URL**,
-which is exactly how the old localhost links were produced.
+is missing from the allowlist, Supabase silently falls back to **Site URL**.
 
-## 2. Send a branded HDSAT email
+## 2. Configure custom SMTP, then apply the branded email
+
+Configure a provider (Brevo's free tier allows 300 messages/day and a verified
+single sender) in Supabase Dashboard → **Project Settings → Auth → SMTP
+Settings**, or through the Management API. Once SMTP is saved, apply the
+template below; Supabase rejects template edits on the default email provider.
+
+## 3. Send a branded HDSAT email
 
 Supabase Dashboard → **Authentication → Email Templates → Confirm signup**
 
@@ -36,7 +47,7 @@ Also set **Authentication → SMTP Settings → Sender name** to `HDSAT`, and us
 `From` address on your own domain (for example `no-reply@hdsat.com`) so the
 sender line reads `HDSAT <no-reply@…>` instead of the Supabase default.
 
-## 3. Account behaviour before confirmation
+## 4. Account behaviour before confirmation
 
 - Sign-up creates the account immediately. Supabase does not issue a session
   until the address is confirmed, so the app records the pending address and

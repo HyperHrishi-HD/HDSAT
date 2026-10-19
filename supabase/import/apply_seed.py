@@ -30,7 +30,6 @@ import urllib.request
 ROOT = pathlib.Path(__file__).resolve().parents[2]
 PROJECT_REF = "qijfmwjcaminecxmbtcf"
 SEED = ROOT / "supabase" / "seed" / "0001_seed_hdsat.sql"
-ENV_FILE = ROOT / ".env"
 CREDENTIALS = ROOT / ".pa" / "supabase_credentials"
 
 OK = (200, 201, 204)
@@ -152,62 +151,75 @@ def split_sql(sql: str) -> list[str]:
     return statements
 
 
+TABLE_ORDER = ["dataset_sources", "questions", "flashcards", "question_keys"]
+INSERT_RE = re.compile(r"INSERT\s+INTO\s+public\.(\w+)", re.IGNORECASE)
+
+
+def table_of(statement: str) -> str:
+    match = INSERT_RE.search(statement)
+    return match.group(1).lower() if match else ""
+
+
+def order_statements(statements: list[str]) -> list[str]:
+    """Parents first. A dependent table must never share a batch with its parent:
+    a failed batch rolls back every statement in it, which previously lost the
+    questions that shared the failing question_keys batch."""
+    rank = {name: index for index, name in enumerate(TABLE_ORDER)}
+    return sorted(statements, key=lambda statement: rank.get(table_of(statement), len(TABLE_ORDER)))
+
+
 def batches(statements: list[str]) -> list[list[str]]:
     out: list[list[str]] = []
     current: list[str] = []
     size = 0
+    table = None
     for statement in statements:
         length = len(statement) + 2
-        if current and (len(current) >= BATCH_STATEMENTS or size + length > BATCH_BYTES):
+        statement_table = table_of(statement)
+        if current and (
+            len(current) >= BATCH_STATEMENTS
+            or size + length > BATCH_BYTES
+            or statement_table != table
+        ):
             out.append(current)
             current, size = [], 0
         current.append(statement)
+        table = statement_table
         size += length
     if current:
         out.append(current)
     return out
 
 
-def load_public_config() -> tuple[str, str]:
-    if not ENV_FILE.exists():
-        sys.exit("missing .env with VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY")
-    values: dict[str, str] = {}
-    for line in ENV_FILE.read_text(encoding="utf-8").splitlines():
-        line = line.strip()
-        if line and not line.startswith("#") and "=" in line:
-            key, _, value = line.partition("=")
-            values[key.strip()] = value.strip()
-    return values.get("VITE_SUPABASE_URL", ""), values.get("VITE_SUPABASE_ANON_KEY", "")
-
-
-def remote_count(base: str, key: str, table: str, column: str = "id") -> int | None:
-    request = urllib.request.Request(
-        f"{base.rstrip('/')}/rest/v1/{table}?select={column}",
-        headers={
-            "apikey": key,
-            "Authorization": f"Bearer {key}",
-            "Prefer": "count=exact",
-            "Range": "0-0",
-        },
+def sql_count(token: str, table: str) -> int | None:
+    """Count as the owner. PostgREST cannot read question_keys (RLS by design)."""
+    status, result = api(
+        token,
+        "POST",
+        f"/projects/{PROJECT_REF}/database/query",
+        {"query": f"SELECT count(*)::int AS n FROM public.{table}"},
     )
-    try:
-        with urllib.request.urlopen(request, timeout=60) as response:
-            content_range = response.headers.get("content-range", "")
-            return int(content_range.split("/")[-1]) if "/" in content_range else None
-    except (urllib.error.URLError, ValueError):
+    if status not in OK or not isinstance(result, list) or not result:
         return None
+    row = result[0]
+    if isinstance(row, dict):
+        return int(row.get("n", row.get("count", 0)))
+    return int(row[0]) if isinstance(row, list) and row else None
 
 
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--dry-run", action="store_true", help="show the batch plan only")
+    parser.add_argument("--verify-only", action="store_true", help="check live row counts only")
     args = parser.parse_args()
 
-    statements = [
-        statement
-        for statement in split_sql(SEED.read_text(encoding="utf-8"))
-        if statement.upper() not in {"BEGIN", "COMMIT"}
-    ]
+    statements = order_statements(
+        [
+            statement
+            for statement in split_sql(SEED.read_text(encoding="utf-8"))
+            if statement.upper() not in {"BEGIN", "COMMIT"}
+        ]
+    )
     plan = batches(statements)
     inserts = sum(1 for statement in statements if statement.upper().startswith("INSERT INTO"))
     print(f"seed statements: {len(statements)} ({inserts} inserts), batches: {len(plan)}")
@@ -217,6 +229,8 @@ def main() -> None:
         return
 
     token = load_token()
+    if args.verify_only:
+        plan = []
     for index, batch in enumerate(plan, 1):
         sql = ";\n".join(batch) + ";"
         status, result = api(
@@ -226,25 +240,18 @@ def main() -> None:
             sys.exit(f"batch {index} failed (HTTP {status}): {result}")
         print(f"  batch {index:02d}/{len(plan)} applied")
 
-    base, key = load_public_config()
-    targets = {
-        "questions": "id",
-        "flashcards": "id",
-        "question_keys": "question_id",
-    }
     failures = []
     print("live verification:")
-    for table, column in targets.items():
-        prefix = f"INSERT INTO PUBLIC.{table.upper()} "
-        minimum = sum(1 for statement in statements if statement.upper().startswith(prefix))
-        count = remote_count(base, key, table, column)
+    for table in ("questions", "flashcards", "question_keys"):
+        minimum = sum(1 for statement in statements if table_of(statement) == table)
+        count = sql_count(token, table)
         good = count is not None and count >= minimum
         print(f"  [{'PASS' if good else 'FAIL'}] {table} = {count} (expected at least {minimum})")
         if not good:
             failures.append(table)
     if failures:
         sys.exit(f"seed verification failed: {', '.join(failures)}")
-    print("SEED APPLIED AND VERIFIED")
+    print("SEED VERIFIED" if args.verify_only else "SEED APPLIED AND VERIFIED")
 
 
 if __name__ == "__main__":

@@ -45,23 +45,22 @@ Checks: `npm run typecheck`, `npm test` (Vitest), `npm run build`. Database seed
 4. **Simplify the site** — it is close, but several pages carry too much
    explanatory text; trim copy and let actions lead. Do not over-simplify the
    Bluebook runner or the data-rights/legal pages.
-5. **Catalog lag** — the Supabase `questions` table is seeded separately from
-   the bundled bank, so new items cannot sync until the seed is re-applied.
-   Measured on 2026-10-18: live table has **36** rows against **6,193** bundled
-   items, so nearly every cloud answer is skipped and test responses cannot be
-   stored. The client skips those writes and says so instead of failing the
-   whole save. Fix by re-running the seed with
-   `python supabase/import/apply_seed.py` (chunked; the old one-statement
-   fallback is what left the table at 36).
+5. **Catalog lag** — fixed and verified on 2026-10-18: the live `questions`
+   table now holds all **6,193** bundled ids, matching the bank exactly, plus
+   6,193 question keys and 1,764 flashcards. Use
+   `python supabase/import/apply_seed.py` after regenerating the bank; the old
+   one-statement fallback is what left the table at 36.
 
 ## Deployment notes
 
 - After regenerating the bank, apply `supabase/seed/0001_seed_hdsat.sql` so
   cloud attempts and test responses accept the new ids. Use
-  `python supabase/import/apply_seed.py` (needs `SUPABASE_ACCESS_TOKEN`) or
-  paste the seed into the Supabase SQL editor; verify `questions` has 6,193
-  rows, not 36.
-- The safety migration (`supabase/migrations/20261017000100_safety_compliance.sql`)
-  has **not** been applied to the live project. Until it is, self-serve account
-  deletion and the `user_appeals` inbox report that the one-time setup is
-  missing; nothing is deleted.
+  `python supabase/import/apply_seed.py` (needs `SUPABASE_ACCESS_TOKEN`); it
+  batches by table and verifies row counts. The live bank is currently complete.
+- The safety migration is applied live. `delete_own_account` was exercised
+  end-to-end with a throwaway account and the auth user was gone afterward.
+- Confirmation email delivery is blocked on SMTP: Supabase's built-in service
+  only delivers to project team addresses, caps at 2 emails/hour, and refuses
+  template edits. Site URL, redirect allowlist and the 6-digit OTP length are
+  already applied. Configure custom SMTP (Brevo free tier is the planned path),
+  then apply `supabase/email-templates/confirmation.html`.
