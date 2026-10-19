@@ -99,7 +99,8 @@ def main() -> None:
         "mailer_subjects_confirmation": "Confirm your HDSAT account",
         "mailer_templates_confirmation_content": TEMPLATE.read_text(encoding="utf-8"),
         "smtp_host": host,
-        "smtp_port": port,
+        # The Management API expects a string here, not a number.
+        "smtp_port": str(port),
         "smtp_user": user,
         "smtp_pass": password,
         "smtp_admin_email": sender,

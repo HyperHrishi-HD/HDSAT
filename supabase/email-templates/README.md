@@ -1,72 +1,68 @@
 # HDSAT confirmation email and auth URLs
 
-The app-side auth flow is implemented here; two project settings are managed in
-the Supabase dashboard. Site URL, the redirect allowlist and the six-digit OTP
-length have already been applied to the live project through the Management API.
-The branded template and reliable delivery still need a custom SMTP provider.
+Everything below is **applied to the live project and verified**. Confirmation
+emails are sent through Brevo SMTP with the branded template, a 6-digit code, and
+a link back to production.
 
-**Why custom SMTP is required:** with Supabase's built-in email service, Auth
-refuses to deliver to addresses that are not on the project team, caps sending
-at `rate_limit_email_sent = 2`, and blocks template editing. Ordinary students
-will never receive a confirmation email until SMTP is configured.
+## Live configuration
 
-## 1. Stop links from pointing at localhost
+| Setting | Value |
+| --- | --- |
+| Site URL | `https://hdsat.pythonanywhere.com` |
+| Redirect URLs | `https://hdsat.pythonanywhere.com/**`, `http://localhost:3010/**`, `http://localhost:5173/**`, `http://localhost:3000/**` |
+| Email OTP length | 6 digits (matches the Account page input) |
+| Email send limit | 30/hour |
+| SMTP host | `smtp-relay.brevo.com` (port 587, STARTTLS) |
+| SMTP login | `bec76f001@smtp-brevo.com` (Brevo's generated relay login — **not** the account email) |
+| Sender | `HDSAT <hdsystem29@gmail.com>` |
+| Template | [`confirmation.html`](confirmation.html), subject "Confirm your HDSAT account" |
 
-Already applied live:
+## Why custom SMTP was required
 
-- **Site URL:** `https://hdsat.pythonanywhere.com`
-- **Redirect URLs:** `https://hdsat.pythonanywhere.com/**`,
-  `http://localhost:3010/**`, `http://localhost:5173/**`,
-  `http://localhost:3000/**`
-- **Email OTP length:** 6 digits (matches the Account page input)
+Supabase's built-in mailer refuses delivery to any address outside the project
+team, caps sending at 2 emails/hour, and blocks template editing. Ordinary
+students never received a confirmation email until SMTP was configured.
 
-The app sends `emailRedirectTo=https://hdsat.pythonanywhere.com/`
-(`VITE_SITE_URL`), so new confirmation emails return to production. If the URL
-is missing from the allowlist, Supabase silently falls back to **Site URL**.
+## Re-applying after a change
 
-## 2. Configure custom SMTP, then apply the branded email
-
-Brevo's free tier allows 300 messages/day with a verified single sender and
-does **not** require a domain. Use `hdsystem29@gmail.com` as the sender:
-
-1. Create a Brevo account with that address and verify it as a sender.
-2. In Brevo, open **SMTP & API → SMTP** and generate an SMTP key. This key is
-the SMTP password; it is not the API key and OAuth is not supported.
-3. Save the values in `.pa/smtp_credentials`:
+1. Put the credentials in `.pa/smtp_credentials` (gitignored):
 
    ```
    SMTP_HOST=smtp-relay.brevo.com
    SMTP_PORT=587
-   SMTP_LOGIN=hdsystem29@gmail.com
+   SMTP_LOGIN=bec76f001@smtp-brevo.com
    SMTP_PASSWORD=<Brevo SMTP key>
    SMTP_SENDER=hdsystem29@gmail.com
    SMTP_SENDER_NAME=HDSAT
    ```
 
-4. Run `python supabase/email-templates/apply_auth_config.py`. It sets SMTP,
-the 30/hour email limit, the branded template, the 6-digit OTP length, Site URL
-and redirects, then verifies every field. The script never prints the key.
+   The SMTP key is generated in Brevo under **SMTP & API → SMTP**. It is shown
+   once; keep it out of chat and out of version control.
 
-Supabase rejects template edits on the default email provider, so this step is
-what unlocks the branded email.
+2. Put `SUPABASE_ACCESS_TOKEN` in `.pa/supabase_credentials`.
 
-## 3. Send a branded HDSAT email
+3. Run `python supabase/email-templates/apply_auth_config.py`. It sets SMTP, the
+   30/hour limit, the branded template, the 6-digit OTP length, Site URL and
+   redirects, then verifies every field. Neither script prints a secret.
 
-Supabase Dashboard → **Authentication → Email Templates → Confirm signup**
+## Brevo gotchas
 
-- **Subject:** `Confirm your HDSAT account`
-- **Body:** paste the full contents of [`confirmation.html`](confirmation.html).
+- **Sender must be verified** (Senders, Domains & IPs → Senders). The free plan
+  allows a verified single sender; no custom domain is required.
+- **Turn off SMTP IP blocking** (Security → Devices → "Blocking unauthorized IP
+  addresses" → Deactivate for SMTP keys). Supabase's egress IPs are dynamic, so
+  IP allowlisting breaks delivery. With blocking off, the same signup that
+  failed with `500 unexpected_failure` / `525 Unauthorized IP address` succeeds
+  and sets `confirmation_sent_at`.
+
+## The email itself
 
 The template uses `{{ .ConfirmationURL }}`, `{{ .Token }}`, `{{ .Email }}` and
 `{{ .SiteURL }}`. The 6-digit `{{ .Token }}` matters: the Account page verifies
 it with `verifyOtp`, which works even when someone opens the email on a phone
 and the link cannot reach the app.
 
-Also set **Authentication → SMTP Settings → Sender name** to `HDSAT`, and use a
-`From` address on your own domain (for example `no-reply@hdsat.com`) so the
-sender line reads `HDSAT <no-reply@…>` instead of the Supabase default.
-
-## 4. Account behaviour before confirmation
+## Account behaviour before confirmation
 
 - Sign-up creates the account immediately. Supabase does not issue a session
   until the address is confirmed, so the app records the pending address and

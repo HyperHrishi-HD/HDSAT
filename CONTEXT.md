@@ -59,8 +59,9 @@ Checks: `npm run typecheck`, `npm test` (Vitest), `npm run build`. Database seed
   batches by table and verifies row counts. The live bank is currently complete.
 - The safety migration is applied live. `delete_own_account` was exercised
   end-to-end with a throwaway account and the auth user was gone afterward.
-- Confirmation email delivery is blocked on SMTP: Supabase's built-in service
-  only delivers to project team addresses, caps at 2 emails/hour, and refuses
-  template edits. Site URL, redirect allowlist and the 6-digit OTP length are
-  already applied. Configure custom SMTP (Brevo free tier is the planned path),
-  then apply `supabase/email-templates/confirmation.html`.
+- Confirmation email is live through Brevo SMTP: the branded template, 6-digit
+  code, 30/hour limit, Site URL and redirects are all applied and verified. A
+  real signup now succeeds and sets `confirmation_sent_at`. Credentials live in
+  `.pa/smtp_credentials`; re-apply with
+  `python supabase/email-templates/apply_auth_config.py`. Brevo SMTP IP blocking
+  must stay off (Supabase egress IPs are dynamic).
