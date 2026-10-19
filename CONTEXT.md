@@ -45,3 +45,16 @@ Checks: `npm run typecheck`, `npm test` (Vitest), `npm run build`. Database seed
 4. **Simplify the site** — it is close, but several pages carry too much
    explanatory text; trim copy and let actions lead. Do not over-simplify the
    Bluebook runner or the data-rights/legal pages.
+5. **Catalog lag** — the Supabase `questions` table is seeded separately from
+   the bundled bank, so new items cannot sync until the seed is re-applied.
+   Currently the client skips those cloud writes and says so. No visible problem
+   yet, but revisit before the bank grows much further.
+
+## Deployment notes
+
+- After regenerating the bank, re-run `supabase/seed/0001_seed_hdsat.sql` in the
+  Supabase SQL editor so cloud attempts and test responses accept the new ids.
+- The safety migration (`supabase/migrations/20261017000100_safety_compliance.sql`)
+  has **not** been applied to the live project. Until it is, self-serve account
+  deletion and the `user_appeals` inbox report that the one-time setup is
+  missing; nothing is deleted.

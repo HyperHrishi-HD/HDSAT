@@ -109,6 +109,14 @@ export async function signUp(
     },
   });
   if (error) throw error;
+  // Supabase hides whether an address is taken by returning an obfuscated user
+  // with no identities. Say so plainly instead of pretending the signup worked.
+  const identities = (data.user as { identities?: unknown[] } | null)?.identities;
+  if (data.user && Array.isArray(identities) && identities.length === 0) {
+    throw new Error(
+      'An account already exists for this email. Check your password, or resend the confirmation email if you never confirmed it.'
+    );
+  }
   return data;
 }
 
@@ -126,6 +134,25 @@ export async function verifySignupCode(email: string, token: string) {
   });
   if (error) throw error;
   return data;
+}
+
+/**
+ * One-form auth entry point: reports whether the password signed in, whether
+ * the address simply has not been confirmed, or whether no matching account
+ * exists yet (so the caller can create one).
+ */
+export type SignInAttempt =
+  | { ok: true; reason: null }
+  | { ok: false; reason: 'invalid' | 'unconfirmed' | 'error'; message?: string };
+
+export async function attemptSignIn(email: string, password: string): Promise<SignInAttempt> {
+  const supabase = client();
+  const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+  if (!error && data.session) return { ok: true, reason: null };
+  const message = error?.message ?? '';
+  if (/email not confirmed/i.test(message)) return { ok: false, reason: 'unconfirmed' };
+  if (/invalid login credentials/i.test(message)) return { ok: false, reason: 'invalid' };
+  return { ok: false, reason: 'error', message: message || 'Sign-in failed. Check your connection and try again.' };
 }
 
 export async function signIn(email: string, password: string) {
@@ -272,6 +299,29 @@ export interface SubmitAttemptArgs {
   timeSpentSeconds: number;
   clientEventId: string;
   sessionId?: string | null;
+}
+
+/**
+ * The deployed database can lag behind a newly regenerated bank. A question
+ * that exists in the client bundle but not in public.questions cannot be
+ * written to question_attempts or test_responses (both have a foreign key),
+ * so callers use this to treat it as a local-only answer instead of an error.
+ */
+export function isUnknownQuestionError(error: unknown): boolean {
+  const message = error instanceof Error ? error.message : String(error ?? '');
+  return /does not exist/i.test(message) || /question_id_fkey/i.test(message);
+}
+
+async function existingQuestionIds(ids: string[]): Promise<Set<string> | null> {
+  const supabase = client();
+  const found = new Set<string>();
+  for (let i = 0; i < ids.length; i += 120) {
+    const chunk = ids.slice(i, i + 120);
+    const { data, error } = await supabase.from('questions').select('id').in('id', chunk);
+    if (error) return null;
+    (data ?? []).forEach((row: { id: string }) => found.add(row.id));
+  }
+  return found;
 }
 
 export async function submitAttemptCloud(args: SubmitAttemptArgs) {
@@ -433,7 +483,7 @@ export async function recordTestCloud(
     .single();
   if (error) throw error;
 
-  const responses = attempt.modules.flatMap((module) =>
+  const answered = attempt.modules.flatMap((module) =>
     module.responses
       .filter((r) => r.response !== null && r.response !== '')
       .map((r, index) => ({
@@ -446,13 +496,36 @@ export async function recordTestCloud(
         is_correct: r.isCorrect,
       }))
   );
+
+  // Skip responses whose question has not been seeded into this project yet.
+  // They remain in the browser and still appear in the local report; only the
+  // cloud copy is limited until the bank is re-seeded.
+  const known = answered.length > 0 ? await existingQuestionIds([...new Set(answered.map((r) => r.question_id))]) : new Set<string>();
+  let responses = known ? answered.filter((r) => known.has(r.question_id)) : answered;
+  const skippedResponses = answered.length - responses.length;
+
   if (responses.length > 0) {
-    const { error: responseError } = await supabase
+    let { error: responseError } = await supabase
       .from('test_responses')
       .upsert(responses, { onConflict: 'test_attempt_id,module_id,question_id' });
+    if (responseError && /foreign key|23503/i.test(responseError.message)) {
+      // A concurrent bank change can invalidate the prefetch; retry once with a
+      // fresh lookup rather than losing the whole attempt.
+      const fresh = await existingQuestionIds([...new Set(responses.map((r) => r.question_id))]);
+      if (fresh) {
+        responses = responses.filter((r) => fresh.has(r.question_id));
+        if (responses.length > 0) {
+          ({ error: responseError } = await supabase
+            .from('test_responses')
+            .upsert(responses, { onConflict: 'test_attempt_id,module_id,question_id' }));
+        } else {
+          responseError = null;
+        }
+      }
+    }
     if (responseError) throw responseError;
   }
-  return data.id as string;
+  return { id: data.id as string, skippedResponses };
 }
 
 /**
@@ -610,20 +683,37 @@ export async function submitAppeal(args: {
  * Permanently deletes the signed-in account and every row that belongs to it.
  * Runs as a SECURITY DEFINER RPC so the browser never needs elevated keys.
  */
-export async function deleteMyAccount(): Promise<{ deleted: boolean; deleted_at: string }> {
+export interface AccountDeletionOutcome {
+  deleted: boolean;
+  /** Set when the self-serve RPC is not installed in this deployment. */
+  setupRequired?: boolean;
+  message: string;
+}
+
+export async function deleteMyAccount(): Promise<AccountDeletionOutcome> {
   const supabase = client();
   const { data, error } = await supabase.rpc('delete_own_account');
   if (error) {
     if (isMissingRoutineError(error.message, 'delete_own_account')) {
-      throw new Error(
-        'Self-serve account deletion is not enabled on this deployment yet, so nothing was deleted. ' +
-          'Please file an appeal instead and we will delete your account for you.'
-      );
+      // The erasure RPC ships in supabase/migrations/20261017000100_safety_compliance.sql.
+      // Until a project owner pastes that migration into the SQL editor, no browser
+      // client can delete an auth user (that needs elevated database privileges), so
+      // be precise rather than reporting a generic failure.
+      return {
+        deleted: false,
+        setupRequired: true,
+        message:
+          'Nothing was deleted, and your data is untouched. Self-serve deletion is waiting on a one-time database setup that has not been applied to this deployment (supabase/migrations/20261017000100_safety_compliance.sql). A project owner can apply that migration once, after which this button deletes the account and every row tied to it.',
+      };
     }
     throw error;
   }
   await supabase.auth.signOut();
-  return data as { deleted: boolean; deleted_at: string };
+  const outcome = data as { deleted?: boolean; deleted_at?: string };
+  return {
+    deleted: outcome?.deleted !== false,
+    message: 'Your account and every row tied to it were deleted.',
+  };
 }
 
 export async function fetchMyReports(): Promise<

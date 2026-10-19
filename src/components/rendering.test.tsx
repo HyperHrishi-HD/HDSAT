@@ -50,6 +50,51 @@ describe('figure rendering', () => {
     }
   });
 
+  it('renders coordinate-plane items with axes, grid and the plotted function', () => {
+    const planes = figureQuestions.filter(
+      (q) => (q.figure_metadata as { type?: string }).type === 'coordinate_plane'
+    );
+    expect(planes.length).toBeGreaterThan(0);
+    for (const q of planes) {
+      const meta = q.figure_metadata as {
+        caption?: string;
+        lines?: unknown[];
+        parabolas?: unknown[];
+        points?: unknown[];
+      };
+      const html = renderToStaticMarkup(<FigureView question={q} />);
+      expect(html, q.id).toContain('figure-coordinate-plane');
+      expect(html, q.id).toContain('<svg');
+      expect(html, q.id).not.toContain('NaN');
+      expect((meta.lines?.length ?? 0) + (meta.parabolas?.length ?? 0), q.id).toBeGreaterThan(0);
+      if (meta.caption) expect(html, q.id).toContain(meta.caption);
+    }
+  });
+
+  it('renders geometry items with labelled sides', () => {
+    const diagrams = figureQuestions.filter(
+      (q) => (q.figure_metadata as { type?: string }).type === 'geometry_figure'
+    );
+    expect(diagrams.length).toBeGreaterThan(0);
+    for (const q of diagrams) {
+      const meta = q.figure_metadata as {
+        caption?: string;
+        shape: 'right_triangle' | 'triangle' | 'rectangle' | 'circle';
+        labels?: Record<string, string>;
+      };
+      const html = renderToStaticMarkup(<FigureView question={q} />);
+      expect(html, q.id).toContain('figure-geometry');
+      expect(html, q.id).toContain('<svg');
+      expect(html, q.id).not.toContain('NaN');
+      if (meta.caption) expect(html, q.id).toContain(meta.caption);
+      const marks = meta.shape === 'circle' ? '<circle' : meta.shape === 'rectangle' ? '<rect' : '<polygon';
+      expect(html, q.id).toContain(marks);
+      for (const label of Object.values(meta.labels ?? {})) {
+        if (label) expect(html, q.id).toContain(label);
+      }
+    }
+  });
+
   it('wraps chart axis labels instead of clipping them', () => {
     expect(wrapLabel('Single 30-min break', 14)).toEqual(['Single 30-min', 'break']);
     expect(wrapLabel('No scheduled break', 14)).toEqual(['No scheduled', 'break']);

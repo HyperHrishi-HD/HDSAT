@@ -76,6 +76,7 @@ export interface AppValue {
   notice: string | null;
   actions: {
     signIn: (email: string, password: string) => Promise<void>;
+    attemptSignIn: (email: string, password: string) => Promise<cloud.SignInAttempt>;
     signUp: (
       email: string,
       password: string,
@@ -285,6 +286,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             duplicate: Boolean(result.duplicate),
           };
         } catch (err) {
+          if (cloud.isUnknownQuestionError(err)) {
+            // The cloud question table lags the bundled bank for a newly added
+            // item. Keep the answer local and quiet: it still counts here.
+            return { isCorrect: outcome.isCorrect, coinsAwarded: outcome.coinsAwarded, duplicate: false };
+          }
           setError(
             `Your answer was saved locally, but writing it to your HDSAT account failed: ${(err as Error).message}`
           );
@@ -367,13 +373,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       persist(local.recordTestAttempt(profileRef.current, attempt));
       if (mode === 'cloud') {
         try {
-          await cloud.recordTestCloud(attempt, {
+          const saved = await cloud.recordTestCloud(attempt, {
             clientSessionId,
             assessment: attempt.assessment,
             durationSeconds: attempt.durationSeconds,
             status: attempt.status,
           });
           await refreshSnapshot();
+          if (saved.skippedResponses > 0) {
+            setNotice(
+              `Test saved to your account. ${saved.skippedResponses} answer(s) used newly added questions that are still being synced to the cloud bank, so those replies stay on this device for now.`
+            );
+          }
         } catch (err) {
           setError(`Test result kept locally; saving it to your account failed: ${(err as Error).message}`);
         }
@@ -509,6 +520,22 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     [importLocalHistoryOnce, refreshSnapshot]
   );
 
+  const attemptSignIn = useCallback(
+    async (email: string, password: string): Promise<cloud.SignInAttempt> => {
+      setError(null);
+      const result = await cloud.attemptSignIn(email, password);
+      if (result.ok) {
+        local.clearPendingAccount();
+        setPendingAccount(null);
+        await refreshSnapshot();
+        const userId = await cloud.getUserId();
+        if (userId) await importLocalHistoryOnce(userId);
+      }
+      return result;
+    },
+    [importLocalHistoryOnce, refreshSnapshot]
+  );
+
   const signOut = useCallback(async () => {
     await cloud.signOutCloud();
     setUser(null);
@@ -571,6 +598,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     notice,
     actions: {
       signIn,
+      attemptSignIn,
       signUp,
       signOut,
       continueAsGuest: () => {

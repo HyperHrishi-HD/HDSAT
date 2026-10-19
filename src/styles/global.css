@@ -1464,3 +1464,24 @@ mark.bb-hl[data-has-note='true']::after {
   gap: 8px;
   margin-top: 12px;
 }
+
+/* Unified account form: optional new-account details stay out of the way. */
+.auth-details {
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 10px 12px;
+  margin: 4px 0 12px;
+  background: #fbfcfe;
+}
+.auth-details > summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--ink-2);
+}
+.auth-details[open] > summary {
+  margin-bottom: 10px;
+}
+.auth-details .field-label {
+  margin-top: 6px;
+}

@@ -1356,7 +1356,9 @@ def main():
         + gen_rhetorical_synthesis_scaled()
         + gen_boundaries_scaled()
     )
-    math_scaled = sweep_math_all() + sweep_trig_math()
+    from generate_bank_math_figures import build as build_math_figures
+
+    math_scaled = sweep_math_all() + sweep_trig_math() + build_math_figures()
 
     from generate_bank_rw_volume import build as build_rw_volume
 

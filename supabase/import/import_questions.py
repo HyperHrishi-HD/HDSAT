@@ -15,7 +15,7 @@ import random
 import re
 from datetime import datetime, timezone
 
-BANK_VERSION = "2026.10.18-open-core-2"
+BANK_VERSION = "2026.10.18-open-core-3"
 
 SOURCES = [
     {

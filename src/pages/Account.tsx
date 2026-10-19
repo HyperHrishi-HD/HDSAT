@@ -19,7 +19,6 @@ import type { Assessment } from '../lib/types';
 
 export function AccountPage() {
   const app = useApp();
-  const [authMode, setAuthMode] = useState<'signin' | 'signup'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
@@ -56,40 +55,45 @@ export function AccountPage() {
       setFormError('Please enter both your email address and password.');
       return;
     }
-    if (authMode === 'signup') {
-      const consent = validateConsent({ ageBand, guardianConsent, acceptedTerms });
-      if (!consent.ok) {
-        setFormError(consent.errors.join(' '));
-        return;
-      }
-      setBusy(true);
-      try {
-        const msg = await app.actions.signUp(email.trim(), password, displayName.trim() || 'Student', consent.metadata);
-        setStatusMessage(msg);
-        setVerifyEmail(email.trim());
-        setPassword('');
-      } catch (err) {
-        setFormError((err as Error).message);
-      } finally {
-        setBusy(false);
-      }
-      return;
-    }
     setBusy(true);
     try {
-      await app.actions.signIn(email.trim(), password);
-      setStatusMessage('Signed in to your HDSAT cloud account.');
+      const attempt = await app.actions.attemptSignIn(email.trim(), password);
+      if (attempt.ok) {
+        setStatusMessage('Signed in. This device history is backed up to your account.');
+        setPassword('');
+        return;
+      }
+      if (attempt.reason === 'unconfirmed') {
+        setVerifyEmail(email.trim());
+        setStatusMessage(
+          'Your account already exists, but ' +
+            email.trim() +
+            ' still needs confirmation. Open the link in the email, or enter the 6-digit code below.'
+        );
+        return;
+      }
+      if (attempt.reason === 'error') {
+        setFormError(attempt.message ?? 'Sign-in failed. Check your connection and try again.');
+        return;
+      }
+
+      // No account matched, so create one. Consent is required only here.
+      const consent = validateConsent({ ageBand, guardianConsent, acceptedTerms });
+      if (!consent.ok) {
+        setFormError('New account: ' + consent.errors.join(' '));
+        return;
+      }
+      const msg = await app.actions.signUp(
+        email.trim(),
+        password,
+        displayName.trim() || 'Student',
+        consent.metadata
+      );
+      setStatusMessage(msg);
+      setVerifyEmail(email.trim());
       setPassword('');
     } catch (err) {
-      const message = (err as Error).message;
-      if (/email not confirmed/i.test(message)) {
-        setVerifyEmail(email.trim());
-        setFormError(
-          'This account exists, but its email is not confirmed yet. Enter the 6-digit code below, or resend the confirmation email. Until then your work stays in this browser.'
-        );
-      } else {
-        setFormError(message);
-      }
+      setFormError((err as Error).message);
     } finally {
       setBusy(false);
     }
@@ -99,13 +103,14 @@ export function AccountPage() {
     e.preventDefault();
     setFormError(null);
     setStatusMessage(null);
-    if (!verifyEmail.trim() || !verifyCode.trim()) {
-      setFormError('Enter the email address and the 6-digit code from the confirmation message.');
+    const address = verifyEmail.trim() || app.pendingAccount?.email || '';
+    if (!address || !verifyCode.trim()) {
+      setFormError('Enter the 6-digit code from the confirmation email.');
       return;
     }
     setVerifying(true);
     try {
-      await app.actions.verifySignupCode(verifyEmail.trim(), verifyCode.trim());
+      await app.actions.verifySignupCode(address, verifyCode.trim());
       setStatusMessage('Email confirmed. Your device history is now saved to your account.');
       setVerifyCode('');
     } catch (err) {
@@ -117,12 +122,13 @@ export function AccountPage() {
 
   const handleResend = async () => {
     setFormError(null);
-    if (!verifyEmail.trim()) {
-      setFormError('Enter the email address you signed up with first.');
+    const address = verifyEmail.trim() || app.pendingAccount?.email || '';
+    if (!address) {
+      setFormError('Enter your email address first.');
       return;
     }
     try {
-      await app.actions.resendVerification(verifyEmail.trim());
+      await app.actions.resendVerification(address);
     } catch (err) {
       setFormError((err as Error).message);
     }
@@ -159,10 +165,14 @@ export function AccountPage() {
     setDeleting(true);
     setFormError(null);
     try {
-      await cloud.deleteMyAccount();
-      app.actions.resetGuestProgress();
-      setStatusMessage('Your account and all associated practice data were deleted.');
-      setDeleteConfirm('');
+      const outcome = await cloud.deleteMyAccount();
+      if (outcome.deleted) {
+        app.actions.resetGuestProgress();
+        setStatusMessage(outcome.message);
+        setDeleteConfirm('');
+      } else {
+        setFormError(outcome.message);
+      }
     } catch (err) {
       setFormError(`Account deletion failed: ${(err as Error).message}`);
     } finally {
@@ -211,21 +221,9 @@ export function AccountPage() {
               the HDCoins above are <em>provisional</em>: they are replaced by your cloud balance when
               you confirm. Cloud sync and cloud coin earning start only after confirmation.
             </p>
-            <button
-              type="button"
-              className="btn btn-outline btn-sm"
-              onClick={async () => {
-                const address = app.pendingAccount?.email ?? '';
-                setVerifyEmail(address);
-                try {
-                  await app.actions.resendVerification(address);
-                } catch (err) {
-                  setFormError((err as Error).message);
-                }
-              }}
-            >
-              Resend confirmation email
-            </button>
+            <p style={{ margin: '6px 0 0' }}>
+              Enter the code, or use <em>Resend email</em>, in the confirmation panel below.
+            </p>
           </div>
         </Alert>
       ) : null}
@@ -271,96 +269,25 @@ export function AccountPage() {
             </div>
           ) : (
             <div>
-              <div className="row-between" style={{ marginBottom: 12 }}>
-                <h2>{authMode === 'signin' ? 'Sign In to HDSAT' : 'Create an HDSAT Account'}</h2>
-                <div className="row">
-                  <Button
-                    size="sm"
-                    variant={authMode === 'signin' ? 'primary' : 'outline'}
-                    onClick={() => setAuthMode('signin')}
-                  >
-                    Sign in
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant={authMode === 'signup' ? 'primary' : 'outline'}
-                    onClick={() => setAuthMode('signup')}
-                  >
-                    Create account
-                  </Button>
-                </div>
-              </div>
-
-              <div className="muted-block" style={{ marginBottom: 12 }}>
-                <strong>Guest first, account later.</strong>
-                <p className="muted" style={{ margin: '6px 0 0' }}>
-                  You can study without confirming anything. Until you verify your email and sign in,
-                  your answers, HDCoins and saved tests stay in this browser only. Confirming takes one
-                  click and imports that history into your account automatically.
-                </p>
-                <p className="muted" style={{ margin: '6px 0 0' }}>
-                  <strong>HDCoins disclaimer:</strong> coins earned before confirmation are local
-                  practice points. They are not transferred; your confirmed account keeps its own
-                  cloud balance from then on.
-                </p>
-              </div>
+              <h2>Sign in or create an account</h2>
+              <p className="muted">
+                One form for both. Enter your email and password: if the account exists we sign you
+                in, otherwise we create it and email a confirmation link and code. You can keep
+                studying before confirming — this device keeps your work and your HDCoins stay
+                provisional until you do.
+              </p>
 
               {!app.cloudConfigured ? (
                 <div className="muted-block">
                   <p style={{ margin: 0 }}>
                     <strong>Cloud authentication is not configured in this build.</strong> Set{' '}
-                    <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> in your environment to enable
-                    Supabase email-and-password sign-in. You can use every practice, test, flashcard, and reward feature
-                    right now in local Guest Mode.
+                    <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> in your
+                    environment to enable email-and-password accounts. Every practice, test,
+                    flashcard and reward feature still works in local Guest Mode.
                   </p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit}>
-                  {authMode === 'signup' ? (
-                    <>
-                      <Field label="Display Name">
-                        <input
-                          type="text"
-                          value={displayName}
-                          onChange={(e) => setDisplayName(e.target.value)}
-                          placeholder="e.g. Hrishi"
-                        />
-                      </Field>
-                      <Select
-                        label="Your age group"
-                        value={ageBand}
-                        onChange={setAgeBand}
-                        options={[{ value: '', label: 'Select your age group…' }, ...AGE_BANDS]}
-                      />
-                      {ageBand.length > 0 && ageBand !== '18+' ? (
-                        <div className="muted-block" style={{ marginBottom: 12 }}>
-                          <strong>Accounts for students under 18 need a parent or guardian.</strong>
-                          <p className="muted" style={{ marginBottom: 8 }}>
-                            Please have your parent or guardian read the{' '}
-                            <Link to={TERMS_PATH}>Terms of Service</Link> and{' '}
-                            <Link to={PRIVACY_PATH}>Privacy &amp; Data Rights</Link> page with you. They must agree
-                            before the account is created. Accounts under {MIN_AGE} years old are not permitted.
-                          </p>
-                          <Toggle
-                            checked={guardianConsent}
-                            onChange={setGuardianConsent}
-                            label="My parent or guardian has reviewed and agrees to the Terms and Privacy Policy"
-                            hint="Required for students aged 13–17."
-                          />
-                        </div>
-                      ) : null}
-                      <Toggle
-                        checked={acceptedTerms}
-                        onChange={setAcceptedTerms}
-                        label={`I accept the Terms of Service and the Privacy & Data Rights policy (version ${LEGAL_VERSION})`}
-                        hint="Links open in the policy pages: Terms, Privacy and Copyright & Content Policy."
-                      />
-                      <p className="muted" style={{ marginBottom: 12 }}>
-                        <Link to={TERMS_PATH}>Terms of Service</Link> · <Link to={PRIVACY_PATH}>Privacy &amp; Data Rights</Link>{' '}
-                        · <Link to={COPYRIGHT_PATH}>Copyright &amp; Content Policy</Link>
-                      </p>
-                    </>
-                  ) : null}
                   <Field label="Email Address">
                     <input
                       type="email"
@@ -368,20 +295,67 @@ export function AccountPage() {
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="you@example.com"
                       required
+                      autoComplete="email"
                     />
                   </Field>
-                  <Field label="Password" hint="Minimum 6 characters">
+                  <Field label="Password" hint="At least 6 characters. New accounts set it here.">
                     <input
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••"
                       required
+                      autoComplete="current-password"
                     />
                   </Field>
-                  <div className="row">
+                  <Field label="Display name (new accounts)" hint="You can change this later.">
+                    <input
+                      type="text"
+                      value={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
+                      placeholder="e.g. Hrishi"
+                      autoComplete="nickname"
+                    />
+                  </Field>
+
+                  <details className="auth-details">
+                    <summary>New account? Age and consent</summary>
+                    <Select
+                      label="Your age group"
+                      value={ageBand}
+                      onChange={setAgeBand}
+                      options={[{ value: '', label: 'Select your age group…' }, ...AGE_BANDS]}
+                    />
+                    {ageBand.length > 0 && ageBand !== '18+' ? (
+                      <div className="muted-block" style={{ marginBottom: 12 }}>
+                        <p className="muted" style={{ marginTop: 0, marginBottom: 8 }}>
+                          Accounts for students under 18 need a parent or guardian. Accounts under{' '}
+                          {MIN_AGE} years old are not permitted.
+                        </p>
+                        <Toggle
+                          checked={guardianConsent}
+                          onChange={setGuardianConsent}
+                          label="My parent or guardian has reviewed and agrees to the Terms and Privacy Policy"
+                          hint="Required for students aged 13–17."
+                        />
+                      </div>
+                    ) : null}
+                    <Toggle
+                      checked={acceptedTerms}
+                      onChange={setAcceptedTerms}
+                      label={`I accept the Terms of Service and the Privacy & Data Rights policy (version ${LEGAL_VERSION})`}
+                      hint="Only needed when a new account is created."
+                    />
+                    <p className="muted" style={{ marginBottom: 12 }}>
+                      <Link to={TERMS_PATH}>Terms of Service</Link> ·{' '}
+                      <Link to={PRIVACY_PATH}>Privacy &amp; Data Rights</Link> ·{' '}
+                      <Link to={COPYRIGHT_PATH}>Copyright &amp; Content Policy</Link>
+                    </p>
+                  </details>
+
+                  <div className="row" style={{ marginTop: 12 }}>
                     <Button type="submit" disabled={busy}>
-                      {busy ? 'Working...' : authMode === 'signin' ? 'Sign In' : 'Create Account'}
+                      {busy ? 'Checking…' : 'Continue'}
                     </Button>
                     <Button type="button" variant="outline" onClick={app.actions.continueAsGuest}>
                       Continue in Guest Mode
@@ -390,39 +364,32 @@ export function AccountPage() {
                 </form>
               )}
 
-              {app.cloudConfigured ? (
+              {app.accountStatus === 'pending' && app.pendingAccount ? (
                 <div className="muted-block" style={{ marginTop: 16 }}>
-                  <strong>Confirm an account from the email</strong>
+                  <strong>Check your email to finish</strong>
                   <p className="muted" style={{ margin: '6px 0 10px' }}>
-                    Enter the 6-digit code from the HDSAT confirmation email. The code works on any
-                    device, even if the email&apos;s link was generated for another address. If the
-                    link opens somewhere else, this code is the reliable path.
+                    We sent a confirmation link and a 6-digit code to{' '}
+                    <strong>{app.pendingAccount.email}</strong>. Click the link, or paste the code
+                    here — either one signs you in and backs up this device&apos;s history. No other
+                    steps are needed.
                   </p>
                   <form onSubmit={handleVerifyCode}>
-                    <Field label="Email Address">
-                      <input
-                        type="email"
-                        value={verifyEmail}
-                        onChange={(e) => setVerifyEmail(e.target.value)}
-                        placeholder="you@example.com"
-                        required
-                      />
-                    </Field>
-                    <Field label="6-digit confirmation code">
+                    <Field label="6-digit code from the email">
                       <input
                         type="text"
                         inputMode="numeric"
                         value={verifyCode}
                         onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
                         placeholder="123456"
+                        autoComplete="one-time-code"
                       />
                     </Field>
                     <div className="row">
                       <Button type="submit" disabled={verifying}>
-                        {verifying ? 'Confirming...' : 'Confirm email & sign in'}
+                        {verifying ? 'Confirming…' : 'Confirm & continue'}
                       </Button>
                       <Button type="button" variant="outline" onClick={handleResend}>
-                        Resend confirmation email
+                        Resend email
                       </Button>
                     </div>
                   </form>
