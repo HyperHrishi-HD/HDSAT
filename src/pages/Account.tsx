@@ -445,8 +445,8 @@ export function AccountPage() {
           <div>
             <h2>Safety &amp; Data Rights</h2>
             <p className="muted">
-              Your rights are self-serve here: take a copy of your data, delete your account, or file a safety,
-              copyright, access or accuracy appeal. You never need to email us to exercise them.
+              Take a copy of your data, request deletion of your account or data, or file a safety,
+              copyright, access or accuracy appeal. You never need to email us to exercise these rights.
             </p>
           </div>
           <Badge tone="info">Policy version {LEGAL_VERSION}</Badge>

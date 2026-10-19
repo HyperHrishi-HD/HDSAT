@@ -60,7 +60,7 @@ export function AppealForm({ defaultCategory = 'safety_report' }: { defaultCateg
     <form onSubmit={submit}>
       <p className="muted">
         Use this form to report unsafe content, request removal of material, appeal an account decision, or ask for
-        access to or deletion of your data. You do not need an account to file a report — you can reach us by{' '}
+        access to or deletion of your data. You do not need an account to file a report: you can{' '}
         {contactLine()}.
       </p>
 
