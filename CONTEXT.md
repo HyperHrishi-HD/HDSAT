@@ -35,7 +35,27 @@ Checks: `npm run typecheck`, `npm test` (Vitest), `npm run build`. Database seed
   coverage notice must say so.
 - Keep the Bluebook runner visually quiet (grey 1px rules, no rainbow banners).
 
-## Backlog for tomorrow (do not start without the user)
+## Done today (2026-10-18) — verify before re-doing
+
+- **Catalog lag fixed and verified.** The live `questions` table now holds all
+  **6,193** bundled ids (was 36), matching the bank exactly, plus 6,193 question
+  keys and 1,764 flashcards. After regenerating the bank run
+  `python supabase/import/apply_seed.py` — it batches by table and verifies row
+  counts. The old one-statement fallback is what left the table at 36.
+- **Account deletion live.** Safety migration applied; `delete_own_account`
+  exercised end-to-end (auth user gone afterward).
+- **Confirmation email live through Brevo SMTP.** Branded template, 6-digit
+  code, 30/hour limit, production Site URL and redirects applied and verified; a
+  real signup sets `confirmation_sent_at`. SMTP creds in `.pa/smtp_credentials`,
+  API key in `.pa/brevo_credentials` (both gitignored); re-apply with
+  `python supabase/email-templates/apply_auth_config.py`. Brevo **SMTP and API
+  IP blocking must stay off** (Supabase egress IPs are dynamic — blocking caused
+  `500 unexpected_failure` / `525 Unauthorized IP address`).
+- **Cloud saves fixed.** Unknown question ids are resolved against the server
+  catalog before writing `test_responses`, so the FK failure is gone and any
+  not-yet-seeded item falls back to a local save with an on-screen notice.
+
+## Future plans (do not start without the user)
 
 1. **Arcade games** — current mini-games are not good enough; improve depth,
    scoring clarity, and replay value.
@@ -45,23 +65,14 @@ Checks: `npm run typecheck`, `npm test` (Vitest), `npm run build`. Database seed
 4. **Simplify the site** — it is close, but several pages carry too much
    explanatory text; trim copy and let actions lead. Do not over-simplify the
    Bluebook runner or the data-rights/legal pages.
-5. **Catalog lag** — fixed and verified on 2026-10-18: the live `questions`
-   table now holds all **6,193** bundled ids, matching the bank exactly, plus
-   6,193 question keys and 1,764 flashcards. Use
-   `python supabase/import/apply_seed.py` after regenerating the bank; the old
-   one-statement fallback is what left the table at 36.
+5. **Polish pass** — keep pushing frontend + backend together until every flow
+   is perfect: more bank stimulus figures, deeper tests for the save/auth paths,
+   and a visual sweep at multiple widths.
+6. **Security hygiene** — rotate the Supabase PAT and Brevo SMTP/API keys (both
+   passed through chat during setup), then re-run the config scripts.
 
 ## Deployment notes
 
-- After regenerating the bank, apply `supabase/seed/0001_seed_hdsat.sql` so
-  cloud attempts and test responses accept the new ids. Use
-  `python supabase/import/apply_seed.py` (needs `SUPABASE_ACCESS_TOKEN`); it
-  batches by table and verifies row counts. The live bank is currently complete.
-- The safety migration is applied live. `delete_own_account` was exercised
-  end-to-end with a throwaway account and the auth user was gone afterward.
-- Confirmation email is live through Brevo SMTP: the branded template, 6-digit
-  code, 30/hour limit, Site URL and redirects are all applied and verified. A
-  real signup now succeeds and sets `confirmation_sent_at`. Credentials live in
-  `.pa/smtp_credentials`; re-apply with
-  `python supabase/email-templates/apply_auth_config.py`. Brevo SMTP IP blocking
-  must stay off (Supabase egress IPs are dynamic).
+- The safety migration is applied live and confirmation email is live through
+  Brevo SMTP — see "Done today" above for the re-apply commands and the IP
+  blocking caveat. The live bank is currently complete.
