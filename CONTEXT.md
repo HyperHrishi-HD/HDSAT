@@ -47,13 +47,20 @@ Checks: `npm run typecheck`, `npm test` (Vitest), `npm run build`. Database seed
    Bluebook runner or the data-rights/legal pages.
 5. **Catalog lag** — the Supabase `questions` table is seeded separately from
    the bundled bank, so new items cannot sync until the seed is re-applied.
-   Currently the client skips those cloud writes and says so. No visible problem
-   yet, but revisit before the bank grows much further.
+   Measured on 2026-10-18: live table has **36** rows against **6,193** bundled
+   items, so nearly every cloud answer is skipped and test responses cannot be
+   stored. The client skips those writes and says so instead of failing the
+   whole save. Fix by re-running the seed with
+   `python supabase/import/apply_seed.py` (chunked; the old one-statement
+   fallback is what left the table at 36).
 
 ## Deployment notes
 
-- After regenerating the bank, re-run `supabase/seed/0001_seed_hdsat.sql` in the
-  Supabase SQL editor so cloud attempts and test responses accept the new ids.
+- After regenerating the bank, apply `supabase/seed/0001_seed_hdsat.sql` so
+  cloud attempts and test responses accept the new ids. Use
+  `python supabase/import/apply_seed.py` (needs `SUPABASE_ACCESS_TOKEN`) or
+  paste the seed into the Supabase SQL editor; verify `questions` has 6,193
+  rows, not 36.
 - The safety migration (`supabase/migrations/20261017000100_safety_compliance.sql`)
   has **not** been applied to the live project. Until it is, self-serve account
   deletion and the `user_appeals` inbox report that the one-time setup is
