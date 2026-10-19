@@ -60,6 +60,8 @@ export function AccountPage() {
       const attempt = await app.actions.attemptSignIn(email.trim(), password);
       if (attempt.ok) {
         setStatusMessage('Signed in. This device history is backed up to your account.');
+        setVerifyEmail('');
+        setVerifyCode('');
         setPassword('');
         return;
       }
@@ -364,14 +366,14 @@ export function AccountPage() {
                 </form>
               )}
 
-              {app.accountStatus === 'pending' && app.pendingAccount ? (
+              {(verifyEmail || (app.accountStatus === 'pending' && app.pendingAccount)) ? (
                 <div className="muted-block" style={{ marginTop: 16 }}>
                   <strong>Check your email to finish</strong>
                   <p className="muted" style={{ margin: '6px 0 10px' }}>
                     We sent a confirmation link and a 6-digit code to{' '}
-                    <strong>{app.pendingAccount.email}</strong>. Click the link, or paste the code
-                    here — either one signs you in and backs up this device&apos;s history. No other
-                    steps are needed.
+                    <strong>{verifyEmail || app.pendingAccount?.email}</strong>. Click the link, or
+                    paste the code here — either one signs you in and backs up this device&apos;s
+                    history. No other steps are needed.
                   </p>
                   <form onSubmit={handleVerifyCode}>
                     <Field label="6-digit code from the email">

@@ -703,7 +703,7 @@ export async function deleteMyAccount(): Promise<AccountDeletionOutcome> {
         deleted: false,
         setupRequired: true,
         message:
-          'Nothing was deleted, and your data is untouched. Self-serve deletion is waiting on a one-time database setup that has not been applied to this deployment (supabase/migrations/20261017000100_safety_compliance.sql). A project owner can apply that migration once, after which this button deletes the account and every row tied to it.',
+          'Nothing was deleted and your data is untouched. Self-serve deletion is not switched on for this deployment yet, so please file an appeal below and we will delete your account and every row tied to it for you.',
       };
     }
     throw error;

@@ -515,7 +515,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       };
       local.savePendingAccount(record);
       setPendingAccount(record);
-      return `Account created for ${email}. We emailed a confirmation link — until you confirm, your work stays on this device and HDCoins are provisional.`;
+      return `Account created for ${email}. We emailed a confirmation link and a 6-digit code — use either one. Until you confirm, your work stays on this device and HDCoins are provisional.`;
     },
     [importLocalHistoryOnce, refreshSnapshot]
   );
