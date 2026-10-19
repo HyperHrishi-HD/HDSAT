@@ -26,10 +26,29 @@ is missing from the allowlist, Supabase silently falls back to **Site URL**.
 
 ## 2. Configure custom SMTP, then apply the branded email
 
-Configure a provider (Brevo's free tier allows 300 messages/day and a verified
-single sender) in Supabase Dashboard → **Project Settings → Auth → SMTP
-Settings**, or through the Management API. Once SMTP is saved, apply the
-template below; Supabase rejects template edits on the default email provider.
+Brevo's free tier allows 300 messages/day with a verified single sender and
+does **not** require a domain. Use `hdsystem29@gmail.com` as the sender:
+
+1. Create a Brevo account with that address and verify it as a sender.
+2. In Brevo, open **SMTP & API → SMTP** and generate an SMTP key. This key is
+the SMTP password; it is not the API key and OAuth is not supported.
+3. Save the values in `.pa/smtp_credentials`:
+
+   ```
+   SMTP_HOST=smtp-relay.brevo.com
+   SMTP_PORT=587
+   SMTP_LOGIN=hdsystem29@gmail.com
+   SMTP_PASSWORD=<Brevo SMTP key>
+   SMTP_SENDER=hdsystem29@gmail.com
+   SMTP_SENDER_NAME=HDSAT
+   ```
+
+4. Run `python supabase/email-templates/apply_auth_config.py`. It sets SMTP,
+the 30/hour email limit, the branded template, the 6-digit OTP length, Site URL
+and redirects, then verifies every field. The script never prints the key.
+
+Supabase rejects template edits on the default email provider, so this step is
+what unlocks the branded email.
 
 ## 3. Send a branded HDSAT email
 
