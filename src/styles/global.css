@@ -1638,3 +1638,153 @@ mark.bb-hl[data-has-note='true']::after {
 .auth-details .field-label {
   margin-top: 6px;
 }
+
+/* ---------- Mobile: Bluebook test runner (<= 760px) ---------- */
+@media (max-width: 760px) {
+  .bb-header {
+    min-height: 54px;
+    padding: 6px 10px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 4px;
+  }
+  .bb-header-left {
+    min-width: 0;
+  }
+  .bb-section-line {
+    font-size: 0.82rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .bb-module-line {
+    font-size: 0.72rem;
+  }
+  .bb-header-center {
+    gap: 4px;
+  }
+  .bb-clock {
+    font-size: 1rem;
+  }
+  .bb-hide-pill {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+  }
+  .bb-header-right {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+    gap: 4px;
+    overflow-x: auto;
+    padding-bottom: 2px;
+  }
+  .bb-tool-btn {
+    padding: 4px 7px;
+    gap: 4px;
+  }
+  .bb-tool-label {
+    font-size: 0.72rem;
+  }
+
+  .bb-workspace.is-split {
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  .bb-workspace.is-split .bb-pane {
+    width: 100% !important;
+    height: auto;
+    overflow-y: visible;
+  }
+  .bb-workspace.is-split .bb-divider {
+    display: none;
+  }
+  .bb-pane-left,
+  .bb-pane-right {
+    padding: 14px 14px;
+  }
+  .bb-workspace.is-single .bb-pane-right {
+    max-width: none;
+  }
+  .bb-question-column {
+    min-width: 0;
+    padding: 0;
+  }
+  .bb-prompt-text,
+  .bb-stimulus-text {
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+  .bb-choices {
+    width: 100%;
+  }
+  .bb-choice-text {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+  .bb-choice-row {
+    min-width: 0;
+  }
+
+  .bb-footer {
+    height: auto;
+    padding: 8px 10px;
+    grid-template-columns: 1fr auto;
+    row-gap: 6px;
+  }
+  .bb-footer-left {
+    display: none;
+  }
+  .bb-footer-center {
+    order: 2;
+  }
+  .bb-question-pill {
+    padding: 7px 12px;
+    font-size: 0.8rem;
+  }
+  .bb-footer-right {
+    order: 3;
+    justify-content: flex-end;
+    gap: 6px;
+  }
+  .bb-pill-btn {
+    padding: 8px 14px;
+    font-size: 0.84rem;
+  }
+
+  .bb-ref-window,
+  .bb-floating-modal {
+    left: 8px !important;
+    right: 8px !important;
+    width: auto !important;
+    max-width: calc(100vw - 16px);
+    top: 60px !important;
+  }
+  .bb-floating-body {
+    max-height: 70vh;
+    overflow: auto;
+  }
+  .bb-directions-popover {
+    left: 8px;
+    right: 8px;
+    width: auto;
+  }
+  .bb-fullscreen {
+    overflow-x: hidden;
+  }
+  .bb-workspace,
+  .bb-workspace .bb-pane,
+  .bb-stimulus-pane,
+  .bb-question-column {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .bb-stimulus-text,
+  .bb-prompt-text,
+  .bb-choices,
+  .bb-choice-text,
+  .bb-spr-area {
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+  .bb-stimulus-text {
+    white-space: normal;
+  }
+}
