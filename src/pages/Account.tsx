@@ -31,6 +31,8 @@ export function AccountPage() {
   const [verifying, setVerifying] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
+  const [nameDraft, setNameDraft] = useState('');
+  const [nameSaving, setNameSaving] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState('');
   const [deleting, setDeleting] = useState(false);
   const [exportMessage, setExportMessage] = useState<string | null>(null);
@@ -133,6 +135,20 @@ export function AccountPage() {
       await app.actions.resendVerification(address);
     } catch (err) {
       setFormError((err as Error).message);
+    }
+  };
+
+  const saveDisplayName = async (event: React.FormEvent) => {
+    event.preventDefault();
+    setFormError(null);
+    setNameSaving(true);
+    try {
+      await app.actions.updateDisplayName(nameDraft);
+      setNameDraft('');
+    } catch (err) {
+      setFormError(`Could not change your name: ${(err as Error).message}`);
+    } finally {
+      setNameSaving(false);
     }
   };
 
@@ -252,6 +268,26 @@ export function AccountPage() {
                   <strong>Policies accepted:</strong> version {LEGAL_VERSION}
                 </div>
               </div>
+
+              <form onSubmit={saveDisplayName} className="row" style={{ alignItems: 'flex-end' }}>
+                <Field label="Change display name" hint="Shown in the top bar and on your profile.">
+                  <input
+                    type="text"
+                    value={nameDraft}
+                    onChange={(e) => setNameDraft(e.target.value)}
+                    placeholder={app.user.displayName}
+                    maxLength={40}
+                    autoComplete="nickname"
+                  />
+                </Field>
+                <Button
+                  type="submit"
+                  size="sm"
+                  disabled={nameSaving || nameDraft.trim().length === 0}
+                >
+                  {nameSaving ? 'Saving…' : 'Save name'}
+                </Button>
+              </form>
 
               <div className="stack" style={{ marginTop: 8 }}>
                 <h3>Merge Browser Guest Progress</h3>
@@ -375,6 +411,26 @@ export function AccountPage() {
                     paste the code here — either one signs you in and backs up this device&apos;s
                     history. No other steps are needed.
                   </p>
+                  <form onSubmit={saveDisplayName} className="row" style={{ alignItems: 'flex-end' }}>
+                    <Field label="Your name" hint="Used once you confirm; you can change it later.">
+                      <input
+                        type="text"
+                        value={nameDraft}
+                        onChange={(e) => setNameDraft(e.target.value)}
+                        placeholder={app.pendingAccount?.displayName ?? 'Student'}
+                        maxLength={40}
+                        autoComplete="nickname"
+                      />
+                    </Field>
+                    <Button
+                      type="submit"
+                      size="sm"
+                      variant="outline"
+                      disabled={nameSaving || nameDraft.trim().length === 0}
+                    >
+                      {nameSaving ? 'Saving…' : 'Save name'}
+                    </Button>
+                  </form>
                   <form onSubmit={handleVerifyCode}>
                     <Field label="6-digit code from the email">
                       <input

@@ -53,6 +53,7 @@ export function ResourcesPage() {
           </Field>
           <Select
             label="Resource Type"
+            mode="dropdown"
             value={typeFilter}
             onChange={setTypeFilter}
             options={[

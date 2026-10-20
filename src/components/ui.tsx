@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 export type IconName =
   | 'dashboard'
@@ -396,8 +396,33 @@ export function InfoTip({
   children: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLSpanElement>(null);
+
+  // A popover this size should dismiss on ANY click elsewhere on the page, not
+  // only on the button that opened it. Capture phase so a click on a control
+  // behind the popover still closes it before that control acts.
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (event: Event) => {
+      const target = event.target as Node | null;
+      if (target && wrapRef.current?.contains(target)) return;
+      setOpen(false);
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('mousedown', onPointerDown, true);
+    document.addEventListener('touchstart', onPointerDown, true);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown, true);
+      document.removeEventListener('touchstart', onPointerDown, true);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [open]);
+
   return (
-    <span className="info-tip-wrap">
+    <span className="info-tip-wrap" ref={wrapRef}>
       <button
         type="button"
         className={`info-tip-btn${open ? ' is-open' : ''}`}

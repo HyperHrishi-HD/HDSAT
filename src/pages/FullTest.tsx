@@ -323,6 +323,10 @@ export function FullTestPage() {
       tier: mod.tier,
       correct: correctCount,
       total: mod.questions.length,
+      // The section estimate is computed from these, so the 8 embedded
+      // experimental items can never inflate or deflate a reported score.
+      operationalCorrect,
+      operationalTotal,
       timedOut,
       responses: moduleResponses,
     };
@@ -1615,9 +1619,21 @@ export function FullTestPage() {
                     </Badge>
                   </div>
                   <p style={{ marginTop: 6 }}>
-                    Score: <strong>{m.correct}</strong> / {m.total} (
-                    {m.total > 0 ? Math.round((m.correct / m.total) * 100) : 0}%)
+                    Score: <strong>{m.operationalCorrect ?? m.correct}</strong> /{' '}
+                    {m.operationalTotal ?? m.total} (
+                    {(m.operationalTotal ?? m.total) > 0
+                      ? Math.round(
+                          ((m.operationalCorrect ?? m.correct) / (m.operationalTotal ?? m.total)) * 100
+                        )
+                      : 0}
+                    %)
                   </p>
+                  {m.operationalTotal && m.operationalTotal !== m.total ? (
+                    <div className="muted">
+                      {m.correct} of {m.total} correct including {m.total - m.operationalTotal}{' '}
+                      unscored experimental item{m.total - m.operationalTotal === 1 ? '' : 's'}
+                    </div>
+                  ) : null}
                   <div className="row" style={{ marginTop: 8 }}>
                     {m.responses.map((r, idx) => (
                       <button

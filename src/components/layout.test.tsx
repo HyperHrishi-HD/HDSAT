@@ -92,13 +92,24 @@ describe('welcome banner', () => {
     appState = baseApp({
       mode: 'cloud',
       accountStatus: 'cloud',
-      user: { email: 'student@example.com' },
+      user: { email: 'student@example.com', displayName: 'Hrishi' },
     });
     render();
     expect(container.querySelector('.welcome-banner')).toBeNull();
     expect(container.textContent).not.toContain('Keep studying as a guest');
     expect(markWelcomeSeen).toHaveBeenCalled();
-    // Signed-in state is still surfaced, just not as a guest pitch.
+    // The top bar greets the student by name, never by email address.
+    expect(container.textContent).toContain('Cloud · Hrishi');
+    expect(container.textContent).not.toContain('Cloud · student@example.com');
+  });
+
+  it('falls back to the email when a cloud account has no display name', () => {
+    appState = baseApp({
+      mode: 'cloud',
+      accountStatus: 'cloud',
+      user: { email: 'student@example.com', displayName: '' },
+    });
+    render();
     expect(container.textContent).toContain('Cloud · student@example.com');
   });
 

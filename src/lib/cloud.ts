@@ -399,6 +399,28 @@ export async function purchaseCosmeticCloud(
   return { ok: true, ...(data as Record<string, unknown>) };
 }
 
+/**
+ * Renames the signed-in student. The auth metadata is what the header reads,
+ * and the profiles mirror keeps the cloud snapshot (and any future admin view)
+ * consistent with it.
+ */
+export async function updateDisplayNameCloud(displayName: string): Promise<string> {
+  const supabase = client();
+  const name = displayName.trim().slice(0, 40);
+  if (!name) throw new Error('Enter a display name.');
+  const { error } = await supabase.auth.updateUser({ data: { display_name: name } });
+  if (error) throw error;
+  const userId = await getUserId();
+  if (userId) {
+    const { error: profileError } = await supabase
+      .from('profiles')
+      .update({ display_name: name, updated_at: new Date().toISOString() })
+      .eq('user_id', userId);
+    if (profileError) throw profileError;
+  }
+  return name;
+}
+
 export async function setPreferredExamCloud(exam: string) {
   const supabase = client();
   const userId = await getUserId();

@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
-import { itemById } from '../lib/catalog';
 import { hasSeenWelcome, markWelcomeSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
 import { COPYRIGHT_PATH, PRIVACY_PATH, SUPPORT_EMAIL, TERMS_PATH } from '../lib/legal';
@@ -23,7 +22,6 @@ export function Layout() {
   const [showWelcome, setShowWelcome] = useState(() => !hasSeenWelcome());
 
   const activeTheme = app.settings?.activeTheme ?? null;
-  const activeFlair = app.settings?.activeFlair ? itemById(app.settings.activeFlair) : undefined;
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -108,12 +106,9 @@ export function Layout() {
               <Icon name="check" size={14} />
               <strong>{app.totals.attempts}</strong> answered
             </span>
-            {activeFlair ? (
-              <Badge tone="info">★ {activeFlair.name.replace(/ Emblem$/, '')}</Badge>
-            ) : null}
             <Badge tone={app.mode === 'cloud' ? 'good' : 'warn'}>
               {app.mode === 'cloud' ? (
-                `Cloud · ${app.user?.email ?? ''}`
+                `Cloud · ${app.user?.displayName || app.user?.email || ''}`
               ) : app.accountStatus === 'pending' ? (
                 <Link to="/account">Confirm email</Link>
               ) : (

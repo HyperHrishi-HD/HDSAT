@@ -129,6 +129,9 @@ export interface TestModuleResult {
   tier: 'module1' | 'upper' | 'lower';
   correct: number;
   total: number;
+  /** Scored (operational) subset; excludes the 2 embedded unscored items. */
+  operationalCorrect?: number;
+  operationalTotal?: number;
   timedOut: boolean;
   responses: { questionId: string; response: string | null; isCorrect: boolean }[];
 }

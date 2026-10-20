@@ -804,8 +804,17 @@ export function summarizeTest(
   const estimateFor = (section: Section): number | null => {
     const sectionModules = modules.filter((m) => m.section === section);
     if (sectionModules.length === 0) return null;
-    const correct = sectionModules.reduce((acc, m) => acc + m.correct, 0);
-    const total = sectionModules.reduce((acc, m) => acc + m.total, 0);
+    // Prefer the operational (scored) counts when the runner recorded them, so
+    // the two embedded experimental items per module never move the estimate.
+    const operational = sectionModules.every((m) => (m.operationalTotal ?? 0) > 0);
+    const correct = sectionModules.reduce(
+      (acc, m) => acc + (operational ? (m.operationalCorrect ?? 0) : m.correct),
+      0
+    );
+    const total = sectionModules.reduce(
+      (acc, m) => acc + (operational ? (m.operationalTotal ?? 0) : m.total),
+      0
+    );
     const routingModule = sectionModules.find((m) => m.tier !== 'module1');
     return estimateScaledScore(routingModule?.tier === 'upper' ? 'upper' : 'lower', correct, total);
   };

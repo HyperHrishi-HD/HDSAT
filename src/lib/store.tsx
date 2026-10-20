@@ -113,6 +113,8 @@ export interface AppValue {
     resendVerification: (email: string) => Promise<void>;
     syncGuestData: () => Promise<void>;
     updateSettings: (patch: Partial<UserSettings>) => void;
+    /** Rename the signed-in student, or the name remembered for a pending signup. */
+    updateDisplayName: (name: string) => Promise<void>;
     dismissMessages: () => void;
     resetGuestProgress: () => void;
   };
@@ -561,8 +563,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       if (!data.session) {
         throw new Error('That code was not accepted. Check the email and try again.');
       }
+      const pending = local.loadPendingAccount();
       local.clearPendingAccount();
       setPendingAccount(null);
+      if (pending?.displayName) {
+        try {
+          const saved = await cloud.updateDisplayNameCloud(pending.displayName);
+          setUser((prev) => (prev ? { ...prev, displayName: saved } : prev));
+        } catch {
+          /* keep the name from signup if the rename cannot be saved */
+        }
+      }
       await refreshSnapshot();
       if (data.user?.id) await importLocalHistoryOnce(data.user.id);
       setNotice('Email confirmed — you are signed in and your device history is backed up.');
@@ -628,6 +639,36 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     setUser(null);
     setSnapshot(null);
   }, []);
+
+  const updateDisplayName = useCallback(
+    async (name: string) => {
+      const trimmed = name.trim().slice(0, 40);
+      if (!trimmed) throw new Error('Enter a display name.');
+      if (user) {
+        const saved = await cloud.updateDisplayNameCloud(trimmed);
+        setUser((prev) => (prev ? { ...prev, displayName: saved } : prev));
+        try {
+          await refreshSnapshot();
+        } catch {
+          /* the header already shows the new name; snapshot catches up next load */
+        }
+        setNotice(`Display name changed to ${saved}.`);
+        return;
+      }
+      // An account that exists but is not confirmed yet has no session, so the
+      // name is remembered locally and applied the moment the code is verified.
+      const pending = local.loadPendingAccount();
+      if (pending) {
+        const record = { ...pending, displayName: trimmed };
+        local.savePendingAccount(record);
+        setPendingAccount(record);
+        setNotice(`Display name will be set to ${trimmed} when you confirm your email.`);
+        return;
+      }
+      throw new Error('Sign in first to change your name.');
+    },
+    [refreshSnapshot, user]
+  );
 
   // Keep the import ref pointed at the latest callback (see onAuthStateChange).
   importLocalRef.current = importLocalHistoryOnce;
@@ -703,6 +744,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       resendVerification,
       syncGuestData,
       updateSettings,
+      updateDisplayName,
       dismissMessages: () => {
         setError(null);
         setNotice(null);

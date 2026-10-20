@@ -115,6 +115,51 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
     expect(summary.totalEstimate).toBe((summary.rwEstimate ?? 0) + (summary.mathEstimate ?? 0));
   });
 
+  it('estimates from the scored items only, so embedded experimental items cannot move the score', () => {
+    const withUnscored = summarizeTest([
+      {
+        moduleId: 'rw-m1',
+        section: 'Reading and Writing',
+        tier: 'module1',
+        correct: 27,
+        total: 27,
+        operationalCorrect: 25,
+        operationalTotal: 25,
+        timedOut: false,
+        responses: [],
+      },
+      {
+        moduleId: 'rw-up',
+        section: 'Reading and Writing',
+        tier: 'upper',
+        correct: 27,
+        total: 27,
+        operationalCorrect: 25,
+        operationalTotal: 25,
+        timedOut: false,
+        responses: [],
+      },
+    ]);
+    const perfect = estimateScaledScore('upper', 50, 50);
+    expect(withUnscored.rwEstimate).toBe(perfect);
+
+    // An item missed only among the unscored ones must not change the estimate.
+    const missedUnscored = summarizeTest([
+      {
+        moduleId: 'rw-m1',
+        section: 'Reading and Writing',
+        tier: 'module1',
+        correct: 26,
+        total: 27,
+        operationalCorrect: 25,
+        operationalTotal: 25,
+        timedOut: false,
+        responses: [],
+      },
+    ]);
+    expect(missedUnscored.rwEstimate).toBe(estimateScaledScore('lower', 25, 25));
+  });
+
   it('builds non-overlapping module plans and respects released-set exclusion', () => {
     const plan = buildTestPlan(questions, {
       assessment: 'SAT',
