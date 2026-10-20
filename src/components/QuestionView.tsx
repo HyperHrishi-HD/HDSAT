@@ -29,7 +29,8 @@ export function QuestionView({
 }: {
   question: Question;
   index: number;
-  total: number;
+  /** Omit to show the position without advertising the size of the working set. */
+  total?: number;
   response: string | null;
   onResponseChange: (value: string) => void;
   eliminated?: string[];
@@ -49,7 +50,7 @@ export function QuestionView({
       <header className="question-head">
         <div className="question-head-left">
           <span className="question-index">
-            Question {index + 1} of {total}
+            {total === undefined ? `Question ${index + 1}` : `Question ${index + 1} of ${total}`}
           </span>
           {showMeta ? (
             <>

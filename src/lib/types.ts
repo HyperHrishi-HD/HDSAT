@@ -133,6 +133,27 @@ export interface TestModuleResult {
   responses: { questionId: string; response: string | null; isCorrect: boolean }[];
 }
 
+export interface PausedTestState {
+  seed: string;
+  excludeReleased: boolean;
+  sectionIndex: number;
+  stageNumber: 1 | 2;
+  tier: 'module1' | 'upper' | 'lower';
+  currentIndex: number;
+  remainingSeconds: number;
+  inSectionBreak: boolean;
+  breakSeconds: number;
+  pendingNextSectionIdx: number | null;
+  responses: Record<string, string>;
+  eliminated: Record<string, string[]>;
+  flagged: Record<string, boolean>;
+  highlights?: Record<
+    string,
+    { id: string; color: 'yellow' | 'blue' | 'pink'; text: string; note: string }[]
+  >;
+  seenQuestionIds: string[];
+}
+
 export interface TestAttempt {
   id: string;
   assessment: string;
@@ -144,6 +165,7 @@ export interface TestAttempt {
   mathEstimate: number | null;
   totalEstimate: number | null;
   durationSeconds: number;
+  pausedState?: PausedTestState;
 }
 
 export interface UserSettings {
@@ -151,6 +173,8 @@ export interface UserSettings {
   excludePreviouslyCorrect: boolean;
   excludeReleasedPracticeSet: boolean;
   timerSound: boolean;
+  activeTheme?: string | null;
+  activeFlair?: string | null;
 }
 
 export interface LocalProfile {

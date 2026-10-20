@@ -1,0 +1,117 @@
+// @vitest-environment jsdom
+/**
+ * The guest onboarding banner ("Welcome to HDSAT... create account or continue
+ * as a guest") must never appear to a student who already has a session. It
+ * used to stay on screen after sign-in because its visibility only depended on
+ * a localStorage "seen" flag.
+ */
+import { act } from 'react';
+import { createRoot, type Root } from 'react-dom/client';
+import { MemoryRouter, Route, Routes } from 'react-router-dom';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+
+declare global {
+  // eslint-disable-next-line no-var
+  var IS_REACT_ACT_ENVIRONMENT: boolean | undefined;
+}
+globalThis.IS_REACT_ACT_ENVIRONMENT = true;
+
+const markWelcomeSeen = vi.fn();
+
+vi.mock('../lib/storage', () => ({
+  hasSeenWelcome: () => false,
+  markWelcomeSeen: () => markWelcomeSeen(),
+}));
+
+type MinimalApp = Record<string, unknown>;
+
+let appState: MinimalApp;
+
+vi.mock('../lib/store', () => ({
+  useApp: () => appState,
+}));
+
+const { Layout } = await import('./Layout');
+
+let container: HTMLDivElement;
+let root: Root;
+
+function baseApp(overrides: MinimalApp = {}): MinimalApp {
+  return {
+    bankVersion: 'test',
+    questions: [],
+    hdCoins: 0,
+    currentStreak: 0,
+    totals: { attempts: 0 },
+    mode: 'guest',
+    accountStatus: 'guest',
+    user: null,
+    cloudConfigured: true,
+    error: null,
+    notice: null,
+    actions: { dismissMessages: () => {} },
+    ...overrides,
+  };
+}
+
+function render() {
+  act(() => {
+    root.render(
+      <MemoryRouter initialEntries={['/']}>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<div>home</div>} />
+          </Route>
+        </Routes>
+      </MemoryRouter>
+    );
+  });
+}
+
+beforeEach(() => {
+  appState = baseApp();
+  container = document.createElement('div');
+  document.body.appendChild(container);
+  root = createRoot(container);
+  markWelcomeSeen.mockClear();
+});
+
+afterEach(() => {
+  act(() => root.unmount());
+  container.remove();
+});
+
+describe('welcome banner', () => {
+  it('invites a first-time guest to create an account', () => {
+    render();
+    expect(container.querySelector('.welcome-banner')).not.toBeNull();
+    expect(container.textContent).toContain('Welcome to HDSAT');
+  });
+
+  it('disappears for a signed-in student and is marked seen', () => {
+    appState = baseApp({
+      mode: 'cloud',
+      accountStatus: 'cloud',
+      user: { email: 'student@example.com' },
+    });
+    render();
+    expect(container.querySelector('.welcome-banner')).toBeNull();
+    expect(container.textContent).not.toContain('Keep studying as a guest');
+    expect(markWelcomeSeen).toHaveBeenCalled();
+    // Signed-in state is still surfaced, just not as a guest pitch.
+    expect(container.textContent).toContain('Cloud · student@example.com');
+  });
+
+  it('stays hidden after the guest dismisses it', () => {
+    render();
+    const dismiss = [...container.querySelectorAll('button')].find((b) =>
+      b.textContent?.includes('Keep studying as a guest')
+    );
+    expect(dismiss).toBeTruthy();
+    act(() => {
+      dismiss!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+    expect(container.querySelector('.welcome-banner')).toBeNull();
+    expect(markWelcomeSeen).toHaveBeenCalled();
+  });
+});

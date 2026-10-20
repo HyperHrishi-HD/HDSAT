@@ -5,7 +5,7 @@ import { MathText } from '../components/MathText';
 import { DESMOS_CB_GRAPHING_URL, MathReferenceSheet } from '../components/MathTools';
 import { QuestionView } from '../components/QuestionView';
 import { ReportQuestion } from '../components/ReportQuestion';
-import { Alert, Badge, Button, Card, Select, Stat, Toggle } from '../components/ui';
+import { Alert, Badge, Button, Card, InfoTip, Select, Stat, Toggle } from '../components/ui';
 import {
   BLENDED_PSAT,
   SECTION_BREAK_MINUTES,
@@ -28,15 +28,17 @@ import type { TestAttempt, TestModuleResult } from '../lib/types';
  * they share a blueprint and difficulty ceiling; PSAT 8/9 keeps its own track
  * with no trigonometry and no hard items.
  */
-const FULL_TEST_TRACKS: { value: string; label: string }[] = [
-  { value: 'SAT', label: 'Digital SAT (Full Adaptive — 98 Qs / 134 min)' },
+const FULL_TEST_TRACKS: { value: string; label: string; hint?: string }[] = [
+  { value: 'SAT', label: 'Digital SAT', hint: 'Full Adaptive — 98 Qs / 134 min' },
   {
     value: BLENDED_PSAT,
-    label: 'PSAT/NMSQT & PSAT 10 (combined — 98 Qs / 134 min)',
+    label: 'PSAT/NMSQT & PSAT 10',
+    hint: 'Combined — 98 Qs / 134 min',
   },
   {
     value: 'PSAT 8/9',
-    label: 'PSAT 8/9 (Full Adaptive — 98 Qs / 134 min, no trigonometry, no hard items)',
+    label: 'PSAT 8/9',
+    hint: '98 Qs / 134 min, no trigonometry, no hard items',
   },
 ];
 
@@ -57,7 +59,6 @@ function DesmosCollegeBoardWindow({ onClose }: { onClose: () => void }) {
     <div className="bb-calc-window" data-testid="desmos-cb-window">
       <div className="bb-calc-titlebar">
         <span>Calculator</span>
-        <span className="bb-calc-drag-dots">⋮⋮⋮</span>
         <button
           type="button"
           className="bb-calc-close"
@@ -112,7 +113,6 @@ export function FullTestPage() {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [eliminated, setEliminated] = useState<Record<string, string[]>>({});
   const [flagged, setFlagged] = useState<Record<string, boolean>>({});
-  const [notes, setNotes] = useState<Record<string, string>>({});
 
   const [remainingSeconds, setRemainingSeconds] = useState<number>(0);
   const [completedModules, setCompletedModules] = useState<TestModuleResult[]>([]);
@@ -121,13 +121,14 @@ export function FullTestPage() {
   const [highlights, setHighlights] = useState<Record<string, HighlightRecord[]>>({});
   const [exitConfirmOpen, setExitConfirmOpen] = useState<boolean>(false);
   const [exitSaving, setExitSaving] = useState<boolean>(false);
+  const [priorElapsedSeconds, setPriorElapsedSeconds] = useState<number>(0);
+  const [initialSeenQuestionIds, setInitialSeenQuestionIds] = useState<string[]>([]);
 
   // Bluebook UI toggles
   const [showDirections, setShowDirections] = useState<boolean>(false);
   const [hideClock, setHideClock] = useState<boolean>(false);
   const [showCalc, setShowCalc] = useState<boolean>(false);
   const [showRef, setShowRef] = useState<boolean>(false);
-  const [showNotes, setShowNotes] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [showNavPopover, setShowNavPopover] = useState<boolean>(false);
   const [showReviewScreen, setShowReviewScreen] = useState<boolean>(false);
@@ -135,8 +136,22 @@ export function FullTestPage() {
   const [splitRatio, setSplitRatio] = useState<number>(50);
   const isDraggingSplitRef = useRef<boolean>(false);
 
+  // Draggable Reference Sheet position & pointer state
+  const [refPos, setRefPos] = useState<{ x: number; y: number }>(() => ({
+    x: typeof window !== 'undefined' ? Math.max(24, window.innerWidth - 780) : 120,
+    y: 74,
+  }));
+  const [isDraggingRef, setIsDraggingRef] = useState<boolean>(false);
+  // Mirrors isDraggingRef so pointermove tracking never waits on a re-render.
+  const refDraggingFlag = useRef<boolean>(false);
+  const refDragOffset = useRef<{ dx: number; dy: number }>({ dx: 0, dy: 0 });
+  const refModalRef = useRef<HTMLDivElement>(null);
+
   const sessionStartRef = useRef<number>(Date.now());
   const clientSessionIdRef = useRef<string>(newEventId());
+  // A module can be submitted exactly once. Guards the review-screen Next
+  // button, the timer and a double click from grading the same module twice.
+  const submittedModuleRef = useRef<string | null>(null);
 
   const previewPlan = useMemo(
     () =>
@@ -149,37 +164,27 @@ export function FullTestPage() {
     [app.questions, assessment, excludeReleased, seenQuestionIds]
   );
 
-  // Module countdown timer
+  // Module countdown timer. Expiry is handled by the effect below, not inside
+  // the state updater: updaters must stay pure (StrictMode calls them twice)
+  // and a side effect there can grade the same module twice.
   useEffect(() => {
     if (!activeStage || inSectionBreak) return;
     const timer = window.setInterval(() => {
-      setRemainingSeconds((prev) => {
-        if (prev <= 1) {
-          window.clearInterval(timer);
-          submitCurrentModule(true);
-          return 0;
-        }
-        return prev - 1;
-      });
+      setRemainingSeconds((prev) => Math.max(0, prev - 1));
     }, 1000);
     return () => window.clearInterval(timer);
-  }, [activeStage, inSectionBreak]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [activeStage, inSectionBreak]);
 
-  // 10-minute inter-section break countdown timer
+  // 10-minute inter-section break countdown. As with the module clock, the
+  // interval only decrements; resuming happens in an effect below so the state
+  // updater stays pure.
   useEffect(() => {
     if (!inSectionBreak) return;
     const timer = window.setInterval(() => {
-      setBreakSeconds((prev) => {
-        if (prev <= 1) {
-          window.clearInterval(timer);
-          resumeFromSectionBreak();
-          return 0;
-        }
-        return prev - 1;
-      });
+      setBreakSeconds((prev) => Math.max(0, prev - 1));
     }, 1000);
     return () => window.clearInterval(timer);
-  }, [inSectionBreak]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [inSectionBreak]);
 
   // Resizable split divider mouse listener
   useEffect(() => {
@@ -199,6 +204,18 @@ export function FullTestPage() {
     };
   }, []);
 
+  // Keep reference sheet clamped inside viewport on window resize
+  useEffect(() => {
+    const onResize = () => {
+      setRefPos((prev) => ({
+        x: Math.max(12, Math.min(window.innerWidth - 320, prev.x)),
+        y: Math.max(56, Math.min(window.innerHeight - 120, prev.y)),
+      }));
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
   const startFullSimulation = () => {
     const seed = `sim:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`;
     const plan = buildTestPlan(app.questions, {
@@ -212,6 +229,12 @@ export function FullTestPage() {
 
     clientSessionIdRef.current = newEventId();
     sessionStartRef.current = Date.now();
+    submittedModuleRef.current = null;
+    suppressAutosaveRef.current = false;
+    autosaveSignatureRef.current = null;
+    attemptCreatedAtRef.current = new Date().toISOString();
+    setPriorElapsedSeconds(0);
+    setInitialSeenQuestionIds(seenQuestionIds);
     setTestPlan(plan);
     setCompletedModules([]);
     setFinishedAttempt(null);
@@ -219,7 +242,7 @@ export function FullTestPage() {
     setResponses({});
     setEliminated({});
     setFlagged({});
-    setNotes({});
+    setHighlights({});
     setCurrentIndex(0);
     setShowCalc(false);
     setShowRef(false);
@@ -255,6 +278,13 @@ export function FullTestPage() {
     });
     setRemainingSeconds(nextMod1.minutes * 60);
   };
+
+  // Start Section 2 automatically when the break clock hits zero.
+  useEffect(() => {
+    if (!inSectionBreak || breakSeconds > 0) return;
+    resumeFromSectionBreak();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [breakSeconds, inSectionBreak]);
 
   /**
    * Grades one module against the current responses and records every answered
@@ -301,6 +331,9 @@ export function FullTestPage() {
 
   const submitCurrentModule = async (timedOut = false) => {
     if (!activeStage || !testPlan) return;
+    const submitKey = `${activeStage.sectionIndex}:${activeStage.stageNumber}`;
+    if (submittedModuleRef.current === submitKey) return;
+    submittedModuleRef.current = submitKey;
     const mod = activeStage.plan;
     const { modResult, correctCount, operationalCorrect, operationalTotal } =
       await gradeModule(mod, timedOut);
@@ -347,7 +380,8 @@ export function FullTestPage() {
     setShowCalc(false);
     setShowRef(false);
     const summary = summarizeTest(nextCompleted);
-    const totalDuration = Math.max(1, Math.round((Date.now() - sessionStartRef.current) / 1000));
+    const currentRunDuration = Math.max(1, Math.round((Date.now() - sessionStartRef.current) / 1000));
+    const totalDuration = priorElapsedSeconds + currentRunDuration;
     const attempt: TestAttempt = {
       id: clientSessionIdRef.current,
       assessment,
@@ -360,6 +394,7 @@ export function FullTestPage() {
       durationSeconds: totalDuration,
     };
     setFinishedAttempt(attempt);
+    suppressAutosaveRef.current = true;
     await app.actions.recordTest(attempt, clientSessionIdRef.current);
 
     const totalAnswered = nextCompleted.reduce((acc, m) => acc + m.total, 0);
@@ -375,6 +410,14 @@ export function FullTestPage() {
     }
   };
 
+  // Auto-submit the module the moment the countdown reaches zero. This lives
+  // outside the interval callback so the timer only ever decrements state.
+  useEffect(() => {
+    if (!activeStage || inSectionBreak || remainingSeconds > 0) return;
+    void submitCurrentModule(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [remainingSeconds, activeStage, inSectionBreak]);
+
   const exitSimulation = () => {
     setActiveStage(null);
     setInSectionBreak(false);
@@ -387,34 +430,143 @@ export function FullTestPage() {
   };
 
   /**
-   * Exit without discarding the run: grade the module in progress, keep every
-   * completed module, stamp the elapsed time, and save the attempt locally or
-   * to the signed-in account. The score report opens immediately afterwards.
+   * Snapshot of the running test: current module position, answers, flags,
+   * highlights, remaining timer and elapsed time. Shared by the autosave loop,
+   * "Save & exit", and the pagehide flush so every path stores the same data.
+   * Scores stay null until all four modules are submitted.
+   */
+  const buildPausedAttempt = (): TestAttempt | null => {
+    if (!testPlan || !activeStage) return null;
+    const currentRunDuration = Math.max(
+      1,
+      Math.round((Date.now() - sessionStartRef.current) / 1000)
+    );
+    return {
+      id: clientSessionIdRef.current,
+      assessment,
+      status: 'incomplete',
+      createdAt: attemptCreatedAtRef.current,
+      modules: completedModules,
+      rwEstimate: null,
+      mathEstimate: null,
+      totalEstimate: null,
+      durationSeconds: priorElapsedSeconds + currentRunDuration,
+      pausedState: {
+        seed: testPlan.seed,
+        excludeReleased,
+        sectionIndex: activeStage.sectionIndex,
+        stageNumber: activeStage.stageNumber,
+        tier: activeStage.plan.tier,
+        currentIndex,
+        remainingSeconds,
+        inSectionBreak,
+        breakSeconds,
+        pendingNextSectionIdx,
+        responses,
+        eliminated,
+        flagged,
+        highlights,
+        seenQuestionIds: initialSeenQuestionIds,
+      },
+    };
+  };
+
+  // Always-current closures so the autosave timers (installed once) can read the
+  // latest question state and store actions without re-registering on every
+  // render — app.actions has a fresh identity each store render, so it must not
+  // sit in the effect dependency array (that would re-arm timers forever).
+  const buildPausedAttemptRef = useRef(buildPausedAttempt);
+  buildPausedAttemptRef.current = buildPausedAttempt;
+  const appActionsRef = useRef(app.actions);
+  appActionsRef.current = app.actions;
+  // Last-written snapshot signature: autosave skips identical data so a save
+  // never triggers a render that triggers another save.
+  const autosaveSignatureRef = useRef<string | null>(null);
+  // Set when the run ends (completed or saved-and-exited): a stale debounced
+  // snapshot must never overwrite the final attempt row with an incomplete one.
+  const suppressAutosaveRef = useRef<boolean>(false);
+  // Creation timestamp is fixed when the run starts/resumes so repeated
+  // autosaves update one row instead of restamping the attempt every time.
+  const attemptCreatedAtRef = useRef<string>(new Date().toISOString());
+
+  /**
+   * Continuous autosave. localStorage gets a synchronous snapshot 1.2s after
+   * every meaningful change and every 15 seconds regardless, so closing the tab
+   * or the whole browser mid-test — without touching Exit — still preserves the
+   * run and its remaining timer. Cloud accounts get a throttled Supabase mirror
+   * plus an immediate flush when the page is hidden or closed.
+   */
+  useEffect(() => {
+    const snapshotNow = (flush: boolean) => {
+      if (suppressAutosaveRef.current) return;
+      const attempt = buildPausedAttemptRef.current();
+      if (!attempt) return;
+      const signature = JSON.stringify([
+        attempt.durationSeconds,
+        attempt.pausedState?.currentIndex,
+        attempt.pausedState?.remainingSeconds,
+        attempt.pausedState?.inSectionBreak,
+        attempt.pausedState?.breakSeconds,
+        attempt.pausedState?.responses,
+        attempt.pausedState?.flagged,
+        attempt.pausedState?.eliminated,
+        attempt.pausedState?.highlights,
+        attempt.modules.length,
+      ]);
+      const changed = signature !== autosaveSignatureRef.current;
+      autosaveSignatureRef.current = signature;
+      if (flush) {
+        appActionsRef.current.flushTestSync(attempt, clientSessionIdRef.current);
+      } else if (changed) {
+        appActionsRef.current.autosaveTest(attempt, clientSessionIdRef.current);
+      }
+    };
+
+    const debounce = window.setTimeout(() => snapshotNow(false), 1200);
+    const interval = window.setInterval(() => snapshotNow(false), 15000);
+    const onHide = () => {
+      if (document.visibilityState === 'hidden') snapshotNow(true);
+    };
+    const onPageHide = () => snapshotNow(true);
+    window.addEventListener('pagehide', onPageHide);
+    document.addEventListener('visibilitychange', onHide);
+    return () => {
+      window.clearTimeout(debounce);
+      window.clearInterval(interval);
+      window.removeEventListener('pagehide', onPageHide);
+      document.removeEventListener('visibilitychange', onHide);
+    };
+    // Re-arms the debounced snapshot after every answer, flag, highlight or
+    // navigation change; the 15s interval covers the ticking clock.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    activeStage,
+    inSectionBreak,
+    currentIndex,
+    responses,
+    flagged,
+    eliminated,
+    highlights,
+    completedModules,
+    pendingNextSectionIdx,
+  ]);
+
+  /**
+   * Exit without discarding the run: save the current module progress, answers,
+   * flags, highlights, and remaining timer so the student can resume later from
+   * "Past simulations". Scores and answers stay hidden until the full simulation
+   * is completed.
    */
   const saveAndExit = async () => {
-    if (!activeStage) {
+    const attempt = buildPausedAttempt();
+    if (!attempt) {
       exitSimulation();
       return;
     }
     setExitSaving(true);
     try {
-      const { modResult } = await gradeModule(activeStage.plan, false);
-      const nextCompleted = [...completedModules, modResult];
-      const summary = summarizeTest(nextCompleted);
-      const totalDuration = Math.max(1, Math.round((Date.now() - sessionStartRef.current) / 1000));
-      const attempt: TestAttempt = {
-        id: clientSessionIdRef.current,
-        assessment,
-        status: 'incomplete',
-        createdAt: new Date().toISOString(),
-        modules: nextCompleted,
-        rwEstimate: summary.rwEstimate,
-        mathEstimate: summary.mathEstimate,
-        totalEstimate: summary.totalEstimate,
-        durationSeconds: totalDuration,
-      };
-      setCompletedModules(nextCompleted);
-      setFinishedAttempt(attempt);
+      setFinishedAttempt(null);
+      suppressAutosaveRef.current = true;
       await app.actions.recordTest(attempt, clientSessionIdRef.current);
       exitSimulation();
     } finally {
@@ -422,7 +574,69 @@ export function FullTestPage() {
     }
   };
 
+  const resumeSavedAttempt = (attempt: TestAttempt) => {
+    const ps = attempt.pausedState;
+    if (!ps) {
+      // Legacy incomplete attempt without pausedState: start a fresh run with its assessment
+      setAssessment(attempt.assessment);
+      startFullSimulation();
+      return;
+    }
+    const plan = buildTestPlan(app.questions, {
+      assessment: attempt.assessment,
+      excludeReleasedPracticeSet: ps.excludeReleased,
+      seed: ps.seed,
+      seenQuestionIds: ps.seenQuestionIds ?? [],
+    });
+    const secPlan = plan.sections[ps.sectionIndex] ?? plan.sections[0];
+    if (!secPlan) return;
+    const modPlan =
+      ps.tier === 'upper'
+        ? secPlan.upper
+        : ps.tier === 'lower'
+        ? secPlan.lower
+        : secPlan.module1;
+
+    clientSessionIdRef.current = attempt.id;
+    sessionStartRef.current = Date.now();
+    submittedModuleRef.current = null;
+    suppressAutosaveRef.current = false;
+    autosaveSignatureRef.current = null;
+    attemptCreatedAtRef.current = attempt.createdAt;
+    setPriorElapsedSeconds(attempt.durationSeconds ?? 0);
+    setInitialSeenQuestionIds(ps.seenQuestionIds ?? []);
+    setAssessment(attempt.assessment);
+    setExcludeReleased(ps.excludeReleased);
+    setTestPlan(plan);
+    setCompletedModules(attempt.modules ?? []);
+    setFinishedAttempt(null);
+    setReviewQuestionId(null);
+    setResponses(ps.responses ?? {});
+    setEliminated(ps.eliminated ?? {});
+    setFlagged(ps.flagged ?? {});
+    setHighlights((ps.highlights as Record<string, HighlightRecord[]>) ?? {});
+    setCurrentIndex(Math.min(Math.max(0, ps.currentIndex ?? 0), Math.max(0, modPlan.questions.length - 1)));
+    setShowCalc(false);
+    setShowRef(false);
+    setShowDirections(false);
+    setShowNavPopover(false);
+    setShowReviewScreen(false);
+    setInSectionBreak(Boolean(ps.inSectionBreak));
+    setBreakSeconds(ps.breakSeconds ?? SECTION_BREAK_MINUTES * 60);
+    setPendingNextSectionIdx(ps.pendingNextSectionIdx ?? null);
+    setActiveStage({
+      sectionIndex: ps.sectionIndex,
+      stageNumber: ps.stageNumber,
+      plan: modPlan,
+    });
+    setRemainingSeconds(ps.remainingSeconds > 0 ? ps.remainingSeconds : modPlan.minutes * 60);
+  };
+
   const openPastAttempt = (attempt: TestAttempt) => {
+    if (attempt.status === 'incomplete') {
+      resumeSavedAttempt(attempt);
+      return;
+    }
     const restored: Record<string, string> = {};
     attempt.modules.forEach((module) =>
       module.responses.forEach((response) => {
@@ -437,6 +651,72 @@ export function FullTestPage() {
   const currentQuestion = activeStage ? activeStage.plan.questions[currentIndex] ?? null : null;
   const isMathSection = activeStage?.plan.section === 'Math';
   const sectionNumber = activeStage ? activeStage.sectionIndex + 1 : 1;
+
+  // Desktop keyboard controls, Bluebook style. Typing inside the SPR box or a
+  // note editor is never intercepted.
+  useEffect(() => {
+    if (!activeStage || inSectionBreak || showReviewScreen || finishedAttempt) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+
+      const question = activeStage.plan.questions[currentIndex];
+      if (!question) return;
+      const key = event.key.toLowerCase();
+
+      const letterAt = ['a', 'b', 'c', 'd'].indexOf(key);
+      const digitAt = ['1', '2', '3', '4'].indexOf(key);
+      const choiceAt = letterAt >= 0 ? letterAt : digitAt;
+      if (choiceAt >= 0 && question.format === 'multiple_choice' && question.choices?.[choiceAt]) {
+        event.preventDefault();
+        const choiceId = question.choices[choiceAt].id;
+        setResponses((prev) => ({ ...prev, [question.id]: choiceId }));
+        return;
+      }
+
+      if (key === 'm') {
+        event.preventDefault();
+        setFlagged((prev) => ({ ...prev, [question.id]: !prev[question.id] }));
+        return;
+      }
+      if (key === 'arrowleft') {
+        event.preventDefault();
+        setCurrentIndex((i) => Math.max(0, i - 1));
+        return;
+      }
+      if (key === 'arrowright' || key === 'enter' || event.key === ' ') {
+        if (event.key === 'Enter' && !(responses[question.id] ?? '').trim()) return;
+        event.preventDefault();
+        if (currentIndex + 1 < activeStage.plan.questions.length) {
+          setCurrentIndex((i) => i + 1);
+        } else {
+          setShowReviewScreen(true);
+        }
+        return;
+      }
+      if (key === 'escape') {
+        setShowNavPopover(false);
+        setShowDirections(false);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [
+    activeStage,
+    inSectionBreak,
+    showReviewScreen,
+    finishedAttempt,
+    currentIndex,
+    responses,
+  ]);
 
   // -------------------------------------------------------------------------
   // 10-Minute Break Screen (Full-Screen Bluebook Style)
@@ -562,26 +842,19 @@ export function FullTestPage() {
                   type="button"
                   className={`bb-tool-btn${showRef ? ' is-active' : ''}`}
                   onClick={() => setShowRef((v) => !v)}
+                  title="Open the math reference sheet"
                 >
                   <span className="bb-tool-icon">𝑥²</span>
                   <span className="bb-tool-label">Reference</span>
                 </button>
               </>
-            ) : (
-              <button
-                type="button"
-                className={`bb-tool-btn${showNotes ? ' is-active' : ''}`}
-                onClick={() => setShowNotes((v) => !v)}
-              >
-                <span className="bb-tool-icon">✎</span>
-                <span className="bb-tool-label">Notes</span>
-              </button>
-            )}              <button
-                type="button"
-                className="bb-tool-btn"
-                onClick={() => setExitConfirmOpen(true)}
-                title="Save and exit practice test"
-              >
+            ) : null}
+            <button
+              type="button"
+              className="bb-tool-btn"
+              onClick={() => setExitConfirmOpen(true)}
+              title="Save and exit practice test"
+            >
               <span className="bb-tool-icon">↪</span>
               <span className="bb-tool-label">Exit</span>
             </button>
@@ -596,6 +869,14 @@ export function FullTestPage() {
           <div className="bb-directions-popover" role="dialog" aria-label="Section directions">
             <div className="bb-directions-body">
               <p>{isMathSection ? MATH_DIRECTIONS : RW_DIRECTIONS}</p>
+              <div className="bb-directions-shortcuts">
+                <strong>Keyboard Shortcuts:</strong>{' '}
+                <span>
+                  <code>A</code>–<code>D</code> or <code>1</code>–<code>4</code> select answer ·{' '}
+                  <code>←</code> / <code>→</code> move · <code>Space</code> or <code>Enter</code>{' '}
+                  next · <code>M</code> mark for review · <code>Esc</code> close panel
+                </span>
+              </div>
             </div>
             <div className="bb-directions-foot">
               <button
@@ -609,17 +890,80 @@ export function FullTestPage() {
           </div>
         ) : null}
 
-        {/* Reference sheet floating window */}
-        {showRef ? (
-          <div className="bb-floating-modal">
-            <div className="bb-floating-head">
+        {/* Reference sheet draggable floating window (Math only) */}
+        {isMathSection && showRef ? (
+          <div
+            ref={refModalRef}
+            className={`bb-floating-modal bb-ref-window${isDraggingRef ? ' is-dragging' : ''}`}
+            style={{
+              left: `${refPos.x}px`,
+              top: `${refPos.y}px`,
+              right: 'auto',
+            }}
+            data-testid="reference-sheet-modal"
+          >
+            <div
+              className="bb-floating-head bb-ref-drag-handle"
+              onPointerDown={(e) => {
+                if ((e.target as HTMLElement).closest('button')) return;
+                e.preventDefault();
+                try {
+                  e.currentTarget.setPointerCapture(e.pointerId);
+                } catch {
+                  /* synthetic pointers have no capturable id; dragging still works */
+                }
+                refDragOffset.current = {
+                  dx: e.clientX - refPos.x,
+                  dy: e.clientY - refPos.y,
+                };
+                refDraggingFlag.current = true;
+                setIsDraggingRef(true);
+              }}
+              onPointerMove={(e) => {
+                if (!refDraggingFlag.current) return;
+                const modalW = refModalRef.current?.offsetWidth ?? 680;
+                const modalH = refModalRef.current?.offsetHeight ?? 360;
+                const nextX = Math.max(
+                  8,
+                  Math.min(window.innerWidth - Math.min(modalW, 240), e.clientX - refDragOffset.current.dx)
+                );
+                const nextY = Math.max(
+                  8,
+                  Math.min(window.innerHeight - Math.min(modalH, 80), e.clientY - refDragOffset.current.dy)
+                );
+                setRefPos({ x: nextX, y: nextY });
+              }}
+              onPointerUp={(e) => {
+                if (refDraggingFlag.current) {
+                  try {
+                    e.currentTarget.releasePointerCapture(e.pointerId);
+                  } catch {
+                    /* ignore */
+                  }
+                  refDraggingFlag.current = false;
+                  setIsDraggingRef(false);
+                }
+              }}
+              onLostPointerCapture={() => {
+                refDraggingFlag.current = false;
+                setIsDraggingRef(false);
+              }}
+              onPointerCancel={() => setIsDraggingRef(false)}
+            >
               <strong>Reference Sheet</strong>
-              <button type="button" onClick={() => setShowRef(false)}>
+              <span className="bb-calc-drag-dots" aria-hidden="true" title="Drag to move">
+                ⋮⋮⋮
+              </span>
+              <button
+                type="button"
+                onClick={() => setShowRef(false)}
+                aria-label="Close reference sheet"
+              >
                 ✕
               </button>
             </div>
             <div className="bb-floating-body">
-              <MathReferenceSheet />
+              <MathReferenceSheet assessment={assessment} />
             </div>
           </div>
         ) : null}
@@ -711,22 +1055,6 @@ export function FullTestPage() {
                           </div>
                         ) : null}
                       </HighlightableStimulus>
-
-                      {showNotes ? (
-                        <div className="bb-notes-box">
-                          <label className="field-label">
-                            Scratch Notes for Question {currentIndex + 1}
-                          </label>
-                          <textarea
-                            rows={3}
-                            value={notes[qId] ?? ''}
-                            onChange={(e) =>
-                              setNotes((prev) => ({ ...prev, [qId]: e.target.value }))
-                            }
-                            placeholder="Add your highlight notes or outline thoughts here..."
-                          />
-                        </div>
-                      ) : null}
                     </div>
                   )}
                 </section>
@@ -1033,9 +1361,10 @@ export function FullTestPage() {
             <div className="bb-modal">
               <h2 id="bb-exit-title">Save this test and exit?</h2>
               <p>
-                Your answers from this module and every module you already submitted are saved with
-                the elapsed time. Open it again any time under <strong>Past simulations</strong> on
-                the Full test page.
+                Your progress, selected answers, highlights, and remaining timer will be saved so
+                you can <strong>resume right where you left off</strong> under{' '}
+                <strong>Past simulations</strong> on the Full test page. Scores and answer
+                explanations stay locked until you complete all modules.
               </p>
               <p className="bb-modal-meta">
                 <span>
@@ -1081,15 +1410,38 @@ export function FullTestPage() {
     <div>
       {!finishedAttempt ? (
         <Card>
-          <h1>Full-Length Bluebook Adaptive Practice Test</h1>
-          <p>
-            Simulates the official full-length Digital {assessment} structure in a full-screen
-            Bluebook interface: <strong>98 total questions</strong> across{' '}
-            <strong>134 minutes</strong> (plus a 10-minute inter-section break). Responses are
-            never graded on Next—each module is scored only when you submit it.
+          <div className="row-between">
+            <div className="row">
+              <h1>Full-Length Adaptive Practice Test</h1>
+              <InfoTip label="Blueprint & scoring">
+                <div className="stack" style={{ gap: 8 }}>
+                  <div>
+                    <strong>98 total questions · 134 minutes</strong> (90 operational scored + 8
+                    unscored experimental items, with a 10-minute break between sections).
+                  </div>
+                  <div>
+                    <strong>Section 1 — Reading &amp; Writing (54 items · 64 min):</strong> two
+                    32-minute adaptive modules of 27 questions across Craft &amp; Structure,
+                    Information &amp; Ideas, Standard English Conventions, and Expression of Ideas.
+                  </div>
+                  <div>
+                    <strong>Section 2 — Math (44 items · 70 min):</strong> two 35-minute adaptive
+                    modules of 22 questions (~75% MC / ~25% SPR) in ascending difficulty.
+                  </div>
+                  <div>
+                    <strong>Fresh-item mode:</strong> draws unseen questions first ({unseenPool.rw}{' '}
+                    R&amp;W and {unseenPool.math} Math unseen available).
+                  </div>
+                </div>
+              </InfoTip>
+            </div>
+            <Badge tone="info">98 Qs · 134 min</Badge>
+          </div>
+          <p className="muted">
+            Full-screen Bluebook simulation for {assessment}. Modules are scored on submission.
           </p>
 
-          <div className="card-grid" style={{ marginTop: 14 }}>
+          <div style={{ marginTop: 14 }}>
             <Select
               label="Assessment"
               value={assessment}
@@ -1102,15 +1454,7 @@ export function FullTestPage() {
             checked={excludeReleased}
             onChange={setExcludeReleased}
             label="Exclude Benchmark Simulation Set items"
-            hint="Optional: reserve the HDSAT Benchmark Form A items for a dedicated benchmark sitting. Leave unchecked to let them appear in this simulation."
           />
-
-          <p className="muted" style={{ marginTop: 8 }}>
-            <strong>Fresh-item mode:</strong> every full test draws only questions you have not
-            attempted yet — {unseenPool.rw} unseen Reading &amp; Writing items and {unseenPool.math}{' '}
-            unseen Math items are available for this assessment. Previously attempted items can only
-            return if the unseen supply runs out, and the notice below will say so.
-          </p>
 
           {previewPlan.warnings.length > 0 ? (
             <div style={{ margin: '12px 0' }}>
@@ -1127,44 +1471,13 @@ export function FullTestPage() {
             </div>
           ) : null}
 
-          <div className="grid-2" style={{ marginTop: 12 }}>
-            <div className="muted-block">
-              <strong>Section 1: Reading and Writing (54 items · 64 minutes)</strong>
-              <div className="muted" style={{ marginTop: 4 }}>
-                • Module 1 (Routing): 27 questions · 32 minutes (30% Easy / 40% Medium / 30% Hard)
-              </div>
-              <div className="muted">
-                • Module 2 (Adaptive Upper or Lower): 27 questions · 32 minutes
-              </div>
-              <div className="muted" style={{ marginTop: 4 }}>
-                Domain order: Craft &amp; Structure → Information &amp; Ideas → Standard English
-                Conventions → Expression of Ideas. The four bands follow that order but overlap by up
-                to three items (for example, Information &amp; Ideas can start near item 5 and finish
-                near item 16) so no two runs share a rigid layout.
-              </div>
-            </div>
-            <div className="muted-block">
-              <strong>Section 2: Math (44 items · 70 minutes)</strong>
-              <div className="muted" style={{ marginTop: 4 }}>
-                • Module 1 (Routing): 22 questions · 35 minutes (~75% MC / ~25% SPR intermixed)
-              </div>
-              <div className="muted">
-                • Module 2 (Adaptive Upper or Lower): 22 questions · 35 minutes
-              </div>
-              <div className="muted" style={{ marginTop: 4 }}>
-                Continuous linear difficulty progression (1 → 22) across Algebra (~35%), Advanced
-                Math (~35%), Problem-Solving &amp; Data Analysis (~15%), and Geometry &amp; Trig
-                (~15%).
-              </div>
-            </div>
-          </div>
-
           <div className="row-between" style={{ marginTop: 16 }}>
             <span className="muted">
-              92 operational scored items + 6 embedded unscored experimental items · 10-minute
-              break between sections.
+              {unseenPool.rw} R&amp;W · {unseenPool.math} Math unseen items ready
             </span>
-            <Button onClick={startFullSimulation}>Launch Full-Screen Bluebook Test</Button>
+            <Button icon="play" onClick={startFullSimulation}>
+              Launch Full-Screen Bluebook Test
+            </Button>
           </div>
 
           {app.testAttempts.length > 0 ? (
@@ -1203,18 +1516,34 @@ export function FullTestPage() {
                           })}
                         </td>
                         <td>{attempt.assessment}</td>
-                        <td>{attempt.rwEstimate ?? '—'}</td>
-                        <td>{attempt.mathEstimate ?? '—'}</td>
-                        <td>{attempt.totalEstimate ?? '—'}</td>
+                        <td>
+                          {attempt.status === 'incomplete'
+                            ? 'In progress'
+                            : attempt.rwEstimate ?? '—'}
+                        </td>
+                        <td>
+                          {attempt.status === 'incomplete'
+                            ? 'In progress'
+                            : attempt.mathEstimate ?? '—'}
+                        </td>
+                        <td>
+                          {attempt.status === 'incomplete'
+                            ? 'Complete to score'
+                            : attempt.totalEstimate ?? '—'}
+                        </td>
                         <td>{formatClock(attempt.durationSeconds)}</td>
                         <td>
                           <Badge tone={attempt.status === 'incomplete' ? 'warn' : 'good'}>
-                            {attempt.status === 'incomplete' ? 'Saved on exit' : 'Completed'}
+                            {attempt.status === 'incomplete' ? 'Saved · In progress' : 'Completed'}
                           </Badge>
                         </td>
                         <td>
-                          <Button size="sm" variant="outline" onClick={() => openPastAttempt(attempt)}>
-                            Open
+                          <Button
+                            size="sm"
+                            variant={attempt.status === 'incomplete' ? 'primary' : 'outline'}
+                            onClick={() => openPastAttempt(attempt)}
+                          >
+                            {attempt.status === 'incomplete' ? 'Resume' : 'Review'}
                           </Button>
                         </td>
                       </tr>

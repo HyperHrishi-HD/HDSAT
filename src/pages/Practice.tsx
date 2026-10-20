@@ -4,7 +4,7 @@ import { FigureView, StimulusView } from '../components/FigureView';
 import { CalculatorPanel, MathReferenceSheet } from '../components/MathTools';
 import { MathText } from '../components/MathText';
 import { QuestionView, type Feedback } from '../components/QuestionView';
-import { Badge, Button, Card, EmptyState, Select, Stat, Toggle } from '../components/ui';
+import { Badge, Button, Card, EmptyState, InfoTip, Select, Stat, Toggle } from '../components/ui';
 import { buildPracticeSession, filterQuestions, formatClock } from '../lib/examEngine';
 import { checkAnswer } from '../lib/grading';
 import { newEventId } from '../lib/storage';
@@ -328,19 +328,37 @@ export function PracticePage() {
       <Card>
         <div className="row-between">
           <div>
-            <h1>Practice &amp; Skill Drills</h1>
-            <p>
-              Targeted domain practice, fast-paced Practice Rush, and deterministic diagnostic coaching.
-            </p>
+            <div className="row">
+              <h1>Practice &amp; Skill Drills</h1>
+              <InfoTip label="Practice modes">
+                Filter the bank by assessment, section, domain, and difficulty, run a timed Practice
+                Rush, or use the rule-based Study Coach to target your lowest-accuracy domains.
+              </InfoTip>
+            </div>
           </div>
           <div className="row">
-            <Button variant={tab === 'custom' ? 'primary' : 'outline'} size="sm" onClick={() => setTab('custom')}>
+            <Button
+              variant={tab === 'custom' ? 'primary' : 'outline'}
+              size="sm"
+              icon="practice"
+              onClick={() => setTab('custom')}
+            >
               Custom Practice
             </Button>
-            <Button variant={tab === 'rush' ? 'primary' : 'outline'} size="sm" onClick={() => setTab('rush')}>
+            <Button
+              variant={tab === 'rush' ? 'primary' : 'outline'}
+              size="sm"
+              icon="bolt"
+              onClick={() => setTab('rush')}
+            >
               Practice Rush
             </Button>
-            <Button variant={tab === 'assistant' ? 'primary' : 'outline'} size="sm" onClick={() => setTab('assistant')}>
+            <Button
+              variant={tab === 'assistant' ? 'primary' : 'outline'}
+              size="sm"
+              icon="spark"
+              onClick={() => setTab('assistant')}
+            >
               Study Coach
             </Button>
           </div>
@@ -349,10 +367,10 @@ export function PracticePage() {
 
       {tab === 'custom' && !sessionId ? (
         <Card>
-          <h2>Configure Custom Practice Session</h2>
-          <p className="muted">
-            Filter the question bank by assessment, section, domain, difficulty, source, and personal history.
-          </p>
+          <div className="row-between">
+            <h2>Custom Practice</h2>
+            <Badge tone="info">{matchingPool.length} matching items</Badge>
+          </div>
 
           <div className="card-grid" style={{ marginTop: 12 }}>
             <Select
@@ -466,11 +484,12 @@ export function PracticePage() {
 
           <div className="row-between" style={{ marginTop: 14 }}>
             <span className="muted">
-              <strong>{matchingPool.length}</strong> licensed question{matchingPool.length === 1 ? '' : 's'} match your
-              filters.
+              {matchingPool.length === 0
+                ? 'No questions match these filters yet.'
+                : `${Math.min(count, matchingPool.length)} items ready from ${matchingPool.length} matching.`}
             </span>
-            <Button onClick={startCustomSession} disabled={matchingPool.length === 0}>
-              Start session ({Math.min(count, matchingPool.length)} items)
+            <Button icon="play" onClick={startCustomSession} disabled={matchingPool.length === 0}>
+              Start session
             </Button>
           </div>
         </Card>

@@ -247,22 +247,27 @@ export async function fetchSnapshot(): Promise<CloudSnapshot> {
   });
 
   const testAttempts: TestAttempt[] = (testsRes.data ?? []).map((row: Record<string, unknown>) => {
-    const payload = (row.modules ?? {}) as { modules?: TestAttempt['modules'] };
+    const payload = (row.modules ?? {}) as {
+      modules?: TestAttempt['modules'];
+      pausedState?: TestAttempt['pausedState'];
+    };
     const estimates = (row.estimated_score_range ?? {}) as {
       rw?: number | null;
       math?: number | null;
       total?: number | null;
     };
+    const isAbandoned = String(row.status) === 'abandoned' || String(row.status) === 'in_progress';
     return {
-      id: String(row.id),
+      id: String(row.client_session_id ?? row.id),
       assessment: String(row.assessment ?? 'SAT'),
-      status: String(row.status) === 'abandoned' ? 'incomplete' : 'completed',
+      status: isAbandoned ? 'incomplete' : 'completed',
       createdAt: String(row.completed_at ?? row.started_at ?? new Date().toISOString()),
       modules: Array.isArray(payload.modules) ? (payload.modules as TestAttempt['modules']) : [],
-      rwEstimate: estimates.rw ?? null,
-      mathEstimate: estimates.math ?? null,
-      totalEstimate: estimates.total ?? null,
+      rwEstimate: isAbandoned ? null : estimates.rw ?? null,
+      mathEstimate: isAbandoned ? null : estimates.math ?? null,
+      totalEstimate: isAbandoned ? null : estimates.total ?? null,
       durationSeconds: Number(row.time_spent_seconds ?? 0),
+      pausedState: payload.pausedState,
     };
   });
 
@@ -451,6 +456,7 @@ export async function recordTestCloud(
   const sum = (rows: typeof attempt.modules, key: 'correct' | 'total') =>
     rows.reduce((acc, m) => acc + m[key], 0);
 
+  const isIncomplete = options.status === 'incomplete';
   const { data, error } = await supabase
     .from('test_attempts')
     .upsert(
@@ -459,21 +465,26 @@ export async function recordTestCloud(
         client_session_id: options.clientSessionId,
         assessment: toDbAssessment(options.assessment),
         mode: 'full_adaptive',
-        status: options.status === 'incomplete' ? 'abandoned' : 'completed',
-        modules: { modules: attempt.modules },
+        status: isIncomplete ? 'abandoned' : 'completed',
+        modules: {
+          modules: attempt.modules,
+          ...(attempt.pausedState ? { pausedState: attempt.pausedState } : {}),
+        },
         rw_route: rwModules.some((m) => m.tier === 'upper') ? 'higher' : 'lower',
         math_route: mathModules.some((m) => m.tier === 'upper') ? 'higher' : 'lower',
-        raw_correct: sum(attempt.modules, 'correct'),
-        raw_total: sum(attempt.modules, 'total'),
-        rw_correct: sum(rwModules, 'correct'),
-        rw_total: sum(rwModules, 'total'),
-        math_correct: sum(mathModules, 'correct'),
-        math_total: sum(mathModules, 'total'),
-        estimated_score_range: {
-          rw: attempt.rwEstimate,
-          math: attempt.mathEstimate,
-          total: attempt.totalEstimate,
-        },
+        raw_correct: isIncomplete ? 0 : sum(attempt.modules, 'correct'),
+        raw_total: isIncomplete ? 0 : sum(attempt.modules, 'total'),
+        rw_correct: isIncomplete ? 0 : sum(rwModules, 'correct'),
+        rw_total: isIncomplete ? 0 : sum(rwModules, 'total'),
+        math_correct: isIncomplete ? 0 : sum(mathModules, 'correct'),
+        math_total: isIncomplete ? 0 : sum(mathModules, 'total'),
+        estimated_score_range: isIncomplete
+          ? { rw: null, math: null, total: null }
+          : {
+              rw: attempt.rwEstimate,
+              math: attempt.mathEstimate,
+              total: attempt.totalEstimate,
+            },
         time_spent_seconds: options.durationSeconds,
         completed_at: attempt.createdAt,
       },

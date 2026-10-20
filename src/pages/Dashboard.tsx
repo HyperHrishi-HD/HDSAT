@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge, Card, ProgressBar, Select, Stat } from '../components/ui';
+import { Badge, Card, Icon, InfoTip, ProgressBar, Select, Stat } from '../components/ui';
 import { useApp } from '../lib/store';
 import type { Assessment } from '../lib/types';
 
@@ -15,7 +15,10 @@ export function DashboardPage() {
   const app = useApp();
 
   const domainBreakdown = useMemo(() => {
-    const map = new Map<string, { domain: string; section: string; total: number; attempted: number; correct: number }>();
+    const map = new Map<
+      string,
+      { domain: string; section: string; total: number; attempted: number; correct: number }
+    >();
     app.questions.forEach((q) => {
       if (!q.assessments.includes(app.settings.assessment)) return;
       const entry = map.get(q.domain) ?? {
@@ -54,13 +57,17 @@ export function DashboardPage() {
       <Card>
         <div className="row-between">
           <div>
-            <h1>HDSAT Preparation Dashboard</h1>
-            <p>
-              Minimalist, adaptive Digital {app.settings.assessment} preparation. Every statistic below reflects your
-              recorded attempts.
-            </p>
+            <div className="row">
+              <h1>Dashboard</h1>
+              <InfoTip label="About HDSAT">
+                Adaptive Digital {app.settings.assessment} preparation. Every statistic reflects
+                your recorded attempts across practice drills, flashcards, and full-length
+                simulations.
+              </InfoTip>
+            </div>
+            <p className="muted">Target track: {app.settings.assessment}</p>
           </div>
-          <div style={{ minWidth: 210 }}>
+          <div style={{ minWidth: 280 }}>
             <Select
               label="Target assessment"
               value={app.settings.assessment}
@@ -72,20 +79,27 @@ export function DashboardPage() {
 
         <div className="row" style={{ marginTop: 8 }}>
           <Link to="/practice" className="btn btn-primary">
-            Start custom practice
+            <Icon name="practice" size={15} />
+            <span>Start custom practice</span>
           </Link>
           <Link to="/test" className="btn btn-outline">
-            Adaptive full simulation
+            <Icon name="test" size={15} />
+            <span>Adaptive full simulation</span>
           </Link>
           <Link to="/bank" className="btn btn-outline">
-            Browse question bank ({app.questions.length})
+            <Icon name="bank" size={15} />
+            <span>Browse question bank</span>
           </Link>
           <Link to="/flashcards" className="btn btn-outline">
-            Review flashcards ({app.totals.dueCards} due)
+            <Icon name="flashcards" size={15} />
+            <span>Review flashcards</span>
           </Link>
           {incorrectCount > 0 ? (
             <Link to="/practice?mode=incorrect" className="btn btn-subtle">
-              Retry {incorrectCount} missed item{incorrectCount === 1 ? '' : 's'}
+              <Icon name="refresh" size={14} />
+              <span>
+                Retry {incorrectCount} missed item{incorrectCount === 1 ? '' : 's'}
+              </span>
             </Link>
           ) : null}
         </div>
@@ -96,7 +110,7 @@ export function DashboardPage() {
           <Stat
             label="Questions Answered"
             value={app.totals.attempts}
-            hint={`${app.totals.uniqueQuestions} of ${app.questions.length} unique bank items`}
+            hint={`${app.totals.uniqueQuestions} unique answered`}
           />
         </Card>
         <Card>
@@ -106,7 +120,7 @@ export function DashboardPage() {
             hint={
               app.totals.attempts > 0
                 ? `${app.totals.correct} correct · ${app.totals.mastered} mastered`
-                : 'Complete your first question to compute accuracy'
+                : 'Answer a question to compute'
             }
           />
         </Card>
@@ -114,14 +128,14 @@ export function DashboardPage() {
           <Stat
             label="Study Streak"
             value={`${app.currentStreak} day${app.currentStreak === 1 ? '' : 's'}`}
-            hint={`Best streak: ${app.bestStreak} day${app.bestStreak === 1 ? '' : 's'}`}
+            hint={`Best: ${app.bestStreak} day${app.bestStreak === 1 ? '' : 's'}`}
           />
         </Card>
         <Card>
           <Stat
             label="HDCoins Balance"
             value={app.hdCoins}
-            hint={`${todayActivity?.coinsEarned ?? 0} earned today · ${app.achievements.length} achievements`}
+            hint={`${todayActivity?.coinsEarned ?? 0} today · ${app.achievements.length} badges`}
           />
         </Card>
       </div>
@@ -130,11 +144,11 @@ export function DashboardPage() {
         <Card>
           <div className="row-between" style={{ marginBottom: 8 }}>
             <h3>Domain Mastery ({app.settings.assessment})</h3>
-            <Badge tone="info">{app.questions.filter((q) => q.assessments.includes(app.settings.assessment)).length} items</Badge>
+            <Badge tone="info">{app.settings.assessment}</Badge>
           </div>
           <div className="stack">
             {domainBreakdown.map((item) => {
-              const pct = item.total > 0 ? Math.round((item.correct / item.total) * 100) : 0;
+              const pct = item.attempted > 0 ? Math.round((item.correct / item.attempted) * 100) : 0;
               return (
                 <div key={item.domain} className="stack" style={{ gap: 4 }}>
                   <div className="row-between" style={{ fontSize: '0.86rem' }}>
@@ -143,10 +157,12 @@ export function DashboardPage() {
                       <span className="muted">({item.section === 'Math' ? 'Math' : 'R&W'})</span>
                     </span>
                     <span className="muted">
-                      {item.correct}/{item.total} correct ({pct}%)
+                      {item.attempted === 0
+                        ? 'No attempts yet'
+                        : `${item.correct}/${item.attempted} (${pct}%)`}
                     </span>
                   </div>
-                  <ProgressBar value={item.correct} max={item.total} />
+                  <ProgressBar value={item.correct} max={Math.max(1, item.attempted)} />
                 </div>
               );
             })}
@@ -164,7 +180,9 @@ export function DashboardPage() {
                 </p>
               </div>
               <Badge tone={(todayActivity?.questionsCompleted ?? 0) >= 3 ? 'good' : 'neutral'}>
-                {(todayActivity?.questionsCompleted ?? 0) >= 3 ? 'Daily goal met' : 'Goal: 3+ questions/day'}
+                {(todayActivity?.questionsCompleted ?? 0) >= 3
+                  ? 'Daily goal met'
+                  : 'Goal: 3+ questions/day'}
               </Badge>
             </div>
             <div className="sparkline" aria-label="14-day question activity chart">
@@ -191,9 +209,10 @@ export function DashboardPage() {
 
           <Card>
             <div className="row-between" style={{ marginBottom: 8 }}>
-              <h3>Recent Adaptive Simulations</h3>
+              <h3>Recent Simulations</h3>
               <Link to="/test" className="btn btn-outline btn-sm">
-                New simulation
+                <Icon name="play" size={12} />
+                <span>New simulation</span>
               </Link>
             </div>
             {latestTest ? (
@@ -217,28 +236,26 @@ export function DashboardPage() {
                 ))}
               </div>
             ) : (
-              <p className="muted">
-                No completed simulations yet. Take a timed, multistage adaptive test to see your module routing and
-                estimated score breakdown.
-              </p>
+              <p className="muted">No completed simulations yet.</p>
             )}
           </Card>
 
           <Card>
             <div className="row-between">
               <div>
-                <h3>Saved Questions &amp; Review</h3>
+                <h3>Saved &amp; Missed</h3>
                 <p className="muted">
-                  {app.saved.length} bookmarked item{app.saved.length === 1 ? '' : 's'} · {incorrectCount} currently
-                  missed
+                  {app.saved.length} saved · {incorrectCount} missed
                 </p>
               </div>
               <div className="row">
                 <Link to="/bank?saved=1" className="btn btn-outline btn-sm">
-                  View saved
+                  <Icon name="bookmark" size={13} />
+                  <span>View saved</span>
                 </Link>
                 <Link to="/arcade" className="btn btn-outline btn-sm">
-                  Desmos Lab &amp; Mini-Games
+                  <Icon name="arcade" size={13} />
+                  <span>Arcade &amp; Lab</span>
                 </Link>
               </div>
             </div>

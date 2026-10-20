@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { MathText } from '../components/MathText';
-import { Badge, Button, Card, EmptyState, Select, Stat } from '../components/ui';
+import { Badge, Button, Card, EmptyState, InfoTip, Select, Stat } from '../components/ui';
 import { isDue } from '../lib/sm2';
 import { useApp } from '../lib/store';
 
@@ -54,14 +54,6 @@ export function FlashcardsPage() {
     return { mastered, learning, due, total: cardsOfDeck.length };
   }, [cardsOfDeck, app.flashcardProgress]);
 
-  const deckCounts = useMemo(() => {
-    const counts: Record<DeckId, number> = { vocabulary: 0, math_formula: 0 };
-    app.flashcards.forEach((c) => {
-      if (c.deck === 'vocabulary' || c.deck === 'math_formula') counts[c.deck] += 1;
-    });
-    return counts;
-  }, [app.flashcards]);
-
   const switchDeck = (deck: DeckId) => {
     setActiveDeck(deck);
     setCurrentIndex(0);
@@ -80,31 +72,31 @@ export function FlashcardsPage() {
       <Card>
         <div className="row-between">
           <div>
-            <h1>Flashcards — Spaced Repetition (SM-2)</h1>
-            <p className="muted">
-              Two fully separate decks. Reviewing due cards schedules intervals with the SM-2 algorithm and awards daily
-              HDCoins.
-            </p>
+            <div className="row">
+              <h1>Flashcards (SM-2)</h1>
+              <InfoTip label="About decks">
+                {DECKS[activeDeck].blurb} Reviewing due cards schedules intervals with the SM-2
+                algorithm and awards daily HDCoins.
+              </InfoTip>
+            </div>
           </div>
           <div className="row">
             <Button
               variant={activeDeck === 'vocabulary' ? 'primary' : 'outline'}
+              icon="flashcards"
               onClick={() => switchDeck('vocabulary')}
             >
-              Vocabulary ({deckCounts.vocabulary.toLocaleString()})
+              Vocabulary
             </Button>
             <Button
               variant={activeDeck === 'math_formula' ? 'primary' : 'outline'}
+              icon="reference"
               onClick={() => switchDeck('math_formula')}
             >
-              Math Formulas ({deckCounts.math_formula})
+              Math Formulas
             </Button>
           </div>
         </div>
-
-        <p className="muted" style={{ marginTop: 8 }}>
-          {DECKS[activeDeck].blurb}
-        </p>
 
         <div className="row" style={{ marginTop: 8 }}>
           <Select
@@ -116,8 +108,8 @@ export function FlashcardsPage() {
               setRevealed(false);
             }}
             options={[
-              { value: 'due', label: `Due Now (${stats.due.toLocaleString()})` },
-              { value: 'all', label: `Browse All (${stats.total.toLocaleString()})` },
+              { value: 'due', label: 'Due Now' },
+              { value: 'all', label: 'Browse All' },
             ]}
           />
         </div>
@@ -126,7 +118,6 @@ export function FlashcardsPage() {
           <Stat label="Due for Review" value={stats.due.toLocaleString()} />
           <Stat label="In Progress" value={stats.learning.toLocaleString()} />
           <Stat label="Mastered (14+ day interval)" value={stats.mastered.toLocaleString()} />
-          <Stat label="This Deck Size" value={stats.total.toLocaleString()} />
         </div>
       </Card>
 
@@ -162,8 +153,7 @@ export function FlashcardsPage() {
               ))}
             </div>
             <span className="muted">
-              Card {Math.min(currentIndex + 1, filteredCards.length).toLocaleString()} of{' '}
-              {filteredCards.length.toLocaleString()} · Stage:{' '}
+              Card {Math.min(currentIndex + 1, filteredCards.length).toLocaleString()} · Stage:{' '}
               <strong>{app.flashcardProgress[currentCard.id]?.stage ?? 'new'}</strong>
             </span>
           </div>

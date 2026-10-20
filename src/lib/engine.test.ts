@@ -22,9 +22,10 @@ import {
   applyFlashcardReview,
   emptyProfile,
   purchaseItem,
+  recordTestAttempt,
   toggleSaved,
 } from './storage';
-import type { Question } from './types';
+import type { Question, TestAttempt } from './types';
 
 const questions = (bankJson as unknown as { questions: Question[] }).questions;
 
@@ -137,7 +138,7 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
     expect(formatClock(125)).toBe('02:05');
   });
 
-  it('fills the FULL Digital SAT blueprint (54 R&W + 44 Math = 98 Qs, 92 operational + 6 unscored) across random seeds', () => {
+  it('fills the FULL Digital SAT blueprint (54 R&W + 44 Math = 98 Qs, 90 operational + 8 unscored) across random seeds', () => {
     for (const assessment of ['SAT', 'PSAT/NMSQT', 'PSAT 10', 'PSAT 8/9'] as const) {
       for (const seed of ['sim:1700000000', 'sim:1700001999', 'sim:1700005000', 'sim:1700009999']) {
         const plan = buildTestPlan(questions, {
@@ -149,7 +150,7 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
 
         for (const sec of plan.sections) {
           const expected = sec.section === 'Reading and Writing' ? 27 : 22;
-          const expectedUnscored = sec.section === 'Reading and Writing' ? 2 : 1;
+          const expectedUnscored = 2;
           expect(sec.module1.questions).toHaveLength(expected);
           expect(sec.upper.questions).toHaveLength(expected);
           expect(sec.lower.questions).toHaveLength(expected);
@@ -161,8 +162,25 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
           const m1Ids = new Set(sec.module1.questions.map((q) => q.id));
           const upIds = sec.upper.questions.map((q) => q.id);
           expect(upIds.some((id) => m1Ids.has(id))).toBe(false);
-          const runIds = [...m1Ids, ...upIds, ...sec.lower.questions.map((q) => q.id)];
+          const runQuestions = [
+            ...sec.module1.questions,
+            ...sec.upper.questions,
+            ...sec.lower.questions,
+          ];
+          const runIds = runQuestions.map((q) => q.id);
           expect(new Set(runIds).size).toBe(runIds.length);
+
+          // Also guarantee no duplicate stimulus/prompt content across the section modules
+          const contentKeys = runQuestions.map(
+            (q) => `${(q.stimulus ?? '').trim()}||${q.prompt.trim()}||${JSON.stringify(q.figure_metadata ?? null)}`
+          );
+          expect(new Set(contentKeys).size).toBe(contentKeys.length);
+
+          // And no shared passage stimulus in Reading & Writing across modules
+          if (sec.section === 'Reading and Writing') {
+            const stims = runQuestions.map((q) => (q.stimulus ?? '').trim()).filter(Boolean);
+            expect(new Set(stims).size).toBe(stims.length);
+          }
         }
       }
     }
@@ -438,6 +456,60 @@ describe('local storage ledger, anti-farming HDCoins, and bookmarks', () => {
     expect(buy.ok).toBe(true);
     expect(buy.profile.hdCoins).toBe(10);
     expect(buy.profile.ownedItems).toContain('oxford-navy');
+    expect(buy.profile.settings.activeTheme).toBe('oxford-navy');
+  });
+
+  it('keeps incomplete saved test attempts without scores and updates them in place when completed', () => {
+    let profile = emptyProfile();
+    const pausedAttempt: TestAttempt = {
+      id: 'sim-pause-1',
+      assessment: 'SAT',
+      status: 'incomplete',
+      createdAt: new Date().toISOString(),
+      modules: [],
+      rwEstimate: null,
+      mathEstimate: null,
+      totalEstimate: null,
+      durationSeconds: 180,
+      pausedState: {
+        seed: 'sim:test:1',
+        excludeReleased: false,
+        sectionIndex: 0,
+        stageNumber: 1,
+        tier: 'module1',
+        currentIndex: 5,
+        remainingSeconds: 1740,
+        inSectionBreak: false,
+        breakSeconds: 600,
+        pendingNextSectionIdx: null,
+        responses: { 'RW-WIC-001': 'A' },
+        eliminated: {},
+        flagged: { 'RW-WIC-001': true },
+        seenQuestionIds: [],
+      },
+    };
+
+    profile = recordTestAttempt(profile, pausedAttempt);
+    expect(profile.testAttempts).toHaveLength(1);
+    expect(profile.testAttempts[0].status).toBe('incomplete');
+    expect(profile.testAttempts[0].totalEstimate).toBeNull();
+    expect(profile.achievements).not.toContain('first-test');
+
+    const completedAttempt: TestAttempt = {
+      ...pausedAttempt,
+      status: 'completed',
+      rwEstimate: 720,
+      mathEstimate: 750,
+      totalEstimate: 1470,
+      durationSeconds: 3600,
+      pausedState: undefined,
+    };
+
+    profile = recordTestAttempt(profile, completedAttempt);
+    expect(profile.testAttempts).toHaveLength(1);
+    expect(profile.testAttempts[0].status).toBe('completed');
+    expect(profile.testAttempts[0].totalEstimate).toBe(1470);
+    expect(profile.achievements).toContain('first-test');
   });
 });
 

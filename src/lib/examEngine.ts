@@ -10,9 +10,9 @@ import type {
 /**
  * Official Digital SAT Suite Test Specifications & Timing:
  * - Total Duration: 134 minutes (plus a 10-minute break between sections).
- * - Total Questions: 98 items (92 operational items used for scoring +
- *   6 unscored experimental/pretest items randomly distributed: 2 per R&W module,
- *   1 per Math module).
+ * - Total Questions: 98 items (90 operational items used for scoring +
+ *   8 unscored experimental/pretest items, 2 hidden inside every module:
+ *   2 per R&W module and 2 per Math module).
  * - Section 1: Reading & Writing — 54 items, 64 min (Module 1: 27 Qs / 32 min, Module 2: 27 Qs / 32 min)
  * - Section 2: Math — 44 items, 70 min (Module 1: 22 Qs / 35 min, Module 2: 22 Qs / 35 min)
  */
@@ -21,7 +21,7 @@ export const SECTION_SPECS: Record<
   { fullItems: number; fullMinutes: number; operationalItems: number; unscoredItems: number }
 > = {
   'Reading and Writing': { fullItems: 27, fullMinutes: 32, operationalItems: 25, unscoredItems: 2 },
-  Math: { fullItems: 22, fullMinutes: 35, operationalItems: 21, unscoredItems: 1 },
+  Math: { fullItems: 22, fullMinutes: 35, operationalItems: 20, unscoredItems: 2 },
 };
 
 export const SECTION_BREAK_MINUTES = 10;
@@ -62,7 +62,7 @@ export interface ModulePlan {
   section: Section;
   tier: ModuleTier;
   questions: Question[];
-  /** IDs of the unscored experimental/pretest items in this module (2 in R&W, 1 in Math). */
+  /** IDs of the unscored experimental/pretest items in this module (2 in every module). */
   unscoredQuestionIds: string[];
   targetItems: number;
   minutes: number;
@@ -166,23 +166,111 @@ function tierDifficultyOrder(tier: ModuleTier, index: number, total: number): Di
   return ['Hard', 'Medium', 'Easy'];
 }
 
+const contentKeyCache = new WeakMap<Question, string>();
+const stimulusKeyCache = new WeakMap<Question, string | null>();
+const templateKeyCache = new WeakMap<Question, string>();
+
+function questionContentKey(q: Question): string {
+  let k = contentKeyCache.get(q);
+  if (k !== undefined) return k;
+  const stim = (q.stimulus ?? '').trim();
+  const prompt = q.prompt.trim();
+  const fig = q.figure_metadata ? JSON.stringify(q.figure_metadata) : '';
+  k = `content:${q.section}:${stim || prompt}:${fig}`;
+  contentKeyCache.set(q, k);
+  return k;
+}
+
+function questionStimulusKey(q: Question): string | null {
+  if (stimulusKeyCache.has(q)) return stimulusKeyCache.get(q) ?? null;
+  const stim = (q.stimulus ?? '').trim();
+  if (!stim) {
+    stimulusKeyCache.set(q, null);
+    return null;
+  }
+  const fig = q.figure_metadata ? JSON.stringify(q.figure_metadata) : '';
+  const k = `stim:${q.section}:${stim}:${fig}`;
+  stimulusKeyCache.set(q, k);
+  return k;
+}
+
+function questionTemplateKey(q: Question): string {
+  let k = templateKeyCache.get(q);
+  if (k !== undefined) return k;
+  const norm = (s: string) => s.trim().toLowerCase().replace(/\d+/g, '#');
+  k = `tmpl:${q.section}:${norm(q.stimulus ?? '')}:${norm(q.prompt)}`;
+  templateKeyCache.set(q, k);
+  return k;
+}
+
+function markQuestionUsed(q: Question, used: Set<string>): void {
+  used.add(q.id);
+  used.add(questionContentKey(q));
+  const stimKey = questionStimulusKey(q);
+  if (stimKey) used.add(stimKey);
+  used.add(questionTemplateKey(q));
+}
+
 function takeMatching(
   pool: Question[],
   used: Set<string>,
   predicate: (q: Question) => boolean,
   preferredDiffs: Difficulty[]
 ): Question | null {
+  const isFreshAll = (q: Question) => {
+    if (used.has(q.id) || used.has(questionContentKey(q))) return false;
+    const stimKey = questionStimulusKey(q);
+    if (stimKey && used.has(stimKey)) return false;
+    return !used.has(questionTemplateKey(q));
+  };
+  const isFreshStim = (q: Question) => {
+    if (used.has(q.id) || used.has(questionContentKey(q))) return false;
+    const stimKey = questionStimulusKey(q);
+    return !stimKey || !used.has(stimKey);
+  };
+  const isFreshContent = (q: Question) => !used.has(q.id) && !used.has(questionContentKey(q));
+
+  // Pass 1: unique ID, unique content, unique stimulus, unique template, preferred difficulty
   for (const diff of preferredDiffs) {
-    const found = pool.find((q) => !used.has(q.id) && q.difficulty === diff && predicate(q));
+    const found = pool.find((q) => isFreshAll(q) && q.difficulty === diff && predicate(q));
     if (found) {
-      used.add(found.id);
+      markQuestionUsed(found, used);
       return found;
     }
   }
-  const fallback = pool.find((q) => !used.has(q.id) && predicate(q));
-  if (fallback) {
-    used.add(fallback.id);
-    return fallback;
+  // Pass 2: unique ID, unique content, unique stimulus, preferred difficulty
+  for (const diff of preferredDiffs) {
+    const found = pool.find((q) => isFreshStim(q) && q.difficulty === diff && predicate(q));
+    if (found) {
+      markQuestionUsed(found, used);
+      return found;
+    }
+  }
+  // Pass 3: unique ID, unique content, preferred difficulty
+  for (const diff of preferredDiffs) {
+    const found = pool.find((q) => isFreshContent(q) && q.difficulty === diff && predicate(q));
+    if (found) {
+      markQuestionUsed(found, used);
+      return found;
+    }
+  }
+  // Pass 4: any difficulty with unique stimulus & content
+  const fallbackStim = pool.find((q) => isFreshStim(q) && predicate(q));
+  if (fallbackStim) {
+    markQuestionUsed(fallbackStim, used);
+    return fallbackStim;
+  }
+  // Pass 5: any difficulty with unique content
+  const fallbackContent = pool.find((q) => isFreshContent(q) && predicate(q));
+  if (fallbackContent) {
+    markQuestionUsed(fallbackContent, used);
+    return fallbackContent;
+  }
+  // Pass 6: strict ID fallback for tiny unit-test fixtures
+  const fallbackId = pool.find((q) => !used.has(q.id) && predicate(q));
+  if (fallbackId) {
+    markQuestionUsed(fallbackId, used);
+    return fallbackId;
   }
   return null;
 }
@@ -795,7 +883,16 @@ export function buildPracticeSession(
   if (options.format && options.format !== 'both') {
     pool = pool.filter((q) => q.format === options.format);
   }
-  const ordered = seededShuffle(pool, options.seed ?? `practice:${Date.now()}`);
+  const orderedAll = seededShuffle(pool, options.seed ?? `practice:${Date.now()}`);
+  const seenContent = new Set<string>();
+  const ordered = orderedAll.filter((q) => {
+    const cKey = questionContentKey(q);
+    const sKey = questionStimulusKey(q);
+    if (seenContent.has(cKey) || (sKey && seenContent.has(sKey))) return false;
+    seenContent.add(cKey);
+    if (sKey) seenContent.add(sKey);
+    return true;
+  });
   if (!filters.section || filters.section === 'all') {
     const rw = ordered.filter((q) => q.section === 'Reading and Writing');
     const math = ordered.filter((q) => q.section === 'Math');

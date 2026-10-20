@@ -101,6 +101,14 @@ export interface AppValue {
       timeSpentSeconds: number;
     }) => Promise<void>;
     recordTest: (attempt: TestAttempt, clientSessionId: string) => Promise<void>;
+    /**
+     * Local-first in-progress snapshot: writes localStorage synchronously (so a
+     * closed tab can never lose the run) and mirrors to the cloud at most every
+     * 20 seconds. Used by the full-test autosave loop.
+     */
+    autosaveTest: (attempt: TestAttempt, clientSessionId: string) => void;
+    /** Fire the pending cloud mirror immediately (page hiding/closing). */
+    flushTestSync: (attempt: TestAttempt, clientSessionId: string) => void;
     verifySignupCode: (email: string, token: string) => Promise<void>;
     resendVerification: (email: string) => Promise<void>;
     syncGuestData: () => Promise<void>;
@@ -226,10 +234,26 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     () => (mode === 'cloud' && snapshot ? snapshot.dailyActivity : profile.dailyActivity),
     [mode, snapshot, profile.dailyActivity]
   );
-  const testAttempts = useMemo(
-    () => (mode === 'cloud' && snapshot ? snapshot.testAttempts : profile.testAttempts),
-    [mode, snapshot, profile.testAttempts]
-  );
+  // Cloud rows are authoritative for completed runs, but a run autosaved on
+  // THIS device may not have reached the cloud yet (throttled sync, or the tab
+  // closed mid-request). Union by id so an in-progress run is always visible
+  // and resumable here even if the mirror never landed.
+  const testAttempts = useMemo(() => {
+    if (mode !== 'cloud' || !snapshot) return profile.testAttempts;
+    const byId = new Map<string, TestAttempt>();
+    for (const remote of snapshot.testAttempts) byId.set(remote.id, remote);
+    for (const localAttempt of profile.testAttempts) {
+      const remote = byId.get(localAttempt.id);
+      if (!remote) {
+        byId.set(localAttempt.id, localAttempt);
+      } else if (remote.status !== 'completed' && localAttempt.status === 'completed') {
+        byId.set(localAttempt.id, localAttempt);
+      } else if (remote.status !== 'completed' && localAttempt.pausedState && !remote.pausedState) {
+        byId.set(localAttempt.id, localAttempt);
+      }
+    }
+    return [...byId.values()];
+  }, [mode, snapshot, profile.testAttempts]);
 
   const totals = useMemo(() => {
     const attempts =
@@ -246,6 +270,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       const state = flashcardProgress[card.id];
       return !state || new Date(state.nextDueAt).getTime() <= now;
     }).length;
+    const completedTests = testAttempts.filter((t) => t.status !== 'incomplete');
     return {
       attempts,
       correct,
@@ -253,7 +278,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       uniqueQuestions: Object.keys(progress).length,
       mastered,
       dueCards,
-      testsTaken: testAttempts.length,
+      testsTaken: completedTests.length,
     };
   }, [mode, snapshot, profile, progress, flashcardProgress, testAttempts]);
 
@@ -342,6 +367,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           const itemType = itemId.startsWith('badge-') ? 'avatar_badge' : 'accent_theme';
           const result = await cloud.purchaseCosmeticCloud(itemId, itemType);
           await refreshSnapshot();
+          if (result.ok) {
+            const isBadge = itemId.startsWith('badge-');
+            const next: LocalProfile = {
+              ...profileRef.current,
+              settings: {
+                ...profileRef.current.settings,
+                ...(isBadge ? { activeFlair: itemId } : { activeTheme: itemId }),
+              },
+            };
+            persist(next);
+          }
           return { ok: Boolean(result.ok), reason: result.reason as string | undefined };
         } catch (err) {
           return { ok: false, reason: (err as Error).message };
@@ -351,7 +387,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       persist(result.profile);
       return { ok: result.ok, reason: result.reason };
     },
-    [mode, persist, profile, refreshSnapshot]
+    [mode, persist, refreshSnapshot]
   );
 
   const completeSession = useCallback<AppValue['actions']['completeSession']>(
@@ -389,10 +425,61 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           setError(`Test result kept locally; saving it to your account failed: ${(err as Error).message}`);
         }
       }
-      const next = local.perfectModuleAchievement(profileRef.current, attempt.modules);
-      if (next !== profileRef.current) persist(next);
+      if (attempt.status !== 'incomplete') {
+        const next = local.perfectModuleAchievement(profileRef.current, attempt.modules);
+        if (next !== profileRef.current) persist(next);
+      }
     },
     [mode, persist, refreshSnapshot]
+  );
+
+  // Throttle for the in-progress cloud mirror: localStorage is written on every
+  // autosave, but Supabase sees at most one write per TEST_SYNC_MIN_MS unless a
+  // flush is forced (page hiding / closing).
+  const lastTestSyncRef = useRef<number>(0);
+  const syncInFlightRef = useRef<boolean>(false);
+
+  const mirrorTestCloud = useCallback(
+    (attempt: TestAttempt, clientSessionId: string) => {
+      if (mode !== 'cloud' || syncInFlightRef.current) return;
+      syncInFlightRef.current = true;
+      lastTestSyncRef.current = Date.now();
+      void cloud
+        .recordTestCloud(attempt, {
+          clientSessionId,
+          assessment: attempt.assessment,
+          durationSeconds: attempt.durationSeconds,
+          status: attempt.status,
+        })
+        .catch(() => {
+          // In-progress mirrors are best-effort: the localStorage copy is the
+          // safety net and the completed-run save re-upserts everything.
+        })
+        .finally(() => {
+          syncInFlightRef.current = false;
+        });
+    },
+    [mode]
+  );
+
+  const autosaveTest = useCallback(
+    (attempt: TestAttempt, clientSessionId: string) => {
+      // Synchronous localStorage write first — this is what guarantees a closed
+      // tab never loses the test.
+      persist(local.recordTestAttempt(profileRef.current, attempt));
+      if (mode === 'cloud' && Date.now() - lastTestSyncRef.current > 20_000) {
+        mirrorTestCloud(attempt, clientSessionId);
+      }
+    },
+    [mirrorTestCloud, mode, persist]
+  );
+
+  const flushTestSync = useCallback(
+    (attempt: TestAttempt, clientSessionId: string) => {
+      persist(local.recordTestAttempt(profileRef.current, attempt));
+      mirrorTestCloud(attempt, clientSessionId);
+    },
+    [mirrorTestCloud, persist]
   );
 
   const syncGuestData = useCallback(async () => {
@@ -610,6 +697,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       purchase,
       completeSession,
       recordTest,
+      autosaveTest,
+      flushTestSync,
       verifySignupCode,
       resendVerification,
       syncGuestData,

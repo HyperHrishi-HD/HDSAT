@@ -4,6 +4,7 @@ import bankJson from '../data/questionBank.json';
 import type { Question, QuestionBank } from '../lib/types';
 import { FigureView, StimulusView, wrapLabel } from './FigureView';
 import { MathText } from './MathText';
+import { MathReferenceSheet, REFERENCE_FORMULAS } from './MathTools';
 
 const bank = bankJson as unknown as QuestionBank;
 const figureQuestions = bank.questions.filter((q) => Boolean(q.figure_metadata));
@@ -171,5 +172,44 @@ describe('mixed math and currency rendering', () => {
     const out = html('The list price was $\\$650$ before tax.');
     expect(out).toContain('katex');
     expect(out).not.toContain('$\\$650$');
+  });
+});
+
+describe('official SAT Suite Math Reference Sheet', () => {
+  it('renders the official College Board sheet image per assessment', () => {
+    const expectations: [string, string][] = [
+      ['SAT', '/reference/sat-math-reference.png'],
+      ['PSAT/NMSQT', '/reference/psat-nmsqt-math-reference.png'],
+      ['PSAT 10', '/reference/psat-10-math-reference.png'],
+      ['PSAT 8/9', '/reference/psat-8-9-math-reference.png'],
+    ];
+    for (const [assessment, src] of expectations) {
+      const html = renderToStaticMarkup(<MathReferenceSheet assessment={assessment} />);
+      expect(html, assessment).toContain('data-testid="math-reference-sheet"');
+      expect(html, assessment).toContain(`src="${src}"`);
+      expect(html, assessment).toContain('math-reference-img');
+      // The alt text must describe every formula family on the sheet.
+      for (const marker of [
+        'A = lw',
+        'A = 1/2 bh',
+        'A = pi r squared',
+        'C = 2 pi r',
+        'c squared = a squared + b squared',
+        'V = lwh',
+        'V = pi r squared h',
+        '4/3 pi r cubed',
+        '1/3 pi r squared h',
+        '1/3 lwh',
+        'Special Right Triangles',
+      ]) {
+        expect(html, `${assessment} alt text missing "${marker}"`).toContain(marker);
+      }
+    }
+    expect(REFERENCE_FORMULAS).toHaveLength(10);
+  });
+
+  it('defaults to the SAT sheet when no assessment is given', () => {
+    const html = renderToStaticMarkup(<MathReferenceSheet />);
+    expect(html).toContain('src="/reference/sat-math-reference.png"');
   });
 });

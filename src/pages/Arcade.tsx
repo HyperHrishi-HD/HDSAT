@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StimulusView } from '../components/FigureView';
 import { CalculatorPanel } from '../components/MathTools';
 import { MathText } from '../components/MathText';
-import { Badge, Button, Card, Stat } from '../components/ui';
+import { Badge, Button, Card, InfoTip, Stat } from '../components/ui';
 import { seededShuffle } from '../lib/examEngine';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
@@ -322,28 +322,45 @@ export function ArcadePage() {
     <div>
       <Card>
         <div className="row-between">
-          <div>
+          <div className="row">
             <h1>Desmos Lab &amp; SAT Skill Mini-Games</h1>
-            <p className="muted">
-              Each run draws fresh randomized items from the live bank and vocabulary deck. Correct answers in a row
-              raise a streak multiplier (up to ×{MAX_COMBO}); best scores are saved on this device.
-            </p>
+            <InfoTip label="How Arcade works">
+              Each run draws fresh randomized items from the live bank and vocabulary deck. Correct
+              answers in a row raise a streak multiplier (up to ×{MAX_COMBO}); best scores are saved
+              on this device.
+            </InfoTip>
           </div>
           <div className="row">
-            <Button variant={mode === 'desmos' ? 'primary' : 'outline'} size="sm" onClick={() => resetTo('desmos')}>
+            <Button
+              variant={mode === 'desmos' ? 'primary' : 'outline'}
+              size="sm"
+              icon="calculator"
+              onClick={() => resetTo('desmos')}
+            >
               Desmos Lab
             </Button>
-            <Button variant={mode === 'sprint' ? 'primary' : 'outline'} size="sm" onClick={() => startGame('sprint')}>
+            <Button
+              variant={mode === 'sprint' ? 'primary' : 'outline'}
+              size="sm"
+              icon="bolt"
+              onClick={() => startGame('sprint')}
+            >
               Equation Sprint
             </Button>
             <Button
               variant={mode === 'transitions' ? 'primary' : 'outline'}
               size="sm"
+              icon="spark"
               onClick={() => startGame('transitions')}
             >
               Transition Match
             </Button>
-            <Button variant={mode === 'vocab' ? 'primary' : 'outline'} size="sm" onClick={() => startGame('vocab')}>
+            <Button
+              variant={mode === 'vocab' ? 'primary' : 'outline'}
+              size="sm"
+              icon="flashcards"
+              onClick={() => startGame('vocab')}
+            >
               Vocab Precision
             </Button>
           </div>

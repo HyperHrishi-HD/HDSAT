@@ -72,6 +72,8 @@ export function emptyProfile(): LocalProfile {
       excludePreviouslyCorrect: false,
       excludeReleasedPracticeSet: false,
       timerSound: false,
+      activeTheme: null,
+      activeFlair: null,
     },
   };
 }
@@ -377,13 +379,20 @@ export function applyFlashcardReview(
 export function recordTestAttempt(profile: LocalProfile, attempt: TestAttempt): LocalProfile {
   const date = todayKey(new Date(attempt.createdAt));
   let next: LocalProfile = withDay(profile, date);
+  const existingIdx = next.testAttempts.findIndex((item) => item.id === attempt.id);
+  const updatedAttempts =
+    existingIdx >= 0
+      ? next.testAttempts.map((item, idx) => (idx === existingIdx ? attempt : item))
+      : [...next.testAttempts, attempt];
   next = {
     ...next,
-    testAttempts: [...next.testAttempts, attempt],
+    testAttempts: updatedAttempts,
   };
-  next = bumpDay(next, date, { sessionsCompleted: 1 });
-  const unlocked = evaluateAchievements(next, profile.achievements);
-  if (unlocked.length > 0) next = { ...next, achievements: [...next.achievements, ...unlocked] };
+  if (attempt.status !== 'incomplete') {
+    next = bumpDay(next, date, { sessionsCompleted: 1 });
+    const unlocked = evaluateAchievements(next, profile.achievements);
+    if (unlocked.length > 0) next = { ...next, achievements: [...next.achievements, ...unlocked] };
+  }
   return next;
 }
 
@@ -406,8 +415,18 @@ export function purchaseItem(
   if (profile.hdCoins < cost) {
     return { profile, ok: false, reason: 'Not enough HDCoins yet.' };
   }
+  const isBadge = itemId.startsWith('badge-');
+  const nextSettings = {
+    ...profile.settings,
+    ...(isBadge ? { activeFlair: itemId } : { activeTheme: itemId }),
+  };
   return {
-    profile: { ...profile, hdCoins: profile.hdCoins - cost, ownedItems: [...profile.ownedItems, itemId] },
+    profile: {
+      ...profile,
+      hdCoins: profile.hdCoins - cost,
+      ownedItems: [...profile.ownedItems, itemId],
+      settings: nextSettings,
+    },
     ok: true,
   };
 }

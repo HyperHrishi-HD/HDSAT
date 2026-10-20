@@ -55,6 +55,84 @@ Checks: `npm run typecheck`, `npm test` (Vitest), `npm run build`. Database seed
   catalog before writing `test_responses`, so the FK failure is gone and any
   not-yet-seeded item falls back to a local save with an on-screen notice.
 
+## Done today (2026-10-19) — Public polish pass (verify before re-doing)
+
+- **Guest welcome banner retires on sign-in.** It was gated only by a
+  localStorage "seen" flag, so it kept offering "create account / continue as
+  guest" to signed-in students. `Layout` now also requires `!app.user` and marks
+  it seen once a session exists; pinned by `src/components/layout.test.tsx`.
+- **Catalog totals are no longer advertised.** Sidebar, dashboard CTAs, Domain
+  Mastery, bank badge/heading, flashcard deck buttons and the bank/flashcard
+  position counters show the student's own work only (answered, correct,
+  attempted), never "6193 items" or deck size.
+- **Question bank no longer renders the whole catalog.** Rows render 60 at a
+  time behind a "Show more" button and reset when filters change; this is what
+  removed the multi-second stall on `/bank`.
+- **8 embedded experimental items.** `SECTION_SPECS` now marks 2 unscored items
+  in *every* module (2 R&W + 2 Math per section = 8 total, 90 scored), matching
+  the runner copy and `engine.test.ts`.
+- **Desktop keyboard controls in the runner:** A–D or 1–4 selects a choice, M
+  toggles Mark for Review, ←/→ moves between questions, Enter advances when an
+  answer exists, Esc closes popovers. Typing in the SPR box or a note editor is
+  never intercepted; a low-contrast footer hint lists the keys (hidden ≤900px).
+
+## Done today (2026-10-19) — Full test polished (verify before re-doing)
+
+- **Correct reference sheet.** `src/components/MathTools.tsx` now renders the
+  official SAT Suite sheet: 11 SVG diagrams (circle, rectangle, triangle, right
+  triangle, 30-60-90 + 45-45-90 special triangles, prism, cylinder, sphere,
+  cone, pyramid), the 10 official formulas, and the 3 closing facts. Same sheet
+  for SAT / PSAT/NMSQT / PSAT 10 / PSAT 8/9 (it is identical on all of them).
+- **Reference sheet is draggable** across the whole test (both sections): pointer
+  drag on the title bar with viewport clamping (`bb-ref-window` in
+  `FullTest.tsx`), driven by a ref flag so tracking never waits on a re-render.
+- **Highlighting fixed on Rhetorical Synthesis bullets.** `HighlightableStimulus`
+  now wraps each text node slice per block element (never extracts whole
+  `<ul>/<li>` structures), so multi-bullet selections keep their layout. Restore
+  logic re-anchors on a whitespace-normalized full-text map.
+- **Why bullets still split after the "fix" (2026-10-19).** The deployed bundle
+  on `hdsat.pythonanywhere.com` was still the pre-fix build — its JS contains
+  `surroundContents`/`extractContents` and no `splitText`, so every visitor kept
+  getting the old destructive range wrapping. The worktree code is the fixed
+  one; **any highlight change only reaches users after `vite build` + deploy**.
+  Now pinned by `src/components/highlight.test.tsx` (jsdom): cross-bullet
+  highlight, 6× navigate-away-and-back, no cross-question text leak, and delete
+  all assert the `<li>` count, order and text are untouched.
+- **Scratch Notes box removed** (permanent textarea + header Notes button). Only
+  selection-linked highlight notes remain, College Board style.
+- **Small disclaimer during testing:** "Not affiliated with or endorsed by the
+  College Board." in the Bluebook footer and on the break screen.
+- **Save & exit no longer reveals scores.** `TestAttempt.pausedState` (see
+  `src/lib/types.ts`) stores seed, module position, remaining timer, answers,
+  flags and highlights; Past simulations shows "In progress / Complete to score"
+  with a **Resume** button, and scores/answers appear only after full completion
+  (cloud `test_attempts` rows for incomplete runs store null estimates and zero
+  raw scores; guest ledger updates in place instead of appending duplicates).
+- **Full test run end-to-end in the browser** (98 questions, break, adaptive
+  routing both sections): score report only on completion, estimates sum
+  correctly, resume restores answers/highlights/timer exactly.
+- Tests: 64/64 (added reference-sheet rendering and save/resume ledger tests).
+- **Sidebar clutter removed.** The bottom-of-sidebar `Bank 2026.10.18-open-core-3`
+  line and its Terms/Privacy/Copyright links are gone (the full legal footer
+  below the app remains). The runner's own footer is the only thing visible in
+  a full test.
+- **Footer key hint was invisible.** `.bb-key-hint` was white on white; it now
+  uses `#7b8494` and stays hidden ≤900px.
+- **Timer purity + double-submit guard (2026-10-19).** Both countdowns only
+  decrement state; expiry/break-resume run in effects, so StrictMode can no
+  longer grade a module twice. `submittedModuleRef` makes one submission per
+  section:stage. Auto-submit at 0:00 and break auto-resume both exercised in the
+  browser. Production now serves `assets/index-qEmpae46.js`.
+
+## Backlog → see `IDEAS_AND_FIXES.md`
+
+Tomorrow's work is planned in **`IDEAS_AND_FIXES.md`** (hidden question counts,
+arcade, coin management + rewards cleanup, complaint-report/admin question —
+answer included there: reports live in Supabase `question_reports` /
+`user_appeals`, no admin UI yet —, bank lag, filler removal, public polish, blue
+icon theme, mobile optimization, backend security, selection-box UI). **Plans
+only — do not start until the user says go.**
+
 ## Future plans (do not start without the user)
 
 1. **Arcade games** — current mini-games are not good enough; improve depth,

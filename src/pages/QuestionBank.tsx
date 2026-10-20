@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { QuestionView, type Feedback } from '../components/QuestionView';
-import { Badge, Button, Card, EmptyState, Field, Select, Toggle } from '../components/ui';
+import { Badge, Button, Card, EmptyState, Field, InfoTip, Select, Toggle } from '../components/ui';
 import { filterQuestions } from '../lib/examEngine';
 import { useApp } from '../lib/store';
 import type { Assessment, Difficulty, Question, Section } from '../lib/types';
@@ -25,6 +25,11 @@ export function QuestionBankPage() {
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [eliminated, setEliminated] = useState<Record<string, string[]>>({});
   const [feedbackMap, setFeedbackMap] = useState<Record<string, Feedback>>({});
+
+  // The catalog holds thousands of items. Rendering every row at once is what
+  // made this page stall, so rows are revealed in pages instead.
+  const PAGE_SIZE = 60;
+  const [visibleCount, setVisibleCount] = useState<number>(PAGE_SIZE);
 
   const domains = useMemo(() => {
     const s = new Set<string>();
@@ -82,6 +87,38 @@ export function QuestionBankPage() {
     excludeReleased,
   ]);
 
+  const hasFilters =
+    assessment !== 'all' ||
+    section !== 'all' ||
+    domain !== 'all' ||
+    difficulty !== 'all' ||
+    sourceId !== 'all' ||
+    statusFilter !== 'all' ||
+    search.trim() !== '' ||
+    onlySaved ||
+    excludeCorrect;
+
+  // A new filter starts a fresh page of results.
+  useEffect(() => {
+    setVisibleCount(PAGE_SIZE);
+  }, [
+    assessment,
+    section,
+    domain,
+    difficulty,
+    sourceId,
+    statusFilter,
+    search,
+    onlySaved,
+    excludeCorrect,
+    excludeReleased,
+  ]);
+
+  const visibleQuestions = useMemo(
+    () => filteredQuestions.slice(0, visibleCount),
+    [filteredQuestions, visibleCount]
+  );
+
   const activeQuestion: Question | null = useMemo(() => {
     if (!selectedQuestionId) return filteredQuestions[0] ?? null;
     return filteredQuestions.find((q) => q.id === selectedQuestionId) ?? filteredQuestions[0] ?? null;
@@ -109,12 +146,21 @@ export function QuestionBankPage() {
     <div>
       <Card>
         <div className="row-between">
-          <div>
+          <div className="row">
             <h1>Question Bank</h1>
-            <p className="muted">{app.licensingNote}</p>
+            <InfoTip label="Sources & licensing">
+              <div className="stack" style={{ gap: 8 }}>
+                <div>{app.licensingNote}</div>
+                {app.sources.map((src) => (
+                  <div key={src.source_id}>
+                    <strong>{src.name}</strong> ({src.license}) — {src.record_count} items
+                  </div>
+                ))}
+              </div>
+            </InfoTip>
           </div>
           <Badge tone="info">
-            Showing {filteredQuestions.length} of {app.questions.length} items
+            {hasFilters ? `${filteredQuestions.length} matching` : `${app.questions.length} items`}
           </Badge>
         </div>
 
@@ -243,7 +289,7 @@ export function QuestionBankPage() {
       ) : (
         <div className="grid-2">
           <Card>
-            <h3>Catalog ({filteredQuestions.length})</h3>
+            <h3>Catalog</h3>
             <div style={{ maxHeight: 580, overflowY: 'auto', marginTop: 8 }}>
               <table>
                 <thead>
@@ -255,7 +301,7 @@ export function QuestionBankPage() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredQuestions.map((q) => {
+                  {visibleQuestions.map((q) => {
                     const st = app.progress[q.id]?.status ?? 'unseen';
                     const isSaved = app.saved.includes(q.id);
                     const isSelected = activeQuestion?.id === q.id;
@@ -301,6 +347,17 @@ export function QuestionBankPage() {
                 </tbody>
               </table>
             </div>
+            {visibleCount < filteredQuestions.length ? (
+              <div className="row" style={{ marginTop: 10, justifyContent: 'center' }}>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => setVisibleCount((prev) => prev + PAGE_SIZE)}
+                >
+                  Show more
+                </Button>
+              </div>
+            ) : null}
           </Card>
 
           <div>
@@ -341,7 +398,7 @@ export function QuestionBankPage() {
                 <QuestionView
                   question={activeQuestion}
                   index={filteredQuestions.findIndex((q) => q.id === activeQuestion.id)}
-                  total={filteredQuestions.length}
+                  total={hasFilters ? filteredQuestions.length : undefined}
                   response={responses[activeQuestion.id] ?? null}
                   onResponseChange={(val) =>
                     setResponses((prev) => ({
@@ -368,27 +425,6 @@ export function QuestionBankPage() {
           </div>
         </div>
       )}
-
-      <Card>
-        <h3>Dataset Provenance &amp; Licensing Registry</h3>
-        <div className="grid-2" style={{ marginTop: 8 }}>
-          {app.sources.map((src) => (
-            <div key={src.source_id} className="muted-block">
-              <div className="row-between">
-                <strong>{src.name}</strong>
-                <Badge tone="info">{src.license}</Badge>
-              </div>
-              <p className="muted" style={{ marginTop: 6 }}>
-                {src.provenance_summary}
-              </p>
-              <div className="muted">
-                Source ID: <code>{src.source_id}</code> · {src.record_count} verified items ·{' '}
-                {src.is_official_college_board ? 'Official' : 'Independent Open-Licensed Bank'}
-              </div>
-            </div>
-          ))}
-        </div>
-      </Card>
     </div>
   );
 }
