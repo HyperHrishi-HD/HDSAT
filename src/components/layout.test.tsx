@@ -113,6 +113,37 @@ describe('welcome banner', () => {
     expect(container.textContent).toContain('Cloud · student@example.com');
   });
 
+  it('shows the equipped emblem as its own icon, with no text label', () => {
+    appState = baseApp({ settings: { activeFlair: 'badge-grapher', activeTheme: null } });
+    render();
+    const chip = container.querySelector('.flair-chip');
+    expect(chip).not.toBeNull();
+    expect(chip!.querySelector('svg')).not.toBeNull();
+    expect(chip!.textContent).toBe('');
+    expect(container.textContent).not.toContain('Adaptive Navigator');
+    expect(container.textContent).not.toContain('★');
+  });
+
+  it('renders a different glyph for a different emblem', () => {
+    appState = baseApp({ settings: { activeFlair: 'badge-navigator' } });
+    render();
+    const navigatorGlyph = container.querySelector('.flair-chip svg')!.getAttribute('class');
+    expect(navigatorGlyph).toBe('ui-icon');
+
+    appState = baseApp({ settings: { activeFlair: 'badge-centurion' } });
+    act(() => root.unmount());
+    root = createRoot(container);
+    render();
+    const crown = container.querySelector('.flair-chip svg')!;
+    expect(crown.querySelector('path')?.getAttribute('d')).toContain('M3 8.5');
+  });
+
+  it('shows no emblem chip when no emblem is equipped', () => {
+    appState = baseApp({ settings: { activeFlair: null } });
+    render();
+    expect(container.querySelector('.flair-chip')).toBeNull();
+  });
+
   it('stays hidden after the guest dismisses it', () => {
     render();
     const dismiss = [...container.querySelectorAll('button')].find((b) =>

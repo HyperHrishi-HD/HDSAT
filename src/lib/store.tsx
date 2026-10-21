@@ -13,6 +13,7 @@ import type {
   LocalProfile,
   Question,
   QuestionProgress,
+  RushScoreRecord,
   StudyResource,
   TestAttempt,
   UserSettings,
@@ -56,6 +57,8 @@ export interface AppValue {
   progress: Record<string, QuestionProgress>;
   saved: string[];
   flashcardProgress: Record<string, FlashcardProgress>;
+  /** Practice Rush personal bests, keyed by `rushSetupKey()`. Device-local. */
+  rushScores: Record<string, RushScoreRecord>;
   testAttempts: TestAttempt[];
   dailyActivity: DailyActivity[];
   achievements: string[];
@@ -93,6 +96,8 @@ export interface AppValue {
     reviewFlashcard: (cardId: string, quality: number) => Promise<void>;
     toggleSaved: (questionId: string) => Promise<void>;
     purchase: (itemId: string, cost: number) => Promise<{ ok: boolean; reason?: string }>;
+    /** Stores a finished Practice Rush score for its exact settings combination. */
+    recordRushScore: (key: string, score: number) => { record: RushScoreRecord; improved: boolean };
     completeSession: (args: {
       activityType: 'practice_rush' | 'timed_session' | 'full_simulation' | 'mini_game';
       sessionId: string;
@@ -391,6 +396,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     },
     [mode, persist, refreshSnapshot]
   );
+
+  const recordRushScore = useCallback<AppValue['actions']['recordRushScore']>((key, score) => {
+    const outcome = local.recordRushScore(profileRef.current, key, score);
+    persist(outcome.profile);
+    return { record: outcome.record, improved: outcome.improved };
+  }, [persist]);
 
   const completeSession = useCallback<AppValue['actions']['completeSession']>(
     async (args) => {
@@ -714,6 +725,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     progress,
     saved,
     flashcardProgress,
+    rushScores: profile.rushScores ?? {},
     testAttempts,
     dailyActivity: emptyActivitySeries(daily),
     achievements: mode === 'cloud' && snapshot ? snapshot.achievements : profile.achievements,
@@ -736,6 +748,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       reviewFlashcard,
       toggleSaved,
       purchase,
+      recordRushScore,
       completeSession,
       recordTest,
       autosaveTest,

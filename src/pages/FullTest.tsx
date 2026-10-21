@@ -1004,7 +1004,7 @@ export function FullTestPage() {
                 </strong>
                 <div className="bb-review-legend">
                   <span>▢ Unanswered</span>
-                  <span>■ Answered</span>
+                  <span className="bb-legend-answered">■ Answered</span>
                   <span style={{ color: '#b3261e' }}>⚑ For Review</span>
                 </div>
               </div>

@@ -15,6 +15,7 @@ import {
   routeModule,
   summarizeTest,
 } from './examEngine';
+import { itemById } from './catalog';
 import { checkAnswer, parseNumeric } from './grading';
 import { isDue, scheduleReview } from './sm2';
 import {
@@ -497,11 +498,54 @@ describe('local storage ledger, anti-farming HDCoins, and bookmarks', () => {
     profile = toggleSaved(profile, 'RW-INF-001');
     expect(profile.saved).toContain('RW-INF-001');
 
-    const buy = purchaseItem(profile, 'oxford-navy', 15);
+    const oxford = itemById('oxford-navy')!;
+    const buy = purchaseItem(profile, oxford.id, oxford.cost);
     expect(buy.ok).toBe(true);
-    expect(buy.profile.hdCoins).toBe(10);
+    expect(buy.profile.hdCoins).toBe(25 - oxford.cost);
     expect(buy.profile.ownedItems).toContain('oxford-navy');
     expect(buy.profile.settings.activeTheme).toBe('oxford-navy');
+  });
+
+  it('filters by several domains and several difficulties at once', () => {
+    const mathDomains = Array.from(
+      new Set(questions.filter((q) => q.section === 'Math').map((q) => q.domain))
+    );
+    expect(mathDomains.length).toBeGreaterThan(1);
+    const pickedDomains = mathDomains.slice(0, 2);
+
+    const narrowed = filterQuestions(questions, {
+      section: 'Math',
+      domains: pickedDomains,
+      difficulties: ['Easy', 'Hard'],
+    });
+    expect(narrowed.length).toBeGreaterThan(0);
+    expect(
+      narrowed.every((q) => pickedDomains.includes(q.domain) && q.difficulty !== 'Medium')
+    ).toBe(true);
+
+    // Dropping the difficulty filter admits Medium items from the same domains.
+    const domainsOnly = filterQuestions(questions, { section: 'Math', domains: pickedDomains });
+    expect(domainsOnly.length).toBeGreaterThan(narrowed.length);
+    expect(domainsOnly.some((q) => q.difficulty === 'Medium')).toBe(true);
+
+    // An empty list means "everything", and the single-value filters still work.
+    expect(filterQuestions(questions, { section: 'Math', domains: [], difficulties: [] })).toHaveLength(
+      filterQuestions(questions, { section: 'Math' }).length
+    );
+    const single = filterQuestions(questions, { section: 'Math', difficulty: 'Hard' });
+    expect(single.every((q) => q.difficulty === 'Hard')).toBe(true);
+
+    // A practice session built from a multi-select narrows identically.
+    const session = buildPracticeSession(
+      questions,
+      { section: 'Math', domains: pickedDomains, difficulties: ['Easy', 'Hard'] },
+      { count: 10, seed: 'multi:filter' }
+    );
+    expect(session.length).toBeGreaterThan(0);
+    expect(session.length).toBeLessThanOrEqual(10);
+    expect(session.every((q) => pickedDomains.includes(q.domain) && q.difficulty !== 'Medium')).toBe(
+      true
+    );
   });
 
   it('keeps incomplete saved test attempts without scores and updates them in place when completed', () => {

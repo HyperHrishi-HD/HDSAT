@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
+import { emblemFor } from '../lib/catalog';
 import { hasSeenWelcome, markWelcomeSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
 import { COPYRIGHT_PATH, PRIVACY_PATH, SUPPORT_EMAIL, TERMS_PATH } from '../lib/legal';
@@ -22,6 +23,7 @@ export function Layout() {
   const [showWelcome, setShowWelcome] = useState(() => !hasSeenWelcome());
 
   const activeTheme = app.settings?.activeTheme ?? null;
+  const activeEmblem = emblemFor(app.settings?.activeFlair);
 
   useEffect(() => {
     if (typeof document === 'undefined') return;
@@ -106,6 +108,15 @@ export function Layout() {
               <Icon name="check" size={14} />
               <strong>{app.totals.attempts}</strong> answered
             </span>
+            {activeEmblem ? (
+              <span
+                className="flair-chip"
+                title={`${activeEmblem.name.replace(/ Emblem$/, '')} emblem equipped`}
+                aria-label={`${activeEmblem.name.replace(/ Emblem$/, '')} emblem equipped`}
+              >
+                <Icon name={activeEmblem.icon ?? 'compass'} size={14} />
+              </span>
+            ) : null}
             <Badge tone={app.mode === 'cloud' ? 'good' : 'warn'}>
               {app.mode === 'cloud' ? (
                 `Cloud · ${app.user?.displayName || app.user?.email || ''}`

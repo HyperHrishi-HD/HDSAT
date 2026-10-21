@@ -9,6 +9,7 @@ import type {
   LocalProfile,
   Question,
   QuestionProgress,
+  RushScoreRecord,
   Section,
   TestAttempt,
 } from './types';
@@ -67,6 +68,7 @@ export function emptyProfile(): LocalProfile {
     saved: [],
     flashcards: {},
     testAttempts: [],
+    rushScores: {},
     settings: {
       assessment: 'SAT',
       excludePreviouslyCorrect: false,
@@ -97,6 +99,7 @@ export function loadProfile(): LocalProfile {
       achievements: parsed.achievements ?? [],
       attempts: parsed.attempts ?? [],
       testAttempts: parsed.testAttempts ?? [],
+      rushScores: parsed.rushScores ?? {},
       version: PROFILE_VERSION,
     };
   } catch {
@@ -394,6 +397,35 @@ export function recordTestAttempt(profile: LocalProfile, attempt: TestAttempt): 
     if (unlocked.length > 0) next = { ...next, achievements: [...next.achievements, ...unlocked] };
   }
   return next;
+}
+
+/**
+ * Records one Practice Rush run against its exact settings combination. Best
+ * only moves up; the last score always shows the most recent run.
+ */
+export function recordRushScore(
+  profile: LocalProfile,
+  key: string,
+  score: number,
+  now: Date = new Date()
+): { profile: LocalProfile; record: RushScoreRecord; improved: boolean } {
+  const safeScore = Math.max(0, Math.round(score));
+  const previous = profile.rushScores[key];
+  const timestamp = now.toISOString();
+  const previousBest = previous?.best ?? 0;
+  const improved = Boolean(previous) && safeScore > previousBest;
+  const record: RushScoreRecord = {
+    best: Math.max(previousBest, safeScore),
+    last: safeScore,
+    bestAt: improved ? timestamp : previous?.bestAt ?? timestamp,
+    lastAt: timestamp,
+    plays: (previous?.plays ?? 0) + 1,
+  };
+  return {
+    profile: { ...profile, rushScores: { ...profile.rushScores, [key]: record } },
+    record,
+    improved,
+  };
 }
 
 export function toggleSaved(profile: LocalProfile, questionId: string): LocalProfile {

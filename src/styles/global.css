@@ -204,6 +204,86 @@ code { font-family: var(--mono); background: var(--surface-2); padding: 1px 5px;
   box-shadow: 0 0 0 1px var(--accent);
 }
 
+/* Multi-select checkbox dropdown (Practice domains/difficulties) */
+.multi-select { position: relative; }
+.ms-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 11px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+  text-align: left;
+  cursor: pointer;
+}
+.ms-trigger:hover { border-color: var(--accent); }
+.ms-trigger.is-open { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.ms-summary {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ms-count {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 999px;
+  padding: 1px 7px;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.ms-caret { color: var(--muted); font-size: 0.7rem; }
+.ms-panel {
+  position: absolute;
+  z-index: 40;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 6px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 30px rgba(20, 24, 31, 0.14);
+}
+.ms-option {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 8px;
+  border-radius: 8px;
+  font-size: 0.88rem;
+  cursor: pointer;
+}
+.ms-option:hover { background: var(--accent-soft); }
+.ms-option input { accent-color: var(--accent); margin: 0; }
+.ms-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 6px 8px 2px;
+  border-top: 1px solid var(--line);
+}
+.ms-hint { font-size: 0.72rem; color: var(--muted); }
+.ms-action {
+  border: none;
+  background: none;
+  color: var(--accent);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+}
+
 /* Collapsible '?' info popover */
 .info-tip-wrap {
   position: relative;
@@ -272,6 +352,33 @@ code { font-family: var(--mono); background: var(--surface-2); padding: 1px 5px;
 .theme-swatch-badge-navigator,
 .theme-swatch-badge-grapher,
 .theme-swatch-badge-centurion { background: var(--accent); }
+
+/* Equipped emblem: glyph only, no text label */
+.flair-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  flex-shrink: 0;
+}
+.flair-chip .ui-icon { width: 14px; height: 14px; }
+.emblem-glyph {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  border: 1px solid var(--accent-border);
+}
+.emblem-glyph.is-active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 
 .bb-directions-shortcuts {
   margin-top: 12px;
@@ -385,6 +492,45 @@ th { font-size: 0.76rem; text-transform: uppercase; letter-spacing: 0.05em; colo
 .rush-option.is-wrong { background: var(--bad-bg); border-color: var(--bad); }
 .timer-bar { height: 6px; background: var(--surface-2); border-radius: 999px; overflow: hidden; margin-bottom: 12px; }
 .timer-bar-fill { height: 100%; background: var(--accent); transition: width 200ms linear; }
+.rush-mix {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.rush-mix-bar {
+  display: flex;
+  height: 7px;
+  width: 148px;
+  border-radius: 999px;
+  overflow: hidden;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+.rush-mix-easy { background: #7fb2f0; }
+.rush-mix-medium { background: #3b7be0; }
+.rush-mix-hard { background: #163a70; }
+.rush-score-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.rush-score-line strong { color: var(--ink); }
+.rush-score-line .rush-score-best { color: var(--accent); }
+.rush-records { margin: 2px 0 12px; font-size: 0.84rem; }
+.rush-records summary {
+  cursor: pointer;
+  color: var(--accent);
+  font-weight: 600;
+}
+.rush-records .stack { gap: 4px; }
+.bb-legend-answered { color: #2557d6; }
 
 /* ---------- charts ---------- */
 .sparkline { display: flex; align-items: flex-end; gap: 4px; height: 84px; }

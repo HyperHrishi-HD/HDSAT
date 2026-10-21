@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Badge, Button, Card, InfoTip, Stat } from '../components/ui';
+import { Badge, Button, Card, Icon, InfoTip, Stat } from '../components/ui';
 import { ACHIEVEMENTS, STORE_ITEMS } from '../lib/catalog';
 import { DAILY_FLASHCARD_COIN_CAP, DAILY_QUESTION_COIN_CAP } from '../lib/storage';
 import { useApp } from '../lib/store';
@@ -139,7 +139,16 @@ export function RewardsPage() {
                 <div key={item.id} className="muted-block row-between">
                   <div>
                     <div className="row">
-                      <span className={`theme-swatch theme-swatch-${item.id}`} />
+                      {item.icon ? (
+                        <span
+                          className={`emblem-glyph${isEquipped ? ' is-active' : ''}`}
+                          aria-hidden="true"
+                        >
+                          <Icon name={item.icon} size={14} />
+                        </span>
+                      ) : (
+                        <span className={`theme-swatch theme-swatch-${item.id}`} />
+                      )}
                       <strong>{item.name}</strong>
                       <Badge tone={isEquipped ? 'good' : 'neutral'}>
                         {isEquipped ? 'Active' : item.slot}

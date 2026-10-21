@@ -838,8 +838,14 @@ export function formatClock(totalSeconds: number): string {
 export interface PracticeFilters {
   assessment?: Assessment | string;
   section?: Section | 'all';
+  /** Single-domain filter. Also used by the Study Coach deep links. */
   domain?: string | 'all';
+  /** Multi-select domains; an empty list means every domain. */
+  domains?: string[];
+  /** Single-difficulty filter, kept for callers that only pick one. */
   difficulty?: Difficulty | 'all';
+  /** Multi-select difficulties; an empty list means every difficulty. */
+  difficulties?: Difficulty[];
   sourceId?: string | 'all';
   onlyIncorrect?: boolean;
   onlySaved?: boolean;
@@ -862,6 +868,8 @@ export function filterQuestions(
   savedIds: string[] = []
 ): Question[] {
   const savedSet = new Set(savedIds);
+  const domainSet = new Set((filters.domains ?? []).filter((d) => d && d !== 'all'));
+  const difficultySet = new Set(filters.difficulties ?? []);
   return all.filter((q) => {
     if (filters.assessment && !q.assessments.includes(String(filters.assessment))) return false;
     if (
@@ -873,7 +881,9 @@ export function filterQuestions(
     }
     if (filters.section && filters.section !== 'all' && q.section !== filters.section) return false;
     if (filters.domain && filters.domain !== 'all' && q.domain !== filters.domain) return false;
+    if (domainSet.size > 0 && !domainSet.has(q.domain)) return false;
     if (filters.difficulty && filters.difficulty !== 'all' && q.difficulty !== filters.difficulty) return false;
+    if (difficultySet.size > 0 && !difficultySet.has(q.difficulty)) return false;
     if (filters.sourceId && filters.sourceId !== 'all' && q.source_id !== filters.sourceId) return false;
     if (filters.onlySaved && !savedSet.has(q.id)) return false;
     if (filters.onlyIncorrect && progress[q.id]?.lastIsCorrect !== false) return false;

@@ -180,6 +180,19 @@ export interface UserSettings {
   activeFlair?: string | null;
 }
 
+/**
+ * One Practice Rush mode combination (duration + section + difficulty).
+ * Best/last are points from the rush scoring curve, so the record is
+ * comparable inside a combination but not across different durations.
+ */
+export interface RushScoreRecord {
+  best: number;
+  last: number;
+  bestAt: string | null;
+  lastAt: string | null;
+  plays: number;
+}
+
 export interface LocalProfile {
   version: number;
   createdAt: string;
@@ -195,6 +208,8 @@ export interface LocalProfile {
   saved: string[];
   flashcards: Record<string, FlashcardProgress>;
   testAttempts: TestAttempt[];
+  /** Practice Rush personal bests, keyed by `rushSetupKey()` in lib/rush.ts. */
+  rushScores: Record<string, RushScoreRecord>;
   settings: UserSettings;
 }
 
@@ -205,10 +220,15 @@ export interface Achievement {
   icon: string;
 }
 
+/** Emblem glyphs each cosmetic can render as in the top bar. */
+export type EmblemIcon = 'compass' | 'graph' | 'crown';
+
 export interface StoreItem {
   id: string;
   name: string;
   description: string;
   cost: number;
   slot: 'theme' | 'flair' | 'utility';
+  /** Emblem items render this glyph (icon only, never a text label). */
+  icon?: EmblemIcon;
 }

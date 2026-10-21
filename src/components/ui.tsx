@@ -24,7 +24,10 @@ export type IconName =
   | 'trophy'
   | 'palette'
   | 'arrow-right'
-  | 'arrow-left';
+  | 'arrow-left'
+  | 'compass'
+  | 'graph'
+  | 'crown';
 
 export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
   const props = {
@@ -211,6 +214,26 @@ export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
           <path d="M19 12H5M12 19l-7-7 7-7" />
         </svg>
       );
+    case 'compass':
+      return (
+        <svg {...props}>
+          <circle cx="12" cy="12" r="9" />
+          <polygon points="16.5 7.5 13.5 13.5 7.5 16.5 10.5 10.5" />
+        </svg>
+      );
+    case 'graph':
+      return (
+        <svg {...props}>
+          <path d="M4 4v16h16" />
+          <polyline points="7 15 11 10 14 13 19 6" />
+        </svg>
+      );
+    case 'crown':
+      return (
+        <svg {...props}>
+          <path d="M3 8.5 7.5 12 12 5l4.5 7L21 8.5V18H3z" />
+        </svg>
+      );
   }
 }
 
@@ -385,6 +408,120 @@ export function Select({
         ))}
       </select>
     </label>
+  );
+}
+
+/**
+ * Checkbox dropdown for multi-value filters. An empty selection means "every
+ * value", which is what the pattern-matching engine treats it as, so the
+ * trigger always reads "All …" until the student narrows it down.
+ */
+export function MultiSelect({
+  label,
+  values,
+  onChange,
+  options,
+  allLabel = 'All',
+  hint,
+}: {
+  label: string;
+  values: string[];
+  onChange: (next: string[]) => void;
+  options: { value: string; label: string }[];
+  allLabel?: string;
+  hint?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (event: Event) => {
+      const target = event.target as Node | null;
+      if (target && wrapRef.current?.contains(target)) return;
+      setOpen(false);
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('mousedown', onPointerDown, true);
+    document.addEventListener('touchstart', onPointerDown, true);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown, true);
+      document.removeEventListener('touchstart', onPointerDown, true);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [open]);
+
+  const selectedSet = new Set(values);
+  const allSelected = values.length === 0;
+  const selectedOptions = options.filter((option) => selectedSet.has(option.value));
+  const checkedCount = allSelected ? options.length : selectedOptions.length;
+  const summary = allSelected
+    ? allLabel
+    : selectedOptions.length === 1
+    ? selectedOptions[0].label
+    : `${selectedOptions.length} selected`;
+
+  const toggle = (value: string) => {
+    const current = allSelected ? options.map((option) => option.value) : values;
+    const next = current.includes(value)
+      ? current.filter((item) => item !== value)
+      : options.map((option) => option.value).filter((item) => current.includes(item) || item === value);
+    // Never allow an empty result to silently mean "everything".
+    if (next.length === 0) return;
+    onChange(next.length === options.length ? [] : next);
+  };
+
+  return (
+    <div className="field multi-select" ref={wrapRef}>
+      <span className="field-label">{label}</span>
+      <button
+        type="button"
+        className={`ms-trigger${open ? ' is-open' : ''}`}
+        onClick={() => setOpen((value) => !value)}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        title={summary}
+      >
+        <span className="ms-summary">{summary}</span>
+        {!allSelected ? <span className="ms-count">{checkedCount}</span> : null}
+        <span className="ms-caret" aria-hidden="true">
+          ▾
+        </span>
+      </button>
+      {open ? (
+        <div className="ms-panel" role="listbox" aria-multiselectable="true" aria-label={label}>
+          {options.map((option) => {
+            const checked = allSelected || selectedSet.has(option.value);
+            return (
+              <label key={option.value} className="ms-option">
+                <input
+                  type="checkbox"
+                  checked={checked}
+                  onChange={() => toggle(option.value)}
+                />
+                <span>{option.label}</span>
+              </label>
+            );
+          })}
+          <div className="ms-foot">
+            <span className="ms-hint">{hint ?? 'Tick any number of options.'}</span>
+            <button
+              type="button"
+              className="ms-action"
+              onClick={() => {
+                onChange([]);
+                setOpen(false);
+              }}
+            >
+              Show all
+            </button>
+          </div>
+        </div>
+      ) : null}
+    </div>
   );
 }
 
