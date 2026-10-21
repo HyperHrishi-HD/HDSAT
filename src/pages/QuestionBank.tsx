@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { FloatingToolWindow } from '../components/FloatingToolWindow';
+import { DesmosFrame } from '../components/MathTools';
+import { ReferenceWindow } from '../components/ReferenceWindow';
 import { QuestionView, type Feedback } from '../components/QuestionView';
 import { Badge, Button, Card, EmptyState, Field, InfoTip, Select, Toggle } from '../components/ui';
 import { filterQuestions } from '../lib/examEngine';
@@ -22,6 +25,8 @@ export function QuestionBankPage() {
   const [excludeCorrect, setExcludeCorrect] = useState<boolean>(false);
 
   const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
+  const [showCalc, setShowCalc] = useState<boolean>(false);
+  const [showRef, setShowRef] = useState<boolean>(false);
   const [responses, setResponses] = useState<Record<string, string>>({});
   const [eliminated, setEliminated] = useState<Record<string, string[]>>({});
   const [feedbackMap, setFeedbackMap] = useState<Record<string, Feedback>>({});
@@ -369,6 +374,18 @@ export function QuestionBankPage() {
                     <Badge>{activeQuestion.assessments.join(', ')}</Badge>
                   </div>
                   <div className="row">
+                    {activeQuestion.section === 'Math' ? (
+                      <Button
+                        size="sm"
+                        variant="subtle"
+                        onClick={() => setShowCalc((v) => !v)}
+                      >
+                        {showCalc ? 'Hide Calculator' : 'Calculator'}
+                      </Button>
+                    ) : null}
+                    <Button size="sm" variant="subtle" onClick={() => setShowRef((v) => !v)}>
+                      {showRef ? 'Hide Reference' : 'Reference Sheet'}
+                    </Button>
                     <Button
                       size="sm"
                       variant="outline"
@@ -394,6 +411,30 @@ export function QuestionBankPage() {
                     ) : null}
                   </div>
                 </div>
+
+                {showRef ? (
+                  <ReferenceWindow
+                    assessment={activeQuestion.assessments[0]}
+                    onClose={() => setShowRef(false)}
+                  />
+                ) : null}
+
+                {showCalc && activeQuestion.section === 'Math' ? (
+                  <FloatingToolWindow
+                    title="Desmos Graphing Calculator"
+                    onClose={() => setShowCalc(false)}
+                    storageKey="hdsat.window.bank-calc"
+                    defaultWidth={560}
+                    defaultHeight={520}
+                    placement="bottom"
+                    minWidth={280}
+                    minHeight={260}
+                    bodyClassName="bb-calc-window-body"
+                    testId="bank-calculator-window"
+                  >
+                    <DesmosFrame />
+                  </FloatingToolWindow>
+                ) : null}
 
                 <QuestionView
                   question={activeQuestion}

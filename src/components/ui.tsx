@@ -27,7 +27,10 @@ export type IconName =
   | 'arrow-left'
   | 'compass'
   | 'graph'
-  | 'crown';
+  | 'crown'
+  | 'cloud'
+  | 'device'
+  | 'flip';
 
 export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
   const props = {
@@ -232,6 +235,27 @@ export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
       return (
         <svg {...props}>
           <path d="M3 8.5 7.5 12 12 5l4.5 7L21 8.5V18H3z" />
+        </svg>
+      );
+    case 'cloud':
+      return (
+        <svg {...props}>
+          <path d="M17.5 19H7a4 4 0 0 1-.6-7.96A5.5 5.5 0 0 1 17.3 9.5a4.75 4.75 0 0 1 .2 9.5z" />
+        </svg>
+      );
+    case 'device':
+      return (
+        <svg {...props}>
+          <rect x="3" y="5" width="18" height="11" rx="2" />
+          <path d="M2 20h20" />
+        </svg>
+      );
+    case 'flip':
+      return (
+        <svg {...props}>
+          <path d="M4 9h12a4 4 0 0 1 0 8H8" />
+          <path d="m6.5 6-2.5 3 2.5 3" />
+          <path d="m14 14-3 3 3 3" />
         </svg>
       );
   }

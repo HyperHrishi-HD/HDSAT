@@ -2,8 +2,10 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { FigureView, StimulusView } from '../components/FigureView';
 import { HighlightableStimulus, type HighlightRecord } from '../components/HighlightableStimulus';
 import { MathText } from '../components/MathText';
-import { DESMOS_CB_GRAPHING_URL, MathReferenceSheet } from '../components/MathTools';
+import { DESMOS_CB_GRAPHING_URL } from '../components/MathTools';
 import { QuestionView } from '../components/QuestionView';
+import { ReferenceWindow } from '../components/ReferenceWindow';
+import { PaneSwitch, SplitWorkbench, useSplitPane } from '../components/SplitWorkbench';
 import { ReportQuestion } from '../components/ReportQuestion';
 import { Alert, Badge, Button, Card, InfoTip, Select, Stat, Toggle } from '../components/ui';
 import {
@@ -127,25 +129,14 @@ export function FullTestPage() {
   // Bluebook UI toggles
   const [showDirections, setShowDirections] = useState<boolean>(false);
   const [hideClock, setHideClock] = useState<boolean>(false);
-  const [showCalc, setShowCalc] = useState<boolean>(false);
+  const [showCalc, setShowCalc] = useState<boolean>(true);
   const [showRef, setShowRef] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [showNavPopover, setShowNavPopover] = useState<boolean>(false);
   const [showReviewScreen, setShowReviewScreen] = useState<boolean>(false);
   const [eliminateMode, setEliminateMode] = useState<boolean>(false);
-  const [splitRatio, setSplitRatio] = useState<number>(50);
-  const isDraggingSplitRef = useRef<boolean>(false);
-
-  // Draggable Reference Sheet position & pointer state
-  const [refPos, setRefPos] = useState<{ x: number; y: number }>(() => ({
-    x: typeof window !== 'undefined' ? Math.max(24, window.innerWidth - 780) : 120,
-    y: 74,
-  }));
-  const [isDraggingRef, setIsDraggingRef] = useState<boolean>(false);
-  // Mirrors isDraggingRef so pointermove tracking never waits on a re-render.
-  const refDraggingFlag = useRef<boolean>(false);
-  const refDragOffset = useRef<{ dx: number; dy: number }>({ dx: 0, dy: 0 });
-  const refModalRef = useRef<HTMLDivElement>(null);
+  // Split pane state persists per device; dragging never re-renders the runner.
+  const split = useSplitPane('hdsat.split.fulltest', { ratio: 50, side: 'left', minRatio: 28, maxRatio: 72 });
 
   const sessionStartRef = useRef<number>(Date.now());
   const clientSessionIdRef = useRef<string>(newEventId());
@@ -163,6 +154,12 @@ export function FullTestPage() {
       }),
     [app.questions, assessment, excludeReleased, seenQuestionIds]
   );
+
+  // Every math module opens with Desmos already on screen. The student can
+  // still hide it for the current module; starting another module reopens it.
+  useEffect(() => {
+    if (activeStage?.plan.section === 'Math') setShowCalc(true);
+  }, [activeStage?.plan.section, activeStage?.stageNumber]);
 
   // Module countdown timer. Expiry is handled by the effect below, not inside
   // the state updater: updaters must stay pure (StrictMode calls them twice)
@@ -185,36 +182,6 @@ export function FullTestPage() {
     }, 1000);
     return () => window.clearInterval(timer);
   }, [inSectionBreak]);
-
-  // Resizable split divider mouse listener
-  useEffect(() => {
-    const onMove = (e: MouseEvent) => {
-      if (!isDraggingSplitRef.current) return;
-      const pct = Math.min(72, Math.max(28, (e.clientX / window.innerWidth) * 100));
-      setSplitRatio(pct);
-    };
-    const onUp = () => {
-      isDraggingSplitRef.current = false;
-    };
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onUp);
-    return () => {
-      window.removeEventListener('mousemove', onMove);
-      window.removeEventListener('mouseup', onUp);
-    };
-  }, []);
-
-  // Keep reference sheet clamped inside viewport on window resize
-  useEffect(() => {
-    const onResize = () => {
-      setRefPos((prev) => ({
-        x: Math.max(12, Math.min(window.innerWidth - 320, prev.x)),
-        y: Math.max(56, Math.min(window.innerHeight - 120, prev.y)),
-      }));
-    };
-    window.addEventListener('resize', onResize);
-    return () => window.removeEventListener('resize', onResize);
-  }, []);
 
   const startFullSimulation = () => {
     const seed = `sim:${Date.now()}:${Math.random().toString(36).slice(2, 8)}`;
@@ -774,7 +741,6 @@ export function FullTestPage() {
     const givenResp = responses[qId] ?? '';
     const qEliminated = eliminated[qId] ?? [];
     const isFlagged = Boolean(flagged[qId]);
-    const showLeftPane = !isMathSection || showCalc;
 
     return (
       <div className="bb-fullscreen" data-testid="bluebook-runner">
@@ -842,6 +808,11 @@ export function FullTestPage() {
                   <span className="bb-tool-icon">🖩</span>
                   <span className="bb-tool-label">Calculator</span>
                 </button>
+                <PaneSwitch
+                  side={split.side}
+                  onClick={split.toggleSide}
+                  className="bb-side-switch"
+                />
                 <button
                   type="button"
                   className={`bb-tool-btn${showRef ? ' is-active' : ''}`}
@@ -881,6 +852,17 @@ export function FullTestPage() {
                   next · <code>M</code> mark for review · <code>Esc</code> close panel
                 </span>
               </div>
+              {isMathSection ? (
+                <div className="bb-directions-shortcuts">
+                  <strong>Tools:</strong>{' '}
+                  <span>
+                    Drag the divider to resize the calculator · the arrow beside{' '}
+                    <strong>Calculator</strong> swaps it left/right · drag the reference sheet&apos;s
+                    header to move it, and any edge or corner to resize it. On a phone the
+                    calculator moves below the question.
+                  </span>
+                </div>
+              ) : null}
             </div>
             <div className="bb-directions-foot">
               <button
@@ -894,82 +876,9 @@ export function FullTestPage() {
           </div>
         ) : null}
 
-        {/* Reference sheet draggable floating window (Math only) */}
+        {/* Reference sheet: draggable by its header, resizable from any edge */}
         {isMathSection && showRef ? (
-          <div
-            ref={refModalRef}
-            className={`bb-floating-modal bb-ref-window${isDraggingRef ? ' is-dragging' : ''}`}
-            style={{
-              left: `${refPos.x}px`,
-              top: `${refPos.y}px`,
-              right: 'auto',
-            }}
-            data-testid="reference-sheet-modal"
-          >
-            <div
-              className="bb-floating-head bb-ref-drag-handle"
-              onPointerDown={(e) => {
-                if ((e.target as HTMLElement).closest('button')) return;
-                e.preventDefault();
-                try {
-                  e.currentTarget.setPointerCapture(e.pointerId);
-                } catch {
-                  /* synthetic pointers have no capturable id; dragging still works */
-                }
-                refDragOffset.current = {
-                  dx: e.clientX - refPos.x,
-                  dy: e.clientY - refPos.y,
-                };
-                refDraggingFlag.current = true;
-                setIsDraggingRef(true);
-              }}
-              onPointerMove={(e) => {
-                if (!refDraggingFlag.current) return;
-                const modalW = refModalRef.current?.offsetWidth ?? 680;
-                const modalH = refModalRef.current?.offsetHeight ?? 360;
-                const nextX = Math.max(
-                  8,
-                  Math.min(window.innerWidth - Math.min(modalW, 240), e.clientX - refDragOffset.current.dx)
-                );
-                const nextY = Math.max(
-                  8,
-                  Math.min(window.innerHeight - Math.min(modalH, 80), e.clientY - refDragOffset.current.dy)
-                );
-                setRefPos({ x: nextX, y: nextY });
-              }}
-              onPointerUp={(e) => {
-                if (refDraggingFlag.current) {
-                  try {
-                    e.currentTarget.releasePointerCapture(e.pointerId);
-                  } catch {
-                    /* ignore */
-                  }
-                  refDraggingFlag.current = false;
-                  setIsDraggingRef(false);
-                }
-              }}
-              onLostPointerCapture={() => {
-                refDraggingFlag.current = false;
-                setIsDraggingRef(false);
-              }}
-              onPointerCancel={() => setIsDraggingRef(false)}
-            >
-              <strong>Reference Sheet</strong>
-              <span className="bb-calc-drag-dots" aria-hidden="true" title="Drag to move">
-                ⋮⋮⋮
-              </span>
-              <button
-                type="button"
-                onClick={() => setShowRef(false)}
-                aria-label="Close reference sheet"
-              >
-                ✕
-              </button>
-            </div>
-            <div className="bb-floating-body">
-              <MathReferenceSheet assessment={assessment} />
-            </div>
-          </div>
+          <ReferenceWindow assessment={assessment} onClose={() => setShowRef(false)} />
         ) : null}
 
         {/* Report question floating window */}
@@ -1033,17 +942,23 @@ export function FullTestPage() {
             </div>
           </main>
         ) : (
-          <main className={`bb-workspace${showLeftPane ? ' is-split' : ' is-single'}`}>
-            {/* Left Pane: Reading Passage + Figure/Chart OR College Board Desmos Graphing Calculator */}
-            {showLeftPane ? (
-              <>
-                <section
-                  className={`bb-pane bb-pane-left${isMathSection && showCalc ? ' is-calc-pane' : ''}`}
-                  style={{ width: `${splitRatio}%` }}
-                >
-                  {isMathSection && showCalc ? (
+          <main className="bb-workspace">
+            <SplitWorkbench
+              className="bb-workbench"
+              side={split.side}
+              ratio={split.ratio}
+              minRatio={split.minRatio}
+              maxRatio={split.maxRatio}
+              onRatioChange={split.setRatio}
+              toolVisible={!isMathSection || showCalc}
+              toolKind={isMathSection ? 'calc' : 'content'}
+              tool={
+                isMathSection ? (
+                  <section className="bb-pane bb-pane-left is-calc-pane">
                     <DesmosCollegeBoardWindow onClose={() => setShowCalc(false)} />
-                  ) : (
+                  </section>
+                ) : (
+                  <section className="bb-pane bb-pane-left">
                     <div className="bb-stimulus-pane">
                       <HighlightableStimulus
                         questionKey={qId}
@@ -1060,30 +975,12 @@ export function FullTestPage() {
                         ) : null}
                       </HighlightableStimulus>
                     </div>
-                  )}
-                </section>
-
-                {/* Vertical Resizable Divider with handle */}
-                <div
-                  className="bb-divider"
-                  onMouseDown={() => {
-                    isDraggingSplitRef.current = true;
-                  }}
-                  role="separator"
-                  aria-orientation="vertical"
-                  title="Drag to resize panes"
-                >
-                  <span className="bb-divider-handle">◂▸</span>
-                </div>
-              </>
-            ) : null}
-
-            {/* Right Pane (or centered column on Math when calculator is closed): Question Stem + Options / SPR */}
-            <section
-              className="bb-pane bb-pane-right"
-              style={showLeftPane ? { width: `${100 - splitRatio}%` } : undefined}
-            >
-              <div className="bb-question-column">
+                  </section>
+                )
+              }
+              main={
+                <section className="bb-pane bb-pane-right">
+<div className="bb-question-column">
                 {/* Question Banner Bar */}
                 <div className="bb-q-banner">
                   <div className="bb-q-banner-top">
@@ -1221,7 +1118,9 @@ export function FullTestPage() {
                   </div>
                 )}
               </div>
-            </section>
+                </section>
+              }
+            />
           </main>
         )}
 

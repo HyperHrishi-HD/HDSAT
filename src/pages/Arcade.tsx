@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { StimulusView } from '../components/FigureView';
-import { CalculatorPanel } from '../components/MathTools';
+import { DesmosPane } from '../components/MathTools';
+import { PaneSwitch, SplitWorkbench, useSplitPane } from '../components/SplitWorkbench';
 import { MathText } from '../components/MathText';
 import { Badge, Button, Card, InfoTip, Stat } from '../components/ui';
 import { seededShuffle } from '../lib/examEngine';
@@ -171,6 +172,8 @@ export function ArcadePage() {
   const app = useApp();
   const [mode, setMode] = useState<'desmos' | GameId>('desmos');
   const [runSeed, setRunSeed] = useState<string>(() => `arc:${Date.now()}`);
+  const [showCalc, setShowCalc] = useState(true);
+  const split = useSplitPane('hdsat.split.arcade', { ratio: 46, minRatio: 30, maxRatio: 70 });
 
   // Desmos Lab state
   const [lessonIdx, setLessonIdx] = useState(0);
@@ -368,7 +371,17 @@ export function ArcadePage() {
       </Card>
 
       {mode === 'desmos' ? (
-        <div>
+        <SplitWorkbench
+          className="arcade-workbench"
+          maxViewportHeight={720}
+          side={split.side}
+          ratio={split.ratio}
+          minRatio={split.minRatio}
+          maxRatio={split.maxRatio}
+          onRatioChange={split.setRatio}
+          toolKind="calc"
+          tool={<DesmosPane key={activeLesson.id} />}
+          main={
           <Card>
             <div className="row-between" style={{ marginBottom: 10 }}>
               <div>
@@ -390,6 +403,7 @@ export function ArcadePage() {
                     Lesson {idx + 1}
                   </Button>
                 ))}
+                <PaneSwitch side={split.side} onClick={split.toggleSide} />
               </div>
             </div>
 
@@ -413,9 +427,8 @@ export function ArcadePage() {
               </div>
             ) : null}
           </Card>
-
-          <CalculatorPanel key={activeLesson.id} />
-        </div>
+          }
+        />
       ) : null}
 
       {showRun && !running && !gameDone ? null : null}
@@ -461,6 +474,18 @@ export function ArcadePage() {
       ) : null}
 
       {showRun && running && current ? (
+        <SplitWorkbench
+          className="arcade-workbench"
+          maxViewportHeight={720}
+          side={split.side}
+          ratio={split.ratio}
+          minRatio={split.minRatio}
+          maxRatio={split.maxRatio}
+          onRatioChange={split.setRatio}
+          toolVisible={mode === 'sprint' && showCalc}
+          toolKind="calc"
+          tool={<DesmosPane />}
+          main={
         <Card>
           <div className="row-between" style={{ marginBottom: 8 }}>
             <h2>
@@ -470,6 +495,14 @@ export function ArcadePage() {
               <span className={`timer${secondsLeft < 15 ? ' is-low' : ''}`}>{String(secondsLeft).padStart(2, '0')}s</span>
               <Badge tone="info">Score {gameScore.toLocaleString()}</Badge>
               {combo > 1 ? <Badge tone="good">Streak ×{combo}</Badge> : null}
+              {mode === 'sprint' ? (
+                <>
+                  <Button size="sm" variant="subtle" onClick={() => setShowCalc((v) => !v)}>
+                    {showCalc ? 'Hide Calculator' : 'Calculator'}
+                  </Button>
+                  <PaneSwitch side={split.side} onClick={split.toggleSide} />
+                </>
+              ) : null}
             </div>
           </div>
 
@@ -496,6 +529,8 @@ export function ArcadePage() {
             </p>
           ) : null}
         </Card>
+          }
+        />
       ) : null}
     </div>
   );

@@ -113,10 +113,22 @@ code { font-family: var(--mono); background: var(--surface-2); padding: 1px 5px;
 .nav-link.is-active .ui-icon { color: var(--accent-ink); opacity: 1; }
 .sidebar-foot { margin-top: auto; }
 .main { display: flex; flex-direction: column; min-width: 0; }
+/* The header rides the same centred column as the page body, so a wide or
+   zoomed-out window never leaves the status pills stranded at the far left. */
 .topbar {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px;
-  padding: 12px 22px; background: var(--surface); border-bottom: 1px solid var(--line);
+  padding: 12px 0; background: var(--surface); border-bottom: 1px solid var(--line);
   position: sticky; top: 0; z-index: 5;
+}
+.topbar-inner {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: 22px;
+  min-width: 0;
+}
+@media (min-width: 1500px) {
+  .topbar-inner { max-width: 1320px; }
+}
+@media (min-width: 1900px) {
+  .topbar-inner { max-width: 1440px; }
 }
 .topbar-stats { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .pill {
@@ -559,6 +571,13 @@ canvas.plot { width: 100%; height: 260px; background: var(--surface); border: 1p
 .legal-links a:hover { color: var(--accent); text-decoration: underline; }
 .sidebar-foot .legal-links { margin-top: 8px; }
 .legal-foot { border-top: 1px solid var(--line); margin-top: auto; padding: 16px 22px 24px; background: var(--surface); }
+.legal-foot .legal-links { max-width: 1120px; margin-inline: auto; }
+@media (min-width: 1500px) {
+  .legal-foot .legal-links { max-width: 1320px; }
+}
+@media (min-width: 1900px) {
+  .legal-foot .legal-links { max-width: 1440px; }
+}
 .legal-foot p { margin: 8px 0 0; max-width: 820px; font-size: 0.78rem; }
 .report-question { font-size: 0.74rem; }
 .report-question-form { flex-basis: 100%; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); }
@@ -1288,7 +1307,7 @@ canvas.plot { width: 100%; height: 260px; background: var(--surface); border: 1p
 }
 
 .bb-floating-modal {
-  position: absolute;
+  position: fixed;
   top: 72px;
   right: 28px;
   width: min(560px, calc(100vw - 56px));
@@ -1741,7 +1760,9 @@ mark.bb-hl[data-has-note='true']::after {
   vertical-align: 1px;
 }
 .welcome-banner {
-  margin: 14px 0 4px;
+  margin: 14px auto 4px;
+  width: calc(100% - 44px);
+  max-width: 1120px;
   padding: 16px 18px;
   border: 1px solid #cfd8e6;
   border-left: 4px solid #2557d6;
@@ -1762,6 +1783,12 @@ mark.bb-hl[data-has-note='true']::after {
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 12px;
+}
+@media (min-width: 1500px) {
+  .welcome-banner { max-width: 1320px; }
+}
+@media (min-width: 1900px) {
+  .welcome-banner { max-width: 1440px; }
 }
 
 /* Unified account form: optional new-account details stay out of the way. */
@@ -1895,13 +1922,16 @@ mark.bb-hl[data-has-note='true']::after {
     font-size: 0.84rem;
   }
 
-  .bb-ref-window,
-  .bb-floating-modal {
-    left: 8px !important;
-    right: 8px !important;
-    width: auto !important;
+  .bb-floating-modal:not(.bb-ref-window) {
+    left: 8px;
+    right: 8px;
+    width: auto;
     max-width: calc(100vw - 16px);
-    top: 60px !important;
+    top: 64px;
+  }
+  .bb-ref-window {
+    max-width: calc(100vw - 16px);
+    max-height: calc(100vh - 24px);
   }
   .bb-floating-body {
     max-height: 70vh;
@@ -1933,4 +1963,494 @@ mark.bb-hl[data-has-note='true']::after {
   .bb-stimulus-text {
     white-space: normal;
   }
+}
+
+/* ==========================================================================
+ * Responsive shell, compact header, mobile tabs and mobile brand
+ * ========================================================================== */
+
+/* Wide/zoomed-out screens: keep the reading column centred instead of pinned
+   to the top-left of a very wide viewport. */
+.main { min-height: 100vh; }
+.content { margin-inline: auto; }
+@media (min-width: 1500px) {
+  .content { max-width: 1320px; }
+}
+@media (min-width: 1900px) {
+  .content { max-width: 1440px; }
+}
+
+.topbar-brand {
+  display: none;
+  align-items: center;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+.topbar-brand .brand-mark {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+}
+.topbar-brand .brand-mark svg { width: 17px; height: 17px; }
+
+.topbar-stats { min-width: 0; }
+.badge-cloud {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  max-width: 240px;
+  overflow: hidden;
+}
+.badge-cloud .ui-icon { flex-shrink: 0; }
+.scroll-name {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  max-width: 190px;
+  vertical-align: bottom;
+}
+.scroll-name > span {
+  display: inline-block;
+  white-space: nowrap;
+  will-change: transform;
+}
+.scroll-name.is-scrolling > span {
+  animation: scroll-name 7s ease-in-out infinite alternate;
+}
+@keyframes scroll-name {
+  from { transform: translateX(0); }
+  to { transform: translateX(var(--scroll-x, 0px)); }
+}
+.pill-tag .ui-icon { color: #5a6472; vertical-align: -1px; }
+.badge-label-compact { display: none; }
+
+/* Compact header: icon + value only. The switch is measured, not guessed. */
+.topbar.is-compact {
+  padding: 9px 0;
+}
+.topbar.is-compact .topbar-inner {
+  padding-inline: 12px;
+  gap: 8px;
+}
+.topbar.is-compact .pill-label,
+.topbar.is-compact .pill-tag-text,
+.topbar.is-compact .btn-label { display: none; }
+.topbar.is-compact .pill {
+  padding: 5px 8px;
+  gap: 4px;
+}
+.topbar.is-compact .btn { padding: 6px 9px; }
+.topbar.is-compact .badge-label-full { display: none; }
+.topbar.is-compact .badge-label-compact { display: inline; }
+.topbar.is-compact .badge-cloud { max-width: 170px; }
+.topbar.is-compact .badge-cloud .scroll-name { max-width: 128px; }
+.topbar.is-compact .pill-tag { padding: 0 2px; }
+.topbar.is-compact .pill-tag-text { display: none; }
+.topbar.is-compact .flair-chip {
+  width: 24px;
+  height: 24px;
+}
+
+/* Bottom tabs: comfortable icon/label rhythm, icons alone when tight. */
+.mobile-nav {
+  gap: 2px;
+  padding: 7px 8px calc(7px + env(safe-area-inset-bottom, 0px));
+}
+.mobile-link {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 6px 4px;
+  line-height: 1.1;
+  font-size: 0.68rem;
+  letter-spacing: 0.01em;
+}
+.mobile-link .ui-icon { flex-shrink: 0; }
+.mobile-link span {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mobile-nav.is-icon-only .mobile-link span { display: none; }
+.mobile-nav.is-icon-only .mobile-link { padding: 13px 4px; gap: 0; }
+
+/* ==========================================================================
+ * Shared split workbench (practice, arcade, full test)
+ * ========================================================================== */
+.split-workbench {
+  --split: 50%;
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+.split-tool {
+  flex: 0 0 var(--split);
+  width: var(--split);
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.split-tool[hidden] { display: none; }
+.split-main {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
+}
+.split-workbench.is-tool-right { flex-direction: row-reverse; }
+.split-workbench.is-single .split-main { flex: 1 1 auto; }
+
+.split-divider {
+  flex: 0 0 11px;
+  width: 11px;
+  align-self: stretch;
+  position: relative;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: col-resize;
+  touch-action: none;
+  user-select: none;
+  background: transparent;
+}
+.split-divider::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 4px;
+  width: 3px;
+  border-radius: 999px;
+  background: var(--line);
+  transition: background 120ms ease;
+}
+.split-divider:hover::before,
+.split-divider:focus-visible::before,
+.split-workbench.is-dragging .split-divider::before { background: var(--accent); }
+.split-divider:focus-visible { outline: none; }
+.split-divider-grip {
+  position: relative;
+  z-index: 1;
+  width: 3px;
+  height: 34px;
+  border-radius: 999px;
+  background: var(--muted);
+  opacity: 0.45;
+  pointer-events: none;
+}
+.split-workbench.is-switching .split-tool,
+.split-workbench.is-switching .split-main {
+  animation: pane-arrive 240ms ease both;
+}
+@keyframes pane-arrive {
+  from { opacity: 0.35; }
+  to { opacity: 1; }
+}
+.split-workbench.is-dragging { cursor: col-resize; }
+.split-workbench.is-dragging .split-tool,
+.split-workbench.is-dragging .split-main { pointer-events: none; }
+.split-drag-shield {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: none;
+  cursor: col-resize;
+}
+.split-workbench.is-dragging .split-drag-shield { display: block; }
+
+/* Calculator pane chrome */
+.pane-tool-shell {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.pane-tool-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+  font-size: 0.78rem;
+  color: var(--ink-2);
+}
+.pane-tool-head strong { font-size: 0.82rem; }
+.pane-tool-head a { font-size: 0.74rem; }
+.pane-tool-body { flex: 1; min-height: 0; background: #fff; }
+.desmos-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+  background: #fff;
+}
+.pane-switch-btn {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--accent);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+}
+.pane-switch-btn:hover { background: var(--accent-soft); border-color: var(--accent); }
+.test-bar .pane-switch-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.34);
+  color: #fff;
+}
+.test-bar .pane-switch-btn:hover { background: rgba(255, 255, 255, 0.24); }
+.practice-workbench {
+  height: var(--fit-height, calc(100vh - 220px));
+  min-height: 440px;
+  margin-bottom: 16px;
+}
+.practice-workbench .split-main { overflow-y: auto; padding-right: 2px; }
+.practice-workbench .card { margin-bottom: 0; }
+.arcade-workbench {
+  height: var(--fit-height, min(720px, calc(100vh - 210px)));
+  min-height: 440px;
+  margin-bottom: 16px;
+}
+.rush-workbench {
+  height: var(--fit-height, min(660px, calc(100vh - 220px)));
+  min-height: 430px;
+  margin: 14px 0 16px;
+}
+.rush-workbench .split-main { overflow-y: auto; padding-right: 2px; }
+.arcade-workbench .split-main { overflow-y: auto; padding-right: 2px; }
+.arcade-workbench .card { margin-bottom: 0; }
+
+/* ==========================================================================
+ * Floating reference sheet: drag the header, resize from every edge/corner
+ * ========================================================================== */
+.bb-ref-window { position: fixed; }
+.bb-ref-body {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  padding: 8px;
+}
+/* Desmos in the Question Bank: the bank is a catalog + inspector page, so the
+   calculator floats in a resizable window instead of squeezing a split pane. */
+.bb-calc-window-body {
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+}
+.bb-calc-window-body .desmos-frame { flex: 1 1 auto; }
+
+/* Drag shield for floating tool windows: covers the page (and any embedded
+   iframe) for the duration of a move or resize gesture. */
+.bb-window-shield {
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: transparent;
+}
+.bb-window-shield.is-drag { cursor: grabbing; }
+.bb-window-shield.is-n,
+.bb-window-shield.is-s { cursor: ns-resize; }
+.bb-window-shield.is-e,
+.bb-window-shield.is-w { cursor: ew-resize; }
+.bb-window-shield.is-ne,
+.bb-window-shield.is-sw { cursor: nesw-resize; }
+.bb-window-shield.is-nw,
+.bb-window-shield.is-se { cursor: nwse-resize; }
+
+/* A stacked layout has no left/right, so the side switch would be a dead button. */
+@media (max-width: 900px) {
+  .pane-switch-btn { display: none; }
+}
+.bb-ref-resizer {
+  position: absolute;
+  touch-action: none;
+  z-index: 4;
+  touch-action: none;
+}
+.bb-ref-resizer.is-n { top: -3px; left: 12px; right: 12px; height: 9px; cursor: ns-resize; }
+.bb-ref-resizer.is-s { bottom: -3px; left: 12px; right: 12px; height: 9px; cursor: ns-resize; }
+.bb-ref-resizer.is-e { right: -3px; top: 12px; bottom: 12px; width: 9px; cursor: ew-resize; }
+.bb-ref-resizer.is-w { left: -3px; top: 12px; bottom: 12px; width: 9px; cursor: ew-resize; }
+.bb-ref-resizer.is-ne { top: -4px; right: -4px; width: 18px; height: 18px; cursor: nesw-resize; }
+.bb-ref-resizer.is-nw { top: -4px; left: -4px; width: 18px; height: 18px; cursor: nwse-resize; }
+.bb-ref-resizer.is-se { bottom: -4px; right: -4px; width: 20px; height: 20px; cursor: nwse-resize; }
+.bb-ref-resizer.is-sw { bottom: -4px; left: -4px; width: 18px; height: 18px; cursor: nesw-resize; }
+.bb-ref-resizer.is-se::after {
+  content: '';
+  position: absolute;
+  right: 5px;
+  bottom: 5px;
+  width: 11px;
+  height: 11px;
+  border-right: 3px solid #6b7686;
+  border-bottom: 3px solid #6b7686;
+  border-radius: 2px;
+  opacity: 0.6;
+}
+.bb-ref-resizer.is-sw::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  bottom: 5px;
+  width: 11px;
+  height: 11px;
+  border-left: 3px solid #6b7686;
+  border-bottom: 3px solid #6b7686;
+  border-radius: 2px;
+  opacity: 0.45;
+}
+.bb-ref-resizer.is-ne::after {
+  content: '';
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  width: 11px;
+  height: 11px;
+  border-right: 3px solid #6b7686;
+  border-top: 3px solid #6b7686;
+  border-radius: 2px;
+  opacity: 0.45;
+}
+.bb-ref-resizer.is-nw::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  width: 11px;
+  height: 11px;
+  border-left: 3px solid #6b7686;
+  border-top: 3px solid #6b7686;
+  border-radius: 2px;
+  opacity: 0.45;
+}
+
+/* Full-test workbench fitting inside the fixed runner */
+.bb-workbench { flex: 1; min-height: 0; background: #ffffff; }
+.bb-workbench .split-tool > .bb-pane,
+.bb-workbench .split-main > .bb-pane { height: 100%; }
+.bb-workbench .split-divider::before { background: #cfd5de; }
+.bb-workbench .split-divider:hover::before,
+.bb-workbench .split-divider:focus-visible::before,
+.bb-workbench.is-dragging .split-divider::before { background: #2557d6; }
+.bb-side-switch {
+  padding: 5px 7px;
+  color: #2557d6;
+}
+
+/* ==========================================================================
+ * Small screens: stack workbenches, icon-only tabs, mobile brand
+ * ========================================================================== */
+@media (max-width: 900px) {
+  .topbar { padding: 9px 0; }
+  .topbar-inner { padding-inline: 12px; gap: 10px; }
+  .topbar-brand { display: inline-flex; }
+  .topbar-stats {
+    flex: 1 1 auto;
+    min-width: 0;
+    justify-content: flex-end;
+    flex-wrap: nowrap;
+    overflow: hidden;
+  }
+  .content { margin-inline: auto; }
+}
+
+@media (max-width: 900px) {
+  .split-workbench {
+    flex-direction: column;
+    height: auto;
+  }
+  .split-workbench.is-tool-right { flex-direction: column; }
+  .split-tool {
+    flex: 0 0 auto;
+    width: 100%;
+    height: min(46vh, 400px);
+    min-height: 260px;
+  }
+  .split-main {
+    width: 100%;
+    flex: 0 0 auto;
+    height: auto;
+    overflow: visible;
+  }
+  .split-divider,
+  .split-drag-shield { display: none; }
+  .practice-workbench,
+  .arcade-workbench,
+  .rush-workbench { height: auto; min-height: 0; }
+  .practice-workbench .split-main,
+  .arcade-workbench .split-main,
+  .rush-workbench .split-main { overflow: visible; }
+
+  .bb-workbench {
+    flex: 1;
+    overflow-y: auto;
+  }
+  .bb-workbench .split-tool {
+    width: 100%;
+    height: min(46vh, 380px);
+    min-height: 240px;
+  }
+  .bb-workbench .split-main { width: 100%; }
+  .bb-workbench .split-main > .bb-pane,
+  .bb-workbench .split-tool > .bb-pane {
+    height: auto;
+    overflow: visible;
+  }
+  /* The calculator pane is a fixed-height box at every width; only text panes
+     grow with their content. */
+  .bb-workbench .split-tool > .bb-pane.is-calc-pane {
+    height: 100%;
+    overflow: hidden;
+  }
+  .bb-ref-window { max-height: calc(100vh - 16px); }
+  .bb-ref-body { max-height: calc(100vh - 64px); }
+  /* The question is what a phone user came for: it comes first, and the
+     calculator sits underneath it instead of pushing it off screen. */
+  .split-workbench.is-tool-calc .split-main { order: 1; }
+  .split-workbench.is-tool-calc .split-tool {
+    order: 2;
+    height: min(52vh, 420px);
+    min-height: 230px;
+  }
+  /* A passage pane is as tall as its passage; only the calculator is boxed. */
+  .split-workbench.is-tool-content .split-tool {
+    height: auto;
+    min-height: 0;
+  }
+  .split-workbench.is-tool-content .split-tool .bb-pane {
+    height: auto;
+    overflow: visible;
+  }
+}
+
+/* Phones: keep the header to brand, coins, cloud/local and account. The two
+   secondary counters move to the dashboard rather than wrapping the bar. */
+@media (max-width: 620px) {
+  .topbar-stats { flex-wrap: nowrap; overflow: hidden; }
+  .topbar .pill[data-pill='streak'],
+  .topbar .pill[data-pill='answered'] { display: none; }
+  .topbar.is-compact .badge-cloud { max-width: 148px; }
+  .topbar.is-compact .badge-cloud .scroll-name { max-width: 104px; }
 }

@@ -1,3 +1,5 @@
+import type { ReactNode } from 'react';
+
 /**
  * Official College Board SAT Suite Math Reference Sheet images, extracted at
  * 200 DPI from the official "Bluebook Test Directions" PDFs published at
@@ -26,6 +28,64 @@ function referenceSheetSrc(assessment?: string): string {
 
 /** Official College Board Digital SAT Desmos Graphing Calculator URL. */
 export const DESMOS_CB_GRAPHING_URL = 'https://www.desmos.com/testing/collegeboard/graphing';
+
+/**
+ * Bare calculator surface for split panes: the iframe fills whatever box it is
+ * given, so the pane can be resized without reloading the graph.
+ */
+export function DesmosFrame({
+  title = 'Desmos Graphing Calculator — College Board Version',
+}: {
+  title?: string;
+}) {
+  return (
+    <iframe
+      src={DESMOS_CB_GRAPHING_URL}
+      title={title}
+      className="desmos-frame"
+      allow="clipboard-write; fullscreen"
+    />
+  );
+}
+
+/**
+ * Chrome for a tool pane inside the split workbench: a compact labelled header
+ * and a body that hands its full height to the calculator.
+ */
+export function ToolPane({
+  label,
+  href,
+  hrefLabel = 'Open in new tab',
+  children,
+}: {
+  label: string;
+  href?: string;
+  hrefLabel?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div className="pane-tool-shell">
+      <div className="pane-tool-head">
+        <strong>{label}</strong>
+        {href ? (
+          <a href={href} target="_blank" rel="noreferrer">
+            {hrefLabel}
+          </a>
+        ) : null}
+      </div>
+      <div className="pane-tool-body">{children}</div>
+    </div>
+  );
+}
+
+/** The Desmos calculator fitted to a split pane, with its own header. */
+export function DesmosPane() {
+  return (
+    <ToolPane label="Desmos Graphing Calculator" href={DESMOS_CB_GRAPHING_URL}>
+      <DesmosFrame />
+    </ToolPane>
+  );
+}
 
 /**
  * Embedded official College Board Desmos Graphing Calculator used across Practice,
@@ -61,12 +121,7 @@ export function CalculatorPanel({ height = 540 }: { height?: number }) {
           background: '#ffffff',
         }}
       >
-        <iframe
-          src={DESMOS_CB_GRAPHING_URL}
-          title="Desmos Graphing Calculator — College Board Version"
-          style={{ width: '100%', height: '100%', border: 'none', display: 'block' }}
-          allow="clipboard-write; fullscreen"
-        />
+        <DesmosFrame />
       </div>
     </div>
   );

@@ -98,9 +98,12 @@ describe('welcome banner', () => {
     expect(container.querySelector('.welcome-banner')).toBeNull();
     expect(container.textContent).not.toContain('Keep studying as a guest');
     expect(markWelcomeSeen).toHaveBeenCalled();
-    // The top bar greets the student by name, never by email address.
-    expect(container.textContent).toContain('Cloud · Hrishi');
-    expect(container.textContent).not.toContain('Cloud · student@example.com');
+    // The top bar greets the student by name, never by email address. The
+    // cloud icon replaces the old "Cloud ·" text so the pill stays compact.
+    const cloud = container.querySelector('.badge-cloud');
+    expect(cloud?.textContent).toBe('Hrishi');
+    expect(cloud?.querySelector('svg')).not.toBeNull();
+    expect(container.textContent).not.toContain('student@example.com');
   });
 
   it('falls back to the email when a cloud account has no display name', () => {
@@ -110,7 +113,9 @@ describe('welcome banner', () => {
       user: { email: 'student@example.com', displayName: '' },
     });
     render();
-    expect(container.textContent).toContain('Cloud · student@example.com');
+    expect(container.querySelector('.badge-cloud')?.textContent).toBe(
+      'student@example.com'
+    );
   });
 
   it('shows the equipped emblem as its own icon, with no text label', () => {

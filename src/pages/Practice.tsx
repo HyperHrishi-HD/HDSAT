@@ -1,7 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { FigureView, StimulusView } from '../components/FigureView';
-import { CalculatorPanel, MathReferenceSheet } from '../components/MathTools';
+import { DesmosPane } from '../components/MathTools';
+import { ReferenceWindow } from '../components/ReferenceWindow';
+import { PaneSwitch, SplitWorkbench, useSplitPane } from '../components/SplitWorkbench';
 import { MathText } from '../components/MathText';
 import { QuestionView, type Feedback } from '../components/QuestionView';
 import { Badge, Button, Card, EmptyState, InfoTip, MultiSelect, Select, Stat, Toggle } from '../components/ui';
@@ -57,7 +59,11 @@ export function PracticePage() {
   const [flagged, setFlagged] = useState<Record<string, boolean>>({});
   const [feedbackMap, setFeedbackMap] = useState<Record<string, Feedback>>({});
   const [sessionDone, setSessionDone] = useState<boolean>(false);
-  const [showCalc, setShowCalc] = useState<boolean>(false);
+  const [showCalc, setShowCalc] = useState<boolean>(true);
+  const split = useSplitPane('hdsat.split.practice', { ratio: 46, minRatio: 30, maxRatio: 70 });
+  // Practice Rush draws from both sections, so its calculator follows the item.
+  const [rushCalcOpen, setRushCalcOpen] = useState<boolean>(true);
+  const rushSplit = useSplitPane('hdsat.split.rush', { ratio: 46, minRatio: 30, maxRatio: 70 });
   const [showRef, setShowRef] = useState<boolean>(false);
   const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);
   const questionStartRef = useRef<number>(Date.now());
@@ -573,9 +579,14 @@ export function PracticePage() {
             </div>
             <div className="row">
               {timedPerQuestion ? <span className="timer">{formatClock(elapsedSeconds)}</span> : null}
-              <Button size="sm" variant="subtle" onClick={() => setShowCalc((v) => !v)}>
-                {showCalc ? 'Hide Calculator' : 'Calculator'}
-              </Button>
+              {currentQuestion.section === 'Math' ? (
+                <>
+                  <Button size="sm" variant="subtle" onClick={() => setShowCalc((v) => !v)}>
+                    {showCalc ? 'Hide Calculator' : 'Calculator'}
+                  </Button>
+                  <PaneSwitch side={split.side} onClick={split.toggleSide} />
+                </>
+              ) : null}
               <Button size="sm" variant="subtle" onClick={() => setShowRef((v) => !v)}>
                 {showRef ? 'Hide Reference' : 'Reference Sheet'}
               </Button>
@@ -588,9 +599,22 @@ export function PracticePage() {
             </div>
           </div>
 
-          {showCalc ? <CalculatorPanel /> : null}
-          {showRef ? <MathReferenceSheet /> : null}
+          {showRef ? (
+            <ReferenceWindow assessment={assessment} onClose={() => setShowRef(false)} />
+          ) : null}
 
+          <SplitWorkbench
+            className="practice-workbench"
+            maxViewportHeight={720}
+            side={split.side}
+            ratio={split.ratio}
+            minRatio={split.minRatio}
+            maxRatio={split.maxRatio}
+            onRatioChange={split.setRatio}
+            toolVisible={currentQuestion.section === 'Math' && showCalc}
+            toolKind="calc"
+            tool={<DesmosPane />}
+            main={
           <Card>
             <div className="navigator" style={{ marginBottom: 12 }}>
               {sessionQuestions.map((q, idx) => {
@@ -671,6 +695,8 @@ export function PracticePage() {
               )}
             </div>
           </Card>
+            }
+          />
         </div>
       ) : null}
 
@@ -823,6 +849,18 @@ export function PracticePage() {
           ) : null}
 
           {rushActive && rushCurrent ? (
+            <SplitWorkbench
+              className="rush-workbench"
+              maxViewportHeight={660}
+              side={rushSplit.side}
+              ratio={rushSplit.ratio}
+              minRatio={rushSplit.minRatio}
+              maxRatio={rushSplit.maxRatio}
+              onRatioChange={rushSplit.setRatio}
+              toolVisible={rushCurrent.section === 'Math' && rushCalcOpen}
+              toolKind="calc"
+              tool={<DesmosPane />}
+              main={
             <div style={{ marginTop: 14 }}>
               {rushDuration === 'free' ? null : (
                 <div className="timer-bar">
@@ -840,6 +878,18 @@ export function PracticePage() {
                   <Badge tone="info">Streak: {rushStreak}</Badge>
                   {rushDuration === 'free' ? (
                     <Badge tone="warn">Stopwatch {formatClock(rushElapsed)}</Badge>
+                  ) : null}
+                  {rushCurrent.section === 'Math' ? (
+                    <>
+                      <Button
+                        size="sm"
+                        variant="subtle"
+                        onClick={() => setRushCalcOpen((v) => !v)}
+                      >
+                        {rushCalcOpen ? 'Hide Calculator' : 'Calculator'}
+                      </Button>
+                      <PaneSwitch side={rushSplit.side} onClick={rushSplit.toggleSide} />
+                    </>
                   ) : null}
                 </div>
                 <Button
@@ -929,6 +979,8 @@ export function PracticePage() {
                 );
               })()}
             </div>
+              }
+            />
           ) : null}
 
           {rushFinished ? (

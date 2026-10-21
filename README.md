@@ -5,7 +5,7 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
 - **Persistent Question Bank:** 4,975 original items (339 Reading and Writing, 4,636 Math) filterable by assessment, section, domain, skill, difficulty, mastery status, bookmarked state, and licensed dataset source.
 - **Multistage Adaptive Practice Simulations:** Section-level Module 1 baseline followed by deterministic Module 2 routing (`upper` vs. `lower` difficulty tier at the 60% threshold). The bank now fills the FULL Digital SAT blueprint (54 R&W + 44 Math items, full module timers) with a fresh randomized item mix per run, and a compact bank still degrades proportionally with a transparent coverage notice.
 - **Custom Practice & Practice Rush:** Untimed or timed custom drills (with toggles to exclude previously correct questions or reserve Benchmark Simulation Set items) and 1/3/5-minute Practice Rush sprints.
-- **In-App Math Tools:** The official College Board version of the Desmos graphing calculator, embedded in Practice, the Desmos Lab, and every Math module of the full-screen test, plus the SAT Suite Math Reference Sheet.
+- **In-App Math Tools:** The official College Board version of the Desmos graphing calculator beside every Math item — Custom Practice, Practice Rush, the Desmos Lab, Equation Sprint, the Question Bank, and every Math module of the full-screen test — plus the SAT Suite Math Reference Sheet. The tool pane is drag-resizable, a one-tap curved-arrow switch swaps it between the left and right side, and the reference sheet is a floating window you can drag by its header and resize from any edge or corner. On phones the calculator stacks under the question instead of squeezing it.
 - **Spaced-Repetition Flashcards (SM-2):** 1,764 verified cards in two fully separate decks — 1,639 vocabulary entries (24 authored SAT items + 1,615 CC0-dedicated elevated-vocabulary entries) and 125 math formulas/identities with KaTeX rendering, scheduled via the SM-2 algorithm.
 - **Desmos Lab & SAT Mini-Games:** Interactive graphing calculator lessons plus timed arcade games — Equation Sprint, Rhetorical Transition Match, and Vocabulary Precision — with streak multipliers and locally saved best scores.
 - **HDCoins Economy, Streaks & Achievements:** Duplicate-resistant, anti-farming reward ledger enforced identically in local Guest Mode and Supabase SECURITY DEFINER RPCs.
@@ -27,8 +27,11 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
 │   ├── App.tsx                 # Route definitions
 │   ├── components/
 │   │   ├── Layout.tsx          # Responsive shell, navigation, topbar stats
+│   │   ├── FloatingToolWindow.tsx  # Draggable/resizable window chrome (reference sheet, bank calculator)
 │   │   ├── MathText.tsx        # KaTeX inline ($...$) and block ($$...$$) renderer
-│   │   ├── MathTools.tsx       # CalculatorPanel (embedded College Board Desmos) & MathReferenceSheet
+│   │   ├── MathTools.tsx       # Desmos pane/frame (College Board version) & MathReferenceSheet
+│   │   ├── ReferenceWindow.tsx # Floating, resizable SAT Suite math reference sheet
+│   │   ├── SplitWorkbench.tsx  # Resizable question/tool split pane used by practice, arcade & the full test
 │   │   ├── QuestionView.tsx    # Digital testing question view (stimulus, tables, MC cross-out, SPR)
 │   │   └── ui.tsx              # Minimalist UI primitives
 │   ├── data/
@@ -42,6 +45,7 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
 │   │   ├── grading.ts          # Multiple-choice and numeric/fraction SPR answer grader
 │   │   ├── sm2.ts              # SM-2 spaced repetition scheduler
 │   │   ├── storage.ts          # Local guest profile persistence and anti-farming coin ledger
+│   │   ├── windowResize.ts     # Pure edge/corner resize geometry shared by floating windows
 │   │   ├── store.tsx           # React context unifying Guest Mode and Supabase Cloud Mode
 │   │   ├── supabaseClient.ts   # Browser Supabase client (anon/publishable key only)
 │   │   ├── types.ts            # Shared TypeScript interfaces
@@ -65,6 +69,22 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
     └── seed/
         └── 0001_seed_hdsat.sql                   # Idempotent SQL seed for Supabase
 ```
+
+---
+
+## Study Workspace Controls
+
+Every place that shows a Math item shares one workspace (`SplitWorkbench`):
+
+| Action | Mouse / touch | Keyboard |
+| :--- | :--- | :--- |
+| Resize the calculator | Drag the divider between the panes | Focus the divider, then `←` / `→` |
+| Swap sides | Tap the curved-arrow button next to **Calculator** | — |
+| Move the reference sheet | Drag its title bar | — |
+| Resize the reference sheet | Drag any edge or corner | — |
+| Close a floating tool | The `✕` in its title bar | — |
+
+Pane width, side, and floating-window geometry are stored per surface in `localStorage`, so the layout a student picks survives a reload. Below 900 px the panes stack (question first, calculator underneath) and the floating windows clamp themselves above the bottom tab bar; the side-switch is hidden there because there is no left or right.
 
 ---
 
