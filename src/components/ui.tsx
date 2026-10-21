@@ -30,7 +30,11 @@ export type IconName =
   | 'crown'
   | 'cloud'
   | 'device'
-  | 'flip';
+  | 'flip'
+  | 'flag'
+  | 'shield'
+  | 'users'
+  | 'layers';
 
 export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
   const props = {
@@ -256,6 +260,34 @@ export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
           <path d="M4 9h12a4 4 0 0 1 0 8H8" />
           <path d="m6.5 6-2.5 3 2.5 3" />
           <path d="m14 14-3 3 3 3" />
+        </svg>
+      );
+    case 'flag':
+      return (
+        <svg {...props}>
+          <path d="M4 22V4M4 4h11l-1.6 3.5L15 11H4" />
+        </svg>
+      );
+    case 'shield':
+      return (
+        <svg {...props}>
+          <path d="M12 22s8-3.6 8-10V5l-8-3-8 3v7c0 6.4 8 10 8 10z" />
+          <path d="m9 12 2 2 4-4" />
+        </svg>
+      );
+    case 'users':
+      return (
+        <svg {...props}>
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      );
+    case 'layers':
+      return (
+        <svg {...props}>
+          <path d="m12 2 9 5-9 5-9-5 9-5z" />
+          <path d="m3 12 9 5 9-5M3 17l9 5 9-5" />
         </svg>
       );
   }

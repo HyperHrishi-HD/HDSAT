@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FigureView, StimulusView } from './FigureView';
 import { MathText } from './MathText';
 import { ReportQuestion } from './ReportQuestion';
@@ -44,6 +44,35 @@ export function QuestionView({
 }) {
   const [showRationales, setShowRationales] = useState(false);
   const eliminatedSet = new Set(eliminated ?? []);
+
+  // Bluebook-style answer shortcuts, shared by Practice, Rush and the bank. The
+  // full test has its own runner, so this only ever fires on these surfaces.
+  useEffect(() => {
+    if (disabled || question.format !== 'multiple_choice' || !question.choices) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      const target = event.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+      const key = event.key.toLowerCase();
+      const letters = ['a', 'b', 'c', 'd'];
+      const digits = ['1', '2', '3', '4'];
+      const index = letters.includes(key) ? letters.indexOf(key) : digits.indexOf(key);
+      if (index < 0) return;
+      const choice = question.choices?.[index];
+      if (!choice) return;
+      event.preventDefault();
+      onResponseChange(choice.id);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [disabled, question, onResponseChange]);
 
   return (
     <article className="question">

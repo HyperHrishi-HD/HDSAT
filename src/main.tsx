@@ -8,6 +8,20 @@ import { getSupabase } from './lib/supabaseClient';
 
 const AUTH_CALLBACK_PATH = '/account';
 
+/**
+ * The operator console lives on a plain `/admin` path so the link can be typed
+ * without a hash. The app itself is hash-routed, so rewrite the entry point to
+ * its hash route before the router mounts; reloading keeps working because the
+ * server serves the SPA for any unknown path.
+ */
+function normaliseAdminEntry(): void {
+  if (typeof window === 'undefined') return;
+  const path = window.location.pathname.replace(/\/+$/, '').toLowerCase();
+  if (!path.endsWith('/admin')) return;
+  if (window.location.hash.length > 1) return;
+  window.history.replaceState(null, '', `${window.location.pathname}#/admin`);
+}
+
 function landOnAccount(): void {
   const base = window.location.pathname + window.location.search;
   window.history.replaceState(null, '', `${base}#${AUTH_CALLBACK_PATH}`);
@@ -74,6 +88,8 @@ async function consumeAuthRedirect(): Promise<void> {
 
   landOnAccount();
 }
+
+normaliseAdminEntry();
 
 void consumeAuthRedirect().finally(() => {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

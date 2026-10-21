@@ -86,7 +86,7 @@ export function ResourcesPage() {
       ) : (
         <div className="grid-2">
           {filtered.map((res) => (
-            <Card key={res.id}>
+            <Card key={res.id} className="resource-card">
               <div className="row-between" style={{ marginBottom: 6 }}>
                 <Badge tone="info">{res.type}</Badge>
                 <Badge tone="good">{res.cost}</Badge>

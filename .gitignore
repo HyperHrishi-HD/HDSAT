@@ -20,3 +20,6 @@ hdsat-deploy.zip
 
 supabase/.temp/
 supabase/import/expansion/
+
+# Source PDFs/notes downloaded while regenerating the reference-sheet assets
+ref-sheets/

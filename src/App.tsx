@@ -2,6 +2,7 @@ import { HashRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { useApp } from './lib/store';
 import { AccountPage } from './pages/Account';
+import { AdminPage } from './pages/Admin';
 import { ArcadePage } from './pages/Arcade';
 import { DashboardPage } from './pages/Dashboard';
 import { FlashcardsPage } from './pages/Flashcards';
@@ -27,6 +28,10 @@ export function App() {
   return (
     <HashRouter>
       <Routes>
+        {/* Operator console. Deliberately absent from every navigation surface:
+            the only way in is the /admin URL (or #/admin). */}
+        <Route path="/admin" element={<AdminPage />} />
+
         <Route element={<Layout />}>
           <Route path="/" element={<DashboardPage />} />
           <Route path="/practice" element={<PracticePage />} />

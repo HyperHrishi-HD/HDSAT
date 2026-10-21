@@ -165,8 +165,9 @@ export function SplitWorkbench({
 
   // Fit the panes to the screen instead of a hard-coded height: the welcome
   // banner or a shorter laptop screen would otherwise push the bottom of the
-  // calculator below the fold.
-  useEffect(() => {
+  // calculator below the fold. Layout effect so the first paint is already the
+  // final height and the pane never flashes at the fallback size.
+  useLayoutEffect(() => {
     if (!maxViewportHeight) return;
     const el = rootRef.current;
     if (!el) return;
