@@ -412,7 +412,13 @@ export function PracticePage() {
               variant={tab === 'custom' ? 'primary' : 'outline'}
               size="sm"
               icon="practice"
-              onClick={() => setTab('custom')}
+              onClick={() => {
+                setTab('custom');
+                if (sessionDone || sessionId) {
+                  setSessionId(null);
+                  setSessionDone(false);
+                }
+              }}
             >
               Custom Practice
             </Button>
@@ -420,7 +426,12 @@ export function PracticePage() {
               variant={tab === 'rush' ? 'primary' : 'outline'}
               size="sm"
               icon="bolt"
-              onClick={() => setTab('rush')}
+              onClick={() => {
+                setTab('rush');
+                if (rushFinished) {
+                  setRushFinished(false);
+                }
+              }}
             >
               Practice Rush
             </Button>
@@ -664,6 +675,14 @@ export function PracticePage() {
               }
               feedback={feedbackMap[currentQuestion.id] ?? null}
               onSubmit={handleSubmitCurrent}
+              onNext={() => {
+                if (currentIndex + 1 < sessionQuestions.length) {
+                  setCurrentIndex((i) => i + 1);
+                  questionStartRef.current = Date.now();
+                } else {
+                  finishCustomSession();
+                }
+              }}
               disabled={Boolean(feedbackMap[currentQuestion.id])}
             />
 
@@ -1065,6 +1084,8 @@ export function PracticePage() {
                         setDifficulties([]);
                         setOnlyIncorrect(false);
                         setOnlySaved(false);
+                        setSessionId(null);
+                        setSessionDone(false);
                         setTab('custom');
                       }}
                     >

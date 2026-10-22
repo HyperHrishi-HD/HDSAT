@@ -169,6 +169,7 @@ function tierDifficultyOrder(tier: ModuleTier, index: number, total: number): Di
 const contentKeyCache = new WeakMap<Question, string>();
 const stimulusKeyCache = new WeakMap<Question, string | null>();
 const templateKeyCache = new WeakMap<Question, string>();
+const archetypeKeyCache = new WeakMap<Question, string>();
 
 function questionContentKey(q: Question): string {
   let k = contentKeyCache.get(q);
@@ -203,12 +204,39 @@ function questionTemplateKey(q: Question): string {
   return k;
 }
 
+/**
+ * Coarse structural signature of a question so parameterized siblings
+ * ("Although X are frequently cited in discussions of Y, few studies have isolated...")
+ * collapse to a single archetype key and never appear back-to-back or flood a session.
+ */
+export function questionArchetypeKey(q: Question): string {
+  let k = archetypeKeyCache.get(q);
+  if (k !== undefined) return k;
+  const collapse = (s: string) =>
+    s
+      .trim()
+      .toLowerCase()
+      .replace(/\$[^$]+\$/g, 'MATH')
+      .replace(/\b\d+(?:\.\d+)?\b/g, '#')
+      .replace(/[^a-z#\s]/g, ' ')
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 7)
+      .join(' ');
+  const stimSig = collapse(q.stimulus ?? '');
+  const promptSig = collapse(q.prompt);
+  k = `arch:${q.section}:${q.skill}:${stimSig.slice(0, 36)}:${promptSig.slice(0, 36)}`;
+  archetypeKeyCache.set(q, k);
+  return k;
+}
+
 function markQuestionUsed(q: Question, used: Set<string>): void {
   used.add(q.id);
   used.add(questionContentKey(q));
   const stimKey = questionStimulusKey(q);
   if (stimKey) used.add(stimKey);
   used.add(questionTemplateKey(q));
+  used.add(questionArchetypeKey(q));
 }
 
 function takeMatching(
@@ -221,7 +249,8 @@ function takeMatching(
     if (used.has(q.id) || used.has(questionContentKey(q))) return false;
     const stimKey = questionStimulusKey(q);
     if (stimKey && used.has(stimKey)) return false;
-    return !used.has(questionTemplateKey(q));
+    if (used.has(questionTemplateKey(q))) return false;
+    return !used.has(questionArchetypeKey(q));
   };
   const isFreshStim = (q: Question) => {
     if (used.has(q.id) || used.has(questionContentKey(q))) return false;
@@ -893,6 +922,93 @@ export function filterQuestions(
   });
 }
 
+/**
+ * Interleaves questions so consecutive items never share the same archetype
+ * or skill when alternatives exist, while prioritizing unseen questions first.
+ */
+function diversifySequence(
+  candidates: Question[],
+  count: number,
+  progress: Record<string, QuestionProgress>,
+  seed: string
+): Question[] {
+  if (candidates.length === 0 || count <= 0) return [];
+  const shuffled = seededShuffle(candidates, seed);
+  // Partition into unseen vs previously attempted so fresh items always lead
+  const unseen = shuffled.filter((q) => !progress[q.id] || progress[q.id].attemptCount === 0);
+  const seen = shuffled.filter((q) => progress[q.id] && progress[q.id].attemptCount > 0);
+  const working = [...unseen, ...seen];
+
+  const picked: Question[] = [];
+  const usedIds = new Set<string>();
+  const usedContent = new Set<string>();
+  const usedTemplates = new Set<string>();
+  const usedArchetypes = new Set<string>();
+
+  // Pass 1: strictly distinct archetype + template + content, avoiding consecutive same skill
+  for (let step = 0; step < count; step += 1) {
+    const prev = picked[picked.length - 1];
+    let bestIdx = -1;
+    for (let i = 0; i < working.length; i += 1) {
+      const q = working[i];
+      if (usedIds.has(q.id)) continue;
+      const cKey = questionContentKey(q);
+      const sKey = questionStimulusKey(q);
+      const tKey = questionTemplateKey(q);
+      const aKey = questionArchetypeKey(q);
+      if (usedContent.has(cKey) || (sKey && usedContent.has(sKey))) continue;
+      if (usedTemplates.has(tKey) || usedArchetypes.has(aKey)) continue;
+      if (prev && prev.skill === q.skill && prev.difficulty === q.difficulty) continue;
+      bestIdx = i;
+      break;
+    }
+    // Relax consecutive-skill restriction if needed while keeping archetype unique
+    if (bestIdx < 0) {
+      for (let i = 0; i < working.length; i += 1) {
+        const q = working[i];
+        if (usedIds.has(q.id)) continue;
+        const cKey = questionContentKey(q);
+        const sKey = questionStimulusKey(q);
+        const tKey = questionTemplateKey(q);
+        const aKey = questionArchetypeKey(q);
+        if (usedContent.has(cKey) || (sKey && usedContent.has(sKey))) continue;
+        if (usedTemplates.has(tKey) || usedArchetypes.has(aKey)) continue;
+        bestIdx = i;
+        break;
+      }
+    }
+    // Relax archetype restriction if pool is small (e.g. narrow single-skill filter)
+    if (bestIdx < 0) {
+      for (let i = 0; i < working.length; i += 1) {
+        const q = working[i];
+        if (usedIds.has(q.id)) continue;
+        const cKey = questionContentKey(q);
+        const sKey = questionStimulusKey(q);
+        if (usedContent.has(cKey) || (sKey && usedContent.has(sKey))) continue;
+        if (prev && questionArchetypeKey(prev) === questionArchetypeKey(q)) continue;
+        bestIdx = i;
+        break;
+      }
+    }
+    // Final fallback: any unused ID
+    if (bestIdx < 0) {
+      bestIdx = working.findIndex((q) => !usedIds.has(q.id));
+    }
+    if (bestIdx < 0) break;
+
+    const chosen = working[bestIdx];
+    picked.push(chosen);
+    usedIds.add(chosen.id);
+    usedContent.add(questionContentKey(chosen));
+    const sKey = questionStimulusKey(chosen);
+    if (sKey) usedContent.add(sKey);
+    usedTemplates.add(questionTemplateKey(chosen));
+    usedArchetypes.add(questionArchetypeKey(chosen));
+  }
+
+  return picked;
+}
+
 export function buildPracticeSession(
   all: Question[],
   filters: PracticeFilters,
@@ -902,37 +1018,42 @@ export function buildPracticeSession(
   if (options.format && options.format !== 'both') {
     pool = pool.filter((q) => q.format === options.format);
   }
-  const orderedAll = seededShuffle(pool, options.seed ?? `practice:${Date.now()}`);
-  const seenContent = new Set<string>();
-  const ordered = orderedAll.filter((q) => {
-    const cKey = questionContentKey(q);
-    const sKey = questionStimulusKey(q);
-    if (seenContent.has(cKey) || (sKey && seenContent.has(sKey))) return false;
-    seenContent.add(cKey);
-    if (sKey) seenContent.add(sKey);
-    return true;
-  });
+  const seed =
+    options.seed ??
+    `practice:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`;
+  const progress = options.progress ?? {};
+
   if (!filters.section || filters.section === 'all') {
-    const rw = ordered.filter((q) => q.section === 'Reading and Writing');
-    const math = ordered.filter((q) => q.section === 'Math');
+    const rwPool = pool.filter((q) => q.section === 'Reading and Writing');
+    const mathPool = pool.filter((q) => q.section === 'Math');
     const half = Math.ceil(options.count / 2);
-    const mixed: Question[] = [];
-    const rwTake = rw.slice(0, Math.min(half, rw.length));
-    const mathTake = math.slice(0, Math.min(options.count - rwTake.length, math.length));
-    mixed.push(...rwTake, ...mathTake);
-    if (mixed.length < options.count) {
-      const used = new Set(mixed.map((q) => q.id));
-      for (const q of ordered) {
-        if (mixed.length >= options.count) break;
-        if (!used.has(q.id)) {
-          mixed.push(q);
-          used.add(q.id);
-        }
-      }
+    const rwTake = diversifySequence(rwPool, half, progress, `${seed}:rw`);
+    const mathTake = diversifySequence(
+      mathPool,
+      Math.max(0, options.count - rwTake.length),
+      progress,
+      `${seed}:math`
+    );
+    const combined: Question[] = [];
+    const maxLen = Math.max(rwTake.length, mathTake.length);
+    for (let i = 0; i < maxLen; i += 1) {
+      if (i < rwTake.length) combined.push(rwTake[i]);
+      if (i < mathTake.length) combined.push(mathTake[i]);
     }
-    return seededShuffle(mixed, `${options.seed ?? 'practice'}:order`).slice(0, options.count);
+    if (combined.length < options.count) {
+      const used = new Set(combined.map((q) => q.id));
+      const extras = diversifySequence(
+        pool.filter((q) => !used.has(q.id)),
+        options.count - combined.length,
+        progress,
+        `${seed}:extra`
+      );
+      combined.push(...extras);
+    }
+    return combined.slice(0, options.count);
   }
-  return ordered.slice(0, options.count);
+
+  return diversifySequence(pool, options.count, progress, seed);
 }
 
 export function averageDifficulty(questions: Question[]): number {

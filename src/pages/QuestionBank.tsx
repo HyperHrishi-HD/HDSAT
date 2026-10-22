@@ -459,6 +459,15 @@ export function QuestionBankPage() {
                   }
                   feedback={feedbackMap[activeQuestion.id] ?? null}
                   onSubmit={() => handleCheck(activeQuestion)}
+                  onNext={() => {
+                    const currIdx = filteredQuestions.findIndex((q) => q.id === activeQuestion.id);
+                    if (currIdx >= 0 && currIdx + 1 < filteredQuestions.length) {
+                      setSelectedQuestionId(filteredQuestions[currIdx + 1].id);
+                      if (currIdx + 1 >= visibleCount) {
+                        setVisibleCount((prev) => prev + PAGE_SIZE);
+                      }
+                    }
+                  }}
                   disabled={Boolean(feedbackMap[activeQuestion.id])}
                 />
               </div>

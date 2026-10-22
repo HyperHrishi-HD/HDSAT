@@ -624,32 +624,64 @@ export function FullTestPage() {
   const sectionNumber = activeStage ? activeStage.sectionIndex + 1 : 1;
 
   // Desktop keyboard controls, Bluebook style. Typing inside the SPR box or a
-  // note editor is never intercepted.
+  // note editor is never intercepted (except Enter in SPR advances).
   useEffect(() => {
     if (!activeStage || inSectionBreak || showReviewScreen || finishedAttempt) return;
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
-      if (
+      const isInput =
         target &&
         (target.tagName === 'INPUT' ||
           target.tagName === 'TEXTAREA' ||
-          target.isContentEditable)
-      ) {
-        return;
-      }
+          target.isContentEditable);
       if (event.ctrlKey || event.metaKey || event.altKey) return;
 
       const question = activeStage.plan.questions[currentIndex];
       if (!question) return;
       const key = event.key.toLowerCase();
 
+      if (key === 'enter') {
+        if (target && (target.tagName === 'TEXTAREA' || target.tagName === 'BUTTON')) return;
+        event.preventDefault();
+        if (currentIndex + 1 < activeStage.plan.questions.length) {
+          setCurrentIndex((i) => i + 1);
+        } else {
+          setShowReviewScreen(true);
+        }
+        return;
+      }
+
+      if (isInput) return;
+
       const letterAt = ['a', 'b', 'c', 'd'].indexOf(key);
       const digitAt = ['1', '2', '3', '4'].indexOf(key);
-      const choiceAt = letterAt >= 0 ? letterAt : digitAt;
+      const shiftDigitAt = ['!', '@', '#', '$'].indexOf(event.key);
+      const codeDigitAt = ['Digit1', 'Digit2', 'Digit3', 'Digit4'].indexOf(event.code);
+      const choiceAt =
+        letterAt >= 0
+          ? letterAt
+          : digitAt >= 0
+          ? digitAt
+          : shiftDigitAt >= 0
+          ? shiftDigitAt
+          : event.shiftKey && codeDigitAt >= 0
+          ? codeDigitAt
+          : -1;
+
       if (choiceAt >= 0 && question.format === 'multiple_choice' && question.choices?.[choiceAt]) {
         event.preventDefault();
         const choiceId = question.choices[choiceAt].id;
-        setResponses((prev) => ({ ...prev, [question.id]: choiceId }));
+        if (event.shiftKey) {
+          setEliminated((prev) => {
+            const list = prev[question.id] ?? [];
+            const next = list.includes(choiceId)
+              ? list.filter((c) => c !== choiceId)
+              : [...list, choiceId];
+            return { ...prev, [question.id]: next };
+          });
+        } else {
+          setResponses((prev) => ({ ...prev, [question.id]: choiceId }));
+        }
         return;
       }
 
@@ -663,8 +695,7 @@ export function FullTestPage() {
         setCurrentIndex((i) => Math.max(0, i - 1));
         return;
       }
-      if (key === 'arrowright' || key === 'enter' || event.key === ' ') {
-        if (event.key === 'Enter' && !(responses[question.id] ?? '').trim()) return;
+      if (key === 'arrowright' || event.key === ' ') {
         event.preventDefault();
         if (currentIndex + 1 < activeStage.plan.questions.length) {
           setCurrentIndex((i) => i + 1);

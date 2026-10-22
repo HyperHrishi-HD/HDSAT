@@ -546,6 +546,16 @@ describe('local storage ledger, anti-farming HDCoins, and bookmarks', () => {
     expect(session.every((q) => pickedDomains.includes(q.domain) && q.difficulty !== 'Medium')).toBe(
       true
     );
+
+    // Practice session diversifies archetypes and avoids consecutive duplicate skills
+    const diverseSession = buildPracticeSession(
+      questions,
+      { section: 'Math' },
+      { count: 16, seed: 'anti-repeat:1' }
+    );
+    expect(diverseSession).toHaveLength(16);
+    const uniqueIds = new Set(diverseSession.map((q) => q.id));
+    expect(uniqueIds.size).toBe(16);
   });
 
   it('keeps incomplete saved test attempts without scores and updates them in place when completed', () => {

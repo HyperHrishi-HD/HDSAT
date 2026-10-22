@@ -124,14 +124,10 @@ Checks: `npm run typecheck`, `npm test` (Vitest), `npm run build`. Database seed
   section:stage. Auto-submit at 0:00 and break auto-resume both exercised in the
   browser. Production now serves `assets/index-qEmpae46.js`.
 
-## Backlog → see `IDEAS_AND_FIXES.md`
+## Backlog & Live Tracker → see `IDEAS_AND_FIXES.md`
 
-Tomorrow's work is planned in **`IDEAS_AND_FIXES.md`** (hidden question counts,
-arcade, coin management + rewards cleanup, complaint-report/admin question —
-answer included there: reports live in Supabase `question_reports` /
-`user_appeals`, no admin UI yet —, bank lag, filler removal, public polish, blue
-icon theme, mobile optimization, backend security, selection-box UI). **Plans
-only — do not start until the user says go.**
+All active milestones (`Milestone 1` through `Milestone 5`), pending owner design proposals (2D Coordinate Interceptor game, Admin batch delete rules, PythonAnywhere auto-refresh bot), and Freebuff MCP triage capabilities (`python .pa/admin_triage.py`) are tracked in **`IDEAS_AND_FIXES.md`**.
+Whenever the owner asks in chat to "check reports / appeals", run `python .pa/admin_triage.py --summary` to pull live Supabase `question_reports` and `user_appeals` and summarize or resolve them directly.
 
 ## Future plans (do not start without the user)
 

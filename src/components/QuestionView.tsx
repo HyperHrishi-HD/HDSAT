@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { FigureView, StimulusView } from './FigureView';
 import { MathText } from './MathText';
 import { ReportQuestion } from './ReportQuestion';
-import { Badge, Button } from './ui';
+import { Badge, Button, Icon } from './ui';
 import type { Question } from '../lib/types';
 
 export interface Feedback {
@@ -24,6 +24,7 @@ export function QuestionView({
   onToggleFlag,
   feedback,
   onSubmit,
+  onNext,
   disabled = false,
   showMeta = true,
 }: {
@@ -39,27 +40,47 @@ export function QuestionView({
   onToggleFlag?: () => void;
   feedback?: Feedback | null;
   onSubmit?: () => void;
+  /** Called when the user presses Enter after feedback is already shown. */
+  onNext?: () => void;
   disabled?: boolean;
   showMeta?: boolean;
 }) {
   const [showRationales, setShowRationales] = useState(false);
   const eliminatedSet = new Set(eliminated ?? []);
 
-  // Bluebook-style answer shortcuts, shared by Practice, Rush and the bank. The
-  // full test has its own runner, so this only ever fires on these surfaces.
+  // Bluebook-style answer shortcuts + Enter to submit/advance, shared by
+  // Practice, Rush and the bank.
   useEffect(() => {
-    if (disabled || question.format !== 'multiple_choice' || !question.choices) return;
     const onKeyDown = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
-      if (
+      const isInputTarget = Boolean(
         target &&
-        (target.tagName === 'INPUT' ||
-          target.tagName === 'TEXTAREA' ||
-          target.isContentEditable)
-      ) {
+          (target.tagName === 'INPUT' ||
+            target.tagName === 'TEXTAREA' ||
+            target.isContentEditable)
+      );
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+
+      if (event.key === 'Enter') {
+        // Allow Enter from SPR input or anywhere on the question card (except textareas/buttons)
+        if (target && (target.tagName === 'TEXTAREA' || target.tagName === 'BUTTON')) {
+          return;
+        }
+        if (feedback && onNext) {
+          event.preventDefault();
+          onNext();
+          return;
+        }
+        if (!disabled && !feedback && onSubmit && (response ?? '').trim().length > 0) {
+          event.preventDefault();
+          onSubmit();
+          return;
+        }
+      }
+
+      if (isInputTarget || disabled || question.format !== 'multiple_choice' || !question.choices) {
         return;
       }
-      if (event.ctrlKey || event.metaKey || event.altKey) return;
       const key = event.key.toLowerCase();
       const letters = ['a', 'b', 'c', 'd'];
       const digits = ['1', '2', '3', '4'];
@@ -72,7 +93,7 @@ export function QuestionView({
     };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
-  }, [disabled, question, onResponseChange]);
+  }, [disabled, feedback, onNext, onResponseChange, onSubmit, question, response]);
 
   return (
     <article className="question">
@@ -154,9 +175,19 @@ export function QuestionView({
                       type="button"
                       className="choice-eliminate"
                       onClick={() => onToggleEliminate(choice.id)}
-                      title="Cross out this option"
+                      title={
+                        eliminatedSet.has(choice.id)
+                          ? `Restore option ${choice.id}`
+                          : `Cross out option ${choice.id}`
+                      }
+                      aria-label={
+                        eliminatedSet.has(choice.id)
+                          ? `Restore option ${choice.id}`
+                          : `Cross out option ${choice.id}`
+                      }
+                      aria-pressed={eliminatedSet.has(choice.id)}
                     >
-                      {eliminatedSet.has(choice.id) ? 'restore' : 'cross out'}
+                      <Icon name={eliminatedSet.has(choice.id) ? 'undo' : 'strike'} size={15} />
                     </button>
                   ) : null}
                 </div>

@@ -554,42 +554,64 @@ export function AccountPage() {
           </div>
         </div>
 
-        <div className="muted-block" style={{ marginTop: 14 }}>
-          <div className="row-between">
-            <h3 style={{ margin: 0 }}>Your recent question reports</h3>
-            <Button variant="outline" size="sm" onClick={loadReports} disabled={!app.user}>
-              Load my reports
-            </Button>
-          </div>
-          {reports === null ? (
-            <p className="muted" style={{ marginBottom: 0 }}>
-              Reports you file from a question card are listed here so you can see they were received.
-            </p>
-          ) : reports.length === 0 ? (
-            <p className="muted" style={{ marginBottom: 0 }}>
-              You have not filed any question reports yet.
-            </p>
-          ) : (
-            <table>
-              <thead>
-                <tr>
-                  <th>Question</th>
-                  <th>Reason</th>
-                  <th>Filed</th>
-                </tr>
-              </thead>
-              <tbody>
-                {reports.map((r) => (
-                  <tr key={r.id}>
-                    <td className="mono">{r.question_id}</td>
-                    <td>{r.reason.replace(/_/g, ' ')}</td>
-                    <td>{new Date(r.created_at).toLocaleDateString()}</td>
+        <details
+          className="auth-details"
+          style={{ marginTop: 14 }}
+          onToggle={(e) => {
+            if ((e.currentTarget as HTMLDetailsElement).open && reports === null && app.user) {
+              void loadReports();
+            }
+          }}
+        >
+          <summary style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px' }}>
+            <div>
+              <strong>Your Submitted Question Reports</strong>
+              <span className="muted" style={{ display: 'block', fontSize: '0.86rem', fontWeight: 400 }}>
+                Expand to view the status and history of questions you have reported for review.
+              </span>
+            </div>
+            <Badge tone="neutral">{reports ? `${reports.length} filed` : 'Click to view'}</Badge>
+          </summary>
+          <div style={{ padding: '12px 16px' }}>
+            {!app.user ? (
+              <p className="muted" style={{ margin: 0 }}>
+                Sign in to view and track your submitted question reports across devices.
+              </p>
+            ) : reports === null ? (
+              <div className="row-between">
+                <p className="muted" style={{ margin: 0 }}>
+                  Loading your submitted question reports…
+                </p>
+                <Button variant="outline" size="sm" onClick={loadReports}>
+                  Refresh reports
+                </Button>
+              </div>
+            ) : reports.length === 0 ? (
+              <p className="muted" style={{ margin: 0 }}>
+                You have not filed any question reports yet.
+              </p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Question</th>
+                    <th>Reason</th>
+                    <th>Filed</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          )}
-        </div>
+                </thead>
+                <tbody>
+                  {reports.map((r) => (
+                    <tr key={r.id}>
+                      <td className="mono">{r.question_id}</td>
+                      <td>{r.reason.replace(/_/g, ' ')}</td>
+                      <td>{new Date(r.created_at).toLocaleDateString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
+        </details>
 
         <h3 style={{ marginTop: 16 }}>File an appeal or safety report</h3>
         {app.cloudConfigured ? (

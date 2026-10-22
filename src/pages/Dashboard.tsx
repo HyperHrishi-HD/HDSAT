@@ -1,15 +1,7 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge, Card, Icon, InfoTip, ProgressBar, Select, Stat } from '../components/ui';
+import { Badge, Card, Icon, InfoTip, ProgressBar, Stat } from '../components/ui';
 import { useApp } from '../lib/store';
-import type { Assessment } from '../lib/types';
-
-const ASSESSMENTS: { value: Assessment; label: string }[] = [
-  { value: 'SAT', label: 'Digital SAT' },
-  { value: 'PSAT/NMSQT', label: 'PSAT/NMSQT' },
-  { value: 'PSAT 10', label: 'PSAT 10' },
-  { value: 'PSAT 8/9', label: 'PSAT 8/9' },
-];
 
 export function DashboardPage() {
   const app = useApp();
@@ -62,19 +54,14 @@ export function DashboardPage() {
               <InfoTip label="About HDSAT">
                 Adaptive Digital {app.settings.assessment} preparation. Every statistic reflects
                 your recorded attempts across practice drills, flashcards, and full-length
-                simulations.
+                simulations. Change your target assessment in Account Preferences.
               </InfoTip>
             </div>
-            <p className="muted">Target track: {app.settings.assessment}</p>
+            <p className="muted">
+              Track your study streak, domain accuracy, and recent practice simulations.
+            </p>
           </div>
-          <div style={{ minWidth: 280 }}>
-            <Select
-              label="Target assessment"
-              value={app.settings.assessment}
-              onChange={(val) => app.actions.updateSettings({ assessment: val as Assessment })}
-              options={ASSESSMENTS}
-            />
-          </div>
+          <Badge tone="info">{app.settings.assessment}</Badge>
         </div>
 
         <div className="row" style={{ marginTop: 8 }}>
@@ -143,8 +130,7 @@ export function DashboardPage() {
       <div className="grid-2">
         <Card>
           <div className="row-between" style={{ marginBottom: 8 }}>
-            <h3>Domain Mastery ({app.settings.assessment})</h3>
-            <Badge tone="info">{app.settings.assessment}</Badge>
+            <h3>Domain Mastery</h3>
           </div>
           <div className="stack">
             {domainBreakdown.map((item) => {
