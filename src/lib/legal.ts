@@ -24,6 +24,10 @@ export const SITE_NAME = 'HDSAT';
 export const TERMS_PATH = '/terms';
 export const PRIVACY_PATH = '/privacy';
 export const COPYRIGHT_PATH = '/copyright';
+export const CREDITS_PATH = '/credits';
+export const CREATOR_HANDLE = 'HyperHrishi-HD';
+export const CREATOR_YOUTUBE_URL = 'https://www.youtube.com/@HyperHrishiHD';
+export const CREATOR_GITHUB_URL = 'https://github.com/HyperHrishi-HD/HDSAT';
 
 export const OPERATOR_NAME = clean(env.VITE_OPERATOR_NAME) || `the ${SITE_NAME} operator`;
 export const SUPPORT_EMAIL = clean(env.VITE_SUPPORT_EMAIL);

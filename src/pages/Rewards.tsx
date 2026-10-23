@@ -66,6 +66,10 @@ export function RewardsPage() {
                   <li>
                     <strong>Full adaptive simulation:</strong> +25 HDCoins.
                   </li>
+                  <li>
+                    <strong>Achievement milestones:</strong> +5 to +40 bonus HDCoins per badge
+                    unlocked.
+                  </li>
                 </ul>
               </InfoTip>
             </div>
@@ -193,7 +197,10 @@ export function RewardsPage() {
               return (
                 <div key={ach.id} className="muted-block row-between">
                   <div>
-                    <strong>{ach.name}</strong>
+                    <div className="row" style={{ gap: 8 }}>
+                      <strong>{ach.name}</strong>
+                      <Badge tone={earned ? 'good' : 'info'}>+{ach.rewardCoins} HDCoins</Badge>
+                    </div>
                     <div className="muted">{ach.description}</div>
                   </div>
                   <Badge tone={earned ? 'good' : 'neutral'}>

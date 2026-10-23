@@ -1,4 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
+import { normalizeAchievementIds } from './catalog';
 import { getSupabase } from './supabaseClient';
 import type {
   AttemptMode,
@@ -287,7 +288,9 @@ export async function fetchSnapshot(): Promise<CloudSnapshot> {
     saved: (savedRes.data ?? []).map((row: { question_id: string }) => row.question_id),
     dailyActivity,
     flashcards,
-    achievements: (achRes.data ?? []).map((row: { achievement_id: string }) => row.achievement_id),
+    achievements: normalizeAchievementIds(
+      (achRes.data ?? []).map((row: { achievement_id: string }) => row.achievement_id)
+    ),
     ownedItems: Array.isArray(profileRes.data?.unlocked_cosmetics)
       ? (profileRes.data.unlocked_cosmetics as string[])
       : [],

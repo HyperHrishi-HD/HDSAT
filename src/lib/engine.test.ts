@@ -469,6 +469,8 @@ describe('local storage ledger, anti-farming HDCoins, and bookmarks', () => {
     const first = applyAttempt(profile, q, wrong, { mode: 'practice', eventId: 'evt-1' });
     expect(first.isCorrect).toBe(false);
     expect(first.coinsAwarded).toBe(1);
+    expect(first.unlocked).toContain('first-steps');
+    expect(first.profile.hdCoins).toBe(6); // 1 attempt coin + 5 achievement bonus
     profile = first.profile;
 
     const dup = applyAttempt(profile, q, wrong, { mode: 'practice', eventId: 'evt-1' });

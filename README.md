@@ -1,8 +1,10 @@
 # HDSAT — Minimalist Digital SAT & PSAT Preparation Platform
 
+**Created by [HyperHrishi-HD](https://github.com/HyperHrishi-HD)** · **YouTube:** [@HyperHrishiHD](https://www.youtube.com/@HyperHrishiHD) · **Live App:** [hdsat.pythonanywhere.com](https://hdsat.pythonanywhere.com)
+
 HDSAT is a minimalist, responsive digital SAT and PSAT preparation application supporting:
 - **Assessments:** Digital SAT, PSAT/NMSQT, PSAT 10, and PSAT 8/9.
-- **Persistent Question Bank:** 4,975 original items (339 Reading and Writing, 4,636 Math) filterable by assessment, section, domain, skill, difficulty, mastery status, bookmarked state, and licensed dataset source.
+- **Persistent Question Bank:** 6,193 original items (1,557 Reading and Writing, 4,636 Math) filterable by assessment, section, domain, skill, difficulty, mastery status, bookmarked state, and licensed dataset source.
 - **Multistage Adaptive Practice Simulations:** Section-level Module 1 baseline followed by deterministic Module 2 routing (`upper` vs. `lower` difficulty tier at the 60% threshold). The bank now fills the FULL Digital SAT blueprint (54 R&W + 44 Math items, full module timers) with a fresh randomized item mix per run, and a compact bank still degrades proportionally with a transparent coverage notice.
 - **Custom Practice & Practice Rush:** Untimed or timed custom drills (with toggles to exclude previously correct questions or reserve Benchmark Simulation Set items) and 1/3/5-minute Practice Rush sprints.
 - **In-App Math Tools:** The official College Board version of the Desmos graphing calculator beside every Math item — Custom Practice, Practice Rush, the Desmos Lab, Equation Sprint, the Question Bank, and every Math module of the full-screen test — plus the SAT Suite Math Reference Sheet. The tool pane is drag-resizable, a one-tap curved-arrow switch swaps it between the left and right side, and the reference sheet is a floating window you can drag by its header and resize from any edge or corner. On phones the calculator stacks under the question instead of squeezing it.

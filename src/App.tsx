@@ -11,7 +11,7 @@ import { QuestionBankPage } from './pages/QuestionBank';
 import { ResourcesPage } from './pages/Resources';
 import { RewardsPage } from './pages/Rewards';
 import { FullTestPage } from './pages/FullTest';
-import { CopyrightPage, PrivacyPage, TermsPage } from './pages/Legal';
+import { CopyrightPage, CreditsPage, PrivacyPage, TermsPage } from './pages/Legal';
 
 export function App() {
   const app = useApp();
@@ -45,6 +45,7 @@ export function App() {
           <Route path="/terms" element={<TermsPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/copyright" element={<CopyrightPage />} />
+          <Route path="/credits" element={<CreditsPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Route>
       </Routes>

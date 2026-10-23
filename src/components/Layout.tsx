@@ -3,7 +3,16 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import { emblemFor } from '../lib/catalog';
 import { hasSeenWelcome, markWelcomeSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
-import { COPYRIGHT_PATH, PRIVACY_PATH, SUPPORT_EMAIL, TERMS_PATH } from '../lib/legal';
+import {
+  COPYRIGHT_PATH,
+  CREATOR_GITHUB_URL,
+  CREATOR_HANDLE,
+  CREATOR_YOUTUBE_URL,
+  CREDITS_PATH,
+  PRIVACY_PATH,
+  SUPPORT_EMAIL,
+  TERMS_PATH,
+} from '../lib/legal';
 import { Alert, Badge, Icon, InfoTip, type IconName } from './ui';
 
 const NAV: { to: string; label: string; icon: IconName; end?: boolean }[] = [
@@ -350,7 +359,14 @@ export function Layout() {
             <Link to={TERMS_PATH}>Terms of Service</Link>
             <Link to={PRIVACY_PATH}>Privacy &amp; Data Rights</Link>
             <Link to={COPYRIGHT_PATH}>Copyright &amp; Content Policy</Link>
+            <Link to={CREDITS_PATH}>Credits</Link>
             <Link to="/account">Appeals &amp; safety reports</Link>
+            <a href={CREATOR_YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
+              By {CREATOR_HANDLE} (YouTube)
+            </a>
+            <a href={CREATOR_GITHUB_URL} target="_blank" rel="noopener noreferrer">
+              GitHub
+            </a>
             {SUPPORT_EMAIL ? <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> : null}
           </nav>
         </footer>

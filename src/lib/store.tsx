@@ -2,6 +2,7 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import bankJson from '../data/questionBank.json';
 import flashcardsJson from '../data/flashcards.json';
 import resourcesJson from '../data/resources.json';
+import { achievementById } from './catalog';
 import * as cloud from './cloud';
 import { getSupabase, isCloudConfigured } from './supabaseClient';
 import * as local from './storage';
@@ -298,7 +299,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       });
       persist(outcome.profile);
       if (outcome.unlocked.length > 0) {
-        setNotice(`Achievement unlocked: ${outcome.unlocked.join(', ')}`);
+        const labels = outcome.unlocked.map((id) => {
+          const ach = achievementById(id);
+          return ach ? `${ach.name} (+${ach.rewardCoins} HDCoins)` : id;
+        });
+        setNotice(`Achievement unlocked: ${labels.join(', ')}`);
       }
 
       if (mode === 'cloud') {

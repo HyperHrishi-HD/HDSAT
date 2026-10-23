@@ -5,6 +5,10 @@ import { AppealForm } from '../components/AppealForm';
 import {
   APPEAL_SLA_HOURS,
   COPYRIGHT_PATH,
+  CREATOR_GITHUB_URL,
+  CREATOR_HANDLE,
+  CREATOR_YOUTUBE_URL,
+  CREDITS_PATH,
   LEGAL_EFFECTIVE_DATE,
   LEGAL_VERSION,
   MIN_AGE,
@@ -39,6 +43,7 @@ function LegalShell({
           <Link to={TERMS_PATH}>Terms of Service</Link>
           <Link to={PRIVACY_PATH}>Privacy &amp; Data Rights</Link>
           <Link to={COPYRIGHT_PATH}>Copyright &amp; Content Policy</Link>
+          <Link to={CREDITS_PATH}>Credits &amp; Attribution</Link>
         </nav>
       </Card>
       <Card className="legal">{children}</Card>
@@ -322,6 +327,68 @@ export function CopyrightPage() {
         {SUPPORT_EMAIL
           ? `Notices may also be emailed to ${SUPPORT_EMAIL}.`
           : 'When a designated agent mailbox is configured for this deployment it will be published here; until then, file notices through the form below and we will respond to your contact address.'}
+      </p>
+    </LegalShell>
+  );
+}
+
+export function CreditsPage() {
+  const app = useApp();
+  return (
+    <LegalShell
+      title="Credits & Attribution"
+      intro={`${SITE_NAME} is built and maintained by ${CREATOR_HANDLE} as an open, accessible Digital SAT and PSAT preparation platform.`}
+    >
+      <h2>Creator &amp; Official Links</h2>
+      <ul>
+        <li>
+          <strong>Created by:</strong> {CREATOR_HANDLE}
+        </li>
+        <li>
+          <strong>YouTube Channel:</strong>{' '}
+          <a href={CREATOR_YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
+            @HyperHrishiHD ({CREATOR_YOUTUBE_URL})
+          </a>
+        </li>
+        <li>
+          <strong>Source Code &amp; Issue Tracker:</strong>{' '}
+          <a href={CREATOR_GITHUB_URL} target="_blank" rel="noopener noreferrer">
+            {CREATOR_GITHUB_URL}
+          </a>
+        </li>
+      </ul>
+
+      <h2>Question Bank &amp; Open Datasets</h2>
+      <p>{app.licensingNote}</p>
+      <ul>
+        {app.sources.map((src) => (
+          <li key={src.source_id}>
+            <strong>{src.name}</strong> ({src.license}) — {src.provenance_summary}
+          </li>
+        ))}
+      </ul>
+
+      <h2>Open-Source Software &amp; Embedded Tools</h2>
+      <ul>
+        <li>
+          <strong>Desmos Graphing Calculator:</strong> Embedded under the College Board Testing calculator configuration
+          for authentic Digital SAT math practice.
+        </li>
+        <li>
+          <strong>KaTeX:</strong> Fast math typesetting library (MIT License).
+        </li>
+        <li>
+          <strong>React, Vite &amp; TypeScript:</strong> Frontend application framework and build toolchain (MIT License).
+        </li>
+        <li>
+          <strong>Flask &amp; Supabase:</strong> Backend serving and PostgreSQL row-level security infrastructure.
+        </li>
+      </ul>
+
+      <h2>Reporting Questions or Feedback</h2>
+      <p>
+        Found an issue with a question or want to suggest an improvement? Use the <strong>Report a problem</strong>{' '}
+        button on any question card or submit the appeal form below.
       </p>
     </LegalShell>
   );

@@ -1,0 +1,33 @@
+name: PythonAnywhere Bi-Monthly Refresh & Health Check
+
+on:
+  schedule:
+    # Runs at 09:00 UTC on the 1st and 15th of every month
+    - cron: '0 9 1,15 * *'
+  workflow_dispatch:
+
+jobs:
+  refresh-webapp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Reload PythonAnywhere Webapp & Verify Health
+        env:
+          PA_USERNAME: ${{ secrets.PA_USERNAME || 'HDSAT' }}
+          PA_API_TOKEN: ${{ secrets.PA_API_TOKEN }}
+        run: |
+          if [ -n "$PA_API_TOKEN" ]; then
+            echo "Reloading hdsat.pythonanywhere.com via PythonAnywhere REST API..."
+            HTTP_CODE=$(curl -s -o /tmp/pa_reload.txt -w "%{http_code}" -X POST \
+              -H "Authorization: Token $PA_API_TOKEN" \
+              "https://www.pythonanywhere.com/api/v0/user/${PA_USERNAME}/webapps/hdsat.pythonanywhere.com/reload/")
+            echo "Reload HTTP status: $HTTP_CODE"
+            if [ "$HTTP_CODE" != "200" ]; then
+              cat /tmp/pa_reload.txt
+              exit 1
+            fi
+          else
+            echo "PA_API_TOKEN secret not set; performing warm-up health check only."
+          fi
+          sleep 3
+          curl -fsSL "https://hdsat.pythonanywhere.com/api/health" | grep -q '"status":"ok"'
+          echo "Health check passed."

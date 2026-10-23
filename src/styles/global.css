@@ -60,6 +60,42 @@
   --accent-border: #d4b2ea;
 }
 
+[data-theme='slate-mono'] {
+  --bg: #f4f5f7;
+  --surface-2: #eaecf0;
+  --line: #d4d8df;
+  --accent: #27303f;
+  --accent-soft: #ebedf2;
+  --accent-border: #b6becd;
+}
+
+[data-theme='teal-current'] {
+  --bg: #f2f8f8;
+  --surface-2: #e6f2f3;
+  --line: #cde4e6;
+  --accent: #0f766e;
+  --accent-soft: #e6f6f4;
+  --accent-border: #99d8d2;
+}
+
+[data-theme='rose-quartz'] {
+  --bg: #fbf4f6;
+  --surface-2: #f5e8ec;
+  --line: #e7d1d8;
+  --accent: #9f1239;
+  --accent-soft: #fce8ee;
+  --accent-border: #ebadc0;
+}
+
+[data-theme='royal-obsidian'] {
+  --bg: #f4f4fa;
+  --surface-2: #eaeaf5;
+  --line: #d5d6ea;
+  --accent: #312e81;
+  --accent-soft: #eae9fb;
+  --accent-border: #b4b2e6;
+}
+
 * { box-sizing: border-box; }
 
 html, body, #root { height: 100%; }
@@ -361,6 +397,10 @@ code { font-family: var(--mono); background: var(--surface-2); padding: 1px 5px;
 .theme-swatch-forest-sage { background: #1d6b4f; }
 .theme-swatch-warm-amber { background: #b85d0c; }
 .theme-swatch-plum-ink { background: #6d2896; }
+.theme-swatch-slate-mono { background: #27303f; }
+.theme-swatch-teal-current { background: #0f766e; }
+.theme-swatch-rose-quartz { background: #9f1239; }
+.theme-swatch-royal-obsidian { background: #312e81; }
 .theme-swatch-badge-navigator,
 .theme-swatch-badge-grapher,
 .theme-swatch-badge-centurion { background: var(--accent); }

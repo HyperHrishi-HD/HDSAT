@@ -1,4 +1,4 @@
-import { ACHIEVEMENTS } from './catalog';
+import { ACHIEVEMENTS, achievementById, normalizeAchievementIds } from './catalog';
 import { checkAnswer } from './grading';
 import { scheduleReview } from './sm2';
 import type {
@@ -96,7 +96,7 @@ export function loadProfile(): LocalProfile {
       flashcards: parsed.flashcards ?? {},
       saved: parsed.saved ?? [],
       ownedItems: parsed.ownedItems ?? [],
-      achievements: parsed.achievements ?? [],
+      achievements: normalizeAchievementIds(parsed.achievements ?? []),
       attempts: parsed.attempts ?? [],
       testAttempts: parsed.testAttempts ?? [],
       rushScores: parsed.rushScores ?? {},
@@ -327,7 +327,15 @@ export function applyAttempt(
 
   const unlocked = evaluateAchievements(next, profile.achievements);
   if (unlocked.length > 0) {
-    next = { ...next, achievements: [...next.achievements, ...unlocked] };
+    const bonus = unlocked.reduce((sum, id) => sum + (achievementById(id)?.rewardCoins ?? 0), 0);
+    next = {
+      ...next,
+      achievements: [...next.achievements, ...unlocked],
+      hdCoins: next.hdCoins + bonus,
+    };
+    if (bonus > 0) {
+      next = bumpDay(next, date, { coinsEarned: bonus });
+    }
   }
 
   return { profile: next, isCorrect, coinsAwarded, duplicate: false, progress, unlocked };
@@ -375,7 +383,17 @@ export function applyFlashcardReview(
   }
 
   const unlocked = evaluateAchievements(next, profile.achievements);
-  if (unlocked.length > 0) next = { ...next, achievements: [...next.achievements, ...unlocked] };
+  if (unlocked.length > 0) {
+    const bonus = unlocked.reduce((sum, id) => sum + (achievementById(id)?.rewardCoins ?? 0), 0);
+    next = {
+      ...next,
+      achievements: [...next.achievements, ...unlocked],
+      hdCoins: next.hdCoins + bonus,
+    };
+    if (bonus > 0) {
+      next = bumpDay(next, date, { coinsEarned: bonus });
+    }
+  }
   return { profile: next, coinsAwarded };
 }
 
@@ -394,7 +412,15 @@ export function recordTestAttempt(profile: LocalProfile, attempt: TestAttempt): 
   if (attempt.status !== 'incomplete') {
     next = bumpDay(next, date, { sessionsCompleted: 1 });
     const unlocked = evaluateAchievements(next, profile.achievements);
-    if (unlocked.length > 0) next = { ...next, achievements: [...next.achievements, ...unlocked] };
+    if (unlocked.length > 0) {
+      const bonus = unlocked.reduce((sum, id) => sum + (achievementById(id)?.rewardCoins ?? 0), 0);
+      next = {
+        ...next,
+        achievements: [...next.achievements, ...unlocked],
+        hdCoins: next.hdCoins + bonus,
+      };
+      if (bonus > 0) next = bumpDay(next, date, { coinsEarned: bonus });
+    }
   }
   return next;
 }
@@ -495,5 +521,10 @@ export function perfectModuleAchievement(
 ): LocalProfile {
   if (!modules.some((m) => m.total > 0 && m.correct === m.total)) return profile;
   if (profile.achievements.includes('perfect-module')) return profile;
-  return { ...profile, achievements: [...profile.achievements, 'perfect-module'] };
+  const bonus = achievementById('perfect-module')?.rewardCoins ?? 0;
+  return {
+    ...profile,
+    achievements: [...profile.achievements, 'perfect-module'],
+    hdCoins: profile.hdCoins + bonus,
+  };
 }

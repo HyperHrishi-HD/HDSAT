@@ -16,13 +16,13 @@
 - [x] **M1.6 · Dashboard cleanup (`Dashboard.tsx`):** Remove the `"Target assessment"` dropdown and `"Target track"` subtitle from the Dashboard header (since it lives in Account Preferences). **Keep the Domain Mastery card**, and remove the parenthetical `({app.settings.assessment})` next to `"Domain Mastery"` so it simply reads `Domain Mastery` and aggregates across the user's preferred/active assessment cleanly.
 - [x] **M1.7 · Account Reports large expandable disclosure (`Account.tsx`):** Replace the small `"Load my reports"` button with a large full-width expandable disclosure card (`Your Submitted Question Reports`) that loads and expands the user's report table on click.
 
-### Milestone 2: Achievements Fix + Coin Payouts, Luxury Theme Ladder, Credits & Repo Hygiene
-- [ ] **M2.1 · Achievement ID unification + HDCoins payouts (`catalog.ts`, `storage.ts`, `store.tsx`, `Rewards.tsx`, Supabase SQL migration):**
+### Milestone 2: Achievements Fix + Coin Payouts, Luxury Theme Ladder, Credits & Repo Hygiene (COMPLETED ✅)
+- [x] **M2.1 · Achievement ID unification + HDCoins payouts (`catalog.ts`, `storage.ts`, `store.tsx`, `Rewards.tsx`, Supabase SQL migration):**
   - Reconcile client and database achievement IDs so cloud and guest modes match 1:1.
   - Award one-time HDCoins for every unlocked achievement (First Steps +5, Warmed Up +10, Grinder +25, Flawless Module +30, Three Day Streak +10, Week Streak +25, Card Shark +10, Deck Master +25, Test Pilot +25, Rush Hour +20, Coin Collector +15, Mastery +40).
   - Show human-readable achievement names + coin reward in the unlock popup and on the Rewards page badges.
-- [ ] **M2.2 · High-tier / exponential theme ladder (`catalog.ts`, `global.css`, Supabase SQL migration):** Add 4 new themes (`Slate Mono` 600, `Teal Current` 1,000, `Rose Quartz` 1,800, `Royal Obsidian` 3,500 HDCoins) with swatch previews and full client/server price parity.
-- [ ] **M2.3 · Credits & Attribution + Repo Hygiene (`Legal.tsx`, `Layout.tsx`, `README.md`, `LICENSE`, `SECURITY.md`):**
+- [x] **M2.2 · High-tier / exponential theme ladder (`catalog.ts`, `global.css`, Supabase SQL migration):** Add 4 new themes (`Slate Mono` 600, `Teal Current` 1,000, `Rose Quartz` 1,800, `Royal Obsidian` 3,500 HDCoins) with swatch previews and full client/server price parity.
+- [x] **M2.3 · Credits & Attribution + Repo Hygiene (`Legal.tsx`, `Layout.tsx`, `README.md`, `LICENSE`, `SECURITY.md`):**
   - Credit **HyperHrishi-HD** and link YouTube (`https://www.youtube.com/@HyperHrishiHD`) + GitHub (`https://github.com/HyperHrishi-HD/HDSAT`) in the site footer/credits (no support email needed; point users to in-app Question Reports & Appeals).
   - Add clean `LICENSE`, `SECURITY.md`, and polished `README.md` ready for public GitHub visibility.
   - Add `.github/workflows/pa-monthly-refresh.yml` + `.pa/refresh_webapp.py` to keep PythonAnywhere refreshed automatically.

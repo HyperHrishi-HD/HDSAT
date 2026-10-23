@@ -218,6 +218,7 @@ export interface Achievement {
   name: string;
   description: string;
   icon: string;
+  rewardCoins: number;
 }
 
 /** Emblem glyphs each cosmetic can render as in the top bar. */

@@ -5,7 +5,7 @@
  */
 import { describe, expect, it } from 'vitest';
 import priceLadderSql from '../../supabase/migrations/20261020000100_cosmetic_price_ladder.sql?raw';
-import { STORE_ITEMS, emblemFor, itemById } from './catalog';
+import { ACHIEVEMENTS, STORE_ITEMS, achievementById, emblemFor, itemById, normalizeAchievementIds } from './catalog';
 
 describe('cosmetic price ladder', () => {
   it('climbs in unlock order with no repeated price', () => {
@@ -13,7 +13,7 @@ describe('cosmetic price ladder', () => {
     expect(costs).toEqual([...costs].sort((a, b) => a - b));
     expect(new Set(costs).size).toBe(costs.length);
     expect(costs[0]).toBe(20);
-    expect(costs[costs.length - 1]).toBeGreaterThanOrEqual(400);
+    expect(costs[costs.length - 1]).toBe(3500);
   });
 
   it('charges exactly what the client shows (server catalogue parity)', () => {
@@ -24,6 +24,17 @@ describe('cosmetic price ladder', () => {
     }
     // No stray branch (the old function had ' plum-ink' with a leading space).
     expect(priceLadderSql).not.toMatch(/WHEN ' /);
+  });
+
+  it('assigns positive HDCoin rewards to every achievement and normalizes legacy DB IDs', () => {
+    expect(ACHIEVEMENTS.every((a) => a.rewardCoins >= 5)).toBe(true);
+    expect(achievementById('first-steps')?.rewardCoins).toBe(5);
+    expect(achievementById('mastery-5')?.rewardCoins).toBe(40);
+    expect(normalizeAchievementIds(['first_question', 'first_simulation', 'streak-7'])).toEqual([
+      'first-steps',
+      'first-test',
+      'streak-7',
+    ]);
   });
 });
 
