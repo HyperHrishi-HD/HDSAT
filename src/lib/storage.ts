@@ -536,6 +536,95 @@ export function recordRushScore(
   };
 }
 
+/**
+ * Guest-mode parity with the cloud's `complete_activity_session` rewards.
+ *
+ * A local session reward ledger keeps the same per-category daily caps the
+ * database enforces, so a guest cannot farm HDCoins by replaying the Arcade and
+ * a signed-in student sees the same numbers on both paths.
+ */
+export const SESSION_LEDGER_KEY = 'hdsat.session-rewards.v1';
+export const SESSION_REWARD_CAPS: Record<string, number> = {
+  practice_rush: 4,
+  timed_session: 3,
+  full_simulation: 2,
+  mini_game: 5,
+};
+
+interface SessionLedger {
+  date: string;
+  counts: Record<string, number>;
+}
+
+function loadSessionLedger(date: string): SessionLedger {
+  if (typeof localStorage === 'undefined') return { date, counts: {} };
+  try {
+    const raw = localStorage.getItem(SESSION_LEDGER_KEY);
+    if (!raw) return { date, counts: {} };
+    const parsed = JSON.parse(raw) as Partial<SessionLedger>;
+    if (parsed.date !== date) return { date, counts: {} };
+    return { date, counts: parsed.counts ?? {} };
+  } catch {
+    return { date, counts: {} };
+  }
+}
+
+function saveSessionLedger(ledger: SessionLedger): void {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(SESSION_LEDGER_KEY, JSON.stringify(ledger));
+  } catch {
+    /* storage unavailable: the reward simply is not repeated this session */
+  }
+}
+
+export type SessionActivityType = 'practice_rush' | 'timed_session' | 'full_simulation' | 'mini_game';
+
+export function awardSessionCoins(
+  profile: LocalProfile,
+  args: {
+    activityType: SessionActivityType;
+    questions: number;
+    correct: number;
+    sessionId: string;
+  },
+  now: Date = new Date()
+): { profile: LocalProfile; coinsAwarded: number; runsToday: number } {
+  const date = todayKey(now);
+  const ledger = loadSessionLedger(date);
+  const runsToday = ledger.counts[args.activityType] ?? 0;
+  const cap = SESSION_REWARD_CAPS[args.activityType] ?? 0;
+  let reward = 0;
+
+  if (args.questions >= 3 && runsToday < cap) {
+    if (args.activityType === 'practice_rush') reward = 5;
+    else if (args.activityType === 'timed_session') {
+      reward = Math.min(15, Math.max(5, Math.round(args.questions * 0.6)));
+    } else if (args.activityType === 'full_simulation') reward = 25;
+    else if (args.activityType === 'mini_game' && args.correct >= 3) reward = 4;
+  }
+
+  // The ledger records a rewarded run only, so a failed run never eats a slot.
+  if (reward > 0) saveSessionLedger({ date, counts: { ...ledger.counts, [args.activityType]: runsToday + 1 } });
+
+  let next: LocalProfile = withDay(profile, date);
+  if (reward > 0) {
+    next = {
+      ...next,
+      hdCoins: next.hdCoins + reward,
+      dailyActivity: {
+        ...next.dailyActivity,
+        [date]: {
+          ...(next.dailyActivity[date] ?? emptyDay(date)),
+          coinsEarned: (next.dailyActivity[date]?.coinsEarned ?? 0) + reward,
+          sessionsCompleted: (next.dailyActivity[date]?.sessionsCompleted ?? 0) + 1,
+        },
+      },
+    };
+  }
+  return { profile: next, coinsAwarded: reward, runsToday: runsToday + (reward > 0 ? 1 : 0) };
+}
+
 export function toggleSaved(profile: LocalProfile, questionId: string): LocalProfile {
   const has = profile.saved.includes(questionId);
   return {

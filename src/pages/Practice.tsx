@@ -1,41 +1,21 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { FigureView, StimulusView } from '../components/FigureView';
 import { DesmosPane } from '../components/MathTools';
 import { ReferenceWindow } from '../components/ReferenceWindow';
 import { PaneSwitch, SplitWorkbench, useSplitPane } from '../components/SplitWorkbench';
-import { MathText } from '../components/MathText';
 import { QuestionView, type Feedback } from '../components/QuestionView';
 import { Badge, Button, Card, EmptyState, InfoTip, MultiSelect, Select, Stat, Toggle } from '../components/ui';
 import { buildPracticeSession, filterQuestions, formatClock } from '../lib/examEngine';
-import { checkAnswer } from '../lib/grading';
-import {
-  chooseRushQuestion,
-  describeRushKey,
-  describeRushMix,
-  emptyRushServed,
-  parseRushDuration,
-  rushAnswerPoints,
-  rushDifficultyMix,
-  RUSH_DIFFICULTY_OPTIONS,
-  RUSH_DURATION_OPTIONS,
-  RUSH_MIN_ATTEMPTS_FOR_RECORD,
-  rushSetupKey,
-  rushSetupLabel,
-  type RushDifficultyMode,
-  type RushDuration,
-  type RushServed,
-} from '../lib/rush';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
 import type { Assessment, Difficulty, Question, Section } from '../lib/types';
 
-type TabMode = 'custom' | 'rush' | 'assistant';
+type TabMode = 'custom' | 'assistant';
 
 export function PracticePage() {
   const app = useApp();
   const [searchParams] = useSearchParams();
-  const [tab, setTab] = useState<TabMode>(() => (searchParams.get('tab') === 'rush' ? 'rush' : 'custom'));
+  const [tab, setTab] = useState<TabMode>('custom');
 
   // Custom practice configuration
   const [assessment, setAssessment] = useState<Assessment>(app.settings.assessment);
@@ -61,41 +41,9 @@ export function PracticePage() {
   const [sessionDone, setSessionDone] = useState<boolean>(false);
   const [showCalc, setShowCalc] = useState<boolean>(true);
   const split = useSplitPane('hdsat.split.practice', { ratio: 46, minRatio: 30, maxRatio: 70 });
-  // Practice Rush draws from both sections, so its calculator follows the item.
-  const [rushCalcOpen, setRushCalcOpen] = useState<boolean>(true);
-  const rushSplit = useSplitPane('hdsat.split.rush', { ratio: 46, minRatio: 30, maxRatio: 70 });
   const [showRef, setShowRef] = useState<boolean>(false);
   const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);
   const questionStartRef = useRef<number>(Date.now());
-
-  // Practice Rush State
-  const [rushDuration, setRushDuration] = useState<RushDuration>(180);
-  const [rushSection, setRushSection] = useState<Section | 'all'>('all');
-  const [rushDifficulty, setRushDifficulty] = useState<RushDifficultyMode>('Mixed');
-  const [rushActive, setRushActive] = useState<boolean>(false);
-  const [rushFinished, setRushFinished] = useState<boolean>(false);
-  const [rushElapsed, setRushElapsed] = useState<number>(0);
-  const [rushPool, setRushPool] = useState<Question[]>([]);
-  const [rushCurrent, setRushCurrent] = useState<Question | null>(null);
-  const [rushCorrect, setRushCorrect] = useState<number>(0);
-  const [rushAttempted, setRushAttempted] = useState<number>(0);
-  const [rushScore, setRushScore] = useState<number>(0);
-  const [rushNewBest, setRushNewBest] = useState<boolean>(false);
-  const [rushStreak, setRushStreak] = useState<number>(0);
-  const [rushBestStreak, setRushBestStreak] = useState<number>(0);
-  const [rushInput, setRushInput] = useState<string>('');
-  const [rushLastFeedback, setRushLastFeedback] = useState<{ correct: boolean; key: string } | null>(null);
-  const rushSessionIdRef = useRef<string>(newEventId());
-  const rushServedRef = useRef<RushServed>(emptyRushServed());
-  const rushUsedRef = useRef<Set<string>>(new Set());
-  const rushRecordedRef = useRef<boolean>(false);
-
-  const rushKey = useMemo(
-    () => rushSetupKey({ duration: rushDuration, section: rushSection, difficulty: rushDifficulty }),
-    [rushDuration, rushSection, rushDifficulty]
-  );
-  const rushRecord = app.rushScores[rushKey] ?? null;
-  const rushMix = rushDifficultyMix(rushElapsed);
 
   const domainOptions = useMemo(() => {
     const set = new Set<string>();
@@ -147,43 +95,6 @@ export function PracticePage() {
     }, 1000);
     return () => window.clearInterval(timer);
   }, [sessionId, sessionDone]);
-
-  // Practice Rush clock: counts up for every mode, so the free stopwatch and the
-  // increasing-difficulty curve both read from one honest source.
-  useEffect(() => {
-    if (!rushActive) return;
-    const timer = window.setInterval(() => {
-      setRushElapsed((seconds) => seconds + 1);
-    }, 1000);
-    return () => window.clearInterval(timer);
-  }, [rushActive]);
-
-  // A timed run ends when its budget is spent; a free run ends only on demand
-  // (or when the question supply runs out).
-  useEffect(() => {
-    if (!rushActive || rushDuration === 'free') return;
-    if (rushElapsed >= rushDuration) {
-      setRushActive(false);
-      setRushFinished(true);
-    }
-  }, [rushActive, rushDuration, rushElapsed]);
-
-  // Exactly once per finished run: store the personal best for this exact
-  // combination and record the activity session.
-  useEffect(() => {
-    if (!rushFinished || rushRecordedRef.current) return;
-    rushRecordedRef.current = true;
-    if (rushAttempted < RUSH_MIN_ATTEMPTS_FOR_RECORD) return;
-    const outcome = app.actions.recordRushScore(rushKey, rushScore);
-    setRushNewBest(outcome.improved);
-    void app.actions.completeSession({
-      activityType: 'practice_rush',
-      sessionId: rushSessionIdRef.current,
-      questions: rushAttempted,
-      correct: rushCorrect,
-      timeSpentSeconds: rushElapsed,
-    });
-  }, [rushFinished]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const startCustomSession = () => {
     const chosen = buildPracticeSession(
@@ -257,93 +168,6 @@ export function PracticePage() {
     }
   };
 
-  const startRush = () => {
-    const built = buildPracticeSession(
-      app.questions,
-      {
-        assessment,
-        section: rushSection,
-        excludeReleasedPracticeSet: excludeReleased,
-      },
-      {
-        count: 400,
-        progress: app.progress,
-        savedIds: app.saved,
-        seed: `rush:${Date.now()}`,
-      }
-    );
-    if (built.length === 0) return;
-    // A fixed difficulty draws from that band only; if the bank has nothing in
-    // that band for this section, fall back to the full mix rather than an
-    // empty run.
-    const banded =
-      rushDifficulty === 'Easy' || rushDifficulty === 'Medium' || rushDifficulty === 'Hard'
-        ? built.filter((q) => q.difficulty === rushDifficulty)
-        : built;
-    const pool = banded.length > 0 ? banded : built;
-    rushServedRef.current = emptyRushServed();
-    rushUsedRef.current = new Set();
-    rushRecordedRef.current = false;
-    const first = chooseRushQuestion(pool, rushDifficulty, 0, rushServedRef.current, rushUsedRef.current);
-    if (!first) return;
-    rushUsedRef.current.add(first.id);
-    rushSessionIdRef.current = newEventId();
-    setRushPool(pool);
-    setRushCurrent(first);
-    setRushCorrect(0);
-    setRushAttempted(0);
-    setRushScore(0);
-    setRushNewBest(false);
-    setRushStreak(0);
-    setRushBestStreak(0);
-    setRushInput('');
-    setRushLastFeedback(null);
-    setRushElapsed(0);
-    setRushFinished(false);
-    setRushActive(true);
-  };
-
-  const submitRushAnswer = async (value: string) => {
-    const q = rushCurrent;
-    if (!q || !rushActive) return;
-    const isCorrect = checkAnswer(q, value);
-    const nextStreak = isCorrect ? rushStreak + 1 : 0;
-    if (isCorrect) {
-      setRushScore((points) => points + rushAnswerPoints(q.difficulty, nextStreak));
-      setRushCorrect((n) => n + 1);
-      setRushStreak(nextStreak);
-      setRushBestStreak((best) => Math.max(best, nextStreak));
-    } else {
-      setRushStreak(0);
-    }
-    setRushAttempted((n) => n + 1);
-    rushServedRef.current = {
-      ...rushServedRef.current,
-      [q.difficulty]: rushServedRef.current[q.difficulty] + 1,
-    };
-    setRushLastFeedback({ correct: isCorrect, key: q.correct_answer });
-    await app.actions.submitAttempt(q, value, {
-      mode: 'rush',
-      timeSpentSeconds: 5,
-      sessionId: rushSessionIdRef.current,
-    });
-    setRushInput('');
-    const next = chooseRushQuestion(
-      rushPool,
-      rushDifficulty,
-      rushElapsed,
-      rushServedRef.current,
-      rushUsedRef.current
-    );
-    if (next) {
-      rushUsedRef.current.add(next.id);
-      setRushCurrent(next);
-    } else {
-      setRushActive(false);
-      setRushFinished(true);
-    }
-  };
-
   // Deterministic Rule-Based Study Coach Diagnostics
   const studyCoachPlan = useMemo(() => {
     const domainStats: {
@@ -402,8 +226,9 @@ export function PracticePage() {
             <div className="row">
               <h1>Practice &amp; Skill Drills</h1>
               <InfoTip label="Practice modes">
-                Filter the bank by assessment, section, domain, and difficulty, run a timed Practice
-                Rush, or use the rule-based Study Coach to target your lowest-accuracy domains.
+                Filter the bank by assessment, section, domain, and difficulty, or use the
+                rule-based Study Coach to target your lowest-accuracy domains. Practice Rush and
+                timed games live in the Arcade.
               </InfoTip>
             </div>
           </div>
@@ -421,19 +246,6 @@ export function PracticePage() {
               }}
             >
               Custom Practice
-            </Button>
-            <Button
-              variant={tab === 'rush' ? 'primary' : 'outline'}
-              size="sm"
-              icon="bolt"
-              onClick={() => {
-                setTab('rush');
-                if (rushFinished) {
-                  setRushFinished(false);
-                }
-              }}
-            >
-              Practice Rush
             </Button>
             <Button
               variant={tab === 'assistant' ? 'primary' : 'outline'}
@@ -756,289 +568,6 @@ export function PracticePage() {
             />
             <Stat label="Total Time" value={formatClock(elapsedSeconds)} />
           </div>
-        </Card>
-      ) : null}
-
-      {tab === 'rush' ? (
-        <Card>
-          <div className="row-between">
-            <div>
-              <h2>Practice Rush</h2>
-              <p className="muted">
-                High-tempo SAT skill sprint. Answer as many questions accurately as you can before the clock expires.
-              </p>
-            </div>
-            {rushActive ? (
-              <Badge tone="warn">
-                {rushDuration === 'free'
-                  ? `${formatClock(rushElapsed)} stopwatch`
-                  : `${formatClock(Math.max(0, rushDuration - rushElapsed))} remaining`}
-              </Badge>
-            ) : null}
-          </div>
-
-          {!rushActive && !rushFinished ? (
-            <div style={{ marginTop: 12 }}>
-              <div className="card-grid">
-                <Select
-                  label="Duration"
-                  value={rushDuration === 'free' ? 'free' : String(rushDuration)}
-                  onChange={(value) => setRushDuration(parseRushDuration(value))}
-                  options={RUSH_DURATION_OPTIONS}
-                />
-                <Select
-                  label="Section Focus"
-                  value={rushSection}
-                  onChange={(value) => setRushSection(value as Section | 'all')}
-                  options={[
-                    { value: 'all', label: 'Mixed (Reading & Writing + Math)' },
-                    { value: 'Reading and Writing', label: 'Reading and Writing Only' },
-                    { value: 'Math', label: 'Math Only' },
-                  ]}
-                />
-                <Select
-                  label="Difficulty"
-                  value={rushDifficulty}
-                  onChange={(value) => setRushDifficulty(value as RushDifficultyMode)}
-                  options={RUSH_DIFFICULTY_OPTIONS}
-                />
-              </div>
-              <div className="rush-score-line">
-                <span>
-                  This setup:{' '}
-                  <strong>
-                    {rushSetupLabel(rushDuration)} ·{' '}
-                    {rushSection === 'all' ? 'Mixed sections' : rushSection} · {rushDifficulty}
-                  </strong>
-                </span>
-                <span className="rush-score-best">
-                  High score: <strong>{rushRecord ? rushRecord.best : '—'}</strong>
-                </span>
-                <span>
-                  Last: <strong>{rushRecord ? rushRecord.last : '—'}</strong>
-                </span>
-                {rushRecord ? (
-                  <span>
-                    {rushRecord.plays} {rushRecord.plays === 1 ? 'run' : 'runs'}
-                  </span>
-                ) : null}
-                <InfoTip label="Rush scoring">
-                  <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55 }}>
-                    <li>
-                      <strong>Correct answers:</strong> Easy 10, Medium 15, Hard 20 points.
-                    </li>
-                    <li>
-                      <strong>Streak:</strong> +10% per consecutive correct answer, capped at +50%.
-                    </li>
-                    <li>
-                      <strong>Increasing:</strong> starts fully Easy, then shifts 10% → 22% → 35% →
-                      50% Medium/Hard over the first five minutes, settling at the SAT module mix.
-                    </li>
-                    <li>
-                      <strong>Records</strong> are kept separately for every duration, section and
-                      difficulty combination, so a stopwatch run never competes with a blitz. Runs
-                      with fewer than three answers are not saved as a record.
-                    </li>
-                  </ul>
-                </InfoTip>
-              </div>
-              {Object.keys(app.rushScores).length > 0 ? (
-                <details className="rush-records">
-                  <summary>
-                    All personal bests ({Object.keys(app.rushScores).length}{' '}
-                    {Object.keys(app.rushScores).length === 1 ? 'setup' : 'setups'})
-                  </summary>
-                  <div className="stack" style={{ marginTop: 8 }}>
-                    {Object.entries(app.rushScores)
-                      .sort((a, b) => b[1].best - a[1].best)
-                      .map(([key, record]) => (
-                        <div key={key} className="row-between" style={{ fontSize: '0.82rem' }}>
-                          <span>{describeRushKey(key)}</span>
-                          <span>
-                            <strong>{record.best}</strong> best · {record.last} last ·{' '}
-                            {record.plays} {record.plays === 1 ? 'run' : 'runs'}
-                          </span>
-                        </div>
-                      ))}
-                  </div>
-                </details>
-              ) : null}
-              <Button onClick={startRush}>Launch Practice Rush</Button>
-            </div>
-          ) : null}
-
-          {rushActive && rushCurrent ? (
-            <SplitWorkbench
-              className="rush-workbench"
-              maxViewportHeight={660}
-              side={rushSplit.side}
-              ratio={rushSplit.ratio}
-              minRatio={rushSplit.minRatio}
-              maxRatio={rushSplit.maxRatio}
-              onRatioChange={rushSplit.setRatio}
-              toolVisible={rushCurrent.section === 'Math' && rushCalcOpen}
-              toolKind="calc"
-              tool={<DesmosPane />}
-              main={
-            <div style={{ marginTop: 14 }}>
-              {rushDuration === 'free' ? null : (
-                <div className="timer-bar">
-                  <div
-                    className="timer-bar-fill"
-                    style={{ width: `${Math.max(0, ((rushDuration - rushElapsed) / rushDuration) * 100)}%` }}
-                  />
-                </div>
-              )}
-              <div className="row-between" style={{ marginBottom: 12 }}>
-                <div className="row">
-                  <Badge tone="info">{rushScore} pts</Badge>
-                  <Badge tone="good">{rushCorrect} correct</Badge>
-                  <Badge>{rushAttempted} attempted</Badge>
-                  <Badge tone="info">Streak: {rushStreak}</Badge>
-                  {rushDuration === 'free' ? (
-                    <Badge tone="warn">Stopwatch {formatClock(rushElapsed)}</Badge>
-                  ) : null}
-                  {rushCurrent.section === 'Math' ? (
-                    <>
-                      <Button
-                        size="sm"
-                        variant="subtle"
-                        onClick={() => setRushCalcOpen((v) => !v)}
-                      >
-                        {rushCalcOpen ? 'Hide Calculator' : 'Calculator'}
-                      </Button>
-                      <PaneSwitch side={rushSplit.side} onClick={rushSplit.toggleSide} />
-                    </>
-                  ) : null}
-                </div>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() => {
-                    setRushActive(false);
-                    setRushFinished(true);
-                  }}
-                >
-                  End Rush
-                </Button>
-              </div>
-
-              {rushDifficulty === 'Increasing' ? (
-                <div className="rush-mix" style={{ marginBottom: 10 }}>
-                  <span>Difficulty curve</span>
-                  <span className="rush-mix-bar" aria-hidden="true">
-                    <span className="rush-mix-easy" style={{ width: `${rushMix.Easy * 100}%` }} />
-                    <span className="rush-mix-medium" style={{ width: `${rushMix.Medium * 100}%` }} />
-                    <span className="rush-mix-hard" style={{ width: `${rushMix.Hard * 100}%` }} />
-                  </span>
-                  <span>{describeRushMix(rushMix)}</span>
-                </div>
-              ) : null}
-
-              {rushLastFeedback ? (
-                <p className="muted">
-                  Previous item:{' '}
-                  <strong style={{ color: rushLastFeedback.correct ? 'var(--good)' : 'var(--bad)' }}>
-                    {rushLastFeedback.correct ? 'Correct!' : `Incorrect (Key: ${rushLastFeedback.key})`}
-                  </strong>
-                </p>
-              ) : null}
-
-              {(() => {
-                const q = rushCurrent;
-                if (!q) return null;
-                return (
-                  <div className="question">
-                    <div className="row-between" style={{ marginBottom: 8 }}>
-                      <Badge tone="info">{q.section}</Badge>
-                      <Badge>
-                        {q.domain} · {q.difficulty}
-                      </Badge>
-                    </div>
-                    <FigureView question={q} />
-                    {q.stimulus ? (
-                      <div className="stimulus">
-                        <StimulusView stimulus={q.stimulus} />
-                      </div>
-                    ) : null}
-                    <div className="prompt">
-                      <MathText text={q.prompt} />
-                    </div>
-                    {q.format === 'multiple_choice' && q.choices ? (
-                      <div>
-                        {q.choices.map((c) => (
-                          <button
-                            key={c.id}
-                            type="button"
-                            className="rush-option"
-                            onClick={() => submitRushAnswer(c.id)}
-                          >
-                            <strong>{c.id}.</strong> <MathText text={c.text} />
-                          </button>
-                        ))}
-                      </div>
-                    ) : (
-                      <form
-                        className="row"
-                        onSubmit={(e) => {
-                          e.preventDefault();
-                          if (rushInput.trim()) submitRushAnswer(rushInput.trim());
-                        }}
-                      >
-                        <input
-                          type="text"
-                          value={rushInput}
-                          onChange={(e) => setRushInput(e.target.value)}
-                          placeholder="Enter numeric response"
-                        />
-                        <Button type="submit">Submit</Button>
-                      </form>
-                    )}
-                  </div>
-                );
-              })()}
-            </div>
-              }
-            />
-          ) : null}
-
-          {rushFinished ? (
-            <div style={{ marginTop: 14 }}>
-              <h3>Practice Rush Summary</h3>
-              <div className="card-grid" style={{ margin: '12px 0' }}>
-                <Stat label="Score" value={rushScore} hint={rushNewBest ? 'New personal best!' : undefined} />
-                <Stat label="Correct" value={`${rushCorrect} / ${rushAttempted}`} />
-                <Stat
-                  label="Accuracy"
-                  value={rushAttempted > 0 ? `${Math.round((rushCorrect / rushAttempted) * 100)}%` : '0%'}
-                />
-                <Stat label="Best Streak" value={rushBestStreak} />
-                <Stat
-                  label="Time"
-                  value={formatClock(rushElapsed)}
-                  hint={rushDuration === 'free' ? 'Stopwatch run' : `of ${rushSetupLabel(rushDuration)}`}
-                />
-              </div>
-              <div className="rush-score-line" style={{ marginBottom: 12 }}>
-                <span>
-                  {rushSetupLabel(rushDuration)} · {rushSection === 'all' ? 'Mixed sections' : rushSection} ·{' '}
-                  {rushDifficulty}
-                </span>
-                <span className="rush-score-best">
-                  High score: <strong>{rushRecord ? rushRecord.best : '—'}</strong>
-                </span>
-                <span>
-                  Last: <strong>{rushRecord ? rushRecord.last : '—'}</strong>
-                </span>
-              </div>
-              <div className="row">
-                <Button onClick={startRush}>Play Again</Button>
-                <Button variant="outline" onClick={() => setRushFinished(false)}>
-                  Change Rush Settings
-                </Button>
-              </div>
-            </div>
-          ) : null}
         </Card>
       ) : null}
 

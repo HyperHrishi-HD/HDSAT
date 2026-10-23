@@ -1,12 +1,15 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Button, Card, Icon, InfoTip, ProgressBar, Stat } from '../components/ui';
+import { QuestionOfTheDay } from '../components/QuestionOfTheDay';
+import { dismissQuestionOfTheDay, isQuestionOfTheDayDismissed } from '../lib/daily';
 import { hasSeenIntro, markIntroSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
 
 export function DashboardPage() {
   const app = useApp();
   const [showIntro, setShowIntro] = useState(() => !hasSeenIntro());
+  const [qotdHidden, setQotdHidden] = useState(() => isQuestionOfTheDayDismissed());
 
   const domainBreakdown = useMemo(() => {
     const map = new Map<
@@ -137,6 +140,16 @@ export function DashboardPage() {
           ) : null}
         </div>
       </Card>
+
+      {!qotdHidden ? (
+        <QuestionOfTheDay
+          variant="compact"
+          onDismiss={() => {
+            dismissQuestionOfTheDay();
+            setQotdHidden(true);
+          }}
+        />
+      ) : null}
 
       <div className="card-grid" style={{ marginBottom: 16 }}>
         <Card>

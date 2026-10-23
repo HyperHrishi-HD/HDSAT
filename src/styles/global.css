@@ -2831,6 +2831,39 @@ mark.bb-hl[data-has-note='true']::after {
 .adm-composer-lines span.is-short { width: 46%; }
 .adm-composer-foot { display: flex; gap: 8px; }
 
+/* Arcade: the 2D arena, daily quests and question-of-the-day cards. */
+.interceptor-canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f8fafc;
+}
+.interceptor-canvas:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.interceptor-controls {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+  align-items: end;
+}
+.interceptor-controls .field { margin-bottom: 0; }
+
+.quest-row {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+}
+.quest-row-main { flex: 1; min-width: 0; }
+
+.qotd-card .prompt { margin-top: 8px; }
+
+@media (max-width: 640px) {
+  .quest-row { flex-direction: column; align-items: stretch; }
+}
+
 .modal-backdrop {
   position: fixed;
   inset: 0;

@@ -418,14 +418,26 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     async (args) => {
       if (mode === 'cloud') {
         try {
-          await cloud.completeActivityCloud(args);
+          const result = await cloud.completeActivityCloud(args);
           await refreshSnapshot();
+          const coins = Number(result?.coins_awarded ?? 0);
+          if (coins > 0) {
+            setNotice(`Session reward: +${coins} HDCoins added to your balance.`);
+          }
         } catch (err) {
           setError(`Session result was not recorded in your account: ${(err as Error).message}`);
         }
+        return;
+      }
+      // Guest mode mirrors the cloud's per-category daily reward caps locally so
+      // the Arcade pays the same on both paths.
+      const outcome = local.awardSessionCoins(profileRef.current, args);
+      if (outcome.coinsAwarded > 0) {
+        persist(outcome.profile);
+        setNotice(`Session reward: +${outcome.coinsAwarded} HDCoins (saved on this device).`);
       }
     },
-    [mode, refreshSnapshot]
+    [mode, persist, refreshSnapshot]
   );
 
   const recordTest = useCallback(
