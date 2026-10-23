@@ -755,6 +755,211 @@ export async function deleteMyAccount(): Promise<AccountDeletionOutcome> {
   };
 }
 
+/* -------------------------------------------------------------------------
+ * Operator console + student notifications.
+ *
+ * Every admin call is a SECURITY DEFINER RPC that re-checks `is_admin()` on the
+ * server, so the browser never holds a service key and a non-admin session gets
+ * a plain "Operator access required" error. Notifications are one row per
+ * operator reply and are readable only by their owner.
+ * ---------------------------------------------------------------------- */
+
+export interface AdminReportRow {
+  id: string;
+  question_id: string;
+  reason: string;
+  details: string | null;
+  contact_email: string | null;
+  status: string;
+  created_at: string;
+  reporter_name: string | null;
+  reporter_email: string | null;
+}
+
+export interface AdminAppealRow {
+  id: string;
+  reference: string;
+  category: string;
+  subject: string;
+  details: string;
+  contact_email: string | null;
+  status: string;
+  created_at: string;
+  reporter_name: string | null;
+  reporter_email: string | null;
+}
+
+export interface AdminStudentRow {
+  user_id: string;
+  display_name: string | null;
+  email: string | null;
+  confirmed: boolean;
+  is_admin: boolean;
+  age_band: string | null;
+  created_at: string;
+  hd_coins: number;
+  current_streak: number;
+  total_attempts: number;
+  report_count: number;
+}
+
+export interface AdminPage<T> {
+  total: number;
+  open?: number;
+  items: T[];
+}
+
+export async function isAdmin(): Promise<boolean> {
+  const supabase = getSupabase();
+  if (!supabase) return false;
+  const { data, error } = await supabase.rpc('is_admin');
+  if (error) {
+    if (isMissingRoutineError(error.message, 'is_admin')) return false;
+    throw error;
+  }
+  return Boolean(data);
+}
+
+export async function adminListReports(args: {
+  status?: string | null;
+  reason?: string | null;
+  limit?: number;
+  offset?: number;
+} = {}): Promise<AdminPage<AdminReportRow>> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('admin_list_reports', {
+    p_status: args.status ?? null,
+    p_reason: args.reason ?? null,
+    p_limit: args.limit ?? 50,
+    p_offset: args.offset ?? 0,
+  });
+  if (error) throw error;
+  return data as AdminPage<AdminReportRow>;
+}
+
+export async function adminSetReportStatus(id: string, status: string): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.rpc('admin_set_report_status', { p_id: id, p_status: status });
+  if (error) throw error;
+}
+
+export async function adminBatchDeleteReports(args: {
+  ids?: string[] | null;
+  userId?: string | null;
+  status?: string | null;
+  olderThanDays?: number | null;
+}): Promise<number> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('admin_batch_delete_reports', {
+    p_ids: args.ids ?? null,
+    p_user_id: args.userId ?? null,
+    p_status: args.status ?? null,
+    p_older_than_days: args.olderThanDays ?? null,
+  });
+  if (error) throw error;
+  return Number((data as { deleted?: number })?.deleted ?? 0);
+}
+
+export async function adminListAppeals(args: {
+  status?: string | null;
+  limit?: number;
+  offset?: number;
+} = {}): Promise<AdminPage<AdminAppealRow>> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('admin_list_appeals', {
+    p_status: args.status ?? null,
+    p_limit: args.limit ?? 50,
+    p_offset: args.offset ?? 0,
+  });
+  if (error) throw error;
+  return data as AdminPage<AdminAppealRow>;
+}
+
+export async function adminSetAppealStatus(id: string, status: string): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.rpc('admin_set_appeal_status', { p_id: id, p_status: status });
+  if (error) throw error;
+}
+
+export async function adminBatchDeleteAppeals(args: {
+  ids?: string[] | null;
+  userId?: string | null;
+  status?: string | null;
+  olderThanDays?: number | null;
+}): Promise<number> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('admin_batch_delete_appeals', {
+    p_ids: args.ids ?? null,
+    p_user_id: args.userId ?? null,
+    p_status: args.status ?? null,
+    p_older_than_days: args.olderThanDays ?? null,
+  });
+  if (error) throw error;
+  return Number((data as { deleted?: number })?.deleted ?? 0);
+}
+
+export async function adminReply(args: {
+  kind: 'report' | 'appeal';
+  id: string;
+  title: string;
+  body: string;
+}): Promise<{ delivered: boolean }> {
+  const supabase = client();
+  const routine = args.kind === 'report' ? 'admin_reply_to_report' : 'admin_reply_to_appeal';
+  const params =
+    args.kind === 'report'
+      ? { p_report_id: args.id, p_title: args.title, p_body: args.body }
+      : { p_appeal_id: args.id, p_title: args.title, p_body: args.body };
+  const { data, error } = await supabase.rpc(routine, params);
+  if (error) throw error;
+  return { delivered: Boolean((data as { delivered?: boolean })?.delivered) };
+}
+
+export async function adminListStudents(
+  args: { limit?: number; offset?: number } = {}
+): Promise<AdminPage<AdminStudentRow>> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('admin_list_students', {
+    p_limit: args.limit ?? 50,
+    p_offset: args.offset ?? 0,
+  });
+  if (error) throw error;
+  return data as AdminPage<AdminStudentRow>;
+}
+
+export interface StudentNotification {
+  id: string;
+  title: string;
+  body: string;
+  reference: string | null;
+  created_at: string;
+  seen_at: string | null;
+}
+
+export async function fetchMyNotifications(): Promise<StudentNotification[]> {
+  const supabase = client();
+  const { data, error } = await supabase
+    .from('user_notifications')
+    .select('id, title, body, reference, created_at, seen_at')
+    .order('created_at', { ascending: false })
+    .limit(20);
+  if (error) {
+    if (isMissingRelationError(error.message, 'user_notifications')) return [];
+    throw error;
+  }
+  return (data ?? []) as StudentNotification[];
+}
+
+export async function markMyNotificationsSeen(): Promise<number> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('mark_my_notifications_seen');
+  if (error) {
+    if (isMissingRoutineError(error.message, 'mark_my_notifications_seen')) return 0;
+    throw error;
+  }
+  return Number(data ?? 0);
+}
+
 export async function fetchMyReports(): Promise<
   { id: string; question_id: string; reason: string; details: string | null; created_at: string }[]
 > {

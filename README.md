@@ -6,10 +6,12 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
 - **Assessments:** Digital SAT, PSAT/NMSQT, PSAT 10, and PSAT 8/9.
 - **Persistent Question Bank:** 6,193 original items (1,557 Reading and Writing, 4,636 Math) filterable by assessment, section, domain, skill, difficulty, mastery status, bookmarked state, and licensed dataset source.
 - **Multistage Adaptive Practice Simulations:** Section-level Module 1 baseline followed by deterministic Module 2 routing (`upper` vs. `lower` difficulty tier at the 60% threshold). The bank now fills the FULL Digital SAT blueprint (54 R&W + 44 Math items, full module timers) with a fresh randomized item mix per run, and a compact bank still degrades proportionally with a transparent coverage notice.
-- **Custom Practice & Practice Rush:** Untimed or timed custom drills (with toggles to exclude previously correct questions or reserve Benchmark Simulation Set items) and 1/3/5-minute Practice Rush sprints.
+- **Custom Practice:** Untimed or timed custom drills with toggles to exclude previously correct questions or reserve Benchmark Simulation Set items, plus a deterministic Study Coach that targets your lowest-accuracy domains.
+- **Arcade (three rooms):** *Interactive Arena* (the Coordinate Interceptor 2D canvas game, the daily Hard Question of the Day, and three daily quests capped at 30 questions a day), *Skill Mini-Games* (Desmos Lab, Equation Sprint, Transition Match, Vocab Precision, configured before you start) and *Practice Rush* (1/3/5-minute highs-score sprints).
+- **Shareable results & AI snapshots:** a completed full simulation can be downloaded as JSON, printed, or shared as a self-contained read-only link, and Account can copy a validated JSON snapshot of your own progress for any AI tutor.
+- **Operator console:** `/admin` reads live question reports and appeals through Supabase `SECURITY DEFINER` RPCs, with status filters, batch resolve/dismiss/delete, per-student cleanup, and replies that appear once on the student's Dashboard.
 - **In-App Math Tools:** The official College Board version of the Desmos graphing calculator beside every Math item — Custom Practice, Practice Rush, the Desmos Lab, Equation Sprint, the Question Bank, and every Math module of the full-screen test — plus the SAT Suite Math Reference Sheet. The tool pane is drag-resizable, a one-tap curved-arrow switch swaps it between the left and right side, and the reference sheet is a floating window you can drag by its header and resize from any edge or corner. On phones the calculator stacks under the question instead of squeezing it.
 - **Spaced-Repetition Flashcards (SM-2):** 1,764 verified cards in two fully separate decks — 1,639 vocabulary entries (24 authored SAT items + 1,615 CC0-dedicated elevated-vocabulary entries) and 125 math formulas/identities with KaTeX rendering, scheduled via the SM-2 algorithm.
-- **Desmos Lab & SAT Mini-Games:** Interactive graphing calculator lessons plus timed arcade games — Equation Sprint, Rhetorical Transition Match, and Vocabulary Precision — with streak multipliers and locally saved best scores.
 - **HDCoins Economy, Streaks & Achievements:** Duplicate-resistant, anti-farming reward ledger enforced identically in local Guest Mode and Supabase SECURITY DEFINER RPCs.
 - **Guest Mode & Cloud Sync:** Full local persistence (`localStorage` key `hdsat.profile.v1`) with idempotent replay into a signed-in Supabase account.
 
@@ -140,7 +142,30 @@ Target project: `qijfmwjcaminecxmbtcf` (`https://supabase.com/dashboard/project/
 1. Open the **Supabase SQL Editor** for project `qijfmwjcaminecxmbtcf` (or use `supabase db push`).
 2. Run `supabase/migrations/20261014000100_init_hdsat_schema.sql` to create all 16 tables, Row Level Security (RLS) policies, `on_auth_user_created` profile/stats triggers, and `SECURITY DEFINER` RPCs (`verify_question_answer`, `submit_question_attempt`, `submit_flashcard_review`, `complete_activity_session`, `purchase_cosmetic_item`, `grade_module_responses`).
 3. Run `supabase/seed/0001_seed_hdsat.sql` to upsert the verified `dataset_sources`, `questions`, `question_keys`, and `flashcards` records.
-4. In **Authentication → Providers → Email**, ensure Email/Password sign-in is enabled.
+4. Run `supabase/migrations/20261017000100_safety_compliance.sql`, `20261020000100_cosmetic_price_ladder.sql` and `20261023000100_admin_console.sql` (admin console, notifications, triage RPCs).
+5. In **Authentication → Providers → Email**, ensure Email/Password sign-in is enabled.
+6. Grant yourself operator access once, in the SQL editor (it has no user JWT, so the guard allows it):
+
+```sql
+UPDATE public.profiles SET is_admin = TRUE
+ WHERE user_id = (SELECT id FROM auth.users WHERE email = 'you@example.com');
+```
+
+---
+
+## Operator Console & Report Triage
+
+- `/admin` (also reachable as `/#/admin`) is gated by `profiles.is_admin` and calls only `SECURITY DEFINER` RPCs (`admin_list_reports`, `admin_list_appeals`, `admin_set_report_status`, `admin_batch_delete_reports`, `admin_reply_to_report`, `admin_list_students`, …). No service-role key ever reaches the browser.
+- Batch actions: mark resolved/dismissed, delete selected, delete everything resolved older than N days, and delete every report or appeal from one student (Students section). Every destructive action needs a second click and reports the affected row count.
+- Replies create one `user_notifications` row, which the student sees **once** on their Dashboard; dismissing it calls `mark_my_notifications_seen`.
+- For local triage from a terminal or from Freebuff, `tools/admin_triage.py` reads the same tables with a service-role key that stays on your machine:
+
+```bash
+# .pa/supabase_url and .pa/supabase_service_key (both gitignored)
+python tools/admin_triage.py summary
+python tools/admin_triage.py reports --status received --limit 20
+python tools/admin_triage.py reply report <uuid> --body "Thanks — fixed in tonight's build."
+```
 
 ---
 

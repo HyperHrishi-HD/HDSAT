@@ -52,15 +52,23 @@
 - [x] **M4.4 · Account Full JSON Snapshot for AI (`Account.tsx`, `dataRights.ts`):** One button in Account copies a structured JSON snapshot (progress, streak, coins, domain accuracy, weakest domains, missed items with prompts but no keys, simulations, flashcards due, 14-day activity, preferences) ready to paste into any AI tutor or Freebuff. Nine tests pin both exports.
 - [x] **M4.5 · Flask Backend Security Hardening (`backend/app.py`, `backend/test_app.py`):** HTTPS redirect in production via `X-Forwarded-Proto` (health endpoint exempt so the uptime monitor keeps working), strict CSP allowing Desmos and blocking `object-src`/`unsafe-eval`, per-IP sliding-window rate limiting on `/api/*` with `Retry-After`, 1 MiB payload cap with a JSON 413, `robots.txt` disallowing `/admin`, and COOP/CORP headers. 19 backend tests pass.
 
-### Milestone 5: Supabase Admin Console Wiring, Student Reply Notifications & Freebuff MCP Bridge
-- [ ] **M5.1 · Supabase Admin RPCs & Live Wiring (`Admin.tsx`, `cloud.ts`, Supabase migration):**
-  - Add `is_admin` on `profiles` + `SECURITY DEFINER` RPCs (`admin_list_reports`, `admin_resolve_report`, `admin_batch_delete_reports`, `admin_list_appeals`, `admin_reply_to_user`).
-  - Wire `/admin` to live Supabase tables with review, delete-after-review, and **batch delete** (e.g., delete all reports from a single spam user or by status).
-- [ ] **M5.2 · One-Time Student Dashboard Notification for Admin Replies (`Dashboard.tsx`, `store.tsx`, `cloud.ts`):**
-  - When the admin replies to a report or appeal, store a notification row in `user_notifications`.
-  - Show it as a banner on the student's Dashboard **once** (dismissing marks `seen_at` so it never reappears).
-- [ ] **M5.3 · Freebuff Local MCP / CLI Triage Bridge (`.pa/admin_triage.py`):**
-  - Create a local script/MCP tool that lets Freebuff directly fetch, filter, summarize, and resolve `question_reports` and `user_appeals` on command whenever you ask in chat.
+### Milestone 5: Supabase Admin Console Wiring, Student Reply Notifications & Freebuff MCP Bridge (COMPLETED ✅ — SQL awaiting your paste)
+- [x] **M5.1 · Supabase Admin RPCs & Live Wiring (`Admin.tsx`, `cloud.ts`, `20261023000100_admin_console.sql`):**
+  - `profiles.is_admin` (guarded by a trigger: a signed-in client cannot promote itself; the SQL editor can) + `SECURITY DEFINER` RPCs: `admin_list_reports`, `admin_list_appeals`, `admin_list_students`, `admin_set_report_status`, `admin_set_appeal_status`, `admin_batch_delete_reports`, `admin_batch_delete_appeals`, `admin_reply_to_report`, `admin_reply_to_appeal`, `mark_my_notifications_seen`, plus the `assert_is_admin()` guard every routine calls first.
+  - `/admin` now gates on the real flag (checking / signed-out / denied / live), reads live rows with status + reason filters, relative ages and empty/error states.
+- [x] **M5.2 · One-Time Student Dashboard Notification (`Dashboard.tsx`, `cloud.ts`):**
+  - Replies insert a `user_notifications` row; the student sees one message card on the Dashboard and dismissing it marks every unseen row read, so it never returns.
+- [x] **M5.3 · Freebuff Local Triage Bridge (`tools/admin_triage.py`):**
+  - `summary`, `reports`, `appeals`, `resolve`, `dismiss`, `close-appeal`, `reply`, `delete-reports`, `delete-appeals` against Supabase REST with a service key that stays in `.pa/`. Freebuff runs this whenever you ask me to check reports.
+
+**Batch / cleanup actions now available in `/admin` (specific list, as requested):**
+- Mark **resolved** or **dismissed** for any selected reports (and resolved/rejected for appeals).
+- **Delete selected** rows.
+- **Delete all resolved reports older than 7 days** (one click, two-step confirm).
+- **Delete every report from this student** and **every appeal from this student** (Students section, by user id).
+- **Reply to a report or appeal** → one Dashboard notification, or an honest “no account attached, reply by email” when there is none.
+
+**Before this goes live you must:** paste `20261023000100_admin_console.sql` in the Supabase SQL editor, then run the one-line `UPDATE public.profiles SET is_admin = TRUE ...` from the README. Until then `/admin` shows “Operator access required” and touches no data.
 
 ---
 

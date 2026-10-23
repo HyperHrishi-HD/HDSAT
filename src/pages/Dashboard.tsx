@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Button, Card, Icon, InfoTip, ProgressBar, Stat } from '../components/ui';
 import { QuestionOfTheDay } from '../components/QuestionOfTheDay';
+import * as cloud from '../lib/cloud';
 import { dismissQuestionOfTheDay, isQuestionOfTheDayDismissed } from '../lib/daily';
 import { hasSeenIntro, markIntroSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
@@ -10,6 +11,42 @@ export function DashboardPage() {
   const app = useApp();
   const [showIntro, setShowIntro] = useState(() => !hasSeenIntro());
   const [qotdHidden, setQotdHidden] = useState(() => isQuestionOfTheDayDismissed());
+  const [notification, setNotification] = useState<cloud.StudentNotification | null>(null);
+  const [dismissingNotification, setDismissingNotification] = useState(false);
+
+  // Operator replies arrive as one notification row and are shown exactly once:
+  // dismissing marks every unseen row read so it never reappears.
+  useEffect(() => {
+    if (!app.user || !app.cloudConfigured) {
+      setNotification(null);
+      return;
+    }
+    let cancelled = false;
+    void cloud
+      .fetchMyNotifications()
+      .then((rows) => {
+        if (cancelled) return;
+        setNotification(rows.find((row) => !row.seen_at) ?? null);
+      })
+      .catch(() => {
+        /* a notification is a nicety: never break the Dashboard over it */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [app.user, app.cloudConfigured]);
+
+  const dismissNotification = async () => {
+    setDismissingNotification(true);
+    try {
+      await cloud.markMyNotificationsSeen();
+    } catch {
+      /* still hide it locally */
+    } finally {
+      setDismissingNotification(false);
+      setNotification(null);
+    }
+  };
 
   const domainBreakdown = useMemo(() => {
     const map = new Map<
@@ -140,6 +177,27 @@ export function DashboardPage() {
           ) : null}
         </div>
       </Card>
+
+      {notification ? (
+        <Card>
+          <div className="row-between">
+            <div className="row">
+              <Badge tone="good">Message from HDSAT</Badge>
+              <h3 style={{ margin: 0 }}>{notification.title}</h3>
+            </div>
+            <Button size="sm" variant="outline" disabled={dismissingNotification} onClick={() => void dismissNotification()}>
+              {dismissingNotification ? 'Saving…' : 'Dismiss'}
+            </Button>
+          </div>
+          <p style={{ margin: '8px 0 0', whiteSpace: 'pre-wrap' }}>{notification.body}</p>
+          {notification.reference ? (
+            <p className="muted" style={{ margin: '6px 0 0' }}>
+              Reference <span className="mono">{notification.reference}</span> ·{' '}
+              {new Date(notification.created_at).toLocaleDateString()}
+            </p>
+          ) : null}
+        </Card>
+      ) : null}
 
       {!qotdHidden ? (
         <QuestionOfTheDay

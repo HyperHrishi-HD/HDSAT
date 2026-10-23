@@ -1,120 +1,58 @@
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Badge, Icon, type IconName } from '../components/ui';
+import * as cloud from '../lib/cloud';
+import { useApp } from '../lib/store';
 
 type SectionId = 'overview' | 'reports' | 'appeals' | 'students' | 'content';
 
-const SECTIONS: { id: SectionId; label: string; icon: IconName; count?: number }[] = [
+const SECTIONS: { id: SectionId; label: string; icon: IconName }[] = [
   { id: 'overview', label: 'Overview', icon: 'dashboard' },
-  { id: 'reports', label: 'Question reports', icon: 'flag', count: 24 },
-  { id: 'appeals', label: 'Appeals & safety', icon: 'shield', count: 6 },
+  { id: 'reports', label: 'Question reports', icon: 'flag' },
+  { id: 'appeals', label: 'Appeals & safety', icon: 'shield' },
   { id: 'students', label: 'Students', icon: 'users' },
   { id: 'content', label: 'Content health', icon: 'layers' },
 ];
 
-/** Placeholder rows. The console is a layout only — nothing here is wired up. */
-const REPORTS = [
-  {
-    id: 'QR-1041',
-    question: 'M-ALG-018',
-    reason: 'Marked answer looks wrong',
-    from: 'guest · this device',
-    age: '12 min',
-    status: 'New' as const,
-  },
-  {
-    id: 'QR-1040',
-    question: 'RW-INF-032',
-    reason: 'Figure does not render',
-    from: 'student@example.com',
-    age: '48 min',
-    status: 'New' as const,
-  },
-  {
-    id: 'QR-1039',
-    question: 'M-GEO-007',
-    reason: 'Skill or difficulty mistagged',
-    from: 'guest · this device',
-    age: '2 h',
-    status: 'Triaged' as const,
-  },
-  {
-    id: 'QR-1038',
-    question: 'M-ADV-064',
-    reason: 'Explanation is wrong',
-    from: 'student@example.com',
-    age: '3 h',
-    status: 'Triaged' as const,
-  },
-  {
-    id: 'QR-1037',
-    question: 'RW-CRF-011',
-    reason: 'Copyright or attribution',
-    from: 'student@example.com',
-    age: '1 d',
-    status: 'Escalated' as const,
-  },
-  {
-    id: 'QR-1036',
-    question: 'M-PSD-092',
-    reason: 'Formatting or math rendering',
-    from: 'guest · this device',
-    age: '1 d',
-    status: 'Resolved' as const,
-  },
-];
+const REPORT_STATUSES = ['received', 'in_review', 'resolved', 'dismissed'];
+const APPEAL_STATUSES = ['received', 'in_review', 'resolved', 'rejected'];
 
-const APPEALS = [
-  {
-    id: 'AP-318',
-    category: 'Safety or abuse report',
-    subject: 'Reported display name',
-    age: '35 min',
-    sla: 'Within SLA' as const,
-  },
-  {
-    id: 'AP-317',
-    category: 'Copyright / removal request',
-    subject: 'Attribution on RW-CRF-011',
-    age: '4 h',
-    sla: 'Within SLA' as const,
-  },
-  {
-    id: 'AP-316',
-    category: 'Data deletion request',
-    subject: 'Account erasure',
-    age: '19 h',
-    sla: 'Respond today' as const,
-  },
-  {
-    id: 'AP-315',
-    category: 'Account access or ban appeal',
-    subject: 'Sign-in after email change',
-    age: '2 d',
-    sla: 'Overdue' as const,
-  },
-];
+function relativeAge(iso: string): string {
+  const then = new Date(iso).getTime();
+  if (!Number.isFinite(then)) return '—';
+  const minutes = Math.max(0, Math.round((Date.now() - then) / 60000));
+  if (minutes < 1) return 'just now';
+  if (minutes < 60) return `${minutes} min`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} h`;
+  const days = Math.floor(hours / 24);
+  if (days < 30) return `${days} d`;
+  const months = Math.floor(days / 30);
+  return months < 12 ? `${months} mo` : `${Math.floor(months / 12)} y`;
+}
 
-const STUDENTS = [
-  { name: 'Hrishi', mode: 'Cloud', streak: 12, last: 'today', status: 'Active' as const },
-  { name: 'Priya S.', mode: 'Cloud', streak: 4, last: 'today', status: 'Active' as const },
-  { name: 'dev-test-01', mode: 'Cloud', streak: 0, last: '3 days ago', status: 'Unconfirmed' as const },
-  { name: 'guest · this device', mode: 'Local', streak: 2, last: 'today', status: 'Guest' as const },
-];
+function shortId(id: string): string {
+  return id.replace(/-/g, '').slice(0, 8).toUpperCase();
+}
 
-const CHECKS = [
-  { label: 'Answer keys verified by independent solve', value: '6,193 / 6,193', tone: 'good' as const },
-  { label: 'Figures generated from the key data', value: '1,204 / 1,204', tone: 'good' as const },
-  { label: 'Items with an open report', value: '5', tone: 'warn' as const },
-  { label: 'Reference-sheet assets present', value: '4 / 4', tone: 'good' as const },
-  { label: 'Duplicate stems inside one module', value: '0', tone: 'good' as const },
-];
+function reasonLabel(reason: string): string {
+  const text = reason.replace(/_/g, ' ');
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function reporterLabel(row: {
+  reporter_name: string | null;
+  reporter_email: string | null;
+  contact_email: string | null;
+}): string {
+  return row.reporter_email ?? row.reporter_name ?? row.contact_email ?? 'guest';
+}
 
 const statusTone = (status: string) => {
-  if (status === 'New') return 'info';
-  if (status === 'Escalated' || status === 'Overdue') return 'bad';
-  if (status === 'Respond today') return 'warn';
-  if (status === 'Resolved' || status === 'Active' || status === 'Within SLA') return 'good';
+  if (status === 'received') return 'info';
+  if (status === 'in_review') return 'warn';
+  if (status === 'resolved') return 'good';
+  if (status === 'rejected') return 'bad';
   return 'neutral';
 };
 
@@ -142,10 +80,14 @@ function SectionHead({
   title,
   blurb,
   action,
+  onAction,
+  actionDisabled,
 }: {
   title: string;
   blurb: string;
   action?: string;
+  onAction?: () => void;
+  actionDisabled?: boolean;
 }) {
   return (
     <div className="adm-section-head">
@@ -154,7 +96,12 @@ function SectionHead({
         <p>{blurb}</p>
       </div>
       {action ? (
-        <button type="button" className="adm-btn" disabled title="Not wired up yet">
+        <button
+          type="button"
+          className="adm-btn"
+          onClick={onAction}
+          disabled={actionDisabled}
+        >
           {action}
         </button>
       ) : null}
@@ -162,18 +109,537 @@ function SectionHead({
   );
 }
 
+type AccessState = 'checking' | 'ok' | 'denied' | 'signed-out' | 'unconfigured' | 'error';
+
 export function AdminPage() {
-  const [section, setSection] = useState<SectionId>('overview');
+  const app = useApp();
   const navigate = useNavigate();
 
-  // The console is reached at the plain /admin path, so leaving it has to drop
-  // that path as well as the hash route.
+  const [section, setSection] = useState<SectionId>('overview');
+  const [access, setAccess] = useState<AccessState>('checking');
+  const [accessError, setAccessError] = useState<string | null>(null);
+  const [accessToken, setAccessToken] = useState(0);
+
+  const [reports, setReports] = useState<cloud.AdminPage<cloud.AdminReportRow> | null>(null);
+  const [appeals, setAppeals] = useState<cloud.AdminPage<cloud.AdminAppealRow> | null>(null);
+  const [students, setStudents] = useState<cloud.AdminPage<cloud.AdminStudentRow> | null>(null);
+  const [reasonOptions, setReasonOptions] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [statusFilter, setStatusFilter] = useState('');
+  const [reasonFilter, setReasonFilter] = useState('');
+  const [selected, setSelected] = useState<Set<string>>(new Set());
+  const [actionMessage, setActionMessage] = useState<string | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [pendingConfirm, setPendingConfirm] = useState<{
+    prompt: string;
+    run: () => Promise<void>;
+  } | null>(null);
+
+  const [replyTarget, setReplyTarget] = useState<{
+    kind: 'report' | 'appeal';
+    id: string;
+    chip: string;
+    contact: string | null;
+  } | null>(null);
+  const [replyTitle, setReplyTitle] = useState('');
+  const [replyBody, setReplyBody] = useState('');
+  const [replyResult, setReplyResult] = useState<string | null>(null);
+  const [reloadToken, setReloadToken] = useState(0);
+
+  const reload = () => setReloadToken((token) => token + 1);
+
+  // Access gate: only an account whose profile row is flagged is_admin may read
+  // or write triage data. The server re-checks this on every RPC too.
+  useEffect(() => {
+    let cancelled = false;
+    if (!app.cloudConfigured) {
+      setAccess('unconfigured');
+      return;
+    }
+    if (!app.user) {
+      setAccess('signed-out');
+      return;
+    }
+    setAccess('checking');
+    setAccessError(null);
+    cloud
+      .isAdmin()
+      .then((ok) => {
+        if (cancelled) return;
+        setAccess(ok ? 'ok' : 'denied');
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setAccess('error');
+        setAccessError((err as Error).message);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [app.cloudConfigured, app.user, accessToken]);
+
+  useEffect(() => {
+    setSelected(new Set());
+    setActionMessage(null);
+  }, [section, statusFilter, reasonFilter]);
+
+  useEffect(() => {
+    if (access !== 'ok') return;
+    let cancelled = false;
+    setLoading(true);
+    setError(null);
+    void (async () => {
+      try {
+        if (section === 'overview') {
+          const [reportPage, appealPage] = await Promise.all([
+            cloud.adminListReports({ limit: 20 }),
+            cloud.adminListAppeals({ limit: 20 }),
+          ]);
+          if (cancelled) return;
+          setReports(reportPage);
+          setAppeals(appealPage);
+          setReasonOptions((prev) =>
+            Array.from(new Set([...prev, ...reportPage.items.map((item) => item.reason)]))
+          );
+        } else if (section === 'reports') {
+          const page = await cloud.adminListReports({
+            status: statusFilter || null,
+            reason: reasonFilter || null,
+            limit: 100,
+          });
+          if (cancelled) return;
+          setReports(page);
+          setReasonOptions((prev) =>
+            Array.from(new Set([...prev, ...page.items.map((item) => item.reason)]))
+          );
+        } else if (section === 'appeals') {
+          const page = await cloud.adminListAppeals({
+            status: statusFilter || null,
+            limit: 100,
+          });
+          if (cancelled) return;
+          setAppeals(page);
+        } else if (section === 'students') {
+          const page = await cloud.adminListStudents({ limit: 100 });
+          if (cancelled) return;
+          setStudents(page);
+        }
+      } catch (err) {
+        if (!cancelled) setError((err as Error).message);
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [access, section, statusFilter, reasonFilter, reloadToken]);
+
+  const reportItems = reports?.items ?? [];
+  const appealItems = appeals?.items ?? [];
+  const openReports = reports?.open ?? reports?.total ?? 0;
+  const openAppeals = appeals?.open ?? appeals?.total ?? 0;
+
+  const visibleIds = useMemo(
+    () =>
+      section === 'reports'
+        ? reportItems.map((row) => row.id)
+        : section === 'appeals'
+          ? appealItems.map((row) => row.id)
+          : [],
+    [section, reportItems, appealItems]
+  );
+  const allVisibleSelected =
+    visibleIds.length > 0 && visibleIds.every((id) => selected.has(id));
+
+  const toggleSelected = (id: string) => {
+    setSelected((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleSelectAll = () => {
+    setSelected((prev) => (allVisibleSelected ? new Set() : new Set([...prev, ...visibleIds])));
+  };
+
+  const runAction = async (label: string | null, action: () => Promise<void>) => {
+    setBusy(true);
+    setActionMessage(null);
+    try {
+      await action();
+      if (label) setActionMessage(label);
+      reload();
+    } catch (err) {
+      setActionMessage(`Failed: ${(err as Error).message}`);
+    } finally {
+      setBusy(false);
+      setPendingConfirm(null);
+    }
+  };
+
+  const setStatusForSelected = (status: string) =>
+    runAction(`Marked ${selected.size} item(s) ${status}.`, async () => {
+      const ids = [...selected];
+      for (const id of ids) {
+        if (section === 'reports') await cloud.adminSetReportStatus(id, status);
+        else if (section === 'appeals') await cloud.adminSetAppealStatus(id, status);
+      }
+      setSelected(new Set());
+    });
+
+  const deleteSelected = () =>
+    setPendingConfirm({
+      prompt: `Delete ${selected.size} ${section === 'reports' ? 'report' : 'appeal'}${
+        selected.size === 1 ? '' : 's'
+      }? This cannot be undone.`,
+      run: async () => {
+        const ids = [...selected];
+        const deleted =
+          section === 'reports'
+            ? await cloud.adminBatchDeleteReports({ ids })
+            : await cloud.adminBatchDeleteAppeals({ ids });
+        setSelected(new Set());
+        setActionMessage(`Deleted ${deleted} ${section === 'reports' ? 'report' : 'appeal'}(s).`);
+      },
+    });
+
+  const cleanupResolved = () =>
+    setPendingConfirm({
+      prompt: 'Delete every resolved report older than 7 days? This cannot be undone.',
+      run: async () => {
+        const deleted = await cloud.adminBatchDeleteReports({
+          status: 'resolved',
+          olderThanDays: 7,
+        });
+        setActionMessage(`Deleted ${deleted} old resolved report(s).`);
+      },
+    });
+
+  const deleteStudentReports = (row: cloud.AdminStudentRow) =>
+    setPendingConfirm({
+      prompt: `Delete every question report from ${
+        row.email ?? row.display_name ?? 'this student'
+      }?`,
+      run: async () => {
+        const deleted = await cloud.adminBatchDeleteReports({ userId: row.user_id });
+        setActionMessage(`Deleted ${deleted} report(s) from that student.`);
+      },
+    });
+
+  const deleteStudentAppeals = (row: cloud.AdminStudentRow) =>
+    setPendingConfirm({
+      prompt: `Delete every appeal from ${
+        row.email ?? row.display_name ?? 'this student'
+      }?`,
+      run: async () => {
+        const deleted = await cloud.adminBatchDeleteAppeals({ userId: row.user_id });
+        setActionMessage(`Deleted ${deleted} appeal(s) from that student.`);
+      },
+    });
+
+  const openReply = (
+    kind: 'report' | 'appeal',
+    id: string,
+    chip: string,
+    contact: string | null
+  ) => {
+    setReplyTarget({ kind, id, chip, contact });
+    setReplyTitle(kind === 'report' ? 'Reply to your question report' : 'Reply to your appeal');
+    setReplyBody('');
+    setReplyResult(null);
+  };
+
+  const sendReply = async () => {
+    if (!replyTarget) return;
+    if (!replyBody.trim()) {
+      setReplyResult('Write a message before sending.');
+      return;
+    }
+    setBusy(true);
+    setReplyResult(null);
+    try {
+      const result = await cloud.adminReply({
+        kind: replyTarget.kind,
+        id: replyTarget.id,
+        title: replyTitle.trim() || 'Reply from HDSAT',
+        body: replyBody.trim(),
+      });
+      setReplyResult(
+        result.delivered
+          ? 'Delivered — the student will see this once on their Dashboard.'
+          : 'This report has no account attached, so it cannot reach a Dashboard; reply to the contact email instead.'
+      );
+      setReplyBody('');
+      reload();
+    } catch (err) {
+      setReplyResult((err as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const backToApp = () => {
     if (typeof window !== 'undefined' && window.location.pathname !== '/') {
       window.history.replaceState(null, '', '/');
     }
     navigate('/');
   };
+
+  const permissionCard = () => {
+    if (access === 'unconfigured') {
+      return (
+        <section className="adm-card">
+          <h2>Supabase is not configured</h2>
+          <p className="adm-dim">
+            This console reads from Supabase. Set <code>VITE_SUPABASE_URL</code> and{' '}
+            <code>VITE_SUPABASE_ANON_KEY</code> for the deployment, then sign in with an operator
+            account.
+          </p>
+        </section>
+      );
+    }
+    if (access === 'signed-out') {
+      return (
+        <section className="adm-card">
+          <h2>Sign in required</h2>
+          <p className="adm-dim">
+            The console only loads for an operator account. Sign in, then come back to{' '}
+            <code>/admin</code>.
+          </p>
+          <a className="adm-btn" href="#/account">
+            Go to sign in
+          </a>
+        </section>
+      );
+    }
+    if (access === 'checking') {
+      return (
+        <section className="adm-card">
+          <p className="adm-dim">Checking operator access…</p>
+        </section>
+      );
+    }
+    return (
+      <section className="adm-card">
+        <h2>Operator access required</h2>
+        <p className="adm-dim">
+          Your account is signed in but not flagged as an operator, so no reports, appeals or student
+          rows are loaded.
+        </p>
+        <p className="adm-dim">
+          Grant it once in the Supabase SQL editor (this runs without a user session, so the
+          self-promotion guard allows it):
+        </p>
+        <pre className="mono" style={{ whiteSpace: 'pre-wrap', fontSize: '0.78rem' }}>
+          {`UPDATE public.profiles SET is_admin = TRUE
+ WHERE user_id = (SELECT id FROM auth.users WHERE email = 'you@example.com');`}
+        </pre>
+        {accessError ? <p className="adm-dim">Last error: {accessError}</p> : null}
+        <button
+          type="button"
+          className="adm-btn"
+          onClick={() => {
+            setAccess('checking');
+            setAccessToken((token) => token + 1);
+          }}
+        >
+          Re-check access
+        </button>
+      </section>
+    );
+  };
+
+  const replyComposer = () => (
+    <section className="adm-card">
+      <div className="adm-card-head">
+        <h2>Reply composer</h2>
+        <span className="adm-dim">
+          {replyTarget ? 'One notification, shown once on the student Dashboard' : 'Pick a row'}
+        </span>
+      </div>
+      {!replyTarget ? (
+        <p className="adm-dim">Use the Reply action on a report or appeal to write back.</p>
+      ) : (
+        <div className="adm-composer">
+          <div className="adm-composer-to">
+            <span className="adm-dim">To</span>
+            <span className="adm-chip">{replyTarget.chip}</span>
+          </div>
+          {replyTarget.contact ? (
+            <p className="adm-dim" style={{ margin: 0 }}>
+              Contact email: {replyTarget.contact}
+            </p>
+          ) : (
+            <p className="adm-dim" style={{ margin: 0 }}>
+              No contact email on file for this row.
+            </p>
+          )}
+          <input
+            type="text"
+            value={replyTitle}
+            maxLength={140}
+            onChange={(e) => setReplyTitle(e.target.value)}
+            placeholder="Subject"
+            aria-label="Reply subject"
+          />
+          <textarea
+            value={replyBody}
+            maxLength={2000}
+            rows={4}
+            onChange={(e) => setReplyBody(e.target.value)}
+            placeholder="Explain what you found or changed. This appears on the student's Dashboard once."
+            aria-label="Reply message"
+          />
+          <div className="adm-composer-foot">
+            <button
+              type="button"
+              className="adm-btn"
+              onClick={() => void sendReply()}
+              disabled={busy || !replyBody.trim()}
+            >
+              {busy ? 'Sending…' : 'Send reply'}
+            </button>
+            <button
+              type="button"
+              className="adm-btn adm-btn-ghost"
+              onClick={() => {
+                setReplyTarget(null);
+                setReplyResult(null);
+              }}
+            >
+              Close
+            </button>
+          </div>
+          {replyResult ? (
+            <p className="adm-dim" style={{ margin: 0 }}>
+              {replyResult}
+            </p>
+          ) : null}
+        </div>
+      )}
+    </section>
+  );
+
+  const confirmBar = () =>
+    pendingConfirm ? (
+      <div className="adm-filters" role="alert">
+        <span className="adm-filter">{pendingConfirm.prompt}</span>
+        <button
+          type="button"
+          className="adm-row-action"
+          disabled={busy}
+          onClick={() => void runAction(null, pendingConfirm.run)}
+        >
+          Yes, delete
+        </button>
+        <button
+          type="button"
+          className="adm-row-action"
+          onClick={() => setPendingConfirm(null)}
+          disabled={busy}
+        >
+          Cancel
+        </button>
+      </div>
+    ) : null;
+
+  const batchBar = () => (
+    <>
+      <div className="adm-filters">
+        <button
+          type="button"
+          className="adm-row-action"
+          disabled={selected.size === 0 || busy}
+          onClick={() => void setStatusForSelected('resolved')}
+        >
+          Mark resolved ({selected.size})
+        </button>
+        <button
+          type="button"
+          className="adm-row-action"
+          disabled={selected.size === 0 || busy}
+          onClick={() =>
+            void setStatusForSelected(section === 'reports' ? 'dismissed' : 'rejected')
+          }
+        >
+          Mark {section === 'reports' ? 'dismissed' : 'rejected'} ({selected.size})
+        </button>
+        <button
+          type="button"
+          className="adm-row-action"
+          disabled={selected.size === 0 || busy}
+          onClick={deleteSelected}
+        >
+          Delete selected ({selected.size})
+        </button>
+        {section === 'reports' ? (
+          <button type="button" className="adm-row-action" disabled={busy} onClick={cleanupResolved}>
+            Delete resolved older than 7 days
+          </button>
+        ) : null}
+      </div>
+      {confirmBar()}
+    </>
+  );
+
+  const filterRow = (statuses: string[], withReason: boolean) => (
+    <div className="adm-filters">
+      <select
+        className="adm-filter"
+        value={statusFilter}
+        onChange={(e) => setStatusFilter(e.target.value)}
+        aria-label="Filter by status"
+      >
+        <option value="">Any status</option>
+        {statuses.map((status) => (
+          <option key={status} value={status}>
+            {status.replace(/_/g, ' ')}
+          </option>
+        ))}
+      </select>
+      {withReason ? (
+        <select
+          className="adm-filter"
+          value={reasonFilter}
+          onChange={(e) => setReasonFilter(e.target.value)}
+          aria-label="Filter by reason"
+        >
+          <option value="">All reasons</option>
+          {reasonOptions.map((reason) => (
+            <option key={reason} value={reason}>
+              {reasonLabel(reason)}
+            </option>
+          ))}
+        </select>
+      ) : null}
+      <button type="button" className="adm-row-action" onClick={reload} disabled={loading}>
+        {loading ? 'Refreshing…' : 'Refresh'}
+      </button>
+    </div>
+  );
+
+  const overviewActivity = useMemo(() => {
+    const merged = [
+      ...reportItems.map((row) => ({
+        id: `r-${row.id}`,
+        at: row.created_at,
+        text: `Report ${shortId(row.id)} · ${reasonLabel(row.reason)} on ${row.question_id}`,
+      })),
+      ...appealItems.map((row) => ({
+        id: `a-${row.id}`,
+        at: row.created_at,
+        text: `Appeal ${row.reference} · ${row.category.replace(/_/g, ' ')}`,
+      })),
+    ];
+    return merged
+      .sort((a, b) => b.at.localeCompare(a.at))
+      .slice(0, 6);
+  }, [reportItems, appealItems]);
 
   return (
     <div className="adm-shell">
@@ -189,7 +655,7 @@ export function AdminPage() {
         </div>
 
         <div className="adm-top-right">
-          <span className="adm-preview-tag">Layout preview</span>
+          <span className="adm-preview-tag">Live data</span>
           <button type="button" className="adm-back" onClick={backToApp}>
             <Icon name="arrow-left" size={14} />
             <span>Back to app</span>
@@ -208,338 +674,493 @@ export function AdminPage() {
             >
               <Icon name={item.icon} size={15} />
               <span>{item.label}</span>
-              {item.count ? <em>{item.count}</em> : null}
+              {item.id === 'reports' && openReports > 0 ? <em>{openReports}</em> : null}
+              {item.id === 'appeals' && openAppeals > 0 ? <em>{openAppeals}</em> : null}
             </button>
           ))}
 
           <div className="adm-rail-foot">
             <span className="adm-rail-note">
-              No sign-in, actions or data yet — this is the shell for tomorrow&apos;s work.
+              Replies reach the student&apos;s Dashboard once. Deleting a report never changes the
+              question for anyone else.
             </span>
           </div>
         </nav>
 
         <main className="adm-main">
-          {section === 'overview' ? (
+          {access !== 'ok' ? permissionCard() : null}
+
+          {access === 'ok' ? (
             <>
-              <SectionHead
-                title="Overview"
-                blurb="Everything waiting on a human: content reports, safety appeals and catalog health."
-              />
-
-              <div className="adm-metrics">
-                <Metric label="Open reports" value="24" hint="5 untouched for over a day" tone="warn" />
-                <Metric label="Appeals awaiting reply" value="6" hint="1 past the 72-hour window" tone="bad" />
-                <Metric label="First response (median)" value="3 h 12 m" hint="Target is under 24 h" />
-                <Metric label="Items flagged as wrong" value="5" hint="Out of 6,193 in the bank" />
-              </div>
-
-              <div className="adm-columns">
+              {error ? (
                 <section className="adm-card">
-                  <div className="adm-card-head">
-                    <h2>Triage queue</h2>
-                    <span className="adm-dim">Newest first</span>
-                  </div>
-                  <ul className="adm-queue">
-                    {REPORTS.slice(0, 4).map((row) => (
-                      <li key={row.id}>
-                        <span className="adm-queue-dot" aria-hidden="true" />
-                        <div>
-                          <strong>{row.reason}</strong>
-                          <span className="adm-dim">
-                            {row.id} · <span className="mono">{row.question}</span> · {row.age} ago
-                          </span>
-                        </div>
-                        <Badge tone={statusTone(row.status)}>{row.status}</Badge>
-                      </li>
-                    ))}
-                  </ul>
+                  <p className="adm-dim">Could not load this section: {error}</p>
+                  <button type="button" className="adm-row-action" onClick={reload}>
+                    Try again
+                  </button>
                 </section>
+              ) : null}
+              {actionMessage ? (
+                <p className="adm-dim" style={{ margin: '0 0 10px' }} role="status">
+                  {actionMessage}
+                </p>
+              ) : null}
 
-                <section className="adm-card">
-                  <div className="adm-card-head">
-                    <h2>Catalog health</h2>
-                    <span className="adm-dim">bank 2026.10.18</span>
+              {section === 'overview' ? (
+                <>
+                  <SectionHead
+                    title="Overview"
+                    blurb="Everything waiting on a human: content reports, safety appeals and catalog health."
+                  />
+
+                  <div className="adm-metrics">
+                    <Metric
+                      label="Open reports"
+                      value={String(openReports)}
+                      hint={`${reportItems.length} loaded of ${reports?.total ?? 0}`}
+                      tone={openReports > 0 ? 'warn' : undefined}
+                    />
+                    <Metric
+                      label="Appeals awaiting reply"
+                      value={String(openAppeals)}
+                      hint={`${appealItems.length} loaded of ${appeals?.total ?? 0}`}
+                      tone={openAppeals > 0 ? 'warn' : undefined}
+                    />
+                    <Metric
+                      label="Questions in bank"
+                      value={app.questions.length.toLocaleString()}
+                      hint="From this deployment's catalog"
+                    />
+                    <Metric
+                      label="Flashcards"
+                      value={app.flashcards.length.toLocaleString()}
+                      hint="Spaced-repetition deck"
+                    />
                   </div>
-                  <ul className="adm-checks">
-                    {CHECKS.map((check) => (
-                      <li key={check.label}>
-                        <span>{check.label}</span>
-                        <Badge tone={check.tone}>{check.value}</Badge>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              </div>
 
-              <section className="adm-card">
-                <div className="adm-card-head">
-                  <h2>Recent activity</h2>
-                  <span className="adm-dim">Sample data</span>
-                </div>
-                <ul className="adm-timeline">
-                  <li>
-                    <span className="adm-time">09:14</span>
-                    <span>AP-318 · safety report opened by a signed-in student</span>
-                  </li>
-                  <li>
-                    <span className="adm-time">08:52</span>
-                    <span>QR-1041 · new answer-key report on M-ALG-018</span>
-                  </li>
-                  <li>
-                    <span className="adm-time">08:31</span>
-                    <span>Bank validator finished — 6,193 items, no schema drift</span>
-                  </li>
-                  <li>
-                    <span className="adm-time">07:58</span>
-                    <span>Deploy completed · bundle verified on production</span>
-                  </li>
-                </ul>
-              </section>
-            </>
-          ) : null}
+                  <div className="adm-columns">
+                    <section className="adm-card">
+                      <div className="adm-card-head">
+                        <h2>Triage queue</h2>
+                        <span className="adm-dim">Newest first</span>
+                      </div>
+                      {loading && reportItems.length === 0 ? (
+                        <p className="adm-dim">Loading reports…</p>
+                      ) : reportItems.length === 0 ? (
+                        <p className="adm-dim">No reports yet.</p>
+                      ) : (
+                        <ul className="adm-queue">
+                          {reportItems.slice(0, 4).map((row) => (
+                            <li key={row.id}>
+                              <span className="adm-queue-dot" aria-hidden="true" />
+                              <div>
+                                <strong>{reasonLabel(row.reason)}</strong>
+                                <span className="adm-dim">
+                                  {shortId(row.id)} ·{' '}
+                                  <span className="mono">{row.question_id}</span> ·{' '}
+                                  {relativeAge(row.created_at)} ago
+                                </span>
+                              </div>
+                              <Badge tone={statusTone(row.status)}>{row.status}</Badge>
+                            </li>
+                          ))}
+                        </ul>
+                      )}
+                    </section>
 
-          {section === 'reports' ? (
-            <>
-              <SectionHead
-                title="Question reports"
-                blurb="Student-submitted content problems. Reviewing one never changes the item for anyone else."
-                action="Export CSV"
-              />
-
-              <div className="adm-filters">
-                <span className="adm-filter">All reasons</span>
-                <span className="adm-filter">Any status</span>
-                <span className="adm-filter">Any assessment</span>
-                <span className="adm-filter adm-filter-input">Search question ID or text</span>
-              </div>
-
-              <section className="adm-card adm-card-flush">
-                <table className="adm-table">
-                  <thead>
-                    <tr>
-                      <th>Report</th>
-                      <th>Question</th>
-                      <th>Reason</th>
-                      <th>Reporter</th>
-                      <th>Age</th>
-                      <th>Status</th>
-                      <th aria-label="Actions" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {REPORTS.map((row) => (
-                      <tr key={row.id}>
-                        <td className="mono">{row.id}</td>
-                        <td className="mono">{row.question}</td>
-                        <td>{row.reason}</td>
-                        <td className="adm-dim">{row.from}</td>
-                        <td className="adm-dim">{row.age}</td>
-                        <td>
-                          <Badge tone={statusTone(row.status)}>{row.status}</Badge>
-                        </td>
-                        <td>
-                          <button type="button" className="adm-row-action" disabled>
-                            Review
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <div className="adm-card-foot">
-                  <span className="adm-dim">Showing 6 of 24 reports</span>
-                  <div className="adm-pager">
-                    <button type="button" disabled>
-                      Previous
-                    </button>
-                    <span>1 / 4</span>
-                    <button type="button" disabled>
-                      Next
-                    </button>
+                    <section className="adm-card">
+                      <div className="adm-card-head">
+                        <h2>Appeals by status</h2>
+                        <span className="adm-dim">{appeals?.total ?? 0} total</span>
+                      </div>
+                      <ul className="adm-checks">
+                        {APPEAL_STATUSES.map((status) => {
+                          const count = appealItems.filter((row) => row.status === status).length;
+                          return (
+                            <li key={status}>
+                              <span>{status.replace(/_/g, ' ')}</span>
+                              <Badge tone={statusTone(status)}>{count}</Badge>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </section>
                   </div>
-                </div>
-              </section>
-            </>
-          ) : null}
 
-          {section === 'appeals' ? (
-            <>
-              <SectionHead
-                title="Appeals & safety"
-                blurb="Copyright, access, data and safety requests. The published first-response target is 72 hours."
-                action="New appeal"
-              />
+                  <section className="adm-card">
+                    <div className="adm-card-head">
+                      <h2>Recent activity</h2>
+                      <span className="adm-dim">Reports and appeals</span>
+                    </div>
+                    {overviewActivity.length === 0 ? (
+                      <p className="adm-dim">Nothing has been reported yet.</p>
+                    ) : (
+                      <ul className="adm-timeline">
+                        {overviewActivity.map((item) => (
+                          <li key={item.id}>
+                            <span className="adm-time">{relativeAge(item.at)}</span>
+                            <span>{item.text}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </section>
+                </>
+              ) : null}
 
-              <div className="adm-metrics">
-                <Metric label="Open" value="6" hint="Across 4 categories" />
-                <Metric label="Approaching SLA" value="2" hint="Under 12 hours left" tone="warn" />
-                <Metric label="Past SLA" value="1" hint="Needs a reply today" tone="bad" />
-              </div>
+              {section === 'reports' ? (
+                <>
+                  <SectionHead
+                    title="Question reports"
+                    blurb="Student-submitted content problems. Reviewing one never changes the item for anyone else."
+                  />
+                  {filterRow(REPORT_STATUSES, true)}
+                  {batchBar()}
 
-              <section className="adm-card adm-card-flush">
-                <table className="adm-table">
-                  <thead>
-                    <tr>
-                      <th>Ref</th>
-                      <th>Category</th>
-                      <th>Subject</th>
-                      <th>Age</th>
-                      <th>SLA</th>
-                      <th aria-label="Actions" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {APPEALS.map((row) => (
-                      <tr key={row.id}>
-                        <td className="mono">{row.id}</td>
-                        <td>{row.category}</td>
-                        <td className="adm-dim">{row.subject}</td>
-                        <td className="adm-dim">{row.age}</td>
-                        <td>
-                          <Badge tone={statusTone(row.sla)}>{row.sla}</Badge>
-                        </td>
-                        <td>
-                          <button type="button" className="adm-row-action" disabled>
-                            Open
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </section>
+                  <section className="adm-card adm-card-flush">
+                    <table className="adm-table">
+                      <thead>
+                        <tr>
+                          <th>
+                            <input
+                              type="checkbox"
+                              checked={allVisibleSelected}
+                              onChange={toggleSelectAll}
+                              aria-label="Select all visible reports"
+                            />
+                          </th>
+                          <th>Report</th>
+                          <th>Question</th>
+                          <th>Reason</th>
+                          <th>Reporter</th>
+                          <th>Age</th>
+                          <th>Status</th>
+                          <th aria-label="Actions" />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {reportItems.map((row) => (
+                          <tr key={row.id}>
+                            <td>
+                              <input
+                                type="checkbox"
+                                checked={selected.has(row.id)}
+                                onChange={() => toggleSelected(row.id)}
+                                aria-label={`Select report ${shortId(row.id)}`}
+                              />
+                            </td>
+                            <td className="mono">{shortId(row.id)}</td>
+                            <td className="mono">{row.question_id}</td>
+                            <td>
+                              {reasonLabel(row.reason)}
+                              {row.details ? (
+                                <div className="adm-dim" style={{ maxWidth: 320 }}>
+                                  {row.details.slice(0, 160)}
+                                </div>
+                              ) : null}
+                            </td>
+                            <td className="adm-dim">{reporterLabel(row)}</td>
+                            <td className="adm-dim">{relativeAge(row.created_at)}</td>
+                            <td>
+                              <Badge tone={statusTone(row.status)}>{row.status}</Badge>
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                className="adm-row-action"
+                                onClick={() =>
+                                  openReply(
+                                    'report',
+                                    row.id,
+                                    `Report ${shortId(row.id)} · ${reporterLabel(row)}`,
+                                    row.contact_email ?? row.reporter_email
+                                  )
+                                }
+                              >
+                                Reply
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <div className="adm-card-foot">
+                      <span className="adm-dim">
+                        {loading
+                          ? 'Loading…'
+                          : reportItems.length === 0
+                            ? 'No reports yet.'
+                            : `Showing ${reportItems.length} of ${reports?.total ?? 0} reports`}
+                      </span>
+                      <button type="button" className="adm-row-action" onClick={reload}>
+                        Refresh
+                      </button>
+                    </div>
+                  </section>
+                  {replyComposer()}
+                </>
+              ) : null}
 
-              <section className="adm-card">
-                <div className="adm-card-head">
-                  <h2>Reply composer</h2>
-                  <span className="adm-dim">Disabled in this preview</span>
-                </div>
-                <div className="adm-composer">
-                  <div className="adm-composer-to">
-                    <span className="adm-dim">To</span>
-                    <span className="adm-chip">Appeal AP-318 · guest this device</span>
+              {section === 'appeals' ? (
+                <>
+                  <SectionHead
+                    title="Appeals & safety"
+                    blurb="Copyright, access, data and safety requests. The published first-response target is 72 hours."
+                  />
+
+                  <div className="adm-metrics">
+                    <Metric label="Open" value={String(openAppeals)} hint="Received or in review" />
+                    <Metric
+                      label="Total"
+                      value={String(appeals?.total ?? 0)}
+                      hint="All categories"
+                    />
+                    <Metric
+                      label="Resolved"
+                      value={String(
+                        appealItems.filter((row) => row.status === 'resolved').length
+                      )}
+                      hint="Loaded rows only"
+                    />
                   </div>
-                  <div className="adm-composer-lines">
-                    <span />
-                    <span />
-                    <span className="is-short" />
+
+                  {filterRow(APPEAL_STATUSES, false)}
+                  {batchBar()}
+
+                  <section className="adm-card adm-card-flush">
+                    <table className="adm-table">
+                      <thead>
+                        <tr>
+                          <th>
+                            <input
+                              type="checkbox"
+                              checked={allVisibleSelected}
+                              onChange={toggleSelectAll}
+                              aria-label="Select all visible appeals"
+                            />
+                          </th>
+                          <th>Ref</th>
+                          <th>Category</th>
+                          <th>Subject</th>
+                          <th>Reporter</th>
+                          <th>Age</th>
+                          <th>Status</th>
+                          <th aria-label="Actions" />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {appealItems.map((row) => (
+                          <tr key={row.id}>
+                            <td>
+                              <input
+                                type="checkbox"
+                                checked={selected.has(row.id)}
+                                onChange={() => toggleSelected(row.id)}
+                                aria-label={`Select appeal ${row.reference}`}
+                              />
+                            </td>
+                            <td className="mono">{row.reference}</td>
+                            <td>{row.category.replace(/_/g, ' ')}</td>
+                            <td className="adm-dim">
+                              {row.subject}
+                              <div style={{ maxWidth: 320 }}>{row.details.slice(0, 160)}</div>
+                            </td>
+                            <td className="adm-dim">{reporterLabel(row)}</td>
+                            <td className="adm-dim">{relativeAge(row.created_at)}</td>
+                            <td>
+                              <Badge tone={statusTone(row.status)}>{row.status}</Badge>
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                className="adm-row-action"
+                                onClick={() =>
+                                  openReply(
+                                    'appeal',
+                                    row.id,
+                                    `Appeal ${row.reference} · ${reporterLabel(row)}`,
+                                    row.contact_email ?? row.reporter_email
+                                  )
+                                }
+                              >
+                                Reply
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <div className="adm-card-foot">
+                      <span className="adm-dim">
+                        {loading
+                          ? 'Loading…'
+                          : appealItems.length === 0
+                            ? 'No appeals yet.'
+                            : `Showing ${appealItems.length} of ${appeals?.total ?? 0} appeals`}
+                      </span>
+                      <button type="button" className="adm-row-action" onClick={reload}>
+                        Refresh
+                      </button>
+                    </div>
+                  </section>
+                  {replyComposer()}
+                </>
+              ) : null}
+
+              {section === 'students' ? (
+                <>
+                  <SectionHead
+                    title="Students"
+                    blurb="Accounts that have practised here, with the aggregate counts the console needs. Account deletion stays self-serve in the app."
+                  />
+
+                  <section className="adm-card adm-card-flush">
+                    <table className="adm-table">
+                      <thead>
+                        <tr>
+                          <th>Student</th>
+                          <th>Confirmed</th>
+                          <th>Streak</th>
+                          <th>Coins</th>
+                          <th>Attempts</th>
+                          <th>Reports</th>
+                          <th>Joined</th>
+                          <th aria-label="Actions" />
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {(students?.items ?? []).map((row) => (
+                          <tr key={row.user_id}>
+                            <td>
+                              {row.display_name ?? 'Student'}
+                              {row.is_admin ? (
+                                <Badge tone="info">
+                                  <span style={{ marginLeft: 6 }}>admin</span>
+                                </Badge>
+                              ) : null}
+                              <div className="adm-dim">{row.email ?? row.user_id}</div>
+                            </td>
+                            <td>
+                              <Badge tone={row.confirmed ? 'good' : 'warn'}>
+                                {row.confirmed ? 'yes' : 'pending'}
+                              </Badge>
+                            </td>
+                            <td>{row.current_streak > 0 ? `${row.current_streak} d` : '—'}</td>
+                            <td>{row.hd_coins.toLocaleString()}</td>
+                            <td>{row.total_attempts.toLocaleString()}</td>
+                            <td>{row.report_count}</td>
+                            <td className="adm-dim">{row.created_at.slice(0, 10)}</td>
+                            <td>
+                              <div className="row" style={{ gap: 6 }}>
+                                <button
+                                  type="button"
+                                  className="adm-row-action"
+                                  onClick={() => deleteStudentReports(row)}
+                                  disabled={row.report_count === 0}
+                                >
+                                  Delete reports
+                                </button>
+                                <button
+                                  type="button"
+                                  className="adm-row-action"
+                                  onClick={() => deleteStudentAppeals(row)}
+                                >
+                                  Delete appeals
+                                </button>
+                              </div>
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                    <div className="adm-card-foot">
+                      <span className="adm-dim">
+                        {loading
+                          ? 'Loading…'
+                          : (students?.items ?? []).length === 0
+                            ? 'No accounts yet.'
+                            : `Showing ${(students?.items ?? []).length} of ${
+                                students?.total ?? 0
+                              } accounts`}
+                      </span>
+                      <button type="button" className="adm-row-action" onClick={reload}>
+                        Refresh
+                      </button>
+                    </div>
+                  </section>
+                  {confirmBar()}
+                </>
+              ) : null}
+
+              {section === 'content' ? (
+                <>
+                  <SectionHead
+                    title="Content health"
+                    blurb="Counts from the catalog this deployment is serving. Reports are the content signal that needs a human."
+                  />
+
+                  <div className="adm-columns">
+                    <section className="adm-card">
+                      <div className="adm-card-head">
+                        <h2>Bank summary</h2>
+                        <span className="adm-dim">bank {app.bankVersion}</span>
+                      </div>
+                      <ul className="adm-checks">
+                        <li>
+                          <span>Questions</span>
+                          <strong>{app.questions.length.toLocaleString()}</strong>
+                        </li>
+                        <li>
+                          <span>Reading &amp; Writing</span>
+                          <strong>
+                            {app.questions
+                              .filter((q) => q.section === 'Reading and Writing')
+                              .length.toLocaleString()}
+                          </strong>
+                        </li>
+                        <li>
+                          <span>Math</span>
+                          <strong>
+                            {app.questions
+                              .filter((q) => q.section === 'Math')
+                              .length.toLocaleString()}
+                          </strong>
+                        </li>
+                        <li>
+                          <span>Flashcards</span>
+                          <strong>{app.flashcards.length.toLocaleString()}</strong>
+                        </li>
+                      </ul>
+                    </section>
+
+                    <section className="adm-card">
+                      <div className="adm-card-head">
+                        <h2>Report signal</h2>
+                      </div>
+                      <ul className="adm-checks">
+                        {REPORT_STATUSES.map((status) => {
+                          const count = reportItems.filter((row) => row.status === status).length;
+                          return (
+                            <li key={status}>
+                              <span>{status.replace(/_/g, ' ')}</span>
+                              <Badge tone={statusTone(status)}>{count}</Badge>
+                            </li>
+                          );
+                        })}
+                        <li>
+                          <span>Distinct flagged questions</span>
+                          <strong>
+                            {new Set(reportItems.map((row) => row.question_id)).size}
+                          </strong>
+                        </li>
+                      </ul>
+                      <p className="adm-dim" style={{ marginBottom: 0 }}>
+                        Counts cover the loaded page, not the whole history.
+                      </p>
+                    </section>
                   </div>
-                  <div className="adm-composer-foot">
-                    <button type="button" className="adm-btn" disabled>
-                      Send reply
-                    </button>
-                    <button type="button" className="adm-btn adm-btn-ghost" disabled>
-                      Internal note
-                    </button>
-                  </div>
-                </div>
-              </section>
-            </>
-          ) : null}
-
-          {section === 'students' ? (
-            <>
-              <SectionHead
-                title="Students"
-                blurb="Accounts and guest devices that have practised here. Nothing is editable yet."
-              />
-
-              <div className="adm-filters">
-                <span className="adm-filter">All accounts</span>
-                <span className="adm-filter">Active this week</span>
-                <span className="adm-filter adm-filter-input">Search name or email</span>
-              </div>
-
-              <section className="adm-card adm-card-flush">
-                <table className="adm-table">
-                  <thead>
-                    <tr>
-                      <th>Student</th>
-                      <th>Mode</th>
-                      <th>Streak</th>
-                      <th>Last active</th>
-                      <th>Status</th>
-                      <th aria-label="Actions" />
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {STUDENTS.map((row) => (
-                      <tr key={row.name}>
-                        <td>{row.name}</td>
-                        <td className="adm-dim">{row.mode}</td>
-                        <td>{row.streak > 0 ? `${row.streak} days` : '—'}</td>
-                        <td className="adm-dim">{row.last}</td>
-                        <td>
-                          <Badge tone={statusTone(row.status)}>{row.status}</Badge>
-                        </td>
-                        <td>
-                          <button type="button" className="adm-row-action" disabled>
-                            View
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <div className="adm-card-foot">
-                  <span className="adm-dim">Sample rows — real accounts load here later</span>
-                </div>
-              </section>
-            </>
-          ) : null}
-
-          {section === 'content' ? (
-            <>
-              <SectionHead
-                title="Content health"
-                blurb="Validators that run over the question bank, decks and reference assets."
-                action="Re-run checks"
-              />
-
-              <div className="adm-columns">
-                <section className="adm-card">
-                  <div className="adm-card-head">
-                    <h2>Bank summary</h2>
-                  </div>
-                  <ul className="adm-checks">
-                    <li>
-                      <span>Questions</span>
-                      <strong>6,193</strong>
-                    </li>
-                    <li>
-                      <span>Reading &amp; Writing</span>
-                      <strong>339</strong>
-                    </li>
-                    <li>
-                      <span>Math</span>
-                      <strong>4,636 + simulated forms</strong>
-                    </li>
-                    <li>
-                      <span>Flashcards</span>
-                      <strong>1,764</strong>
-                    </li>
-                    <li>
-                      <span>Resources</span>
-                      <strong>18</strong>
-                    </li>
-                  </ul>
-                </section>
-
-                <section className="adm-card">
-                  <div className="adm-card-head">
-                    <h2>Integrity checks</h2>
-                  </div>
-                  <ul className="adm-checks">
-                    {CHECKS.map((check) => (
-                      <li key={check.label}>
-                        <span>{check.label}</span>
-                        <Badge tone={check.tone}>{check.value}</Badge>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              </div>
+                </>
+              ) : null}
             </>
           ) : null}
         </main>
