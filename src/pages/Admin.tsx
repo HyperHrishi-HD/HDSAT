@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Badge, Icon, type IconName } from '../components/ui';
 import * as cloud from '../lib/cloud';
@@ -84,10 +84,13 @@ function SectionHead({ title, action, onAction }: { title: string; action?: stri
   );
 }
 
-type AccessState = 'checking' | 'ok' | 'locked' | 'signed-out' | 'unconfigured' | 'error';
+type AccessState = 'checking' | 'ok' | 'locked' | 'signed-out' | 'unconfigured';
 
-/** Where the short-lived console token lives. Removed on lock, tab close and passcode change. */
-const ADMIN_TOKEN_KEY = 'hdsat.admin.token';
+/**
+ * How long the console may sit untouched before it locks itself. The server
+ * token lasts 8 hours; this is deliberately far shorter and never persisted.
+ */
+const IDLE_LOCK_MS = 10 * 60 * 1000;
 
 /* ---------------------------------------------------------------------------
  * Human check: server-issued proof of work, solved in this tab.
@@ -124,7 +127,6 @@ function scrubConsoleTrace() {
         const key = store.key(index);
         if (key && key.toLowerCase().includes('admin')) store.removeItem(key);
       }
-      store.removeItem(ADMIN_TOKEN_KEY);
     }
   } catch {
     /* storage can be blocked; nothing else to clean there */
@@ -145,7 +147,6 @@ export function AdminPage() {
 
   const [section, setSection] = useState<SectionId>('overview');
   const [access, setAccess] = useState<AccessState>('checking');
-  const [accessError, setAccessError] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState(0);
   const [adminToken, setAdminToken] = useState('');
 
@@ -187,51 +188,37 @@ export function AdminPage() {
   const [reloadToken, setReloadToken] = useState(0);
 
   const challengeRun = useRef(0);
+  const liveToken = useRef('');
 
   const reload = () => setReloadToken((token) => token + 1);
 
-  // Access gate: a signed-in session, the human check and the operator passcode.
-  // The passcode is only ever compared inside Postgres against a bcrypt hash.
   useEffect(() => {
-    let cancelled = false;
+    liveToken.current = adminToken;
+  }, [adminToken]);
+
+  // Access gate: a signed-in session, the human check and the operator passcode.
+  // The console token lives in memory only — never in storage or a cookie — so
+  // a reload, a closed tab or leaving the site always comes back locked, and
+  // the passcode itself is only ever compared inside Postgres against a hash.
+  useEffect(() => {
     if (!app.cloudConfigured) {
       setAccess('unconfigured');
       return;
     }
     if (!app.user) {
+      // Signing out of the app ends the console too: revoke what we can and
+      // drop the token, the passcode field and any admin storage keys.
+      const stale = liveToken.current;
+      liveToken.current = '';
+      setAdminToken('');
+      setGatePasscode('');
+      scrubConsoleTrace();
+      if (stale) void cloud.adminLock(stale).catch(() => undefined);
       setAccess('signed-out');
       return;
     }
-    const stored =
-      typeof window !== 'undefined' ? window.sessionStorage.getItem(ADMIN_TOKEN_KEY) ?? '' : '';
-    if (!stored) {
-      setAccess('locked');
-      return;
-    }
-    setAccess('checking');
-    setAccessError(null);
-    cloud
-      .adminSessionValid(stored)
-      .then((ok) => {
-        if (cancelled) return;
-        if (ok) {
-          setAdminToken(stored);
-          setAccess('ok');
-          return;
-        }
-        scrubConsoleTrace();
-        setAdminToken('');
-        setAccess('locked');
-      })
-      .catch((err) => {
-        if (cancelled) return;
-        setAccess('error');
-        setAccessError((err as Error).message);
-      });
-    return () => {
-      cancelled = true;
-    };
-  }, [app.cloudConfigured, app.user, accessToken]);
+    setAccess((current) => (current === 'ok' ? current : 'locked'));
+  }, [app.cloudConfigured, app.user]);
 
   // A fresh single-use challenge whenever the gate opens or a try fails.
   useEffect(() => {
@@ -499,7 +486,6 @@ export function AdminPage() {
         nonce: solvedNonce,
       });
       if (result.ok && result.token) {
-        window.sessionStorage.setItem(ADMIN_TOKEN_KEY, result.token);
         setAdminToken(result.token);
         setGatePasscode('');
         setGateMessage(null);
@@ -518,9 +504,10 @@ export function AdminPage() {
     }
   };
 
-  // Lock: revoke server-side, wipe storage/cookies, drop every in-memory copy,
-  // remove the admin route from history and leave the console.
-  const lockConsole = async () => {
+  // Lock: revoke server-side, wipe storage/cookies, drop every in-memory copy
+  // (including the passcode field and the solved challenge), remove the admin
+  // route from history and leave the console.
+  const lockConsole = useCallback(async () => {
     const current = adminToken;
     scrubConsoleTrace();
     setAdminToken('');
@@ -548,7 +535,38 @@ export function AdminPage() {
     }
     if (typeof window !== 'undefined') window.history.replaceState(null, '', '/');
     navigate('/', { replace: true });
-  };
+  }, [adminToken, navigate]);
+
+  // Ten idle minutes, a closed tab or leaving the site all end the session:
+  // the token is revoked, storage is scrubbed and nothing about the passcode
+  // stays behind on this device.
+  useEffect(() => {
+    if (access !== 'ok') return;
+    let timer = window.setTimeout(() => void lockConsole(), IDLE_LOCK_MS);
+    const rearm = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(() => void lockConsole(), IDLE_LOCK_MS);
+    };
+    const events = ['pointerdown', 'keydown', 'wheel', 'touchstart'] as const;
+    for (const name of events) window.addEventListener(name, rearm, { passive: true });
+    return () => {
+      window.clearTimeout(timer);
+      for (const name of events) window.removeEventListener(name, rearm);
+    };
+  }, [access, lockConsole]);
+
+  useEffect(() => {
+    if (access !== 'ok') return;
+    const current = adminToken;
+    const onHide = () => {
+      scrubConsoleTrace();
+      if (!current) return;
+      // Best effort: a keepalive RPC still leaves the tab when it closes.
+      void cloud.adminLock(current).catch(() => undefined);
+    };
+    window.addEventListener('pagehide', onHide);
+    return () => window.removeEventListener('pagehide', onHide);
+  }, [access, adminToken]);
 
   const permissionCard = () => {
     if (access === 'unconfigured') {
@@ -575,22 +593,6 @@ export function AdminPage() {
       return (
         <section className="adm-gate">
           <p className="adm-gate-msg">Checking session…</p>
-        </section>
-      );
-    }
-
-    if (access === 'error') {
-      return (
-        <section className="adm-gate">
-          <h1>Could not reach the console</h1>
-          <p className="adm-gate-msg">{accessError ?? 'Unknown error.'}</p>
-          <button
-            type="button"
-            className="adm-btn adm-btn-wide"
-            onClick={() => setAccessToken((value) => value + 1)}
-          >
-            Try again
-          </button>
         </section>
       );
     }
@@ -630,8 +632,11 @@ export function AdminPage() {
           <label htmlFor="admin-passcode">Passcode</label>
           <input
             id="admin-passcode"
+            name="hdsat-console-passcode"
             type="password"
-            autoComplete="off"
+            autoComplete="new-password"
+            data-lpignore="true"
+            data-1p-ignore="true"
             spellCheck={false}
             autoFocus
             value={gatePasscode}
@@ -801,19 +806,21 @@ export function AdminPage() {
           ))}
         </select>
       ) : null}
-      <button
-        type="button"
-        className="adm-row-action adm-toolbar-end"
-        onClick={reload}
-        disabled={loading}
-      >
-        {loading ? 'Refreshing…' : 'Refresh'}
-      </button>
-      {section === 'reports' ? (
-        <button type="button" className="adm-row-action" disabled={busy} onClick={cleanupResolved}>
-          Clear resolved (7d+)
+      <div className="adm-toolbar-end row" style={{ gap: 8 }}>
+        {section === 'reports' ? (
+          <button type="button" className="adm-row-action" disabled={busy} onClick={cleanupResolved}>
+            Clear resolved (7d+)
+          </button>
+        ) : null}
+        <button
+          type="button"
+          className="adm-row-action"
+          onClick={reload}
+          disabled={loading}
+        >
+          {loading ? 'Refreshing…' : 'Refresh'}
         </button>
-      ) : null}
+      </div>
     </div>
   );
 
@@ -860,22 +867,24 @@ export function AdminPage() {
         </div>
       </header>
 
-      <div className="adm-body">
-        <nav className="adm-rail" aria-label="Admin sections">
-          {SECTIONS.map((item) => (
-            <button
-              key={item.id}
-              type="button"
-              className={`adm-nav${section === item.id ? ' is-active' : ''}`}
-              onClick={() => setSection(item.id)}
-            >
-              <Icon name={item.icon} size={15} />
-              <span>{item.label}</span>
-              {item.id === 'reports' && openReports > 0 ? <em>{openReports}</em> : null}
-              {item.id === 'appeals' && openAppeals > 0 ? <em>{openAppeals}</em> : null}
-            </button>
-          ))}
-        </nav>
+      <div className={`adm-body${access === 'ok' ? '' : ' is-gate'}`}>
+        {access === 'ok' ? (
+          <nav className="adm-rail" aria-label="Admin sections">
+            {SECTIONS.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                className={`adm-nav${section === item.id ? ' is-active' : ''}`}
+                onClick={() => setSection(item.id)}
+              >
+                <Icon name={item.icon} size={15} />
+                <span>{item.label}</span>
+                {item.id === 'reports' && openReports > 0 ? <em>{openReports}</em> : null}
+                {item.id === 'appeals' && openAppeals > 0 ? <em>{openAppeals}</em> : null}
+              </button>
+            ))}
+          </nav>
+        ) : null}
 
         <main className="adm-main">
           {access !== 'ok' ? permissionCard() : null}
