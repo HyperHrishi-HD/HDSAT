@@ -794,7 +794,6 @@ export interface AdminStudentRow {
   display_name: string | null;
   email: string | null;
   confirmed: boolean;
-  is_admin: boolean;
   age_band: string | null;
   created_at: string;
   hd_coins: number;
@@ -809,25 +808,72 @@ export interface AdminPage<T> {
   items: T[];
 }
 
-export async function isAdmin(): Promise<boolean> {
-  const supabase = getSupabase();
-  if (!supabase) return false;
-  const { data, error } = await supabase.rpc('is_admin');
+export interface AdminUnlockResult {
+  ok: boolean;
+  token?: string;
+  expires_at?: string;
+  message?: string;
+  attempts_left?: number;
+  locked_seconds?: number;
+}
+
+/** Server-issued arithmetic captcha. Single use, five-minute lifetime. */
+export async function adminCaptchaChallenge(): Promise<{ id: string; question: string }> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('admin_captcha_challenge');
+  if (error) throw error;
+  return data as { id: string; question: string };
+}
+
+/**
+ * Session + captcha + passcode. The passcode is compared against a bcrypt hash
+ * inside Postgres; the browser never sees or stores it, and a success returns a
+ * random token that every admin RPC below requires.
+ */
+export async function adminUnlock(args: {
+  passcode: string;
+  captchaId: string;
+  captchaAnswer: string;
+}): Promise<AdminUnlockResult> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('admin_unlock', {
+    p_passcode: args.passcode,
+    p_captcha_id: args.captchaId,
+    p_captcha_answer: args.captchaAnswer,
+  });
+  if (error) throw error;
+  return data as AdminUnlockResult;
+}
+
+export async function adminSessionValid(token: string): Promise<boolean> {
+  const supabase = client();
+  if (!token) return false;
+  const { data, error } = await supabase.rpc('admin_session_valid', { p_token: token });
   if (error) {
-    if (isMissingRoutineError(error.message, 'is_admin')) return false;
+    if (isMissingRoutineError(error.message, 'admin_session_valid')) return false;
     throw error;
   }
   return Boolean(data);
 }
 
-export async function adminListReports(args: {
-  status?: string | null;
-  reason?: string | null;
-  limit?: number;
-  offset?: number;
-} = {}): Promise<AdminPage<AdminReportRow>> {
+export async function adminLock(token: string): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.rpc('admin_lock', { p_token: token });
+  if (error) throw error;
+}
+
+export async function adminListReports(
+  token: string,
+  args: {
+    status?: string | null;
+    reason?: string | null;
+    limit?: number;
+    offset?: number;
+  } = {}
+): Promise<AdminPage<AdminReportRow>> {
   const supabase = client();
   const { data, error } = await supabase.rpc('admin_list_reports', {
+    p_token: token,
     p_status: args.status ?? null,
     p_reason: args.reason ?? null,
     p_limit: args.limit ?? 50,
@@ -837,20 +883,32 @@ export async function adminListReports(args: {
   return data as AdminPage<AdminReportRow>;
 }
 
-export async function adminSetReportStatus(id: string, status: string): Promise<void> {
+export async function adminSetReportStatus(
+  token: string,
+  id: string,
+  status: string
+): Promise<void> {
   const supabase = client();
-  const { error } = await supabase.rpc('admin_set_report_status', { p_id: id, p_status: status });
+  const { error } = await supabase.rpc('admin_set_report_status', {
+    p_token: token,
+    p_id: id,
+    p_status: status,
+  });
   if (error) throw error;
 }
 
-export async function adminBatchDeleteReports(args: {
-  ids?: string[] | null;
-  userId?: string | null;
-  status?: string | null;
-  olderThanDays?: number | null;
-}): Promise<number> {
+export async function adminBatchDeleteReports(
+  token: string,
+  args: {
+    ids?: string[] | null;
+    userId?: string | null;
+    status?: string | null;
+    olderThanDays?: number | null;
+  }
+): Promise<number> {
   const supabase = client();
   const { data, error } = await supabase.rpc('admin_batch_delete_reports', {
+    p_token: token,
     p_ids: args.ids ?? null,
     p_user_id: args.userId ?? null,
     p_status: args.status ?? null,
@@ -860,13 +918,13 @@ export async function adminBatchDeleteReports(args: {
   return Number((data as { deleted?: number })?.deleted ?? 0);
 }
 
-export async function adminListAppeals(args: {
-  status?: string | null;
-  limit?: number;
-  offset?: number;
-} = {}): Promise<AdminPage<AdminAppealRow>> {
+export async function adminListAppeals(
+  token: string,
+  args: { status?: string | null; limit?: number; offset?: number } = {}
+): Promise<AdminPage<AdminAppealRow>> {
   const supabase = client();
   const { data, error } = await supabase.rpc('admin_list_appeals', {
+    p_token: token,
     p_status: args.status ?? null,
     p_limit: args.limit ?? 50,
     p_offset: args.offset ?? 0,
@@ -875,20 +933,32 @@ export async function adminListAppeals(args: {
   return data as AdminPage<AdminAppealRow>;
 }
 
-export async function adminSetAppealStatus(id: string, status: string): Promise<void> {
+export async function adminSetAppealStatus(
+  token: string,
+  id: string,
+  status: string
+): Promise<void> {
   const supabase = client();
-  const { error } = await supabase.rpc('admin_set_appeal_status', { p_id: id, p_status: status });
+  const { error } = await supabase.rpc('admin_set_appeal_status', {
+    p_token: token,
+    p_id: id,
+    p_status: status,
+  });
   if (error) throw error;
 }
 
-export async function adminBatchDeleteAppeals(args: {
-  ids?: string[] | null;
-  userId?: string | null;
-  status?: string | null;
-  olderThanDays?: number | null;
-}): Promise<number> {
+export async function adminBatchDeleteAppeals(
+  token: string,
+  args: {
+    ids?: string[] | null;
+    userId?: string | null;
+    status?: string | null;
+    olderThanDays?: number | null;
+  }
+): Promise<number> {
   const supabase = client();
   const { data, error } = await supabase.rpc('admin_batch_delete_appeals', {
+    p_token: token,
     p_ids: args.ids ?? null,
     p_user_id: args.userId ?? null,
     p_status: args.status ?? null,
@@ -898,28 +968,28 @@ export async function adminBatchDeleteAppeals(args: {
   return Number((data as { deleted?: number })?.deleted ?? 0);
 }
 
-export async function adminReply(args: {
-  kind: 'report' | 'appeal';
-  id: string;
-  title: string;
-  body: string;
-}): Promise<{ delivered: boolean }> {
+export async function adminReply(
+  token: string,
+  args: { kind: 'report' | 'appeal'; id: string; title: string; body: string }
+): Promise<{ delivered: boolean }> {
   const supabase = client();
   const routine = args.kind === 'report' ? 'admin_reply_to_report' : 'admin_reply_to_appeal';
   const params =
     args.kind === 'report'
-      ? { p_report_id: args.id, p_title: args.title, p_body: args.body }
-      : { p_appeal_id: args.id, p_title: args.title, p_body: args.body };
+      ? { p_token: token, p_report_id: args.id, p_title: args.title, p_body: args.body }
+      : { p_token: token, p_appeal_id: args.id, p_title: args.title, p_body: args.body };
   const { data, error } = await supabase.rpc(routine, params);
   if (error) throw error;
   return { delivered: Boolean((data as { delivered?: boolean })?.delivered) };
 }
 
 export async function adminListStudents(
+  token: string,
   args: { limit?: number; offset?: number } = {}
 ): Promise<AdminPage<AdminStudentRow>> {
   const supabase = client();
   const { data, error } = await supabase.rpc('admin_list_students', {
+    p_token: token,
     p_limit: args.limit ?? 50,
     p_offset: args.offset ?? 0,
   });

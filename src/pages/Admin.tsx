@@ -109,7 +109,10 @@ function SectionHead({
   );
 }
 
-type AccessState = 'checking' | 'ok' | 'denied' | 'signed-out' | 'unconfigured' | 'error';
+type AccessState = 'checking' | 'ok' | 'locked' | 'signed-out' | 'unconfigured' | 'error';
+
+/** Where the short-lived console token lives. Cleared on lock, tab close and passcode change. */
+const ADMIN_TOKEN_KEY = 'hdsat.admin.token';
 
 export function AdminPage() {
   const app = useApp();
@@ -119,6 +122,12 @@ export function AdminPage() {
   const [access, setAccess] = useState<AccessState>('checking');
   const [accessError, setAccessError] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState(0);
+  const [adminToken, setAdminToken] = useState('');
+  const [gateQuestion, setGateQuestion] = useState<{ id: string; question: string } | null>(null);
+  const [gatePasscode, setGatePasscode] = useState('');
+  const [gateCaptcha, setGateCaptcha] = useState('');
+  const [gateMessage, setGateMessage] = useState<string | null>(null);
+  const [gateBusy, setGateBusy] = useState(false);
 
   const [reports, setReports] = useState<cloud.AdminPage<cloud.AdminReportRow> | null>(null);
   const [appeals, setAppeals] = useState<cloud.AdminPage<cloud.AdminAppealRow> | null>(null);
@@ -150,8 +159,9 @@ export function AdminPage() {
 
   const reload = () => setReloadToken((token) => token + 1);
 
-  // Access gate: only an account whose profile row is flagged is_admin may read
-  // or write triage data. The server re-checks this on every RPC too.
+  // Access gate: a signed-in session, the operator passcode and a single-use
+  // captcha. The passcode is only ever compared inside Postgres against a bcrypt
+  // hash; this browser keeps a short-lived random token instead of the secret.
   useEffect(() => {
     let cancelled = false;
     if (!app.cloudConfigured) {
@@ -162,13 +172,26 @@ export function AdminPage() {
       setAccess('signed-out');
       return;
     }
+    const stored =
+      typeof window !== 'undefined' ? window.sessionStorage.getItem(ADMIN_TOKEN_KEY) ?? '' : '';
+    if (!stored) {
+      setAccess('locked');
+      return;
+    }
     setAccess('checking');
     setAccessError(null);
     cloud
-      .isAdmin()
+      .adminSessionValid(stored)
       .then((ok) => {
         if (cancelled) return;
-        setAccess(ok ? 'ok' : 'denied');
+        if (ok) {
+          setAdminToken(stored);
+          setAccess('ok');
+          return;
+        }
+        window.sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+        setAdminToken('');
+        setAccess('locked');
       })
       .catch((err) => {
         if (cancelled) return;
@@ -180,9 +203,32 @@ export function AdminPage() {
     };
   }, [app.cloudConfigured, app.user, accessToken]);
 
+  // A fresh single-use captcha whenever the gate is shown or retried.
+  useEffect(() => {
+    if (access !== 'locked') return;
+    let cancelled = false;
+    setGateQuestion(null);
+    cloud
+      .adminCaptchaChallenge()
+      .then((challenge) => {
+        if (!cancelled) setGateQuestion(challenge);
+      })
+      .catch((err) => {
+        if (!cancelled) setGateMessage((err as Error).message);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [access, accessToken]);
+
   useEffect(() => {
     setSelected(new Set());
     setActionMessage(null);
+    // A composer opened for one section must not float over the next one.
+    setReplyTarget(null);
+    setReplyTitle('');
+    setReplyBody('');
+    setReplyResult(null);
   }, [section, statusFilter, reasonFilter]);
 
   useEffect(() => {
@@ -194,8 +240,8 @@ export function AdminPage() {
       try {
         if (section === 'overview') {
           const [reportPage, appealPage] = await Promise.all([
-            cloud.adminListReports({ limit: 20 }),
-            cloud.adminListAppeals({ limit: 20 }),
+            cloud.adminListReports(adminToken, { limit: 20 }),
+            cloud.adminListAppeals(adminToken, { limit: 20 }),
           ]);
           if (cancelled) return;
           setReports(reportPage);
@@ -204,7 +250,7 @@ export function AdminPage() {
             Array.from(new Set([...prev, ...reportPage.items.map((item) => item.reason)]))
           );
         } else if (section === 'reports') {
-          const page = await cloud.adminListReports({
+          const page = await cloud.adminListReports(adminToken, {
             status: statusFilter || null,
             reason: reasonFilter || null,
             limit: 100,
@@ -215,14 +261,14 @@ export function AdminPage() {
             Array.from(new Set([...prev, ...page.items.map((item) => item.reason)]))
           );
         } else if (section === 'appeals') {
-          const page = await cloud.adminListAppeals({
+          const page = await cloud.adminListAppeals(adminToken, {
             status: statusFilter || null,
             limit: 100,
           });
           if (cancelled) return;
           setAppeals(page);
         } else if (section === 'students') {
-          const page = await cloud.adminListStudents({ limit: 100 });
+          const page = await cloud.adminListStudents(adminToken, { limit: 100 });
           if (cancelled) return;
           setStudents(page);
         }
@@ -286,8 +332,8 @@ export function AdminPage() {
     runAction(`Marked ${selected.size} item(s) ${status}.`, async () => {
       const ids = [...selected];
       for (const id of ids) {
-        if (section === 'reports') await cloud.adminSetReportStatus(id, status);
-        else if (section === 'appeals') await cloud.adminSetAppealStatus(id, status);
+        if (section === 'reports') await cloud.adminSetReportStatus(adminToken, id, status);
+        else if (section === 'appeals') await cloud.adminSetAppealStatus(adminToken, id, status);
       }
       setSelected(new Set());
     });
@@ -301,8 +347,8 @@ export function AdminPage() {
         const ids = [...selected];
         const deleted =
           section === 'reports'
-            ? await cloud.adminBatchDeleteReports({ ids })
-            : await cloud.adminBatchDeleteAppeals({ ids });
+            ? await cloud.adminBatchDeleteReports(adminToken, { ids })
+            : await cloud.adminBatchDeleteAppeals(adminToken, { ids });
         setSelected(new Set());
         setActionMessage(`Deleted ${deleted} ${section === 'reports' ? 'report' : 'appeal'}(s).`);
       },
@@ -312,7 +358,7 @@ export function AdminPage() {
     setPendingConfirm({
       prompt: 'Delete every resolved report older than 7 days? This cannot be undone.',
       run: async () => {
-        const deleted = await cloud.adminBatchDeleteReports({
+        const deleted = await cloud.adminBatchDeleteReports(adminToken, {
           status: 'resolved',
           olderThanDays: 7,
         });
@@ -326,7 +372,7 @@ export function AdminPage() {
         row.email ?? row.display_name ?? 'this student'
       }?`,
       run: async () => {
-        const deleted = await cloud.adminBatchDeleteReports({ userId: row.user_id });
+        const deleted = await cloud.adminBatchDeleteReports(adminToken, { userId: row.user_id });
         setActionMessage(`Deleted ${deleted} report(s) from that student.`);
       },
     });
@@ -337,7 +383,7 @@ export function AdminPage() {
         row.email ?? row.display_name ?? 'this student'
       }?`,
       run: async () => {
-        const deleted = await cloud.adminBatchDeleteAppeals({ userId: row.user_id });
+        const deleted = await cloud.adminBatchDeleteAppeals(adminToken, { userId: row.user_id });
         setActionMessage(`Deleted ${deleted} appeal(s) from that student.`);
       },
     });
@@ -363,7 +409,7 @@ export function AdminPage() {
     setBusy(true);
     setReplyResult(null);
     try {
-      const result = await cloud.adminReply({
+      const result = await cloud.adminReply(adminToken, {
         kind: replyTarget.kind,
         id: replyTarget.id,
         title: replyTitle.trim() || 'Reply from HDSAT',
@@ -390,6 +436,56 @@ export function AdminPage() {
     navigate('/');
   };
 
+  const unlockConsole = async () => {
+    if (!gateQuestion) return;
+    setGateBusy(true);
+    setGateMessage(null);
+    try {
+      const result = await cloud.adminUnlock({
+        passcode: gatePasscode,
+        captchaId: gateQuestion.id,
+        captchaAnswer: gateCaptcha,
+      });
+      if (result.ok && result.token) {
+        window.sessionStorage.setItem(ADMIN_TOKEN_KEY, result.token);
+        setAdminToken(result.token);
+        setGatePasscode('');
+        setGateCaptcha('');
+        setAccess('ok');
+        reload();
+        return;
+      }
+      setGateMessage(result.message ?? 'Could not unlock the console.');
+      setGatePasscode('');
+      setGateCaptcha('');
+      const next = await cloud.adminCaptchaChallenge();
+      setGateQuestion(next);
+    } catch (err) {
+      setGateMessage((err as Error).message);
+    } finally {
+      setGateBusy(false);
+    }
+  };
+
+  const lockConsole = async () => {
+    const current = adminToken;
+    window.sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+    setAdminToken('');
+    setReports(null);
+    setAppeals(null);
+    setStudents(null);
+    setSelected(new Set());
+    setAccess('locked');
+    setAccessToken((value) => value + 1);
+    if (current) {
+      try {
+        await cloud.adminLock(current);
+      } catch {
+        /* the token is already gone locally and expires on the server */
+      }
+    }
+  };
+
   const permissionCard = () => {
     if (access === 'unconfigured') {
       return (
@@ -397,19 +493,19 @@ export function AdminPage() {
           <h2>Supabase is not configured</h2>
           <p className="adm-dim">
             This console reads from Supabase. Set <code>VITE_SUPABASE_URL</code> and{' '}
-            <code>VITE_SUPABASE_ANON_KEY</code> for the deployment, then sign in with an operator
-            account.
+            <code>VITE_SUPABASE_ANON_KEY</code> for this deployment, then reload.
           </p>
         </section>
       );
     }
+
     if (access === 'signed-out') {
       return (
         <section className="adm-card">
-          <h2>Sign in required</h2>
+          <h2>Sign in first</h2>
           <p className="adm-dim">
-            The console only loads for an operator account. Sign in, then come back to{' '}
-            <code>/admin</code>.
+            The console asks for two things: a signed-in session, and the operator passcode plus a
+            captcha. It is not tied to any particular account.
           </p>
           <a className="adm-btn" href="#/account">
             Go to sign in
@@ -417,39 +513,95 @@ export function AdminPage() {
         </section>
       );
     }
+
     if (access === 'checking') {
       return (
         <section className="adm-card">
-          <p className="adm-dim">Checking operator access…</p>
+          <p className="adm-dim">Restoring your console session…</p>
         </section>
       );
     }
+
+    if (access === 'error') {
+      return (
+        <section className="adm-card">
+          <h2>Could not reach the console</h2>
+          <p className="adm-dim">{accessError ?? 'Unknown error.'}</p>
+          <button
+            type="button"
+            className="adm-btn"
+            onClick={() => setAccessToken((value) => value + 1)}
+          >
+            Try again
+          </button>
+        </section>
+      );
+    }
+
     return (
       <section className="adm-card">
-        <h2>Operator access required</h2>
+        <h2>Operator passcode</h2>
         <p className="adm-dim">
-          Your account is signed in but not flagged as an operator, so no reports, appeals or student
-          rows are loaded.
+          Enter the operator passcode and answer the captcha. Five wrong tries lock the console for
+          15 minutes. The passcode is compared inside the database against a bcrypt hash — it is
+          never stored in this app, never logged, and never sent anywhere except that check.
         </p>
-        <p className="adm-dim">
-          Grant it once in the Supabase SQL editor (this runs without a user session, so the
-          self-promotion guard allows it):
-        </p>
-        <pre className="mono" style={{ whiteSpace: 'pre-wrap', fontSize: '0.78rem' }}>
-          {`UPDATE public.profiles SET is_admin = TRUE
- WHERE user_id = (SELECT id FROM auth.users WHERE email = 'you@example.com');`}
-        </pre>
-        {accessError ? <p className="adm-dim">Last error: {accessError}</p> : null}
-        <button
-          type="button"
-          className="adm-btn"
-          onClick={() => {
-            setAccess('checking');
-            setAccessToken((token) => token + 1);
-          }}
-        >
-          Re-check access
-        </button>
+        <div className="adm-composer">
+          <label className="adm-dim" htmlFor="admin-passcode">
+            Passcode
+          </label>
+          <input
+            id="admin-passcode"
+            type="password"
+            autoComplete="off"
+            spellCheck={false}
+            value={gatePasscode}
+            onChange={(e) => setGatePasscode(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') void unlockConsole();
+            }}
+            placeholder="Operator passcode"
+            aria-label="Operator passcode"
+          />
+          <label className="adm-dim" htmlFor="admin-captcha">
+            Captcha {gateQuestion ? `— ${gateQuestion.question}` : '— loading…'}
+          </label>
+          <input
+            id="admin-captcha"
+            type="text"
+            inputMode="numeric"
+            autoComplete="off"
+            value={gateCaptcha}
+            onChange={(e) => setGateCaptcha(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') void unlockConsole();
+            }}
+            placeholder="Answer the captcha"
+            aria-label="Captcha answer"
+          />
+          <div className="adm-composer-foot">
+            <button
+              type="button"
+              className="adm-btn"
+              onClick={() => void unlockConsole()}
+              disabled={gateBusy || !gateQuestion || !gatePasscode || !gateCaptcha}
+            >
+              {gateBusy ? 'Checking…' : 'Unlock console'}
+            </button>
+            <button
+              type="button"
+              className="adm-btn adm-btn-ghost"
+              disabled={gateBusy}
+              onClick={() => {
+                setGateMessage(null);
+                setAccessToken((value) => value + 1);
+              }}
+            >
+              New captcha
+            </button>
+          </div>
+          {gateMessage ? <p className="adm-dim">{gateMessage}</p> : null}
+        </div>
       </section>
     );
   };
@@ -656,6 +808,12 @@ export function AdminPage() {
 
         <div className="adm-top-right">
           <span className="adm-preview-tag">Live data</span>
+          {access === 'ok' ? (
+            <button type="button" className="adm-back" onClick={() => void lockConsole()}>
+              <Icon name="shield" size={14} />
+              <span>Lock console</span>
+            </button>
+          ) : null}
           <button type="button" className="adm-back" onClick={backToApp}>
             <Icon name="arrow-left" size={14} />
             <span>Back to app</span>
@@ -1033,11 +1191,6 @@ export function AdminPage() {
                           <tr key={row.user_id}>
                             <td>
                               {row.display_name ?? 'Student'}
-                              {row.is_admin ? (
-                                <Badge tone="info">
-                                  <span style={{ marginLeft: 6 }}>admin</span>
-                                </Badge>
-                              ) : null}
                               <div className="adm-dim">{row.email ?? row.user_id}</div>
                             </td>
                             <td>

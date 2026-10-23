@@ -42,9 +42,12 @@ def _read_cred(name: str) -> str:
     env = os.environ.get(name, "").strip()
     if env:
         return env
-    path = PA_DIR / name.lower().replace("hdsat_", "")
-    if path.exists():
-        return path.read_text(encoding="utf-8").strip()
+    stem = name.lower().replace("hdsat_", "")
+    # HDSAT_SERVICE_KEY documents `.pa/supabase_service_key`; older setups only
+    # had `.pa/service_key`, so accept both.
+    for candidate in (PA_DIR / stem, PA_DIR / ("supabase_" + stem)):
+        if candidate.exists():
+            return candidate.read_text(encoding="utf-8").strip()
     return ""
 
 

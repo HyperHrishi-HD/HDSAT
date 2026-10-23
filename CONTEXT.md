@@ -46,9 +46,9 @@ python tools/admin_triage.py reply appeal <id> --body "..."   # one-time Dashboa
 ```
 
 Summarise, group by question/reason, and propose fixes; only mutate when the
-owner asks. The SQL side is `20261023000100_admin_console.sql` — it must be pasted
-into the Supabase SQL editor before the console can read anything, and
-`profiles.is_admin` has to be set for the operator account (see the README).
+owner asks. The SQL side is `20261023000100_admin_console.sql`, applied to the
+live project; the console itself unlocks with the operator passcode plus a
+captcha (bcrypt hash in `admin_gate`, no privileged account, no `is_admin` flag).
 
 ## Rules of the road
 

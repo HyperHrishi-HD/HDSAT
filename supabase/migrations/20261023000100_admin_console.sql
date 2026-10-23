@@ -1,141 +1,307 @@
 -- ============================================================================
 -- HDSAT OPERATOR CONSOLE MIGRATION
 -- ============================================================================
--- Wires the /admin review console to real data without ever shipping a service
--- key to the browser:
---   1. profiles.is_admin — the only flag that unlocks triage, guarded so a
---      signed-in student cannot promote themselves.
---   2. public.user_notifications — one row per operator reply, read by the
---      student's Dashboard exactly once.
---   3. SECURITY DEFINER admin RPCs: list, filter, resolve, batch-delete and
---      reply for question reports and appeals, plus a student roster.
+-- The console is protected by a passcode that is stored ONLY as a bcrypt hash,
+-- never in the repository and never in plaintext in the database. Access needs
+-- three things together:
+--   1. a signed-in Supabase session (any account, so the console is not tied to
+--      one person's email),
+--   2. a single-use server-issued captcha challenge answered correctly,
+--   3. the operator passcode.
+-- A correct unlock issues a random 32-byte token (stored hashed) that every
+-- admin RPC requires and that expires after 8 hours. Five wrong passcodes lock
+-- the gate for 15 minutes and are logged.
 --
--- Idempotent: safe to re-run. Applying this migration does NOT grant anyone
--- admin access; run the UPDATE at the bottom with your own user id.
+-- Set the passcode once from the SQL editor or with the service key:
+--   SELECT public.set_admin_passcode('choose-a-long-passphrase');
+-- It is never echoed back, and no function returns it.
+--
+-- Idempotent: safe to re-run.
 -- ============================================================================
 
--- ----------------------------------------------------------------------------
--- 1. ADMIN FLAG
--- ----------------------------------------------------------------------------
-ALTER TABLE public.profiles ADD COLUMN IF NOT EXISTS is_admin BOOLEAN NOT NULL DEFAULT FALSE;
-
-CREATE OR REPLACE FUNCTION public.guard_is_admin_flag()
-RETURNS TRIGGER
-LANGUAGE plpgsql
-AS $$
-BEGIN
-    IF NEW.is_admin IS DISTINCT FROM OLD.is_admin AND auth.uid() IS NOT NULL THEN
-        RAISE EXCEPTION 'is_admin is operator-managed and cannot be changed from a signed-in client';
-    END IF;
-    RETURN NEW;
-END;
-$$;
-
-DROP TRIGGER IF EXISTS profiles_guard_is_admin ON public.profiles;
-CREATE TRIGGER profiles_guard_is_admin
-    BEFORE UPDATE ON public.profiles
-    FOR EACH ROW
-    EXECUTE FUNCTION public.guard_is_admin_flag();
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- ----------------------------------------------------------------------------
--- 2. USER NOTIFICATIONS (operator replies land here)
+-- 1. PASSCODE GATE STATE
 -- ----------------------------------------------------------------------------
-CREATE TABLE IF NOT EXISTS public.user_notifications (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
-    kind TEXT NOT NULL DEFAULT 'admin_reply'
-        CHECK (kind IN ('admin_reply', 'system')),
-    title TEXT NOT NULL,
-    body TEXT NOT NULL,
-    reference TEXT,
-    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    seen_at TIMESTAMPTZ
+CREATE TABLE IF NOT EXISTS public.admin_gate (
+    id SMALLINT PRIMARY KEY DEFAULT 1 CHECK (id = 1),
+    passcode_hash TEXT NOT NULL,
+    failed_attempts INTEGER NOT NULL DEFAULT 0,
+    locked_until TIMESTAMPTZ,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS user_notifications_user_idx
-    ON public.user_notifications (user_id, created_at DESC);
-CREATE INDEX IF NOT EXISTS user_notifications_unseen_idx
-    ON public.user_notifications (user_id) WHERE seen_at IS NULL;
+CREATE TABLE IF NOT EXISTS public.admin_captcha (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    question TEXT NOT NULL,
+    answer_hash TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    expires_at TIMESTAMPTZ NOT NULL DEFAULT NOW() + INTERVAL '5 minutes',
+    used_at TIMESTAMPTZ
+);
 
-ALTER TABLE public.user_notifications ENABLE ROW LEVEL SECURITY;
+CREATE TABLE IF NOT EXISTS public.admin_unlock_tokens (
+    token_hash TEXT PRIMARY KEY,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    expires_at TIMESTAMPTZ NOT NULL,
+    last_seen_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
 
-DROP POLICY IF EXISTS "Users read own notifications" ON public.user_notifications;
-CREATE POLICY "Users read own notifications" ON public.user_notifications
-    FOR SELECT TO authenticated USING (auth.uid() = user_id);
+CREATE TABLE IF NOT EXISTS public.admin_access_log (
+    id BIGSERIAL PRIMARY KEY,
+    event TEXT NOT NULL CHECK (event IN ('unlock_ok', 'unlock_fail', 'locked', 'locked_out')),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
 
-DROP POLICY IF EXISTS "Users mark own notifications seen" ON public.user_notifications;
-CREATE POLICY "Users mark own notifications seen" ON public.user_notifications
-    FOR UPDATE TO authenticated
-    USING (auth.uid() = user_id)
-    WITH CHECK (auth.uid() = user_id);
+-- Nothing here is client-readable. Every read goes through a function.
+ALTER TABLE public.admin_gate ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.admin_captcha ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.admin_unlock_tokens ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.admin_access_log ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON public.admin_gate FROM anon, authenticated;
+REVOKE ALL ON public.admin_captcha FROM anon, authenticated;
+REVOKE ALL ON public.admin_unlock_tokens FROM anon, authenticated;
+REVOKE ALL ON public.admin_access_log FROM anon, authenticated;
 
--- A student may only ever write the seen_at column; the body is operator text.
-REVOKE ALL ON public.user_notifications FROM anon, authenticated;
-GRANT SELECT ON public.user_notifications TO authenticated;
-GRANT UPDATE (seen_at) ON public.user_notifications TO authenticated;
-
--- Marks every unseen notification read for the caller. Used by the Dashboard.
-CREATE OR REPLACE FUNCTION public.mark_my_notifications_seen()
-RETURNS INTEGER
+-- ----------------------------------------------------------------------------
+-- 2. SET THE PASSCODE (operator only: SQL editor or service_role key)
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION public.set_admin_passcode(p_code TEXT)
+RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public
+SET search_path = public, extensions
 AS $$
-DECLARE
-    v_user_id UUID := auth.uid();
-    v_count INTEGER := 0;
 BEGIN
-    IF v_user_id IS NULL THEN
-        RAISE EXCEPTION 'Authentication required';
+    IF coalesce(auth.role(), '') IN ('anon', 'authenticated') THEN
+        RAISE EXCEPTION 'Only the SQL editor or a service key may set the operator passcode';
     END IF;
-    UPDATE public.user_notifications
-        SET seen_at = NOW()
-        WHERE user_id = v_user_id AND seen_at IS NULL;
-    GET DIAGNOSTICS v_count = ROW_COUNT;
-    RETURN v_count;
+    IF length(coalesce(p_code, '')) < 4 THEN
+        RAISE EXCEPTION 'The operator passcode must be at least 4 characters';
+    END IF;
+
+    INSERT INTO public.admin_gate (id, passcode_hash, failed_attempts, locked_until, updated_at)
+    VALUES (1, crypt(p_code, gen_salt('bf', 12)), 0, NULL, NOW())
+    ON CONFLICT (id) DO UPDATE
+        SET passcode_hash = crypt(p_code, gen_salt('bf', 12)),
+            failed_attempts = 0,
+            locked_until = NULL,
+            updated_at = NOW();
+
+    -- A passcode change invalidates every outstanding console session.
+    -- `WHERE TRUE` keeps Supabase's pg-safeupdate guard happy.
+    DELETE FROM public.admin_unlock_tokens WHERE TRUE;
+    RETURN jsonb_build_object('updated', TRUE);
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.mark_my_notifications_seen() TO authenticated;
+REVOKE ALL ON FUNCTION public.set_admin_passcode(TEXT) FROM PUBLIC, anon, authenticated;
+GRANT EXECUTE ON FUNCTION public.set_admin_passcode(TEXT) TO service_role;
 
 -- ----------------------------------------------------------------------------
--- 3. ADMIN GUARDS
+-- 3. CAPTCHA CHALLENGE (single use, hashed answer, five-minute lifetime)
 -- ----------------------------------------------------------------------------
-CREATE OR REPLACE FUNCTION public.is_admin()
-RETURNS BOOLEAN
-LANGUAGE SQL
-STABLE
+CREATE OR REPLACE FUNCTION public.admin_captcha_challenge()
+RETURNS JSONB
+LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public
+SET search_path = public, extensions
 AS $$
-    SELECT COALESCE(
-        (SELECT p.is_admin FROM public.profiles p WHERE p.user_id = auth.uid()),
-        FALSE
-    );
+DECLARE
+    v_a INTEGER := 2 + floor(random() * 18)::INTEGER;
+    v_b INTEGER := 2 + floor(random() * 18)::INTEGER;
+    v_question TEXT;
+    v_answer TEXT;
+    v_id UUID;
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM public.admin_gate WHERE id = 1) THEN
+        RAISE EXCEPTION 'The operator passcode has not been set up yet';
+    END IF;
+
+    IF random() < 0.5 THEN
+        v_question := v_a || ' + ' || v_b;
+        v_answer := (v_a + v_b)::TEXT;
+    ELSE
+        IF v_b > v_a THEN
+            v_question := v_b || ' - ' || v_a;
+            v_answer := (v_b - v_a)::TEXT;
+        ELSE
+            v_question := v_a || ' - ' || v_b;
+            v_answer := (v_a - v_b)::TEXT;
+        END IF;
+    END IF;
+
+    -- Housekeeping: keep the table small.
+    DELETE FROM public.admin_captcha WHERE expires_at < NOW() - INTERVAL '1 hour';
+
+    INSERT INTO public.admin_captcha (question, answer_hash)
+    VALUES (v_question, encode(digest(v_answer, 'sha256'), 'hex'))
+    RETURNING id INTO v_id;
+
+    RETURN jsonb_build_object('id', v_id, 'question', 'What is ' || v_question || '?');
+END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.is_admin() TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_captcha_challenge() TO authenticated;
 
--- Every admin routine starts with this so a missing RPC grant can never become
--- a data leak. The response shape is stable so the console can render it.
-CREATE OR REPLACE FUNCTION public.assert_is_admin()
+-- ----------------------------------------------------------------------------
+-- 4. UNLOCK: session + captcha + bcrypt passcode -> hashed token
+-- ----------------------------------------------------------------------------
+CREATE OR REPLACE FUNCTION public.admin_unlock(
+    p_passcode TEXT,
+    p_captcha_id UUID,
+    p_captcha_answer TEXT
+)
+RETURNS JSONB
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, extensions
+AS $$
+DECLARE
+    v_gate public.admin_gate%ROWTYPE;
+    v_captcha public.admin_captcha%ROWTYPE;
+    v_answer_hash TEXT;
+    v_token TEXT;
+    v_token_hash TEXT;
+    v_expires TIMESTAMPTZ := NOW() + INTERVAL '8 hours';
+BEGIN
+    IF auth.uid() IS NULL THEN
+        RAISE EXCEPTION 'Sign in before opening the operator console';
+    END IF;
+
+    SELECT * INTO v_gate FROM public.admin_gate WHERE id = 1 FOR UPDATE;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'The operator passcode has not been set up yet';
+    END IF;
+
+    IF v_gate.locked_until IS NOT NULL AND v_gate.locked_until > NOW() THEN
+        RETURN jsonb_build_object(
+            'ok', FALSE,
+            'locked_seconds', ceil(extract(epoch FROM (v_gate.locked_until - NOW())))::INTEGER,
+            'message', 'Too many wrong attempts. The console is locked for a few minutes.'
+        );
+    END IF;
+
+    SELECT * INTO v_captcha FROM public.admin_captcha WHERE id = p_captcha_id;
+    IF NOT FOUND OR v_captcha.used_at IS NOT NULL OR v_captcha.expires_at < NOW() THEN
+        RETURN jsonb_build_object('ok', FALSE, 'message', 'That captcha expired. Request a new one.');
+    END IF;
+
+    -- Single use: burn the challenge whatever the outcome.
+    UPDATE public.admin_captcha SET used_at = NOW() WHERE id = v_captcha.id;
+
+    v_answer_hash := encode(digest(trim(coalesce(p_captcha_answer, '')), 'sha256'), 'hex');
+    IF v_answer_hash <> v_captcha.answer_hash THEN
+        INSERT INTO public.admin_access_log (event) VALUES ('unlock_fail');
+        RETURN jsonb_build_object('ok', FALSE, 'message', 'That captcha answer is not right.');
+    END IF;
+
+    IF crypt(coalesce(p_passcode, ''), v_gate.passcode_hash) <> v_gate.passcode_hash THEN
+        UPDATE public.admin_gate
+            SET failed_attempts = failed_attempts + 1,
+                locked_until = CASE
+                    WHEN failed_attempts + 1 >= 5 THEN NOW() + INTERVAL '15 minutes'
+                    ELSE locked_until
+                END,
+                updated_at = NOW()
+            WHERE id = 1
+            RETURNING * INTO v_gate;
+        INSERT INTO public.admin_access_log (event)
+        VALUES (CASE WHEN v_gate.locked_until IS NOT NULL AND v_gate.locked_until > NOW()
+                     THEN 'locked' ELSE 'unlock_fail' END);
+        RETURN jsonb_build_object(
+            'ok', FALSE,
+            'attempts_left', GREATEST(0, 5 - v_gate.failed_attempts),
+            'message', 'Wrong passcode.'
+        );
+    END IF;
+
+    UPDATE public.admin_gate
+        SET failed_attempts = 0, locked_until = NULL, updated_at = NOW()
+        WHERE id = 1;
+
+    DELETE FROM public.admin_unlock_tokens WHERE expires_at < NOW();
+
+    v_token := encode(gen_random_bytes(32), 'hex');
+    v_token_hash := encode(digest(v_token, 'sha256'), 'hex');
+    INSERT INTO public.admin_unlock_tokens (token_hash, expires_at)
+    VALUES (v_token_hash, v_expires);
+
+    INSERT INTO public.admin_access_log (event) VALUES ('unlock_ok');
+
+    RETURN jsonb_build_object('ok', TRUE, 'token', v_token, 'expires_at', v_expires);
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.admin_unlock(TEXT, UUID, TEXT) TO authenticated;
+
+CREATE OR REPLACE FUNCTION public.admin_session_valid(p_token TEXT)
+RETURNS BOOLEAN
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, extensions
+AS $$
+BEGIN
+    IF auth.uid() IS NULL OR coalesce(p_token, '') = '' THEN
+        RETURN FALSE;
+    END IF;
+    RETURN EXISTS (
+        SELECT 1 FROM public.admin_unlock_tokens
+        WHERE token_hash = encode(digest(p_token, 'sha256'), 'hex')
+          AND expires_at > NOW()
+    );
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.admin_session_valid(TEXT) TO authenticated;
+
+CREATE OR REPLACE FUNCTION public.admin_lock(p_token TEXT)
+RETURNS JSONB
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, extensions
+AS $$
+BEGIN
+    DELETE FROM public.admin_unlock_tokens
+    WHERE token_hash = encode(digest(coalesce(p_token, ''), 'sha256'), 'hex');
+    RETURN jsonb_build_object('locked', TRUE);
+END;
+$$;
+
+GRANT EXECUTE ON FUNCTION public.admin_lock(TEXT) TO authenticated;
+
+-- Internal guard for every admin routine below.
+CREATE OR REPLACE FUNCTION public.assert_admin_unlocked(p_token TEXT)
 RETURNS VOID
 LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, extensions
 AS $$
 BEGIN
     IF auth.uid() IS NULL THEN
-        RAISE EXCEPTION 'Authentication required';
+        RAISE EXCEPTION 'Sign in before using the operator console';
     END IF;
-    IF NOT public.is_admin() THEN
-        RAISE EXCEPTION 'Operator access required';
+    IF coalesce(p_token, '') = '' THEN
+        RAISE EXCEPTION 'Unlock the operator console first';
+    END IF;
+    UPDATE public.admin_unlock_tokens
+        SET last_seen_at = NOW()
+        WHERE token_hash = encode(digest(p_token, 'sha256'), 'hex')
+          AND expires_at > NOW();
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Your console session expired. Unlock again.';
     END IF;
 END;
 $$;
 
+REVOKE ALL ON FUNCTION public.assert_admin_unlocked(TEXT) FROM PUBLIC, anon, authenticated;
+
 -- ----------------------------------------------------------------------------
--- 4. REPORT TRIAGE
+-- 5. REPORT TRIAGE
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.admin_list_reports(
+    p_token TEXT,
     p_status TEXT DEFAULT NULL,
     p_limit INTEGER DEFAULT 50,
     p_offset INTEGER DEFAULT 0,
@@ -153,7 +319,7 @@ DECLARE
     v_total INTEGER;
     v_open INTEGER;
 BEGIN
-    PERFORM public.assert_is_admin();
+    PERFORM public.assert_admin_unlocked(p_token);
 
     SELECT COUNT(*) INTO v_total
     FROM public.question_reports r
@@ -175,12 +341,10 @@ BEGIN
             'contact_email', r.contact_email,
             'status', r.status,
             'created_at', r.created_at,
-            'reporter_name', p.display_name,
-            'reporter_email', u.email
+            'reporter_name', p.display_name
         ) AS row
         FROM public.question_reports r
         LEFT JOIN public.profiles p ON p.user_id = r.user_id
-        LEFT JOIN auth.users u ON u.id = r.user_id
         WHERE (p_status IS NULL OR r.status = p_status)
           AND (p_reason IS NULL OR r.reason = p_reason)
         ORDER BY r.created_at DESC
@@ -191,16 +355,16 @@ BEGIN
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.admin_list_reports(TEXT, INTEGER, INTEGER, TEXT) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_list_reports(TEXT, TEXT, INTEGER, INTEGER, TEXT) TO authenticated;
 
-CREATE OR REPLACE FUNCTION public.admin_set_report_status(p_id UUID, p_status TEXT)
+CREATE OR REPLACE FUNCTION public.admin_set_report_status(p_token TEXT, p_id UUID, p_status TEXT)
 RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-    PERFORM public.assert_is_admin();
+    PERFORM public.assert_admin_unlocked(p_token);
     IF p_status NOT IN ('received', 'in_review', 'resolved', 'dismissed') THEN
         RAISE EXCEPTION 'Unsupported report status %', p_status;
     END IF;
@@ -209,12 +373,13 @@ BEGIN
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.admin_set_report_status(UUID, TEXT) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_set_report_status(TEXT, UUID, TEXT) TO authenticated;
 
 -- Batch delete. At least one filter must be given so a stray call cannot empty
 -- the table: pass p_ids, or p_user_id (every report from one spammer), or a
--- status with p_older_than_days for routine cleanup.
+-- status together with p_older_than_days for routine cleanup.
 CREATE OR REPLACE FUNCTION public.admin_batch_delete_reports(
+    p_token TEXT,
     p_ids UUID[] DEFAULT NULL,
     p_user_id UUID DEFAULT NULL,
     p_status TEXT DEFAULT NULL,
@@ -228,7 +393,7 @@ AS $$
 DECLARE
     v_deleted INTEGER := 0;
 BEGIN
-    PERFORM public.assert_is_admin();
+    PERFORM public.assert_admin_unlocked(p_token);
 
     IF p_ids IS NULL AND p_user_id IS NULL
        AND (p_status IS NULL OR p_older_than_days IS NULL) THEN
@@ -254,12 +419,13 @@ BEGIN
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.admin_batch_delete_reports(UUID[], UUID, TEXT, INTEGER) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_batch_delete_reports(TEXT, UUID[], UUID, TEXT, INTEGER) TO authenticated;
 
 -- ----------------------------------------------------------------------------
--- 5. APPEAL TRIAGE
+-- 6. APPEAL TRIAGE
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.admin_list_appeals(
+    p_token TEXT,
     p_status TEXT DEFAULT NULL,
     p_limit INTEGER DEFAULT 50,
     p_offset INTEGER DEFAULT 0
@@ -276,7 +442,7 @@ DECLARE
     v_total INTEGER;
     v_open INTEGER;
 BEGIN
-    PERFORM public.assert_is_admin();
+    PERFORM public.assert_admin_unlocked(p_token);
 
     SELECT COUNT(*) INTO v_total
     FROM public.user_appeals a
@@ -298,12 +464,10 @@ BEGIN
             'contact_email', a.contact_email,
             'status', a.status,
             'created_at', a.created_at,
-            'reporter_name', p.display_name,
-            'reporter_email', u.email
+            'reporter_name', p.display_name
         ) AS row
         FROM public.user_appeals a
         LEFT JOIN public.profiles p ON p.user_id = a.user_id
-        LEFT JOIN auth.users u ON u.id = a.user_id
         WHERE (p_status IS NULL OR a.status = p_status)
         ORDER BY a.created_at DESC
         LIMIT v_limit OFFSET v_offset
@@ -313,16 +477,16 @@ BEGIN
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.admin_list_appeals(TEXT, INTEGER, INTEGER) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_list_appeals(TEXT, TEXT, INTEGER, INTEGER) TO authenticated;
 
-CREATE OR REPLACE FUNCTION public.admin_set_appeal_status(p_id UUID, p_status TEXT)
+CREATE OR REPLACE FUNCTION public.admin_set_appeal_status(p_token TEXT, p_id UUID, p_status TEXT)
 RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
 SET search_path = public
 AS $$
 BEGIN
-    PERFORM public.assert_is_admin();
+    PERFORM public.assert_admin_unlocked(p_token);
     IF p_status NOT IN ('received', 'in_review', 'resolved', 'rejected') THEN
         RAISE EXCEPTION 'Unsupported appeal status %', p_status;
     END IF;
@@ -333,9 +497,10 @@ BEGIN
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.admin_set_appeal_status(UUID, TEXT) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_set_appeal_status(TEXT, UUID, TEXT) TO authenticated;
 
 CREATE OR REPLACE FUNCTION public.admin_batch_delete_appeals(
+    p_token TEXT,
     p_ids UUID[] DEFAULT NULL,
     p_user_id UUID DEFAULT NULL,
     p_status TEXT DEFAULT NULL,
@@ -349,7 +514,7 @@ AS $$
 DECLARE
     v_deleted INTEGER := 0;
 BEGIN
-    PERFORM public.assert_is_admin();
+    PERFORM public.assert_admin_unlocked(p_token);
 
     IF p_ids IS NULL AND p_user_id IS NULL
        AND (p_status IS NULL OR p_older_than_days IS NULL) THEN
@@ -375,12 +540,13 @@ BEGIN
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.admin_batch_delete_appeals(UUID[], UUID, TEXT, INTEGER) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_batch_delete_appeals(TEXT, UUID[], UUID, TEXT, INTEGER) TO authenticated;
 
 -- ----------------------------------------------------------------------------
--- 6. REPLIES BECOME ONE-TIME DASHBOARD NOTIFICATIONS
+-- 7. REPLIES BECOME ONE-TIME DASHBOARD NOTIFICATIONS
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.admin_reply_to_report(
+    p_token TEXT,
     p_report_id UUID,
     p_title TEXT,
     p_body TEXT
@@ -395,7 +561,7 @@ DECLARE
     v_delivered BOOLEAN := FALSE;
     v_notification_id UUID;
 BEGIN
-    PERFORM public.assert_is_admin();
+    PERFORM public.assert_admin_unlocked(p_token);
 
     IF length(trim(COALESCE(p_body, ''))) = 0 THEN
         RAISE EXCEPTION 'A reply needs a message';
@@ -421,16 +587,14 @@ BEGIN
         v_delivered := TRUE;
     END IF;
 
-    RETURN jsonb_build_object(
-        'delivered', v_delivered,
-        'notification_id', v_notification_id
-    );
+    RETURN jsonb_build_object('delivered', v_delivered, 'notification_id', v_notification_id);
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.admin_reply_to_report(UUID, TEXT, TEXT) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_reply_to_report(TEXT, UUID, TEXT, TEXT) TO authenticated;
 
 CREATE OR REPLACE FUNCTION public.admin_reply_to_appeal(
+    p_token TEXT,
     p_appeal_id UUID,
     p_title TEXT,
     p_body TEXT
@@ -446,7 +610,7 @@ DECLARE
     v_delivered BOOLEAN := FALSE;
     v_notification_id UUID;
 BEGIN
-    PERFORM public.assert_is_admin();
+    PERFORM public.assert_admin_unlocked(p_token);
 
     IF length(trim(COALESCE(p_body, ''))) = 0 THEN
         RAISE EXCEPTION 'A reply needs a message';
@@ -473,19 +637,17 @@ BEGIN
         v_delivered := TRUE;
     END IF;
 
-    RETURN jsonb_build_object(
-        'delivered', v_delivered,
-        'notification_id', v_notification_id
-    );
+    RETURN jsonb_build_object('delivered', v_delivered, 'notification_id', v_notification_id);
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.admin_reply_to_appeal(UUID, TEXT, TEXT) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_reply_to_appeal(TEXT, UUID, TEXT, TEXT) TO authenticated;
 
 -- ----------------------------------------------------------------------------
--- 7. STUDENT ROSTER (aggregate only, no progress contents)
+-- 8. STUDENT ROSTER (aggregate only, no progress contents)
 -- ----------------------------------------------------------------------------
 CREATE OR REPLACE FUNCTION public.admin_list_students(
+    p_token TEXT,
     p_limit INTEGER DEFAULT 50,
     p_offset INTEGER DEFAULT 0
 )
@@ -500,7 +662,7 @@ DECLARE
     v_items JSONB;
     v_total INTEGER;
 BEGIN
-    PERFORM public.assert_is_admin();
+    PERFORM public.assert_admin_unlocked(p_token);
 
     SELECT COUNT(*) INTO v_total FROM public.profiles;
 
@@ -510,9 +672,7 @@ BEGIN
         SELECT jsonb_build_object(
             'user_id', p.user_id,
             'display_name', p.display_name,
-            'email', u.email,
-            'confirmed', (u.email_confirmed_at IS NOT NULL),
-            'is_admin', p.is_admin,
+            'confirmed', (p.terms_accepted_at IS NOT NULL),
             'age_band', p.age_band,
             'created_at', p.created_at,
             'hd_coins', COALESCE(s.hd_coins, 0),
@@ -523,7 +683,6 @@ BEGIN
             )
         ) AS row
         FROM public.profiles p
-        LEFT JOIN auth.users u ON u.id = p.user_id
         LEFT JOIN public.user_stats s ON s.user_id = p.user_id
         ORDER BY p.created_at DESC
         LIMIT v_limit OFFSET v_offset
@@ -533,16 +692,97 @@ BEGIN
 END;
 $$;
 
-GRANT EXECUTE ON FUNCTION public.admin_list_students(INTEGER, INTEGER) TO authenticated;
+GRANT EXECUTE ON FUNCTION public.admin_list_students(TEXT, INTEGER, INTEGER) TO authenticated;
 
 -- ----------------------------------------------------------------------------
--- 8. GRANT YOURSELF OPERATOR ACCESS
+-- 9. STUDENT NOTIFICATIONS (one card per operator reply)
 -- ----------------------------------------------------------------------------
--- After applying this file, run once in the Supabase SQL editor with your own
--- account email (the SQL editor has no JWT, so the guard allows it):
---
---   UPDATE public.profiles
---      SET is_admin = TRUE
---    WHERE user_id = (SELECT id FROM auth.users WHERE email = 'you@example.com');
---
--- To revoke: set it back to FALSE the same way.
+-- Written only by the SECURITY DEFINER reply functions above; a student can read
+-- and dismiss their own rows and nothing else.
+CREATE TABLE IF NOT EXISTS public.user_notifications (
+    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+    kind TEXT NOT NULL DEFAULT 'admin_reply',
+    title TEXT NOT NULL,
+    body TEXT NOT NULL,
+    reference TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    seen_at TIMESTAMPTZ
+);
+
+CREATE INDEX IF NOT EXISTS user_notifications_user_created_idx
+    ON public.user_notifications (user_id, created_at DESC);
+
+ALTER TABLE public.user_notifications ENABLE ROW LEVEL SECURITY;
+REVOKE ALL ON public.user_notifications FROM anon, authenticated;
+GRANT SELECT ON public.user_notifications TO authenticated;
+
+DROP POLICY IF EXISTS user_notifications_read_own ON public.user_notifications;
+CREATE POLICY user_notifications_read_own ON public.user_notifications
+    FOR SELECT TO authenticated
+    USING (auth.uid() = user_id);
+
+-- Dismissing a card marks every unseen row read, so a reply is shown once.
+CREATE OR REPLACE FUNCTION public.mark_my_notifications_seen()
+RETURNS INTEGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public
+AS $$
+DECLARE
+    v_count INTEGER := 0;
+BEGIN
+    IF auth.uid() IS NULL THEN
+        RETURN 0;
+    END IF;
+    UPDATE public.user_notifications
+        SET seen_at = NOW()
+        WHERE user_id = auth.uid() AND seen_at IS NULL;
+    GET DIAGNOSTICS v_count = ROW_COUNT;
+    RETURN v_count;
+END;
+$$;
+
+REVOKE ALL ON FUNCTION public.mark_my_notifications_seen() FROM PUBLIC, anon;
+GRANT EXECUTE ON FUNCTION public.mark_my_notifications_seen() TO authenticated;
+
+-- ----------------------------------------------------------------------------
+-- Hardening: `CREATE FUNCTION` grants EXECUTE to PUBLIC by default, which would
+-- let an anonymous visitor reach these endpoints (they would still need the
+-- passcode + captcha, but they should not be callable at all). Revoke the
+-- implicit grant from PUBLIC/anon and keep it only for authenticated sessions.
+-- `assert_admin_unlocked` is an internal helper and must not be callable
+-- directly by any client role.
+-- ----------------------------------------------------------------------------
+DO $$
+DECLARE
+    r RECORD;
+BEGIN
+    FOR r IN
+        SELECT p.oid::regprocedure AS signature
+        FROM pg_proc p
+        JOIN pg_namespace n ON n.oid = p.pronamespace
+        WHERE n.nspname = 'public'
+          AND (
+              p.proname LIKE 'admin\_%'
+              OR p.proname IN ('set_admin_passcode', 'assert_admin_unlocked')
+          )
+          AND EXISTS (
+              SELECT 1
+              FROM aclexplode(COALESCE(p.proacl, acldefault('f', p.proowner))) a
+              JOIN pg_roles ro ON ro.oid = a.grantee
+              WHERE ro.rolname = 'anon'
+          )
+    LOOP
+        EXECUTE format('REVOKE ALL ON FUNCTION %s FROM PUBLIC, anon', r.signature);
+    END LOOP;
+END;
+$$;
+
+-- Make PostgREST pick up the new tables/functions immediately.
+NOTIFY pgrst, 'reload schema';
+
+-- ============================================================================
+-- NEXT STEPS (run as the operator, never committed):
+--   SELECT public.set_admin_passcode('...');
+-- ============================================================================

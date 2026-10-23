@@ -144,18 +144,20 @@ Target project: `qijfmwjcaminecxmbtcf` (`https://supabase.com/dashboard/project/
 3. Run `supabase/seed/0001_seed_hdsat.sql` to upsert the verified `dataset_sources`, `questions`, `question_keys`, and `flashcards` records.
 4. Run `supabase/migrations/20261017000100_safety_compliance.sql`, `20261020000100_cosmetic_price_ladder.sql` and `20261023000100_admin_console.sql` (admin console, notifications, triage RPCs).
 5. In **Authentication → Providers → Email**, ensure Email/Password sign-in is enabled.
-6. Grant yourself operator access once, in the SQL editor (it has no user JWT, so the guard allows it):
+6. Set the operator passcode once, in the SQL editor (or with a service key). Only a bcrypt hash is stored; the plaintext never enters this repository, the bundle or the browser:
 
 ```sql
-UPDATE public.profiles SET is_admin = TRUE
- WHERE user_id = (SELECT id FROM auth.users WHERE email = 'you@example.com');
+SELECT public.set_admin_passcode('your-operator-passcode');
 ```
+
+Changing the passcode clears every outstanding console session.
 
 ---
 
 ## Operator Console & Report Triage
 
-- `/admin` (also reachable as `/#/admin`) is gated by `profiles.is_admin` and calls only `SECURITY DEFINER` RPCs (`admin_list_reports`, `admin_list_appeals`, `admin_set_report_status`, `admin_batch_delete_reports`, `admin_reply_to_report`, `admin_list_students`, …). No service-role key ever reaches the browser.
+- `/admin` (also reachable as `/#/admin`) asks for a signed-in session, the operator passcode and a server-issued captcha. The passcode is compared inside Postgres against a bcrypt (cost 12) hash, five wrong tries lock the console for 15 minutes, and a correct unlock returns a random 8-hour token stored in `sessionStorage` that every admin RPC re-checks by hash. No account is privileged and no service-role key ever reaches the browser.
+- The console calls only `SECURITY DEFINER` RPCs (`admin_captcha_challenge`, `admin_unlock`, `admin_session_valid`, `admin_lock`, `admin_list_reports`, `admin_list_appeals`, `admin_set_report_status`, `admin_batch_delete_reports`, `admin_reply_to_report`, `admin_list_students`, …); the underlying tables have RLS enabled and `anon` has no EXECUTE on any of them.
 - Batch actions: mark resolved/dismissed, delete selected, delete everything resolved older than N days, and delete every report or appeal from one student (Students section). Every destructive action needs a second click and reports the affected row count.
 - Replies create one `user_notifications` row, which the student sees **once** on their Dashboard; dismissing it calls `mark_my_notifications_seen`.
 - For local triage from a terminal or from Freebuff, `tools/admin_triage.py` reads the same tables with a service-role key that stays on your machine:

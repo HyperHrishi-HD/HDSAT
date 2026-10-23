@@ -52,10 +52,10 @@
 - [x] **M4.4 · Account Full JSON Snapshot for AI (`Account.tsx`, `dataRights.ts`):** One button in Account copies a structured JSON snapshot (progress, streak, coins, domain accuracy, weakest domains, missed items with prompts but no keys, simulations, flashcards due, 14-day activity, preferences) ready to paste into any AI tutor or Freebuff. Nine tests pin both exports.
 - [x] **M4.5 · Flask Backend Security Hardening (`backend/app.py`, `backend/test_app.py`):** HTTPS redirect in production via `X-Forwarded-Proto` (health endpoint exempt so the uptime monitor keeps working), strict CSP allowing Desmos and blocking `object-src`/`unsafe-eval`, per-IP sliding-window rate limiting on `/api/*` with `Retry-After`, 1 MiB payload cap with a JSON 413, `robots.txt` disallowing `/admin`, and COOP/CORP headers. 19 backend tests pass.
 
-### Milestone 5: Supabase Admin Console Wiring, Student Reply Notifications & Freebuff MCP Bridge (COMPLETED ✅ — SQL awaiting your paste)
+### Milestone 5: Supabase Admin Console Wiring, Student Reply Notifications & Freebuff MCP Bridge (COMPLETED ✅ — applied to the live project)
 - [x] **M5.1 · Supabase Admin RPCs & Live Wiring (`Admin.tsx`, `cloud.ts`, `20261023000100_admin_console.sql`):**
-  - `profiles.is_admin` (guarded by a trigger: a signed-in client cannot promote itself; the SQL editor can) + `SECURITY DEFINER` RPCs: `admin_list_reports`, `admin_list_appeals`, `admin_list_students`, `admin_set_report_status`, `admin_set_appeal_status`, `admin_batch_delete_reports`, `admin_batch_delete_appeals`, `admin_reply_to_report`, `admin_reply_to_appeal`, `mark_my_notifications_seen`, plus the `assert_is_admin()` guard every routine calls first.
-  - `/admin` now gates on the real flag (checking / signed-out / denied / live), reads live rows with status + reason filters, relative ages and empty/error states.
+  - Passcode gate: `admin_gate` holds a bcrypt (cost 12) hash, `admin_captcha`, `admin_unlock_tokens` (sha256 of a random 32-byte token, 8-hour expiry) and `admin_access_log`, all RLS + no `anon` grants. `SECURITY DEFINER` RPCs: `admin_captcha_challenge`, `admin_unlock` (session + single-use captcha + passcode, 5 tries then a 15-minute lock), `admin_session_valid`, `admin_lock`, `admin_list_reports`, `admin_list_appeals`, `admin_list_students`, `admin_set_report_status`, `admin_set_appeal_status`, `admin_batch_delete_reports`, `admin_batch_delete_appeals`, `admin_reply_to_report`, `admin_reply_to_appeal`, `mark_my_notifications_seen`, plus the `assert_admin_unlocked()` guard every routine calls first.
+  - `/admin` shows an operator-passcode text box (not a PIN pad) with a server-issued captcha, then reads live rows with status + reason filters, relative ages and empty/error states. No account is privileged; the passcode is only ever compared inside Postgres.
 - [x] **M5.2 · One-Time Student Dashboard Notification (`Dashboard.tsx`, `cloud.ts`):**
   - Replies insert a `user_notifications` row; the student sees one message card on the Dashboard and dismissing it marks every unseen row read, so it never returns.
 - [x] **M5.3 · Freebuff Local Triage Bridge (`tools/admin_triage.py`):**
@@ -68,7 +68,7 @@
 - **Delete every report from this student** and **every appeal from this student** (Students section, by user id).
 - **Reply to a report or appeal** → one Dashboard notification, or an honest “no account attached, reply by email” when there is none.
 
-**Before this goes live you must:** paste `20261023000100_admin_console.sql` in the Supabase SQL editor, then run the one-line `UPDATE public.profiles SET is_admin = TRUE ...` from the README. Until then `/admin` shows “Operator access required” and touches no data.
+**Status:** `20261023000100_admin_console.sql` is applied to the live project and the operator passcode is set; the whole flow (unlock → list → status → reply → dismiss → batch delete → lock) was exercised end to end against Supabase, and the test rows and test account were removed afterwards.
 
 ---
 
