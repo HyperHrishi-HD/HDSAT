@@ -555,6 +555,16 @@ export function AdminPage() {
     };
   }, [access, lockConsole]);
 
+  // Navigating away unmounts the console, which ends the session too.
+  useEffect(() => {
+    return () => {
+      const stale = liveToken.current;
+      liveToken.current = '';
+      scrubConsoleTrace();
+      if (stale) void cloud.adminLock(stale).catch(() => undefined);
+    };
+  }, []);
+
   useEffect(() => {
     if (access !== 'ok') return;
     const current = adminToken;
