@@ -1,10 +1,12 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Badge, Card, Icon, InfoTip, ProgressBar, Stat } from '../components/ui';
+import { Badge, Button, Card, Icon, InfoTip, ProgressBar, Stat } from '../components/ui';
+import { hasSeenIntro, markIntroSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
 
 export function DashboardPage() {
   const app = useApp();
+  const [showIntro, setShowIntro] = useState(() => !hasSeenIntro());
 
   const domainBreakdown = useMemo(() => {
     const map = new Map<
@@ -44,8 +46,52 @@ export function DashboardPage() {
   const todayActivity = app.dailyActivity[app.dailyActivity.length - 1];
   const latestTest = app.testAttempts[0] ?? null;
 
+  const dismissIntro = () => {
+    markIntroSeen();
+    setShowIntro(false);
+  };
+
   return (
     <div>
+      {showIntro && !app.user ? (
+        <Card className="intro-card">
+          <div className="row-between">
+            <div>
+              <Badge tone="info">Welcome to HDSAT</Badge>
+              <h2 style={{ marginTop: 8, marginBottom: 4 }}>
+                Your Complete Digital SAT &amp; PSAT Command Center
+              </h2>
+              <p className="muted" style={{ maxWidth: 680 }}>
+                Practice with realistic adaptive simulations, targeted domain drills, interactive
+                Desmos &amp; reference sheets, spaced-repetition flashcards, and the Arcade reward
+                economy. Everything works immediately in local guest mode—or sign in anytime to sync
+                across devices.
+              </p>
+            </div>
+          </div>
+          <div className="row" style={{ marginTop: 12 }}>
+            <Link to="/practice" className="btn btn-primary" onClick={dismissIntro}>
+              <Icon name="practice" size={15} />
+              <span>Start First Practice</span>
+            </Link>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => {
+                dismissIntro();
+                app.actions.openAuthModal(app.accountStatus === 'pending' ? 'verify' : 'signin');
+              }}
+            >
+              <Icon name="account" size={14} />
+              <span>Sign In / Create Account</span>
+            </Button>
+            <Button type="button" variant="ghost" onClick={dismissIntro}>
+              Continue as Guest
+            </Button>
+          </div>
+        </Card>
+      ) : null}
+
       <Card>
         <div className="row-between">
           <div>

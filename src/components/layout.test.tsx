@@ -49,7 +49,13 @@ function baseApp(overrides: MinimalApp = {}): MinimalApp {
     cloudConfigured: true,
     error: null,
     notice: null,
-    actions: { dismissMessages: () => {} },
+    authModalOpen: false,
+    authModalView: 'signin',
+    actions: {
+      dismissMessages: () => {},
+      openAuthModal: () => {},
+      closeAuthModal: () => {},
+    },
     ...overrides,
   };
 }

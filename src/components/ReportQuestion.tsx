@@ -56,6 +56,28 @@ export function ReportQuestion({ questionId }: { questionId: string }) {
     );
   }
 
+  if (!app.user) {
+    return (
+      <div className="report-question-form">
+        <p className="muted" style={{ margin: '0 0 8px' }}>
+          Please sign in to report a question (required for server safety and follow-up replies).
+        </p>
+        <div className="row">
+          <Button
+            type="button"
+            size="sm"
+            onClick={() => app.actions.openAuthModal(app.accountStatus === 'pending' ? 'verify' : 'signin')}
+          >
+            Sign in to report
+          </Button>
+          <Button type="button" size="sm" variant="outline" onClick={() => setOpen(false)}>
+            Cancel
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <form className="report-question-form" onSubmit={submit}>
       <Select

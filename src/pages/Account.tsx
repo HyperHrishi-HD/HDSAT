@@ -1,31 +1,19 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { Alert, Badge, Button, Card, Field, Select, Toggle } from '../components/ui';
 import { AppealForm } from '../components/AppealForm';
 import * as cloud from '../lib/cloud';
-import { buildDataExport, downloadExport, validateConsent } from '../lib/dataRights';
+import { buildDataExport, downloadExport } from '../lib/dataRights';
 import {
-  AGE_BANDS,
-  COPYRIGHT_PATH,
   LEGAL_VERSION,
-  MIN_AGE,
-  PRIVACY_PATH,
   SITE_NAME,
   SUPPORT_EMAIL,
-  TERMS_PATH,
 } from '../lib/legal';
+import { formatRemainingHours } from '../lib/storage';
 import { useApp } from '../lib/store';
 import type { Assessment } from '../lib/types';
 
 export function AccountPage() {
   const app = useApp();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [displayName, setDisplayName] = useState('');
-  const [ageBand, setAgeBand] = useState('');
-  const [guardianConsent, setGuardianConsent] = useState(false);
-  const [acceptedTerms, setAcceptedTerms] = useState(false);
-  const [busy, setBusy] = useState(false);
   const [verifyEmail, setVerifyEmail] = useState('');
   const [verifyCode, setVerifyCode] = useState('');
   const [verifying, setVerifying] = useState(false);
@@ -48,60 +36,6 @@ export function AccountPage() {
     window.sessionStorage.removeItem('hdsat.auth-error');
     setFormError(message);
   }, []);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError(null);
-    setStatusMessage(null);
-    if (!email.trim() || !password) {
-      setFormError('Please enter both your email address and password.');
-      return;
-    }
-    setBusy(true);
-    try {
-      const attempt = await app.actions.attemptSignIn(email.trim(), password);
-      if (attempt.ok) {
-        setStatusMessage('Signed in. This device history is backed up to your account.');
-        setVerifyEmail('');
-        setVerifyCode('');
-        setPassword('');
-        return;
-      }
-      if (attempt.reason === 'unconfirmed') {
-        setVerifyEmail(email.trim());
-        setStatusMessage(
-          'Your account already exists, but ' +
-            email.trim() +
-            ' still needs confirmation. Open the link in the email, or enter the 6-digit code below.'
-        );
-        return;
-      }
-      if (attempt.reason === 'error') {
-        setFormError(attempt.message ?? 'Sign-in failed. Check your connection and try again.');
-        return;
-      }
-
-      // No account matched, so create one. Consent is required only here.
-      const consent = validateConsent({ ageBand, guardianConsent, acceptedTerms });
-      if (!consent.ok) {
-        setFormError('New account: ' + consent.errors.join(' '));
-        return;
-      }
-      const msg = await app.actions.signUp(
-        email.trim(),
-        password,
-        displayName.trim() || 'Student',
-        consent.metadata
-      );
-      setStatusMessage(msg);
-      setVerifyEmail(email.trim());
-      setPassword('');
-    } catch (err) {
-      setFormError((err as Error).message);
-    } finally {
-      setBusy(false);
-    }
-  };
 
   const handleVerifyCode = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -233,14 +167,18 @@ export function AccountPage() {
       {app.accountStatus === 'pending' && app.pendingAccount ? (
         <Alert tone="info">
           <div>
-            <strong>Account created for {app.pendingAccount.email} — confirmation pending.</strong>
+            <strong>
+              Account created for {app.pendingAccount.email} — 24-hour confirmation active (
+              {formatRemainingHours(Math.max(0, app.pendingAccount.expiresAt - Date.now()))}{' '}
+              remaining).
+            </strong>
             <p style={{ margin: '6px 0' }}>
               You can keep studying now. Answers, saves and past tests are stored on this device, and
               the HDCoins above are <em>provisional</em>: they are replaced by your cloud balance when
-              you confirm. Cloud sync and cloud coin earning start only after confirmation.
+              you confirm. Your 6-digit code works for a full 24 hours so you only need one email.
             </p>
             <p style={{ margin: '6px 0 0' }}>
-              Enter the code, or use <em>Resend email</em>, in the confirmation panel below.
+              Enter your 6-digit code in the confirmation panel below.
             </p>
           </div>
         </Alert>
@@ -325,92 +263,41 @@ export function AccountPage() {
                   </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit}>
-                  <Field label="Email Address">
-                    <input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="you@example.com"
-                      required
-                      autoComplete="email"
-                    />
-                  </Field>
-                  <Field label="Password" hint="At least 6 characters. New accounts set it here.">
-                    <input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      placeholder="••••••••"
-                      required
-                      autoComplete="current-password"
-                    />
-                  </Field>
-                  <Field label="Display name (new accounts)" hint="You can change this later.">
-                    <input
-                      type="text"
-                      value={displayName}
-                      onChange={(e) => setDisplayName(e.target.value)}
-                      placeholder="e.g. Hrishi"
-                      autoComplete="nickname"
-                    />
-                  </Field>
-
-                  <details className="auth-details">
-                    <summary>New account? Age and consent</summary>
-                    <Select
-                      label="Your age group"
-                      value={ageBand}
-                      onChange={setAgeBand}
-                      options={[{ value: '', label: 'Select your age group…' }, ...AGE_BANDS]}
-                    />
-                    {ageBand.length > 0 && ageBand !== '18+' ? (
-                      <div className="muted-block" style={{ marginBottom: 12 }}>
-                        <p className="muted" style={{ marginTop: 0, marginBottom: 8 }}>
-                          Accounts for students under 18 need a parent or guardian. Accounts under{' '}
-                          {MIN_AGE} years old are not permitted.
-                        </p>
-                        <Toggle
-                          checked={guardianConsent}
-                          onChange={setGuardianConsent}
-                          label="My parent or guardian has reviewed and agrees to the Terms and Privacy Policy"
-                          hint="Required for students aged 13–17."
-                        />
-                      </div>
-                    ) : null}
-                    <Toggle
-                      checked={acceptedTerms}
-                      onChange={setAcceptedTerms}
-                      label={`I accept the Terms of Service and the Privacy & Data Rights policy (version ${LEGAL_VERSION})`}
-                      hint="Only needed when a new account is created."
-                    />
-                    <p className="muted" style={{ marginBottom: 12 }}>
-                      <Link to={TERMS_PATH}>Terms of Service</Link> ·{' '}
-                      <Link to={PRIVACY_PATH}>Privacy &amp; Data Rights</Link> ·{' '}
-                      <Link to={COPYRIGHT_PATH}>Copyright &amp; Content Policy</Link>
-                    </p>
-                  </details>
-
-                  <div className="row" style={{ marginTop: 12 }}>
-                    <Button type="submit" disabled={busy}>
-                      {busy ? 'Checking…' : 'Continue'}
+                <div className="muted-block">
+                  <p className="muted" style={{ marginTop: 0, marginBottom: 10 }}>
+                    Open the Sign-In popup to log into an existing account or create a new cloud
+                    account.
+                  </p>
+                  <div className="row">
+                    <Button
+                      type="button"
+                      onClick={() =>
+                        app.actions.openAuthModal(
+                          app.accountStatus === 'pending' ? 'verify' : 'signin'
+                        )
+                      }
+                    >
+                      Open Sign-In / Sign-Up Modal
                     </Button>
                     <Button type="button" variant="outline" onClick={app.actions.continueAsGuest}>
                       Continue in Guest Mode
                     </Button>
                   </div>
-                </form>
+                </div>
               )}
 
-              {(verifyEmail || (app.accountStatus === 'pending' && app.pendingAccount)) ? (
-                <div className="muted-block" style={{ marginTop: 16 }}>
-                  <strong>Check your email to finish</strong>
-                  <p className="muted" style={{ margin: '6px 0 10px' }}>
-                    We sent a confirmation link and a 6-digit code to{' '}
-                    <strong>{verifyEmail || app.pendingAccount?.email}</strong>. Click the link, or
-                    paste the code here — either one signs you in and backs up this device&apos;s
-                    history. No other steps are needed.
-                  </p>
+              <div className="muted-block" style={{ marginTop: 16 }}>
+                <strong>Confirm an email with your 24-hour code</strong>
+                <p className="muted" style={{ margin: '6px 0 10px' }}>
+                  {app.pendingAccount
+                    ? `We sent a confirmation link and a 6-digit code to ${
+                        app.pendingAccount.email
+                      }. Your code stays active for 24 hours (${formatRemainingHours(
+                        Math.max(0, app.pendingAccount.expiresAt - Date.now())
+                      )} remaining) so you don't need to request another email.`
+                    : 'Already received a confirmation email within the last 24 hours? Enter your email address and the 6-digit code below to activate cloud sync.'}
+                </p>
+                {app.pendingAccount ? (
                   <form onSubmit={saveDisplayName} className="row" style={{ alignItems: 'flex-end' }}>
                     <Field label="Your name" hint="Used once you confirm; you can change it later.">
                       <input
@@ -431,28 +318,38 @@ export function AccountPage() {
                       {nameSaving ? 'Saving…' : 'Save name'}
                     </Button>
                   </form>
-                  <form onSubmit={handleVerifyCode}>
-                    <Field label="6-digit code from the email">
+                ) : null}
+                <form onSubmit={handleVerifyCode}>
+                  {!app.pendingAccount ? (
+                    <Field label="Email Address">
                       <input
-                        type="text"
-                        inputMode="numeric"
-                        value={verifyCode}
-                        onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                        placeholder="123456"
-                        autoComplete="one-time-code"
+                        type="email"
+                        value={verifyEmail}
+                        onChange={(e) => setVerifyEmail(e.target.value)}
+                        placeholder="you@example.com"
                       />
                     </Field>
-                    <div className="row">
-                      <Button type="submit" disabled={verifying}>
-                        {verifying ? 'Confirming…' : 'Confirm & continue'}
-                      </Button>
-                      <Button type="button" variant="outline" onClick={handleResend}>
-                        Resend email
-                      </Button>
-                    </div>
-                  </form>
-                </div>
-              ) : null}
+                  ) : null}
+                  <Field label="6-digit code from the email (valid 24 hours)">
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      value={verifyCode}
+                      onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                      placeholder="123456"
+                      autoComplete="one-time-code"
+                    />
+                  </Field>
+                  <div className="row">
+                    <Button type="submit" disabled={verifying}>
+                      {verifying ? 'Confirming…' : 'Confirm & continue'}
+                    </Button>
+                    <Button type="button" variant="outline" onClick={handleResend}>
+                      Resend email (after 24h)
+                    </Button>
+                  </div>
+                </form>
+              </div>
             </div>
           )}
         </Card>

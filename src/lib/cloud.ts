@@ -667,22 +667,22 @@ export async function reportQuestion(args: {
 }): Promise<void> {
   const supabase = client();
   const userId = await getUserId();
+  if (!userId) {
+    throw new Error('Please sign in to report a question.');
+  }
   const row = {
     user_id: userId,
     question_id: args.questionId,
     reason: args.reason,
-    details: args.details?.trim() ? args.details.trim() : null,
+    details: args.details?.trim() ? args.details.trim().slice(0, 2000) : null,
   };
-  const email = args.contactEmail?.trim();
+  const email = args.contactEmail?.trim().slice(0, 254);
 
   if (email) {
     const withEmail = await supabase
       .from('question_reports')
       .insert({ ...row, contact_email: email });
     if (!withEmail.error) return;
-    // A project that has not yet run the safety migration has no contact_email
-    // column. The report itself is still valuable, so fall through and file it
-    // without the optional reply address instead of losing the report.
     if (!isMissingColumnError(withEmail.error.message, 'contact_email')) {
       throw withEmail.error;
     }
@@ -700,11 +700,14 @@ export async function submitAppeal(args: {
 }): Promise<string> {
   const supabase = client();
   const userId = await getUserId();
+  if (!userId) {
+    throw new Error('Please sign in to submit an appeal or safety report.');
+  }
   const { data, error } = await supabase
     .from('user_appeals')
     .insert({
       user_id: userId,
-      contact_email: args.contactEmail?.trim() ? args.contactEmail.trim() : null,
+      contact_email: args.contactEmail?.trim() ? args.contactEmail.trim().slice(0, 254) : null,
       category: args.category,
       subject: args.subject.trim().slice(0, 200),
       details: args.details.trim().slice(0, 8000),

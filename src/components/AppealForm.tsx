@@ -56,12 +56,30 @@ export function AppealForm({ defaultCategory = 'safety_report' }: { defaultCateg
     );
   }
 
+  if (!app.user) {
+    return (
+      <div className="muted-block">
+        <p className="muted" style={{ margin: '0 0 10px' }}>
+          Please sign in to submit an appeal, safety report, or content review request. Signing in
+          keeps our report queue protected against spam and lets us send replies directly to your
+          dashboard.
+        </p>
+        <Button
+          type="button"
+          size="sm"
+          onClick={() => app.actions.openAuthModal(app.accountStatus === 'pending' ? 'verify' : 'signin')}
+        >
+          Sign in to file an appeal
+        </Button>
+      </div>
+    );
+  }
+
   return (
     <form onSubmit={submit}>
       <p className="muted">
         Use this form to report unsafe content, request removal of material, appeal an account decision, or ask for
-        access to or deletion of your data. You do not need an account to file a report: you can{' '}
-        {contactLine()}.
+        access to or deletion of your data. You can {contactLine()}.
       </p>
 
       <Select

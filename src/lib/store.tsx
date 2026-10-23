@@ -78,7 +78,11 @@ export interface AppValue {
   syncMessage: string | null;
   error: string | null;
   notice: string | null;
+  authModalOpen: boolean;
+  authModalView: 'signin' | 'verify';
   actions: {
+    openAuthModal: (view?: 'signin' | 'verify') => void;
+    closeAuthModal: () => void;
     signIn: (email: string, password: string) => Promise<void>;
     attemptSignIn: (email: string, password: string) => Promise<cloud.SignInAttempt>;
     signUp: (
@@ -152,6 +156,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
+  const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [authModalView, setAuthModalView] = useState<'signin' | 'verify'>('signin');
 
   // Module submissions run many attempts in one loop (27 R&W / 22 Math items),
   // so mutating actions must read the freshest profile rather than the closure
@@ -599,8 +605,21 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const resendVerification = useCallback(async (email: string) => {
     setError(null);
+    const guard = local.canSendVerificationEmail(email);
+    if (!guard.allowed) {
+      throw new Error(
+        `A confirmation email was already sent to ${email.trim()}. That 6-digit code works for a full 24 hours (${local.formatRemainingHours(
+          guard.remainingMs
+        )} remaining). Enter the code from that email, use a different email address, or wait until the 24-hour window expires.`
+      );
+    }
     await cloud.resendConfirmation(email);
-    setNotice('Confirmation email sent again. Check your inbox and spam folder.');
+    const saved = local.savePendingAccount({
+      email: email.trim(),
+      displayName: guard.existing?.displayName ?? 'Student',
+    });
+    setPendingAccount(saved);
+    setNotice('Confirmation email sent. Your 6-digit code stays active for 24 hours.');
   }, []);
 
   const signUp = useCallback(
@@ -611,6 +630,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       consent: Record<string, string | boolean> = {}
     ) => {
       setError(null);
+      const guard = local.canSendVerificationEmail(email);
+      if (!guard.allowed) {
+        setPendingAccount(guard.existing);
+        setAuthModalView('verify');
+        return `A confirmation email was already sent to ${email.trim()} (${local.formatRemainingHours(
+          guard.remainingMs
+        )} remaining in its 24-hour window). Enter the 6-digit code from that email below.`;
+      }
       const data = await cloud.signUp(email, password, displayName, consent);
       if (data.session) {
         local.clearPendingAccount();
@@ -619,17 +646,12 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         if (data.user?.id) await importLocalHistoryOnce(data.user.id);
         return 'Account created and signed in. Your device history is now backed up to the cloud.';
       }
-      // Supabase requires email confirmation before it issues a session. The
-      // account exists now, so the student keeps studying on this device and we
-      // remember the address to explain what confirmation unlocks.
-      const record = {
-        email,
+      const record = local.savePendingAccount({
+        email: email.trim(),
         displayName: displayName || 'Student',
-        createdAt: new Date().toISOString(),
-      };
-      local.savePendingAccount(record);
+      });
       setPendingAccount(record);
-      return `Account created for ${email}. We emailed a confirmation link and a 6-digit code — use either one. Until you confirm, your work stays on this device and HDCoins are provisional.`;
+      return `Account created for ${email}. We emailed a confirmation link and a 6-digit code that stays valid for 24 hours.`;
     },
     [importLocalHistoryOnce, refreshSnapshot]
   );
@@ -741,7 +763,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     syncMessage,
     error,
     notice,
+    authModalOpen,
+    authModalView,
     actions: {
+      openAuthModal: (view = 'signin') => {
+        setAuthModalView(view);
+        setAuthModalOpen(true);
+      },
+      closeAuthModal: () => {
+        setAuthModalOpen(false);
+      },
       signIn,
       attemptSignIn,
       signUp,

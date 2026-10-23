@@ -22,6 +22,8 @@ import type {
 export const STORAGE_KEY = 'hdsat.profile.v1';
 export const PENDING_ACCOUNT_KEY = 'hdsat.pending-account.v1';
 export const WELCOME_SEEN_KEY = 'hdsat.welcome-seen.v1';
+export const INTRO_SEEN_KEY = 'hdsat.intro.seen.v1';
+export const EMAIL_WINDOW_MS = 24 * 60 * 60 * 1000;
 export const DAILY_QUESTION_COIN_CAP = 60;
 export const DAILY_FLASHCARD_COIN_CAP = 15;
 const PROFILE_VERSION = 1;
@@ -128,44 +130,124 @@ export function clearProfile(): void {
 
 /**
  * An account created with a password but not yet email-confirmed. The student
- * keeps practising on this device; the address is remembered so the app can
- * explain that cloud sync and the cloud coin balance start after confirmation.
+ * keeps practising on this device; the address is remembered for 24 hours so
+ * the app can accept the 6-digit code and prevent duplicate Brevo emails
+ * within the same 24-hour window.
  */
 export interface PendingAccount {
   email: string;
   displayName: string;
   createdAt: string;
+  sentAt: number;
+  expiresAt: number;
 }
 
-export function loadPendingAccount(): PendingAccount | null {
-  if (typeof localStorage === 'undefined') return null;
+let memoryPendingAccount: PendingAccount | null = null;
+let memoryIntroSeen = false;
+
+export function loadPendingAccount(now: number = Date.now()): PendingAccount | null {
   try {
-    const raw = localStorage.getItem(PENDING_ACCOUNT_KEY);
-    if (!raw) return null;
-    const parsed = JSON.parse(raw) as Partial<PendingAccount>;
-    if (!parsed.email) return null;
+    const raw =
+      typeof localStorage !== 'undefined' ? localStorage.getItem(PENDING_ACCOUNT_KEY) : null;
+    const parsed: Partial<PendingAccount> | null = raw
+      ? (JSON.parse(raw) as Partial<PendingAccount>)
+      : memoryPendingAccount;
+    if (!parsed || !parsed.email) return null;
+    const createdMs = parsed.createdAt ? new Date(parsed.createdAt).getTime() : now;
+    const sentAt = typeof parsed.sentAt === 'number' && parsed.sentAt > 0 ? parsed.sentAt : createdMs;
+    const expiresAt =
+      typeof parsed.expiresAt === 'number' && parsed.expiresAt > 0
+        ? parsed.expiresAt
+        : sentAt + EMAIL_WINDOW_MS;
+    if (now >= expiresAt) {
+      memoryPendingAccount = null;
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem(PENDING_ACCOUNT_KEY);
+      }
+      return null;
+    }
     return {
       email: String(parsed.email),
       displayName: String(parsed.displayName ?? 'Student'),
-      createdAt: String(parsed.createdAt ?? new Date().toISOString()),
+      createdAt: String(parsed.createdAt ?? new Date(sentAt).toISOString()),
+      sentAt,
+      expiresAt,
     };
   } catch {
     return null;
   }
 }
 
-export function savePendingAccount(account: PendingAccount): void {
-  if (typeof localStorage === 'undefined') return;
-  try {
-    localStorage.setItem(PENDING_ACCOUNT_KEY, JSON.stringify(account));
-  } catch {
-    /* storage unavailable: the in-memory state still explains the situation */
+export function savePendingAccount(
+  account: Pick<PendingAccount, 'email' | 'displayName'> & Partial<PendingAccount>,
+  now: number = Date.now()
+): PendingAccount {
+  const sentAt = account.sentAt ?? now;
+  const expiresAt = account.expiresAt ?? sentAt + EMAIL_WINDOW_MS;
+  const full: PendingAccount = {
+    email: account.email.trim(),
+    displayName: account.displayName || 'Student',
+    createdAt: account.createdAt ?? new Date(sentAt).toISOString(),
+    sentAt,
+    expiresAt,
+  };
+  memoryPendingAccount = full;
+  if (typeof localStorage !== 'undefined') {
+    try {
+      localStorage.setItem(PENDING_ACCOUNT_KEY, JSON.stringify(full));
+    } catch {
+      /* storage unavailable: the in-memory state still explains the situation */
+    }
   }
+  return full;
+}
+
+export function canSendVerificationEmail(
+  email: string,
+  now: number = Date.now()
+): { allowed: boolean; remainingMs: number; existing: PendingAccount | null } {
+  const existing = loadPendingAccount(now);
+  if (
+    existing &&
+    existing.email.trim().toLowerCase() === email.trim().toLowerCase() &&
+    now < existing.expiresAt
+  ) {
+    return {
+      allowed: false,
+      remainingMs: Math.max(0, existing.expiresAt - now),
+      existing,
+    };
+  }
+  return { allowed: true, remainingMs: 0, existing };
+}
+
+export function formatRemainingHours(ms: number): string {
+  const totalMinutes = Math.max(1, Math.ceil(ms / 60_000));
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours <= 0) return `${minutes}m`;
+  return minutes > 0 ? `${hours}h ${minutes}m` : `${hours}h`;
 }
 
 export function clearPendingAccount(): void {
+  memoryPendingAccount = null;
   if (typeof localStorage === 'undefined') return;
   localStorage.removeItem(PENDING_ACCOUNT_KEY);
+}
+
+export function hasSeenIntro(): boolean {
+  if (typeof localStorage === 'undefined') return memoryIntroSeen;
+  return Boolean(localStorage.getItem(INTRO_SEEN_KEY)) || memoryIntroSeen;
+}
+
+export function markIntroSeen(): void {
+  memoryIntroSeen = true;
+  if (typeof localStorage === 'undefined') return;
+  try {
+    localStorage.setItem(INTRO_SEEN_KEY, new Date().toISOString());
+  } catch {
+    /* ignore quota errors */
+  }
 }
 
 export function hasSeenWelcome(): boolean {

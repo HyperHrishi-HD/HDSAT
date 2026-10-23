@@ -12,6 +12,16 @@ import {
 } from './legal';
 import { buildDataExport, exportFileName, validateConsent, type DataExportInput } from './dataRights';
 import { isMissingColumnError, isMissingRelationError, isMissingRoutineError } from './cloud';
+import {
+  EMAIL_WINDOW_MS,
+  canSendVerificationEmail,
+  clearPendingAccount,
+  formatRemainingHours,
+  hasSeenIntro,
+  loadPendingAccount,
+  markIntroSeen,
+  savePendingAccount,
+} from './storage';
 
 describe('signup consent gate (minors / COPPA)', () => {
   it('refuses signup without an age band or without accepting the policies', () => {
@@ -165,5 +175,40 @@ describe('published policies cover the required disclosures', () => {
     ['security', 'security practices'],
   ])('mentions %s (%s)', (needle) => {
     expect(haystack).toContain(needle);
+  });
+});
+
+describe('24-hour email confirmation cooldown and intro screen persistence', () => {
+  it('blocks duplicate confirmation emails to the same address within 24 hours and allows a different email or after 24h', () => {
+    clearPendingAccount();
+    const t0 = 1_700_000_000_000;
+    expect(canSendVerificationEmail('student@example.com', t0).allowed).toBe(true);
+
+    const saved = savePendingAccount({ email: 'student@example.com', displayName: 'Hrishi' }, t0);
+    expect(saved.expiresAt - saved.sentAt).toBe(EMAIL_WINDOW_MS);
+
+    const withinWindow = canSendVerificationEmail('STUDENT@example.com', t0 + 2 * 60 * 60 * 1000);
+    expect(withinWindow.allowed).toBe(false);
+    expect(formatRemainingHours(withinWindow.remainingMs)).toBe('22h');
+
+    // A different email address is allowed immediately
+    expect(canSendVerificationEmail('other@example.com', t0 + 2 * 60 * 60 * 1000).allowed).toBe(
+      true
+    );
+
+    // After 24 hours the window expires and the same address can send again
+    expect(loadPendingAccount(t0 + EMAIL_WINDOW_MS + 1)).toBeNull();
+    expect(canSendVerificationEmail('student@example.com', t0 + EMAIL_WINDOW_MS + 1).allowed).toBe(
+      true
+    );
+  });
+
+  it('tracks first-run intro dismissal in localStorage', () => {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem('hdsat.intro.seen.v1');
+      expect(hasSeenIntro()).toBe(false);
+      markIntroSeen();
+      expect(hasSeenIntro()).toBe(true);
+    }
   });
 });

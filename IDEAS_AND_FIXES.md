@@ -27,14 +27,14 @@
   - Add clean `LICENSE`, `SECURITY.md`, and polished `README.md` ready for public GitHub visibility.
   - Add `.github/workflows/pa-monthly-refresh.yml` + `.pa/refresh_webapp.py` to keep PythonAnywhere refreshed automatically.
 
-### Milestone 3: First-Run Intro Screen, Auth Pop-Up Modals & 24-Hour Brevo Email Protection
-- [ ] **M3.1 · First-run Dashboard Intro Screen (`IntroScreen.tsx`, `Dashboard.tsx`):** When local browser storage is empty (`attempts === 0` and `!localStorage['hdsat.intro.seen.v1']`), display an interactive welcome screen directly inside the Dashboard view with a one-click transition into the Dashboard that never nags again.
-- [ ] **M3.2 · Sign-In / Sign-Up Pop-Up Modal (`AuthModal.tsx`, `Layout.tsx`, `Account.tsx`):** Clicking `"Sign in"` anywhere pops up a modal window for sign-in / account creation. Remove the inline sign-in form from the Account page so Account only holds preferences (display name, assessment preference, email confirmation status, data export/delete, and reports/appeals).
-- [ ] **M3.3 · 24-Hour Email Confirmation Window & Quota Guard (`AuthModal.tsx`, `Account.tsx`, `cloud.ts`):**
-  - Store `pendingVerification` (`{ email, sentAt, expiresAt: sentAt + 86_400_000 }`) in `localStorage`.
+### Milestone 3: First-Run Intro Screen, Auth Pop-Up Modals & 24-Hour Brevo Email Protection (COMPLETED ✅)
+- [x] **M3.1 · First-run Dashboard Intro Screen (`Dashboard.tsx`):** When local browser storage is empty (`!localStorage['hdsat.intro.seen.v1']`), display an interactive welcome screen directly inside the Dashboard view with a one-click transition into the Dashboard that never nags again.
+- [x] **M3.2 · Sign-In / Sign-Up Pop-Up Modal (`AuthModal.tsx`, `Layout.tsx`, `Account.tsx`):** Clicking `"Sign in"` anywhere pops up a modal window for sign-in / account creation. Replaced the inline sign-in form on the Account page with a trigger for the popup modal while keeping the 24-hour confirmation panel, preferences, data export/delete, and reports/appeals.
+- [x] **M3.3 · 24-Hour Email Confirmation Window & Quota Guard (`AuthModal.tsx`, `Account.tsx`, `storage.ts`, `store.tsx`):**
+  - Store `pendingAccount` (`{ email, displayName, createdAt, sentAt, expiresAt: sentAt + 86_400_000 }`) in `localStorage`.
   - Allow the user to open the confirmation code modal from Account or the top banner for a full **24 hours** without resending.
   - Block duplicate confirmation emails to the same address for 24 hours so Brevo's daily quota can never be spammed or drained.
-- [ ] **M3.4 · Require Sign-In for Question Reports (`ReportQuestion.tsx`, `AppealForm.tsx`):** Require an authenticated user session to submit question reports (with a one-click `"Sign in to report"` button that opens the Sign-In modal) + enforce strict character limits.
+- [x] **M3.4 · Require Sign-In for Question Reports (`ReportQuestion.tsx`, `AppealForm.tsx`, `cloud.ts`):** Require an authenticated user session to submit question reports and appeals (with a one-click `"Sign in to report"` button that opens the Sign-In modal) + enforce strict character limits.
 
 ### Milestone 4: Arcade 3-Tab Overhaul, Daily Quests, Hard QOTD, Shareable Test Results & Backend Hardening
 - [ ] **M4.1 · Move Practice Rush into Arcade & 3-Tab Layout (`Arcade.tsx`, `Practice.tsx`):**

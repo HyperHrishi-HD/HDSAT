@@ -2831,6 +2831,35 @@ mark.bb-hl[data-has-note='true']::after {
 .adm-composer-lines span.is-short { width: 46%; }
 .adm-composer-foot { display: flex; gap: 8px; }
 
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 950;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 520px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--surface, #fff);
+  border: 1px solid var(--line, #e2e8f0);
+  border-radius: 16px;
+  padding: 20px 22px;
+  box-shadow: 0 24px 48px rgba(15, 23, 42, 0.22);
+}
+
+.intro-card {
+  background: linear-gradient(135deg, var(--surface, #fff) 0%, var(--surface-alt, #f8fafc) 100%);
+  border: 1px solid var(--brand-soft, #dbeafe);
+}
+
 @media (max-width: 860px) {
   .adm-top { padding: 10px 14px; }
   .adm-preview-tag { display: none; }

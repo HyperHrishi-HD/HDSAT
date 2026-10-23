@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 import { emblemFor } from '../lib/catalog';
 import { hasSeenWelcome, markWelcomeSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
+import { AuthModal } from './AuthModal';
 import {
   COPYRIGHT_PATH,
   CREATOR_GITHUB_URL,
@@ -92,7 +93,7 @@ export function Layout() {
   const topbarRef = useRef<HTMLDivElement | null>(null);
   const statsRef = useRef<HTMLDivElement | null>(null);
   const brandRef = useRef<HTMLAnchorElement | null>(null);
-  const accountRef = useRef<HTMLAnchorElement | null>(null);
+  const accountRef = useRef<HTMLElement | null>(null);
   const mobileNavRef = useRef<HTMLElement | null>(null);
   const [compact, setCompact] = useState(false);
   const [navLabels, setNavLabels] = useState(true);
@@ -286,10 +287,14 @@ export function Layout() {
                 </span>
               ) : pending ? (
                 <Badge tone="warn">
-                  <Link to="/account">
+                  <button
+                    type="button"
+                    className="link-button"
+                    onClick={() => app.actions.openAuthModal('verify')}
+                  >
                     <span className="badge-label-full">Confirm email</span>
                     <span className="badge-label-compact">Confirm</span>
-                  </Link>
+                  </button>
                 </Badge>
               ) : (
                 <Badge tone="warn">
@@ -300,10 +305,32 @@ export function Layout() {
               )}
             </div>
 
-            <NavLink to="/account" className="btn btn-outline btn-sm topbar-account" ref={accountRef}>
-              <Icon name="account" size={14} />
-              <span className="btn-label">{app.user ? 'Account' : 'Sign in'}</span>
-            </NavLink>
+            {app.user ? (
+              <NavLink
+                to="/account"
+                className="btn btn-outline btn-sm topbar-account"
+                ref={(el) => {
+                  accountRef.current = el;
+                }}
+              >
+                <Icon name="account" size={14} />
+                <span className="btn-label">Account</span>
+              </NavLink>
+            ) : (
+              <button
+                type="button"
+                className="btn btn-outline btn-sm topbar-account"
+                ref={(el) => {
+                  accountRef.current = el;
+                }}
+                onClick={() =>
+                  app.actions.openAuthModal(pending ? 'verify' : 'signin')
+                }
+              >
+                <Icon name="account" size={14} />
+                <span className="btn-label">Sign in</span>
+              </button>
+            )}
           </div>
         </header>
 
@@ -328,10 +355,14 @@ export function Layout() {
               </InfoTip>
             </div>
             <div className="welcome-actions">
-              <Link to="/account" className="btn btn-primary btn-sm">
+              <button
+                type="button"
+                className="btn btn-primary btn-sm"
+                onClick={() => app.actions.openAuthModal(pending ? 'verify' : 'signin')}
+              >
                 <Icon name="account" size={13} />
                 <span>Create account or sign in</span>
-              </Link>
+              </button>
               <button type="button" className="btn btn-outline btn-sm" onClick={dismissWelcome}>
                 Keep studying as a guest
               </button>
@@ -385,6 +416,7 @@ export function Layout() {
           </NavLink>
         ))}
       </nav>
+      <AuthModal />
     </div>
   );
 }
