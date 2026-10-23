@@ -190,7 +190,7 @@ export function AdminPage() {
 
   const reload = () => setReloadToken((token) => token + 1);
 
-  // Access gate: a signed-in session plus the operator passcode and reCAPTCHA.
+  // Access gate: a signed-in session, the human check and the operator passcode.
   // The passcode is only ever compared inside Postgres against a bcrypt hash.
   useEffect(() => {
     let cancelled = false;
@@ -237,6 +237,7 @@ export function AdminPage() {
   useEffect(() => {
     if (access !== 'locked') return;
     let cancelled = false;
+    challengeRun.current += 1; // abandon any solve still running for an old challenge
     setChallenge(null);
     setSolvedNonce(null);
     setChallengeState('loading');
