@@ -2563,6 +2563,7 @@ mark.bb-hl[data-has-note='true']::after {
   white-space: nowrap;
 }
 .adm-back:hover { background: #1b2537; color: #fff; }
+.adm-short { display: none; }
 
 .adm-body { display: grid; grid-template-columns: 232px minmax(0, 1fr); flex: 1; }
 /* Locked: the section rail does not exist until the console is unlocked. */
@@ -3009,9 +3010,13 @@ mark.bb-hl[data-has-note='true']::after {
 }
 
 @media (max-width: 860px) {
-  .adm-top { padding: 10px 14px; }
+  .adm-top { padding: 10px 12px; gap: 8px; }
   .adm-preview-tag { display: none; }
-  .adm-body { grid-template-columns: 1fr; }
+  .adm-top-title span { display: none; }
+  .adm-top-title strong { font-size: 0.86rem; white-space: nowrap; }
+  .adm-mark { width: 28px; height: 28px; border-radius: 8px; font-size: 0.9rem; }
+  .adm-back { padding: 5px 9px; }
+  .adm-body { grid-template-columns: 1fr; align-content: start; }
   .adm-rail {
     position: static;
     height: auto;
@@ -3031,4 +3036,13 @@ mark.bb-hl[data-has-note='true']::after {
   .adm-card-flush { overflow-x: auto; }
   .adm-table { min-width: 640px; }
   .adm-section-head { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 560px) {
+  /* Short labels on phones: the full ones would wrap the bar onto two lines. */
+  .adm-short { display: none; }
+  .adm-back .adm-long { display: none; }
+  .adm-back .adm-short { display: inline; }
+  .adm-lock,
+  .adm-exit { padding: 6px 9px; }
 }

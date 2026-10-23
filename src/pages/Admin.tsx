@@ -865,14 +865,28 @@ export function AdminPage() {
 
         <div className="adm-top-right">
           {access === 'ok' ? (
-            <button type="button" className="adm-back" onClick={() => void lockConsole()}>
+            <button
+              type="button"
+              className="adm-back adm-lock"
+              aria-label="Lock console"
+              title="Lock console"
+              onClick={() => void lockConsole()}
+            >
               <Icon name="shield" size={14} />
-              <span>Lock console</span>
+              <span className="adm-long">Lock console</span>
+              <span className="adm-short">Lock</span>
             </button>
           ) : null}
-          <button type="button" className="adm-back" onClick={backToApp}>
+          <button
+            type="button"
+            className="adm-back adm-exit"
+            aria-label="Back to app"
+            title="Back to app"
+            onClick={backToApp}
+          >
             <Icon name="arrow-left" size={14} />
-            <span>Back to app</span>
+            <span className="adm-long">Back to app</span>
+            <span className="adm-short">Back</span>
           </button>
         </div>
       </header>
