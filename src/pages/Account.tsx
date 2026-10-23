@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Alert, Badge, Button, Card, Field, Select, Toggle } from '../components/ui';
 import { AppealForm } from '../components/AppealForm';
 import * as cloud from '../lib/cloud';
-import { buildDataExport, downloadExport } from '../lib/dataRights';
+import { buildAiSnapshot, buildDataExport, downloadExport } from '../lib/dataRights';
 import {
   LEGAL_VERSION,
   SITE_NAME,
@@ -24,6 +24,7 @@ export function AccountPage() {
   const [deleteConfirm, setDeleteConfirm] = useState('');
   const [deleting, setDeleting] = useState(false);
   const [exportMessage, setExportMessage] = useState<string | null>(null);
+  const [aiMessage, setAiMessage] = useState<string | null>(null);
   const [reports, setReports] = useState<{ id: string; question_id: string; reason: string; created_at: string }[] | null>(
     null
   );
@@ -107,6 +108,68 @@ export function AccountPage() {
     });
     const name = downloadExport(payload, app.user);
     setExportMessage(`Downloaded ${name}. It contains only your own practice data.`);
+  };
+
+  const handleAiSnapshot = async () => {
+    setAiMessage(null);
+    const payload = buildAiSnapshot({
+      user: app.user,
+      mode: app.mode,
+      assessment: app.settings.assessment,
+      account: {
+        hdCoins: app.hdCoins,
+        currentStreak: app.currentStreak,
+        bestStreak: app.bestStreak,
+        achievements: app.achievements,
+        ownedItems: app.ownedItems,
+        settings: { ...app.settings },
+      },
+      totals: {
+        attempts: app.totals.attempts,
+        correct: app.totals.correct,
+        accuracy: app.totals.accuracy,
+        mastered: app.totals.mastered,
+        dueCards: app.totals.dueCards,
+      },
+      progress: app.progress,
+      questions: app.questions.map((question) => ({
+        id: question.id,
+        section: question.section,
+        domain: question.domain,
+        skill: question.skill,
+        difficulty: question.difficulty,
+        prompt: question.prompt,
+      })),
+      saved: app.saved,
+      flashcardProgress: app.flashcardProgress,
+      testAttempts: app.testAttempts.map((attempt) => ({
+        id: attempt.id,
+        assessment: attempt.assessment,
+        createdAt: attempt.createdAt,
+        status: attempt.status,
+        rwEstimate: attempt.rwEstimate ?? null,
+        mathEstimate: attempt.mathEstimate ?? null,
+        totalEstimate: attempt.totalEstimate ?? null,
+        modules: attempt.modules.map((module) => ({
+          section: module.section,
+          tier: module.tier,
+          correct: module.correct,
+          total: module.total,
+        })),
+      })),
+      dailyActivity: app.dailyActivity,
+    });
+    const text = JSON.stringify(payload, null, 2);
+    try {
+      await navigator.clipboard.writeText(text);
+      setAiMessage(
+        `Copied a ${text.length.toLocaleString()}-character snapshot. Paste it into any AI tutor or into a Freebuff chat — it has no answer keys and no other students' data.`
+      );
+    } catch {
+      setAiMessage(
+        'Your browser blocked clipboard access. Use "Download data export (JSON)" above, or copy from the box below.'
+      );
+    }
   };
 
   const handleDelete = async () => {
@@ -415,6 +478,23 @@ export function AccountPage() {
             <Button variant="outline" size="sm" onClick={handleExport}>
               Download data export (JSON)
             </Button>
+          </div>
+
+          <div className="muted-block">
+            <h3>Copy an AI-ready snapshot</h3>
+            <p className="muted">
+              One click copies a structured JSON snapshot of your progress, domain accuracy, missed
+              items, simulations and activity. Paste it into any AI tutor — or into Freebuff — and
+              ask what to study next. It contains no answer keys and no other students&apos; data.
+            </p>
+            <Button variant="outline" size="sm" onClick={() => void handleAiSnapshot()}>
+              Copy full account snapshot for AI
+            </Button>
+            {aiMessage ? (
+              <p className="muted" style={{ margin: '8px 0 0', wordBreak: 'break-word' }}>
+                {aiMessage}
+              </p>
+            ) : null}
           </div>
 
           <div className="muted-block">

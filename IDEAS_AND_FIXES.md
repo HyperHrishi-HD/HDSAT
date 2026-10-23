@@ -46,9 +46,10 @@
 - [x] **M4.2 · Daily Quests (Arcade-only, 30 Q cap) & Daily Hard Question of the Day (`daily.ts`, `DailyQuests.tsx`, `QuestionOfTheDay.tsx`, `Dashboard.tsx`, `Arcade.tsx`):**
   - 3 Daily Quests in the Arcade (5 R&W + 5 Math each = 30 questions maximum per day, reset at midnight).
   - Daily Hard Question of the Day on the **Dashboard** with a Hide control that only affects the Dashboard, and permanently inside the **Arcade**.
-- [ ] **M4.3 · Full Test Results Download & Shareable Public Link (`FullTest.tsx`, `App.tsx`):**
-  - On completed Adaptive Full Tests, add **Download Score Report (JSON / Printable Certificate)** and **Copy Public Share Link** (`/#/test?share=<encoded-verifiable-summary>`) so students can share a read-only summary card of their score & module breakdown.
-- [ ] **M4.4 · Account Full JSON Snapshot for AI (`Account.tsx`, `dataRights.ts`):** Single button in Account that exports/copies a structured JSON snapshot of the user's full profile, domain accuracy, missed skills, and history ready to paste into any AI tutor or Freebuff.
+- [x] **M4.3 · Full Test Results Download & Shareable Public Link (`FullTest.tsx`, `testShare.ts`):**
+  - Completed Adaptive Full Tests now offer **Download score report (JSON)**, **Print / save as PDF**, and **Copy public share link**.
+  - The link (`/#/test?share=<code>`) carries a validated, base64url-encoded summary (assessment, date, section estimates, raw counts, module breakdown). It needs no account, server row or database write, contains no name/email/question ids/answers, and a hand-edited code is clamped into the real ranges rather than rendered.
+- [x] **M4.4 · Account Full JSON Snapshot for AI (`Account.tsx`, `dataRights.ts`):** One button in Account copies a structured JSON snapshot (progress, streak, coins, domain accuracy, weakest domains, missed items with prompts but no keys, simulations, flashcards due, 14-day activity, preferences) ready to paste into any AI tutor or Freebuff. Nine tests pin both exports.
 - [x] **M4.5 · Flask Backend Security Hardening (`backend/app.py`, `backend/test_app.py`):** HTTPS redirect in production via `X-Forwarded-Proto` (health endpoint exempt so the uptime monitor keeps working), strict CSP allowing Desmos and blocking `object-src`/`unsafe-eval`, per-IP sliding-window rate limiting on `/api/*` with `Retry-After`, 1 MiB payload cap with a JSON 413, `robots.txt` disallowing `/admin`, and COOP/CORP headers. 19 backend tests pass.
 
 ### Milestone 5: Supabase Admin Console Wiring, Student Reply Notifications & Freebuff MCP Bridge

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { FigureView, StimulusView } from '../components/FigureView';
 import { HighlightableStimulus, type HighlightRecord } from '../components/HighlightableStimulus';
 import { MathText } from '../components/MathText';
@@ -23,6 +24,14 @@ import {
 import { checkAnswer } from '../lib/grading';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
+import {
+  buildSharedSummary,
+  decodeSharedSummary,
+  downloadJson,
+  encodeSharedSummary,
+  reportFileName,
+  shareUrl,
+} from '../lib/testShare';
 import type { TestAttempt, TestModuleResult } from '../lib/types';
 
 /**
@@ -84,6 +93,12 @@ function DesmosCollegeBoardWindow({ onClose }: { onClose: () => void }) {
 
 export function FullTestPage() {
   const app = useApp();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const sharedSummary = useMemo(
+    () => decodeSharedSummary(searchParams.get('share')),
+    [searchParams]
+  );
+  const [shareNotice, setShareNotice] = useState<string | null>(null);
 
   const [assessment, setAssessment] = useState<string>(() =>
     app.settings.assessment === 'PSAT 8/9' ? 'PSAT 8/9' : app.settings.assessment === 'SAT' ? 'SAT' : BLENDED_PSAT
@@ -1338,11 +1353,111 @@ export function FullTestPage() {
   }
 
   // -------------------------------------------------------------------------
+  const handleDownloadReport = () => {
+    if (!finishedAttempt) return;
+    const name = downloadJson(
+      {
+        generated_at: new Date().toISOString(),
+        notice:
+          'Your own practice simulation report. It contains this test\u2019s score summary and module breakdown only \u2014 no answer keys, no other students\u2019 data and no credentials.',
+        report: buildSharedSummary(finishedAttempt),
+      },
+      reportFileName(finishedAttempt)
+    );
+    setShareNotice(`Downloaded ${name}.`);
+  };
+
+  const handleCopyShareLink = async () => {
+    if (!finishedAttempt) return;
+    const code = encodeSharedSummary(buildSharedSummary(finishedAttempt));
+    const url = shareUrl(code, window.location.origin, window.location.pathname);
+    try {
+      await navigator.clipboard.writeText(url);
+      setShareNotice(
+        'Public link copied. It carries only the score summary \u2014 no name, email, answers or explanations.'
+      );
+    } catch {
+      setShareNotice(`Clipboard unavailable. Copy this link yourself: ${url}`);
+    }
+  };
+
+  const clearSharedView = () => {
+    const next = new URLSearchParams(searchParams);
+    next.delete('share');
+    setSearchParams(next, { replace: true });
+  };
+
   // Pre-Test Setup Card & Post-Test Score Report (inside normal app shell)
   // -------------------------------------------------------------------------
   return (
     <div>
-      {!finishedAttempt ? (
+      {sharedSummary && !finishedAttempt ? (
+        <Card>
+          <div className="row-between">
+            <div>
+              <h1>Shared Practice Result</h1>
+              <p className="muted">
+                A read-only practice summary shared from HDSAT. It contains no name, email,
+                question ids or answers — only the score card below.
+              </p>
+            </div>
+            <Badge tone="info">{sharedSummary.assessment}</Badge>
+          </div>
+
+          <div className="card-grid" style={{ marginTop: 12 }}>
+            <Stat
+              label="Estimated Total (400–1600)"
+              value={sharedSummary.total ?? '—'}
+              hint={sharedSummary.date || 'Practice estimate'}
+            />
+            <Stat label="Reading & Writing (200–800)" value={sharedSummary.rw ?? '—'} />
+            <Stat label="Math (200–800)" value={sharedSummary.math ?? '—'} />
+            <Stat
+              label="Raw correct"
+              value={
+                sharedSummary.rawTotal > 0
+                  ? `${sharedSummary.rawCorrect}/${sharedSummary.rawTotal}`
+                  : '—'
+              }
+            />
+          </div>
+
+          {sharedSummary.modules.length > 0 ? (
+            <table style={{ marginTop: 14 }}>
+              <thead>
+                <tr>
+                  <th>Section</th>
+                  <th>Module</th>
+                  <th>Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {sharedSummary.modules.map((module, index) => (
+                  <tr key={`${module.section}-${module.tier}-${index}`}>
+                    <td>{module.section}</td>
+                    <td>
+                      {module.tier === 'module1'
+                        ? 'Module 1 (Baseline)'
+                        : module.tier === 'upper'
+                        ? 'Module 2 (Routed Upper)'
+                        : 'Module 2 (Routed Lower)'}
+                    </td>
+                    <td>
+                      {module.correct} / {module.total}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          ) : null}
+
+          <div className="row" style={{ marginTop: 14 }}>
+            <Button onClick={clearSharedView}>Start your own simulation</Button>
+          </div>
+        </Card>
+      ) : null}
+
+      {!finishedAttempt && !sharedSummary ? (
         <Card>
           <div className="row-between">
             <div className="row">
@@ -1517,6 +1632,23 @@ export function FullTestPage() {
                 </Button>
               </div>
             </div>
+
+            <div className="row" style={{ marginTop: 10 }}>
+              <Button size="sm" variant="outline" onClick={handleDownloadReport}>
+                Download score report (JSON)
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => window.print()}>
+                Print / save as PDF
+              </Button>
+              <Button size="sm" variant="outline" onClick={() => void handleCopyShareLink()}>
+                Copy public share link
+              </Button>
+            </div>
+            {shareNotice ? (
+              <p className="muted" style={{ margin: '8px 0 0', wordBreak: 'break-word' }}>
+                {shareNotice}
+              </p>
+            ) : null}
 
             <div className="card-grid" style={{ marginTop: 12 }}>
               <Stat
