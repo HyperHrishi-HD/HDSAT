@@ -43,6 +43,8 @@ POLICY_PATHS = {
 # deployed header can be diffed against source. `unsafe-eval` is deliberately
 # absent: nothing in the bundle needs it. `frame-src`/`script-src` allow the
 # official College Board Desmos calculator, which the study workspace embeds.
+# The operator console's human check is computed locally, so no third-party
+# script or frame origin is needed.
 CONTENT_SECURITY_POLICY = (
     "default-src 'self'; "
     "script-src 'self' 'unsafe-inline' https://www.desmos.com; "

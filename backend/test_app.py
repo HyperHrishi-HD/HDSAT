@@ -160,6 +160,7 @@ def test_csp_allows_desmos_and_blocks_objects():
         assert csp == CONTENT_SECURITY_POLICY
         assert "https://www.desmos.com" in csp
         assert "frame-src https://www.desmos.com" in csp
+        assert "google.com" not in csp
         assert "object-src 'none'" in csp
         assert "unsafe-eval" not in csp
 

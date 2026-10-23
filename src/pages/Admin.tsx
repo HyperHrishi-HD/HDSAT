@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Badge, Icon, type IconName } from '../components/ui';
 import * as cloud from '../lib/cloud';
+import { sha256Hex } from '../lib/sha256';
 import { useApp } from '../lib/store';
 
 type SectionId = 'overview' | 'reports' | 'appeals' | 'students' | 'content';
@@ -40,6 +41,11 @@ function reasonLabel(reason: string): string {
   return text.charAt(0).toUpperCase() + text.slice(1);
 }
 
+function statusLabel(status: string): string {
+  const text = status.replace(/_/g, ' ');
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 function reporterLabel(row: {
   reporter_name: string | null;
   reporter_email: string | null;
@@ -56,52 +62,21 @@ const statusTone = (status: string) => {
   return 'neutral';
 };
 
-function Metric({
-  label,
-  value,
-  hint,
-  tone,
-}: {
-  label: string;
-  value: string;
-  hint: string;
-  tone?: 'warn' | 'bad';
-}) {
+function Metric({ label, value, tone }: { label: string; value: string; tone?: 'warn' | 'bad' }) {
   return (
     <div className="adm-metric">
       <span className="adm-metric-label">{label}</span>
       <span className={`adm-metric-value${tone ? ` is-${tone}` : ''}`}>{value}</span>
-      <span className="adm-metric-hint">{hint}</span>
     </div>
   );
 }
 
-function SectionHead({
-  title,
-  blurb,
-  action,
-  onAction,
-  actionDisabled,
-}: {
-  title: string;
-  blurb: string;
-  action?: string;
-  onAction?: () => void;
-  actionDisabled?: boolean;
-}) {
+function SectionHead({ title, action, onAction }: { title: string; action?: string; onAction?: () => void }) {
   return (
     <div className="adm-section-head">
-      <div>
-        <h1>{title}</h1>
-        <p>{blurb}</p>
-      </div>
+      <h1>{title}</h1>
       {action ? (
-        <button
-          type="button"
-          className="adm-btn"
-          onClick={onAction}
-          disabled={actionDisabled}
-        >
+        <button type="button" className="adm-btn adm-btn-ghost" onClick={onAction}>
           {action}
         </button>
       ) : null}
@@ -111,8 +86,58 @@ function SectionHead({
 
 type AccessState = 'checking' | 'ok' | 'locked' | 'signed-out' | 'unconfigured' | 'error';
 
-/** Where the short-lived console token lives. Cleared on lock, tab close and passcode change. */
+/** Where the short-lived console token lives. Removed on lock, tab close and passcode change. */
 const ADMIN_TOKEN_KEY = 'hdsat.admin.token';
+
+/* ---------------------------------------------------------------------------
+ * Human check: server-issued proof of work, solved in this tab.
+ * ------------------------------------------------------------------------- */
+const CHALLENGE_BATCH = 3000;
+const CHALLENGE_TIMEOUT_MS = 45000;
+
+/** Find a nonce whose SHA-256(salt + nonce) has the requested zero nibbles. */
+async function solveHumanChallenge(
+  challenge: cloud.AdminHumanChallenge,
+  onProgress: (nonce: number) => void
+): Promise<number> {
+  const prefix = '0'.repeat(challenge.difficulty);
+  const deadline = Date.now() + CHALLENGE_TIMEOUT_MS;
+  let nonce = 0;
+
+  while (Date.now() < deadline) {
+    for (let round = 0; round < CHALLENGE_BATCH; round += 1) {
+      if (sha256Hex(`${challenge.salt}${nonce}`).startsWith(prefix)) return nonce;
+      nonce += 1;
+    }
+    onProgress(nonce);
+    await new Promise((resolve) => window.setTimeout(resolve, 0));
+  }
+  throw new Error('The check took too long. Try again.');
+}
+
+/** Remove every console artefact this browser could hold. */
+function scrubConsoleTrace() {
+  if (typeof window === 'undefined') return;
+  try {
+    for (const store of [window.sessionStorage, window.localStorage]) {
+      for (let index = store.length - 1; index >= 0; index -= 1) {
+        const key = store.key(index);
+        if (key && key.toLowerCase().includes('admin')) store.removeItem(key);
+      }
+      store.removeItem(ADMIN_TOKEN_KEY);
+    }
+  } catch {
+    /* storage can be blocked; nothing else to clean there */
+  }
+  try {
+    for (const name of ['hdsat_admin', 'hdsat_admin_token', 'hdsat.admin.token']) {
+      document.cookie = `${name}=; Max-Age=0; path=/; SameSite=Strict`;
+      document.cookie = `${name}=; Max-Age=0; path=/; domain=${window.location.hostname}; SameSite=Strict`;
+    }
+  } catch {
+    /* cookies can be blocked too */
+  }
+}
 
 export function AdminPage() {
   const app = useApp();
@@ -123,9 +148,13 @@ export function AdminPage() {
   const [accessError, setAccessError] = useState<string | null>(null);
   const [accessToken, setAccessToken] = useState(0);
   const [adminToken, setAdminToken] = useState('');
-  const [gateQuestion, setGateQuestion] = useState<{ id: string; question: string } | null>(null);
+
+  const [challenge, setChallenge] = useState<cloud.AdminHumanChallenge | null>(null);
+  const [challengeState, setChallengeState] = useState<'loading' | 'ready' | 'running' | 'done' | 'error'>(
+    'loading'
+  );
+  const [solvedNonce, setSolvedNonce] = useState<number | null>(null);
   const [gatePasscode, setGatePasscode] = useState('');
-  const [gateCaptcha, setGateCaptcha] = useState('');
   const [gateMessage, setGateMessage] = useState<string | null>(null);
   const [gateBusy, setGateBusy] = useState(false);
 
@@ -157,11 +186,12 @@ export function AdminPage() {
   const [replyResult, setReplyResult] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
 
+  const challengeRun = useRef(0);
+
   const reload = () => setReloadToken((token) => token + 1);
 
-  // Access gate: a signed-in session, the operator passcode and a single-use
-  // captcha. The passcode is only ever compared inside Postgres against a bcrypt
-  // hash; this browser keeps a short-lived random token instead of the secret.
+  // Access gate: a signed-in session plus the operator passcode and reCAPTCHA.
+  // The passcode is only ever compared inside Postgres against a bcrypt hash.
   useEffect(() => {
     let cancelled = false;
     if (!app.cloudConfigured) {
@@ -189,7 +219,7 @@ export function AdminPage() {
           setAccess('ok');
           return;
         }
-        window.sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+        scrubConsoleTrace();
         setAdminToken('');
         setAccess('locked');
       })
@@ -203,28 +233,51 @@ export function AdminPage() {
     };
   }, [app.cloudConfigured, app.user, accessToken]);
 
-  // A fresh single-use captcha whenever the gate is shown or retried.
+  // A fresh single-use challenge whenever the gate opens or a try fails.
   useEffect(() => {
     if (access !== 'locked') return;
     let cancelled = false;
-    setGateQuestion(null);
+    setChallenge(null);
+    setSolvedNonce(null);
+    setChallengeState('loading');
     cloud
-      .adminCaptchaChallenge()
-      .then((challenge) => {
-        if (!cancelled) setGateQuestion(challenge);
+      .adminHumanCheck()
+      .then((next) => {
+        if (cancelled) return;
+        setChallenge(next);
+        setChallengeState('ready');
       })
       .catch((err) => {
-        if (!cancelled) setGateMessage((err as Error).message);
+        if (cancelled) return;
+        setGateMessage((err as Error).message);
+        setChallengeState('error');
       });
     return () => {
       cancelled = true;
     };
   }, [access, accessToken]);
 
+  const runHumanCheck = async () => {
+    if (!challenge || challengeState === 'running' || challengeState === 'done') return;
+    const run = challengeRun.current + 1;
+    challengeRun.current = run;
+    setChallengeState('running');
+    setGateMessage(null);
+    try {
+      const nonce = await solveHumanChallenge(challenge, () => undefined);
+      if (challengeRun.current !== run) return;
+      setSolvedNonce(nonce);
+      setChallengeState('done');
+    } catch (err) {
+      if (challengeRun.current !== run) return;
+      setGateMessage((err as Error).message);
+      setChallengeState('ready');
+    }
+  };
+
   useEffect(() => {
     setSelected(new Set());
     setActionMessage(null);
-    // A composer opened for one section must not float over the next one.
     setReplyTarget(null);
     setReplyTitle('');
     setReplyBody('');
@@ -297,8 +350,7 @@ export function AdminPage() {
           : [],
     [section, reportItems, appealItems]
   );
-  const allVisibleSelected =
-    visibleIds.length > 0 && visibleIds.every((id) => selected.has(id));
+  const allVisibleSelected = visibleIds.length > 0 && visibleIds.every((id) => selected.has(id));
 
   const toggleSelected = (id: string) => {
     setSelected((prev) => {
@@ -329,7 +381,7 @@ export function AdminPage() {
   };
 
   const setStatusForSelected = (status: string) =>
-    runAction(`Marked ${selected.size} item(s) ${status}.`, async () => {
+    runAction(`Updated ${selected.size} item(s).`, async () => {
       const ids = [...selected];
       for (const id of ids) {
         if (section === 'reports') await cloud.adminSetReportStatus(adminToken, id, status);
@@ -350,50 +402,41 @@ export function AdminPage() {
             ? await cloud.adminBatchDeleteReports(adminToken, { ids })
             : await cloud.adminBatchDeleteAppeals(adminToken, { ids });
         setSelected(new Set());
-        setActionMessage(`Deleted ${deleted} ${section === 'reports' ? 'report' : 'appeal'}(s).`);
+        setActionMessage(`Deleted ${deleted}.`);
       },
     });
 
   const cleanupResolved = () =>
     setPendingConfirm({
-      prompt: 'Delete every resolved report older than 7 days? This cannot be undone.',
+      prompt: 'Delete every resolved report older than 7 days?',
       run: async () => {
         const deleted = await cloud.adminBatchDeleteReports(adminToken, {
           status: 'resolved',
           olderThanDays: 7,
         });
-        setActionMessage(`Deleted ${deleted} old resolved report(s).`);
+        setActionMessage(`Deleted ${deleted} old report(s).`);
       },
     });
 
   const deleteStudentReports = (row: cloud.AdminStudentRow) =>
     setPendingConfirm({
-      prompt: `Delete every question report from ${
-        row.email ?? row.display_name ?? 'this student'
-      }?`,
+      prompt: `Delete every report from ${row.email ?? row.display_name ?? 'this student'}?`,
       run: async () => {
         const deleted = await cloud.adminBatchDeleteReports(adminToken, { userId: row.user_id });
-        setActionMessage(`Deleted ${deleted} report(s) from that student.`);
+        setActionMessage(`Deleted ${deleted} report(s).`);
       },
     });
 
   const deleteStudentAppeals = (row: cloud.AdminStudentRow) =>
     setPendingConfirm({
-      prompt: `Delete every appeal from ${
-        row.email ?? row.display_name ?? 'this student'
-      }?`,
+      prompt: `Delete every appeal from ${row.email ?? row.display_name ?? 'this student'}?`,
       run: async () => {
         const deleted = await cloud.adminBatchDeleteAppeals(adminToken, { userId: row.user_id });
-        setActionMessage(`Deleted ${deleted} appeal(s) from that student.`);
+        setActionMessage(`Deleted ${deleted} appeal(s).`);
       },
     });
 
-  const openReply = (
-    kind: 'report' | 'appeal',
-    id: string,
-    chip: string,
-    contact: string | null
-  ) => {
+  const openReply = (kind: 'report' | 'appeal', id: string, chip: string, contact: string | null) => {
     setReplyTarget({ kind, id, chip, contact });
     setReplyTitle(kind === 'report' ? 'Reply to your question report' : 'Reply to your appeal');
     setReplyBody('');
@@ -403,7 +446,7 @@ export function AdminPage() {
   const sendReply = async () => {
     if (!replyTarget) return;
     if (!replyBody.trim()) {
-      setReplyResult('Write a message before sending.');
+      setReplyResult('Write a message first.');
       return;
     }
     setBusy(true);
@@ -416,9 +459,7 @@ export function AdminPage() {
         body: replyBody.trim(),
       });
       setReplyResult(
-        result.delivered
-          ? 'Delivered — the student will see this once on their Dashboard.'
-          : 'This report has no account attached, so it cannot reach a Dashboard; reply to the contact email instead.'
+        result.delivered ? 'Sent to the student’s Dashboard.' : 'No account attached — reply by email.'
       );
       setReplyBody('');
       reload();
@@ -429,6 +470,13 @@ export function AdminPage() {
     }
   };
 
+  const refreshChallenge = () => {
+    setSolvedNonce(null);
+    setChallenge(null);
+    setChallengeState('loading');
+    setAccessToken((value) => value + 1);
+  };
+
   const backToApp = () => {
     if (typeof window !== 'undefined' && window.location.pathname !== '/') {
       window.history.replaceState(null, '', '/');
@@ -437,99 +485,107 @@ export function AdminPage() {
   };
 
   const unlockConsole = async () => {
-    if (!gateQuestion) return;
+    if (solvedNonce === null || !challenge) {
+      setGateMessage('Complete the human check first.');
+      return;
+    }
     setGateBusy(true);
     setGateMessage(null);
     try {
       const result = await cloud.adminUnlock({
         passcode: gatePasscode,
-        captchaId: gateQuestion.id,
-        captchaAnswer: gateCaptcha,
+        challengeId: challenge.id,
+        nonce: solvedNonce,
       });
       if (result.ok && result.token) {
         window.sessionStorage.setItem(ADMIN_TOKEN_KEY, result.token);
         setAdminToken(result.token);
         setGatePasscode('');
-        setGateCaptcha('');
+        setGateMessage(null);
         setAccess('ok');
         reload();
         return;
       }
       setGateMessage(result.message ?? 'Could not unlock the console.');
       setGatePasscode('');
-      setGateCaptcha('');
-      const next = await cloud.adminCaptchaChallenge();
-      setGateQuestion(next);
+      refreshChallenge();
     } catch (err) {
       setGateMessage((err as Error).message);
+      refreshChallenge();
     } finally {
       setGateBusy(false);
     }
   };
 
+  // Lock: revoke server-side, wipe storage/cookies, drop every in-memory copy,
+  // remove the admin route from history and leave the console.
   const lockConsole = async () => {
     const current = adminToken;
-    window.sessionStorage.removeItem(ADMIN_TOKEN_KEY);
+    scrubConsoleTrace();
     setAdminToken('');
     setReports(null);
     setAppeals(null);
     setStudents(null);
     setSelected(new Set());
-    setAccess('locked');
-    setAccessToken((value) => value + 1);
+    setReplyTarget(null);
+    setReplyTitle('');
+    setReplyBody('');
+    setReplyResult(null);
+    setActionMessage(null);
+    setGatePasscode('');
+    setGateMessage(null);
+    setChallenge(null);
+    setSolvedNonce(null);
+    setChallengeState('loading');
+    challengeRun.current += 1;
     if (current) {
       try {
         await cloud.adminLock(current);
       } catch {
-        /* the token is already gone locally and expires on the server */
+        /* token is gone locally and expires on the server */
       }
     }
+    if (typeof window !== 'undefined') window.history.replaceState(null, '', '/');
+    navigate('/', { replace: true });
   };
 
   const permissionCard = () => {
     if (access === 'unconfigured') {
       return (
-        <section className="adm-card">
-          <h2>Supabase is not configured</h2>
-          <p className="adm-dim">
-            This console reads from Supabase. Set <code>VITE_SUPABASE_URL</code> and{' '}
-            <code>VITE_SUPABASE_ANON_KEY</code> for this deployment, then reload.
-          </p>
+        <section className="adm-gate">
+          <h1>Console unavailable</h1>
+          <p className="adm-gate-msg">Supabase is not configured for this build.</p>
         </section>
       );
     }
 
     if (access === 'signed-out') {
       return (
-        <section className="adm-card">
-          <h2>Sign in first</h2>
-          <p className="adm-dim">
-            The console asks for two things: a signed-in session, and the operator passcode plus a
-            captcha. It is not tied to any particular account.
-          </p>
-          <a className="adm-btn" href="#/account">
+        <section className="adm-gate">
+          <h1>Sign in required</h1>
+          <button type="button" className="adm-btn adm-btn-wide" onClick={() => navigate('/account')}>
             Go to sign in
-          </a>
+          </button>
         </section>
       );
     }
 
     if (access === 'checking') {
       return (
-        <section className="adm-card">
-          <p className="adm-dim">Restoring your console session…</p>
+        <section className="adm-gate">
+          <p className="adm-gate-msg">Checking session…</p>
         </section>
       );
     }
 
     if (access === 'error') {
       return (
-        <section className="adm-card">
-          <h2>Could not reach the console</h2>
-          <p className="adm-dim">{accessError ?? 'Unknown error.'}</p>
+        <section className="adm-gate">
+          <h1>Could not reach the console</h1>
+          <p className="adm-gate-msg">{accessError ?? 'Unknown error.'}</p>
           <button
             type="button"
-            className="adm-btn"
+            className="adm-btn adm-btn-wide"
             onClick={() => setAccessToken((value) => value + 1)}
           >
             Try again
@@ -538,104 +594,93 @@ export function AdminPage() {
       );
     }
 
+    if (challengeState === 'loading' && !challenge) {
+      return (
+        <section className="adm-gate">
+          <p className="adm-gate-msg">Loading…</p>
+        </section>
+      );
+    }
+
+    if (challengeState === 'error' && !challenge) {
+      return (
+        <section className="adm-gate">
+          <h1>Operator access</h1>
+          <p className="adm-gate-msg">{gateMessage ?? 'The human check could not load.'}</p>
+          <button type="button" className="adm-btn adm-btn-wide" onClick={refreshChallenge}>
+            Try again
+          </button>
+        </section>
+      );
+    }
+
+    const verified = challengeState === 'done' && solvedNonce !== null;
+    const checking = challengeState === 'running';
+
     return (
-      <section className="adm-card">
-        <h2>Operator passcode</h2>
-        <p className="adm-dim">
-          Enter the operator passcode and answer the captcha. Five wrong tries lock the console for
-          15 minutes. The passcode is compared inside the database against a bcrypt hash — it is
-          never stored in this app, never logged, and never sent anywhere except that check.
-        </p>
-        <div className="adm-composer">
-          <label className="adm-dim" htmlFor="admin-passcode">
-            Passcode
-          </label>
+      <section className="adm-gate">
+        <h1>Operator access</h1>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault();
+            if (verified) void unlockConsole();
+          }}
+        >
+          <label htmlFor="admin-passcode">Passcode</label>
           <input
             id="admin-passcode"
             type="password"
             autoComplete="off"
             spellCheck={false}
+            autoFocus
             value={gatePasscode}
-            onChange={(e) => setGatePasscode(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') void unlockConsole();
-            }}
-            placeholder="Operator passcode"
-            aria-label="Operator passcode"
+            onChange={(event) => setGatePasscode(event.target.value)}
+            placeholder="Passcode"
           />
-          <label className="adm-dim" htmlFor="admin-captcha">
-            Captcha {gateQuestion ? `— ${gateQuestion.question}` : '— loading…'}
-          </label>
-          <input
-            id="admin-captcha"
-            type="text"
-            inputMode="numeric"
-            autoComplete="off"
-            value={gateCaptcha}
-            onChange={(e) => setGateCaptcha(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') void unlockConsole();
-            }}
-            placeholder="Answer the captcha"
-            aria-label="Captcha answer"
-          />
-          <div className="adm-composer-foot">
-            <button
-              type="button"
-              className="adm-btn"
-              onClick={() => void unlockConsole()}
-              disabled={gateBusy || !gateQuestion || !gatePasscode || !gateCaptcha}
-            >
-              {gateBusy ? 'Checking…' : 'Unlock console'}
-            </button>
-            <button
-              type="button"
-              className="adm-btn adm-btn-ghost"
-              disabled={gateBusy}
-              onClick={() => {
-                setGateMessage(null);
-                setAccessToken((value) => value + 1);
-              }}
-            >
-              New captcha
-            </button>
-          </div>
-          {gateMessage ? <p className="adm-dim">{gateMessage}</p> : null}
-        </div>
+          <button
+            type="button"
+            role="checkbox"
+            aria-checked={verified}
+            className={`adm-human${verified ? ' is-checked' : ''}`}
+            onClick={() => void runHumanCheck()}
+            disabled={checking || verified || !challenge}
+          >
+            <span className="adm-human-box" aria-hidden="true">
+              {verified ? '✓' : checking ? '•' : ''}
+            </span>
+            <span className="adm-human-label">
+              {verified ? 'Verified' : checking ? 'Checking…' : 'I\u2019m not a robot'}
+            </span>
+          </button>
+          {gateMessage ? (
+            <p className="adm-gate-msg" role="alert">
+              {gateMessage}
+            </p>
+          ) : null}
+          <button type="submit" className="adm-btn adm-btn-wide" disabled={gateBusy || !gatePasscode || !verified}>
+            {gateBusy ? 'Checking…' : 'Unlock'}
+          </button>
+        </form>
       </section>
     );
   };
 
-  const replyComposer = () => (
-    <section className="adm-card">
-      <div className="adm-card-head">
-        <h2>Reply composer</h2>
-        <span className="adm-dim">
-          {replyTarget ? 'One notification, shown once on the student Dashboard' : 'Pick a row'}
-        </span>
-      </div>
-      {!replyTarget ? (
-        <p className="adm-dim">Use the Reply action on a report or appeal to write back.</p>
-      ) : (
+  const replyComposer = () =>
+    replyTarget ? (
+      <section className="adm-card">
+        <div className="adm-card-head">
+          <h2>Reply</h2>
+          <span className="adm-chip">{replyTarget.chip}</span>
+        </div>
         <div className="adm-composer">
-          <div className="adm-composer-to">
-            <span className="adm-dim">To</span>
-            <span className="adm-chip">{replyTarget.chip}</span>
-          </div>
-          {replyTarget.contact ? (
-            <p className="adm-dim" style={{ margin: 0 }}>
-              Contact email: {replyTarget.contact}
-            </p>
-          ) : (
-            <p className="adm-dim" style={{ margin: 0 }}>
-              No contact email on file for this row.
-            </p>
-          )}
+          <p className="adm-dim" style={{ margin: 0 }}>
+            {replyTarget.contact ?? 'No contact email on file.'}
+          </p>
           <input
             type="text"
             value={replyTitle}
             maxLength={140}
-            onChange={(e) => setReplyTitle(e.target.value)}
+            onChange={(event) => setReplyTitle(event.target.value)}
             placeholder="Subject"
             aria-label="Reply subject"
           />
@@ -643,8 +688,8 @@ export function AdminPage() {
             value={replyBody}
             maxLength={2000}
             rows={4}
-            onChange={(e) => setReplyBody(e.target.value)}
-            placeholder="Explain what you found or changed. This appears on the student's Dashboard once."
+            onChange={(event) => setReplyBody(event.target.value)}
+            placeholder="Write your reply…"
             aria-label="Reply message"
           />
           <div className="adm-composer-foot">
@@ -654,7 +699,7 @@ export function AdminPage() {
               onClick={() => void sendReply()}
               disabled={busy || !replyBody.trim()}
             >
-              {busy ? 'Sending…' : 'Send reply'}
+              {busy ? 'Sending…' : 'Send'}
             </button>
             <button
               type="button"
@@ -664,34 +709,33 @@ export function AdminPage() {
                 setReplyResult(null);
               }}
             >
-              Close
+              Cancel
             </button>
           </div>
           {replyResult ? (
-            <p className="adm-dim" style={{ margin: 0 }}>
+            <p className="adm-dim" style={{ margin: 0 }} role="status">
               {replyResult}
             </p>
           ) : null}
         </div>
-      )}
-    </section>
-  );
+      </section>
+    ) : null;
 
   const confirmBar = () =>
     pendingConfirm ? (
-      <div className="adm-filters" role="alert">
-        <span className="adm-filter">{pendingConfirm.prompt}</span>
+      <div className="adm-confirm" role="alert">
+        <span>{pendingConfirm.prompt}</span>
         <button
           type="button"
-          className="adm-row-action"
+          className="adm-btn"
           disabled={busy}
           onClick={() => void runAction(null, pendingConfirm.run)}
         >
-          Yes, delete
+          Delete
         </button>
         <button
           type="button"
-          className="adm-row-action"
+          className="adm-btn adm-btn-ghost"
           onClick={() => setPendingConfirm(null)}
           disabled={busy}
         >
@@ -700,57 +744,44 @@ export function AdminPage() {
       </div>
     ) : null;
 
-  const batchBar = () => (
-    <>
-      <div className="adm-filters">
+  const batchBar = () =>
+    selected.size === 0 ? null : (
+      <div className="adm-batch">
+        <span className="adm-batch-count">{selected.size} selected</span>
         <button
           type="button"
           className="adm-row-action"
-          disabled={selected.size === 0 || busy}
+          disabled={busy}
           onClick={() => void setStatusForSelected('resolved')}
         >
-          Mark resolved ({selected.size})
+          Resolve
         </button>
         <button
           type="button"
           className="adm-row-action"
-          disabled={selected.size === 0 || busy}
-          onClick={() =>
-            void setStatusForSelected(section === 'reports' ? 'dismissed' : 'rejected')
-          }
+          disabled={busy}
+          onClick={() => void setStatusForSelected(section === 'reports' ? 'dismissed' : 'rejected')}
         >
-          Mark {section === 'reports' ? 'dismissed' : 'rejected'} ({selected.size})
+          {section === 'reports' ? 'Dismiss' : 'Reject'}
         </button>
-        <button
-          type="button"
-          className="adm-row-action"
-          disabled={selected.size === 0 || busy}
-          onClick={deleteSelected}
-        >
-          Delete selected ({selected.size})
+        <button type="button" className="adm-row-action" disabled={busy} onClick={deleteSelected}>
+          Delete
         </button>
-        {section === 'reports' ? (
-          <button type="button" className="adm-row-action" disabled={busy} onClick={cleanupResolved}>
-            Delete resolved older than 7 days
-          </button>
-        ) : null}
       </div>
-      {confirmBar()}
-    </>
-  );
+    );
 
   const filterRow = (statuses: string[], withReason: boolean) => (
-    <div className="adm-filters">
+    <div className="adm-toolbar">
       <select
         className="adm-filter"
         value={statusFilter}
-        onChange={(e) => setStatusFilter(e.target.value)}
+        onChange={(event) => setStatusFilter(event.target.value)}
         aria-label="Filter by status"
       >
-        <option value="">Any status</option>
+        <option value="">All statuses</option>
         {statuses.map((status) => (
           <option key={status} value={status}>
-            {status.replace(/_/g, ' ')}
+            {statusLabel(status)}
           </option>
         ))}
       </select>
@@ -758,7 +789,7 @@ export function AdminPage() {
         <select
           className="adm-filter"
           value={reasonFilter}
-          onChange={(e) => setReasonFilter(e.target.value)}
+          onChange={(event) => setReasonFilter(event.target.value)}
           aria-label="Filter by reason"
         >
           <option value="">All reasons</option>
@@ -769,9 +800,19 @@ export function AdminPage() {
           ))}
         </select>
       ) : null}
-      <button type="button" className="adm-row-action" onClick={reload} disabled={loading}>
+      <button
+        type="button"
+        className="adm-row-action adm-toolbar-end"
+        onClick={reload}
+        disabled={loading}
+      >
         {loading ? 'Refreshing…' : 'Refresh'}
       </button>
+      {section === 'reports' ? (
+        <button type="button" className="adm-row-action" disabled={busy} onClick={cleanupResolved}>
+          Clear resolved (7d+)
+        </button>
+      ) : null}
     </div>
   );
 
@@ -780,17 +821,15 @@ export function AdminPage() {
       ...reportItems.map((row) => ({
         id: `r-${row.id}`,
         at: row.created_at,
-        text: `Report ${shortId(row.id)} · ${reasonLabel(row.reason)} on ${row.question_id}`,
+        text: `Report ${shortId(row.id)} · ${reasonLabel(row.reason)} · ${row.question_id}`,
       })),
       ...appealItems.map((row) => ({
         id: `a-${row.id}`,
         at: row.created_at,
-        text: `Appeal ${row.reference} · ${row.category.replace(/_/g, ' ')}`,
+        text: `Appeal ${row.reference} · ${reasonLabel(row.category)}`,
       })),
     ];
-    return merged
-      .sort((a, b) => b.at.localeCompare(a.at))
-      .slice(0, 6);
+    return merged.sort((a, b) => b.at.localeCompare(a.at)).slice(0, 6);
   }, [reportItems, appealItems]);
 
   return (
@@ -807,7 +846,6 @@ export function AdminPage() {
         </div>
 
         <div className="adm-top-right">
-          <span className="adm-preview-tag">Live data</span>
           {access === 'ok' ? (
             <button type="button" className="adm-back" onClick={() => void lockConsole()}>
               <Icon name="shield" size={14} />
@@ -836,13 +874,6 @@ export function AdminPage() {
               {item.id === 'appeals' && openAppeals > 0 ? <em>{openAppeals}</em> : null}
             </button>
           ))}
-
-          <div className="adm-rail-foot">
-            <span className="adm-rail-note">
-              Replies reach the student&apos;s Dashboard once. Deleting a report never changes the
-              question for anyone else.
-            </span>
-          </div>
         </nav>
 
         <main className="adm-main">
@@ -851,61 +882,50 @@ export function AdminPage() {
           {access === 'ok' ? (
             <>
               {error ? (
-                <section className="adm-card">
-                  <p className="adm-dim">Could not load this section: {error}</p>
+                <div className="adm-confirm" role="alert">
+                  <span>{error}</span>
                   <button type="button" className="adm-row-action" onClick={reload}>
                     Try again
                   </button>
-                </section>
+                </div>
               ) : null}
               {actionMessage ? (
-                <p className="adm-dim" style={{ margin: '0 0 10px' }} role="status">
+                <p className="adm-status" role="status">
                   {actionMessage}
                 </p>
               ) : null}
 
               {section === 'overview' ? (
                 <>
-                  <SectionHead
-                    title="Overview"
-                    blurb="Everything waiting on a human: content reports, safety appeals and catalog health."
-                  />
+                  <SectionHead title="Overview" />
 
                   <div className="adm-metrics">
                     <Metric
                       label="Open reports"
                       value={String(openReports)}
-                      hint={`${reportItems.length} loaded of ${reports?.total ?? 0}`}
                       tone={openReports > 0 ? 'warn' : undefined}
                     />
                     <Metric
-                      label="Appeals awaiting reply"
+                      label="Open appeals"
                       value={String(openAppeals)}
-                      hint={`${appealItems.length} loaded of ${appeals?.total ?? 0}`}
                       tone={openAppeals > 0 ? 'warn' : undefined}
                     />
-                    <Metric
-                      label="Questions in bank"
-                      value={app.questions.length.toLocaleString()}
-                      hint="From this deployment's catalog"
-                    />
-                    <Metric
-                      label="Flashcards"
-                      value={app.flashcards.length.toLocaleString()}
-                      hint="Spaced-repetition deck"
-                    />
+                    <Metric label="Questions" value={app.questions.length.toLocaleString()} />
+                    <Metric label="Flashcards" value={app.flashcards.length.toLocaleString()} />
                   </div>
 
                   <div className="adm-columns">
                     <section className="adm-card">
                       <div className="adm-card-head">
-                        <h2>Triage queue</h2>
-                        <span className="adm-dim">Newest first</span>
+                        <h2>Latest reports</h2>
+                        <button type="button" className="adm-row-action" onClick={() => setSection('reports')}>
+                          View all
+                        </button>
                       </div>
                       {loading && reportItems.length === 0 ? (
-                        <p className="adm-dim">Loading reports…</p>
+                        <p className="adm-dim">Loading…</p>
                       ) : reportItems.length === 0 ? (
-                        <p className="adm-dim">No reports yet.</p>
+                        <p className="adm-dim">No reports.</p>
                       ) : (
                         <ul className="adm-queue">
                           {reportItems.slice(0, 4).map((row) => (
@@ -914,12 +934,11 @@ export function AdminPage() {
                               <div>
                                 <strong>{reasonLabel(row.reason)}</strong>
                                 <span className="adm-dim">
-                                  {shortId(row.id)} ·{' '}
-                                  <span className="mono">{row.question_id}</span> ·{' '}
-                                  {relativeAge(row.created_at)} ago
+                                  {shortId(row.id)} · <span className="mono">{row.question_id}</span> ·{' '}
+                                  {relativeAge(row.created_at)}
                                 </span>
                               </div>
-                              <Badge tone={statusTone(row.status)}>{row.status}</Badge>
+                              <Badge tone={statusTone(row.status)}>{statusLabel(row.status)}</Badge>
                             </li>
                           ))}
                         </ul>
@@ -928,15 +947,17 @@ export function AdminPage() {
 
                     <section className="adm-card">
                       <div className="adm-card-head">
-                        <h2>Appeals by status</h2>
-                        <span className="adm-dim">{appeals?.total ?? 0} total</span>
+                        <h2>Appeals</h2>
+                        <button type="button" className="adm-row-action" onClick={() => setSection('appeals')}>
+                          View all
+                        </button>
                       </div>
                       <ul className="adm-checks">
                         {APPEAL_STATUSES.map((status) => {
                           const count = appealItems.filter((row) => row.status === status).length;
                           return (
                             <li key={status}>
-                              <span>{status.replace(/_/g, ' ')}</span>
+                              <span>{statusLabel(status)}</span>
                               <Badge tone={statusTone(status)}>{count}</Badge>
                             </li>
                           );
@@ -948,10 +969,9 @@ export function AdminPage() {
                   <section className="adm-card">
                     <div className="adm-card-head">
                       <h2>Recent activity</h2>
-                      <span className="adm-dim">Reports and appeals</span>
                     </div>
                     {overviewActivity.length === 0 ? (
-                      <p className="adm-dim">Nothing has been reported yet.</p>
+                      <p className="adm-dim">Nothing yet.</p>
                     ) : (
                       <ul className="adm-timeline">
                         {overviewActivity.map((item) => (
@@ -968,91 +988,86 @@ export function AdminPage() {
 
               {section === 'reports' ? (
                 <>
-                  <SectionHead
-                    title="Question reports"
-                    blurb="Student-submitted content problems. Reviewing one never changes the item for anyone else."
-                  />
+                  <SectionHead title="Question reports" />
                   {filterRow(REPORT_STATUSES, true)}
                   {batchBar()}
+                  {confirmBar()}
 
                   <section className="adm-card adm-card-flush">
-                    <table className="adm-table">
-                      <thead>
-                        <tr>
-                          <th>
-                            <input
-                              type="checkbox"
-                              checked={allVisibleSelected}
-                              onChange={toggleSelectAll}
-                              aria-label="Select all visible reports"
-                            />
-                          </th>
-                          <th>Report</th>
-                          <th>Question</th>
-                          <th>Reason</th>
-                          <th>Reporter</th>
-                          <th>Age</th>
-                          <th>Status</th>
-                          <th aria-label="Actions" />
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {reportItems.map((row) => (
-                          <tr key={row.id}>
-                            <td>
+                    <div className="adm-table-wrap">
+                      <table className="adm-table">
+                        <thead>
+                          <tr>
+                            <th>
                               <input
                                 type="checkbox"
-                                checked={selected.has(row.id)}
-                                onChange={() => toggleSelected(row.id)}
-                                aria-label={`Select report ${shortId(row.id)}`}
+                                checked={allVisibleSelected}
+                                onChange={toggleSelectAll}
+                                aria-label="Select all reports"
                               />
-                            </td>
-                            <td className="mono">{shortId(row.id)}</td>
-                            <td className="mono">{row.question_id}</td>
-                            <td>
-                              {reasonLabel(row.reason)}
-                              {row.details ? (
-                                <div className="adm-dim" style={{ maxWidth: 320 }}>
-                                  {row.details.slice(0, 160)}
-                                </div>
-                              ) : null}
-                            </td>
-                            <td className="adm-dim">{reporterLabel(row)}</td>
-                            <td className="adm-dim">{relativeAge(row.created_at)}</td>
-                            <td>
-                              <Badge tone={statusTone(row.status)}>{row.status}</Badge>
-                            </td>
-                            <td>
-                              <button
-                                type="button"
-                                className="adm-row-action"
-                                onClick={() =>
-                                  openReply(
-                                    'report',
-                                    row.id,
-                                    `Report ${shortId(row.id)} · ${reporterLabel(row)}`,
-                                    row.contact_email ?? row.reporter_email
-                                  )
-                                }
-                              >
-                                Reply
-                              </button>
-                            </td>
+                            </th>
+                            <th>Report</th>
+                            <th>Question</th>
+                            <th>Reason</th>
+                            <th>Reporter</th>
+                            <th>Age</th>
+                            <th>Status</th>
+                            <th aria-label="Actions" />
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {reportItems.map((row) => (
+                            <tr key={row.id}>
+                              <td>
+                                <input
+                                  type="checkbox"
+                                  checked={selected.has(row.id)}
+                                  onChange={() => toggleSelected(row.id)}
+                                  aria-label={`Select report ${shortId(row.id)}`}
+                                />
+                              </td>
+                              <td className="mono">{shortId(row.id)}</td>
+                              <td className="mono">{row.question_id}</td>
+                              <td>
+                                {reasonLabel(row.reason)}
+                                {row.details ? (
+                                  <div className="adm-dim adm-clip">{row.details}</div>
+                                ) : null}
+                              </td>
+                              <td className="adm-dim">{reporterLabel(row)}</td>
+                              <td className="adm-dim">{relativeAge(row.created_at)}</td>
+                              <td>
+                                <Badge tone={statusTone(row.status)}>{statusLabel(row.status)}</Badge>
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="adm-row-action"
+                                  onClick={() =>
+                                    openReply(
+                                      'report',
+                                      row.id,
+                                      `Report ${shortId(row.id)}`,
+                                      row.contact_email ?? row.reporter_email
+                                    )
+                                  }
+                                >
+                                  Reply
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                     <div className="adm-card-foot">
                       <span className="adm-dim">
                         {loading
                           ? 'Loading…'
                           : reportItems.length === 0
-                            ? 'No reports yet.'
-                            : `Showing ${reportItems.length} of ${reports?.total ?? 0} reports`}
+                            ? 'No reports.'
+                            : `${reportItems.length} of ${reports?.total ?? 0} reports`}
                       </span>
-                      <button type="button" className="adm-row-action" onClick={reload}>
-                        Refresh
-                      </button>
                     </div>
                   </section>
                   {replyComposer()}
@@ -1061,104 +1076,84 @@ export function AdminPage() {
 
               {section === 'appeals' ? (
                 <>
-                  <SectionHead
-                    title="Appeals & safety"
-                    blurb="Copyright, access, data and safety requests. The published first-response target is 72 hours."
-                  />
-
-                  <div className="adm-metrics">
-                    <Metric label="Open" value={String(openAppeals)} hint="Received or in review" />
-                    <Metric
-                      label="Total"
-                      value={String(appeals?.total ?? 0)}
-                      hint="All categories"
-                    />
-                    <Metric
-                      label="Resolved"
-                      value={String(
-                        appealItems.filter((row) => row.status === 'resolved').length
-                      )}
-                      hint="Loaded rows only"
-                    />
-                  </div>
-
+                  <SectionHead title="Appeals & safety" />
                   {filterRow(APPEAL_STATUSES, false)}
                   {batchBar()}
+                  {confirmBar()}
 
                   <section className="adm-card adm-card-flush">
-                    <table className="adm-table">
-                      <thead>
-                        <tr>
-                          <th>
-                            <input
-                              type="checkbox"
-                              checked={allVisibleSelected}
-                              onChange={toggleSelectAll}
-                              aria-label="Select all visible appeals"
-                            />
-                          </th>
-                          <th>Ref</th>
-                          <th>Category</th>
-                          <th>Subject</th>
-                          <th>Reporter</th>
-                          <th>Age</th>
-                          <th>Status</th>
-                          <th aria-label="Actions" />
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {appealItems.map((row) => (
-                          <tr key={row.id}>
-                            <td>
+                    <div className="adm-table-wrap">
+                      <table className="adm-table">
+                        <thead>
+                          <tr>
+                            <th>
                               <input
                                 type="checkbox"
-                                checked={selected.has(row.id)}
-                                onChange={() => toggleSelected(row.id)}
-                                aria-label={`Select appeal ${row.reference}`}
+                                checked={allVisibleSelected}
+                                onChange={toggleSelectAll}
+                                aria-label="Select all appeals"
                               />
-                            </td>
-                            <td className="mono">{row.reference}</td>
-                            <td>{row.category.replace(/_/g, ' ')}</td>
-                            <td className="adm-dim">
-                              {row.subject}
-                              <div style={{ maxWidth: 320 }}>{row.details.slice(0, 160)}</div>
-                            </td>
-                            <td className="adm-dim">{reporterLabel(row)}</td>
-                            <td className="adm-dim">{relativeAge(row.created_at)}</td>
-                            <td>
-                              <Badge tone={statusTone(row.status)}>{row.status}</Badge>
-                            </td>
-                            <td>
-                              <button
-                                type="button"
-                                className="adm-row-action"
-                                onClick={() =>
-                                  openReply(
-                                    'appeal',
-                                    row.id,
-                                    `Appeal ${row.reference} · ${reporterLabel(row)}`,
-                                    row.contact_email ?? row.reporter_email
-                                  )
-                                }
-                              >
-                                Reply
-                              </button>
-                            </td>
+                            </th>
+                            <th>Reference</th>
+                            <th>Category</th>
+                            <th>Subject</th>
+                            <th>Reporter</th>
+                            <th>Age</th>
+                            <th>Status</th>
+                            <th aria-label="Actions" />
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {appealItems.map((row) => (
+                            <tr key={row.id}>
+                              <td>
+                                <input
+                                  type="checkbox"
+                                  checked={selected.has(row.id)}
+                                  onChange={() => toggleSelected(row.id)}
+                                  aria-label={`Select appeal ${row.reference}`}
+                                />
+                              </td>
+                              <td className="mono">{row.reference}</td>
+                              <td>{reasonLabel(row.category)}</td>
+                              <td>
+                                {row.subject}
+                                <div className="adm-dim adm-clip">{row.details}</div>
+                              </td>
+                              <td className="adm-dim">{reporterLabel(row)}</td>
+                              <td className="adm-dim">{relativeAge(row.created_at)}</td>
+                              <td>
+                                <Badge tone={statusTone(row.status)}>{statusLabel(row.status)}</Badge>
+                              </td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="adm-row-action"
+                                  onClick={() =>
+                                    openReply(
+                                      'appeal',
+                                      row.id,
+                                      `Appeal ${row.reference}`,
+                                      row.contact_email ?? row.reporter_email
+                                    )
+                                  }
+                                >
+                                  Reply
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                     <div className="adm-card-foot">
                       <span className="adm-dim">
                         {loading
                           ? 'Loading…'
                           : appealItems.length === 0
-                            ? 'No appeals yet.'
-                            : `Showing ${appealItems.length} of ${appeals?.total ?? 0} appeals`}
+                            ? 'No appeals.'
+                            : `${appealItems.length} of ${appeals?.total ?? 0} appeals`}
                       </span>
-                      <button type="button" className="adm-row-action" onClick={reload}>
-                        Refresh
-                      </button>
                     </div>
                   </section>
                   {replyComposer()}
@@ -1167,96 +1162,87 @@ export function AdminPage() {
 
               {section === 'students' ? (
                 <>
-                  <SectionHead
-                    title="Students"
-                    blurb="Accounts that have practised here, with the aggregate counts the console needs. Account deletion stays self-serve in the app."
-                  />
+                  <SectionHead title="Students" />
+                  {confirmBar()}
 
                   <section className="adm-card adm-card-flush">
-                    <table className="adm-table">
-                      <thead>
-                        <tr>
-                          <th>Student</th>
-                          <th>Confirmed</th>
-                          <th>Streak</th>
-                          <th>Coins</th>
-                          <th>Attempts</th>
-                          <th>Reports</th>
-                          <th>Joined</th>
-                          <th aria-label="Actions" />
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(students?.items ?? []).map((row) => (
-                          <tr key={row.user_id}>
-                            <td>
-                              {row.display_name ?? 'Student'}
-                              <div className="adm-dim">{row.email ?? row.user_id}</div>
-                            </td>
-                            <td>
-                              <Badge tone={row.confirmed ? 'good' : 'warn'}>
-                                {row.confirmed ? 'yes' : 'pending'}
-                              </Badge>
-                            </td>
-                            <td>{row.current_streak > 0 ? `${row.current_streak} d` : '—'}</td>
-                            <td>{row.hd_coins.toLocaleString()}</td>
-                            <td>{row.total_attempts.toLocaleString()}</td>
-                            <td>{row.report_count}</td>
-                            <td className="adm-dim">{row.created_at.slice(0, 10)}</td>
-                            <td>
-                              <div className="row" style={{ gap: 6 }}>
-                                <button
-                                  type="button"
-                                  className="adm-row-action"
-                                  onClick={() => deleteStudentReports(row)}
-                                  disabled={row.report_count === 0}
-                                >
-                                  Delete reports
-                                </button>
-                                <button
-                                  type="button"
-                                  className="adm-row-action"
-                                  onClick={() => deleteStudentAppeals(row)}
-                                >
-                                  Delete appeals
-                                </button>
-                              </div>
-                            </td>
+                    <div className="adm-table-wrap">
+                      <table className="adm-table">
+                        <thead>
+                          <tr>
+                            <th>Student</th>
+                            <th>Confirmed</th>
+                            <th>Streak</th>
+                            <th>Coins</th>
+                            <th>Attempts</th>
+                            <th>Reports</th>
+                            <th>Joined</th>
+                            <th aria-label="Actions" />
                           </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                        </thead>
+                        <tbody>
+                          {(students?.items ?? []).map((row) => (
+                            <tr key={row.user_id}>
+                              <td>
+                                {row.display_name ?? 'Student'}
+                                <div className="adm-dim">{row.email ?? row.user_id}</div>
+                              </td>
+                              <td>
+                                <Badge tone={row.confirmed ? 'good' : 'warn'}>
+                                  {row.confirmed ? 'Yes' : 'Pending'}
+                                </Badge>
+                              </td>
+                              <td>{row.current_streak > 0 ? `${row.current_streak} d` : '—'}</td>
+                              <td>{row.hd_coins.toLocaleString()}</td>
+                              <td>{row.total_attempts.toLocaleString()}</td>
+                              <td>{row.report_count}</td>
+                              <td className="adm-dim">{row.created_at.slice(0, 10)}</td>
+                              <td>
+                                <div className="row" style={{ gap: 6 }}>
+                                  <button
+                                    type="button"
+                                    className="adm-row-action"
+                                    onClick={() => deleteStudentReports(row)}
+                                    disabled={row.report_count === 0}
+                                  >
+                                    Delete reports
+                                  </button>
+                                  <button
+                                    type="button"
+                                    className="adm-row-action"
+                                    onClick={() => deleteStudentAppeals(row)}
+                                  >
+                                    Delete appeals
+                                  </button>
+                                </div>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
                     <div className="adm-card-foot">
                       <span className="adm-dim">
                         {loading
                           ? 'Loading…'
                           : (students?.items ?? []).length === 0
-                            ? 'No accounts yet.'
-                            : `Showing ${(students?.items ?? []).length} of ${
-                                students?.total ?? 0
-                              } accounts`}
+                            ? 'No accounts.'
+                            : `${(students?.items ?? []).length} of ${students?.total ?? 0} accounts`}
                       </span>
-                      <button type="button" className="adm-row-action" onClick={reload}>
-                        Refresh
-                      </button>
                     </div>
                   </section>
-                  {confirmBar()}
                 </>
               ) : null}
 
               {section === 'content' ? (
                 <>
-                  <SectionHead
-                    title="Content health"
-                    blurb="Counts from the catalog this deployment is serving. Reports are the content signal that needs a human."
-                  />
+                  <SectionHead title="Content health" />
 
                   <div className="adm-columns">
                     <section className="adm-card">
                       <div className="adm-card-head">
-                        <h2>Bank summary</h2>
-                        <span className="adm-dim">bank {app.bankVersion}</span>
+                        <h2>Bank</h2>
+                        <span className="adm-dim mono">{app.bankVersion}</span>
                       </div>
                       <ul className="adm-checks">
                         <li>
@@ -1267,7 +1253,7 @@ export function AdminPage() {
                           <span>Reading &amp; Writing</span>
                           <strong>
                             {app.questions
-                              .filter((q) => q.section === 'Reading and Writing')
+                              .filter((question) => question.section === 'Reading and Writing')
                               .length.toLocaleString()}
                           </strong>
                         </li>
@@ -1275,7 +1261,7 @@ export function AdminPage() {
                           <span>Math</span>
                           <strong>
                             {app.questions
-                              .filter((q) => q.section === 'Math')
+                              .filter((question) => question.section === 'Math')
                               .length.toLocaleString()}
                           </strong>
                         </li>
@@ -1288,28 +1274,23 @@ export function AdminPage() {
 
                     <section className="adm-card">
                       <div className="adm-card-head">
-                        <h2>Report signal</h2>
+                        <h2>Reports</h2>
                       </div>
                       <ul className="adm-checks">
                         {REPORT_STATUSES.map((status) => {
                           const count = reportItems.filter((row) => row.status === status).length;
                           return (
                             <li key={status}>
-                              <span>{status.replace(/_/g, ' ')}</span>
+                              <span>{statusLabel(status)}</span>
                               <Badge tone={statusTone(status)}>{count}</Badge>
                             </li>
                           );
                         })}
                         <li>
-                          <span>Distinct flagged questions</span>
-                          <strong>
-                            {new Set(reportItems.map((row) => row.question_id)).size}
-                          </strong>
+                          <span>Flagged questions</span>
+                          <strong>{new Set(reportItems.map((row) => row.question_id)).size}</strong>
                         </li>
                       </ul>
-                      <p className="adm-dim" style={{ marginBottom: 0 }}>
-                        Counts cover the loaded page, not the whole history.
-                      </p>
                     </section>
                   </div>
                 </>

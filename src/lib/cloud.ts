@@ -817,29 +817,39 @@ export interface AdminUnlockResult {
   locked_seconds?: number;
 }
 
-/** Server-issued arithmetic captcha. Single use, five-minute lifetime. */
-export async function adminCaptchaChallenge(): Promise<{ id: string; question: string }> {
+/**
+ * One proof-of-work challenge for the console's human check. The browser finds
+ * a nonce whose SHA-256(salt + nonce) has `difficulty` leading zero nibbles;
+ * Postgres re-computes it and burns the challenge on use.
+ */
+export interface AdminHumanChallenge {
+  id: string;
+  salt: string;
+  difficulty: number;
+}
+
+export async function adminHumanCheck(): Promise<AdminHumanChallenge> {
   const supabase = client();
-  const { data, error } = await supabase.rpc('admin_captcha_challenge');
+  const { data, error } = await supabase.rpc('admin_human_check');
   if (error) throw error;
-  return data as { id: string; question: string };
+  return data as AdminHumanChallenge;
 }
 
 /**
- * Session + captcha + passcode. The passcode is compared against a bcrypt hash
- * inside Postgres; the browser never sees or stores it, and a success returns a
- * random token that every admin RPC below requires.
+ * Session + solved human check + passcode. The passcode is compared against a
+ * bcrypt hash inside Postgres, and a success returns a random console token
+ * that every admin RPC below requires.
  */
 export async function adminUnlock(args: {
   passcode: string;
-  captchaId: string;
-  captchaAnswer: string;
+  challengeId: string;
+  nonce: number;
 }): Promise<AdminUnlockResult> {
   const supabase = client();
   const { data, error } = await supabase.rpc('admin_unlock', {
     p_passcode: args.passcode,
-    p_captcha_id: args.captchaId,
-    p_captcha_answer: args.captchaAnswer,
+    p_challenge_id: args.challengeId,
+    p_nonce: args.nonce,
   });
   if (error) throw error;
   return data as AdminUnlockResult;
