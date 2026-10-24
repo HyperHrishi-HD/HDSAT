@@ -500,3 +500,33 @@ Whenever the owner asks in chat to "check reports / appeals", run
 - The safety migration is applied live and confirmation email is live through
   Brevo SMTP — see "Done today" above for the re-apply commands and the IP
   blocking caveat. The live bank is currently complete.
+
+## 2026-10-31 — report PDF, mobile break screen, M13 bank batch
+
+- **Past simulations list.** The eight-column table is now a grid row list:
+  date and track, four labelled figures, status and actions. It collapses to one
+  column under 720 px, so a long track name can no longer push the page wider
+  than the viewport. The stored copy says just how many runs are saved — no
+  commentary about limits.
+- **Score log is a window.** A "Score log (n)" button beside the section heading
+  opens the deleted-run scores in a dialog instead of extending the page.
+- **Deleting asks in a window.** The confirmation is a focused dialog
+  ("Delete this simulation?"), so a long list cannot push the prompt out of view.
+- **Break screen.** Timer and instructions stack on phones and the screen
+  scrolls, so "Resume Testing Now" is always reachable; previously the 240 px
+  timer column squeezed the text into a sliver.
+- **Real PDF reports.** `src/lib/scoreReportPdf.ts` writes the document itself
+  (Helvetica, US Letter, no dependency): navy header, three score panels, a
+  module table with operational accuracy, and interpretation notes. The
+  "print this page" path is gone. Durations over an hour render as h:mm:ss.
+- **M13 bank batch.** 304 new items through the merge gate with 0 QA errors and
+  0 warnings: 160 authored R&W (40 quantitative-evidence items on tables,
+  bar and line charts; central ideas, inferences, structure; words in context,
+  boundaries, transitions, synthesis) and 144 generated math items with
+  geometry figures, coordinate planes, function tables and charts. Every math
+  key was recomputed from its own figure before merge; the check caught a
+  percent-change key that disagreed with its graph, which is fixed.
+- **Known content debt.** The shipped bank still contains 481 exact duplicate
+  stems and about 5,000 near-duplicate pairs from earlier volume tiers; the new
+  batch is clean. A dedupe/archive pass needs the owner's decision because
+  removing ids would drop rows students may already have practiced.

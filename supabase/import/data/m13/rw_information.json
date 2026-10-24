@@ -1,0 +1,4704 @@
+{
+ "questions": [
+  {
+   "id": "RW-M13-INFO-001",
+   "external_id": "HDSAT-RW-M13-INFO-001",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A small museum's visitor-services team is preparing a note for its annual report describing how attendance changed across the year.",
+   "prompt": "Which choice most effectively uses data from the table to describe the pattern in attendance?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Seasonal attendance at a small museum",
+    "headers": [
+     "Season",
+     "Visitors"
+    ],
+    "rows": [
+     [
+      "Spring",
+      "1,240"
+     ],
+     [
+      "Summer",
+      "2,180"
+     ],
+     [
+      "Fall",
+      "1,560"
+     ],
+     [
+      "Winter",
+      "980"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Summer drew 2,180 visitors, more than twice the 980 who visited in winter."
+    },
+    {
+     "id": "B",
+     "text": "Fall drew nearly twice as many visitors as summer."
+    },
+    {
+     "id": "C",
+     "text": "Winter drew more visitors than spring."
+    },
+    {
+     "id": "D",
+     "text": "Summer and fall together drew fewer than 3,000 visitors."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Summer attendance reached 2,180 while winter attendance was 980, and 2,180 is indeed more than twice 980. The other choices contradict the table.",
+   "distractor_rationales": {
+    "B": "Fall recorded 1,560 visitors, fewer than summer's 2,180, so it was not nearly twice as many.",
+    "C": "Winter recorded 980 visitors, fewer than spring's 1,240.",
+    "D": "Summer and fall together recorded 3,740 visitors, well above 3,000."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-002",
+   "external_id": "HDSAT-RW-M13-INFO-002",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A city transportation office is summarizing a week of bike-share activity at one busy docking station.",
+   "prompt": "Which choice most effectively uses data from the chart to describe the week?",
+   "figure_metadata": {
+    "type": "bar_chart",
+    "caption": "Bike-share trips from one docking station, by weekday",
+    "x_label": "Day",
+    "y_label": "Trips",
+    "series": [
+     {
+      "label": "Mon",
+      "value": 320
+     },
+     {
+      "label": "Tue",
+      "value": 410
+     },
+     {
+      "label": "Wed",
+      "value": 380
+     },
+     {
+      "label": "Thu",
+      "value": 450
+     },
+     {
+      "label": "Fri",
+      "value": 510
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Use peaked on Friday at 510 trips, 190 more than on Monday."
+    },
+    {
+     "id": "B",
+     "text": "Tuesday recorded more trips than any other day."
+    },
+    {
+     "id": "C",
+     "text": "Wednesday recorded more trips than Thursday."
+    },
+    {
+     "id": "D",
+     "text": "Thursday recorded fewer trips than Wednesday."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Friday's bar is the tallest at 510, and 510 minus 320 is 190 more than Monday. No other statement matches the five bars.",
+   "distractor_rationales": {
+    "B": "Tuesday recorded 410 trips, fewer than Friday's 510.",
+    "C": "Wednesday recorded 380 trips, fewer than Thursday's 450.",
+    "D": "Thursday recorded 450 trips, more than Wednesday's 380."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-003",
+   "external_id": "HDSAT-RW-M13-INFO-003",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A botany class tracked the height of a single sunflower seedling once a week for five weeks.",
+   "prompt": "Which choice most effectively uses data from the graph to describe the seedling's growth?",
+   "figure_metadata": {
+    "type": "line_chart",
+    "caption": "Sunflower seedling height by week",
+    "x_label": "Week",
+    "y_label": "Height (cm)",
+    "series": [
+     {
+      "label": "1",
+      "value": 4
+     },
+     {
+      "label": "2",
+      "value": 7
+     },
+     {
+      "label": "3",
+      "value": 11
+     },
+     {
+      "label": "4",
+      "value": 16
+     },
+     {
+      "label": "5",
+      "value": 22
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "The seedling grew 18 cm over the four weeks from week 1 to week 5."
+    },
+    {
+     "id": "B",
+     "text": "The seedling was 11 cm tall in week 4."
+    },
+    {
+     "id": "C",
+     "text": "The seedling's height doubled between week 2 and week 4."
+    },
+    {
+     "id": "D",
+     "text": "The seedling reached a final height of 18 cm."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Height rose from 4 cm in week 1 to 22 cm in week 5, a gain of 18 cm. The remaining choices misread the points or the axis.",
+   "distractor_rationales": {
+    "B": "Week 4 shows 16 cm; 11 cm is the week 3 height.",
+    "C": "The height went from 7 cm to 16 cm, which is more than double but not exactly double.",
+    "D": "The final height was 22 cm; 18 cm is the amount of growth."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-004",
+   "external_id": "HDSAT-RW-M13-INFO-004",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A garden cooperative recorded monthly rainfall at its demonstration plot and wants to note which month was driest.",
+   "prompt": "Which choice most effectively uses data from the table to describe the rainfall?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Monthly rainfall at a demonstration garden",
+    "headers": [
+     "Month",
+     "Rainfall (cm)"
+    ],
+    "rows": [
+     [
+      "April",
+      "3.2"
+     ],
+     [
+      "May",
+      "4.8"
+     ],
+     [
+      "June",
+      "2.1"
+     ],
+     [
+      "July",
+      "1.4"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "July was the driest month at 1.4 cm, less than half of May's 4.8 cm."
+    },
+    {
+     "id": "B",
+     "text": "June was wetter than April."
+    },
+    {
+     "id": "C",
+     "text": "April was the driest month of the four."
+    },
+    {
+     "id": "D",
+     "text": "May recorded less than 4 cm of rain."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "July's 1.4 cm is the smallest figure in the table and is less than half of May's 4.8 cm. The other choices reverse or misstate the values.",
+   "distractor_rationales": {
+    "B": "June recorded 2.1 cm, less than April's 3.2 cm.",
+    "C": "April recorded 3.2 cm, well above July's 1.4 cm.",
+    "D": "May recorded 4.8 cm, which is more than 4 cm."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-005",
+   "external_id": "HDSAT-RW-M13-INFO-005",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A branch library is comparing how often items in four collections were borrowed during a single month.",
+   "prompt": "Which choice most effectively uses data from the table to describe borrowing?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Items borrowed by collection in one month",
+    "headers": [
+     "Collection",
+     "Items borrowed"
+    ],
+    "rows": [
+     [
+      "Fiction",
+      "640"
+     ],
+     [
+      "History",
+      "210"
+     ],
+     [
+      "Science",
+      "180"
+     ],
+     [
+      "Poetry",
+      "95"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Fiction borrowing, at 640 items, exceeded the other three collections combined."
+    },
+    {
+     "id": "B",
+     "text": "Poetry was the most borrowed collection."
+    },
+    {
+     "id": "C",
+     "text": "Science borrowing was higher than history borrowing."
+    },
+    {
+     "id": "D",
+     "text": "History and science together accounted for more than 500 items."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The other three collections total 210 + 180 + 95 = 485 items, which is less than fiction's 640. The remaining choices misstate the ranking or the total.",
+   "distractor_rationales": {
+    "B": "Poetry had the fewest items borrowed, 95.",
+    "C": "Science had 180, fewer than history's 210.",
+    "D": "History and science together total 390, not more than 500."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-006",
+   "external_id": "HDSAT-RW-M13-INFO-006",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A transit authority is reviewing average daily boardings on four bus routes to decide where to add service.",
+   "prompt": "Which choice most effectively uses data from the table to identify the route carrying the most riders?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Average daily boardings by route",
+    "headers": [
+     "Route",
+     "Daily boardings"
+    ],
+    "rows": [
+     [
+      "A",
+      "1,150"
+     ],
+     [
+      "B",
+      "980"
+     ],
+     [
+      "C",
+      "1,420"
+     ],
+     [
+      "D",
+      "870"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Route C carried 1,420 riders, 550 more than route D."
+    },
+    {
+     "id": "B",
+     "text": "Route A carried the most riders, at 1,150."
+    },
+    {
+     "id": "C",
+     "text": "Route D carried more riders than route B."
+    },
+    {
+     "id": "D",
+     "text": "Route C carried fewer riders than routes A and B combined."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Route C's 1,420 boardings is the largest figure, and 1,420 minus 870 equals 550. The other statements contradict the table.",
+   "distractor_rationales": {
+    "B": "Route A's 1,150 boardings are fewer than route C's 1,420.",
+    "C": "Route D's 870 boardings are fewer than route B's 980.",
+    "D": "Routes A and B together carry 2,130, far more than route C alone."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-007",
+   "external_id": "HDSAT-RW-M13-INFO-007",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A neighborhood recycling program tallied the material it collected by weight in a single week.",
+   "prompt": "Which choice most effectively uses data from the table to describe the week's collection?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Recycled material collected in one week (kg)",
+    "headers": [
+     "Material",
+     "Weight (kg)"
+    ],
+    "rows": [
+     [
+      "Paper",
+      "420"
+     ],
+     [
+      "Glass",
+      "180"
+     ],
+     [
+      "Metal",
+      "95"
+     ],
+     [
+      "Plastic",
+      "260"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Paper made up 420 kg, more than glass and metal combined."
+    },
+    {
+     "id": "B",
+     "text": "Plastic was the most collected material."
+    },
+    {
+     "id": "C",
+     "text": "Metal outweighed glass."
+    },
+    {
+     "id": "D",
+     "text": "Paper weighed less than plastic and metal combined."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Glass and metal together total 275 kg, and paper alone was 420 kg. The other choices reverse the ranking or the comparison.",
+   "distractor_rationales": {
+    "B": "Plastic was 260 kg, less than paper's 420 kg.",
+    "C": "Metal was 95 kg, less than glass's 180 kg.",
+    "D": "Plastic and metal together total 355 kg, less than paper's 420 kg."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-008",
+   "external_id": "HDSAT-RW-M13-INFO-008",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A farmers market coordinator is describing how the number of vendors changed over four years.",
+   "prompt": "Which choice most effectively uses data from the chart to describe the change?",
+   "figure_metadata": {
+    "type": "bar_chart",
+    "caption": "Number of vendors at a weekly farmers market",
+    "x_label": "Year",
+    "y_label": "Vendors",
+    "series": [
+     {
+      "label": "2018",
+      "value": 24
+     },
+     {
+      "label": "2019",
+      "value": 31
+     },
+     {
+      "label": "2020",
+      "value": 27
+     },
+     {
+      "label": "2021",
+      "value": 38
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "The market had 38 vendors in 2021, 7 more than in 2019."
+    },
+    {
+     "id": "B",
+     "text": "The market had the most vendors in 2020."
+    },
+    {
+     "id": "C",
+     "text": "The number of vendors declined every year."
+    },
+    {
+     "id": "D",
+     "text": "The market had 31 vendors in 2021."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The 2021 bar is the tallest at 38, and 38 minus 31 equals 7. The remaining choices misread the bars.",
+   "distractor_rationales": {
+    "B": "2020 shows 27 vendors, fewer than both 2019 and 2021.",
+    "C": "Vendor counts rose in 2019 and again in 2021, so they did not decline every year.",
+    "D": "The 2021 figure is 38; 31 is the 2019 figure."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-009",
+   "external_id": "HDSAT-RW-M13-INFO-009",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A volunteer bird survey counted individuals of a single species at a wetland each spring for five years.",
+   "prompt": "Which choice most effectively uses data from the graph to summarize the survey?",
+   "figure_metadata": {
+    "type": "line_chart",
+    "caption": "Birds counted at a wetland, 2016-2020",
+    "x_label": "Year",
+    "y_label": "Birds counted",
+    "series": [
+     {
+      "label": "2016",
+      "value": 120
+     },
+     {
+      "label": "2017",
+      "value": 150
+     },
+     {
+      "label": "2018",
+      "value": 135
+     },
+     {
+      "label": "2019",
+      "value": 180
+     },
+     {
+      "label": "2020",
+      "value": 210
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "The count rose from 120 birds in 2016 to 210 in 2020, an increase of 90."
+    },
+    {
+     "id": "B",
+     "text": "The count fell every year after 2016."
+    },
+    {
+     "id": "C",
+     "text": "The highest count came in 2018."
+    },
+    {
+     "id": "D",
+     "text": "The count doubled between 2016 and 2019."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The series starts at 120 and ends at 210, a difference of 90. The other choices contradict the plotted points.",
+   "distractor_rationales": {
+    "B": "The count rose in three of the four later years, including a rise from 2018 to 2019.",
+    "C": "The 2018 count of 135 is below the counts for 2017, 2019 and 2020.",
+    "D": "Doubling 120 would give 240, well above the 180 recorded in 2019."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-010",
+   "external_id": "HDSAT-RW-M13-INFO-010",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "The owner of a small coffee stand is comparing daily sales across one workweek.",
+   "prompt": "Which choice most effectively uses data from the table to describe the week?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Cups sold per day at a coffee stand",
+    "headers": [
+     "Day",
+     "Cups sold"
+    ],
+    "rows": [
+     [
+      "Monday",
+      "84"
+     ],
+     [
+      "Tuesday",
+      "92"
+     ],
+     [
+      "Wednesday",
+      "78"
+     ],
+     [
+      "Thursday",
+      "105"
+     ],
+     [
+      "Friday",
+      "118"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Friday's 118 cups were the week's highest, 40 more than Wednesday's 78."
+    },
+    {
+     "id": "B",
+     "text": "Wednesday was the busiest day of the week."
+    },
+    {
+     "id": "C",
+     "text": "Thursday's sales were higher than Friday's."
+    },
+    {
+     "id": "D",
+     "text": "Tuesday's sales were below 80 cups."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Friday has the largest figure in the table, and 118 minus 78 is 40. The other choices contradict the numbers.",
+   "distractor_rationales": {
+    "B": "Wednesday's 78 cups are the fewest of the week.",
+    "C": "Thursday sold 105 cups, fewer than Friday's 118.",
+    "D": "Tuesday sold 92 cups, above 80."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-011",
+   "external_id": "HDSAT-RW-M13-INFO-011",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A parks department counted visitors at a trailhead over four months to plan maintenance.",
+   "prompt": "Which choice most effectively uses data from the table to describe the season's use?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Trailhead visitors by month",
+    "headers": [
+     "Month",
+     "Visitors"
+    ],
+    "rows": [
+     [
+      "January",
+      "340"
+     ],
+     [
+      "February",
+      "410"
+     ],
+     [
+      "March",
+      "620"
+     ],
+     [
+      "April",
+      "980"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "April's 980 visitors were nearly three times January's 340."
+    },
+    {
+     "id": "B",
+     "text": "March drew more visitors than April."
+    },
+    {
+     "id": "C",
+     "text": "February's visitor count fell below January's."
+    },
+    {
+     "id": "D",
+     "text": "April's visitors exceeded March and February combined."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Three times January's 340 is 1,020, so April's 980 is nearly, though not quite, triple. The other choices contradict the table.",
+   "distractor_rationales": {
+    "B": "March drew 620, fewer than April's 980.",
+    "C": "February drew 410, more than January's 340.",
+    "D": "March and February together drew 1,030, more than April's 980."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-012",
+   "external_id": "HDSAT-RW-M13-INFO-012",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Marine researchers surveyed coral cover at one reef site every five years and reported the results as a percentage.",
+   "prompt": "Which choice most effectively uses data from the chart to describe the trend?",
+   "figure_metadata": {
+    "type": "bar_chart",
+    "caption": "Coral cover at a reef site by year",
+    "x_label": "Year",
+    "y_label": "Coral cover (%)",
+    "series": [
+     {
+      "label": "2005",
+      "value": 32
+     },
+     {
+      "label": "2010",
+      "value": 24
+     },
+     {
+      "label": "2015",
+      "value": 18
+     },
+     {
+      "label": "2020",
+      "value": 26
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Coral cover reached its lowest point in 2015, at 18%."
+    },
+    {
+     "id": "B",
+     "text": "Coral cover rose steadily at every survey."
+    },
+    {
+     "id": "C",
+     "text": "Coral cover was lowest in 2020."
+    },
+    {
+     "id": "D",
+     "text": "Coral cover in 2005 was lower than in 2010."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The 2015 bar is the shortest at 18%, making it the lowest of the four surveys. The other choices reverse the pattern.",
+   "distractor_rationales": {
+    "B": "Cover fell from 2005 to 2015 before rising in 2020.",
+    "C": "2020 recorded 26%, above the 2015 low.",
+    "D": "2005 recorded 32%, higher than 2010's 24%."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-013",
+   "external_id": "HDSAT-RW-M13-INFO-013",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A community energy group recorded the electricity generated by a small turbine over four months.",
+   "prompt": "Which choice most effectively uses data from the table to identify the strongest month?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Electricity generated by a community turbine (MWh)",
+    "headers": [
+     "Month",
+     "Output (MWh)"
+    ],
+    "rows": [
+     [
+      "January",
+      "420"
+     ],
+     [
+      "February",
+      "380"
+     ],
+     [
+      "March",
+      "510"
+     ],
+     [
+      "April",
+      "460"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "March produced 510 MWh, 130 more than February."
+    },
+    {
+     "id": "B",
+     "text": "April produced the most electricity of the four months."
+    },
+    {
+     "id": "C",
+     "text": "February's output exceeded March's."
+    },
+    {
+     "id": "D",
+     "text": "January produced the least electricity."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "March's 510 MWh is the largest figure, and 510 minus 380 is 130. The other statements contradict the table.",
+   "distractor_rationales": {
+    "B": "April produced 460 MWh, less than March's 510.",
+    "C": "February produced 380 MWh, less than March's 510.",
+    "D": "January produced 420 MWh, more than February's 380."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-014",
+   "external_id": "HDSAT-RW-M13-INFO-014",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A tutoring center tracked the number of students attending its free after-school sessions.",
+   "prompt": "Which choice most effectively uses data from the graph to describe attendance?",
+   "figure_metadata": {
+    "type": "line_chart",
+    "caption": "Students attending after-school tutoring by week",
+    "x_label": "Week",
+    "y_label": "Students",
+    "series": [
+     {
+      "label": "1",
+      "value": 12
+     },
+     {
+      "label": "2",
+      "value": 18
+     },
+     {
+      "label": "3",
+      "value": 15
+     },
+     {
+      "label": "4",
+      "value": 24
+     },
+     {
+      "label": "5",
+      "value": 30
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Attendance reached 30 students in week 5, 18 more than in week 1."
+    },
+    {
+     "id": "B",
+     "text": "Attendance fell every week after week 2."
+    },
+    {
+     "id": "C",
+     "text": "Attendance was highest in week 4."
+    },
+    {
+     "id": "D",
+     "text": "Attendance doubled between week 3 and week 4."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The final point is 30 and the first is 12, a difference of 18. The other choices misstate the plotted values.",
+   "distractor_rationales": {
+    "B": "Attendance rose from 15 in week 3 to 24 in week 4 and 30 in week 5.",
+    "C": "Week 5 is higher, at 30 students.",
+    "D": "Doubling week 3's 15 would give 30, but week 4 shows 24."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-015",
+   "external_id": "HDSAT-RW-M13-INFO-015",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A food bank reported the number of donation boxes it received each month during a spring drive.",
+   "prompt": "Which choice most effectively uses data from the table to describe the drive?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Donation boxes received, January to April",
+    "headers": [
+     "Month",
+     "Boxes"
+    ],
+    "rows": [
+     [
+      "January",
+      "240"
+     ],
+     [
+      "February",
+      "300"
+     ],
+     [
+      "March",
+      "280"
+     ],
+     [
+      "April",
+      "360"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "April brought 360 boxes, 120 more than January."
+    },
+    {
+     "id": "B",
+     "text": "March brought the most boxes of any month."
+    },
+    {
+     "id": "C",
+     "text": "February brought fewer boxes than January."
+    },
+    {
+     "id": "D",
+     "text": "April brought fewer boxes than February and March combined."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "April's 360 boxes are the highest count, and 360 minus 240 is 120. The other choices contradict the table.",
+   "distractor_rationales": {
+    "B": "March brought 280 boxes, fewer than April's 360.",
+    "C": "February brought 300 boxes, more than January's 240.",
+    "D": "February and March together brought 580 boxes, more than April's 360."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-016",
+   "external_id": "HDSAT-RW-M13-INFO-016",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A hydrologist measured the average flow of a small river each month from May through August.",
+   "prompt": "Which choice most effectively uses data from the chart to describe the flow?",
+   "figure_metadata": {
+    "type": "bar_chart",
+    "caption": "Average river flow by month",
+    "x_label": "Month",
+    "y_label": "Flow (cubic meters per second)",
+    "series": [
+     {
+      "label": "May",
+      "value": 45
+     },
+     {
+      "label": "June",
+      "value": 62
+     },
+     {
+      "label": "July",
+      "value": 38
+     },
+     {
+      "label": "August",
+      "value": 22
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Flow was highest in June at 62, 40 more than in August."
+    },
+    {
+     "id": "B",
+     "text": "Flow was highest in July."
+    },
+    {
+     "id": "C",
+     "text": "August's flow was higher than July's."
+    },
+    {
+     "id": "D",
+     "text": "May had the lowest flow of the four months."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "June's bar is the tallest at 62, and 62 minus 22 is 40. The remaining choices reverse the ranking.",
+   "distractor_rationales": {
+    "B": "July's flow of 38 is below June's 62.",
+    "C": "August's flow of 22 is lower than July's 38.",
+    "D": "May's flow of 45 is above both July and August."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-017",
+   "external_id": "HDSAT-RW-M13-INFO-017",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A community theater compared ticket sales for its three weekend performances.",
+   "prompt": "Which choice most effectively uses data from the table to compare the performances?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Tickets sold by performance",
+    "headers": [
+     "Performance",
+     "Tickets"
+    ],
+    "rows": [
+     [
+      "Friday",
+      "210"
+     ],
+     [
+      "Saturday",
+      "340"
+     ],
+     [
+      "Sunday",
+      "290"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Saturday sold 340 tickets, 130 more than Friday."
+    },
+    {
+     "id": "B",
+     "text": "Sunday sold the most tickets."
+    },
+    {
+     "id": "C",
+     "text": "Friday sold the most tickets."
+    },
+    {
+     "id": "D",
+     "text": "Sunday sold fewer than 200 tickets."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Saturday's 340 tickets are the highest count, and 340 minus 210 is 130. The other choices misstate the ranking.",
+   "distractor_rationales": {
+    "B": "Sunday sold 290 tickets, fewer than Saturday's 340.",
+    "C": "Friday sold 210 tickets, the fewest of the three.",
+    "D": "Sunday sold 290 tickets, well above 200."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-018",
+   "external_id": "HDSAT-RW-M13-INFO-018",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A gym manager reviewed the number of member check-ins on each day of one week.",
+   "prompt": "Which choice most effectively uses data from the graph to describe the week?",
+   "figure_metadata": {
+    "type": "line_chart",
+    "caption": "Gym check-ins by day",
+    "x_label": "Day",
+    "y_label": "Check-ins",
+    "series": [
+     {
+      "label": "Mon",
+      "value": 180
+     },
+     {
+      "label": "Tue",
+      "value": 210
+     },
+     {
+      "label": "Wed",
+      "value": 160
+     },
+     {
+      "label": "Thu",
+      "value": 230
+     },
+     {
+      "label": "Fri",
+      "value": 250
+     },
+     {
+      "label": "Sat",
+      "value": 120
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Saturday had the fewest check-ins, at 120."
+    },
+    {
+     "id": "B",
+     "text": "Wednesday had the most check-ins."
+    },
+    {
+     "id": "C",
+     "text": "Friday's check-ins were below Thursday's."
+    },
+    {
+     "id": "D",
+     "text": "Tuesday had the fewest check-ins."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Saturday's 120 check-ins is the lowest point in the series. The other choices contradict the plotted values.",
+   "distractor_rationales": {
+    "B": "Wednesday's 160 is among the lowest; Friday is highest at 250.",
+    "C": "Friday recorded 250, above Thursday's 230.",
+    "D": "Tuesday recorded 210, above Wednesday and Saturday."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-019",
+   "external_id": "HDSAT-RW-M13-INFO-019",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A water district compared average daily household use in four towns.",
+   "prompt": "Which choice most effectively uses data from the table to compare the towns?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Average daily household water use (liters)",
+    "headers": [
+     "Town",
+     "Liters per household"
+    ],
+    "rows": [
+     [
+      "A",
+      "145"
+     ],
+     [
+      "B",
+      "168"
+     ],
+     [
+      "C",
+      "122"
+     ],
+     [
+      "D",
+      "190"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Town D used 190 liters per household, 68 more than town C."
+    },
+    {
+     "id": "B",
+     "text": "Town B had the highest use of the four towns."
+    },
+    {
+     "id": "C",
+     "text": "Town C used more than town A."
+    },
+    {
+     "id": "D",
+     "text": "Town A used fewer than 120 liters per household."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Town D's 190 liters is the highest figure, and 190 minus 122 is 68. The other statements contradict the table.",
+   "distractor_rationales": {
+    "B": "Town B used 168 liters, less than town D's 190.",
+    "C": "Town C used 122 liters, less than town A's 145.",
+    "D": "Town A used 145 liters, above 120."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-020",
+   "external_id": "HDSAT-RW-M13-INFO-020",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A marine survey team counted fish of one species at four reef sites during the same week.",
+   "prompt": "Which choice most effectively uses data from the table to compare the sites?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Fish counted at four reef sites",
+    "headers": [
+     "Site",
+     "Fish counted"
+    ],
+    "rows": [
+     [
+      "Reef 1",
+      "86"
+     ],
+     [
+      "Reef 2",
+      "64"
+     ],
+     [
+      "Reef 3",
+      "102"
+     ],
+     [
+      "Reef 4",
+      "71"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Reef 3 had 102 fish, 38 more than reef 2."
+    },
+    {
+     "id": "B",
+     "text": "Reef 2 had the most fish of the four sites."
+    },
+    {
+     "id": "C",
+     "text": "Reef 1 had more fish than reef 3."
+    },
+    {
+     "id": "D",
+     "text": "Reef 4 had the fewest fish."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Reef 3's 102 fish is the highest count, and 102 minus 64 is 38. The remaining choices misstate the ranking.",
+   "distractor_rationales": {
+    "B": "Reef 2 had 64 fish, the fewest of the four.",
+    "C": "Reef 1 had 86 fish, fewer than reef 3's 102.",
+    "D": "Reef 2 had 64 fish, fewer than reef 4's 71."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-021",
+   "external_id": "HDSAT-RW-M13-INFO-021",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A school nutrition office is reviewing how many lunches were served each day in one week.",
+   "prompt": "Which choice most effectively uses data from the chart to describe the week?",
+   "figure_metadata": {
+    "type": "bar_chart",
+    "caption": "Lunches served by day",
+    "x_label": "Day",
+    "y_label": "Lunches",
+    "series": [
+     {
+      "label": "Mon",
+      "value": 420
+     },
+     {
+      "label": "Tue",
+      "value": 455
+     },
+     {
+      "label": "Wed",
+      "value": 390
+     },
+     {
+      "label": "Thu",
+      "value": 470
+     },
+     {
+      "label": "Fri",
+      "value": 380
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Thursday's 470 lunches were the week's high, 50 more than Monday's."
+    },
+    {
+     "id": "B",
+     "text": "Friday served the most lunches."
+    },
+    {
+     "id": "C",
+     "text": "Wednesday served more lunches than Tuesday."
+    },
+    {
+     "id": "D",
+     "text": "Monday served more lunches than Thursday."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Thursday's 470 is the tallest bar, and 470 minus 420 is 50. The other choices contradict the bars.",
+   "distractor_rationales": {
+    "B": "Friday's 380 lunches are the fewest of the week.",
+    "C": "Wednesday served 390, fewer than Tuesday's 455.",
+    "D": "Monday served 420, fewer than Thursday's 470."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-022",
+   "external_id": "HDSAT-RW-M13-INFO-022",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "An air-quality monitor logged hourly readings of a pollution index on a still, sunny day. Higher values indicate worse air.",
+   "prompt": "Which choice most effectively uses data from the graph to describe the day?",
+   "figure_metadata": {
+    "type": "line_chart",
+    "caption": "Pollution index readings by hour",
+    "x_label": "Time",
+    "y_label": "Index",
+    "series": [
+     {
+      "label": "8 am",
+      "value": 42
+     },
+     {
+      "label": "10 am",
+      "value": 55
+     },
+     {
+      "label": "Noon",
+      "value": 78
+     },
+     {
+      "label": "2 pm",
+      "value": 66
+     },
+     {
+      "label": "4 pm",
+      "value": 51
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "The index peaked at noon at 78, then fell by 27 by 4 p.m."
+    },
+    {
+     "id": "B",
+     "text": "The index rose steadily from morning through late afternoon."
+    },
+    {
+     "id": "C",
+     "text": "The index peaked at 10 a.m."
+    },
+    {
+     "id": "D",
+     "text": "The 8 a.m. reading was the day's highest."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The series reaches 78 at noon and falls to 51 at 4 p.m., a drop of 27. The other choices misdescribe the shape of the curve.",
+   "distractor_rationales": {
+    "B": "The index fell after noon, so it did not rise steadily all day.",
+    "C": "The 10 a.m. reading of 55 is below the noon peak of 78.",
+    "D": "The 8 a.m. reading of 42 is the lowest, not the highest."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-023",
+   "external_id": "HDSAT-RW-M13-INFO-023",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A rail operator publishes the percentage of trains arriving on time for each of its four lines.",
+   "prompt": "Which choice most effectively uses data from the table to compare the lines?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "On-time arrivals by line",
+    "headers": [
+     "Line",
+     "On-time (%)"
+    ],
+    "rows": [
+     [
+      "1",
+      "92"
+     ],
+     [
+      "2",
+      "86"
+     ],
+     [
+      "3",
+      "78"
+     ],
+     [
+      "4",
+      "95"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Line 4 had the best record at 95%, 17 percentage points above line 3."
+    },
+    {
+     "id": "B",
+     "text": "Line 1 had the best on-time record."
+    },
+    {
+     "id": "C",
+     "text": "Line 3 performed better than line 2."
+    },
+    {
+     "id": "D",
+     "text": "Line 2 had the lowest on-time rate."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Line 4's 95% is the highest rate, and 95 minus 78 is 17. The other choices reverse the ranking.",
+   "distractor_rationales": {
+    "B": "Line 1's 92% is below line 4's 95%.",
+    "C": "Line 3's 78% is below line 2's 86%.",
+    "D": "Line 3's 78% is the lowest, not line 2's 86%."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-024",
+   "external_id": "HDSAT-RW-M13-INFO-024",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A biology class measured one bean plant at the end of each of five weeks.",
+   "prompt": "Which choice most effectively uses data from the chart to describe the plant's growth?",
+   "figure_metadata": {
+    "type": "bar_chart",
+    "caption": "Bean plant height at the end of each week",
+    "x_label": "Week",
+    "y_label": "Height (cm)",
+    "series": [
+     {
+      "label": "1",
+      "value": 6
+     },
+     {
+      "label": "2",
+      "value": 9
+     },
+     {
+      "label": "3",
+      "value": 13
+     },
+     {
+      "label": "4",
+      "value": 18
+     },
+     {
+      "label": "5",
+      "value": 20
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "The plant reached 20 cm by week 5, 14 cm taller than in week 1."
+    },
+    {
+     "id": "B",
+     "text": "The plant reached 20 cm by week 3."
+    },
+    {
+     "id": "C",
+     "text": "The plant's height doubled between weeks 1 and 3."
+    },
+    {
+     "id": "D",
+     "text": "The plant grew 6 cm between weeks 4 and 5."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The plant measures 6 cm in week 1 and 20 cm in week 5, a difference of 14 cm. The other choices misread specific bars.",
+   "distractor_rationales": {
+    "B": "Week 3 shows 13 cm; 20 cm is the week 5 height.",
+    "C": "Doubling 6 cm would give 12 cm, but week 3 shows 13 cm.",
+    "D": "The plant grew from 18 cm to 20 cm between weeks 4 and 5, a gain of 2 cm."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-025",
+   "external_id": "HDSAT-RW-M13-INFO-025",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A consumer lab tested how long four portable batteries powered the same device on one charge.",
+   "prompt": "Which choice most effectively uses data from the table to compare the batteries?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Battery runtime under identical load (hours)",
+    "headers": [
+     "Battery",
+     "Runtime (hours)"
+    ],
+    "rows": [
+     [
+      "A",
+      "8.5"
+     ],
+     [
+      "B",
+      "7.2"
+     ],
+     [
+      "C",
+      "9.4"
+     ],
+     [
+      "D",
+      "6.8"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Battery C lasted 9.4 hours, 2.6 hours longer than battery D."
+    },
+    {
+     "id": "B",
+     "text": "Battery A lasted the longest of the four."
+    },
+    {
+     "id": "C",
+     "text": "Battery B outlasted battery A."
+    },
+    {
+     "id": "D",
+     "text": "Battery D outlasted battery C."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Battery C's 9.4 hours is the longest runtime, and 9.4 minus 6.8 is 2.6. The other statements contradict the table.",
+   "distractor_rationales": {
+    "B": "Battery A lasted 8.5 hours, less than battery C's 9.4.",
+    "C": "Battery B lasted 7.2 hours, less than battery A's 8.5.",
+    "D": "Battery D lasted the shortest time of all four."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-026",
+   "external_id": "HDSAT-RW-M13-INFO-026",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A volunteer network recorded the hours its members contributed each month.",
+   "prompt": "Which choice most effectively uses data from the chart to describe the trend?",
+   "figure_metadata": {
+    "type": "bar_chart",
+    "caption": "Volunteer hours by month",
+    "x_label": "Month",
+    "y_label": "Hours",
+    "series": [
+     {
+      "label": "Jan",
+      "value": 120
+     },
+     {
+      "label": "Feb",
+      "value": 180
+     },
+     {
+      "label": "Mar",
+      "value": 150
+     },
+     {
+      "label": "Apr",
+      "value": 240
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "April's 240 hours were double January's 120 hours."
+    },
+    {
+     "id": "B",
+     "text": "March's hours were double February's."
+    },
+    {
+     "id": "C",
+     "text": "January had the most volunteer hours."
+    },
+    {
+     "id": "D",
+     "text": "February's hours exceeded April's."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "April's bar is 240 and January's is 120, so April is exactly twice January. The other choices contradict the bars.",
+   "distractor_rationales": {
+    "B": "March recorded 150 hours, less than February's 180, so it was not double.",
+    "C": "January's 120 hours are the fewest of the four months.",
+    "D": "February recorded 180 hours, below April's 240."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-027",
+   "external_id": "HDSAT-RW-M13-INFO-027",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A parks service reported annual visits to a state park over four years, in thousands.",
+   "prompt": "Which choice most effectively uses data from the graph to summarize the four years?",
+   "figure_metadata": {
+    "type": "line_chart",
+    "caption": "Annual park visits (thousands)",
+    "x_label": "Year",
+    "y_label": "Visits (thousands)",
+    "series": [
+     {
+      "label": "2019",
+      "value": 12
+     },
+     {
+      "label": "2020",
+      "value": 18
+     },
+     {
+      "label": "2021",
+      "value": 21
+     },
+     {
+      "label": "2022",
+      "value": 19
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Visits reached their peak in 2021 at 21,000."
+    },
+    {
+     "id": "B",
+     "text": "Visits were highest in 2022."
+    },
+    {
+     "id": "C",
+     "text": "Visits were highest in 2019."
+    },
+    {
+     "id": "D",
+     "text": "Visits in 2022 exceeded those in 2021."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The 2021 point sits highest at 21 thousand visits. The other choices contradict the plotted points.",
+   "distractor_rationales": {
+    "B": "2022 recorded 19,000 visits, fewer than 2021's 21,000.",
+    "C": "2019 recorded 12,000 visits, the lowest of the four years.",
+    "D": "2022 recorded 19,000 visits, below 2021's 21,000."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-028",
+   "external_id": "HDSAT-RW-M13-INFO-028",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A dairy co-op compared the yearly milk yield of three herds.",
+   "prompt": "Which choice most effectively uses data from the table to compare the herds?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Milk yield by herd (liters per year)",
+    "headers": [
+     "Herd",
+     "Yield (liters)"
+    ],
+    "rows": [
+     [
+      "A",
+      "1,850"
+     ],
+     [
+      "B",
+      "2,140"
+     ],
+     [
+      "C",
+      "1,960"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Herd B produced 2,140 liters, 290 more than herd A."
+    },
+    {
+     "id": "B",
+     "text": "Herd C produced the most milk."
+    },
+    {
+     "id": "C",
+     "text": "Herd A produced more than herd C."
+    },
+    {
+     "id": "D",
+     "text": "Herd B produced fewer than 2,000 liters."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Herd B's 2,140 liters is the largest yield, and 2,140 minus 1,850 is 290. The other choices misstate the figures.",
+   "distractor_rationales": {
+    "B": "Herd C produced 1,960 liters, less than herd B's 2,140.",
+    "C": "Herd A produced 1,850 liters, less than herd C's 1,960.",
+    "D": "Herd B produced 2,140 liters, above 2,000."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-029",
+   "external_id": "HDSAT-RW-M13-INFO-029",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A forestry crew counted saplings in three restoration plots of the same size.",
+   "prompt": "Which choice most effectively uses data from the table to compare the plots?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Saplings counted by plot",
+    "headers": [
+     "Plot",
+     "Saplings"
+    ],
+    "rows": [
+     [
+      "1",
+      "240"
+     ],
+     [
+      "2",
+      "310"
+     ],
+     [
+      "3",
+      "285"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Plot 2 held 310 saplings, 25 more than plot 3."
+    },
+    {
+     "id": "B",
+     "text": "Plot 1 held the most saplings."
+    },
+    {
+     "id": "C",
+     "text": "Plot 3 held more saplings than plot 2."
+    },
+    {
+     "id": "D",
+     "text": "Plot 2 held fewer than 280 saplings."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Plot 2's 310 saplings are the highest count, and 310 minus 285 is 25. The other choices contradict the table.",
+   "distractor_rationales": {
+    "B": "Plot 1 held 240 saplings, the fewest of the three.",
+    "C": "Plot 3 held 285 saplings, fewer than plot 2's 310.",
+    "D": "Plot 2 held 310 saplings, above 280."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-030",
+   "external_id": "HDSAT-RW-M13-INFO-030",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A clinic tracked the average wait time for walk-in patients on each weekday.",
+   "prompt": "Which choice most effectively uses data from the chart to describe the week?",
+   "figure_metadata": {
+    "type": "bar_chart",
+    "caption": "Average walk-in wait by weekday (minutes)",
+    "x_label": "Day",
+    "y_label": "Wait (minutes)",
+    "series": [
+     {
+      "label": "Mon",
+      "value": 34
+     },
+     {
+      "label": "Tue",
+      "value": 48
+     },
+     {
+      "label": "Wed",
+      "value": 41
+     },
+     {
+      "label": "Thu",
+      "value": 55
+     },
+     {
+      "label": "Fri",
+      "value": 38
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Thursday's wait of 55 minutes was the longest, 21 minutes more than Monday's."
+    },
+    {
+     "id": "B",
+     "text": "Tuesday had the longest average wait."
+    },
+    {
+     "id": "C",
+     "text": "Friday had the longest average wait."
+    },
+    {
+     "id": "D",
+     "text": "Wednesday had the shortest average wait."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Thursday's bar is the tallest at 55, and 55 minus 34 is 21. The other choices misidentify the extremes.",
+   "distractor_rationales": {
+    "B": "Tuesday's wait was 48, below Thursday's 55.",
+    "C": "Friday's wait was 38, below Thursday's 55.",
+    "D": "Monday's 34 minutes is the shortest wait, not Wednesday's 41."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-031",
+   "external_id": "HDSAT-RW-M13-INFO-031",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A media class logged the hours each member spent watching streaming video over four weeks.",
+   "prompt": "Which choice most effectively uses data from the table to describe the four weeks?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Streaming hours logged each week",
+    "headers": [
+     "Week",
+     "Hours"
+    ],
+    "rows": [
+     [
+      "1",
+      "6.5"
+     ],
+     [
+      "2",
+      "8.0"
+     ],
+     [
+      "3",
+      "7.0"
+     ],
+     [
+      "4",
+      "9.5"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Week 4 had the most hours, 9.5, which was 3 more than week 1."
+    },
+    {
+     "id": "B",
+     "text": "Week 2 had the most hours."
+    },
+    {
+     "id": "C",
+     "text": "Week 3 had more hours than week 2."
+    },
+    {
+     "id": "D",
+     "text": "Week 1 had the most hours."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Week 4's 9.5 hours are the highest figure, and 9.5 minus 6.5 is 3. The remaining choices contradict the table.",
+   "distractor_rationales": {
+    "B": "Week 2 logged 8.0 hours, fewer than week 4's 9.5.",
+    "C": "Week 3 logged 7.0 hours, fewer than week 2's 8.0.",
+    "D": "Week 1 logged 6.5 hours, the fewest of the four weeks."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-032",
+   "external_id": "HDSAT-RW-M13-INFO-032",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "A running club recorded how many members finished its annual marathon over five years.",
+   "prompt": "Which choice most effectively uses data from the graph to describe the five years?",
+   "figure_metadata": {
+    "type": "line_chart",
+    "caption": "Marathon finishers by year",
+    "x_label": "Year",
+    "y_label": "Finishers",
+    "series": [
+     {
+      "label": "2018",
+      "value": 480
+     },
+     {
+      "label": "2019",
+      "value": 560
+     },
+     {
+      "label": "2020",
+      "value": 210
+     },
+     {
+      "label": "2021",
+      "value": 640
+     },
+     {
+      "label": "2022",
+      "value": 700
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Finishers were lowest in 2020 at 210, 490 fewer than in 2022."
+    },
+    {
+     "id": "B",
+     "text": "Finishers were lowest in 2018."
+    },
+    {
+     "id": "C",
+     "text": "Finishers were highest in 2021."
+    },
+    {
+     "id": "D",
+     "text": "Finishers in 2020 were above the 2019 total."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The 2020 point is the lowest at 210, and 700 minus 210 is 490. The other choices contradict the series.",
+   "distractor_rationales": {
+    "B": "2018 recorded 480 finishers, above the 2020 low of 210.",
+    "C": "2021 recorded 640 finishers, fewer than 2022's 700.",
+    "D": "2020 recorded 210 finishers, far below 2019's 560."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-033",
+   "external_id": "HDSAT-RW-M13-INFO-033",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A municipal compost program weighed the material processed at three sites in one month.",
+   "prompt": "Which choice most effectively uses data from the table to compare the sites?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Compost processed by site (kg)",
+    "headers": [
+     "Site",
+     "Weight (kg)"
+    ],
+    "rows": [
+     [
+      "1",
+      "310"
+     ],
+     [
+      "2",
+      "420"
+     ],
+     [
+      "3",
+      "380"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Site 2 processed 420 kg, 40 more than site 3."
+    },
+    {
+     "id": "B",
+     "text": "Site 1 processed the most material."
+    },
+    {
+     "id": "C",
+     "text": "Site 3 processed more than site 2."
+    },
+    {
+     "id": "D",
+     "text": "Site 2 processed fewer than 400 kg."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Site 2's 420 kg is the largest amount, and 420 minus 380 is 40. The other choices misstate the values.",
+   "distractor_rationales": {
+    "B": "Site 1 processed 310 kg, the least of the three.",
+    "C": "Site 3 processed 380 kg, less than site 2's 420.",
+    "D": "Site 2 processed 420 kg, above 400."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-034",
+   "external_id": "HDSAT-RW-M13-INFO-034",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A ferry operator counted passengers on each of four morning crossings.",
+   "prompt": "Which choice most effectively uses data from the chart to describe the morning?",
+   "figure_metadata": {
+    "type": "bar_chart",
+    "caption": "Passengers per crossing",
+    "x_label": "Departure",
+    "y_label": "Passengers",
+    "series": [
+     {
+      "label": "6 am",
+      "value": 120
+     },
+     {
+      "label": "8 am",
+      "value": 260
+     },
+     {
+      "label": "10 am",
+      "value": 180
+     },
+     {
+      "label": "Noon",
+      "value": 140
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "The 8 a.m. crossing carried 260 passengers, 80 more than the 10 a.m. crossing."
+    },
+    {
+     "id": "B",
+     "text": "The 10 a.m. crossing carried the most passengers."
+    },
+    {
+     "id": "C",
+     "text": "The noon crossing carried the most passengers."
+    },
+    {
+     "id": "D",
+     "text": "The 6 a.m. crossing carried more passengers than the noon crossing."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The 8 a.m. bar is the tallest at 260, and 260 minus 180 is 80. The other choices contradict the chart.",
+   "distractor_rationales": {
+    "B": "The 10 a.m. crossing carried 180, fewer than 260.",
+    "C": "The noon crossing carried 140, the second fewest.",
+    "D": "The 6 a.m. crossing carried 120, fewer than the noon crossing's 140."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-035",
+   "external_id": "HDSAT-RW-M13-INFO-035",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "An orchard cooperative recorded the total harvest of three fruits in one season.",
+   "prompt": "Which choice most effectively uses data from the table to compare the harvests?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Harvest by fruit (kg)",
+    "headers": [
+     "Fruit",
+     "Harvest (kg)"
+    ],
+    "rows": [
+     [
+      "Apple",
+      "1,240"
+     ],
+     [
+      "Pear",
+      "860"
+     ],
+     [
+      "Plum",
+      "520"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "The apple harvest was 1,240 kg, 380 more than the pear harvest."
+    },
+    {
+     "id": "B",
+     "text": "The pear harvest was the largest."
+    },
+    {
+     "id": "C",
+     "text": "The plum harvest exceeded the pear harvest."
+    },
+    {
+     "id": "D",
+     "text": "The apple harvest was below 1,000 kg."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The apple harvest is the largest at 1,240 kg, and 1,240 minus 860 is 380. The other choices contradict the table.",
+   "distractor_rationales": {
+    "B": "The pear harvest of 860 kg is below the apple harvest.",
+    "C": "The plum harvest of 520 kg is below the pear harvest's 860.",
+    "D": "The apple harvest of 1,240 kg is above 1,000."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-036",
+   "external_id": "HDSAT-RW-M13-INFO-036",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "A city forestry office measured the share of ground shaded by street trees every five years.",
+   "prompt": "Which choice most effectively uses data from the graph to describe the change over twenty years?",
+   "figure_metadata": {
+    "type": "line_chart",
+    "caption": "Street-tree canopy cover by year",
+    "x_label": "Year",
+    "y_label": "Canopy cover (%)",
+    "series": [
+     {
+      "label": "2000",
+      "value": 18
+     },
+     {
+      "label": "2005",
+      "value": 22
+     },
+     {
+      "label": "2010",
+      "value": 27
+     },
+     {
+      "label": "2015",
+      "value": 31
+     },
+     {
+      "label": "2020",
+      "value": 34
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Canopy cover grew from 18% to 34%, an increase of 16 percentage points."
+    },
+    {
+     "id": "B",
+     "text": "Canopy cover doubled between 2000 and 2020."
+    },
+    {
+     "id": "C",
+     "text": "Canopy cover fell after 2010."
+    },
+    {
+     "id": "D",
+     "text": "Canopy cover was highest in 2005."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The series runs from 18 to 34, a gain of 16 points. Doubling 18 would give 36, which the series never reaches, and the later points keep rising.",
+   "distractor_rationales": {
+    "B": "Doubling 18% would be 36%, but the 2020 figure is 34%.",
+    "C": "Cover rose from 27% in 2010 to 34% in 2020.",
+    "D": "2005 recorded 22%, below every later survey."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-037",
+   "external_id": "HDSAT-RW-M13-INFO-037",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A school coding club recorded its membership at the end of each month in the fall.",
+   "prompt": "Which choice most effectively uses data from the table to describe membership?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Coding club members by month",
+    "headers": [
+     "Month",
+     "Members"
+    ],
+    "rows": [
+     [
+      "September",
+      "14"
+     ],
+     [
+      "October",
+      "19"
+     ],
+     [
+      "November",
+      "23"
+     ],
+     [
+      "December",
+      "21"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Membership peaked in November at 23, two more than in December."
+    },
+    {
+     "id": "B",
+     "text": "Membership was highest in December."
+    },
+    {
+     "id": "C",
+     "text": "Membership was highest in September."
+    },
+    {
+     "id": "D",
+     "text": "October had more members than November."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "November's 23 members are the most recorded, and 23 minus 21 is 2. The other choices misstate the peak.",
+   "distractor_rationales": {
+    "B": "December had 21 members, below November's 23.",
+    "C": "September had 14 members, the fewest of the four months.",
+    "D": "October had 19 members, fewer than November's 23."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-038",
+   "external_id": "HDSAT-RW-M13-INFO-038",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A bicycle repair workshop logged the number of jobs completed on each of four days.",
+   "prompt": "Which choice most effectively uses data from the table to describe the four days?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Repair jobs completed by day",
+    "headers": [
+     "Day",
+     "Jobs"
+    ],
+    "rows": [
+     [
+      "Monday",
+      "7"
+     ],
+     [
+      "Tuesday",
+      "9"
+     ],
+     [
+      "Wednesday",
+      "12"
+     ],
+     [
+      "Thursday",
+      "8"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Wednesday's 12 jobs were the most, five more than Monday's."
+    },
+    {
+     "id": "B",
+     "text": "Tuesday completed the most jobs."
+    },
+    {
+     "id": "C",
+     "text": "Thursday completed the most jobs."
+    },
+    {
+     "id": "D",
+     "text": "Wednesday completed fewer jobs than Tuesday."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Wednesday's 12 jobs are the highest count, and 12 minus 7 is 5. The other choices contradict the table.",
+   "distractor_rationales": {
+    "B": "Tuesday completed 9 jobs, fewer than Wednesday's 12.",
+    "C": "Thursday completed 8 jobs, fewer than Wednesday's 12.",
+    "D": "Wednesday completed 12 jobs, more than Tuesday's 9."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-039",
+   "external_id": "HDSAT-RW-M13-INFO-039",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A community foundation counted grant applications in four categories.",
+   "prompt": "Which choice most effectively uses data from the chart to compare the categories?",
+   "figure_metadata": {
+    "type": "bar_chart",
+    "caption": "Grant applications by category",
+    "x_label": "Category",
+    "y_label": "Applications",
+    "series": [
+     {
+      "label": "Arts",
+      "value": 34
+     },
+     {
+      "label": "Health",
+      "value": 46
+     },
+     {
+      "label": "Education",
+      "value": 52
+     },
+     {
+      "label": "Environment",
+      "value": 28
+     }
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Education received 52 applications, 24 more than environment."
+    },
+    {
+     "id": "B",
+     "text": "Health received the most applications."
+    },
+    {
+     "id": "C",
+     "text": "Environment received the most applications."
+    },
+    {
+     "id": "D",
+     "text": "Arts received more applications than education."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Education's 52 applications are the most, and 52 minus 28 is 24. The other choices contradict the bars.",
+   "distractor_rationales": {
+    "B": "Health received 46 applications, fewer than education's 52.",
+    "C": "Environment received 28 applications, the fewest of the four.",
+    "D": "Arts received 34 applications, fewer than education's 52."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-040",
+   "external_id": "HDSAT-RW-M13-INFO-040",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Quantitative)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "An ecology class measured water temperature in a stream once per season.",
+   "prompt": "Which choice most effectively uses data from the table to compare the seasons?",
+   "figure_metadata": {
+    "type": "table",
+    "caption": "Stream temperature by season",
+    "headers": [
+     "Season",
+     "Temperature (C)"
+    ],
+    "rows": [
+     [
+      "Spring",
+      "11"
+     ],
+     [
+      "Summer",
+      "19"
+     ],
+     [
+      "Fall",
+      "14"
+     ],
+     [
+      "Winter",
+      "6"
+     ]
+    ]
+   },
+   "choices": [
+    {
+     "id": "A",
+     "text": "Summer water was 19 C, 8 degrees warmer than spring water."
+    },
+    {
+     "id": "B",
+     "text": "Fall was the warmest season."
+    },
+    {
+     "id": "C",
+     "text": "Winter was the warmest season."
+    },
+    {
+     "id": "D",
+     "text": "Spring water was warmer than summer water."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Summer's 19 C is the highest reading, and 19 minus 11 is 8. The other choices reverse the ranking.",
+   "distractor_rationales": {
+    "B": "Fall measured 14 C, below summer's 19 C.",
+    "C": "Winter measured 6 C, the coldest reading.",
+    "D": "Spring measured 11 C, below summer's 19 C."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-041",
+   "external_id": "HDSAT-RW-M13-INFO-041",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In a coastal estuary, conservation crews installed low fences of woven branches along the edge of a tidal marsh. The fences slow incoming water just enough for suspended sediment to settle. Within three seasons the marsh surface had risen several centimeters, keeping pace with the local rise in sea level. Crews now treat the fences as temporary scaffolding: once grasses anchor the new sediment, the structures rot away.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "A modest intervention can help a marsh build elevation fast enough to keep up with rising water."
+    },
+    {
+     "id": "B",
+     "text": "Woven fences are the only way to restore a coastal marsh."
+    },
+    {
+     "id": "C",
+     "text": "Grasses grow faster than sea level rises in every estuary."
+    },
+    {
+     "id": "D",
+     "text": "Suspended sediment is unimportant to the health of a marsh."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage describes a low-cost fence that traps sediment, raises the marsh surface, and lets grasses take over. That makes a modest intervention the central point.",
+   "distractor_rationales": {
+    "B": "The text presents one technique, not a claim of exclusivity.",
+    "C": "The passage describes one estuary keeping pace, not every estuary.",
+    "D": "The entire mechanism depends on trapped sediment."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-042",
+   "external_id": "HDSAT-RW-M13-INFO-042",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "When a county archive began recording oral histories of retired dockworkers, staff wrote the summaries themselves. The transcripts were accurate but flat, stripped of the jokes and nicknames that carried meaning for the speakers. The archive then invited community members to annotate the recordings. Those notes identified people, places, and turns of phrase that outsiders had missed, and later researchers relied on them heavily.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "Inviting community members to annotate recordings improved the archive's records in ways staff alone could not."
+    },
+    {
+     "id": "B",
+     "text": "The archive's original transcripts contained factual errors."
+    },
+    {
+     "id": "C",
+     "text": "Oral histories should replace written documents in county archives."
+    },
+    {
+     "id": "D",
+     "text": "Later researchers ignored the archive's annotations."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage says the staff transcripts were accurate but missed local meaning, and that community notes supplied what outsiders had missed. That is the central claim.",
+   "distractor_rationales": {
+    "B": "The text calls the transcripts accurate, not wrong.",
+    "C": "No comparison with written documents is made.",
+    "D": "The text says researchers relied on the notes heavily."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-043",
+   "external_id": "HDSAT-RW-M13-INFO-043",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Paper mills in one region experimented with fibers from an invasive reed that clogs waterways. The reed broke down into pulp with less energy than wood, and the resulting paper was sturdy enough for packaging. Mills still cannot use the reed for fine writing paper because its fibers are short. Even so, harvesting the reed for packaging both lowered the cost of clearing waterways and produced a saleable product.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "Using an invasive reed for packaging can yield a useful product while helping control the plant."
+    },
+    {
+     "id": "B",
+     "text": "Invasive reeds are suitable for every kind of paper product."
+    },
+    {
+     "id": "C",
+     "text": "Mills have stopped clearing waterways because of the reed."
+    },
+    {
+     "id": "D",
+     "text": "Short fibers make a paper stronger than long fibers do."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage sets out one limitation, fine paper, and then states the double benefit of using the reed for packaging. The main idea is that practical use and control can go together.",
+   "distractor_rationales": {
+    "B": "The text explicitly says the reed cannot be used for fine writing paper.",
+    "C": "Harvesting the reed lowered clearing costs rather than stopping the work.",
+    "D": "The passage treats short fibers as the reason fine paper is impossible."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-044",
+   "external_id": "HDSAT-RW-M13-INFO-044",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Biologists tracking foxes in a large city found that animals living near busy roads shifted most of their activity to the hours after midnight. In quieter neighborhoods, the same species remained active at dusk. The shift did not follow temperature or food availability, both of which were similar across the sites studied.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "Foxes living near heavy traffic appear to adjust when they are active."
+    },
+    {
+     "id": "B",
+     "text": "Foxes avoid cities entirely when roads are busy."
+    },
+    {
+     "id": "C",
+     "text": "Temperature determines when foxes leave their dens."
+    },
+    {
+     "id": "D",
+     "text": "Food availability explains the difference between the sites."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage reports a timing difference that tracks road traffic and rules out temperature and food. The central point is that the animals shift their active hours.",
+   "distractor_rationales": {
+    "B": "The foxes were living in the city, not avoiding it.",
+    "C": "The text says temperature was similar across sites and did not explain the shift.",
+    "D": "Food availability was also similar and is explicitly ruled out."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-045",
+   "external_id": "HDSAT-RW-M13-INFO-045",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "A poet working in a signed language composes by filming sequences rather than writing lines. Rhymes in this poetry are formed by repeating handshapes or locations in space, and a single sign can be held to mark a pause. Readers of a printed gloss often miss these patterns because the notation records words, not movement.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "The visual structure of signed poetry is lost when the work is transcribed as words."
+    },
+    {
+     "id": "B",
+     "text": "Signed poetry does not use rhyme of any kind."
+    },
+    {
+     "id": "C",
+     "text": "Printed glosses make signed poems easier to understand."
+    },
+    {
+     "id": "D",
+     "text": "Poets who sign avoid filming their work."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage explains that rhyme lives in handshapes and held signs, which word-based notation does not capture. That is the central observation about transcription.",
+   "distractor_rationales": {
+    "B": "The text describes rhyme formed by repeated handshapes and locations.",
+    "C": "It says readers of printed glosses often miss the patterns.",
+    "D": "The poet composes by filming sequences."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-046",
+   "external_id": "HDSAT-RW-M13-INFO-046",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Chemists analyzed trace elements in glass beads from several ancient ports. Beads from one harbor shared a chemical signature with sand from a river hundreds of kilometers inland, while beads from a neighboring harbor matched a coastal source. The pattern suggests that finished beads moved along routes separate from those that carried raw materials.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "Chemical signatures in the beads suggest that trade in finished goods followed different routes from trade in raw materials."
+    },
+    {
+     "id": "B",
+     "text": "All of the beads were made from a single source of sand."
+    },
+    {
+     "id": "C",
+     "text": "Glassmaking began at the coast and spread inland."
+    },
+    {
+     "id": "D",
+     "text": "The harbors were abandoned once the beads arrived."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The beads match sources that do not match their own harbors, and the passage draws exactly that conclusion about separate routes. The other choices go beyond or contradict the evidence.",
+   "distractor_rationales": {
+    "B": "Two distinct source signatures are described.",
+    "C": "The passage says nothing about where glassmaking began.",
+    "D": "No claim is made about the harbors being abandoned."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-047",
+   "external_id": "HDSAT-RW-M13-INFO-047",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A seed bank is often imagined as a freezer full of envelopes. In practice, staff test germination every few years, because viability falls at different rates for different species. A batch that still sprouts at 80 percent may be left alone; one that falls below a threshold is regrown in a nursery so fresh seed can be stored.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "Maintaining a seed bank requires ongoing testing and renewal, not just storage."
+    },
+    {
+     "id": "B",
+     "text": "Freezers destroy the seeds they are meant to protect."
+    },
+    {
+     "id": "C",
+     "text": "All species lose viability at the same rate."
+    },
+    {
+     "id": "D",
+     "text": "Seed banks store only seeds of food crops."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage contrasts the freezer image with the regular testing and nursery regrowth that keep a collection alive. That contrast is the main idea.",
+   "distractor_rationales": {
+    "B": "Freezing is not described as harmful, only as insufficient on its own.",
+    "C": "The text says viability falls at different rates for different species.",
+    "D": "The passage never limits seed banks to food crops."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-048",
+   "external_id": "HDSAT-RW-M13-INFO-048",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Keepers of coastal lighthouses recorded weather every few hours for decades, noting wind, fog, and ice in bound volumes. Historians once treated these logs as background color. Climate scientists now digitize them, because the entries predate most instrumental records and describe conditions at headlands that no weather station covered.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "Routine records kept for one purpose can become valuable evidence for another."
+    },
+    {
+     "id": "B",
+     "text": "Lighthouse keepers were trained as climate scientists."
+    },
+    {
+     "id": "C",
+     "text": "Continuous instrumental records are older than the logs."
+    },
+    {
+     "id": "D",
+     "text": "The logs are valuable mainly for their descriptions of shipwrecks."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The logs were routine weather notes for lighthouse work and are now a climate data source. That change in use is the passage's central point.",
+   "distractor_rationales": {
+    "B": "No such training is mentioned; the logs were simply kept routinely.",
+    "C": "The text says the logs predate most instrumental records.",
+    "D": "Shipwrecks are not mentioned at all."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-049",
+   "external_id": "HDSAT-RW-M13-INFO-049",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "In a rehearsal, a quartet stopped midway through a piece. Instead of naming a chord, the pianist hummed a phrase and tapped the ride cymbal. The bassist nodded, and the group restarted with a different feel. Later, the musicians said they rarely discuss harmony in words; the sound itself carries the instruction.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "The musicians often communicate musical changes through sound rather than verbal explanation."
+    },
+    {
+     "id": "B",
+     "text": "The quartet avoids rehearsing altogether."
+    },
+    {
+     "id": "C",
+     "text": "The pianist is the group's formal director."
+    },
+    {
+     "id": "D",
+     "text": "The bassist misunderstood the pianist's cue."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The pianist conveys a change by humming and tapping, and the musicians say words are rarely needed. That is the central idea about how they communicate.",
+   "distractor_rationales": {
+    "B": "The passage shows a rehearsal in progress.",
+    "C": "Nothing in the text establishes a formal director.",
+    "D": "The bassist nods and the group restarts successfully."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-050",
+   "external_id": "HDSAT-RW-M13-INFO-050",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Drilling an ice core yields a cylinder of layered snow. Each summer layer carries dust blown from continents, and the amount varies with wind strength and storm frequency. By counting layers and measuring dust, researchers reconstruct centuries of atmospheric circulation, even though no one recorded the weather at the time.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "Dust in ice-core layers provides a record of past atmospheric circulation."
+    },
+    {
+     "id": "B",
+     "text": "Ice cores record only the temperature of past summers."
+    },
+    {
+     "id": "C",
+     "text": "All dust in an ice core comes from the ocean."
+    },
+    {
+     "id": "D",
+     "text": "The layers cannot be counted reliably."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage explains how counted layers and measured dust reveal past winds even without written records. That reconstruction is the main idea.",
+   "distractor_rationales": {
+    "B": "The text focuses on dust and circulation, not only summer temperature.",
+    "C": "It says the dust was blown from continents.",
+    "D": "Layer counting is the method the researchers rely on."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-051",
+   "external_id": "HDSAT-RW-M13-INFO-051",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A weaving cooperative began attaching a small tag to each blanket naming the weaver and the pattern's origin. Buyers had previously chosen by color alone. After the tags appeared, orders shifted toward patterns whose stories customers could read, and younger weavers began learning designs that had nearly gone unused.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "Sharing the story behind a pattern changed which designs buyers chose and renewed interest in them."
+    },
+    {
+     "id": "B",
+     "text": "Buyers preferred blankets with no visible pattern."
+    },
+    {
+     "id": "C",
+     "text": "The tags caused prices to fall sharply."
+    },
+    {
+     "id": "D",
+     "text": "Older weavers stopped teaching their designs."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage links the tags to a shift in orders and to younger weavers learning neglected designs. That is the central point about visible provenance.",
+   "distractor_rationales": {
+    "B": "Orders shifted toward patterned work with stories attached.",
+    "C": "Prices are never mentioned.",
+    "D": "Younger weavers began learning designs that had gone unused."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-052",
+   "external_id": "HDSAT-RW-M13-INFO-052",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "A historian compared two sixteenth-century maps of the same coastline. One shows a wide estuary; the other omits it and places a headland in its stead. The historian argues that the second map was copied from the first but corrected using a sailor's sketch, which recorded the headland after a storm had closed the estuary mouth.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "The maps' disagreement may reflect a real change in the coastline rather than a copying error."
+    },
+    {
+     "id": "B",
+     "text": "Both maps were drawn from the same survey."
+    },
+    {
+     "id": "C",
+     "text": "The estuary never existed and was invented by a mapmaker."
+    },
+    {
+     "id": "D",
+     "text": "The second map is simply a careless copy of the first."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The historian's argument is that the coastline itself changed between surveys, so both maps can be right. That is the passage's central claim.",
+   "distractor_rationales": {
+    "B": "The text says the second map was corrected from a different sketch.",
+    "C": "The estuary appears on the earlier map and is described as having been closed by a storm.",
+    "D": "The passage argues against treating the difference as an error."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-053",
+   "external_id": "HDSAT-RW-M13-INFO-053",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Hives kept on city rooftops often produce as much honey as hives in surrounding farmland. The reason seems to be variety: parks, balconies, and vacant lots supply flowers in succession from spring to fall, while a single field may bloom for only a few weeks. Beekeepers who plant for continuous bloom report steadier yields.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "A range of flowers available over a long season can support urban hives."
+    },
+    {
+     "id": "B",
+     "text": "Urban honey always tastes better than farm honey."
+    },
+    {
+     "id": "C",
+     "text": "Farmland has no bees at all."
+    },
+    {
+     "id": "D",
+     "text": "Rooftop hives need less care than rural hives."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage attributes urban yields to flowers blooming in succession across many small spaces. That variety is the main explanation offered.",
+   "distractor_rationales": {
+    "B": "Taste is not discussed.",
+    "C": "Farmland is described as having fields that bloom briefly, not as lacking bees.",
+    "D": "The amount of care is never compared."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-054",
+   "external_id": "HDSAT-RW-M13-INFO-054",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "When a small theater replaced its incandescent fixtures with LEDs, rehearsals changed. Actors could suddenly see the audience, and directors began blocking movement that used the whole stage rather than the lit center. The lighting designer noted that the new fixtures, though brighter, required careful dimming to preserve the shadows the company relied on.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "A change in lighting technology altered how the company staged its performances."
+    },
+    {
+     "id": "B",
+     "text": "The new fixtures were dimmer than the old ones."
+    },
+    {
+     "id": "C",
+     "text": "The theater removed all shadows from its stage."
+    },
+    {
+     "id": "D",
+     "text": "Audiences objected to the new lighting."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage connects the new fixtures to changes in blocking and to the designer's adjusted approach. The main idea is that the technology reshaped the staging.",
+   "distractor_rationales": {
+    "B": "The text calls the new fixtures brighter.",
+    "C": "The designer worked to preserve shadows rather than eliminate them.",
+    "D": "Audience reaction is not described."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-055",
+   "external_id": "HDSAT-RW-M13-INFO-055",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Before industrial whaling, sailors recorded whale sightings in logbooks, often noting only that whales were numerous. Researchers combing these logs found that sightings clustered along particular currents. The clustering matches modern tracking of the whales' prey, suggesting the animals followed food rather than fixed migration routes.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "Old sighting records suggest that whale movements followed food rather than a fixed route."
+    },
+    {
+     "id": "B",
+     "text": "Sailors exaggerated the number of whales they saw."
+    },
+    {
+     "id": "C",
+     "text": "Whales no longer migrate at all."
+    },
+    {
+     "id": "D",
+     "text": "The logs prove that whaling caused the population to decline."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage reports that sightings match the location of prey and draws a conclusion about food rather than fixed routes. That conclusion is the main idea.",
+   "distractor_rationales": {
+    "B": "The text treats the logs as usable evidence, not as exaggeration.",
+    "C": "It describes movement patterns, not an end to migration.",
+    "D": "Population decline is not discussed."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-056",
+   "external_id": "HDSAT-RW-M13-INFO-056",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Seedlings grown in sterilized soil often wilt during a dry spell, while seedlings in soil containing mycorrhizal fungi keep growing. The fungi extend threadlike networks that reach water beyond the plant's roots, and they receive sugars in return. In a drought year, plots with intact fungal networks produced more saplings than plots where the soil had been turned.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "Fungal networks can help seedlings survive drought by extending their access to water."
+    },
+    {
+     "id": "B",
+     "text": "Mycorrhizal fungi harm the seedlings they associate with."
+    },
+    {
+     "id": "C",
+     "text": "Sterilizing soil improves seedling growth in dry conditions."
+    },
+    {
+     "id": "D",
+     "text": "Saplings in disturbed plots grew more than those in intact plots."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage explains that fungal threads reach water the roots cannot and reports better sapling survival where the networks were intact. That is the main claim.",
+   "distractor_rationales": {
+    "B": "The relationship is described as mutually beneficial.",
+    "C": "Sterilized soil seedlings wilted, so sterilization did not improve growth.",
+    "D": "Intact plots produced more saplings than disturbed plots."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-057",
+   "external_id": "HDSAT-RW-M13-INFO-057",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Moths of one species rest on tree bark and range from pale to dark. In a forest where soot darkened the trunks, dark moths became more common over several decades. When air-quality rules later lightened the trunks, pale moths increased again. These shifts suggest that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "moths whose color contrasted with the bark were more likely to be caught by birds."
+    },
+    {
+     "id": "B",
+     "text": "individual moths changed color as the bark darkened."
+    },
+    {
+     "id": "C",
+     "text": "soot helped the moths find food more easily."
+    },
+    {
+     "id": "D",
+     "text": "the species split into two separate populations."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The population shifts track how well each color matches the bark, which points to visual predators selecting the conspicuous moths. The other options require mechanisms the passage does not support.",
+   "distractor_rationales": {
+    "B": "An individual moth cannot change its inherited color as bark darkens.",
+    "C": "The passage is about camouflage, not food finding.",
+    "D": "No splitting of the species is described."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-058",
+   "external_id": "HDSAT-RW-M13-INFO-058",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In a greenhouse, seedlings planted in soil from an old meadow grew larger than seedlings in soil from a young lawn, even though both soils had the same nutrients and water. When the meadow soil was heated to kill microbes, its advantage disappeared. This suggests that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "microorganisms in the meadow soil contributed to the seedlings' greater growth."
+    },
+    {
+     "id": "B",
+     "text": "heating the soil added nutrients that the lawn soil lacked."
+    },
+    {
+     "id": "C",
+     "text": "lawn soil cannot support seedlings under any conditions."
+    },
+    {
+     "id": "D",
+     "text": "meadow plants grow faster than lawn plants in every soil."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Because nutrients and water were equal, and killing microbes removed the advantage, the living organisms in the meadow soil are the remaining explanation.",
+   "distractor_rationales": {
+    "B": "Heating removed the advantage rather than creating one.",
+    "C": "Lawn soil supported seedlings; they simply grew less.",
+    "D": "The comparison is between soils, not between plant types."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-059",
+   "external_id": "HDSAT-RW-M13-INFO-059",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Chemical residue inside cooking pots from a coastal settlement contained fats from both land animals and fish. The pots were found in households of similar size and age. This pattern suggests that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "the households used a mix of land and marine foods rather than specializing in one."
+    },
+    {
+     "id": "B",
+     "text": "the settlement had no access to land animals."
+    },
+    {
+     "id": "C",
+     "text": "fish were traded inland from the settlement."
+    },
+    {
+     "id": "D",
+     "text": "the pots were used only for storage."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Pots in comparable households held both kinds of fat, which points to mixed use rather than specialization. The other choices contradict the residue or add unsupported claims.",
+   "distractor_rationales": {
+    "B": "Land-animal fats were found, so the settlement did have access to them.",
+    "C": "Trade is not mentioned in the passage.",
+    "D": "The pots were used for cooking, as the residue shows."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-060",
+   "external_id": "HDSAT-RW-M13-INFO-060",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Young birds of one species raised in isolation develop songs that lack the local dialect heard in the wild. When recordings of the dialect are played to them during a sensitive period, their songs come to match it. This suggests that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "young birds learn dialect features from what they hear rather than from instinct alone."
+    },
+    {
+     "id": "B",
+     "text": "dialects are inherited genetically from parents."
+    },
+    {
+     "id": "C",
+     "text": "adult birds can no longer learn new songs."
+    },
+    {
+     "id": "D",
+     "text": "isolation improves the accuracy of a bird's song."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Isolated birds lacked the dialect, and hearing recordings restored it, which shows a learned component. That rules out a purely genetic explanation.",
+   "distractor_rationales": {
+    "B": "Inherited song would not depend on hearing recordings.",
+    "C": "The study concerns young birds, not adult learning.",
+    "D": "Isolated songs lacked the local dialect."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-061",
+   "external_id": "HDSAT-RW-M13-INFO-061",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A northern community builds a road across a frozen lake each winter. Officials close the road when measured ice thickness falls below a set level, even if the surface looks solid. This policy assumes that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "visible surface conditions can hide ice too thin to support vehicles."
+    },
+    {
+     "id": "B",
+     "text": "thick ice never melts during the winter."
+    },
+    {
+     "id": "C",
+     "text": "drivers can judge ice thickness reliably by looking at it."
+    },
+    {
+     "id": "D",
+     "text": "the road is used only during daylight hours."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Closing the road despite a solid-looking surface implies that appearance is not a safe guide. That is the assumption behind measuring thickness.",
+   "distractor_rationales": {
+    "B": "No claim is made that ice never melts.",
+    "C": "The policy exists precisely because looking is not enough.",
+    "D": "The timing of use is not mentioned."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-062",
+   "external_id": "HDSAT-RW-M13-INFO-062",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Gardeners in a neighborhood with older housing tested their soil and found elevated lead near building foundations. They moved vegetable beds away from the walls and added clean compost. Subsequent tests showed lower lead in the beds. This suggests that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "the beds' location and added soil, rather than the neighborhood as a whole, explained the earlier readings."
+    },
+    {
+     "id": "B",
+     "text": "compost removes lead from the vegetables that grow in it."
+    },
+    {
+     "id": "C",
+     "text": "lead occurs naturally throughout the neighborhood's soil."
+    },
+    {
+     "id": "D",
+     "text": "the first tests were performed incorrectly."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Lead was elevated only near foundations, and moving the beds plus adding clean soil lowered the readings, which points to local conditions rather than a neighborhood-wide problem.",
+   "distractor_rationales": {
+    "B": "The passage does not claim compost removes lead from plants.",
+    "C": "The pattern near foundations suggests a local source, not a uniform natural level.",
+    "D": "The change after relocating the beds supports the original tests rather than discrediting them."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-063",
+   "external_id": "HDSAT-RW-M13-INFO-063",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Documents stored in a damp basement faded more than identical documents stored in a dry room. The ink in both sets was made from the same recipe. This suggests that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "moisture accelerated the fading of the ink."
+    },
+    {
+     "id": "B",
+     "text": "the basement documents were much older."
+    },
+    {
+     "id": "C",
+     "text": "the ink recipe changed between the two sets."
+    },
+    {
+     "id": "D",
+     "text": "light alone caused all of the fading."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The documents and ink were the same, so the storage condition is the difference that explains the extra fading. Moisture is the only variable named.",
+   "distractor_rationales": {
+    "B": "Nothing indicates an age difference.",
+    "C": "The passage says both sets used the same recipe.",
+    "D": "Light conditions are not described as differing."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-064",
+   "external_id": "HDSAT-RW-M13-INFO-064",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Lichen species differ in how much air pollution they tolerate. Surveys along a road found only tolerant species near the highway and a mix of tolerant and sensitive species farther away. This pattern suggests that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "pollution levels decline with distance from the highway."
+    },
+    {
+     "id": "B",
+     "text": "sensitive species prefer the soil beside roads."
+    },
+    {
+     "id": "C",
+     "text": "tolerant species require polluted air to survive."
+    },
+    {
+     "id": "D",
+     "text": "lichens move quickly from one site to another."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Sensitive lichens appear only where pollution is lower, which implies a gradient away from the road. That is the inference the survey supports.",
+   "distractor_rationales": {
+    "B": "Sensitive species were absent near the road, the opposite of preferring it.",
+    "C": "Tolerance does not mean a requirement for pollution.",
+    "D": "Dispersal speed is not discussed."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-065",
+   "external_id": "HDSAT-RW-M13-INFO-065",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A shoreline behind an oyster reef eroded less than a nearby shoreline without one. Waves reaching the first shore were measured as smaller. This suggests that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "the reef reduced wave energy before the waves reached the shore."
+    },
+    {
+     "id": "B",
+     "text": "oysters cement loose sand into solid rock."
+    },
+    {
+     "id": "C",
+     "text": "the second shoreline had softer soil."
+    },
+    {
+     "id": "D",
+     "text": "erosion depends only on the height of the tide."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Smaller waves arrived where the reef stood, and that shore eroded less, which points to the reef absorbing wave energy.",
+   "distractor_rationales": {
+    "B": "No cementing process is described.",
+    "C": "Soil differences are not mentioned.",
+    "D": "The comparison isolates the presence of the reef."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-066",
+   "external_id": "HDSAT-RW-M13-INFO-066",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Bats of one species forage along unlit paths more than along paths lit all night. When lamps were fitted with shields that directed light downward, bat activity along those paths increased. This suggests that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "light spilling sideways, not light itself, discouraged the bats."
+    },
+    {
+     "id": "B",
+     "text": "bats avoid every kind of artificial light equally."
+    },
+    {
+     "id": "C",
+     "text": "shields attracted more insects to the paths."
+    },
+    {
+     "id": "D",
+     "text": "the bats changed their diet after the shields were added."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The lamps still shone, but shielding the sideways spill restored activity, so the direction of the light mattered. That isolates spill rather than light in general.",
+   "distractor_rationales": {
+    "B": "The shielded paths were still lit and the bats returned.",
+    "C": "Insect numbers are not measured in the passage.",
+    "D": "Diet is not discussed."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-067",
+   "external_id": "HDSAT-RW-M13-INFO-067",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Pressed specimens of one wildflower, collected over a century at the same site and stored identically, show earlier flowering dates in recent decades. This suggests that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "the plants have been flowering earlier than they did a century ago."
+    },
+    {
+     "id": "B",
+     "text": "the collectors visited the site only in spring."
+    },
+    {
+     "id": "C",
+     "text": "pressing the flowers altered the dates on the labels."
+    },
+    {
+     "id": "D",
+     "text": "the species has stopped flowering at this site."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "With the site and storage held constant, the shift in recorded dates points to a real change in flowering time. That is the inference the evidence supports.",
+   "distractor_rationales": {
+    "B": "A spring-only collector could not produce the range of dates described.",
+    "C": "Pressing does not change the collection date on a label.",
+    "D": "The specimens document flowering, which continues."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-068",
+   "external_id": "HDSAT-RW-M13-INFO-068",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Seeds of a shrub germinate readily after being heated to temperatures reached in a brush fire but rarely without heat. In unburned plots seedlings are scarce; in recently burned plots they are abundant. This suggests that",
+   "prompt": "Which choice most logically completes the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "fire cues trigger germination in this species."
+    },
+    {
+     "id": "B",
+     "text": "fire supplies all the nutrients the shrub needs."
+    },
+    {
+     "id": "C",
+     "text": "heat kills most of the shrub's seeds."
+    },
+    {
+     "id": "D",
+     "text": "the shrub requires deep shade to reproduce."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Seeds sprout after heat and seedlings follow fire, which indicates that fire acts as a germination cue. The other choices contradict the observation.",
+   "distractor_rationales": {
+    "B": "Nutrients are not measured in the passage.",
+    "C": "Heated seeds germinated readily rather than dying.",
+    "D": "Seedlings were abundant in burned, open plots."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-069",
+   "external_id": "HDSAT-RW-M13-INFO-069",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A repair cafe invites volunteers to fix broken appliances for free. A city report opens by describing the tons of small electronics discarded each year. It then describes a weekend cafe where volunteers repaired 60 of the 75 items brought in. The report concludes that repair events divert only a fraction of the waste stream but build skills that outlast the events.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "It frames a large problem, presents a small-scale response to it, then qualifies that response's impact."
+    },
+    {
+     "id": "B",
+     "text": "It compares two cities that run repair cafes."
+    },
+    {
+     "id": "C",
+     "text": "It argues that volunteers are responsible for electronic waste."
+    },
+    {
+     "id": "D",
+     "text": "It describes a repair process step by step in chronological order."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The report moves from the scale of the waste problem to one event and then limits the claim while noting another benefit. That is the structure described.",
+   "distractor_rationales": {
+    "B": "Only one city's report is described.",
+    "C": "The report credits volunteers with repairs, not with creating the waste.",
+    "D": "The passage describes the report's parts, not a repair procedure."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-070",
+   "external_id": "HDSAT-RW-M13-INFO-070",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "For years researchers assumed that sleep simply rested the brain. A study then showed that participants who slept after learning a list recalled more words than those who stayed awake. A second study found that the benefit depended on deep sleep rather than total hours. Together the studies shifted the question from whether sleep matters to which stage does the work.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "It traces a shift from a general assumption to a more specific research question."
+    },
+    {
+     "id": "B",
+     "text": "It describes a single experiment in exhaustive detail."
+    },
+    {
+     "id": "C",
+     "text": "It compares two theories and concludes that neither can be tested."
+    },
+    {
+     "id": "D",
+     "text": "It offers practical advice for improving sleep."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage starts with an old assumption, reports two studies, and ends by naming a narrower question. That progression is the structure.",
+   "distractor_rationales": {
+    "B": "Two studies are summarized briefly, not one in detail.",
+    "C": "The research is described as testable and productive.",
+    "D": "No advice about sleep habits is given."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-071",
+   "external_id": "HDSAT-RW-M13-INFO-071",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Early maps of a river delta show channels that no longer exist. A later map, drawn after a flood, shows a single channel. The text notes that the earlier channels were not errors: the delta itself had changed between surveys.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "It explains why two maps that appear to disagree can both be accurate."
+    },
+    {
+     "id": "B",
+     "text": "It argues that one of the maps is a deliberate fraud."
+    },
+    {
+     "id": "C",
+     "text": "It describes the printing techniques used to make maps."
+    },
+    {
+     "id": "D",
+     "text": "It compares the colors used by two mapmakers."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The text reconciles the two maps by explaining that the landscape changed, so the apparent disagreement is not an error. That reconciliation is its structure and purpose.",
+   "distractor_rationales": {
+    "B": "The text explicitly says the earlier channels were not errors.",
+    "C": "Printing methods are not mentioned.",
+    "D": "Color is not discussed."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-072",
+   "external_id": "HDSAT-RW-M13-INFO-072",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Many people assume that fermentation is a form of spoilage. The passage explains that in fermentation specific microbes outcompete the organisms that cause rot, and that the resulting acidity preserves food. It then notes that the same process can fail when temperatures favor the wrong microbes.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "It corrects a common misconception and then notes a condition under which the process fails."
+    },
+    {
+     "id": "B",
+     "text": "It gives a history of fermentation techniques."
+    },
+    {
+     "id": "C",
+     "text": "It compares two recipes for the same food."
+    },
+    {
+     "id": "D",
+     "text": "It argues that fermentation is unsafe in all cases."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage first separates fermentation from rot and then adds a failure condition. That correction-then-qualification sequence is the structure.",
+   "distractor_rationales": {
+    "B": "No historical development is traced.",
+    "C": "Recipes are not compared.",
+    "D": "The passage presents fermentation as a preserving process, not an unsafe one."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-073",
+   "external_id": "HDSAT-RW-M13-INFO-073",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "One museum labels objects with dates and materials only. Another writes labels that begin with a question and end with an unresolved detail. The passage describes visitors spending longer at the second museum's cases and argues that the difference lies less in the objects than in the invitation to look closely.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "It contrasts two labeling approaches and attributes a difference in visitor behavior to that contrast."
+    },
+    {
+     "id": "B",
+     "text": "It argues that museums should remove labels entirely."
+    },
+    {
+     "id": "C",
+     "text": "It describes a single exhibit in detail."
+    },
+    {
+     "id": "D",
+     "text": "It compares the ticket prices of two museums."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage sets one labeling style against another and explains the difference in attention by that contrast. That comparison-and-attribution is the structure.",
+   "distractor_rationales": {
+    "B": "The passage discusses two kinds of labels, not their removal.",
+    "C": "No single exhibit is described in detail.",
+    "D": "Ticket prices are not mentioned."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-074",
+   "external_id": "HDSAT-RW-M13-INFO-074",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The passage lists the benefits of street trees: shade, cooler air, and slower storm runoff. It then observes that trees planted in narrow pits often die within a decade, and that cities which count only initial plantings overstate their progress.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "It presents benefits and then qualifies a common way of measuring success."
+    },
+    {
+     "id": "B",
+     "text": "It argues that street trees are not worth planting."
+    },
+    {
+     "id": "C",
+     "text": "It compares two species of street tree."
+    },
+    {
+     "id": "D",
+     "text": "It gives step-by-step planting instructions."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "After listing advantages, the passage points out that counting plantings alone can exaggerate progress. That is a qualification of a success measure.",
+   "distractor_rationales": {
+    "B": "The passage supports planting while questioning how progress is counted.",
+    "C": "No species comparison is made.",
+    "D": "No planting instructions are given."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-075",
+   "external_id": "HDSAT-RW-M13-INFO-075",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The passage opens with a clerk in 1908 who blamed a jammed typewriter for a missed deadline. It then widens out: manufacturers soon standardized keyboard layouts, and the standard outlasted the machines themselves.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "It begins with a specific incident and uses it to introduce a broader development."
+    },
+    {
+     "id": "B",
+     "text": "It argues that the clerk was correct about the cause of the delay."
+    },
+    {
+     "id": "C",
+     "text": "It describes how typewriters were manufactured."
+    },
+    {
+     "id": "D",
+     "text": "It compares two offices in different countries."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "A single anecdote opens the passage, which then moves to standard layouts surviving the machines. That widening from incident to trend is the structure.",
+   "distractor_rationales": {
+    "B": "The passage does not settle whether the clerk was right.",
+    "C": "Manufacturing methods are not described.",
+    "D": "No two offices are compared."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-076",
+   "external_id": "HDSAT-RW-M13-INFO-076",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "For decades a population of whales was said to migrate along a single corridor. The passage describes a tagging study that recorded several routes, then presents an alternative explanation: the earlier conclusion rested on sightings from ships that all traveled the same lane.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "It presents an established claim, reports evidence against it, and offers a reason the claim persisted."
+    },
+    {
+     "id": "B",
+     "text": "It describes a single tagged whale in detail."
+    },
+    {
+     "id": "C",
+     "text": "It argues that tagging studies are unreliable."
+    },
+    {
+     "id": "D",
+     "text": "It compares whale populations in two oceans."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The text states the old claim, gives tag data that complicate it, and explains why ship-based sightings produced it. That three-part movement is the structure.",
+   "distractor_rationales": {
+    "B": "The tagging study covers several routes, not one whale.",
+    "C": "The passage relies on the tagging study as evidence.",
+    "D": "Only one population is discussed."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-077",
+   "external_id": "HDSAT-RW-M13-INFO-077",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "The passage reports that library visits rose after a branch extended its evening hours. It then cautions that the increase was concentrated among students, and that overall borrowing did not change.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "It presents a result and then narrows what that result shows."
+    },
+    {
+     "id": "B",
+     "text": "It argues that libraries should close earlier."
+    },
+    {
+     "id": "C",
+     "text": "It compares two cities' library systems."
+    },
+    {
+     "id": "D",
+     "text": "It describes a library's budget in detail."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "A rise in visits is reported first, then limited by the detail about students and unchanged borrowing. That is a result followed by a narrowing qualification.",
+   "distractor_rationales": {
+    "B": "The passage reports an extension, not a recommendation to close earlier.",
+    "C": "Only one branch is discussed.",
+    "D": "Budget figures are not given."
+   }
+  },
+  {
+   "id": "RW-M13-INFO-078",
+   "external_id": "HDSAT-RW-M13-INFO-078",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A footbridge in a river town was given a slight upward curve because its flat deck had looked heavy from the bank. Later analysis showed that the curve also changed how wind moved across the deck, weakening a vibration that had rattled the original railings. The engineers had not planned for that effect.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "figure_metadata": null,
+   "choices": [
+    {
+     "id": "A",
+     "text": "It describes a design choice made for appearance and explains an unintended structural benefit."
+    },
+    {
+     "id": "B",
+     "text": "It argues that the engineers ignored safety concerns."
+    },
+    {
+     "id": "C",
+     "text": "It compares the costs of two bridges."
+    },
+    {
+     "id": "D",
+     "text": "It describes a bridge failure in detail."
+    }
+   ],
+   "source_id": "hdsat-open-core-2026",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The curve was added so the bridge would look lighter, and the passage then credits it with an aerodynamic benefit nobody designed for. That is the structure.",
+   "distractor_rationales": {
+    "B": "The passage shows the design performing better, not safety being ignored.",
+    "C": "No costs are mentioned.",
+    "D": "A vibration is reduced, not a failure described."
+   }
+  }
+ ]
+}

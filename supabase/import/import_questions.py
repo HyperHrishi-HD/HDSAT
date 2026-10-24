@@ -1521,6 +1521,12 @@ def load_expansion(base_dir=None):
     if os.path.exists(m10b_path):
         with open(m10b_path, "r", encoding="utf-8") as fh:
             questions = questions + json.load(fh).get("questions", [])
+    # M13 batch: figure-bearing math plus a further authored R&W set. Kept in
+    # its own file so the next batch can be added without rebuilding earlier ones.
+    m13_path = os.path.join(exp_dir, "extra_m13.json")
+    if os.path.exists(m13_path):
+        with open(m13_path, "r", encoding="utf-8") as fh:
+            questions = questions + json.load(fh).get("questions", [])
     if os.path.exists(c_path):
         with open(c_path, "r", encoding="utf-8") as fh:
             cards = json.load(fh).get("cards", [])

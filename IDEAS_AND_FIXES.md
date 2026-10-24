@@ -244,3 +244,18 @@ Nothing in this section has been applied. It is the material for the three defer
 - The lowest-risk option is **Neon (Postgres)**: Supabase → Neon logical replication can stream the catalogue tables, with direct connections (not the pooler), matching schemas and watched lag. DDL is not replicated, so migrations must be applied to both.
 - **Cloudflare D1 / Turso** are SQLite, not Postgres drop-ins: schema and SQL must be converted (no direct Postgres import).
 - A second database **does not inherit Supabase Auth or RLS**. Its credentials must stay behind a server/Worker, never in the SPA. Keep one writer, use shadow reads with a fallback, cut over with a freeze + checksum check, and keep the old source read-only for rollback. Avoid dual writes — two databases cannot commit atomically.
+
+## Section 7 — Round notes (2026-10-31)
+
+- [x] **Past simulations fit the window.** The table became a responsive row list; the eight columns were forcing the whole card wider than a phone viewport, which is what clipped the status badge in the reported screenshot. Verified at 375 px: `scrollWidth 399 < viewport 417`, every row 333 px wide, no overflowing descendants.
+- [x] **Score log and delete are windows.** Both are dialogs now, so neither can be pushed off-screen by a long list. The score log button reads "Score log (n)".
+- [x] **"no cap" removed**, along with the old inline delete confirmation and its CSS.
+- [x] **Break screen stacks and scrolls.** At 375 px the timer sits above the instructions (timer y 33–133, text 147–480) and the resume button is on screen; at 390×467 the screen scrolls and "Resume Testing Now" is reachable at y 400–434.
+- [x] **The score report is a PDF.** A dependency-free writer produces a real one-page document. Verified: `pdftotext -layout` shows the header band, three score panels, four module rows with accuracy, notes and footer; duration now prints `1:59:00`, not `119:00`. Browser check produced `application/pdf`, 3,952 bytes, `HDSAT-score-report-2026-10-23.pdf`.
+- [x] **M13 bank batch: 304 items**, 0 QA errors / 0 warnings on the incoming set. Bank now 7,594 (2,674 R&W / 4,920 Math); Math crossed 5,000. Figures: 12 right triangles, 8 legs, 10 rectangle areas, 8 perimeters, 6 missing sides, 12 circle areas, 8 circumferences, 6 radii, 16 slopes, 12 intercepts, 8 parabolas, 8 zero sets, 8 function tables, 8 exponential tables, 8 bar charts, 6 line charts; 40 authored quantitative-evidence R&W items with tables and charts.
+
+### 7.1 Still open
+
+- **R&W volume.** 2,326 more R&W items are needed for 5k/5k. Authoring runs at roughly 160 items per reviewed batch; the merge path (`merge_bank_m10.py --incoming …`) is the safe way to add each one.
+- **Duplicate debt in the old bank.** `tools/content_qa.py` reports 481 exact duplicate stems and about 5,000 near-duplicate pairs across the pre-existing generated tiers (the new batch contributes none). They are parameter variants from earlier volume sweeps. Cleaning means archiving ids, which would remove items students may have practiced — waiting on the owner's call.
+- **Public-source items.** Copying released College Board questions into a public bank is a licensing problem, and the openly licensed SAT-style R&W corpora that exist are small and uneven. Original items in the official formats remain the safe path; a licensed export can be imported unchanged with `--file` if one is ever obtained.

@@ -1544,10 +1544,13 @@ canvas.plot { width: 100%; height: 260px; background: var(--surface); border: 1p
   justify-content: center;
   align-items: center;
   padding: 24px;
+  /* A short window (or a phone in landscape) must still reach Resume. */
+  overflow-y: auto;
 }
 .bb-break-card {
   max-width: 780px;
   width: 100%;
+  min-width: 0;
   display: grid;
   grid-template-columns: 240px 1fr;
   gap: 32px;
@@ -1572,6 +1575,9 @@ canvas.plot { width: 100%; height: 260px; background: var(--surface); border: 1p
   font-size: 2.6rem;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
+}
+.bb-break-info {
+  min-width: 0;
 }
 .bb-break-info h1 {
   color: #ffffff;
@@ -1860,21 +1866,155 @@ mark.bb-hl[data-has-note='true']::after {
 .sync-nudge-close:hover { background: #f6e6b8; color: #4a3a12; }
 .sync-nudge-close:focus-visible { outline: 2px solid #b45309; outline-offset: 1px; }
 
-/* Inline confirmation for deleting a saved simulation. */
-.delete-confirm {
-  display: flex;
+/* ---------- Past simulations: one row per run ---------- */
+.attempts-block { margin-top: 22px; }
+.attempts-head {
+  gap: 8px 14px;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px 14px;
-  margin-top: 10px;
-  padding: 9px 12px;
-  border: 1px solid #f0c8c8;
-  border-radius: 9px;
-  background: #fff7f7;
-  color: #5b2323;
-  font-size: 0.85rem;
 }
+.attempts-head-actions {
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  min-width: 0;
+}
+.attempt-list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.attempt-row {
+  display: grid;
+  grid-template-columns: minmax(116px, 1fr) minmax(0, 2fr) auto;
+  align-items: center;
+  gap: 10px 18px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #ffffff;
+  min-width: 0;
+}
+.attempt-what {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.attempt-what strong { font-size: 0.9rem; }
+.attempt-track {
+  font-size: 0.78rem;
+  color: var(--muted);
+  overflow-wrap: anywhere;
+}
+.attempt-scores {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(48px, auto));
+  gap: 4px 18px;
+  min-width: 0;
+}
+.attempt-score {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+.attempt-score > span {
+  font-size: 0.66rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.attempt-score > strong {
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+  overflow-wrap: anywhere;
+}
+.attempt-tail {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.attempt-actions { display: flex; align-items: center; gap: 6px; }
+.attempt-delete {
+  font: inherit;
+  font-size: 0.78rem;
+  background: none;
+  border: 0;
+  padding: 4px 2px;
+  color: #a23b36;
+  cursor: pointer;
+  border-radius: 5px;
+}
+.attempt-delete:hover { text-decoration: underline; }
+.attempt-delete:focus-visible { outline: 2px solid #a23b36; outline-offset: 1px; }
+
+@media (max-width: 720px) {
+  .attempt-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 8px;
+    padding: 12px;
+  }
+  .attempt-scores { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 4px 10px; }
+  .attempt-tail { justify-content: space-between; }
+  .attempts-head { align-items: flex-start; }
+  .attempts-head-actions { justify-content: flex-start; }
+}
+
+/* ---------- In-app dialogs (score log, delete confirmation) ---------- */
+.app-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 400;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(14, 18, 24, 0.45);
+  overflow-y: auto;
+}
+.app-modal {
+  width: min(440px, 100%);
+  max-height: calc(100vh - 36px);
+  overflow-y: auto;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 20px 22px;
+  box-shadow: 0 20px 50px rgba(10, 16, 26, 0.28);
+}
+.app-modal-wide { width: min(720px, 100%); }
+.app-modal h2 { font-size: 1.05rem; letter-spacing: -0.01em; }
+.app-modal p {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+  margin: 8px 0 0;
+}
+.app-modal-close {
+  font: inherit;
+  font-size: 1rem;
+  background: none;
+  border: 0;
+  padding: 4px 6px;
+  border-radius: 6px;
+  color: var(--muted);
+  cursor: pointer;
+}
+.app-modal-close:hover { background: #f1f4f8; color: var(--ink); }
+.app-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.app-modal-scroll { overflow-x: auto; margin-top: 6px; }
+.app-modal-scroll table { min-width: 420px; }
 
 /* Unified account form: optional new-account details stay out of the way. */
 .auth-details {
@@ -2039,6 +2179,26 @@ mark.bb-hl[data-has-note='true']::after {
   .bb-fullscreen {
     overflow-x: hidden;
   }
+
+  /* Break screen: timer above the text, both full width, resume in reach. */
+  .bb-break-screen {
+    align-items: stretch;
+    justify-content: flex-start;
+    padding: 14px;
+    overflow-y: auto;
+  }
+  .bb-break-card {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    padding: 18px;
+    align-items: stretch;
+  }
+  .bb-break-timer-box { padding: 14px 12px; }
+  .bb-break-timer-value { font-size: 2rem; }
+  .bb-break-info h1 { font-size: 1.15rem; }
+  .bb-break-info p { font-size: 0.92rem; }
+  .bb-break-rules { padding: 12px 14px; margin: 12px 0 14px; }
+  .bb-break-rules ul { font-size: 0.85rem; }
   .bb-workspace,
   .bb-workspace .bb-pane,
   .bb-stimulus-pane,

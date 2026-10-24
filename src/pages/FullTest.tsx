@@ -22,6 +22,7 @@ import {
   type TestPlan,
 } from '../lib/examEngine';
 import { checkAnswer } from '../lib/grading';
+import { downloadScoreReport } from '../lib/scoreReportPdf';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
 import {
@@ -136,6 +137,7 @@ export function FullTestPage() {
   const [finishedAttempt, setFinishedAttempt] = useState<TestAttempt | null>(null);
   const [deleteTargetId, setDeleteTargetId] = useState<string | null>(null);
   const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [scoreLogOpen, setScoreLogOpen] = useState<boolean>(false);
   const [reviewQuestionId, setReviewQuestionId] = useState<string | null>(null);
   const [highlights, setHighlights] = useState<Record<string, HighlightRecord[]>>({});
   const [exitConfirmOpen, setExitConfirmOpen] = useState<boolean>(false);
@@ -637,6 +639,7 @@ export function FullTestPage() {
   };
 
   const currentQuestion = activeStage ? activeStage.plan.questions[currentIndex] ?? null : null;
+  const deleteTarget = app.testAttempts.find((attempt) => attempt.id === deleteTargetId) ?? null;
   const isMathSection = activeStage?.plan.section === 'Math';
   const sectionNumber = activeStage ? activeStage.sectionIndex + 1 : 1;
 
@@ -1376,6 +1379,12 @@ export function FullTestPage() {
     setShareNotice(`Downloaded ${name}.`);
   };
 
+  const handleDownloadPdf = () => {
+    if (!finishedAttempt) return;
+    const name = downloadScoreReport(finishedAttempt);
+    setShareNotice(`Saved ${name}.`);
+  };
+
   const handleCopyShareLink = async () => {
     if (!finishedAttempt) return;
     const code = encodeSharedSummary(buildSharedSummary(finishedAttempt));
@@ -1467,10 +1476,11 @@ export function FullTestPage() {
       ) : null}
 
       {!finishedAttempt && !sharedSummary ? (
-        <Card>
-          <div className="row-between">
-            <div className="row">
-              <h1>Full-Length Adaptive Practice Test</h1>
+        <>
+          <Card>
+            <div className="row-between">
+              <div className="row">
+                <h1>Full-Length Adaptive Practice Test</h1>
               <InfoTip label="Blueprint & scoring">
                 <div className="stack" style={{ gap: 8 }}>
                   <div>
@@ -1538,171 +1548,209 @@ export function FullTestPage() {
             </Button>
           </div>
 
-          {app.testAttempts.length > 0 ? (
-            <div style={{ marginTop: 20 }}>
-              <div className="row-between">
+          {app.testAttempts.length > 0 || app.scoreLog.length > 0 ? (
+            <div className="attempts-block">
+              <div className="row-between attempts-head">
                 <h3 style={{ margin: 0 }}>Past simulations</h3>
-                <span className="muted">
-                  {app.testAttempts.length} saved{' '}
-                  {app.mode === 'cloud' ? 'to your account' : 'in this browser'} · no cap
-                </span>
+                <div className="row attempts-head-actions">
+                  <span className="muted">
+                    {app.testAttempts.length} saved{' '}
+                    {app.mode === 'cloud' ? 'to your account' : 'in this browser'}
+                  </span>
+                  {app.scoreLog.length > 0 ? (
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      icon="library"
+                      onClick={() => setScoreLogOpen(true)}
+                    >
+                      Score log ({app.scoreLog.length})
+                    </Button>
+                  ) : null}
+                </div>
               </div>
-              <table style={{ marginTop: 8 }}>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Track</th>
-                    <th>R&amp;W</th>
-                    <th>Math</th>
-                    <th>Total</th>
-                    <th>Time</th>
-                    <th>Status</th>
-                    <th />
-                  </tr>
-                </thead>
-                <tbody>
+
+              {app.testAttempts.length === 0 ? (
+                <p className="muted" style={{ marginTop: 8 }}>
+                  No saved simulations. Ones you delete keep their score in the score log.
+                </p>
+              ) : (
+                <ul className="attempt-list">
                   {app.testAttempts
                     .slice()
                     .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
-                    .map((attempt) => (
-                      <tr key={attempt.id}>
+                    .map((attempt) => {
+                      const incomplete = attempt.status === 'incomplete';
+                      const when = new Date(attempt.createdAt).toLocaleDateString(undefined, {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric',
+                      });
+                      return (
+                        <li key={attempt.id} className="attempt-row">
+                          <div className="attempt-what">
+                            <strong>{when}</strong>
+                            <span className="attempt-track">{attempt.assessment}</span>
+                          </div>
+
+                          <div className="attempt-scores">
+                            <span className="attempt-score">
+                              <span>R&amp;W</span>
+                              <strong>{incomplete ? '—' : attempt.rwEstimate ?? '—'}</strong>
+                            </span>
+                            <span className="attempt-score">
+                              <span>Math</span>
+                              <strong>{incomplete ? '—' : attempt.mathEstimate ?? '—'}</strong>
+                            </span>
+                            <span className="attempt-score">
+                              <span>Total</span>
+                              <strong>{incomplete ? '—' : attempt.totalEstimate ?? '—'}</strong>
+                            </span>
+                            <span className="attempt-score">
+                              <span>Time</span>
+                              <strong>{formatClock(attempt.durationSeconds)}</strong>
+                            </span>
+                          </div>
+
+                          <div className="attempt-tail">
+                            <Badge tone={incomplete ? 'warn' : 'good'}>
+                              {incomplete ? 'In progress' : 'Completed'}
+                            </Badge>
+                            <div className="attempt-actions">
+                              <Button
+                                size="sm"
+                                variant={incomplete ? 'primary' : 'outline'}
+                                onClick={() => openPastAttempt(attempt)}
+                              >
+                                {incomplete ? 'Resume' : 'Review'}
+                              </Button>
+                              <button
+                                type="button"
+                                className="attempt-delete"
+                                onClick={() => setDeleteTargetId(attempt.id)}
+                                aria-label={`Delete the simulation from ${when}`}
+                              >
+                                Delete
+                              </button>
+                            </div>
+                          </div>
+                        </li>
+                      );
+                    })}
+                </ul>
+              )}
+            </div>
+          ) : null}
+        </Card>
+
+        {scoreLogOpen ? (
+          <div
+            className="app-modal-backdrop"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="score-log-title"
+          >
+            <div className="app-modal app-modal-wide">
+              <div className="row-between">
+                <h2 id="score-log-title" style={{ margin: 0 }}>
+                  Score log
+                </h2>
+                <button
+                  type="button"
+                  className="app-modal-close"
+                  onClick={() => setScoreLogOpen(false)}
+                  aria-label="Close score log"
+                >
+                  ✕
+                </button>
+              </div>
+              <p className="muted" style={{ margin: '4px 0 10px' }}>
+                Every simulation keeps one row here after you delete it. Scores only — no answers
+                or module detail.
+              </p>
+              <div className="app-modal-scroll">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Track</th>
+                      <th>R&amp;W</th>
+                      <th>Math</th>
+                      <th>Total</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {app.scoreLog.map((entry) => (
+                      <tr key={entry.id}>
                         <td>
-                          {new Date(attempt.createdAt).toLocaleDateString(undefined, {
+                          {new Date(entry.createdAt).toLocaleDateString(undefined, {
                             month: 'short',
                             day: 'numeric',
                             year: 'numeric',
                           })}
                         </td>
-                        <td>{attempt.assessment}</td>
-                        <td>
-                          {attempt.status === 'incomplete'
-                            ? 'In progress'
-                            : attempt.rwEstimate ?? '—'}
-                        </td>
-                        <td>
-                          {attempt.status === 'incomplete'
-                            ? 'In progress'
-                            : attempt.mathEstimate ?? '—'}
-                        </td>
-                        <td>
-                          {attempt.status === 'incomplete'
-                            ? 'Complete to score'
-                            : attempt.totalEstimate ?? '—'}
-                        </td>
-                        <td>{formatClock(attempt.durationSeconds)}</td>
-                        <td>
-                          <Badge tone={attempt.status === 'incomplete' ? 'warn' : 'good'}>
-                            {attempt.status === 'incomplete' ? 'Saved · In progress' : 'Completed'}
-                          </Badge>
-                        </td>
-                        <td>
-                          <div className="row" style={{ flexWrap: 'nowrap', gap: 6 }}>
-                            <Button
-                              size="sm"
-                              variant={attempt.status === 'incomplete' ? 'primary' : 'outline'}
-                              onClick={() => openPastAttempt(attempt)}
-                            >
-                              {attempt.status === 'incomplete' ? 'Resume' : 'Review'}
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="subtle"
-                              title="Delete this simulation"
-                              onClick={() => setDeleteTargetId(attempt.id)}
-                            >
-                              Delete
-                            </Button>
-                          </div>
-                        </td>
+                        <td>{entry.assessment}</td>
+                        <td>{entry.rw ?? '—'}</td>
+                        <td>{entry.math ?? '—'}</td>
+                        <td>{entry.total ?? '—'}</td>
+                        <td>{formatClock(entry.durationSeconds)}</td>
                       </tr>
                     ))}
-                </tbody>
-              </table>
-
-              {deleteTargetId ? (
-                <div className="delete-confirm" role="alertdialog" aria-label="Delete simulation">
-                  <span>
-                    Delete this simulation? Its score stays in your log; answers and module detail
-                    cannot be recovered.
-                  </span>
-                  <div className="row" style={{ flexWrap: 'nowrap', gap: 6 }}>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => setDeleteTargetId(null)}
-                      disabled={deletingId !== null}
-                    >
-                      Keep
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="danger"
-                      disabled={deletingId !== null}
-                      onClick={() => {
-                        const id = deleteTargetId;
-                        setDeletingId(id);
-                        void app.actions
-                          .deleteTest(id)
-                          .finally(() => {
-                            setDeletingId(null);
-                            setDeleteTargetId(null);
-                          });
-                      }}
-                    >
-                      {deletingId ? 'Deleting…' : 'Delete'}
-                    </Button>
-                  </div>
-                </div>
-              ) : null}
-
-            </div>
-          ) : app.scoreLog.length > 0 ? (
-            <p className="muted" style={{ marginTop: 18 }}>
-              Every simulation you delete keeps its score below.
-            </p>
-          ) : null}
-
-          {app.scoreLog.length > 0 ? (
-            <div style={{ marginTop: 22 }}>
-              <div className="row-between">
-                <h3 style={{ margin: 0 }}>Score log</h3>
-                <span className="muted">
-                  {app.scoreLog.length} kept after deletion · scores only
-                </span>
+                  </tbody>
+                </table>
               </div>
-              <table style={{ marginTop: 8 }}>
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Track</th>
-                    <th>R&amp;W</th>
-                    <th>Math</th>
-                    <th>Total</th>
-                    <th>Time</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {app.scoreLog.map((entry) => (
-                    <tr key={entry.id}>
-                      <td>
-                        {new Date(entry.createdAt).toLocaleDateString(undefined, {
-                          month: 'short',
-                          day: 'numeric',
-                          year: 'numeric',
-                        })}
-                      </td>
-                      <td>{entry.assessment}</td>
-                      <td>{entry.rw ?? '—'}</td>
-                      <td>{entry.math ?? '—'}</td>
-                      <td>{entry.total ?? '—'}</td>
-                      <td>{formatClock(entry.durationSeconds)}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="app-modal-actions">
+                <Button variant="outline" onClick={() => setScoreLogOpen(false)}>
+                  Close
+                </Button>
+              </div>
             </div>
-          ) : null}
-        </Card>
+          </div>
+        ) : null}
+
+        {deleteTarget ? (
+          <div
+            className="app-modal-backdrop"
+            role="alertdialog"
+            aria-modal="true"
+            aria-labelledby="delete-simulation-title"
+          >
+            <div className="app-modal">
+              <h2 id="delete-simulation-title" style={{ marginTop: 0 }}>
+                Delete this simulation?
+              </h2>
+              <p>
+                Its score stays in your score log. Answers, explanations and module detail cannot
+                be recovered.
+              </p>
+              <div className="app-modal-actions">
+                <Button
+                  variant="outline"
+                  onClick={() => setDeleteTargetId(null)}
+                  disabled={deletingId !== null}
+                >
+                  Keep it
+                </Button>
+                <Button
+                  variant="danger"
+                  disabled={deletingId !== null}
+                  onClick={() => {
+                    const id = deleteTarget.id;
+                    setDeletingId(id);
+                    void app.actions.deleteTest(id).finally(() => {
+                      setDeletingId(null);
+                      setDeleteTargetId(null);
+                    });
+                  }}
+                >
+                  {deletingId ? 'Deleting…' : 'Delete simulation'}
+                </Button>
+              </div>
+            </div>
+          </div>
+        ) : null}
+        </>
       ) : null}
 
       {finishedAttempt ? (
@@ -1738,8 +1786,8 @@ export function FullTestPage() {
               <Button size="sm" variant="outline" onClick={handleDownloadReport}>
                 Download score report (JSON)
               </Button>
-              <Button size="sm" variant="outline" onClick={() => window.print()}>
-                Print / save as PDF
+              <Button size="sm" variant="outline" onClick={() => handleDownloadPdf()}>
+                Download score report (PDF)
               </Button>
               <Button size="sm" variant="outline" onClick={() => void handleCopyShareLink()}>
                 Copy public share link
