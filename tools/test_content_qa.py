@@ -189,6 +189,34 @@ class AnswerKeyTests(unittest.TestCase):
         report = qa.check_bank(bank(duplicate))
         self.assertIn("answer_key.duplicate_choice_text", categories(report, "warn"))
 
+    def test_punctuation_options_are_not_duplicates(self):
+        # A Boundaries item may offer ", but", "but" and "; but". They differ
+        # only in punctuation, which is the whole point of the item.
+        boundaries = item(
+            "C-2b",
+            section="Reading and Writing",
+            domain="Standard English Conventions",
+            skill="Boundaries",
+            stimulus="The storm had passed ______ the crew still waited for the swell to settle.",
+            prompt="Which choice completes the text so that it conforms to the conventions of Standard English?",
+            choices=[
+                {"id": "A", "text": ", but"},
+                {"id": "B", "text": " but"},
+                {"id": "C", "text": "; but"},
+                {"id": "D", "text": ", however"},
+            ],
+            correct_answer="A",
+            acceptable_answers=["A"],
+            explanation="Two independent clauses joined by 'but' take a comma before the conjunction.",
+            distractor_rationales={
+                "B": "Without the comma the clauses run together.",
+                "C": "A semicolon before a coordinating conjunction is nonstandard.",
+                "D": "A comma alone before 'however' creates a comma splice.",
+            },
+        )
+        report = qa.check_bank(bank(boundaries))
+        self.assertNotIn("answer_key.duplicate_choice_text", categories(report, "warn"))
+
     def test_all_of_the_above_style_choices_are_warned(self):
         style = item(
             "C-3",

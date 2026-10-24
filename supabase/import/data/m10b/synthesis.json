@@ -1,0 +1,1214 @@
+{
+  "items": [
+    {
+      "notes": [
+        "A team grew insulation panels from mycelium bound to agricultural waste.",
+        "The panels had a thermal conductivity of 0.21 W/mK; extruded polystyrene (EPS) panels measured 0.035 W/mK, and lower conductivity means better insulation.",
+        "Buried in soil, the mycelium panels lost 90 percent of their mass within 90 days; EPS showed no measurable mass loss after two years.",
+        "The mycelium panels cost about 40 percent less per square meter to produce."
+      ],
+      "goal": "The student wants to emphasize the tradeoff between insulation performance and disposal.",
+      "correct": "The mycelium panels insulated less well than EPS (0.21 versus 0.035 W/mK) but broke down in soil within 90 days, while EPS did not degrade.",
+      "wrongs": [
+        "The mycelium panels had a thermal conductivity of 0.21 W/mK, compared with 0.035 W/mK for EPS.",
+        "The mycelium panels lost 90 percent of their mass within 90 days in soil, whereas EPS showed no measurable loss after two years.",
+        "The mycelium panels cost about 40 percent less per square meter to produce than EPS panels did."
+      ],
+      "why": [
+        "This choice gives only the insulation figures and says nothing about disposal, so it does not present a tradeoff.",
+        "This choice gives only the disposal result and omits the weaker insulation, so it presents no tradeoff either.",
+        "Cost is not part of the insulation-versus-disposal tradeoff the goal names."
+      ],
+      "explanation": "The goal asks for both sides of one decision. The key pairs the conductivity figures from the second note with the degradation result from the third note, showing weaker insulation alongside easier disposal.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "Twelve hospital wards joined a hand-hygiene study; six received proximity sensors that flashed a reminder when a worker entered without sanitizing, and six kept their usual posters.",
+        "Compliance on the sensor wards rose from 71 percent to 89 percent over eight weeks.",
+        "Compliance on the poster wards moved from 70 percent to 73 percent over the same period.",
+        "The sensor system cost about 18,000 dollars per ward per year."
+      ],
+      "goal": "The student wants to emphasize the size of the improvement associated with the sensor reminders.",
+      "correct": "Compliance rose 18 percentage points on the sensor wards, from 71 to 89 percent, but only 3 points on the poster wards, from 70 to 73 percent.",
+      "wrongs": [
+        "The sensor wards and the poster wards began the study with nearly identical compliance, at 71 and 70 percent.",
+        "The sensor system cost about 18,000 dollars per ward per year, while posters cost almost nothing.",
+        "Workers on the sensor wards received a flashing reminder whenever they entered without sanitizing."
+      ],
+      "why": [
+        "This choice notes the similar starting points but never reports how much each group improved.",
+        "This choice compares cost, not the change in compliance that the goal asks to emphasize.",
+        "This choice describes the reminder but gives no before-and-after figures."
+      ],
+      "explanation": "The key turns the two after-values into change scores (18 points versus 3 points) and keeps the starting values, which is exactly the comparison that shows the size of the sensor effect.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "In the 1890s, United States postal clerks sorted letters aboard moving railway cars rather than at fixed stations.",
+        "The Railway Mail Service cut average transit time between Chicago and New York from about 48 hours to about 24 hours.",
+        "Clerks worked standing at pigeonhole cases bolted to the car, sorting mail as the train traveled.",
+        "The service ended in 1977 as trucks and airplanes took over mail transport."
+      ],
+      "goal": "The student wants to explain how a change in sorting reduced delivery time.",
+      "correct": "Sorting letters aboard moving trains let clerks work during transit, cutting Chicago-to-New York time from about 48 hours to about 24.",
+      "wrongs": [
+        "Railway mail clerks stood at pigeonhole cases bolted to the car and sorted letters while the train traveled.",
+        "The Railway Mail Service ended in 1977, when trucks and airplanes took over mail transport.",
+        "The Railway Mail Service required clerks to sort letters at fixed stations before each train departed."
+      ],
+      "why": [
+        "This choice describes the clerks' working position but never connects it to faster delivery.",
+        "This choice gives the service's end date, which does not explain the earlier speedup.",
+        "This choice reverses the notes, which say sorting happened aboard the moving cars."
+      ],
+      "explanation": "The key links the practice described in the first note (sorting during transit) to the outcome in the second note (transit time halved), which is the causal explanation the goal requests.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "Silbo Gomero is a whistled language used on La Gomera in the Canary Islands; whistlers replace vowels and consonants with tones.",
+        "Two skilled whistlers can hold a conversation across a valley about two kilometers wide.",
+        "Schools on the island have taught Silbo since 1999, and UNESCO added it to its intangible heritage list in 2009.",
+        "In a 2005 study, Spanish speakers with no knowledge of Silbo identified only 1 of 10 whistled phrases."
+      ],
+      "goal": "The student wants to emphasize how hard Silbo is for people who have not learned it.",
+      "correct": "Spanish speakers unfamiliar with Silbo recognized only one of ten whistled phrases in the 2005 study.",
+      "wrongs": [
+        "Silbo can carry a conversation across a valley roughly two kilometers wide.",
+        "UNESCO added Silbo to its intangible heritage list in 2009, ten years after island schools began teaching it.",
+        "Silbo replaces the vowels and consonants of Spanish with a system of tones."
+      ],
+      "why": [
+        "This choice describes the language's range, not how difficult it is for outsiders.",
+        "This choice gives recognition dates, which say nothing about comprehension by non-users.",
+        "This choice explains how the language works, not how poorly outsiders understand it."
+      ],
+      "explanation": "Only the key uses the comprehension result, the one note that measures how little untrained listeners understood.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "A survey of 40 gardens in one city counted hedgehogs on ten nights.",
+        "Gardens with 13-centimeter gaps cut into their fences averaged 2.4 hedgehogs per night; gardens without gaps averaged 0.3.",
+        "The city's hedgehog population fell about 30 percent between 2000 and 2020.",
+        "Cutting one fence gap costs about 5 pounds."
+      ],
+      "goal": "The student wants to support a low-cost recommendation for reconnecting gardens.",
+      "correct": "Because gardens with 13-centimeter fence gaps recorded eight times as many hedgehogs as closed gardens, adding gaps at about 5 pounds each could help reconnect the population.",
+      "wrongs": [
+        "The city's hedgehog population fell about 30 percent between 2000 and 2020, so the animals need help.",
+        "Cutting a 13-centimeter gap in a fence costs about 5 pounds, which is inexpensive.",
+        "Hedgehogs were counted on ten nights in 40 gardens, with 2.4 animals per night in some gardens."
+      ],
+      "why": [
+        "This choice states the decline but proposes nothing and uses none of the gap data.",
+        "This choice mentions the low cost but not the evidence that gaps help hedgehogs.",
+        "This choice reports sampling details without making a recommendation."
+      ],
+      "explanation": "The key joins the comparison from the second note (8 times as many hedgehogs) to the price in the fourth note, which is what turns the finding into an affordable recommendation.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Orchestras tuned to a range of pitches before 1939, when A above middle C was standardized at 440 Hz.",
+        "Historical orchestras used A from roughly 415 Hz to 455 Hz.",
+        "Raising pitch brightens string tone but increases string tension; a set tuned to 455 Hz carries about 8 percent more tension than one at 440 Hz.",
+        "Some period-instrument ensembles still tune to 415 Hz."
+      ],
+      "goal": "The student wants to explain a physical consequence of choosing a higher tuning pitch.",
+      "correct": "Tuning to 455 Hz raises string tension by about 8 percent compared with 440 Hz, which can brighten the sound while stressing the instruments.",
+      "wrongs": [
+        "A was standardized at 440 Hz in 1939, ending a period in which orchestras used several different pitches.",
+        "Historical orchestras tuned somewhere between 415 Hz and 455 Hz.",
+        "Some period-instrument ensembles continue to tune to 415 Hz today."
+      ],
+      "why": [
+        "This choice gives the standardization date but no physical consequence of a higher pitch.",
+        "This choice states the historical range without explaining what a higher pitch does.",
+        "This choice reports a modern practice without any physical consequence."
+      ],
+      "explanation": "The key uses the tension figure from the third note to explain the physical effect of the higher pitch named in the goal.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Twenty-four trained cyclists completed a 4-kilometer time trial twice, once after 3 milligrams of caffeine per kilogram of body mass and once after a placebo.",
+        "The caffeine rides were 6.2 seconds faster on average, an improvement of about 1.5 percent.",
+        "Riders reported no difference in perceived effort between the two conditions.",
+        "Two participants reported jitteriness after the caffeine dose."
+      ],
+      "goal": "The student wants to emphasize how large the performance effect was while keeping it in proportion.",
+      "correct": "Caffeine made riders 6.2 seconds faster over 4 kilometers, an improvement of about 1.5 percent, with no change in perceived effort.",
+      "wrongs": [
+        "Two of the 24 cyclists reported jitteriness after taking caffeine.",
+        "The study tested 24 trained cyclists, each of whom rode the time trial twice.",
+        "Caffeine produced a large improvement in cycling performance and made the effort feel easier."
+      ],
+      "why": [
+        "This choice reports a side effect and says nothing about the size of the performance change.",
+        "This choice gives the sample size, not the effect.",
+        "This choice overstates the result and contradicts the notes, which found no change in perceived effort."
+      ],
+      "explanation": "The key states the raw gain and converts it into a percentage, which shows the effect is real but modest, and it correctly notes that effort perception did not change.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "Researchers sampled 90 sourdough starters from 30 bakeries in three countries.",
+        "Every starter contained the yeast Kazachstania humilis and lactic acid bacteria.",
+        "Starters kept in cooler bakeries had a higher ratio of yeast to bacteria.",
+        "Acidity varied widely across starters and tracked lactic acid concentration rather than yeast count."
+      ],
+      "goal": "The student wants to explain what accounted for differences in acidity.",
+      "correct": "Acidity tracked the concentration of lactic acid, not the number of yeasts, across the sampled starters.",
+      "wrongs": [
+        "All 90 starters contained both Kazachstania humilis and lactic acid bacteria.",
+        "Starters kept in cooler bakeries had a higher ratio of yeast to bacteria.",
+        "The researchers sampled 30 bakeries in three countries to capture a range of baking practices."
+      ],
+      "why": [
+        "This choice notes a shared feature, which cannot explain variation in acidity.",
+        "This choice describes a temperature effect on the yeast-bacteria ratio, not on acidity.",
+        "This choice describes the sampling design rather than the cause of acidity differences."
+      ],
+      "explanation": "The key uses the fourth note's comparison directly: acidity followed lactic acid concentration, while yeast count did not.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "A telescope monitored a star's brightness for 40 days.",
+        "Every 3.2 days the star dimmed by 1.0 percent as a planet crossed in front of it.",
+        "The planet's radius is about 10 percent of the star's radius, a figure derived from the depth of the dip.",
+        "The star's radius is estimated at 0.9 times the Sun's radius."
+      ],
+      "goal": "The student wants to explain how the planet's size was estimated.",
+      "correct": "The team derived the planet's radius from the depth of the brightness dip, which showed it is about 10 percent of the star's radius.",
+      "wrongs": [
+        "The telescope monitored the star's brightness for 40 days and recorded a dip every 3.2 days.",
+        "The star's radius is estimated at 0.9 times the Sun's radius.",
+        "The team measured the planet's radius directly by photographing its disk against the star."
+      ],
+      "why": [
+        "This choice gives the observing period and interval, not the size method.",
+        "This choice gives the star's size, not how the planet's size was found.",
+        "This choice contradicts the notes, which say the radius came from the dip depth, not an image."
+      ],
+      "explanation": "The key states the method: the depth of the dip yields the ratio of planet radius to star radius, which the notes give as about 10 percent.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Archaeologists analyzed 120 pottery sherds from three sites occupied about 5,000 years ago.",
+        "Gas chromatography detected lipid residues in 38 of the sherds.",
+        "Residues from one site contained dairy fats; residues from the other two contained plant waxes.",
+        "The pottery was porous and absorbed fats and waxes during cooking and storage."
+      ],
+      "goal": "The student wants to explain why the residues were still detectable.",
+      "correct": "Because the pottery was porous, it absorbed fats and waxes during use, and those residues survived in the sherds.",
+      "wrongs": [
+        "Gas chromatography detected lipid residues in 38 of the 120 sherds.",
+        "Residues from one site contained dairy fats, while residues from two other sites contained plant waxes.",
+        "The sherds came from three sites occupied about 5,000 years ago."
+      ],
+      "why": [
+        "This choice gives the detection count but not why the lipids persisted.",
+        "This choice reports what the residues were, not why they survived.",
+        "This choice gives the age and number of sites, which do not explain preservation."
+      ],
+      "explanation": "The key uses the fourth note, which explains that the porous clay absorbed the residues and held them until analysis.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "A city rebuilt a 6-kilometer bus corridor with dedicated lanes and off-board fare payment at 14 stations.",
+        "Average bus trip time along the corridor fell from 42 minutes to 27 minutes.",
+        "Boarding time per passenger fell from about 6 seconds to about 2 seconds.",
+        "Car traffic on parallel streets rose about 4 percent after the changes."
+      ],
+      "goal": "The student wants to emphasize the size of the time saving for bus riders.",
+      "correct": "Average bus trips fell from 42 minutes to 27 minutes after the dedicated lanes and off-board payment were introduced.",
+      "wrongs": [
+        "Boarding time fell from about 6 seconds to about 2 seconds per passenger.",
+        "Car traffic on parallel streets rose about 4 percent after the corridor was rebuilt.",
+        "The corridor has 14 stations, each with off-board fare payment."
+      ],
+      "why": [
+        "This choice gives one cause of the saving but not the overall time saved.",
+        "This choice reports an effect on car traffic, not on bus trip time.",
+        "This choice describes the stations rather than the change in travel time."
+      ],
+      "explanation": "The key states the before-and-after trip times, which is the direct measure of the saving the goal asks about.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "In an experiment, 180 students studied a list of 60 vocabulary words either in one 60-minute block or in four 15-minute sessions spread over two weeks.",
+        "One week after studying, the spaced group recalled 68 percent of the words; the blocked group recalled 49 percent.",
+        "Both groups spent exactly 60 minutes studying.",
+        "Asked to rate their method, students in the spaced group judged their own studying less effective."
+      ],
+      "goal": "The student wants to emphasize the mismatch between students' impressions and their results.",
+      "correct": "The spaced group recalled more words (68 versus 49 percent) even though those students rated their study method as less effective.",
+      "wrongs": [
+        "Both groups spent exactly 60 minutes studying the same list of 60 words.",
+        "The experiment included 180 students who studied a list of 60 vocabulary words.",
+        "Students who studied in four short sessions over two weeks recalled 68 percent of the words."
+      ],
+      "why": [
+        "This choice establishes that study time was equal but does not mention the mismatch with self-ratings.",
+        "This choice gives the sample and task, not the mismatch.",
+        "This choice reports only the spaced group's result and omits both the comparison and the ratings."
+      ],
+      "explanation": "The key pairs the recall figures from the second note with the self-rating from the fourth, which is the gap between what students believed and how they performed.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "Researchers recorded 500 great tits in 20 cities and in forests near each city.",
+        "City birds sang with a minimum frequency of 3.2 kHz, compared with 2.7 kHz for forest birds.",
+        "The low-frequency part of the song overlaps with traffic noise in cities.",
+        "Female great tits tend to prefer lower-pitched songs in quiet settings."
+      ],
+      "goal": "The student wants to explain a likely reason for the pitch difference.",
+      "correct": "Because the song's low frequencies overlap with city traffic noise, birds may raise their pitch so the song can be heard.",
+      "wrongs": [
+        "The researchers recorded 500 birds across 20 cities and nearby forests.",
+        "City great tits sang at 3.2 kHz and forest great tits at 2.7 kHz.",
+        "Female great tits tend to prefer lower-pitched songs when the setting is quiet."
+      ],
+      "why": [
+        "This choice gives the sample size and locations, not a cause.",
+        "This choice states the difference without offering any explanation for it.",
+        "This choice describes a preference that would work against, not explain, higher city pitch."
+      ],
+      "explanation": "The key connects the overlap with traffic noise in the third note to the higher pitch observed in the second, giving a plausible acoustic explanation.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Glaciologists drilled stakes into a glacier and measured how much of each stake emerged each year.",
+        "At three sites, the surface lowered by 1.8, 2.4 and 3.1 meters per year.",
+        "Air temperature at the sites rose about 0.6 degrees Celsius over 20 years.",
+        "The method assumes each stake remains vertical as the ice flows."
+      ],
+      "goal": "The student wants to emphasize a limitation of the stake method.",
+      "correct": "The method assumes the stakes stay vertical as the ice flows, so any tilting could distort the melt estimates.",
+      "wrongs": [
+        "The surface lowered by 1.8, 2.4 and 3.1 meters per year at the three sites.",
+        "Air temperature at the three sites rose about 0.6 degrees Celsius over 20 years.",
+        "The team measured melt by drilling stakes into the ice and recording how much emerged each year."
+      ],
+      "why": [
+        "This choice reports the results, not a weakness in how they were obtained.",
+        "This choice gives the temperature trend, not a limitation of the method.",
+        "This choice describes the method without identifying its assumption."
+      ],
+      "explanation": "The key uses the fourth note's assumption (vertical stakes) and states why violating it would bias the measurement, which is the limitation the goal asks for.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "Forty adults learned 60 word pairs and then slept in a laboratory while their brain activity was recorded.",
+        "After eight hours of sleep, participants recalled 22 percent more pairs than they had at bedtime.",
+        "The size of each person's gain correlated with the density of sleep spindles in the last hour of sleep.",
+        "In a separate 20-person trial, caffeine taken before bed reduced spindle density."
+      ],
+      "goal": "The student wants to connect a measured brain pattern to memory retention.",
+      "correct": "Greater spindle density during the last hour of sleep went with larger gains in word-pair recall.",
+      "wrongs": [
+        "Participants recalled 22 percent more word pairs after eight hours of sleep than they had at bedtime.",
+        "The main experiment involved 40 adults, and a separate caffeine trial involved 20 people.",
+        "Caffeine taken before bed reduced the density of sleep spindles."
+      ],
+      "why": [
+        "This choice shows that memory improved but not which brain pattern tracked the gain.",
+        "This choice reports sample sizes, not a link between brain activity and memory.",
+        "This choice comes from a different trial and does not connect spindles to recall."
+      ],
+      "explanation": "The key uses the correlation in the third note, which ties spindle density to the size of the recall gain.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "A badgir is a traditional Persian wind catcher that channels breezes into a building and vents hot air.",
+        "A house with a badgir stayed 6 to 8 degrees Celsius cooler indoors than a similar house without one during summer afternoons.",
+        "The tower has no moving parts and uses no electricity.",
+        "A modern version fitted with mechanical dampers performed worse than the traditional design in comparative tests."
+      ],
+      "goal": "The student wants to emphasize the advantage of the design where electricity is unreliable.",
+      "correct": "Because the badgir has no moving parts and needs no electricity, it can keep a house 6 to 8 degrees cooler without power.",
+      "wrongs": [
+        "A modern version with mechanical dampers performed worse than the traditional badgir in tests.",
+        "The badgir is a traditional Persian tower that channels breezes and vents hot air.",
+        "Houses with a badgir were 6 to 8 degrees Celsius cooler than similar houses without one."
+      ],
+      "why": [
+        "This choice compares two designs but does not mention the no-power advantage.",
+        "This choice defines the tower, not its advantage in places without reliable electricity.",
+        "This choice gives the cooling result but omits the fact that it needs no electricity."
+      ],
+      "explanation": "The key combines the no-electricity feature in the third note with the measured cooling in the second, which is exactly the advantage the goal names.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Seagrass meadows trap carbon in the sediment beneath them.",
+        "A hectare of seagrass sediment stored about four times as much carbon as a hectare of nearby forest soil.",
+        "The region's meadows covered about 12,000 hectares.",
+        "Dredging destroyed about 300 hectares of meadow over ten years."
+      ],
+      "goal": "The student wants to emphasize the carbon cost of the lost meadow area.",
+      "correct": "The 300 hectares lost to dredging had stored about four times as much carbon per hectare as forest soil.",
+      "wrongs": [
+        "The region's seagrass meadows covered about 12,000 hectares.",
+        "Seagrass traps carbon in the sediment beneath the meadow.",
+        "Dredging destroyed about 300 hectares of seagrass meadow over ten years."
+      ],
+      "why": [
+        "This choice gives the total area but not the carbon significance of the loss.",
+        "This choice explains the mechanism but not the cost of the lost area.",
+        "This choice gives the lost area without saying how much carbon it held."
+      ],
+      "explanation": "The key multiplies the lost area by the per-hectare comparison in the second note to convey how much stored carbon the dredging removed.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "A five-year trial compared 24 fields, half planted with a winter rye cover crop and half left bare.",
+        "Rye fields lost 35 percent less nitrate in runoff than bare fields.",
+        "Rye fields also needed 12 percent less nitrogen fertilizer.",
+        "Establishing rye cost about 28 dollars per acre."
+      ],
+      "goal": "The student wants to support a recommendation based on water quality.",
+      "correct": "Winter rye reduced nitrate loss in runoff by 35 percent and fertilizer use by 12 percent, at a cost of about 28 dollars per acre.",
+      "wrongs": [
+        "The trial followed 24 fields for five years.",
+        "Winter rye cost about 28 dollars per acre to establish.",
+        "Winter rye reduced yields, which is why fewer fields used it."
+      ],
+      "why": [
+        "This choice gives the study's size and duration, not its water-quality result.",
+        "This choice states the cost but not the benefit to water quality.",
+        "This choice adds a yield claim that appears nowhere in the notes."
+      ],
+      "explanation": "The key pairs the nitrate reduction, the main water-quality finding, with the fertilizer saving and the stated cost, which supports the recommendation.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "In a study, 1,200 participants in eight countries viewed 60 photographs of posed facial expressions.",
+        "Recognition of happy faces exceeded 90 percent in every country.",
+        "Recognition of fearful faces ranged from 58 percent to 86 percent across the eight countries.",
+        "The photographs were posed by actors rather than captured in spontaneous situations."
+      ],
+      "goal": "The student wants to emphasize which emotion showed the largest variation across countries.",
+      "correct": "Fear recognition ranged from 58 to 86 percent across countries, while happiness was recognized above 90 percent everywhere.",
+      "wrongs": [
+        "The study included 1,200 participants from eight countries.",
+        "The faces in the study were posed by actors rather than captured spontaneously.",
+        "Recognition of happy faces was high in every country included in the study."
+      ],
+      "why": [
+        "This choice gives the sample size, not the variation in recognition.",
+        "This choice describes the photographs' limitation, not which emotion varied most.",
+        "This choice reports only the emotion that varied least."
+      ],
+      "explanation": "The key contrasts the wide fear range with the uniformly high happiness scores, which identifies fear as the most variable emotion.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "A program lent to 2,000 borrowers organized into 120 repayment groups.",
+        "Groups that repaid weekly had a 94 percent on-time rate; groups that repaid monthly had 88 percent.",
+        "Weekly groups also had an 18 percent dropout rate, compared with 11 percent for monthly groups.",
+        "Most borrowers were market vendors working in the same districts."
+      ],
+      "goal": "The student wants to emphasize a tradeoff between repayment and retention.",
+      "correct": "Weekly repayment groups had better on-time rates (94 versus 88 percent) but higher dropout (18 versus 11 percent).",
+      "wrongs": [
+        "Most of the program's borrowers were market vendors working in the same districts.",
+        "The program lent to 2,000 borrowers organized into 120 repayment groups.",
+        "Weekly repayment produced both better on-time rates and lower dropout than monthly repayment."
+      ],
+      "why": [
+        "This choice describes who borrowed, not the tradeoff between repayment and retention.",
+        "This choice gives the program's size, not either outcome.",
+        "This choice contradicts the notes, which show weekly groups had higher dropout."
+      ],
+      "explanation": "The key sets the two outcomes side by side, showing the repayment gain came with a retention cost.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "A 120-million-year-old fossil feather preserved melanosomes, the structures that hold pigment.",
+        "In living birds, sausage-shaped melanosomes produce black or gray feathers, while round ones produce reddish tones.",
+        "The fossil's melanosomes were sausage-shaped.",
+        "The feather was found in a fine-grained lake deposit that preserved soft tissue."
+      ],
+      "goal": "The student wants to explain how the feather's color was inferred.",
+      "correct": "Because sausage-shaped melanosomes produce black or gray in living birds, the fossil feather was probably dark.",
+      "wrongs": [
+        "The feather is about 120 million years old and was found in a fine-grained lake deposit.",
+        "The fossil preserved melanosomes, the structures that hold pigment.",
+        "Researchers recovered intact pigment molecules and identified the color directly."
+      ],
+      "why": [
+        "This choice gives the age and setting, not the reasoning about color.",
+        "This choice says what was preserved but not how color was inferred.",
+        "This choice claims direct pigment recovery, which the notes do not report."
+      ],
+      "explanation": "The key applies the living-bird rule from the second note to the fossil's sausage-shaped melanosomes, which is the inference the goal asks about.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Acoustic measurements were taken in eight concert halls during rehearsals.",
+        "Reverberation times at mid frequencies ranged from 1.4 to 2.8 seconds.",
+        "Listeners rated halls with reverberation above 2.0 seconds as warmer in sound.",
+        "Clarity ratings fell steadily as reverberation time increased."
+      ],
+      "goal": "The student wants to emphasize a tradeoff between two qualities listeners value.",
+      "correct": "Halls with longer reverberation were rated warmer, but their clarity ratings were lower.",
+      "wrongs": [
+        "Reverberation times in the eight halls ranged from 1.4 to 2.8 seconds.",
+        "The measurements were taken during rehearsals in eight concert halls.",
+        "Listeners preferred halls with reverberation above 2.0 seconds in every rating category."
+      ],
+      "why": [
+        "This choice gives the measurement range, not a tradeoff between qualities.",
+        "This choice describes when and where data were collected.",
+        "This choice contradicts the notes, which say clarity fell as reverberation rose."
+      ],
+      "explanation": "The key pairs the warmth rating with the falling clarity rating, showing that the two valued qualities moved in opposite directions.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "In one county, average tornado warning lead time rose from 9 minutes in 2000 to 13 minutes in 2010.",
+        "The false alarm rate for tornado warnings rose from 70 percent to 78 percent over the same period.",
+        "Deaths per tornado fell about 30 percent.",
+        "The county's population grew about 12 percent."
+      ],
+      "goal": "The student wants to emphasize the tension between earlier warnings and public trust.",
+      "correct": "Average lead time improved from 9 to 13 minutes, but the false alarm rate rose from 70 to 78 percent.",
+      "wrongs": [
+        "Deaths per tornado fell about 30 percent while the population grew about 12 percent.",
+        "The county population grew about 12 percent during the decade.",
+        "Warning lead times improved and the false alarm rate fell over the same period."
+      ],
+      "why": [
+        "This choice pairs two outcomes that do not capture the warning-versus-trust tension.",
+        "This choice gives population growth, which says nothing about warnings.",
+        "This choice contradicts the notes, which report a rising false alarm rate."
+      ],
+      "explanation": "The key sets the longer lead time against the higher false alarm rate, which is the tension the goal names.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "Dung beetles roll balls of dung in straight lines away from a pile.",
+        "In a planetarium, beetles oriented correctly when the Milky Way was projected overhead.",
+        "On moonless nights outdoors, they still rolled straight when the Milky Way was visible.",
+        "When the sky was blocked from view, the beetles rolled in circles."
+      ],
+      "goal": "The student wants to explain the evidence that the Milky Way guides the beetles.",
+      "correct": "The beetles rolled straight when the Milky Way was visible and circled when the sky was blocked.",
+      "wrongs": [
+        "Dung beetles roll balls of dung in straight lines away from a pile.",
+        "In the planetarium, beetles oriented correctly when the Milky Way was projected overhead.",
+        "The beetles rolled in circles whenever the night had no moon."
+      ],
+      "why": [
+        "This choice describes normal behavior, not the evidence about the Milky Way.",
+        "This choice gives only the planetarium result and omits the blocked-sky comparison.",
+        "This choice misstates the notes, which say moonless nights still allowed straight rolls."
+      ],
+      "explanation": "The key uses the contrast between the visible-sky and blocked-sky trials, the evidence that isolates the Milky Way as the cue.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Ash from a major eruption in 1257 spread across three continents.",
+        "Ice cores and tree rings both record a sulfate spike and an unusually cold summer in 1258.",
+        "Tree rings at one site were about 40 percent narrower in 1258 than the 20-year average.",
+        "Written records from Europe describe heavy rain and poor harvests that summer."
+      ],
+      "goal": "The student wants to explain why two separate records strengthen the case for one eruption.",
+      "correct": "Ice cores and tree rings independently show the same 1258 anomaly, so two different records point to the same event.",
+      "wrongs": [
+        "Tree rings at one site were about 40 percent narrower in 1258 than the 20-year average.",
+        "Ash from the 1257 eruption spread across three continents.",
+        "European records describe heavy rain and poor harvests in the summer of 1258."
+      ],
+      "why": [
+        "This choice gives a single measurement rather than the agreement of two records.",
+        "This choice shows the ash spread but not the independent confirmation.",
+        "This choice reports one documentary source, not the agreement of ice and tree records."
+      ],
+      "explanation": "The key explains the reasoning: two records formed by different processes both show the 1258 signal, which makes a shared cause more likely.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "A gripper with silicone fingers and pneumatic channels was tested on ripe tomatoes.",
+        "It picked up 95 percent of tomatoes without visible bruising; a rigid gripper bruised 30 percent.",
+        "The soft gripper completed a pick in 1.8 seconds; the rigid gripper took 0.9 seconds.",
+        "The soft gripper cost 120 dollars to build, compared with 400 dollars for the rigid one."
+      ],
+      "goal": "The student wants to support choosing the soft gripper for fragile produce despite its slower speed.",
+      "correct": "The soft gripper bruised far fewer tomatoes (5 versus 30 percent) and cost less, though it was slower.",
+      "wrongs": [
+        "The soft gripper completed a pick in 1.8 seconds, while the rigid gripper took 0.9 seconds.",
+        "The soft gripper cost 120 dollars to build, compared with 400 dollars for the rigid gripper.",
+        "The soft gripper was both faster and gentler than the rigid gripper."
+      ],
+      "why": [
+        "This choice shows only the speed disadvantage and none of the reasons to choose it.",
+        "This choice gives only cost, not the bruising benefit.",
+        "This choice reverses the notes, which show the soft gripper was slower."
+      ],
+      "explanation": "The key weighs the bruising and cost advantages against the acknowledged speed cost, which is what the recommendation requires.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Twelve volunteers took 500 milligrams of aspirin with 250 milliliters of water at three temperatures.",
+        "Cold water delayed peak plasma concentration by about 20 minutes compared with warm water.",
+        "The total amount of aspirin absorbed did not differ by water temperature.",
+        "Warm water increased the rate at which the stomach emptied."
+      ],
+      "goal": "The student wants to explain why water temperature changed how quickly aspirin appeared in the blood.",
+      "correct": "Warm water sped up stomach emptying, which brought the peak concentration about 20 minutes earlier.",
+      "wrongs": [
+        "The total amount of aspirin absorbed was the same at every water temperature.",
+        "Twelve volunteers took part in the study, each at three water temperatures.",
+        "Cold water increased the total amount of aspirin absorbed but slowed its appearance."
+      ],
+      "why": [
+        "This choice notes that the total was unchanged, which does not explain the timing difference.",
+        "This choice gives the sample size, not the mechanism.",
+        "This choice contradicts the notes, which say the total absorbed did not differ."
+      ],
+      "explanation": "The key links the faster stomach emptying in the fourth note to the earlier peak concentration in the second.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Archaeologists recovered 70 obsidian artifacts from a site occupied about 9,000 years ago.",
+        "Each volcanic source has a distinct trace-element fingerprint.",
+        "Sixty-two artifacts matched a source 240 kilometers away.",
+        "The other eight matched a source 40 kilometers away."
+      ],
+      "goal": "The student wants to emphasize the scale of long-distance movement.",
+      "correct": "Most of the artifacts matched a source 240 kilometers away, showing that obsidian moved a long way.",
+      "wrongs": [
+        "Archaeologists recovered 70 obsidian artifacts from the site.",
+        "Each volcanic source has a distinct trace-element fingerprint.",
+        "Eight of the artifacts matched a source only 40 kilometers away."
+      ],
+      "why": [
+        "This choice gives the number of artifacts, not the distance they traveled.",
+        "This choice explains the identification method, not the movement.",
+        "This choice emphasizes the minority of artifacts that traveled the shortest distance."
+      ],
+      "explanation": "The key uses the 62-artifact majority and its 240-kilometer source, which is the clearest evidence of long-distance movement.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "Wolves were reintroduced to a national park in 1995.",
+        "Elk numbers in the park fell from about 12,000 to about 6,000 by 2010.",
+        "Willows along streams grew about three times taller in areas elk used less often.",
+        "Beavers returned to 9 of 14 study streams."
+      ],
+      "goal": "The student wants to describe a chain of effects that followed reintroduction.",
+      "correct": "After wolves returned, elk numbers fell, streamside willows grew taller, and beavers returned to 9 of 14 streams.",
+      "wrongs": [
+        "Wolves were reintroduced to the park in 1995.",
+        "Elk numbers in the park fell from about 12,000 to about 6,000 by 2010.",
+        "Wolves planted willows along streams, which attracted beavers to the park."
+      ],
+      "why": [
+        "This choice gives only the starting event, not the sequence of effects.",
+        "This choice reports only the elk decline and stops there.",
+        "This choice invents a direct action by wolves that the notes do not support."
+      ],
+      "explanation": "The key orders three linked changes from the notes, which is the chain the goal asks the student to describe.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Researchers compared six streams with beaver dams and six without them.",
+        "Maximum summer water temperature was 2.3 degrees Celsius lower in the dammed streams.",
+        "Dammed streams also had 40 percent more pools.",
+        "All measurements came from a single summer."
+      ],
+      "goal": "The student wants to emphasize a limitation of the finding about temperature.",
+      "correct": "The temperature difference comes from one summer of measurements, so it may not hold in other years.",
+      "wrongs": [
+        "Maximum summer water temperature was 2.3 degrees Celsius lower in the dammed streams.",
+        "Dammed streams had 40 percent more pools than streams without dams.",
+        "The study compared six dammed streams with six undammed streams."
+      ],
+      "why": [
+        "This choice reports the finding itself rather than its limitation.",
+        "This choice gives a different result, not a weakness of the temperature finding.",
+        "This choice describes the design without identifying what it cannot support."
+      ],
+      "explanation": "The key uses the single-summer scope in the fourth note to explain why the temperature result may not generalize.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "A five-qubit code detected and corrected single-bit errors during computation.",
+        "The logical error rate fell from about 1 in 1,000 operations to about 1 in 50,000.",
+        "Each logical qubit required five physical qubits.",
+        "The processor operated at about 20 millikelvin."
+      ],
+      "goal": "The student wants to emphasize the cost of the reliability gain.",
+      "correct": "The logical error rate improved about 50-fold, but each logical qubit required five physical qubits.",
+      "wrongs": [
+        "The logical error rate fell from about 1 in 1,000 operations to about 1 in 50,000.",
+        "The processor operated at a temperature of about 20 millikelvin.",
+        "The code corrected errors with no additional hardware beyond a single qubit."
+      ],
+      "why": [
+        "This choice gives the gain but not the cost the goal asks about.",
+        "This choice gives an operating condition, not the cost of the reliability gain.",
+        "This choice contradicts the notes, which require five physical qubits per logical qubit."
+      ],
+      "explanation": "The key pairs the 50-fold error reduction with the five-to-one hardware overhead, which is the cost.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "A survey covered 4,000 employees at 30 firms that allowed remote work.",
+        "Employees worked remotely an average of 2.1 days per week.",
+        "Each remote day saved an average of 54 minutes of commuting.",
+        "Employees reported spending 40 percent of the saved time on work, 35 percent on family and 25 percent on rest."
+      ],
+      "goal": "The student wants to emphasize how the saved commute time was used.",
+      "correct": "Of the 54 minutes saved per remote day, employees spent 40 percent on work and 35 percent on family.",
+      "wrongs": [
+        "The survey covered 4,000 employees at 30 firms.",
+        "Employees worked remotely an average of 2.1 days per week.",
+        "Employees used all of the saved commuting time for rest and leisure."
+      ],
+      "why": [
+        "This choice gives the sample size, not how time was used.",
+        "This choice gives the frequency of remote work, not the use of saved time.",
+        "This choice contradicts the notes, which say only 25 percent went to rest."
+      ],
+      "explanation": "The key reports the breakdown of saved time from the fourth note, which is the use the goal asks to emphasize.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "Seeds of 12 shrub species were treated with smoke-water or plain water.",
+        "Eight species germinated more with smoke, on average about 2.5 times as many seeds.",
+        "Three species showed no difference between treatments.",
+        "One species germinated less with smoke."
+      ],
+      "goal": "The student wants to emphasize that the response to smoke was not universal.",
+      "correct": "Smoke increased germination in 8 of the 12 species, made no difference in 3 and reduced it in 1.",
+      "wrongs": [
+        "Smoke-treated seeds germinated about 2.5 times as often as water-treated seeds.",
+        "Eight of the 12 species germinated more after smoke treatment.",
+        "All 12 species germinated more after smoke treatment, with an average gain of 2.5 times."
+      ],
+      "why": [
+        "This choice gives the average gain but hides the species that did not benefit.",
+        "This choice reports only the positive results and omits the four other species.",
+        "This choice contradicts the notes, which say one species did worse."
+      ],
+      "explanation": "The key reports the full split across all 12 species, which shows the effect depended on the species.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "Researchers tracked 240 vaccine shipments with temperature loggers.",
+        "Eighteen percent of shipments exceeded 8 degrees Celsius at some point.",
+        "Most of those excursions lasted less than two hours.",
+        "Vaccine potency stayed within specification in all but two shipments."
+      ],
+      "goal": "The student wants to explain why many temperature excursions did not ruin the vaccine.",
+      "correct": "Most excursions lasted under two hours, and potency stayed within specification in all but two shipments.",
+      "wrongs": [
+        "Researchers tracked 240 vaccine shipments with temperature loggers.",
+        "Eighteen percent of shipments exceeded 8 degrees Celsius at some point.",
+        "Temperature excursions destroyed the vaccine in 18 percent of shipments."
+      ],
+      "why": [
+        "This choice gives the number of shipments, not why potency survived.",
+        "This choice states that excursions occurred but not why they were harmless.",
+        "This choice contradicts the notes, which say potency failed in only two shipments."
+      ],
+      "explanation": "The key uses the short duration of most excursions and the potency result to explain why the breaches rarely mattered.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "The Mercator projection preserves angles locally, so a straight line on the map is a constant compass course.",
+        "Mercator greatly enlarges high-latitude areas: Greenland appears about the size of Africa, though its area is roughly one-fourteenth as large.",
+        "Equal-area projections preserve relative area but distort shape.",
+        "Navigators historically preferred Mercator for plotting courses."
+      ],
+      "goal": "The student wants to explain why Mercator remained useful despite its distortion.",
+      "correct": "Mercator preserves local angles, so a straight line on the map corresponds to a constant compass course.",
+      "wrongs": [
+        "Greenland appears about the size of Africa on a Mercator map, although it is much smaller.",
+        "Equal-area projections preserve relative area but distort shape.",
+        "Mercator preserves both area and shape, which is why navigators preferred it."
+      ],
+      "why": [
+        "This choice illustrates the distortion but not the reason the map stayed useful.",
+        "This choice describes a rival projection, not Mercator's advantage.",
+        "This choice contradicts the notes, which say Mercator enlarges high latitudes."
+      ],
+      "explanation": "The key uses the angle-preservation property that makes straight rhumb lines possible, which is the practical benefit.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "Twenty plots were studied; ten received biochar at 10 tonnes per hectare and ten served as controls.",
+        "Amended plots held about 18 percent more plant-available water in the top 20 centimeters.",
+        "Yield rose 9 percent in a dry year and 2 percent in a wet year.",
+        "The biochar was made from rice husks."
+      ],
+      "goal": "The student wants to emphasize the condition under which biochar helped most.",
+      "correct": "Biochar raised yield by 9 percent in the dry year but only 2 percent in the wet year.",
+      "wrongs": [
+        "Biochar-amended plots held about 18 percent more plant-available water.",
+        "The biochar used in the study was made from rice husks.",
+        "Biochar raised yield by the same amount in both the dry and the wet year."
+      ],
+      "why": [
+        "This choice gives the water effect, not the difference between years.",
+        "This choice describes the material, not when it helped most.",
+        "This choice contradicts the notes, which report 9 percent and 2 percent."
+      ],
+      "explanation": "The key contrasts the two yearly gains, which shows the benefit was concentrated in the dry year.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Two gamelan ensembles in the same city use different tunings.",
+        "Ensemble A's slendro octave spans about 1,205 cents; ensemble B's spans about 1,180 cents.",
+        "Instruments within an ensemble are tuned as a matched set and are never swapped between ensembles.",
+        "Musicians describe each ensemble's tuning as having its own character."
+      ],
+      "goal": "The student wants to explain why instruments are not exchanged between the two ensembles.",
+      "correct": "Each ensemble's instruments are tuned as a matched set, so an instrument from the other ensemble would not blend.",
+      "wrongs": [
+        "Ensemble A's octave spans about 1,205 cents, while ensemble B's spans about 1,180.",
+        "The two ensembles are based in the same city.",
+        "Musicians describe each ensemble's tuning as having its own character."
+      ],
+      "why": [
+        "This choice gives the measurements but not the reason instruments stay put.",
+        "This choice states their shared location, which does not explain the practice.",
+        "This choice reports an impression, not the practical reason for keeping sets together."
+      ],
+      "explanation": "The key uses the matched-set tuning in the third note to explain why mixing instruments would create a clash.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Thirty adults trained one arm with eccentric contractions and the other with concentric contractions for eight weeks.",
+        "The eccentric arm gained 12 percent more strength at long muscle lengths.",
+        "The concentric arm gained 8 percent more strength at short muscle lengths.",
+        "Both arms gained similar amounts of muscle cross-sectional area."
+      ],
+      "goal": "The student wants to emphasize that the two methods produced different, specific gains.",
+      "correct": "Eccentric training produced larger gains at long muscle lengths, while concentric training produced larger gains at short lengths.",
+      "wrongs": [
+        "Both arms gained similar amounts of muscle cross-sectional area.",
+        "The training program lasted eight weeks and involved 30 adults.",
+        "Eccentric training produced larger strength gains at every muscle length."
+      ],
+      "why": [
+        "This choice describes a similarity, not the specific difference the goal asks about.",
+        "This choice gives the sample and duration, not the pattern of gains.",
+        "This choice contradicts the notes, which show the concentric arm did better at short lengths."
+      ],
+      "explanation": "The key contrasts the two length-specific advantages, which shows each method helped most at a different muscle length.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Six hundred adolescents wore sleep monitors for 14 days.",
+        "Each additional hour of evening screen use was associated with 11 minutes less sleep.",
+        "Teens who used screens in bed fell asleep about 24 minutes later on average.",
+        "The study was observational and did not assign screen use."
+      ],
+      "goal": "The student wants to emphasize a limitation of the study's conclusion.",
+      "correct": "Because the study was observational, it cannot show that screen use caused the shorter sleep.",
+      "wrongs": [
+        "Each additional hour of evening screen use was associated with 11 minutes less sleep.",
+        "Teens who used screens in bed fell asleep about 24 minutes later.",
+        "The study followed 600 adolescents for 14 days."
+      ],
+      "why": [
+        "This choice reports the association itself, not the limitation.",
+        "This choice gives another result, not a weakness of the design.",
+        "This choice describes the sample and period, not what the design cannot prove."
+      ],
+      "explanation": "The key uses the observational design noted in the fourth bullet to explain why causation cannot be established.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "Panels made from flax fiber and panels made from glass fiber were tested at equal thickness.",
+        "Flax panels were about 25 percent lighter.",
+        "Flax tensile strength was about 60 percent that of glass.",
+        "Flax panels absorbed more moisture, gaining 7 percent of their mass compared with 1 percent for glass."
+      ],
+      "goal": "The student wants to emphasize the tradeoff of choosing flax panels.",
+      "correct": "Flax panels were 25 percent lighter but only 60 percent as strong and absorbed more moisture.",
+      "wrongs": [
+        "Flax and glass panels were tested at equal thickness.",
+        "Flax tensile strength was about 60 percent that of glass.",
+        "Flax panels were lighter, stronger and more moisture resistant than glass panels."
+      ],
+      "why": [
+        "This choice states a test condition, not the tradeoff.",
+        "This choice gives only the strength disadvantage and none of the benefit.",
+        "This choice contradicts the notes on both strength and moisture."
+      ],
+      "explanation": "The key weighs the weight advantage against the strength and moisture penalties, which is the tradeoff the goal asks for.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Eight hundred dogs began guide-dog training, and 480 graduated.",
+        "At eight weeks, each puppy was placed on a novel surface and timed while crossing it.",
+        "Puppies that crossed quickly were 1.4 times as likely to graduate.",
+        "Breed was not associated with graduation in this sample."
+      ],
+      "goal": "The student wants to emphasize the usefulness of an early behavioral test.",
+      "correct": "Puppies that crossed a novel surface quickly at eight weeks were 1.4 times as likely to graduate.",
+      "wrongs": [
+        "Of the 800 dogs that began training, 480 graduated.",
+        "Breed was not associated with graduation in this sample.",
+        "Puppies that hesitated on the novel surface were more likely to graduate."
+      ],
+      "why": [
+        "This choice gives the overall graduation rate, not the predictive test.",
+        "This choice says what did not predict graduation.",
+        "This choice reverses the notes, which say faster puppies were more likely to succeed."
+      ],
+      "explanation": "The key uses the 1.4-times result from the third note, which is the evidence that the early test has predictive value.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "Twenty forest plots were treated with controlled burns and twenty were left untreated.",
+        "Treated plots had 55 percent less fuel on the ground afterward.",
+        "When a wildfire later crossed the area, treated plots lost 30 percent less canopy.",
+        "Burns were conducted only when wind was below 10 kilometers per hour."
+      ],
+      "goal": "The student wants to emphasize the protective effect during the later wildfire.",
+      "correct": "Plots that had been treated with controlled burns lost 30 percent less canopy in the later wildfire.",
+      "wrongs": [
+        "Treated plots had 55 percent less fuel on the ground afterward.",
+        "The controlled burns were conducted only when wind was below 10 kilometers per hour.",
+        "Controlled burning eliminated all canopy loss in the treated plots."
+      ],
+      "why": [
+        "This choice gives the fuel reduction, not the wildfire outcome.",
+        "This choice states a safety condition for conducting the burns.",
+        "This choice overstates the result, which was 30 percent less loss, not none."
+      ],
+      "explanation": "The key uses the comparison from the third note, which directly measures how much better the treated plots fared in the fire.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "A ridge installation used mesh nets to capture water droplets from fog.",
+        "A single 40-square-meter net produced about 12 liters per day during the dry season.",
+        "Sixty nets supplied a village of 300 people with about 5 liters per person per day.",
+        "Output fell to about 3 liters per net per day in windy, clear weather."
+      ],
+      "goal": "The student wants to emphasize how much the system depends on weather.",
+      "correct": "Output fell from about 12 to about 3 liters per net per day when the weather turned windy and clear.",
+      "wrongs": [
+        "Sixty nets supplied a village of 300 people with about 5 liters per person per day.",
+        "A single net covers 40 square meters.",
+        "The nets produced about 12 liters per day regardless of the weather."
+      ],
+      "why": [
+        "This choice describes the village supply, not the weather dependence.",
+        "This choice gives the net's size, not its dependence on conditions.",
+        "This choice contradicts the notes, which report a sharp drop in poor fog conditions."
+      ],
+      "explanation": "The key contrasts the two output figures, which shows how strongly production responds to weather.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "Recordings were collected from 200 speakers in three age groups.",
+        "The vowel in the word trap has shifted upward in speakers born after 1980.",
+        "The shift is stronger in women than in men.",
+        "The shifted vowel appears in both formal and casual speech."
+      ],
+      "goal": "The student wants to emphasize that the change is not limited to casual speech.",
+      "correct": "The shifted trap vowel appears in both formal and casual speech, not only in relaxed conversation.",
+      "wrongs": [
+        "Recordings were collected from 200 speakers in three age groups.",
+        "The shift is stronger in women than in men.",
+        "The vowel shift appears only when speakers are talking casually."
+      ],
+      "why": [
+        "This choice gives the sample, not the range of speaking situations.",
+        "This choice describes a difference between groups of speakers, not between speech styles.",
+        "This choice contradicts the notes, which say the shift appears in formal speech too."
+      ],
+      "explanation": "The key uses the fourth note directly, which states that both registers show the shifted vowel.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Indigo does not dissolve in water in its blue form.",
+        "Bacteria in a dye vat reduce indigo to a soluble yellow-green form.",
+        "Cloth dipped in the vat turns blue when it is lifted into the air.",
+        "Traditional vats use bran and lye to feed the bacteria."
+      ],
+      "goal": "The student wants to explain the role of air in indigo dyeing.",
+      "correct": "When the soluble form on the cloth meets air, it oxidizes back into blue indigo.",
+      "wrongs": [
+        "Bacteria in the vat reduce indigo to a soluble yellow-green form.",
+        "Traditional vats use bran and lye to feed the bacteria.",
+        "Air dissolves the indigo so that it can penetrate the cloth."
+      ],
+      "why": [
+        "This choice describes the bacterial step, not what air does.",
+        "This choice describes how the vat is maintained, not the role of air.",
+        "This choice contradicts the notes, which say indigo does not dissolve in water in its blue form."
+      ],
+      "explanation": "The key connects the soluble form produced in the vat to the color change that occurs on exposure to air.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "A city charged drivers 9 dollars to enter a central zone on weekday daytime trips.",
+        "Traffic entering the zone fell 18 percent after the charge began.",
+        "Average bus speeds inside the zone rose 12 percent.",
+        "Revenue from the charge paid for 40 new buses."
+      ],
+      "goal": "The student wants to describe the main outcomes of the policy.",
+      "correct": "Traffic entering the zone fell 18 percent, bus speeds rose 12 percent and revenue paid for 40 new buses.",
+      "wrongs": [
+        "The charge was 9 dollars for weekday daytime trips into the central zone.",
+        "The policy reduced traffic, improved bus speeds and sharply lowered air pollution.",
+        "Traffic entering the zone rose 18 percent after the charge was introduced."
+      ],
+      "why": [
+        "This choice gives the price, not the outcomes.",
+        "This choice adds an air-pollution result that the notes do not mention.",
+        "This choice reverses the direction of the traffic change."
+      ],
+      "explanation": "The key lists the three measured consequences in the notes, which is what the goal asks for.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "Thirty right whales were fitted with satellite tags.",
+        "The tagged whales traveled about 1,800 kilometers from feeding grounds to calving grounds.",
+        "They spent 70 percent of their tracked time within 40 kilometers of the coast.",
+        "Major shipping lanes cross those coastal waters."
+      ],
+      "goal": "The student wants to emphasize the overlap between whale habitat and shipping.",
+      "correct": "The whales spent 70 percent of their tracked time within 40 kilometers of the coast, where shipping lanes cross.",
+      "wrongs": [
+        "The tagged whales traveled about 1,800 kilometers between feeding and calving grounds.",
+        "Thirty right whales were fitted with satellite tags for the study.",
+        "The whales spent most of their time far offshore, away from shipping lanes."
+      ],
+      "why": [
+        "This choice gives the migration distance, not the overlap with shipping.",
+        "This choice gives the sample size, not where the whales spent time.",
+        "This choice contradicts the notes, which place the whales near the coast."
+      ],
+      "explanation": "The key combines the coastal share of tracked time with the presence of shipping lanes in those waters, which is the overlap.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Two eruptions were sampled; one lava was about 1,050 degrees Celsius and the other about 1,150.",
+        "The cooler lava was about ten times more viscous.",
+        "The cooler flow advanced about 200 meters per day; the hotter flow advanced about 1.2 kilometers per day.",
+        "Both lavas had similar silica content."
+      ],
+      "goal": "The student wants to explain the difference in how fast the two flows advanced.",
+      "correct": "The cooler lava was ten times more viscous, so it advanced far more slowly, about 200 meters per day versus 1.2 kilometers.",
+      "wrongs": [
+        "Both lavas had similar silica content.",
+        "The two lavas were about 1,050 and 1,150 degrees Celsius.",
+        "The hotter lava was more viscous and therefore advanced more slowly."
+      ],
+      "why": [
+        "This choice notes a similarity that does not explain the speed difference.",
+        "This choice gives the temperatures but not the link to flow speed.",
+        "This choice reverses the relationship in the notes, where the cooler lava was more viscous."
+      ],
+      "explanation": "The key connects the viscosity measurement to the advance rates, which is the causal explanation the goal requests.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Test walls were built from polypropylene bags filled with soil.",
+        "A 30-centimeter earthbag wall had an R-value of about 1.8; a fired-brick wall of the same thickness measured about 0.9.",
+        "Earthbag walls withstood a simulated flood for six hours; the brick wall failed after two.",
+        "The bags are filled on site with local soil."
+      ],
+      "goal": "The student wants to support choosing earthbags where transporting materials is expensive.",
+      "correct": "Earthbags are filled with local soil, so they avoid transporting brick, and they also resisted flooding longer.",
+      "wrongs": [
+        "The earthbag wall had an R-value of about 1.8, compared with 0.9 for brick.",
+        "Earthbag walls withstood the simulated flood for six hours, while the brick wall failed after two.",
+        "Earthbags must be shipped to the site already filled with a special mixture."
+      ],
+      "why": [
+        "This choice gives the insulation advantage, not the transport advantage.",
+        "This choice gives the flood result, not the material-transport argument.",
+        "This choice contradicts the notes, which say the bags are filled on site with local soil."
+      ],
+      "explanation": "The key uses the on-site filling in the fourth note to address transport cost and adds the flood result as a second benefit.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Twenty runners were assigned to sleep at a simulated altitude of 2,500 meters or at sea level for four weeks.",
+        "Both groups trained at sea level.",
+        "Hemoglobin mass rose about 4 percent in the altitude group and did not change in the control group.",
+        "Five-kilometer race times improved by about 1 percent in both groups."
+      ],
+      "goal": "The student wants to emphasize the gap between a physiological change and performance.",
+      "correct": "Hemoglobin mass rose 4 percent in the altitude group, yet 5-kilometer times improved about 1 percent in both groups.",
+      "wrongs": [
+        "The altitude group slept at a simulated 2,500 meters for four weeks.",
+        "Twenty runners took part in the study.",
+        "The altitude group improved its race times far more than the control group did."
+      ],
+      "why": [
+        "This choice gives the altitude exposure, not the gap between the two outcomes.",
+        "This choice gives the sample size, not the result.",
+        "This choice contradicts the notes, which report similar 1 percent gains in both groups."
+      ],
+      "explanation": "The key sets the hemoglobin increase against the equal race-time improvement, which is the gap the goal highlights.",
+      "difficulty": "Hard"
+    },
+    {
+      "notes": [
+        "Three hundred dead birds were collected around ten buildings over one year.",
+        "Sixty-two percent of the birds were found at buildings whose facades were more than 60 percent glass.",
+        "Most collisions happened during the spring and fall migrations.",
+        "In a trial, decals covering at least 90 percent of a glass surface reduced collisions by 80 percent."
+      ],
+      "goal": "The student wants to support one specific mitigation measure.",
+      "correct": "Decals covering at least 90 percent of the glass reduced collisions by 80 percent in the trial.",
+      "wrongs": [
+        "Sixty-two percent of the dead birds were found at buildings with facades more than 60 percent glass.",
+        "Most collisions occurred during the spring and fall migrations.",
+        "Any pattern of decals on a window reduces collisions by about 80 percent."
+      ],
+      "why": [
+        "This choice identifies the risk factor but proposes no measure.",
+        "This choice gives the timing of collisions, not a mitigation.",
+        "This choice overstates the evidence, which applies to decals covering at least 90 percent of the glass."
+      ],
+      "explanation": "The key reports the trial result for the specific coverage level, which is the evidence for the recommended measure.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Slow sand filters pass water through layers of sand and gravel.",
+        "A biological layer forms on the surface and removes pathogens.",
+        "In laboratory tests, the filters removed 99 percent of E. coli.",
+        "Flow slows as the layer thickens, and scraping the surface restores it."
+      ],
+      "goal": "The student wants to explain why the filters need regular maintenance.",
+      "correct": "The biological layer that removes pathogens also slows the flow, so it must be scraped to restore the rate.",
+      "wrongs": [
+        "The filters removed 99 percent of E. coli in laboratory tests.",
+        "The filters are built from layers of sand and gravel.",
+        "Flow through the filter increases as the biological layer thickens."
+      ],
+      "why": [
+        "This choice gives the removal result, not the maintenance need.",
+        "This choice describes the filter's construction.",
+        "This choice contradicts the notes, which say flow slows as the layer thickens."
+      ],
+      "explanation": "The key connects the layer's benefit to its clogging effect, which is why the surface must be scraped.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Retroreflectors were placed on the Moon during missions in 1969, 1971 and 1973.",
+        "A laser fired from Earth reflects off a retroreflector and returns.",
+        "The round-trip travel time gives the Earth-Moon distance.",
+        "Current measurements are precise to within a few millimeters, and the Moon recedes about 3.8 centimeters per year."
+      ],
+      "goal": "The student wants to explain how the Earth-Moon distance is measured.",
+      "correct": "Timing how long a laser pulse takes to travel to a retroreflector and back gives the Earth-Moon distance.",
+      "wrongs": [
+        "Retroreflectors were placed on the Moon in 1969, 1971 and 1973.",
+        "The Moon recedes from Earth by about 3.8 centimeters per year.",
+        "The distance is measured by photographing the retroreflectors from orbit."
+      ],
+      "why": [
+        "This choice gives the installation dates, not the method.",
+        "This choice gives a result of the measurements, not how they are made.",
+        "This choice invents a photographic method that the notes do not describe."
+      ],
+      "explanation": "The key uses the round-trip timing described in the notes, which is the basis of lunar laser ranging.",
+      "difficulty": "Easy"
+    },
+    {
+      "notes": [
+        "Axolotls can regenerate limbs, including bone and nerve tissue.",
+        "Researchers amputated limbs at three positions along the arm.",
+        "Complete limbs regrew in 70 percent of cases; the rest formed scar tissue.",
+        "Regeneration was slower in older animals."
+      ],
+      "goal": "The student wants to emphasize that regeneration was not guaranteed.",
+      "correct": "Only 70 percent of the amputations produced a complete limb; the rest formed scar tissue instead.",
+      "wrongs": [
+        "Regeneration was slower in older axolotls.",
+        "The researchers amputated limbs at three positions.",
+        "Every amputation regrew a complete limb, though older animals took longer."
+      ],
+      "why": [
+        "This choice describes a speed difference, not the failure rate.",
+        "This choice gives the experimental design, not the outcome.",
+        "This choice contradicts the notes, which say 30 percent formed scar tissue."
+      ],
+      "explanation": "The key states the success rate and what happened in the other cases, which shows regrowth was not certain.",
+      "difficulty": "Medium"
+    },
+    {
+      "notes": [
+        "Twelve sauerkraut batches were made with either 1.5 percent or 2.5 percent salt.",
+        "The 2.5 percent batches reached a pH of 3.5 in about eight days; the 1.5 percent batches took about five.",
+        "The low-salt batches showed more spoilage molds.",
+        "Final acidity was similar in both groups."
+      ],
+      "goal": "The student wants to emphasize the tradeoff between speed and spoilage.",
+      "correct": "Lower-salt batches fermented faster but grew more spoilage molds.",
+      "wrongs": [
+        "The 2.5 percent batches took about eight days to reach pH 3.5, while the 1.5 percent batches took about five.",
+        "Both groups reached a similar final acidity.",
+        "Lower-salt batches fermented more slowly but stayed free of spoilage molds."
+      ],
+      "why": [
+        "This choice compares fermentation times but says nothing about spoilage.",
+        "This choice reports a similarity, not the tradeoff.",
+        "This choice reverses the notes on both speed and mold."
+      ],
+      "explanation": "The key pairs the faster fermentation of the low-salt batches with their higher mold rate, which is the tradeoff.",
+      "difficulty": "Medium"
+    }
+  ]
+}

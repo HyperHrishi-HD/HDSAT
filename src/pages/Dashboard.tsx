@@ -4,6 +4,7 @@ import { Badge, Button, Card, Icon, InfoTip, ProgressBar, Stat } from '../compon
 import { Leaderboard } from '../components/Leaderboard';
 import { MissedLog } from '../components/MissedLog';
 import { QuestionOfTheDay } from '../components/QuestionOfTheDay';
+import { SyncNudge } from '../components/SyncNudge';
 import * as cloud from '../lib/cloud';
 import {
   dismissQuestionOfTheDay,
@@ -123,6 +124,8 @@ export function DashboardPage() {
 
   return (
     <div>
+      <SyncNudge />
+
       {resume ? (
         <Card>
           <div className="row-between">

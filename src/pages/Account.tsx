@@ -77,6 +77,7 @@ export function AccountPage() {
       saved: app.saved,
       flashcardProgress: app.flashcardProgress,
       testAttempts: app.testAttempts,
+      testScoreLog: app.scoreLog,
       dailyActivity: app.dailyActivity,
     });
     const name = downloadExport(payload, app.user);

@@ -1,9 +1,8 @@
 // @vitest-environment jsdom
 /**
- * The guest onboarding banner ("Welcome to HDSAT... create account or continue
- * as a guest") must never appear to a student who already has a session. It
- * used to stay on screen after sign-in because its visibility only depended on
- * a localStorage "seen" flag.
+ * The app shell: identity, status pills and the emblem chip. The guest welcome
+ * card this file used to cover was replaced by the Dashboard's thin sign-in
+ * nudge (see SyncNudge.test.tsx).
  */
 import { act } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
@@ -15,13 +14,6 @@ declare global {
   var IS_REACT_ACT_ENVIRONMENT: boolean | undefined;
 }
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
-
-const markWelcomeSeen = vi.fn();
-
-vi.mock('../lib/storage', () => ({
-  hasSeenWelcome: () => false,
-  markWelcomeSeen: () => markWelcomeSeen(),
-}));
 
 type MinimalApp = Record<string, unknown>;
 
@@ -79,7 +71,6 @@ beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
   root = createRoot(container);
-  markWelcomeSeen.mockClear();
 });
 
 afterEach(() => {
@@ -87,23 +78,14 @@ afterEach(() => {
   container.remove();
 });
 
-describe('welcome banner', () => {
-  it('invites a first-time guest to create an account', () => {
-    render();
-    expect(container.querySelector('.welcome-banner')).not.toBeNull();
-    expect(container.textContent).toContain('Welcome to HDSAT');
-  });
-
-  it('disappears for a signed-in student and is marked seen', () => {
+describe('app shell', () => {
+  it('greets a signed-in student by name, never by email', () => {
     appState = baseApp({
       mode: 'cloud',
       accountStatus: 'cloud',
       user: { email: 'student@example.com', displayName: 'Hrishi' },
     });
     render();
-    expect(container.querySelector('.welcome-banner')).toBeNull();
-    expect(container.textContent).not.toContain('Keep studying as a guest');
-    expect(markWelcomeSeen).toHaveBeenCalled();
     // The top bar greets the student by name, never by email address. The
     // cloud icon replaces the old "Cloud ·" text so the pill stays compact.
     const cloud = container.querySelector('.badge-cloud');
@@ -155,16 +137,4 @@ describe('welcome banner', () => {
     expect(container.querySelector('.flair-chip')).toBeNull();
   });
 
-  it('stays hidden after the guest dismisses it', () => {
-    render();
-    const dismiss = [...container.querySelectorAll('button')].find((b) =>
-      b.textContent?.includes('Keep as guest')
-    );
-    expect(dismiss).toBeTruthy();
-    act(() => {
-      dismiss!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
-    });
-    expect(container.querySelector('.welcome-banner')).toBeNull();
-    expect(markWelcomeSeen).toHaveBeenCalled();
-  });
 });

@@ -12,6 +12,7 @@ import type {
   RushScoreRecord,
   Section,
   TestAttempt,
+  TestScoreEntry,
 } from './types';
 
 /**
@@ -29,6 +30,7 @@ export const DAILY_FLASHCARD_COIN_CAP = 15;
 const PROFILE_VERSION = 1;
 const MAX_LOCAL_ATTEMPTS = 2000;
 const MAX_LOCAL_TESTS = 2000;
+const MAX_LOCAL_SCORE_LOG = 400;
 
 export function todayKey(date: Date = new Date()): string {
   const year = date.getFullYear();
@@ -71,6 +73,7 @@ export function emptyProfile(): LocalProfile {
     saved: [],
     flashcards: {},
     testAttempts: [],
+    testScoreLog: [],
     rushScores: {},
     settings: {
       assessment: 'SAT',
@@ -140,6 +143,7 @@ export function loadProfile(): LocalProfile {
       achievements: normalizeAchievementIds(parsed.achievements ?? []),
       attempts: parsed.attempts ?? [],
       testAttempts: parsed.testAttempts ?? [],
+      testScoreLog: parsed.testScoreLog ?? [],
       rushScores: parsed.rushScores ?? {},
       version: PROFILE_VERSION,
     };
@@ -155,6 +159,7 @@ export function saveProfile(profile: LocalProfile): void {
       ...profile,
       attempts: profile.attempts.slice(-MAX_LOCAL_ATTEMPTS),
       testAttempts: profile.testAttempts.slice(-MAX_LOCAL_TESTS),
+      testScoreLog: profile.testScoreLog.slice(-MAX_LOCAL_SCORE_LOG),
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(trimmed));
   } catch {
@@ -300,6 +305,71 @@ export function markWelcomeSeen(): void {
     localStorage.setItem(WELCOME_SEEN_KEY, new Date().toISOString());
   } catch {
     /* ignore quota errors */
+  }
+}
+
+/*
+ * Guest sign-in nudge: a thin banner at the top of the Dashboard that offers to
+ * save progress across devices. It is shown at most twice in a browser's life.
+ * The first dismissal covers the visit; the second appearance waits for the
+ * next visit (a new page load), and the second dismissal retires it for good.
+ */
+export const SYNC_NUDGE_KEY = 'hdsat.sync-nudge.v1';
+export const SYNC_NUDGE_VISIT_KEY = 'hdsat.visit.v1';
+export const SYNC_NUDGE_LIMIT = 2;
+
+interface SyncNudgeState {
+  dismissals: number;
+  dismissedVisit: string | null;
+}
+
+function currentVisit(): string {
+  if (typeof sessionStorage === 'undefined') return '';
+  try {
+    const existing = sessionStorage.getItem(SYNC_NUDGE_VISIT_KEY);
+    if (existing) return existing;
+    const fresh = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+    sessionStorage.setItem(SYNC_NUDGE_VISIT_KEY, fresh);
+    return fresh;
+  } catch {
+    return '';
+  }
+}
+
+export function loadSyncNudge(): SyncNudgeState {
+  if (typeof localStorage === 'undefined') return { dismissals: 0, dismissedVisit: null };
+  try {
+    const raw = localStorage.getItem(SYNC_NUDGE_KEY);
+    if (!raw) return { dismissals: 0, dismissedVisit: null };
+    const parsed = JSON.parse(raw) as Partial<SyncNudgeState>;
+    const dismissals = Math.max(0, Math.min(SYNC_NUDGE_LIMIT, Number(parsed.dismissals) || 0));
+    return { dismissals, dismissedVisit: parsed.dismissedVisit ?? null };
+  } catch {
+    return { dismissals: 0, dismissedVisit: null };
+  }
+}
+
+export function shouldShowSyncNudge(): boolean {
+  const state = loadSyncNudge();
+  if (state.dismissals >= SYNC_NUDGE_LIMIT) return false;
+  if (state.dismissals === 0) return true;
+  // The second showing is a second visit, never the moment it was dismissed.
+  return state.dismissedVisit !== currentVisit();
+}
+
+export function dismissSyncNudge(): void {
+  if (typeof localStorage === 'undefined') return;
+  const state = loadSyncNudge();
+  try {
+    localStorage.setItem(
+      SYNC_NUDGE_KEY,
+      JSON.stringify({
+        dismissals: Math.min(SYNC_NUDGE_LIMIT, state.dismissals + 1),
+        dismissedVisit: currentVisit(),
+      })
+    );
+  } catch {
+    /* storage disabled: the banner simply shows again next visit */
   }
 }
 
@@ -566,6 +636,52 @@ export function recordTestAttempt(profile: LocalProfile, attempt: TestAttempt): 
  * Records one Practice Rush run against its exact settings combination. Best
  * only moves up; the last score always shows the most recent run.
  */
+/**
+ * Deletes a saved simulation and keeps its score in a one-line log.
+ *
+ * The score is the only thing worth keeping once the run is gone: the modules
+ * and per-item responses are exactly what the student asked to remove. An
+ * unfinished run never had a score, so it leaves nothing behind.
+ */
+export function deleteTestAttempt(
+  profile: LocalProfile,
+  attemptId: string
+): { profile: LocalProfile; entry: TestScoreEntry | null } {
+  const attempt = profile.testAttempts.find((item) => item.id === attemptId);
+  if (!attempt) return { profile, entry: null };
+  const finished = attempt.status !== 'incomplete' && attempt.totalEstimate !== null;
+  const entry: TestScoreEntry | null = finished
+    ? {
+        id: attempt.id,
+        createdAt: attempt.createdAt,
+        assessment: attempt.assessment,
+        total: attempt.totalEstimate,
+        rw: attempt.rwEstimate,
+        math: attempt.mathEstimate,
+        rawCorrect: attempt.modules.reduce((sum, m) => sum + m.correct, 0),
+        rawTotal: attempt.modules.reduce((sum, m) => sum + m.total, 0),
+        durationSeconds: attempt.durationSeconds,
+      }
+    : null;
+  return {
+    profile: {
+      ...profile,
+      testAttempts: profile.testAttempts.filter((item) => item.id !== attemptId),
+      testScoreLog: entry ? mergeScoreLog(profile.testScoreLog, entry) : profile.testScoreLog,
+    },
+    entry,
+  };
+}
+
+/** One entry per deleted attempt, newest last, deduplicated by attempt id. */
+export function mergeScoreLog(
+  log: TestScoreEntry[],
+  entry: TestScoreEntry
+): TestScoreEntry[] {
+  const without = log.filter((item) => item.id !== entry.id);
+  return [...without, entry].slice(-MAX_LOCAL_SCORE_LOG);
+}
+
 export function recordRushScore(
   profile: LocalProfile,
   key: string,

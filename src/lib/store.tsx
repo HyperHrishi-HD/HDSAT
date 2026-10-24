@@ -19,6 +19,7 @@ import type {
   RushScoreRecord,
   StudyResource,
   TestAttempt,
+  TestScoreEntry,
   UserSettings,
 } from './types';
 
@@ -67,6 +68,8 @@ export interface AppValue {
   /** Practice Rush personal bests, keyed by `rushSetupKey()`. Device-local. */
   rushScores: Record<string, RushScoreRecord>;
   testAttempts: TestAttempt[];
+  /** Scores of deleted simulations, newest first (cloud + this device). */
+  scoreLog: TestScoreEntry[];
   dailyActivity: DailyActivity[];
   achievements: string[];
   ownedItems: string[];
@@ -121,6 +124,8 @@ export interface AppValue {
       timeSpentSeconds: number;
     }) => Promise<void>;
     recordTest: (attempt: TestAttempt, clientSessionId: string) => Promise<void>;
+    /** Removes a saved simulation; a finished run leaves its score in the log. */
+    deleteTest: (attemptId: string) => Promise<void>;
     /**
      * Local-first in-progress snapshot: writes localStorage synchronously (so a
      * closed tab can never lose the run) and mirrors to the cloud at most every
@@ -290,6 +295,16 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     }
     return [...byId.values()];
   }, [mode, snapshot, profile.testAttempts]);
+
+  const scoreLog = useMemo(() => {
+    const localLog = profile.testScoreLog ?? [];
+    const rows = mode === 'cloud' && snapshot ? [...snapshot.scoreLog, ...localLog] : localLog;
+    const byId = new Map<string, TestScoreEntry>();
+    for (const entry of rows) byId.set(entry.id, entry);
+    return [...byId.values()]
+      .sort((a, b) => b.createdAt.localeCompare(a.createdAt))
+      .slice(0, 100);
+  }, [mode, snapshot, profile.testScoreLog]);
 
   const totals = useMemo(() => {
     const attempts =
@@ -565,6 +580,30 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       setSyncing(false);
     }
   }, [mode, profile, refreshSnapshot]);
+
+  const deleteTest = useCallback<AppValue['actions']['deleteTest']>(
+    async (attemptId: string) => {
+      const outcome = local.deleteTestAttempt(profileRef.current, attemptId);
+      if (outcome.profile !== profileRef.current) persist(outcome.profile);
+      if (mode === 'cloud') {
+        try {
+          await cloud.deleteTestAttemptCloud(attemptId);
+          await refreshSnapshot();
+        } catch (err) {
+          setError(
+            `Deleted on this device, but removing it from your account failed: ${(err as Error).message}`
+          );
+          return;
+        }
+      }
+      setNotice(
+        outcome.entry
+          ? 'Simulation deleted. Its score stays in your log.'
+          : 'Simulation deleted.'
+      );
+    },
+    [mode, persist, refreshSnapshot]
+  );
 
   /**
    * First meaningful sign-in imports this device's guest history exactly once.
@@ -881,6 +920,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     flashcardProgress,
     rushScores: profile.rushScores ?? {},
     testAttempts,
+    scoreLog,
     dailyActivity: emptyActivitySeries(daily),
     achievements: mode === 'cloud' && snapshot ? snapshot.achievements : profile.achievements,
     ownedItems: mode === 'cloud' && snapshot ? snapshot.ownedItems : profile.ownedItems,
@@ -916,6 +956,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       recordRushScore,
       completeSession,
       recordTest,
+      deleteTest,
       autosaveTest,
       flushTestSync,
       verifySignupCode,

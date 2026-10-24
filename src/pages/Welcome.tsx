@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthModal } from '../components/AuthModal';
+import { BrandMark } from '../components/BrandMark';
 import {
   COPYRIGHT_PATH,
   CREATOR_NAME,
@@ -56,18 +57,7 @@ export function WelcomePage() {
 
       <header className="welcome-top">
         <span className="welcome-brand">
-          <span className="brand-mark" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 64 64" fill="none">
-              <path
-                d="M16 14V50M48 14V50M16 32H48"
-                stroke="currentColor"
-                strokeWidth="7.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <circle cx="48" cy="14" r="4.5" fill="#bfdbfe" />
-            </svg>
-          </span>
+          <BrandMark size={34} title="HDSAT" />
           <strong>HDSAT</strong>
         </span>
         <button
@@ -83,13 +73,12 @@ export function WelcomePage() {
         <span className="welcome-emblem" aria-hidden="true">
           <svg width="40" height="40" viewBox="0 0 64 64" fill="none">
             <path
-              d="M16 14V50M48 14V50M16 32H48"
+              d="M17 15V49M47 15V49M17 32H47"
               stroke="currentColor"
-              strokeWidth="7.5"
+              strokeWidth="8"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-            <circle cx="48" cy="14" r="4.5" fill="#bfdbfe" />
           </svg>
         </span>
 

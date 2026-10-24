@@ -171,6 +171,22 @@ export interface TestAttempt {
   pausedState?: PausedTestState;
 }
 
+/**
+ * One line kept after a simulation is deleted: the score, never the run.
+ * Stored locally for guests and in `test_score_log` for signed-in students.
+ */
+export interface TestScoreEntry {
+  id: string;
+  createdAt: string;
+  assessment: string;
+  total: number | null;
+  rw: number | null;
+  math: number | null;
+  rawCorrect: number;
+  rawTotal: number;
+  durationSeconds: number;
+}
+
 export interface UserSettings {
   assessment: Assessment;
   /** ISO date (YYYY-MM-DD) of the real test the student is working towards. */
@@ -213,6 +229,8 @@ export interface LocalProfile {
   saved: string[];
   flashcards: Record<string, FlashcardProgress>;
   testAttempts: TestAttempt[];
+  /** Scores of simulations this student deleted; newest entries are last. */
+  testScoreLog: TestScoreEntry[];
   /** Practice Rush personal bests, keyed by `rushSetupKey()` in lib/rush.ts. */
   rushScores: Record<string, RushScoreRecord>;
   settings: UserSettings;

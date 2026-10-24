@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, NavLink, Outlet } from 'react-router-dom';
 import { emblemFor } from '../lib/catalog';
-import { hasSeenWelcome, markWelcomeSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
 import { AuthModal } from './AuthModal';
+import { BrandMark } from './BrandMark';
 import { VerifyEmailBanner } from './VerifyEmailBanner';
 import {
   COPYRIGHT_PATH,
@@ -25,24 +25,6 @@ const NAV: { to: string; label: string; icon: IconName; end?: boolean }[] = [
   { to: '/rewards', label: 'Rewards', icon: 'rewards' },
   { to: '/account', label: 'Account', icon: 'account' },
 ];
-
-/** Same mark as the sidebar brand, sized for the mobile top bar. */
-function BrandMark() {
-  return (
-    <span className="brand-mark" aria-hidden="true">
-      <svg width="20" height="20" viewBox="0 0 64 64" fill="none">
-        <path
-          d="M16 14V50M48 14V50M16 32H48"
-          stroke="currentColor"
-          strokeWidth="7.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <circle cx="48" cy="14" r="4.5" fill="#93c5fd" />
-      </svg>
-    </span>
-  );
-}
 
 /**
  * A name that scrolls back and forth inside its pill once it is too long to
@@ -87,7 +69,6 @@ function ScrollName({ text }: { text: string }) {
 
 export function Layout() {
   const app = useApp();
-  const [showWelcome, setShowWelcome] = useState(() => !hasSeenWelcome());
   const topbarRef = useRef<HTMLDivElement | null>(null);
   const statsRef = useRef<HTMLDivElement | null>(null);
   const brandRef = useRef<HTMLAnchorElement | null>(null);
@@ -109,16 +90,6 @@ export function Layout() {
       document.documentElement.removeAttribute('data-theme');
     }
   }, [activeTheme]);
-
-  // The banner is a guest onboarding card: once the student has a session it is
-  // wrong to keep saying "no account needed" and offering "continue as guest",
-  // so signing in retires it for good.
-  useEffect(() => {
-    if (app.user && showWelcome) {
-      markWelcomeSeen();
-      setShowWelcome(false);
-    }
-  }, [app.user, showWelcome]);
 
   /**
    * Decide whether the status pills need their labels. A hidden clone of the
@@ -198,11 +169,6 @@ export function Layout() {
       observer?.disconnect();
     };
   }, []);
-
-  const dismissWelcome = () => {
-    markWelcomeSeen();
-    setShowWelcome(false);
-  };
 
   return (
     <div className="app-shell" data-theme={activeTheme ?? undefined}>
@@ -331,27 +297,6 @@ export function Layout() {
             )}
           </div>
         </header>
-
-        {showWelcome && app.cloudConfigured && !app.user ? (
-          <div className="welcome-banner" role="status">
-            <span>
-              <strong>Welcome to HDSAT.</strong> Saved on this device.
-            </span>
-            <div className="welcome-actions">
-              <button
-                type="button"
-                className="btn btn-primary btn-sm"
-                onClick={() => app.actions.openAuthModal(pending ? 'verify' : 'signin')}
-              >
-                <Icon name="account" size={13} />
-                <span>Sign in to sync</span>
-              </button>
-              <button type="button" className="btn btn-outline btn-sm" onClick={dismissWelcome}>
-                Keep as guest
-              </button>
-            </div>
-          </div>
-        ) : null}
 
         <VerifyEmailBanner />
 

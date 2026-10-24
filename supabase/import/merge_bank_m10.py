@@ -16,6 +16,11 @@ move hundreds of existing items, so this script only ever *adds*:
 Usage:
     python supabase/import/merge_bank_m10.py --dry-run
     python supabase/import/merge_bank_m10.py
+# A later batch reuses the same merge with its own inputs and seed file:
+    python supabase/import/merge_bank_m10.py \
+        --incoming expansion/extra_rw_m10b.json \
+        --seed 0003_m10b_rw_expansion.sql \
+        --version 2026.10.30-open-core-5
 """
 
 import argparse
@@ -38,6 +43,7 @@ BANK = ROOT / "src" / "data" / "questionBank.json"
 INCOMING = HERE / "expansion" / "extra_rw_m10.json"
 SEED_OUT = ROOT / "supabase" / "seed" / "0002_m10_rw_expansion.sql"
 NEW_VERSION = "2026.10.27-open-core-4"
+DEFAULT_SEED_NAME = "0002_m10_rw_expansion.sql"
 
 
 def stem(question):
@@ -54,7 +60,7 @@ def seed_for(records, sources):
     """Seed SQL for question rows only, reusing the importer's escaping."""
     source_index = iq._source_index(sources)
     lines = [
-        "-- HDSAT R2-M10 Reading & Writing expansion (generated)",
+        "-- HDSAT Reading & Writing expansion (generated)",
         f"-- generated_at: {datetime.now(timezone.utc).isoformat()}",
         "-- Idempotent upserts; applies only the new items.",
         "",
@@ -104,13 +110,28 @@ def seed_for(records, sources):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument(
+        "--incoming",
+        default=str(INCOMING),
+        help="expansion JSON to merge (default: the first R&W batch)",
+    )
+    parser.add_argument(
+        "--seed",
+        default=DEFAULT_SEED_NAME,
+        help="file name under supabase/seed for the new rows",
+    )
+    parser.add_argument("--version", default=NEW_VERSION, help="bank_version to write")
     args = parser.parse_args()
+    incoming_path = pathlib.Path(args.incoming)
+    if not incoming_path.is_absolute():
+        incoming_path = HERE / incoming_path
+    seed_path = ROOT / "supabase" / "seed" / args.seed
 
     bank = json.loads(BANK.read_text(encoding="utf-8"))
     existing = bank["questions"]
     sources = [dict(s) for s in bank["sources"]]
-    incoming = json.loads(INCOMING.read_text(encoding="utf-8"))["questions"]
-    print(f"bank: {len(existing)} items; incoming: {len(incoming)}")
+    incoming = json.loads(incoming_path.read_text(encoding="utf-8"))["questions"]
+    print(f"bank: {len(existing)} items; incoming: {len(incoming)} from {incoming_path.name}")
 
     known_ids = {q["id"] for q in existing}
     known_stems = {stem(q) for q in existing}
@@ -159,8 +180,8 @@ def main():
     fresh_public = [q for q in public_new if q["id"] not in updates]
     updated_public = {q["id"]: q for q in public_new if q["id"] in updates}
     report = content_qa.check_bank(
-        {"questions": public_new, "sources": sources, "bank_version": NEW_VERSION},
-        bank_path=str(INCOMING),
+        {"questions": public_new, "sources": sources, "bank_version": args.version},
+        bank_path=str(incoming_path),
         sample=8,
         max_near_duplicates=20,
     )
@@ -180,21 +201,21 @@ def main():
 
     seed = seed_for(public_new, sources)
     if args.dry_run:
-        print(f"dry run: would write {BANK} and {SEED_OUT} ({len(seed):,} bytes)")
+        print(f"dry run: would write {BANK} and {seed_path} ({len(seed):,} bytes)")
         return
 
     counts = collections.Counter(q["source_id"] for q in merged)
-    bank["bank_version"] = NEW_VERSION
+    bank["bank_version"] = args.version
     bank["generated_at"] = datetime.now(timezone.utc).isoformat()
     bank["sources"] = [
         {**s, "record_count": counts.get(s["source_id"], 0)} for s in sources
     ]
     bank["questions"] = merged
     BANK.write_text(json.dumps(bank, ensure_ascii=False, indent=1) + "\n", encoding="utf-8")
-    SEED_OUT.parent.mkdir(parents=True, exist_ok=True)
-    SEED_OUT.write_text(seed, encoding="utf-8")
+    seed_path.parent.mkdir(parents=True, exist_ok=True)
+    seed_path.write_text(seed, encoding="utf-8")
     print(f"wrote {BANK} ({BANK.stat().st_size:,} bytes)")
-    print(f"wrote {SEED_OUT} ({len(seed):,} bytes)")
+    print(f"wrote {seed_path} ({len(seed):,} bytes)")
 
 
 if __name__ == "__main__":

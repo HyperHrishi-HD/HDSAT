@@ -1,0 +1,524 @@
+{
+  "items": [
+    {
+      "sentence": "The curator's notes were so ______ that even a reader unfamiliar with the period could follow the argument.",
+      "correct": "lucid",
+      "wrongs": ["terse", "ornate", "tentative"],
+      "why": [
+        "'Terse' means brief to the point of abruptness, which would not help an unfamiliar reader follow anything.",
+        "'Ornate' means heavily decorated, the opposite of the plain clarity the sentence praises.",
+        "'Tentative' means uncertain, and hesitant notes would not make an argument easy to follow."
+      ],
+      "explanation": "The phrase 'even a reader unfamiliar with the period could follow' names the quality the notes need: clarity. 'Lucid' means clear and easy to understand, so it is the only choice that explains why an outsider could follow the argument.",
+      "cue": "the clause about an unfamiliar reader following the argument signals clarity rather than brevity, decoration or doubt",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The dispute over water rights proved ______: three mediators resigned, and neither side would agree even to the wording of a meeting notice.",
+      "correct": "intractable",
+      "wrongs": ["brittle", "generous", "transient"],
+      "why": [
+        "'Brittle' describes something that breaks easily, not a dispute that resists every attempt at settlement.",
+        "'Generous' is the opposite of what the resigned mediators and the stalled notice show.",
+        "'Transient' means short-lived, but the sentence describes a conflict stubborn enough to outlast three mediators."
+      ],
+      "explanation": "The evidence is cumulative failure: mediators quit and the parties cannot agree even on a meeting notice. 'Intractable' means stubbornly difficult to control or solve, which matches a dispute that defeats every attempt at settlement.",
+      "cue": "resigned mediators and a deadlock over a meeting notice show stubborn resistance to settlement",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Though the expedition is remembered for its drama, its daily log was ______, recording little more than mileage, weather and the state of the mules.",
+      "correct": "prosaic",
+      "wrongs": ["lyrical", "perilous", "cryptic"],
+      "why": [
+        "'Lyrical' suggests expressive, songlike writing, but the log records only mileage, weather and mules.",
+        "'Perilous' would describe danger, and the sentence lists ordinary bookkeeping instead.",
+        "'Cryptic' means deliberately mysterious, while the entries named are plain and easy to read."
+      ],
+      "explanation": "The contrast with the expedition's dramatic reputation sets up an ordinary record. 'Prosaic' means dull and matter-of-fact, exactly what a log of mileage, weather and mule condition is.",
+      "cue": "the contrast with remembered drama and the list of routine entries signals dullness",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The trial's results were ______: the treatment helped patients over sixty but showed no measurable effect on younger ones.",
+      "correct": "equivocal",
+      "wrongs": ["conclusive", "negligible", "unanimous"],
+      "why": [
+        "'Conclusive' would settle the question, yet the results point in two directions.",
+        "'Negligible' would mean the treatment did almost nothing, ignoring the benefit seen in older patients.",
+        "'Unanimous' describes agreement among people, not a split pattern of results."
+      ],
+      "explanation": "A result that helps one group and does not help another cannot be read as a single verdict. 'Equivocal' means open to more than one interpretation, which is precisely the divided outcome described.",
+      "cue": "benefit for one age group and no effect for another make the outcome open to more than one reading",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The committee adopted a ______ schedule, one it would replace once the survey of the new site was complete.",
+      "correct": "provisional",
+      "wrongs": ["permanent", "meticulous", "punitive"],
+      "why": [
+        "'Permanent' contradicts the plan to replace the schedule later.",
+        "'Meticulous' praises care in detail, but the sentence is about the schedule's temporary status.",
+        "'Punitive' would mean designed as a punishment, which nothing in the sentence suggests."
+      ],
+      "explanation": "The clause 'one it would replace once the survey was complete' defines the schedule as a stand-in. 'Provisional' means arranged for the present and likely to change, which is exactly that arrangement.",
+      "cue": "the promise to replace the schedule after the survey marks it as temporary",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "In a report crowded with technical detail, the most ______ finding was that the bridge's expansion joints had been sealed shut.",
+      "correct": "salient",
+      "wrongs": ["negligible", "oblique", "ornamental"],
+      "why": [
+        "'Negligible' means too small to matter, the reverse of a finding singled out from a crowded report.",
+        "'Oblique' means indirect, but a sealed joint is a direct and concrete fact.",
+        "'Ornamental' describes decoration, not a structural fault worth noticing."
+      ],
+      "explanation": "The sentence picks one finding out of many because it matters most. 'Salient' means most noticeable or important, which fits a safety-relevant detail standing out from technical clutter.",
+      "cue": "one finding singled out from a crowded report signals importance and noticeability",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The link between the two sightings was ______, resting on a single blurry photograph and the memory of one retired ranger.",
+      "correct": "tenuous",
+      "wrongs": ["robust", "explicit", "reciprocal"],
+      "why": [
+        "'Robust' means strong and dependable, the opposite of a case built on one photograph and one memory.",
+        "'Explicit' means stated clearly, but the problem is the thinness of the evidence, not its clarity.",
+        "'Reciprocal' describes something mutual, which the sentence never claims."
+      ],
+      "explanation": "The evidence is deliberately described as slight: a blurry photograph and a single recollection. 'Tenuous' means weak or flimsy, which matches a connection that barely holds.",
+      "cue": "a single blurry photograph and one memory show how thin the evidence is",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The monastery's ______ cells contained a narrow bed, a stool and nothing else.",
+      "correct": "austere",
+      "wrongs": ["lavish", "cluttered", "provisional"],
+      "why": [
+        "'Lavish' means rich and abundant, the opposite of a bed, a stool and nothing else.",
+        "'Cluttered' would mean filled with many objects, but the cell holds two.",
+        "'Provisional' means temporary, which the sentence does not suggest."
+      ],
+      "explanation": "A room with a bed, a stool and nothing else is defined by severe simplicity. 'Austere' means plain and without comfort or ornament, which is exactly the cell described.",
+      "cue": "the inventory of two objects and 'nothing else' signals severe plainness",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "A ______ correspondent, she could fill a half-hour interview with anecdotes and never once repeat herself.",
+      "correct": "voluble",
+      "wrongs": ["reticent", "laconic", "taciturn"],
+      "why": [
+        "'Reticent' means unwilling to speak freely, which contradicts filling a half-hour interview.",
+        "'Laconic' means using very few words, the opposite of a stream of anecdotes.",
+        "'Taciturn' means habitually silent, again the reverse of the behaviour described."
+      ],
+      "explanation": "Filling thirty minutes with anecdotes and never repeating herself is fluent, abundant speech. 'Voluble' means speaking readily and at length, which is the only choice consistent with that performance.",
+      "cue": "filling a half-hour with anecdotes and never repeating herself signals abundant speech",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The editor's ______ cuts removed three redundant scenes without touching a single line the author considered essential.",
+      "correct": "judicious",
+      "wrongs": ["arbitrary", "lavish", "hasty"],
+      "why": [
+        "'Arbitrary' means done without reason, but the cuts are explained by redundancy.",
+        "'Lavish' means abundant or extravagant, not selective and careful.",
+        "'Hasty' means too quick, while the sentence describes precision in sparing essential lines."
+      ],
+      "explanation": "The editor removed what was redundant and preserved what mattered, which is careful judgment. 'Judicious' means showing good sense, precisely the quality of cuts that are both effective and respectful of the text.",
+      "cue": "removing redundancy while sparing essential lines shows careful judgment",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Critics called the score ______, noting that its main theme repeated a folk melody the composer had used in two earlier works.",
+      "correct": "derivative",
+      "wrongs": ["innovative", "spare", "dissonant"],
+      "why": [
+        "'Innovative' means introducing something new, but the theme is borrowed from the composer's own earlier works.",
+        "'Spare' describes thin texture, which the sentence never mentions.",
+        "'Dissonant' describes harsh harmony, also absent from the sentence."
+      ],
+      "explanation": "The evidence is reuse: the main theme repeats a melody heard twice before. 'Derivative' means imitative of an earlier source rather than original, which is exactly the criticism the reviewers made.",
+      "cue": "a theme repeated from two earlier works signals imitation rather than originality",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The sensor's ______ readings puzzled the technicians: every other gauge on the site agreed with the forecast.",
+      "correct": "anomalous",
+      "wrongs": ["consistent", "calibrated", "marginal"],
+      "why": [
+        "'Consistent' would mean the readings matched the others, which is what puzzled the technicians.",
+        "'Calibrated' describes an instrument that has been adjusted correctly, not a reading that departs from every gauge.",
+        "'Marginal' means slight, but the contrast is between one dissenting sensor and every other gauge."
+      ],
+      "explanation": "One sensor disagrees with every other gauge and with the forecast, so its readings are the exception. 'Anomalous' means deviating from what is standard or expected, which explains the puzzlement.",
+      "cue": "one sensor disagreeing with every other gauge marks its readings as exceptions",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Through ______ record-keeping, the archivist tracked every loan, repair and misfiling across four decades.",
+      "correct": "assiduous",
+      "wrongs": ["sporadic", "reluctant", "cursory"],
+      "why": [
+        "'Sporadic' means occurring at irregular intervals, which could not produce a four-decade record.",
+        "'Reluctant' describes unwillingness, not the diligence implied by tracking every transaction.",
+        "'Cursory' means hurried and superficial, the opposite of tracking every loan and repair."
+      ],
+      "explanation": "Keeping a complete record of every loan, repair and misfiling over forty years takes steady, painstaking attention. 'Assiduous' means showing great care and perseverance, which matches that sustained effort.",
+      "cue": "four decades of tracking every transaction signals steady, painstaking care",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The citation turned out to be ______: the article it named had never been published, and its author did not exist.",
+      "correct": "spurious",
+      "wrongs": ["obscure", "seminal", "verbatim"],
+      "why": [
+        "'Obscure' means little known, but the citation names an article that never existed at all.",
+        "'Seminal' means highly influential, which a nonexistent article cannot be.",
+        "'Verbatim' means word for word, a description of quotation rather than of a fabricated source."
+      ],
+      "explanation": "A source that was never published and an author who never existed make the citation false rather than merely unfamiliar. 'Spurious' means not genuine or valid, which fits a fabricated reference.",
+      "cue": "an unpublished article and a nonexistent author show the citation is fabricated",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The model is appealingly ______, predicting the entire outcome from just two measured variables.",
+      "correct": "parsimonious",
+      "wrongs": ["elaborate", "opaque", "redundant"],
+      "why": [
+        "'Elaborate' means having many parts, the opposite of a model built on two variables.",
+        "'Opaque' means hard to understand, but the sentence praises the model as appealing.",
+        "'Redundant' means needlessly repetitive, which a two-variable model is not."
+      ],
+      "explanation": "A model that predicts everything from two variables is economical in its assumptions. 'Parsimonious' means unusually frugal or economical, and in this context it praises a simple explanation that accounts for a great deal.",
+      "cue": "predicting everything from two variables signals economy of assumptions",
+      "difficulty": "Hard"
+    },
+    {
+      "sentence": "The board was ______ that the deadline would not move, despite three requests for an extension.",
+      "correct": "adamant",
+      "wrongs": ["ambivalent", "amenable", "indifferent"],
+      "why": [
+        "'Ambivalent' means having mixed feelings, which would not explain a refusal to move the deadline.",
+        "'Amenable' means open to suggestion, the opposite of resisting three requests.",
+        "'Indifferent' suggests the board did not care, yet it repeatedly refused to change the date."
+      ],
+      "explanation": "Three requests for an extension were turned aside, which shows a fixed position. 'Adamant' means refusing to be persuaded, exactly the stance described.",
+      "cue": "refusing three extension requests despite pressure shows an unyielding position",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The desert bloom is ______, lasting sometimes only a single morning before the heat closes the petals.",
+      "correct": "ephemeral",
+      "wrongs": ["hardy", "perennial", "dormant"],
+      "why": [
+        "'Hardy' means able to survive harsh conditions, while the bloom collapses in a morning.",
+        "'Perennial' means lasting year after year, the opposite of a single morning.",
+        "'Dormant' means temporarily inactive, not briefly alive and then gone."
+      ],
+      "explanation": "The flower exists for a morning and then closes. 'Ephemeral' means lasting for a very short time, which is the defining fact the sentence gives.",
+      "cue": "lasting a single morning before the heat closes the petals shows extreme brevity",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The ______ design survived two winters of heavy snow and a summer of record heat without a single repair.",
+      "correct": "robust",
+      "wrongs": ["fragile", "ornate", "rigid"],
+      "why": [
+        "'Fragile' means easily broken, which two winters and a summer without repair rule out.",
+        "'Ornate' concerns decoration, not the ability to endure weather.",
+        "'Rigid' means stiff and unyielding, which is not what the sentence's evidence establishes."
+      ],
+      "explanation": "The design endured extreme weather with no repairs, which is a test of strength and resilience. 'Robust' means sturdy and able to withstand adverse conditions, exactly the performance described.",
+      "cue": "surviving two winters and a record-hot summer without repair shows sturdiness",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "Pressed by reporters, the spokesperson ______, praising the proposal's goals while declining to say whether the agency supported it.",
+      "correct": "equivocated",
+      "wrongs": ["conceded", "elaborated", "recanted"],
+      "why": [
+        "'Conceded' means admitted a point, but the spokesperson gave no ground either way.",
+        "'Elaborated' means added detail, while the answer deliberately avoided a clear position.",
+        "'Recanted' means withdrew an earlier statement, which the sentence does not describe."
+      ],
+      "explanation": "Praising the goals while refusing to say whether the agency supports the proposal is a deliberate avoidance of commitment. 'Equivocated' means used ambiguous language to avoid taking a clear position.",
+      "cue": "praising goals while refusing to state support shows deliberate ambiguity",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "A second witness helped ______ the driver's account, describing the same blue van and the same turning signal.",
+      "correct": "corroborate",
+      "wrongs": ["refute", "embellish", "postpone"],
+      "why": [
+        "'Refute' means disprove, but the second witness matched the first account.",
+        "'Embellish' means add decorative detail, whereas the witness independently confirmed the same facts.",
+        "'Postpone' means delay, which has nothing to do with two matching accounts."
+      ],
+      "explanation": "Two independent accounts agree on the van and the signal. 'Corroborate' means to confirm or support with additional evidence, which is exactly what the second witness did.",
+      "cue": "an independent account matching the same details confirms the first",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "Without regular use, a language learned in childhood may slowly ______, leaving only fragments of vocabulary.",
+      "correct": "atrophy",
+      "wrongs": ["flourish", "proliferate", "solidify"],
+      "why": [
+        "'Flourish' means thrive, the opposite of losing vocabulary through disuse.",
+        "'Proliferate' means increase rapidly, which contradicts leaving only fragments.",
+        "'Solidify' means become firmer, while the sentence describes gradual loss."
+      ],
+      "explanation": "The sentence describes decline from disuse, ending with only fragments. 'Atrophy' means to weaken or waste away through lack of use, which fits a language that fades when not practised.",
+      "cue": "disuse and remaining fragments signal gradual wasting away",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The review ______ the film's plotting as lazy and its dialogue as borrowed, and it recommended that readers skip the sequel.",
+      "correct": "castigated",
+      "wrongs": ["praised", "summarized", "overlooked"],
+      "why": [
+        "'Praised' contradicts the complaints about lazy plotting and borrowed dialogue.",
+        "'Summarized' means described briefly, but the review is clearly passing harsh judgment.",
+        "'Overlooked' means failed to notice, which cannot describe a review that recommends skipping the sequel."
+      ],
+      "explanation": "Calling the plotting lazy and the dialogue borrowed, then advising readers to skip the sequel, is severe criticism. 'Castigated' means reprimanded or criticized harshly, which matches the review's tone.",
+      "cue": "the hostile description and the recommendation to skip the sequel signal harsh criticism",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Out of ______ for the elders who had built the hall, the younger members left the original floorboards in place during the renovation.",
+      "correct": "deference",
+      "wrongs": ["indifference", "defiance", "curiosity"],
+      "why": [
+        "'Indifference' means lack of concern, which would not lead anyone to preserve something for another generation.",
+        "'Defiance' means open resistance, the opposite of respecting the elders' work.",
+        "'Curiosity' means interest in learning, not the respect that motivated preserving the floorboards."
+      ],
+      "explanation": "The younger members preserved something because of the elders who built it. 'Deference' means respectful yielding to another's judgment or standing, which explains a choice made out of respect rather than necessity.",
+      "cue": "preserving the elders' work out of respect signals deference",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The gallery's ______ collection moved from silk scrolls to welded steel to field recordings, sometimes within a single room.",
+      "correct": "eclectic",
+      "wrongs": ["uniform", "sparse", "derivative"],
+      "why": [
+        "'Uniform' means all the same, the opposite of scrolls, steel and field recordings together.",
+        "'Sparse' means thinly spread, but the sentence stresses variety rather than scarcity.",
+        "'Derivative' means imitative, which says nothing about the range of media on display."
+      ],
+      "explanation": "The collection combines widely different materials and traditions, even within one room. 'Eclectic' means drawn from a broad range of sources, which describes that deliberate variety.",
+      "cue": "scrolls, welded steel and field recordings in one room signal a wide range of sources",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "A ______ archivist, she checked each folder's date against three separate catalogues before filing it.",
+      "correct": "fastidious",
+      "wrongs": ["careless", "gregarious", "improvident"],
+      "why": [
+        "'Careless' contradicts the three-way cross-check before filing.",
+        "'Gregarious' means sociable, which describes temperament rather than this working method.",
+        "'Improvident' means failing to plan ahead, the reverse of checking every date carefully."
+      ],
+      "explanation": "Verifying every date against three catalogues before filing shows anxious attention to detail. 'Fastidious' means very attentive to accuracy and detail, which is the habit described.",
+      "cue": "a three-catalogue check before every filing signals extreme attention to detail",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "An ______ by temperament, she spent her career arguing that the city's most beloved monuments were badly designed.",
+      "correct": "iconoclast",
+      "wrongs": ["imitator", "mediator", "traditionalist"],
+      "why": [
+        "'Imitator' means someone who copies others, while she attacked established taste.",
+        "'Mediator' means someone who settles disputes, which is not the role described.",
+        "'Traditionalist' means someone who defends inherited practices, the opposite of attacking beloved monuments."
+      ],
+      "explanation": "Her career was built on challenging what the city revered. 'Iconoclast' means a person who attacks cherished beliefs or institutions, which is precisely her stance toward the monuments.",
+      "cue": "attacking the city's most beloved monuments shows a challenge to cherished beliefs",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The error was ______, the result of a drop-down menu that had been reordered overnight without anyone's noticing.",
+      "correct": "inadvertent",
+      "wrongs": ["deliberate", "systematic", "brazen"],
+      "why": [
+        "'Deliberate' contradicts the unnoticed menu change that caused the mistake.",
+        "'Systematic' means methodically planned, while the cause was an accidental reordering.",
+        "'Brazen' means shameless, implying intent that the sentence explicitly denies."
+      ],
+      "explanation": "A menu that changed overnight without anyone noticing makes the error accidental. 'Inadvertent' means unintentional, which matches a mistake produced by an unnoticed interface change.",
+      "cue": "an unnoticed overnight menu change makes the mistake unintentional",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "Planting trees along the canal can ______ summer heat, lowering afternoon temperatures in nearby streets by several degrees.",
+      "correct": "mitigate",
+      "wrongs": ["intensify", "quantify", "replicate"],
+      "why": [
+        "'Intensify' means make worse, the opposite of lowering temperatures.",
+        "'Quantify' means measure, but the sentence describes an effect on heat, not a calculation.",
+        "'Replicate' means copy or repeat, which does not fit reducing heat."
+      ],
+      "explanation": "The trees lower street temperatures, so they reduce the heat. 'Mitigate' means to make less severe, which matches a measurable reduction in afternoon heat.",
+      "cue": "lowering afternoon temperatures by several degrees signals making heat less severe",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The essay's ______ lies in its attention to small differences, distinguishing, for example, between tolerated and encouraged.",
+      "correct": "nuance",
+      "wrongs": ["bluster", "uniformity", "brevity"],
+      "why": [
+        "'Bluster' means loud, empty talk, which the essay's careful distinctions contradict.",
+        "'Uniformity' means sameness, the opposite of distinguishing between two close terms.",
+        "'Brevity' means shortness, and the sentence praises precision rather than length."
+      ],
+      "explanation": "The essay's strength is its sensitivity to small distinctions between nearly synonymous ideas. 'Nuance' means subtle difference in meaning, which is exactly what distinguishing tolerated from encouraged demonstrates.",
+      "cue": "distinguishing between two close terms signals sensitivity to subtle difference",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "______ as ever, the engineer rejected the simpler design for the fourth time and returned to her original drawings.",
+      "correct": "obstinate",
+      "wrongs": ["pliable", "indifferent", "cautious"],
+      "why": [
+        "'Pliable' means easily influenced, the opposite of rejecting the same suggestion four times.",
+        "'Indifferent' would mean she did not care, yet she keeps returning to her own drawings.",
+        "'Cautious' suggests care about risk, not stubborn refusal to consider an alternative."
+      ],
+      "explanation": "Four rejections and a return to the original drawings show a refusal to change course. 'Obstinate' means stubbornly refusing to change one's opinion or chosen course, which fits the repetition and the return.",
+      "cue": "four rejections and a return to the original design signal stubbornness",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "It is a ______ that the town's busiest road is named Quiet Street, a fact that visitors never tire of pointing out.",
+      "correct": "paradox",
+      "wrongs": ["consensus", "precedent", "platitude"],
+      "why": [
+        "'Consensus' means general agreement, which is not a contradiction between a name and a condition.",
+        "'Precedent' means an earlier case used as a guide, not an ironic mismatch.",
+        "'Platitude' means a flat, overused remark, while the sentence describes a contradictory fact."
+      ],
+      "explanation": "A noisy, busy road carrying the name Quiet Street is a contradiction between expectation and reality. 'Paradox' means a situation that seems self-contradictory, which is exactly what visitors enjoy pointing out.",
+      "cue": "a busy road named Quiet Street creates a contradiction between name and reality",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "A ______ approach to the shortage, the plan rented extra tankers instead of waiting for a permanent pipeline.",
+      "correct": "pragmatic",
+      "wrongs": ["dogmatic", "sentimental", "doctrinaire"],
+      "why": [
+        "'Dogmatic' means insisting on fixed principles regardless of results, while the plan adapts to a shortage.",
+        "'Sentimental' means guided by emotion, not by a practical workaround.",
+        "'Doctrinaire' means rigidly theoretical, the opposite of renting tankers now."
+      ],
+      "explanation": "Renting tankers instead of waiting for an ideal solution is a practical response to an immediate problem. 'Pragmatic' means dealing with things sensibly and realistically, which the plan's temporary fix demonstrates.",
+      "cue": "choosing a workable rental over waiting for an ideal pipeline signals practical realism",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Although ______ about his own role, he spoke at length about the work of every colleague on the team.",
+      "correct": "reticent",
+      "wrongs": ["boastful", "verbose", "candid"],
+      "why": [
+        "'Boastful' means talking proudly about oneself, the opposite of saying little about his own role.",
+        "'Verbose' means using too many words, which contradicts saying little about himself.",
+        "'Candid' means frank and open, while the sentence stresses what he withheld about himself."
+      ],
+      "explanation": "The contrast is between saying little about himself and saying much about others. 'Reticent' means not revealing one's thoughts or feelings readily, which explains his silence about his own contribution.",
+      "cue": "the contrast between little said about himself and much said about colleagues signals withholding",
+      "difficulty": "Hard"
+    },
+    {
+      "sentence": "Inspectors ______ the welds on every beam, comparing each one against the original specification.",
+      "correct": "scrutinized",
+      "wrongs": ["ignored", "endorsed", "duplicated"],
+      "why": [
+        "'Ignored' contradicts the careful comparison against the specification.",
+        "'Endorsed' means approved, but inspection involves examination before any judgment.",
+        "'Duplicated' means copied, which is not what comparing a weld to a specification means."
+      ],
+      "explanation": "Comparing every weld against its specification is close, critical examination. 'Scrutinized' means examined closely and thoroughly, which describes the inspectors' method rather than its conclusion.",
+      "cue": "comparing every weld against a specification shows close, systematic examination",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The team offered a ______ conclusion, noting that the sample was small and that a larger trial might reverse it.",
+      "correct": "tentative",
+      "wrongs": ["definitive", "reckless", "unanimous"],
+      "why": [
+        "'Definitive' would mean final and authoritative, but the team invites a larger trial to overturn it.",
+        "'Reckless' means careless of consequences, whereas the team is explicitly cautious.",
+        "'Unanimous' describes everyone agreeing, not the confidence level of a finding."
+      ],
+      "explanation": "The team hedges its result because the sample is small and a bigger trial might change it. 'Tentative' means not certain or fixed, which captures that openly provisional conclusion.",
+      "cue": "a small sample and a possible reversal make the conclusion provisional",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "Repeated delays ______ the contractor's credibility, and by spring two clients had moved their projects elsewhere.",
+      "correct": "undermined",
+      "wrongs": ["bolstered", "hastened", "documented"],
+      "why": [
+        "'Bolstered' means strengthened, the opposite of clients leaving.",
+        "'Hastened' means sped up, which does not explain lost credibility.",
+        "'Documented' means recorded, a neutral act that would not drive clients away."
+      ],
+      "explanation": "The delays preceded two clients leaving, so they weakened the contractor's standing. 'Undermined' means lessened the effectiveness or credibility of something, which matches the loss of trust.",
+      "cue": "delays followed by clients leaving show credibility being weakened",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The proposal is ______ only if the city can secure the land before the grant expires in June.",
+      "correct": "viable",
+      "wrongs": ["futile", "ornate", "superfluous"],
+      "why": [
+        "'Futile' means pointless, but the sentence describes a conditional path to success.",
+        "'Ornate' means elaborately decorated, which says nothing about whether a plan can work.",
+        "'Superfluous' means unnecessary, whereas the plan hinges on one condition being met."
+      ],
+      "explanation": "The plan can succeed, but only under a stated condition. 'Viable' means capable of working successfully, which is exactly what securing the land before June would make possible.",
+      "cue": "success hinging on one condition shows the plan can work if met",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "Scientists remain ______ of the early results, which come from a single laboratory and have not yet been repeated.",
+      "correct": "wary",
+      "wrongs": ["dismissive", "oblivious", "enamored"],
+      "why": [
+        "'Dismissive' would mean rejecting the results outright, but caution is not rejection.",
+        "'Oblivious' means unaware, while the scientists are clearly aware of the results' limits.",
+        "'Enamored' means enthusiastic, the opposite of caution about unrepeated findings."
+      ],
+      "explanation": "Results from one laboratory that have not been replicated call for caution rather than belief or rejection. 'Wary' means feeling caution about possible problems, which fits the scientists' guarded stance.",
+      "cue": "a single lab and no repetition justify caution rather than belief or rejection",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Her ______ for the project was evident in the hours she spent repairing instruments no one else would touch.",
+      "correct": "zeal",
+      "wrongs": ["apathy", "hesitation", "candor"],
+      "why": [
+        "'Apathy' means indifference, which contradicts hours of voluntary repair work.",
+        "'Hesitation' means reluctance, the opposite of eagerly taking on neglected tasks.",
+        "'Candor' means honesty, a quality of speech rather than of dedication to a project."
+      ],
+      "explanation": "Long hours spent on neglected repairs show intense enthusiasm. 'Zeal' means great energy or enthusiasm for a cause, which is the quality the sentence illustrates.",
+      "cue": "voluntary hours on neglected repairs show intense enthusiasm",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "He answered with ______, admitting that he had misread the report and that the mistake was his alone.",
+      "correct": "candor",
+      "wrongs": ["evasion", "pomposity", "hostility"],
+      "why": [
+        "'Evasion' means avoiding the question, while he admits the error directly.",
+        "'Pomposity' means self-important display, which contradicts taking personal responsibility.",
+        "'Hostility' means aggression, absent from a plain admission of fault."
+      ],
+      "explanation": "Admitting a misreading and accepting sole responsibility is direct honesty. 'Candor' means the quality of being open and sincere, which is exactly how the answer is described.",
+      "cue": "admitting the error and accepting responsibility shows open honesty",
+      "difficulty": "Medium"
+    }
+  ]
+}

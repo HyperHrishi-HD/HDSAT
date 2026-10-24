@@ -4,7 +4,7 @@
 
 HDSAT is a minimalist, responsive digital SAT and PSAT preparation application supporting:
 - **Assessments:** Digital SAT, PSAT/NMSQT, PSAT 10, and PSAT 8/9.
-- **Persistent Question Bank:** 6,970 original items (2,194 Reading and Writing, 4,776 Math) filterable by assessment, section, domain, skill, difficulty, mastery status, bookmarked state, and licensed dataset source.
+- **Persistent Question Bank:** 7,290 original items (2,514 Reading and Writing, 4,776 Math) filterable by assessment, section, domain, skill, difficulty, mastery status, bookmarked state, and licensed dataset source.
 - **Multistage Adaptive Practice Simulations:** Section-level Module 1 baseline followed by deterministic Module 2 routing (`upper` vs. `lower` difficulty tier at the 60% threshold). The bank now fills the FULL Digital SAT blueprint (54 R&W + 44 Math items, full module timers) with a fresh randomized item mix per run, and a compact bank still degrades proportionally with a transparent coverage notice.
 - **Custom Practice:** Untimed or timed custom drills with toggles to exclude previously correct questions or reserve Benchmark Simulation Set items, plus a deterministic Study Coach that targets your lowest-accuracy domains.
 - **Arcade (three rooms):** *Interactive Arena* (the Coordinate Interceptor 2D canvas game, the daily Hard Question of the Day, and three daily quests capped at 30 questions a day), *Skill Mini-Games* (Desmos Lab, Equation Sprint, Transition Match, Vocab Precision, configured before you start) and *Practice Rush* (1/3/5-minute highs-score sprints).
@@ -42,7 +42,7 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
 │   │   ├── QuestionView.tsx    # Digital testing question view (stimulus, tables, MC cross-out, SPR)
 │   │   └── ui.tsx              # Minimalist UI primitives
 │   ├── data/
-│   │   ├── questionBank.json   # Generated verified question bank (6,970 items)
+│   │   ├── questionBank.json   # Generated verified question bank (7,290 items)
 │   │   ├── flashcards.json     # Generated SM-2 study deck (46 cards)
 │   │   └── resources.json      # Curated study resource library (18 verified links)
 │   ├── lib/
@@ -190,7 +190,7 @@ HDSAT strictly prohibits scraping or re-hosting copyrighted College Board Bluebo
    Original practice questions reserved as a designated benchmark simulation set (`is_official_college_board = false`, `is_released_practice_set = true`) so students can toggle "Exclude Benchmark Simulation Set" during routine drills.
 
 **Current Verified Counts:**
-- **Questions:** 6,970 total (2,194 Reading and Writing, 4,776 Math; multiple-choice and student-produced response `spr`). Authored items come from `supabase/import/generate_bank_expansion.py`, the volume tier from `generate_bank_scale.py`, and the R2-M10 Reading & Writing expansion from `generate_bank_rw_m10.py` (Words in Context, Boundaries, Transitions, passages, Rhetorical Synthesis, quantitative-evidence figures). `merge_bank_m10.py` adds the M10 batch to the shipped bank and writes its own seed; nothing existing is rewritten.
+- **Questions:** 7,290 total (2,514 Reading and Writing, 4,776 Math; multiple-choice and student-produced response `spr`). Authored items come from `supabase/import/generate_bank_expansion.py`, the volume tier from `generate_bank_scale.py`, and the R2-M10 Reading & Writing expansion from `generate_bank_rw_m10.py` plus the 2026-10-29 second batch from `generate_bank_rw_m10b.py` (Words in Context, Boundaries, Transitions, passages, Rhetorical Synthesis, quantitative-evidence tables and charts). `merge_bank_m10.py` adds a batch to the shipped bank and writes its own seed; nothing existing is rewritten.
 - **Flashcards:** 1,804 total (1,678 vocabulary entries + 126 math formulas, `CC-BY-4.0`; the vocabulary corpus derives from the CC0-dedicated *A New Word Every Day* word list, recorded in `flashcards.json` → `vocabulary_source`, plus authored SAT words).
 - **Study Resources:** 18 verified links (College Board official specifications, Khan Academy, Desmos, OpenStax CC BY 4.0 textbooks, Purdue OWL).
 
@@ -262,5 +262,5 @@ PYTHONPATH=. .venv/bin/pytest -v
 
 ## Current Limitations
 
-- **Question Bank Size vs. Full Blueprint Length:** A full-length official Digital SAT requires 54 Reading & Writing items (27 per module) and 44 Math items (22 per module), plus an additional second-stage routing pool (81 R&W / 66 Math unique items). The bank's original, licensed pool now exceeds those minimums (2,194 R&W / 4,776 Math unique items), so every assessment fills the full blueprint with a fresh randomized mix per run and no repeats within a single test. Proportional scaling with a transparent coverage notice remains the fallback if the bank is later trimmed.
+- **Question Bank Size vs. Full Blueprint Length:** A full-length official Digital SAT requires 54 Reading & Writing items (27 per module) and 44 Math items (22 per module), plus an additional second-stage routing pool (81 R&W / 66 Math unique items). The bank's original, licensed pool now exceeds those minimums (2,514 R&W / 4,776 Math unique items), so every assessment fills the full blueprint with a fresh randomized mix per run and no repeats within a single test. Proportional scaling with a transparent coverage notice remains the fallback if the bank is later trimmed.
 - **Estimated Scaled Scores:** Adaptive simulation scores (400–1600) are practice estimates calculated from raw accuracy and Stage-2 module tier routing, not official College Board equated scores.

@@ -14,6 +14,7 @@ import type {
   LocalProfile,
   QuestionProgress,
   TestAttempt,
+  TestScoreEntry,
 } from './types';
 
 /**
@@ -45,6 +46,8 @@ export interface CloudSnapshot {
   achievements: string[];
   ownedItems: string[];
   testAttempts: TestAttempt[];
+  /** Compact scores of simulations the student deleted; the runs are gone. */
+  scoreLog: TestScoreEntry[];
   preferredExam: string;
   displayName: string;
   /** Null until the student proves they own the address with an emailed code. */
@@ -335,6 +338,29 @@ export async function fetchSnapshot(): Promise<CloudSnapshot> {
     };
   });
 
+  // The score log is optional infrastructure: a deployment whose migration has
+  // not been applied yet must still load the rest of the account.
+  let scoreLog: TestScoreEntry[] = [];
+  const scoreRes = await supabase
+    .from('test_score_log')
+    .select('*')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(200);
+  if (!scoreRes.error && Array.isArray(scoreRes.data)) {
+    scoreLog = scoreRes.data.map((row: Record<string, unknown>) => ({
+      id: String(row.attempt_ref ?? row.id),
+      createdAt: String(row.created_at ?? ''),
+      assessment: String(row.assessment ?? 'SAT'),
+      total: row.total_score === null ? null : Number(row.total_score),
+      rw: row.rw_score === null ? null : Number(row.rw_score),
+      math: row.math_score === null ? null : Number(row.math_score),
+      rawCorrect: Number(row.raw_correct ?? 0),
+      rawTotal: Number(row.raw_total ?? 0),
+      durationSeconds: Number(row.duration_seconds ?? 0),
+    }));
+  }
+
   return {
     stats: {
       hdCoins: Number(statsRow.hd_coins ?? 0),
@@ -359,6 +385,7 @@ export async function fetchSnapshot(): Promise<CloudSnapshot> {
       ? (profileRes.data.unlocked_cosmetics as string[])
       : [],
     testAttempts,
+    scoreLog,
     preferredExam: String(profileRes.data?.preferred_exam ?? 'SAT'),
     displayName: String(profileRes.data?.display_name ?? 'Student'),
     emailVerifiedAt: (profileRes.data?.email_verified_at as string | null) ?? null,
@@ -854,6 +881,23 @@ export async function recordTestCloud(
     if (responseError) throw responseError;
   }
   return { id: data.id as string, skippedResponses, lightLimited: false };
+}
+
+/**
+ * Deletes one saved simulation. The database trigger writes the compact score
+ * line before the row and its responses disappear, so the log stays complete
+ * no matter where the delete is started from.
+ */
+export async function deleteTestAttemptCloud(attemptId: string): Promise<void> {
+  const supabase = client();
+  const userId = await getUserId();
+  if (!userId) throw new Error('Not signed in.');
+  const { error } = await supabase
+    .from('test_attempts')
+    .delete()
+    .eq('user_id', userId)
+    .eq('client_session_id', attemptId);
+  if (error) throw error;
 }
 
 /**

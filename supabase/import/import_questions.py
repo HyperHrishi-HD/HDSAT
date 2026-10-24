@@ -1515,6 +1515,12 @@ def load_expansion(base_dir=None):
     if os.path.exists(m10_path):
         with open(m10_path, "r", encoding="utf-8") as fh:
             questions = questions + json.load(fh).get("questions", [])
+    # Second R&W batch (R2-M10 continuation): quantitative figures plus more
+    # passages, synthesis, transitions, boundaries and words in context.
+    m10b_path = os.path.join(exp_dir, "extra_rw_m10b.json")
+    if os.path.exists(m10b_path):
+        with open(m10b_path, "r", encoding="utf-8") as fh:
+            questions = questions + json.load(fh).get("questions", [])
     if os.path.exists(c_path):
         with open(c_path, "r", encoding="utf-8") as fh:
             cards = json.load(fh).get("cards", [])

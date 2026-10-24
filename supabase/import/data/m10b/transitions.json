@@ -1,0 +1,719 @@
+{
+  "items": [
+    {
+      "before": "The first batches of the new insulation lost almost no heat in laboratory tests",
+      "after": "Outdoor trials in a wet climate showed that its performance fell by nearly a third.",
+      "correct": "However",
+      "wrongs": ["Therefore", "For example", "In addition"],
+      "why": [
+        "The second sentence does not follow as a consequence of the first, so a causal transition is wrong.",
+        "The outdoor result is a conflicting finding, not an instance of the laboratory result.",
+        "The two results point in opposite directions, so an additive transition would misstate the relation."
+      ],
+      "explanation": "'However' marks the contrast between strong laboratory performance and much weaker outdoor performance; the other options claim a cause, an example or an addition that the sentences do not support.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "A 2019 review found that children raised with two languages switched tasks no faster than their peers",
+      "after": "A later study of 1,200 adolescents reported a small but consistent advantage on the same tasks.",
+      "correct": "By contrast",
+      "wrongs": ["Consequently", "For instance", "Similarly"],
+      "why": [
+        "The later study does not follow from the earlier review, so a result transition is wrong.",
+        "The later study is a separate investigation, not an example of the first finding.",
+        "The two studies reach different conclusions, so 'Similarly' would hide the disagreement."
+      ],
+      "explanation": "'By contrast' signals that the later study conflicts with the earlier review; the other choices would present the disagreement as a consequence, an example or an agreement.",
+      "difficulty": "Hard"
+    },
+    {
+      "before": "Samples of the alloy resisted corrosion for more than a decade in dry air",
+      "after": "The same alloy developed deep pits within months when exposed to salt spray.",
+      "correct": "In contrast",
+      "wrongs": ["Thus", "Namely", "Moreover"],
+      "why": [
+        "The salt-spray result is not a consequence of the dry-air result, so 'Thus' is wrong.",
+        "The second sentence reports a different outcome rather than restating the first.",
+        "The sentences describe opposing outcomes, so an additive transition would be misleading."
+      ],
+      "explanation": "'In contrast' sets the two exposures against each other: the alloy lasted in dry air and failed quickly in salt spray. The other options wrongly suggest cause, restatement or addition.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The 1985 glacier survey recorded a terminus well below the ridge",
+      "after": "Satellite images from 2020 place the terminus almost two kilometers farther up the valley.",
+      "correct": "Since then",
+      "wrongs": ["Nevertheless", "For example", "In other words"],
+      "why": [
+        "'Nevertheless' would imply an unexpected exception, but the later measurement simply continues the record.",
+        "The satellite images are not an example of the 1985 survey; they are a later measurement.",
+        "The second sentence adds new information rather than restating the first."
+      ],
+      "explanation": "'Since then' places the satellite measurement after the 1985 survey in time, which is exactly the relation between the two sentences. The other transitions signal contrast, example or restatement.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The manual claims that the sensor needs no calibration after installation",
+      "after": "The manufacturer's own field notes describe a monthly zero-point check.",
+      "correct": "However",
+      "wrongs": ["Accordingly", "For instance", "In addition"],
+      "why": [
+        "'Accordingly' would present the field notes as a consequence of the manual's claim, which they are not.",
+        "The field notes are a conflicting document, not an example of the manual's statement.",
+        "The two documents disagree, so an additive transition would obscure the conflict."
+      ],
+      "explanation": "'However' highlights the contradiction between the manual's claim and the manufacturer's own instructions. The other choices would wrongly frame the notes as a result, an example or an extra point.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Street trees lowered afternoon surface temperatures in every block the team measured",
+      "after": "The cooling effect disappeared at night, when the canopy trapped heat near the ground.",
+      "correct": "On the other hand",
+      "wrongs": ["As a result", "For example", "In the same way"],
+      "why": [
+        "The nighttime result is not caused by the daytime cooling, so a result transition is wrong.",
+        "The nighttime measurement is not an example of afternoon cooling; it is the opposite pattern.",
+        "The two findings run in different directions, so 'In the same way' is inaccurate."
+      ],
+      "explanation": "'On the other hand' introduces the opposing nighttime pattern after the daytime benefit. The other options would make the night result a consequence, an example or a parallel finding.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The harbor's outer wall has survived two thousand years of storms",
+      "after": "The inner basin silted up within three centuries of its construction.",
+      "correct": "Yet",
+      "wrongs": ["Therefore", "For example", "Likewise"],
+      "why": [
+        "The silting does not follow from the wall's survival, so a causal transition is wrong.",
+        "The fate of the inner basin is not an illustration of the outer wall's durability.",
+        "The two outcomes differ sharply, so 'Likewise' would misrepresent them."
+      ],
+      "explanation": "'Yet' contrasts the durable outer wall with the much shorter life of the inner basin. The other choices would wrongly present the contrast as a cause, an example or a similarity.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "Colonies with young queens produced more honey in the first season",
+      "after": "Those same colonies were far more likely to swarm the following spring.",
+      "correct": "Still",
+      "wrongs": ["Because of this", "For instance", "Equally"],
+      "why": [
+        "The swarming is a drawback that accompanies the gain, not a consequence of it.",
+        "The swarming statistic is not an example of honey production.",
+        "The two results are different in kind, so 'Equally' would overstate their similarity."
+      ],
+      "explanation": "'Still' concedes the early advantage while introducing a later drawback. The other options would treat swarming as a result, an example or an equivalent benefit.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The telescope's mirror was polished to a tolerance of a few nanometers",
+      "after": "Its first images were blurred by a defect in the mounting, not in the glass.",
+      "correct": "Even so",
+      "wrongs": ["As a result", "For example", "In addition"],
+      "why": [
+        "The blurred images were caused by the mounting, not by the polishing, so 'As a result' is wrong.",
+        "The defect is not an example of precise polishing; it is a separate problem.",
+        "The second sentence reports a problem, so adding it as a further benefit misreads it."
+      ],
+      "explanation": "'Even so' concedes that the mirror was made precisely and then reports a failure elsewhere. The other transitions would wrongly link the blurring to the polishing or treat it as an added advantage.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Membership at the city's science museum rose sharply after the new wing opened",
+      "after": "Donations to its education fund declined over the same period.",
+      "correct": "Nevertheless",
+      "wrongs": ["Consequently", "For instance", "Similarly"],
+      "why": [
+        "The decline in donations is not a consequence of rising membership, so 'Consequently' is wrong.",
+        "The donation figure is not an example of membership growth.",
+        "The two trends move in opposite directions, so 'Similarly' is inaccurate."
+      ],
+      "explanation": "'Nevertheless' contrasts the membership increase with the simultaneous decline in donations. The other choices would present the decline as a result, an example or a parallel trend.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Participants who napped for twenty minutes recalled more words the next morning",
+      "after": "Their reaction times on a separate task were no better than those of the control group.",
+      "correct": "However",
+      "wrongs": ["Therefore", "For example", "Moreover"],
+      "why": [
+        "The lack of improvement in reaction time is not caused by the better recall, so 'Therefore' is wrong.",
+        "The reaction-time result is a different measure, not an example of recall.",
+        "The second result limits the first, so an additive transition would overstate the benefit."
+      ],
+      "explanation": "'However' marks the limit of the nap's benefit: memory improved while reaction time did not. The other options would wrongly present that limit as a consequence, an example or an additional gain.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The river restoration removed the concrete banks and replanted native sedges",
+      "after": "Fish counts in the restored reach have barely changed in five years.",
+      "correct": "Yet",
+      "wrongs": ["Thus", "For example", "In addition"],
+      "why": [
+        "The unchanged fish counts do not follow from the restoration work, so 'Thus' is wrong.",
+        "The fish counts are an outcome, not an example of the replanting.",
+        "The second sentence reports a disappointing result, so adding it as another gain misreads it."
+      ],
+      "explanation": "'Yet' signals the gap between the restoration effort and the disappointing fish counts. The other transitions would treat the outcome as a consequence, an example or an extra benefit.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The coral nursery raised fragments on rope frames suspended above the seabed",
+      "after": "It kept a second set of fragments in cooler water to test heat tolerance.",
+      "correct": "In addition",
+      "wrongs": ["However", "Therefore", "For instance"],
+      "why": [
+        "The second activity does not contradict the first, so 'However' is wrong.",
+        "The cooler-water set was a deliberate comparison, not a consequence of the frames.",
+        "The second set is a separate experiment rather than an example of the rope frames."
+      ],
+      "explanation": "'In addition' adds the second, parallel experiment to the first. The other choices would wrongly frame it as a contrast, a result or an example.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The typeface was designed for readers with low vision",
+      "after": "Its numerals were drawn to stay distinct at very small sizes.",
+      "correct": "Moreover",
+      "wrongs": ["Nevertheless", "Therefore", "By contrast"],
+      "why": [
+        "The numeral design does not contradict the overall design goal, so 'Nevertheless' is wrong.",
+        "Distinct numerals are part of the design, not a consequence of it.",
+        "The two features work together, so 'By contrast' would invent a conflict."
+      ],
+      "explanation": "'Moreover' adds a second feature that supports the same design goal. The other options would wrongly suggest contrast, cause or opposition between the two choices.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The vineyard's soil sensors report moisture every fifteen minutes",
+      "after": "A weather station on the ridge records wind speed and humidity.",
+      "correct": "In addition",
+      "wrongs": ["However", "So", "For instance"],
+      "why": [
+        "The two instruments do not conflict, so 'However' is wrong.",
+        "The weather station was installed alongside the sensors, not because of them.",
+        "The weather station is a separate instrument, not an example of a soil sensor."
+      ],
+      "explanation": "'In addition' adds the weather station to the list of instruments monitoring the vineyard. The other choices would wrongly imply contrast, causation or exemplification.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Satellite tags revealed that the birds crossed the desert in a single night",
+      "after": "Ground observers found that the same birds rested for two days before continuing.",
+      "correct": "Meanwhile",
+      "wrongs": ["Therefore", "For example", "Nevertheless"],
+      "why": [
+        "The resting period is not a consequence of the night crossing, so 'Therefore' is wrong.",
+        "The resting observation is not an example of the crossing.",
+        "The two findings describe different stages of the journey, not a contradiction."
+      ],
+      "explanation": "'Meanwhile' sets the ground observation alongside the satellite finding as a parallel piece of evidence. The other transitions would wrongly suggest cause, example or concession.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The kiln was fired in a reducing atmosphere to deepen the glaze",
+      "after": "Each vessel was rotated a quarter turn every hour so that it would not slump.",
+      "correct": "At the same time",
+      "wrongs": ["As a result", "In contrast", "For instance"],
+      "why": [
+        "The rotation was a separate precaution, not an effect of the reducing atmosphere.",
+        "The two procedures were both part of the firing, so they do not contrast.",
+        "The rotation is not an example of a firing atmosphere."
+      ],
+      "explanation": "'At the same time' adds a second procedure carried out during the same firing. The other options would wrongly present it as a result, a contrast or an example.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The new cycle lanes cut injury rates along the avenue by half",
+      "after": "Secure parking at six transit stations gave riders a place to leave their bikes overnight.",
+      "correct": "In addition",
+      "wrongs": ["However", "Therefore", "For example"],
+      "why": [
+        "The parking does not contradict the safety improvement, so 'However' is wrong.",
+        "The parking was a separate investment, not a consequence of the lanes.",
+        "The parking is a complementary measure, not an example of a cycle lane."
+      ],
+      "explanation": "'In addition' presents the parking as another measure introduced alongside the lanes. The other choices would wrongly make it a contrast, a result or an illustration.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The archive digitised its photographic collection at high resolution",
+      "after": "It recorded an oral history interview with every surviving photographer.",
+      "correct": "Additionally",
+      "wrongs": ["However", "As a result", "For example"],
+      "why": [
+        "The interviews do not conflict with the digitisation, so 'However' is wrong.",
+        "The interviews were a separate project, not an effect of scanning the photographs.",
+        "The interviews are not an example of digitisation; they are a different record."
+      ],
+      "explanation": "'Additionally' adds a second preservation project to the first. The other transitions would wrongly frame the interviews as a contrast, a consequence or an example.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Thin-film panels can be printed onto flexible backing",
+      "after": "They perform well in diffuse light, which makes them useful on overcast days.",
+      "correct": "Moreover",
+      "wrongs": ["Nevertheless", "Consequently", "For example"],
+      "why": [
+        "The second sentence supports the first rather than contradicting it.",
+        "The performance in diffuse light is a property of the panels, not a result of the flexible backing.",
+        "The performance claim is not an example of printing on flexible backing."
+      ],
+      "explanation": "'Moreover' adds a second advantage of thin-film panels. The other choices would wrongly present it as a contrast, a consequence or an example.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The bridge's expansion joints had not been replaced in thirty years",
+      "after": "Engineers closed two lanes for emergency repairs after the first hard freeze.",
+      "correct": "As a result",
+      "wrongs": ["However", "For example", "In addition"],
+      "why": [
+        "The repairs were a consequence of the worn joints, not a contrast to them.",
+        "The lane closures are an outcome, not an example of the joints.",
+        "The closures are not an additional benefit, so 'In addition' misreads the relation."
+      ],
+      "explanation": "'As a result' links the overdue maintenance to the emergency closures that followed. The other transitions would wrongly present the outcome as a contrast, an example or an extra point.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The hatchery lost its water supply when the intake pipe froze",
+      "after": "Staff moved forty thousand juvenile salmon to a backup tank within six hours.",
+      "correct": "Consequently",
+      "wrongs": ["Nevertheless", "For instance", "Meanwhile"],
+      "why": [
+        "The move was a direct response to the lost supply, not a concession to it.",
+        "The move was an action taken after the failure, not an example of the failure.",
+        "The two events are causally linked, so 'Meanwhile' would hide the connection."
+      ],
+      "explanation": "'Consequently' marks the staff's rapid move as the result of losing the water supply. The other options would wrongly suggest concession, example or mere simultaneity.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Fewer than one in five respondents had ever used the emergency app",
+      "after": "The county redesigned the interface and advertised it through libraries.",
+      "correct": "Therefore",
+      "wrongs": ["However", "For example", "Likewise"],
+      "why": [
+        "The redesign responds to the low use rather than opposing it.",
+        "The redesign is a response, not an example of low use.",
+        "The two actions are cause and response, not parallel cases."
+      ],
+      "explanation": "'Therefore' presents the redesign as the county's response to low use. The other choices would wrongly frame it as a contrast, an example or a parallel situation.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The manuscript had been stored in a damp cellar for decades",
+      "after": "Conservators spent four months removing mould from the margins.",
+      "correct": "As a result",
+      "wrongs": ["In contrast", "For example", "In addition"],
+      "why": [
+        "The mould removal was caused by the damp storage, not a contrast to it.",
+        "The conservation work is an outcome, not an example of cellar storage.",
+        "The second sentence reports necessary repair, not an added benefit."
+      ],
+      "explanation": "'As a result' connects the damp storage to the months of conservation work. The other transitions would wrongly suggest contrast, exemplification or addition.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The turbine blades accumulated ice faster than the de-icing system could clear it",
+      "after": "Operators shut the array down during the storm.",
+      "correct": "So",
+      "wrongs": ["Yet", "For example", "Likewise"],
+      "why": [
+        "The shutdown was caused by the icing, not an exception to it.",
+        "Shutting down is a response, not an example of ice accumulation.",
+        "The shutdown is a consequence, not a parallel case."
+      ],
+      "explanation": "'So' presents the shutdown as the consequence of ice building faster than the system could remove it. The other options would wrongly signal contrast, example or similarity.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "Demand for the clinic's evening appointments doubled in a year",
+      "after": "It hired two more nurses and extended its hours to nine.",
+      "correct": "In response",
+      "wrongs": ["By contrast", "For instance", "Similarly"],
+      "why": [
+        "The new hires answer the demand rather than contrast with it.",
+        "The new hires are a response, not an example of demand.",
+        "The measures are a reaction to the demand, not a parallel trend."
+      ],
+      "explanation": "'In response' frames the hiring and longer hours as the clinic's answer to rising demand. The other choices would wrongly suggest contrast, example or similarity.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The seed vault's cooling system failed during a regional power cut",
+      "after": "Staff drilled a second, independent generator the following summer.",
+      "correct": "As a result",
+      "wrongs": ["However", "For example", "Equally"],
+      "why": [
+        "The new generator was a consequence of the failure, not a contrast to it.",
+        "The generator is a response, not an example of the power cut.",
+        "The two events are cause and remedy, not equivalent cases."
+      ],
+      "explanation": "'As a result' links the cooling failure to the decision to install an independent generator. The other options would misstate the relation as contrast, example or equivalence.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The software update removed an outdated security certificate",
+      "after": "Several older devices could no longer connect to the network.",
+      "correct": "Consequently",
+      "wrongs": ["Nevertheless", "For example", "In addition"],
+      "why": [
+        "The connection failures were caused by the removed certificate, not a concession.",
+        "The failures are an outcome, not an example of the update.",
+        "The failures are a side effect, not an extra benefit."
+      ],
+      "explanation": "'Consequently' marks the lost connections as the result of removing the certificate. The other transitions would wrongly suggest concession, exemplification or addition.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "Several deep-sea species survive on chemicals rather than sunlight",
+      "after": "Tube worms at hydrothermal vents feed through bacteria that oxidise hydrogen sulfide.",
+      "correct": "For example",
+      "wrongs": ["However", "Therefore", "In addition"],
+      "why": [
+        "The tube worms illustrate the claim rather than contradicting it.",
+        "The tube worms are an illustration, not a consequence of the general statement.",
+        "The example supports a claim already made, so 'In addition' misses the relation."
+      ],
+      "explanation": "'For example' introduces the tube worms as a specific case of chemical-based survival. The other options would wrongly signal contrast, causation or a separate additional point.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Early maps of the region placed rivers that later surveys could not find",
+      "after": "A 1740 chart shows a channel running west from the delta that no modern map includes.",
+      "correct": "For instance",
+      "wrongs": ["As a result", "By contrast", "Moreover"],
+      "why": [
+        "The 1740 chart is an illustration, not a consequence of the general claim.",
+        "The chart supports the claim about early maps rather than opposing it.",
+        "The chart is an example of the claim, not a new and separate point."
+      ],
+      "explanation": "'For instance' offers the 1740 chart as a concrete case of a mapped river that later surveys could not find. The other choices would misread it as a result, a contrast or an addition.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Some plants defend themselves chemically against grazing insects",
+      "after": "Tomato leaves release a compound that slows caterpillar growth when the leaves are damaged.",
+      "correct": "For example",
+      "wrongs": ["However", "Thus", "Similarly"],
+      "why": [
+        "The tomato case supports the general claim rather than contradicting it.",
+        "The tomato case is an instance, not a consequence of the general statement.",
+        "The tomato case is offered as evidence, not as a parallel separate claim."
+      ],
+      "explanation": "'For example' presents the tomato's chemical response as a specific instance of plant defence. The other transitions would wrongly suggest contrast, cause or similarity.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The orchestra's archive contains instruments that fell out of use centuries ago",
+      "after": "A curved cornet from 1790 sits in the collection beside a serpent and a lute.",
+      "correct": "For instance",
+      "wrongs": ["Therefore", "Nevertheless", "In addition"],
+      "why": [
+        "The instruments are evidence for the claim, not a consequence of it.",
+        "The instruments support the claim rather than conceding anything against it.",
+        "The instruments are examples of the claim, not a separate added topic."
+      ],
+      "explanation": "'For instance' introduces the cornet, serpent and lute as examples of obsolete instruments in the archive. The other options would wrongly signal cause, concession or addition.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Cities have begun to cool public spaces with reflective surfaces",
+      "after": "A pilot project in Los Angeles repainted school roofs and recorded a five-degree drop in playground temperature.",
+      "correct": "For example",
+      "wrongs": ["However", "Consequently", "Likewise"],
+      "why": [
+        "The Los Angeles project supports the general claim instead of opposing it.",
+        "The project is an illustration, not a result of the general trend.",
+        "The project is a specific case, not a parallel separate trend."
+      ],
+      "explanation": "'For example' introduces the Los Angeles pilot as a specific case of cooling with reflective surfaces. The other choices would misstate it as contrast, consequence or a separate parallel.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The survey found that students rarely used the library's online tutorials",
+      "after": "Only eleven percent of first-year students opened one during their first term.",
+      "correct": "For example",
+      "wrongs": ["Therefore", "In contrast", "Moreover"],
+      "why": [
+        "The statistic supports the finding rather than following from it as a separate result.",
+        "The statistic confirms the finding instead of opposing it.",
+        "The statistic is evidence for the claim, not an additional unrelated point."
+      ],
+      "explanation": "'For example' presents the eleven-percent figure as evidence of the low use. The other transitions would wrongly frame the statistic as a consequence, a contrast or an addition.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Many desert animals avoid the heat by being active at night",
+      "after": "The kangaroo rat leaves its burrow only after the sand has cooled.",
+      "correct": "For instance",
+      "wrongs": ["Still", "As a result", "In addition"],
+      "why": [
+        "The kangaroo rat supports the general claim rather than conceding a point.",
+        "The behaviour is an example, not a consequence of the general statement.",
+        "The example illustrates the claim instead of adding a new topic."
+      ],
+      "explanation": "'For instance' gives the kangaroo rat as a concrete example of nighttime activity. The other options would wrongly signal concession, causation or addition.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The coating is expensive to apply and requires a trained crew",
+      "after": "It has already paid for itself in reduced repainting on two bridges.",
+      "correct": "Even so",
+      "wrongs": ["Therefore", "For example", "In addition"],
+      "why": [
+        "The payback is a counterweight to the cost, not a consequence of it.",
+        "The payback is not an example of the coating's expense.",
+        "The second sentence offsets the first rather than adding a similar point."
+      ],
+      "explanation": "'Even so' concedes the high cost and then reports the savings that outweigh it. The other choices would wrongly present the payback as a result, an example or another cost.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The theory explains most of the observed data",
+      "after": "It cannot account for the unusually warm winters of the 1930s.",
+      "correct": "Nevertheless",
+      "wrongs": ["Consequently", "For instance", "Moreover"],
+      "why": [
+        "The unexplained winters are a limitation, not a consequence of the theory's success.",
+        "The warm winters are a counterexample, not an example of the theory's explanatory power.",
+        "The second sentence limits the theory rather than adding support for it."
+      ],
+      "explanation": "'Nevertheless' introduces a limitation that stands against the theory's broad success. The other transitions would wrongly present the exception as a result, an example or additional support.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The first edition sold fewer than five hundred copies",
+      "after": "It is now regarded as the founding text of the field.",
+      "correct": "Nonetheless",
+      "wrongs": ["As a result", "For example", "Similarly"],
+      "why": [
+        "The later reputation was not caused by the poor sales.",
+        "The later reputation is a reversal, not an example of weak sales.",
+        "The two facts point in opposite directions, so 'Similarly' is wrong."
+      ],
+      "explanation": "'Nonetheless' contrasts the book's poor initial sales with its later standing. The other choices would wrongly suggest cause, example or similarity.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The trail is closed to vehicles and has no cell reception",
+      "after": "It draws more than ten thousand hikers each summer.",
+      "correct": "Still",
+      "wrongs": ["Therefore", "For example", "In addition"],
+      "why": [
+        "The popularity is not a consequence of the trail's isolation.",
+        "The visitor number is a contrast to the drawbacks, not an example of them.",
+        "The second sentence sets a benefit against the drawbacks rather than adding a similar one."
+      ],
+      "explanation": "'Still' concedes the trail's drawbacks and then reports its popularity. The other options would wrongly present the visitors as a result, an example or an additional drawback.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The new schedule reduced waiting times at the clinic",
+      "after": "Some patients found the earlier appointments easier to reach by bus.",
+      "correct": "That said",
+      "wrongs": ["Thus", "For instance", "Likewise"],
+      "why": [
+        "The bus complaint is a qualification, not a consequence of shorter waits.",
+        "The complaint is a drawback, not an example of reduced waiting.",
+        "The complaint qualifies the improvement rather than paralleling it."
+      ],
+      "explanation": "'That said' concedes a drawback after reporting the improvement. The other choices would wrongly suggest cause, exemplification or similarity.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The archive's catalogue is available online in full",
+      "after": "Most of its photographs can be seen only by visiting in person.",
+      "correct": "However",
+      "wrongs": ["Therefore", "For example", "In addition"],
+      "why": [
+        "The limited access is not a consequence of the online catalogue.",
+        "The photographs are not an example of the catalogue; they are a separate restriction.",
+        "The second sentence limits the first rather than adding a similar benefit."
+      ],
+      "explanation": "'However' marks the limit on what the online catalogue offers. The other options would wrongly present the restriction as a result, an example or an added convenience.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The crew pumped the flooded hold dry and replaced the damaged frames",
+      "after": "They applied three coats of primer before the hull was returned to the water.",
+      "correct": "Next",
+      "wrongs": ["However", "For example", "Therefore"],
+      "why": [
+        "The priming continues the repair sequence rather than contrasting with it.",
+        "The priming is a later step, not an example of pumping the hold.",
+        "The priming is the next step in the work, not a consequence of the frames."
+      ],
+      "explanation": "'Next' places the priming after the pumping and frame replacement in the repair sequence. The other choices would wrongly signal contrast, example or causation.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The experimenter recorded the baseline reading for ten minutes",
+      "after": "She introduced the tracer dye and continued sampling every thirty seconds.",
+      "correct": "Then",
+      "wrongs": ["Nevertheless", "For instance", "In addition"],
+      "why": [
+        "The dye step is the next action, not a concession to the baseline reading.",
+        "The dye step is not an example of a baseline reading.",
+        "The dye step follows in time rather than adding a separate point."
+      ],
+      "explanation": "'Then' marks the dye injection as the step that followed the baseline reading. The other transitions would wrongly signal concession, example or addition.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The first phase mapped the cave's upper passages",
+      "after": "The second phase surveyed the flooded chambers below.",
+      "correct": "Afterward",
+      "wrongs": ["However", "For example", "Likewise"],
+      "why": [
+        "The second phase continues the work rather than opposing the first.",
+        "The flooded chambers are not an example of the upper passages.",
+        "The phases are sequential, not parallel independent cases."
+      ],
+      "explanation": "'Afterward' places the second survey after the first mapping phase. The other choices would wrongly signal contrast, example or a parallel comparison.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The committee published its draft for public comment in March",
+      "after": "It held six hearings across the county before revising the text.",
+      "correct": "Subsequently",
+      "wrongs": ["Nevertheless", "For instance", "In contrast"],
+      "why": [
+        "The hearings followed the draft rather than conceding anything against it.",
+        "The hearings are a later stage, not an example of the draft.",
+        "The hearings continue the process rather than contrasting with it."
+      ],
+      "explanation": "'Subsequently' places the hearings after the draft's publication in the process. The other options would wrongly suggest concession, exemplification or contrast.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The seedlings were hardened in a shaded frame for two weeks",
+      "after": "They were transplanted into the field once the last frost had passed.",
+      "correct": "Later",
+      "wrongs": ["However", "For example", "Therefore"],
+      "why": [
+        "Transplanting continues the sequence rather than contrasting with hardening.",
+        "Transplanting is the next stage, not an example of hardening.",
+        "Transplanting follows in time, not because of the hardening."
+      ],
+      "explanation": "'Later' marks transplanting as the stage that followed hardening. The other choices would wrongly signal contrast, example or cause.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The tribunal heard closing arguments in the morning",
+      "after": "It issued a written ruling the following week.",
+      "correct": "After that",
+      "wrongs": ["By contrast", "For instance", "In addition"],
+      "why": [
+        "The ruling followed the arguments rather than contrasting with them.",
+        "The ruling is a later step, not an example of the arguments.",
+        "The ruling comes next in time, not as an additional separate point."
+      ],
+      "explanation": "'After that' places the written ruling after the closing arguments. The other transitions would wrongly signal contrast, example or addition.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The drug lowered blood pressure in the trial's first month",
+      "after": "The effect had largely disappeared by the end of the year.",
+      "correct": "However",
+      "wrongs": ["Therefore", "For example", "In addition"],
+      "why": [
+        "The fading effect does not follow from the early success as a consequence.",
+        "The later result is not an example of the early reduction.",
+        "The second finding undercuts the first, so an additive transition is wrong."
+      ],
+      "explanation": "'However' contrasts the early benefit with its later disappearance. The other choices would wrongly treat the loss of effect as a result, an example or an added benefit.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "The survey asked how often residents visited the park",
+      "after": "It also recorded how they travelled there.",
+      "correct": "In addition",
+      "wrongs": ["However", "Therefore", "For instance"],
+      "why": [
+        "The travel question does not contradict the first question.",
+        "The travel question was part of the design, not a consequence of the first.",
+        "The travel question is a second item, not an example of the first."
+      ],
+      "explanation": "'In addition' adds the travel question to the survey's scope. The other options would wrongly signal contrast, cause or exemplification.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The ferry's engine failed midway across the strait",
+      "after": "Passengers waited four hours for a relief vessel.",
+      "correct": "As a result",
+      "wrongs": ["However", "For example", "Likewise"],
+      "why": [
+        "The wait was caused by the engine failure, not a contrast to it.",
+        "The wait is an outcome, not an example of the failure.",
+        "The wait is a consequence, not a parallel case."
+      ],
+      "explanation": "'As a result' links the engine failure to the long wait for a relief vessel. The other transitions would wrongly suggest contrast, example or similarity.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "Some fungi form partnerships with the roots of a single tree species",
+      "after": "The birch bolete attaches only to birches.",
+      "correct": "For example",
+      "wrongs": ["However", "Therefore", "In addition"],
+      "why": [
+        "The bolete supports the general claim rather than opposing it.",
+        "The bolete is an instance, not a consequence of the general statement.",
+        "The bolete illustrates the claim instead of adding a new topic."
+      ],
+      "explanation": "'For example' introduces the birch bolete as a specific case of a fungus tied to one tree species. The other choices would wrongly signal contrast, cause or addition.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The proposal would save the city money over twenty years",
+      "after": "Its upfront cost exceeds the current budget.",
+      "correct": "Even so",
+      "wrongs": ["Therefore", "For instance", "In addition"],
+      "why": [
+        "The high upfront cost resists the savings rather than following from them.",
+        "The cost is a drawback, not an example of the savings.",
+        "The second sentence offsets the first rather than adding a similar point."
+      ],
+      "explanation": "'Even so' concedes the long-term savings and then sets the immediate cost against them. The other options would wrongly present the cost as a result, an example or another saving.",
+      "difficulty": "Medium"
+    },
+    {
+      "before": "Workers removed the old track bed and graded the surface",
+      "after": "They laid the new rails in sections during overnight closures.",
+      "correct": "Next",
+      "wrongs": ["However", "For example", "Therefore"],
+      "why": [
+        "Laying the rails continues the sequence rather than contrasting with it.",
+        "Laying the rails is a later stage, not an example of grading.",
+        "Laying the rails follows in time, not because of the grading."
+      ],
+      "explanation": "'Next' places the rail laying after removing the track bed and grading. The other transitions would wrongly signal contrast, example or cause.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The novel was dismissed by reviewers when it appeared",
+      "after": "It has never gone out of print.",
+      "correct": "Yet",
+      "wrongs": ["Therefore", "For example", "Similarly"],
+      "why": [
+        "The book's lasting availability was not caused by the dismissive reviews.",
+        "The long print run is a reversal, not an example of the reviews.",
+        "The two facts point in opposite directions, so 'Similarly' is wrong."
+      ],
+      "explanation": "'Yet' contrasts the early dismissal with the novel's enduring availability. The other choices would wrongly suggest cause, example or similarity.",
+      "difficulty": "Easy"
+    },
+    {
+      "before": "The orchard's irrigation line was damaged by construction",
+      "after": "The grower lost most of the young trees that summer.",
+      "correct": "Consequently",
+      "wrongs": ["However", "For example", "Equally"],
+      "why": [
+        "The loss was caused by the damaged line, not a contrast to it.",
+        "The loss is an outcome, not an example of the damage.",
+        "The loss is a consequence, not an equivalent event."
+      ],
+      "explanation": "'Consequently' marks the lost trees as the result of the damaged irrigation line. The other choices would wrongly signal contrast, example or equivalence.",
+      "difficulty": "Easy"
+    }
+  ]
+}

@@ -133,8 +133,12 @@ code { font-family: var(--mono); background: var(--surface-2); padding: 1px 5px;
   background: linear-gradient(135deg, var(--accent), #1d4ed8);
   color: #fff;
   display: grid; place-items: center; font-weight: 700;
+  flex-shrink: 0;
   box-shadow: 0 2px 8px rgba(31, 95, 208, 0.25);
 }
+/* The SVG is a block box, so the letter is centred on the tile rather than on
+   a text baseline. */
+.brand-mark svg { display: block; }
 .brand strong { display: block; font-size: 1rem; letter-spacing: 0.04em; }
 .brand em { font-style: normal; color: var(--muted); font-size: 0.75rem; }
 .nav { display: flex; flex-direction: column; gap: 3px; }
@@ -1819,35 +1823,57 @@ mark.bb-hl[data-has-note='true']::after {
   text-transform: uppercase;
   vertical-align: 1px;
 }
-.welcome-banner {
-  margin: 14px auto 4px;
-  width: calc(100% - 44px);
-  max-width: 1120px;
-  padding: 16px 18px;
-  border: 1px solid #cfd8e6;
-  border-left: 4px solid #2557d6;
-  border-radius: 10px;
-  background: #f7f9fd;
-  color: #28313d;
-  font-size: 0.9rem;
-  line-height: 1.55;
+/* Guest progress nudge: one thin amber island, not a card. */
+.sync-nudge {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 8px 16px;
+  gap: 6px 14px;
+  margin: 0 0 12px;
+  padding: 7px 10px 7px 12px;
+  border: 1px solid #f0d38a;
+  border-radius: 10px;
+  background: #fffaeb;
+  color: #4a3a12;
+  font-size: 0.84rem;
+  line-height: 1.45;
 }
-.welcome-banner em { font-style: italic; }
-.welcome-actions {
+.sync-nudge-text { display: inline-flex; align-items: center; gap: 7px; min-width: 0; }
+.sync-nudge-text .ui-icon { color: #b45309; flex-shrink: 0; }
+.sync-nudge-text strong { font-weight: 650; }
+.sync-nudge-actions { display: inline-flex; align-items: center; gap: 6px; }
+.sync-nudge .btn { padding: 4px 10px; font-size: 0.78rem; }
+.sync-nudge-close {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #7a6224;
+  font-size: 1.15rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.sync-nudge-close:hover { background: #f6e6b8; color: #4a3a12; }
+.sync-nudge-close:focus-visible { outline: 2px solid #b45309; outline-offset: 1px; }
+
+/* Inline confirmation for deleting a saved simulation. */
+.delete-confirm {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-}
-@media (min-width: 1500px) {
-  .welcome-banner { max-width: 1320px; }
-}
-@media (min-width: 1900px) {
-  .welcome-banner { max-width: 1440px; }
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px 14px;
+  margin-top: 10px;
+  padding: 9px 12px;
+  border: 1px solid #f0c8c8;
+  border-radius: 9px;
+  background: #fff7f7;
+  color: #5b2323;
+  font-size: 0.85rem;
 }
 
 /* Unified account form: optional new-account details stay out of the way. */
@@ -3317,7 +3343,7 @@ mark.bb-hl[data-has-note='true']::after {
 /* The tile is a blue gradient, so the H must be white. Inheriting the accent
    colour painted blue on blue and read as a half-drawn letter. */
 .welcome-brand .brand-mark {
-  display: inline-flex; color: #fff;
+  display: grid; place-items: center; color: #fff;
   box-shadow: 0 4px 14px rgba(31, 95, 208, 0.32), inset 0 0 0 1px rgba(255, 255, 255, 0.16);
 }
 .welcome-brand .brand-mark svg { color: #fff; }
@@ -3437,16 +3463,19 @@ mark.bb-hl[data-has-note='true']::after {
   50% { box-shadow: 0 12px 36px rgba(31, 95, 208, 0.34), 0 0 0 1px rgba(255, 255, 255, 0.26) inset, 0 0 58px rgba(96, 165, 250, 0.55); }
 }
 @keyframes welcome-drift-a {
-  from { transform: translate3d(0, 0, 0) scale(1); }
-  to { transform: translate3d(-7vw, 6vh, 0) scale(1.14); }
+  0% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(-5vw, 4vh, 0) scale(1.09); }
+  100% { transform: translate3d(-10vw, 9vh, 0) scale(1.18); }
 }
 @keyframes welcome-drift-b {
-  from { transform: translate3d(0, 0, 0) scale(1.06); }
-  to { transform: translate3d(8vw, -7vh, 0) scale(0.94); }
+  0% { transform: translate3d(0, 0, 0) scale(1.08); }
+  50% { transform: translate3d(5vw, -4vh, 0) scale(0.98); }
+  100% { transform: translate3d(11vw, -9vh, 0) scale(0.9); }
 }
 @keyframes welcome-drift-c {
-  from { transform: translate3d(0, 0, 0) scale(0.96); opacity: 0.4; }
-  to { transform: translate3d(-5vw, -4vh, 0) scale(1.16); opacity: 0.62; }
+  0% { transform: translate3d(0, 0, 0) scale(0.94); opacity: 0.36; }
+  50% { transform: translate3d(-4vw, -3vh, 0) scale(1.06); opacity: 0.52; }
+  100% { transform: translate3d(3vw, 5vh, 0) scale(1.2); opacity: 0.66; }
 }
 @media (max-width: 720px) {
   .welcome-facts { grid-template-columns: 1fr; gap: 12px; }

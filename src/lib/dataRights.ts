@@ -21,6 +21,8 @@ export interface DataExportInput {
   saved: string[];
   flashcardProgress: Record<string, unknown>;
   testAttempts: unknown[];
+  /** Scores of deleted simulations; the runs themselves are no longer held. */
+  testScoreLog?: unknown[];
   dailyActivity: unknown[];
 }
 
@@ -36,6 +38,7 @@ export interface DataExport {
     saved_questions: string[];
     flashcard_progress: Record<string, unknown>;
     test_attempts: unknown[];
+    test_score_log: unknown[];
     daily_activity: unknown[];
   };
 }
@@ -56,6 +59,7 @@ export function buildDataExport(input: DataExportInput, now: Date = new Date()):
       saved_questions: [...input.saved],
       flashcard_progress: input.flashcardProgress,
       test_attempts: input.testAttempts,
+      test_score_log: input.testScoreLog ?? [],
       daily_activity: input.dailyActivity,
     },
   };

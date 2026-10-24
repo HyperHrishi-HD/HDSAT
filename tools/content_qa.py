@@ -81,14 +81,16 @@ def normalise(text: object) -> str:
 
 
 def choice_key(text: object) -> str:
-    """Comparable choice text that keeps mathematical operators.
+    """Comparable choice text that keeps operators and punctuation.
 
     Stripping every symbol would make "3n + 2p" and "3n - 2p" look identical,
-    which is the opposite of what this check is for.
+    which is the opposite of what this check is for. The same applies to a
+    Boundaries item, where ", but", "but" and "; but" are three different
+    choices that all collapse to "but" if the marks are discarded.
     """
     raw = ascii_text(text or "").lower()
     raw = raw.replace("\\(", " ").replace("\\)", " ").replace("$", " ")
-    raw = re.sub(r"[^a-z0-9+\-*/=<>^.,]", " ", raw)
+    raw = re.sub(r"[^a-z0-9+\-*/=<>^.,;:!?\u2014\u2013]", " ", raw)
     return re.sub(r"\s+", " ", raw).strip()
 
 

@@ -1,0 +1,604 @@
+{
+  "items": [
+    {
+      "sentence": "Although the tide had turned ______ the crew kept the nets in the water until dusk.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon joins two independent clauses, but the opening clause is dependent.",
+        "A colon would introduce an explanation or a list, not a main clause after a dependent one.",
+        "A dash marks a sharp break, while this sentence needs the ordinary comma after an introductory clause."
+      ],
+      "explanation": "An introductory dependent clause is separated from the main clause by a comma; the clause cannot stand alone, so a semicolon, colon or dash would misrepresent the structure.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "Because the samples had thawed in transit ______ the laboratory rejected the entire batch.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "The first clause is dependent, so a semicolon cannot join it to the main clause.",
+        "A colon would announce an explanation rather than close an introductory clause.",
+        "A dash would mark an abrupt break that the sentence does not contain."
+      ],
+      "explanation": "The opening clause begins with 'Because' and cannot stand alone, so it takes a comma before the main clause. The other marks all require structures this sentence does not have.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "When the sensor array rebooted after the storm ______ it began transmitting again within minutes.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon needs an independent clause on both sides, and the opening clause is dependent.",
+        "A colon would promise a list or an explanation, neither of which follows.",
+        "A dash would create a dramatic pause that the neutral sentence does not support."
+      ],
+      "explanation": "The subordinate clause beginning with 'When' is introductory, so a comma separates it from the main clause. A semicolon, colon or dash would signal a different relationship.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "If the forecast holds through Friday ______ the launch will proceed as planned.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "The conditional clause is dependent, so a semicolon cannot join the two parts.",
+        "A colon has no list or explanation to introduce here.",
+        "A dash would interrupt a sentence that runs in a single unbroken line."
+      ],
+      "explanation": "An introductory 'If' clause is dependent and is followed by a comma before the main clause. The other punctuation marks would each require a different sentence structure.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "Since the archive closed early on Fridays ______ researchers scheduled their visits for the morning.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "The 'Since' clause is dependent, so a semicolon cannot separate it from the main clause.",
+        "A colon would introduce an explanation, but the second clause is the result, not a definition.",
+        "A dash would mark a break in thought that is not present."
+      ],
+      "explanation": "The sentence opens with a dependent clause, which takes a comma before the main clause. A semicolon would need two independent clauses, and a colon or dash would change the tone and logic.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Before the results could be published ______ two reviewers checked every calculation.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon cannot follow a dependent clause.",
+        "A colon would suggest that what follows explains the opening, which it does not.",
+        "A dash would make the review sound like an interruption rather than a scheduled step."
+      ],
+      "explanation": "The introductory clause beginning with 'Before' is dependent, so a comma marks the boundary with the main clause. The other marks all join or introduce structures this sentence lacks.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "While the paint was still drying ______ workers covered the windows with plastic sheeting.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "The opening clause is dependent, so a semicolon would wrongly join it to an independent clause.",
+        "A colon has nothing to introduce here.",
+        "A dash would imply a sudden break rather than a simultaneous action."
+      ],
+      "explanation": "A dependent clause beginning with 'While' is set off by a comma when it comes first. The other options would signal relationships the sentence does not have.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "Unless the manufacturer ships the parts early ______ the repair will slip into next month.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "The conditional clause cannot stand alone, so a semicolon is wrong.",
+        "A colon would need to introduce an explanation or list.",
+        "A dash would suggest an aside rather than a condition."
+      ],
+      "explanation": "An introductory 'Unless' clause is dependent and takes a comma before the main clause. The alternatives would each change the sentence's structure rather than punctuate it.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Even though the earlier trial had failed ______ the team secured funding for a second attempt.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon would treat the dependent opening clause as an independent one.",
+        "A colon would promise a conclusion or a list, not the main clause of a concession.",
+        "A dash would break the sentence more sharply than the contrast requires."
+      ],
+      "explanation": "The concessive clause introduced by 'Even though' is dependent, so a comma separates it from the main clause. A semicolon, colon or dash would each misread the sentence's structure.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Once the frost had lifted from the fields ______ the growers began planting.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "The 'Once' clause is dependent, so a semicolon is not available.",
+        "A colon would need to introduce an explanation or a list.",
+        "A dash would make a routine sequence sound like an abrupt turn."
+      ],
+      "explanation": "A dependent clause beginning with 'Once' is followed by a comma when it opens the sentence. The other marks require independent clauses or explanatory material that is not present.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The northern route closes each winter ______ the southern route remains open all year.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "A comma alone between two independent clauses creates a comma splice.",
+        "A colon would need the second clause to explain or list something in the first.",
+        "A period would leave the next clause beginning with a lowercase word, so it cannot end the sentence."
+      ],
+      "explanation": "Two independent clauses that are closely related but not explanatory are joined by a semicolon. The comma would splice them together, and the period would create a fragment after it.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The first prototype passed every bench test ______ the second failed within an hour.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "The comma alone cannot join two independent clauses.",
+        "The second clause reports a contrast, not an explanation of the first.",
+        "A period would leave the following clause starting lowercase and standing as a fragment."
+      ],
+      "explanation": "The two clauses are independent and in contrast, so a semicolon is the correct joint. A colon would promise an explanation, and a period cannot sit before a lowercase word.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The library holds the original letters ______ the museum holds the author's desk.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "A comma alone would splice two independent clauses.",
+        "A colon would suggest that the desk explains the letters, which it does not.",
+        "A period would leave 'the museum' beginning a new sentence in lowercase."
+      ],
+      "explanation": "This sentence balances two independent clauses, so a semicolon joins them. The other marks either splice the clauses, promise an explanation or create a fragment.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The bridge was designed for freight trains ______ it now carries only pedestrians.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "A comma alone would create a comma splice between the two clauses.",
+        "A colon would need the second clause to explain or list something in the first.",
+        "A period would leave 'it' starting a lowercase sentence."
+      ],
+      "explanation": "The two independent clauses are joined by a semicolon, which marks their close relationship without suggesting that one explains the other. The comma, colon and period each fail structurally.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Attendance at the lectures doubled in the spring ______ the organizers have already booked a larger hall for the autumn.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "A comma alone cannot join these two independent clauses.",
+        "The booking is a separate fact, not an explanation or list of the attendance figure.",
+        "A period would leave 'the organizers' beginning a lowercase sentence."
+      ],
+      "explanation": "Both clauses can stand alone and the second adds a related but separate fact, so a semicolon is correct. A colon would wrongly present the booking as an explanation of the attendance.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The eastern rows ripen two weeks later ______ the western rows are ready in early August.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "The comma alone would splice two independent clauses.",
+        "A colon would imply that the western rows explain the eastern ones.",
+        "A period would leave the second clause starting with a lowercase word."
+      ],
+      "explanation": "The sentence sets two independent observations side by side, which a semicolon does. The comma would splice them, and the colon would falsely suggest an explanatory relationship.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The ferry runs a reduced timetable in winter ______ a second vessel covers the school run.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "Two independent clauses cannot be joined by a comma alone.",
+        "A colon would present the second vessel as an explanation of the timetable, which it is not.",
+        "A period would leave 'a second vessel' starting a lowercase sentence."
+      ],
+      "explanation": "The clauses are independent and related by contrast, so a semicolon joins them. The colon would misstate the relationship, and the period would create a fragment.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The kit contained three items ______ a compass, a whistle, and a length of rope.",
+      "correct": ":",
+      "wrongs": [";", ",", "."],
+      "why": [
+        "A semicolon joins independent clauses; the list that follows is not a clause.",
+        "A comma alone cannot introduce a list after a complete clause.",
+        "A period would leave the list standing as a fragment that begins lowercase."
+      ],
+      "explanation": "A colon introduces the list that completes the meaning of the opening clause. The semicolon would need a second independent clause, and the comma and period would leave the list improperly attached.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The results pointed to one conclusion ______ the coating had failed in salt water.",
+      "correct": ":",
+      "wrongs": [";", ",", "."],
+      "why": [
+        "A semicolon would present the conclusion as a separate clause rather than the content of the conclusion.",
+        "A comma alone cannot set off the explanation that follows.",
+        "A period would leave the explanation beginning lowercase as a fragment."
+      ],
+      "explanation": "The clause after the blank spells out what the conclusion is, so a colon is correct. A semicolon would flatten the explanatory link, and the other marks would break the sentence.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The recipe calls for four ingredients ______ flour, butter, sugar, and a pinch of salt.",
+      "correct": ":",
+      "wrongs": [";", ",", "."],
+      "why": [
+        "A semicolon requires a second independent clause, but what follows is a list.",
+        "A comma alone does not introduce a list after a complete clause.",
+        "A period would strand the list as a lowercase fragment."
+      ],
+      "explanation": "The list after the blank enumerates the ingredients, and a colon introduces an enumerated list. The semicolon, comma and period all fail to attach the list correctly.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "One detail troubled the reviewers ______ the final table did not match the text.",
+      "correct": ":",
+      "wrongs": [";", ",", "."],
+      "why": [
+        "A semicolon would make the mismatch a separate fact rather than the detail itself.",
+        "A comma alone cannot introduce the explanation.",
+        "A period would leave the explanation starting lowercase."
+      ],
+      "explanation": "The second clause identifies the detail that troubled the reviewers, so a colon introduces it. The semicolon would lose that explanatory connection, and the comma and period are structurally wrong.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The museum's collection has a single theme ______ the everyday tools of coastal villages.",
+      "correct": ":",
+      "wrongs": [";", ",", "."],
+      "why": [
+        "The phrase after the blank is not an independent clause, so a semicolon cannot follow.",
+        "A comma alone cannot introduce the theme.",
+        "A period would leave the theme as a lowercase fragment."
+      ],
+      "explanation": "The colon introduces the phrase that states the theme. A semicolon needs a full clause, and the comma and period would leave the theme unattached.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The delay had an obvious cause ______ the replacement part arrived two weeks late.",
+      "correct": ":",
+      "wrongs": [";", ",", "."],
+      "why": [
+        "A semicolon would treat the cause as an unrelated second fact.",
+        "A comma alone cannot introduce the explanation.",
+        "A period would leave 'the replacement part' starting lowercase."
+      ],
+      "explanation": "The clause after the blank names the cause, which is exactly what a colon introduces. The semicolon would weaken the link, and the other marks would break the sentence structure.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The survey asked one question ______ how often residents used the ferry.",
+      "correct": ":",
+      "wrongs": [";", ",", "."],
+      "why": [
+        "A semicolon would need a second independent clause; the question itself is a phrase.",
+        "A comma alone cannot introduce the content of the question.",
+        "A period would leave the question beginning lowercase."
+      ],
+      "explanation": "The colon introduces the question the survey asked. The semicolon cannot precede a phrase, and the comma and period would leave the phrase dangling.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "Marie Tharp, a geologist and cartographer ______ mapped the ocean floor with data her colleague collected.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon would not pair with the comma that opened the appositive.",
+        "A colon would break the pair of commas around the appositive.",
+        "A dash would mismatch the comma that introduced the appositive."
+      ],
+      "explanation": "The phrase 'a geologist and cartographer' is a nonessential appositive opened by a comma, so it must close with a comma. The other marks would leave the pair mismatched.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The instrument, a brass sextant ______ had been carried on the expedition.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "The semicolon would end the appositive with a mark that does not match the opening comma.",
+        "A colon would break the comma pair around the explanatory phrase.",
+        "A dash would leave one comma and one dash enclosing the appositive."
+      ],
+      "explanation": "An appositive opened with a comma must close with a comma, so the blank takes a comma. Semicolon, colon and dash each break the matched pair.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The refuge, a former gravel pit ______ now supports more than sixty bird species.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon cannot close the appositive that the comma opened.",
+        "A colon would treat the rest of the sentence as an explanation rather than the main clause.",
+        "A dash would mismatch the opening comma."
+      ],
+      "explanation": "The appositive 'a former gravel pit' is set off by a pair of commas, so the second comma is required. The other marks would leave the pair unbalanced.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "Her first book, a study of tidal marshes ______ won the prize for natural history.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon would separate the subject from its verb and break the appositive.",
+        "A colon would interrupt the sentence before its verb.",
+        "A dash would not match the comma that opened the appositive."
+      ],
+      "explanation": "The phrase describing the book is a nonessential appositive opened by a comma, so it closes with a comma before the verb. The other marks break the pair and the sentence.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The vessel, a converted trawler ______ spent forty days mapping the shelf.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon would sever the subject from its verb.",
+        "A colon would introduce an explanation where the main verb belongs.",
+        "A dash would mismatch the opening comma of the appositive."
+      ],
+      "explanation": "The appositive opened by the first comma must be closed by a comma so the verb can follow. Semicolon, colon and dash each leave the sentence ungrammatical.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The proposal, a modest widening of the path ______ drew objections from two neighbours.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon would leave the appositive unclosed and separate the subject from its verb.",
+        "A colon would promise an explanation instead of returning to the main clause.",
+        "A dash would clash with the comma that opened the phrase."
+      ],
+      "explanation": "A comma closes the appositive so that the main verb 'drew' can follow its subject. The other marks break the matched pair and the sentence's structure.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The storm had passed ______ the crew still waited for the swell to settle.",
+      "correct": ", but",
+      "wrongs": ["but", "; but", ", however"],
+      "why": [
+        "Without the comma, two independent clauses are run together with only a conjunction.",
+        "A semicolon already joins the clauses, so adding 'but' after it is nonstandard.",
+        "'However' is a conjunctive adverb, so a comma alone before it creates a comma splice."
+      ],
+      "explanation": "Two independent clauses joined by the coordinating conjunction 'but' need a comma before the conjunction. The other options either drop the comma, double the joint or misuse a conjunctive adverb.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The first edition sold poorly ______ the publisher printed a second run anyway.",
+      "correct": ", but",
+      "wrongs": ["but", "; but", ", however"],
+      "why": [
+        "The comma is required before a coordinating conjunction joining two independent clauses.",
+        "A semicolon plus 'but' is redundant and nonstandard.",
+        "A comma before 'however' would splice the clauses rather than join them."
+      ],
+      "explanation": "The contrast between poor sales and a second printing is carried by the coordinating conjunction 'but', which takes a comma before it. The other choices are punctuation errors.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The trail is steep ______ it is well maintained.",
+      "correct": ", but",
+      "wrongs": ["but", "; but", ", however"],
+      "why": [
+        "The conjunction alone does not punctuate the boundary between the clauses.",
+        "The semicolon already separates the clauses, making 'but' after it incorrect.",
+        "A comma plus 'however' is a comma splice."
+      ],
+      "explanation": "A comma belongs before 'but' when it joins two independent clauses. The other options omit the comma, double the separator or use the wrong kind of connective.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The lab is small ______ it contains equipment found in few other places.",
+      "correct": ", but",
+      "wrongs": ["but", "; but", ", however"],
+      "why": [
+        "Two independent clauses joined by a conjunction still need the comma.",
+        "A semicolon cannot be followed by a coordinating conjunction in this structure.",
+        "'However' would need a semicolon or a period before it, not a comma."
+      ],
+      "explanation": "The comma before 'but' marks the boundary between two independent clauses. The other choices either omit required punctuation or combine marks incorrectly.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The manuscript was late ______ the editor accepted it without complaint.",
+      "correct": ", but",
+      "wrongs": ["but", "; but", ", however"],
+      "why": [
+        "The clause boundary needs a comma before the conjunction.",
+        "A semicolon followed by 'but' is not standard punctuation.",
+        "A comma alone before 'however' creates a comma splice."
+      ],
+      "explanation": "The coordinating conjunction 'but' joins two independent clauses and takes a comma before it. Dropping the comma, doubling the joint or substituting 'however' all produce errors.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The engine is efficient ______ it is expensive to maintain.",
+      "correct": ", but",
+      "wrongs": ["but", "; but", ", however"],
+      "why": [
+        "Without the comma, the sentence runs the two clauses together.",
+        "A semicolon and a coordinating conjunction are not used together this way.",
+        "'However' requires a different punctuation pattern from the comma shown here."
+      ],
+      "explanation": "A comma precedes 'but' when the conjunction joins two independent clauses. The alternatives all misuse the boundary between the clauses.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "After three years of negotiations with neighbouring districts ______ the water authority signed the agreement.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon would join an introductory phrase to a main clause as if both were independent.",
+        "A colon would introduce an explanation that the main clause does not provide.",
+        "A dash would break the sentence more sharply than the neutral opening warrants."
+      ],
+      "explanation": "A long introductory prepositional phrase is followed by a comma before the main clause. The other marks would misrepresent the phrase as an independent clause or as an explanation.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "In the first weeks of the rainy season ______ the lower fields flood almost every year.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "The opening phrase is not an independent clause, so a semicolon is wrong.",
+        "A colon would promise a list or explanation rather than the main clause.",
+        "A dash would make a routine seasonal statement sound like an interruption."
+      ],
+      "explanation": "The introductory phrase sets the time and is followed by a comma before the main clause. The other punctuation marks would each require a different structure.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "During the long voyage across the southern ocean ______ the crew collected daily samples.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon cannot follow a prepositional phrase.",
+        "A colon would need to introduce an explanation or list.",
+        "A dash would imply a dramatic break that the sentence does not have."
+      ],
+      "explanation": "The long introductory phrase is set off by a comma before the main clause. Semicolon, colon and dash all fail to punctuate this structure correctly.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "At the end of the second growing season ______ the orchard produced its first commercial crop.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "The opening phrase cannot stand alone, so a semicolon is unavailable.",
+        "A colon has no explanation or list to introduce.",
+        "A dash would exaggerate the pause before the main clause."
+      ],
+      "explanation": "A comma separates the introductory phrase from the main clause. The other marks would signal relationships or structures the sentence does not contain.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "In the months before the census ______ enumerators visited every household on the island.",
+      "correct": ",",
+      "wrongs": [";", ":", "—"],
+      "why": [
+        "A semicolon would treat the introductory phrase as a full clause.",
+        "A colon would introduce an explanation rather than continue the sentence.",
+        "A dash would create a sharper break than the neutral opening calls for."
+      ],
+      "explanation": "The introductory prepositional phrase is followed by a comma before the main clause. The other options misread the phrase as independent or explanatory.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The first trial produced no measurable effect ______ however, the second trial used a higher dose.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "A comma before 'however' creates a comma splice between two independent clauses.",
+        "A colon would suggest that the second trial explains the first, which it does not.",
+        "A period would leave 'however' beginning a lowercase sentence."
+      ],
+      "explanation": "A conjunctive adverb joining two independent clauses needs a semicolon before it. The comma produces a splice, and the colon and period mispunctuate the connection.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The prototype met every safety requirement ______ moreover, it cost less than the original design.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "The comma alone before 'moreover' is a comma splice.",
+        "A colon would present the lower cost as an explanation of the safety result.",
+        "A period would leave 'moreover' starting a lowercase sentence."
+      ],
+      "explanation": "'Moreover' is a conjunctive adverb, so the two independent clauses are joined by a semicolon. A comma would splice them together, and the other marks are structurally wrong.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The archive has never been fully catalogued ______ consequently, no one knows how many letters it holds.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "A comma before 'consequently' would create a comma splice.",
+        "A colon would present the unknown count as an explanation rather than a result.",
+        "A period would leave 'consequently' beginning a lowercase sentence."
+      ],
+      "explanation": "The conjunctive adverb 'consequently' links two independent clauses and takes a semicolon before it. The comma would splice the clauses, and the colon and period are incorrect here.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The species is rare in the north ______ however, it is common in the southern valleys.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "A comma alone cannot join the clauses before 'however'.",
+        "A colon would imply an explanation of the rarity.",
+        "A period would leave 'however' starting a lowercase sentence."
+      ],
+      "explanation": "Two independent clauses linked by 'however' need a semicolon before the adverb. The comma would be a splice, and the other marks would break the sentence.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The first map was drawn from memory ______ therefore, its distances are unreliable.",
+      "correct": ";",
+      "wrongs": [",", ":", "."],
+      "why": [
+        "The comma before 'therefore' creates a comma splice.",
+        "A colon would present the unreliability as an explanation rather than a consequence.",
+        "A period would leave 'therefore' beginning a lowercase sentence."
+      ],
+      "explanation": "The conjunctive adverb 'therefore' introduces a result, so a semicolon joins it to the first clause. The alternative marks either splice the clauses or create a fragment.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The survey asked about sleep, exercise ______ diet.",
+      "correct": ", and",
+      "wrongs": ["and", ", but", "; and"],
+      "why": [
+        "Without the comma, the final item is not clearly separated in the series.",
+        "'But' signals contrast, yet the three items are simply listed.",
+        "A semicolon is too heavy for items in a simple series."
+      ],
+      "explanation": "A list of three items takes a comma before 'and', which separates the final item from the rest. The other options either omit the comma or introduce the wrong relationship.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The kit includes a trowel, a brush ______ a small sieve.",
+      "correct": ", and",
+      "wrongs": ["and", ", but", "; and"],
+      "why": [
+        "The final item needs the comma that keeps the series parallel.",
+        "A contrast is not being drawn between the brush and the sieve.",
+        "A semicolon would break the list instead of closing it."
+      ],
+      "explanation": "The series of three tools is closed by a comma plus 'and'. Dropping the comma blurs the list, and 'but' or a semicolon introduces a relationship the list does not have.",
+      "difficulty": "Easy"
+    },
+    {
+      "sentence": "The report covers rainfall, temperature ______ wind speed.",
+      "correct": ", and",
+      "wrongs": ["and", ", but", "; and"],
+      "why": [
+        "Without the comma, the last item runs into the preceding one.",
+        "The three measurements are listed, not contrasted.",
+        "A semicolon would separate clauses, not items in a list."
+      ],
+      "explanation": "The comma before 'and' marks the final item in a list of three. The other choices either remove required punctuation or wrongly suggest contrast or a clause boundary.",
+      "difficulty": "Medium"
+    },
+    {
+      "sentence": "The course teaches mapping, sampling ______ analysis.",
+      "correct": ", and",
+      "wrongs": ["and", ", but", "; and"],
+      "why": [
+        "The missing comma makes the series unclear.",
+        "There is no contrast between the skills being listed.",
+        "A semicolon does not belong between items in a simple series."
+      ],
+      "explanation": "A comma precedes 'and' in a series of three items. The other options either drop the comma or misuse a contrastive conjunction or a semicolon.",
+      "difficulty": "Medium"
+    }
+  ]
+}

@@ -1,0 +1,1650 @@
+{
+  "items": [
+    {
+      "scenario": "A soil laboratory measured the percentage of organic matter in samples taken from four field plots. The results are shown in the table.",
+      "prompt": "Which choice most effectively uses data from the table to complete the statement?",
+      "figure": {
+        "type": "table",
+        "caption": "Organic matter in four field plots",
+        "headers": ["Plot", "Organic matter (%)"],
+        "rows": [["Plot A", "2.4"], ["Plot B", "3.1"], ["Plot C", "2.8"], ["Plot D", "3.9"]]
+      },
+      "correct": "Plot D had the highest share of organic matter, 3.9 percent, which was 0.8 percentage points above Plot B.",
+      "wrongs": [
+        "Plot B had the highest share of organic matter, at 3.1 percent.",
+        "Plot A had the highest share of organic matter, at 2.4 percent.",
+        "Plots A and C recorded the same share of organic matter."
+      ],
+      "why": [
+        "Plot D's 3.9 percent is higher than Plot B's 3.1 percent, so B is not the highest.",
+        "Plot A's 2.4 percent is the lowest value in the table, not the highest.",
+        "Plot A recorded 2.4 percent and Plot C recorded 2.8 percent, so the two differ."
+      ],
+      "explanation": "Plot D leads at 3.9 percent. Subtracting Plot B's 3.1 percent gives a gap of 0.8 percentage points, which matches the correct statement.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A transport survey counted the average number of vehicle crossings per day on four city bridges. The counts are summarized in the table.",
+      "prompt": "Which statement is best supported by the data in the table?",
+      "figure": {
+        "type": "table",
+        "caption": "Average daily vehicle crossings",
+        "headers": ["Bridge", "Crossings per day"],
+        "rows": [["Bridge 1", "18,400"], ["Bridge 2", "22,750"], ["Bridge 3", "15,900"], ["Bridge 4", "20,100"]]
+      },
+      "correct": "Bridge 2 carried the most traffic, 22,750 crossings a day, or 2,650 more than Bridge 4.",
+      "wrongs": [
+        "Bridge 4 carried the most traffic, at 20,100 crossings a day.",
+        "Bridge 1 carried the fewest crossings, at 18,400 a day.",
+        "Every bridge carried more than 20,000 crossings a day."
+      ],
+      "why": [
+        "Bridge 2's 22,750 is higher than Bridge 4's 20,100, so Bridge 4 is not the busiest.",
+        "Bridge 3 is lowest at 15,900, not Bridge 1 at 18,400.",
+        "Bridge 1 and Bridge 3 are both below 20,000 crossings a day."
+      ],
+      "explanation": "Bridge 2 is highest at 22,750 crossings a day. The difference from Bridge 4 is 22,750 minus 20,100, or 2,650 crossings.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "Four rain gauges in the same catchment recorded total annual rainfall. The totals appear in the table.",
+      "prompt": "According to the table, which statement is true?",
+      "figure": {
+        "type": "table",
+        "caption": "Annual rainfall by gauge",
+        "headers": ["Gauge", "Rainfall (mm)"],
+        "rows": [["Gauge A", "812"], ["Gauge B", "964"], ["Gauge C", "1,104"], ["Gauge D", "878"]]
+      },
+      "correct": "Gauge C recorded the most rainfall, 1,104 mm, or 292 mm more than Gauge A.",
+      "wrongs": [
+        "Gauge B recorded the most rainfall, at 964 mm.",
+        "Gauge D recorded the least rainfall, at 878 mm.",
+        "All four gauges recorded more than 900 mm."
+      ],
+      "why": [
+        "Gauge C's 1,104 mm exceeds Gauge B's 964 mm, so B is not the wettest.",
+        "Gauge A recorded 812 mm, which is lower than Gauge D's 878 mm.",
+        "Gauge A and Gauge D both recorded less than 900 mm."
+      ],
+      "explanation": "Gauge C is highest at 1,104 mm. Subtracting Gauge A's 812 mm gives 292 mm, the difference named in the correct choice.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A materials laboratory tested four concrete mixes and recorded their compressive strength after 28 days. The results are shown in the table.",
+      "prompt": "Which choice most effectively uses data from the table to complete the statement?",
+      "figure": {
+        "type": "table",
+        "caption": "Compressive strength of four mixes",
+        "headers": ["Mix", "Strength (MPa)"],
+        "rows": [["Mix A", "34.2"], ["Mix B", "38.6"], ["Mix C", "31.9"], ["Mix D", "37.4"]]
+      },
+      "correct": "Mix B was the strongest at 38.6 MPa, 1.2 MPa above Mix D.",
+      "wrongs": [
+        "Mix D was the strongest at 37.4 MPa.",
+        "Mix C was the strongest at 31.9 MPa.",
+        "Mixes A and D reached the same strength."
+      ],
+      "why": [
+        "Mix B's 38.6 MPa is higher than Mix D's 37.4 MPa, so Mix D is not the strongest.",
+        "Mix C's 31.9 MPa is the lowest value in the table.",
+        "Mix A reached 34.2 MPa while Mix D reached 37.4 MPa, so they differ."
+      ],
+      "explanation": "Mix B is highest at 38.6 MPa. The gap to Mix D is 38.6 minus 37.4, or 1.2 MPa.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A health survey asked adults in four age groups how many hours they slept on an average night. The group averages are shown in the table.",
+      "prompt": "Which statement is best supported by the data in the table?",
+      "figure": {
+        "type": "table",
+        "caption": "Average nightly sleep by age group",
+        "headers": ["Age group", "Sleep (hours)"],
+        "rows": [["18-24", "8.9"], ["25-34", "7.7"], ["35-44", "7.1"], ["45-54", "6.4"]]
+      },
+      "correct": "The 18-24 group slept the most, 8.9 hours, 1.8 hours more than the 35-44 group.",
+      "wrongs": [
+        "The 45-54 group slept the most, at 6.4 hours.",
+        "The 35-44 group slept the least, at 7.1 hours.",
+        "All four groups averaged more than 7.5 hours."
+      ],
+      "why": [
+        "The 45-54 group has the lowest average in the table, not the highest.",
+        "The 45-54 group at 6.4 hours is lower than the 35-44 group at 7.1 hours.",
+        "The 35-44 and 45-54 groups both averaged below 7.5 hours."
+      ],
+      "explanation": "The youngest group is highest at 8.9 hours. Subtracting the 35-44 group's 7.1 hours leaves 1.8 hours.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A hospital audited how quickly patients were seen in four departments and recorded the share seen within four hours. The shares are shown in the table.",
+      "prompt": "According to the table, which statement is true?",
+      "figure": {
+        "type": "table",
+        "caption": "Share of patients seen within four hours",
+        "headers": ["Department", "Seen within four hours (%)"],
+        "rows": [["Department A", "62"], ["Department B", "71"], ["Department C", "68"], ["Department D", "59"]]
+      },
+      "correct": "Department B saw the largest share within four hours, 71 percent, 12 percentage points above Department D.",
+      "wrongs": [
+        "Department C saw the largest share, at 68 percent.",
+        "Department D saw the largest share, at 59 percent.",
+        "Every department saw at least 65 percent of patients within four hours."
+      ],
+      "why": [
+        "Department B's 71 percent is higher than Department C's 68 percent.",
+        "Department D's 59 percent is the lowest share in the table.",
+        "Departments A and D both fell below 65 percent."
+      ],
+      "explanation": "Department B leads at 71 percent. The gap to Department D is 71 minus 59, or 12 percentage points.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A city counted daily bicycle crossings on four bridges over the same week. The daily averages are shown in the table.",
+      "prompt": "Which choice most effectively uses data from the table to complete the statement?",
+      "figure": {
+        "type": "table",
+        "caption": "Daily bicycle crossings by bridge",
+        "headers": ["Bridge", "Daily crossings"],
+        "rows": [["Bridge A", "3,250"], ["Bridge B", "2,780"], ["Bridge C", "4,110"], ["Bridge D", "3,690"]]
+      },
+      "correct": "Bridge C counted the most crossings, 4,110, which was 420 more than Bridge D.",
+      "wrongs": [
+        "Bridge D counted the most crossings, at 3,690.",
+        "Bridge B counted the most crossings, at 2,780.",
+        "Bridges A and C counted the same number of crossings."
+      ],
+      "why": [
+        "Bridge C's 4,110 is higher than Bridge D's 3,690, so Bridge D is not highest.",
+        "Bridge B's 2,780 is the lowest count in the table.",
+        "Bridge A counted 3,250 while Bridge C counted 4,110, so they differ."
+      ],
+      "explanation": "Bridge C leads at 4,110 crossings. Subtracting Bridge D's 3,690 gives 420, the gap stated in the correct choice.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A beekeeping group measured the honey harvested from four apiaries during one season. The yields are listed in the table.",
+      "prompt": "Which statement is best supported by the data in the table?",
+      "figure": {
+        "type": "table",
+        "caption": "Honey harvested at four apiaries",
+        "headers": ["Apiary", "Honey (kg)"],
+        "rows": [["Apiary A", "24.5"], ["Apiary B", "31.0"], ["Apiary C", "27.8"], ["Apiary D", "29.4"]]
+      },
+      "correct": "Apiary B produced the most honey, 31.0 kg, 1.6 kg more than Apiary D.",
+      "wrongs": [
+        "Apiary D produced the most honey, at 29.4 kg.",
+        "Apiary A produced the most honey, at 24.5 kg.",
+        "Apiaries B and C produced the same amount."
+      ],
+      "why": [
+        "Apiary B's 31.0 kg is above Apiary D's 29.4 kg, so Apiary D is not the top producer.",
+        "Apiary A's 24.5 kg is the lowest yield in the table.",
+        "Apiary B produced 31.0 kg and Apiary C produced 27.8 kg, so the amounts differ."
+      ],
+      "explanation": "Apiary B is highest at 31.0 kg. The difference from Apiary D is 31.0 minus 29.4, or 1.6 kg.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A university library counted the average number of loans per student in four faculties. The averages are shown in the table.",
+      "prompt": "According to the table, which statement is true?",
+      "figure": {
+        "type": "table",
+        "caption": "Loans per student by faculty",
+        "headers": ["Faculty", "Loans per student"],
+        "rows": [["Faculty A", "7.2"], ["Faculty B", "9.4"], ["Faculty C", "6.8"], ["Faculty D", "8.1"]]
+      },
+      "correct": "Faculty B recorded the most loans per student, 9.4, 1.3 more than Faculty D.",
+      "wrongs": [
+        "Faculty D recorded the most loans per student, at 8.1.",
+        "Faculty C recorded the most loans per student, at 6.8.",
+        "Every faculty recorded more than 8 loans per student."
+      ],
+      "why": [
+        "Faculty B's 9.4 is higher than Faculty D's 8.1, so Faculty D is not highest.",
+        "Faculty C's 6.8 is the lowest average in the table.",
+        "Faculties A and C both averaged below 8 loans per student."
+      ],
+      "explanation": "Faculty B leads at 9.4 loans per student. Subtracting Faculty D's 8.1 gives 1.3.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A recycling scheme measured the share of contaminated material in four collection rounds. The rates are shown in the table.",
+      "prompt": "Which choice most effectively uses data from the table to complete the statement?",
+      "figure": {
+        "type": "table",
+        "caption": "Contamination rate by collection round",
+        "headers": ["Round", "Contamination (%)"],
+        "rows": [["Round A", "12.4"], ["Round B", "9.8"], ["Round C", "14.1"], ["Round D", "11.2"]]
+      },
+      "correct": "Round C had the highest contamination rate, 14.1 percent, 4.3 percentage points above Round B.",
+      "wrongs": [
+        "Round A had the highest contamination rate, at 12.4 percent.",
+        "Round B had the highest contamination rate, at 9.8 percent.",
+        "Rounds B and D had the same contamination rate."
+      ],
+      "why": [
+        "Round C's 14.1 percent is higher than Round A's 12.4 percent.",
+        "Round B's 9.8 percent is the lowest rate in the table.",
+        "Round B recorded 9.8 percent while Round D recorded 11.2 percent, so they differ."
+      ],
+      "explanation": "Round C is highest at 14.1 percent. The gap to Round B is 14.1 minus 9.8, or 4.3 percentage points.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A marine survey measured the density of seagrass shoots at four coastal sites. The densities are shown in the table.",
+      "prompt": "Which statement is best supported by the data in the table?",
+      "figure": {
+        "type": "table",
+        "caption": "Seagrass density at four sites",
+        "headers": ["Site", "Shoots per square meter"],
+        "rows": [["Site A", "412"], ["Site B", "358"], ["Site C", "505"], ["Site D", "476"]]
+      },
+      "correct": "Site C had the densest seagrass, 505 shoots per square meter, 29 more than Site D.",
+      "wrongs": [
+        "Site D had the densest seagrass, at 476 shoots per square meter.",
+        "Site B had the densest seagrass, at 358 shoots per square meter.",
+        "Sites A and D recorded the same density."
+      ],
+      "why": [
+        "Site C's 505 is higher than Site D's 476, so Site D is not the densest.",
+        "Site B's 358 is the lowest density in the table.",
+        "Site A recorded 412 shoots per square meter while Site D recorded 476, so they differ."
+      ],
+      "explanation": "Site C leads at 505 shoots per square meter. The difference from Site D is 505 minus 476, or 29.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "An energy auditor measured winter heat loss through four wall constructions. The results are shown in the table.",
+      "prompt": "According to the table, which statement is true?",
+      "figure": {
+        "type": "table",
+        "caption": "Winter heat loss by construction",
+        "headers": ["Construction", "Heat loss (W/m2)"],
+        "rows": [["Construction A", "28.4"], ["Construction B", "22.1"], ["Construction C", "31.6"], ["Construction D", "25.9"]]
+      },
+      "correct": "Construction C lost the most heat, 31.6 W/m2, 3.2 more than Construction A.",
+      "wrongs": [
+        "Construction A lost the most heat, at 28.4 W/m2.",
+        "Construction B lost the most heat, at 22.1 W/m2.",
+        "All four constructions lost less than 30 W/m2."
+      ],
+      "why": [
+        "Construction C's 31.6 W/m2 is above Construction A's 28.4.",
+        "Construction B's 22.1 W/m2 is the lowest loss in the table.",
+        "Construction C lost 31.6 W/m2, which is above 30."
+      ],
+      "explanation": "Construction C is highest at 31.6 W/m2. Subtracting Construction A's 28.4 gives 3.2 W/m2.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A farm trial measured the yield of four wheat varieties in tonnes per hectare. The yields are shown in the table.",
+      "prompt": "Which choice most effectively uses data from the table to complete the statement?",
+      "figure": {
+        "type": "table",
+        "caption": "Wheat yield by variety",
+        "headers": ["Variety", "Yield (t/ha)"],
+        "rows": [["Variety A", "6.2"], ["Variety B", "7.4"], ["Variety C", "6.8"], ["Variety D", "7.1"]]
+      },
+      "correct": "Variety B gave the highest yield, 7.4 tonnes per hectare, 1.2 above Variety A.",
+      "wrongs": [
+        "Variety D gave the highest yield, at 7.1 tonnes per hectare.",
+        "Variety C gave the highest yield, at 6.8 tonnes per hectare.",
+        "Varieties B and D produced the same yield."
+      ],
+      "why": [
+        "Variety B's 7.4 is above Variety D's 7.1, so Variety D is not highest.",
+        "Variety C's 6.8 is below both Variety B and Variety D.",
+        "Variety B produced 7.4 tonnes per hectare while Variety D produced 7.1, so the yields differ."
+      ],
+      "explanation": "Variety B leads at 7.4 tonnes per hectare. The gap to Variety A is 7.4 minus 6.2, or 1.2.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A tourism office recorded overnight stays in four coastal towns during one summer. The totals are shown in the table.",
+      "prompt": "Which statement is best supported by the data in the table?",
+      "figure": {
+        "type": "table",
+        "caption": "Overnight stays by town",
+        "headers": ["Town", "Overnight stays (thousands)"],
+        "rows": [["Town A", "128"], ["Town B", "176"], ["Town C", "152"], ["Town D", "194"]]
+      },
+      "correct": "Town D recorded the most overnight stays, 194 thousand, 18 thousand more than Town B.",
+      "wrongs": [
+        "Town B recorded the most overnight stays, at 176 thousand.",
+        "Town A recorded the most overnight stays, at 128 thousand.",
+        "Towns C and D recorded the same number of stays."
+      ],
+      "why": [
+        "Town D's 194 thousand is higher than Town B's 176 thousand.",
+        "Town A's 128 thousand is the lowest total in the table.",
+        "Town C recorded 152 thousand stays while Town D recorded 194 thousand, so they differ."
+      ],
+      "explanation": "Town D leads at 194 thousand stays. The difference from Town B is 194 minus 176, or 18 thousand.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A clinic compared the share of appointments kept under four reminder methods. The shares are shown in the table.",
+      "prompt": "According to the table, which statement is true?",
+      "figure": {
+        "type": "table",
+        "caption": "Appointments kept by reminder method",
+        "headers": ["Method", "Appointments kept (%)"],
+        "rows": [["Method A", "78"], ["Method B", "84"], ["Method C", "71"], ["Method D", "88"]]
+      },
+      "correct": "Method D had the highest share of kept appointments, 88 percent, 4 percentage points above Method B.",
+      "wrongs": [
+        "Method B had the highest share, at 84 percent.",
+        "Method A had the highest share, at 78 percent.",
+        "Every method kept at least 80 percent of appointments."
+      ],
+      "why": [
+        "Method D's 88 percent is above Method B's 84 percent.",
+        "Method A's 78 percent is below both Method B and Method D.",
+        "Methods A and C kept fewer than 80 percent."
+      ],
+      "explanation": "Method D leads at 88 percent. Subtracting Method B's 84 percent gives a gap of 4 percentage points.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "An air-quality network logged the average concentration of nitrogen dioxide at four curbside sites. The averages are shown in the table.",
+      "prompt": "Which choice most effectively uses data from the table to complete the statement?",
+      "figure": {
+        "type": "table",
+        "caption": "Nitrogen dioxide concentration by site",
+        "headers": ["Site", "NO2 (micrograms per cubic meter)"],
+        "rows": [["Site A", "41"], ["Site B", "36"], ["Site C", "48"], ["Site D", "44"]]
+      },
+      "correct": "Site C recorded the highest concentration, 48 micrograms per cubic meter, 4 more than Site D.",
+      "wrongs": [
+        "Site D recorded the highest concentration, at 44 micrograms per cubic meter.",
+        "Site A recorded the highest concentration, at 41 micrograms per cubic meter.",
+        "Sites B and C recorded equal concentrations."
+      ],
+      "why": [
+        "Site C's 48 is above Site D's 44, so Site D is not highest.",
+        "Site A's 41 is below both Site C and Site D.",
+        "Site B recorded 36 while Site C recorded 48, so the concentrations differ."
+      ],
+      "explanation": "Site C leads at 48 micrograms per cubic meter. The gap to Site D is 48 minus 44, or 4.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A conservation team counted the fish passing a weir through four ladders during one migration season. The counts are shown in the table.",
+      "prompt": "Which statement is best supported by the data in the table?",
+      "figure": {
+        "type": "table",
+        "caption": "Fish counted at four ladders",
+        "headers": ["Ladder", "Fish counted"],
+        "rows": [["Ladder A", "214"], ["Ladder B", "168"], ["Ladder C", "249"], ["Ladder D", "196"]]
+      },
+      "correct": "Ladder C counted the most fish, 249, 35 more than Ladder A.",
+      "wrongs": [
+        "Ladder A counted the most fish, at 214.",
+        "Ladder B counted the most fish, at 168.",
+        "Ladders B and D counted the same number of fish."
+      ],
+      "why": [
+        "Ladder C's 249 is above Ladder A's 214, so Ladder A is not highest.",
+        "Ladder B's 168 is the lowest count in the table.",
+        "Ladder B counted 168 fish while Ladder D counted 196, so they differ."
+      ],
+      "explanation": "Ladder C leads at 249 fish. Subtracting Ladder A's 214 gives 35.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A rail operator measured the share of morning trains arriving on time at four stations. The shares are shown in the table.",
+      "prompt": "According to the table, which statement is true?",
+      "figure": {
+        "type": "table",
+        "caption": "On-time arrivals by station",
+        "headers": ["Station", "On-time arrivals (%)"],
+        "rows": [["Station A", "91.2"], ["Station B", "87.5"], ["Station C", "94.8"], ["Station D", "89.6"]]
+      },
+      "correct": "Station C had the best punctuality, 94.8 percent, 3.6 percentage points above Station A.",
+      "wrongs": [
+        "Station A had the best punctuality, at 91.2 percent.",
+        "Station B had the best punctuality, at 87.5 percent.",
+        "Every station reached at least 92 percent."
+      ],
+      "why": [
+        "Station C's 94.8 percent is above Station A's 91.2 percent.",
+        "Station B's 87.5 percent is the lowest share in the table.",
+        "Stations A, B and D all fell below 92 percent."
+      ],
+      "explanation": "Station C leads at 94.8 percent. The gap to Station A is 94.8 minus 91.2, or 3.6 percentage points.",
+      "difficulty": "Hard"
+    },
+    {
+      "scenario": "A greenhouse trial measured leaf area on plants grown under four fertiliser treatments. The averages are shown in the table.",
+      "prompt": "Which choice most effectively uses data from the table to complete the statement?",
+      "figure": {
+        "type": "table",
+        "caption": "Leaf area by fertiliser treatment",
+        "headers": ["Treatment", "Leaf area (cm2)"],
+        "rows": [["Treatment A", "46.8"], ["Treatment B", "52.4"], ["Treatment C", "49.1"], ["Treatment D", "55.7"]]
+      },
+      "correct": "Treatment D produced the largest leaf area, 55.7 cm2, 3.3 cm2 more than Treatment B.",
+      "wrongs": [
+        "Treatment B produced the largest leaf area, at 52.4 cm2.",
+        "Treatment C produced the largest leaf area, at 49.1 cm2.",
+        "Treatments A and C produced equal leaf areas."
+      ],
+      "why": [
+        "Treatment D's 55.7 cm2 is above Treatment B's 52.4 cm2.",
+        "Treatment C's 49.1 cm2 is below both Treatment B and Treatment D.",
+        "Treatment A measured 46.8 cm2 while Treatment C measured 49.1 cm2, so they differ."
+      ],
+      "explanation": "Treatment D leads at 55.7 cm2. Subtracting Treatment B's 52.4 gives 3.3 cm2.",
+      "difficulty": "Hard"
+    },
+    {
+      "scenario": "A health team recorded the share of households with safe drinking water in four districts. The shares are shown in the table.",
+      "prompt": "Which statement is best supported by the data in the table?",
+      "figure": {
+        "type": "table",
+        "caption": "Households with safe drinking water",
+        "headers": ["District", "Households with safe water (%)"],
+        "rows": [["District A", "68"], ["District B", "74"], ["District C", "81"], ["District D", "77"]]
+      },
+      "correct": "District C had the highest share with safe water, 81 percent, 13 percentage points above District A.",
+      "wrongs": [
+        "District D had the highest share, at 77 percent.",
+        "District A had the highest share, at 68 percent.",
+        "Districts B and D had equal shares."
+      ],
+      "why": [
+        "District C's 81 percent is above District D's 77 percent.",
+        "District A's 68 percent is the lowest share in the table.",
+        "District B recorded 74 percent while District D recorded 77 percent, so they differ."
+      ],
+      "explanation": "District C leads at 81 percent. The gap to District A is 81 minus 68, or 13 percentage points.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A city parks department counted the trees planted by four schools during a spring programme. The counts are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Trees planted by school",
+        "x_label": "School",
+        "y_label": "Trees planted",
+        "series": [
+          {"label": "School A", "value": 320},
+          {"label": "School B", "value": 410},
+          {"label": "School C", "value": 275},
+          {"label": "School D", "value": 360}
+        ]
+      },
+      "correct": "School B planted the most trees, 410, which was 135 more than School C.",
+      "wrongs": [
+        "School D planted the most trees, at 360.",
+        "School A planted the fewest trees, at 320.",
+        "Schools B and D planted the same number of trees."
+      ],
+      "why": [
+        "School B's 410 is higher than School D's 360, so School D did not plant the most.",
+        "School C planted 275 trees, which is fewer than School A's 320.",
+        "School B planted 410 trees while School D planted 360, so the totals differ."
+      ],
+      "explanation": "School B leads at 410 trees. The difference from School C is 410 minus 275, or 135.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A water utility recorded average daily household consumption in four neighbourhoods. The averages are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Daily household water use",
+        "x_label": "Neighbourhood",
+        "y_label": "Liters per household",
+        "series": [
+          {"label": "Neighbourhood A", "value": 148},
+          {"label": "Neighbourhood B", "value": 132},
+          {"label": "Neighbourhood C", "value": 165},
+          {"label": "Neighbourhood D", "value": 121}
+        ]
+      },
+      "correct": "Neighbourhood C used the most water, 165 liters per household a day, 44 more than Neighbourhood D.",
+      "wrongs": [
+        "Neighbourhood A used the most water, at 148 liters per household a day.",
+        "Neighbourhood B used the most water, at 132 liters per household a day.",
+        "Every neighbourhood used more than 140 liters per household a day."
+      ],
+      "why": [
+        "Neighbourhood C's 165 liters is above Neighbourhood A's 148.",
+        "Neighbourhood B's 132 liters is below both Neighbourhood C and Neighbourhood A.",
+        "Neighbourhoods B and D both used less than 140 liters per household a day."
+      ],
+      "explanation": "Neighbourhood C is highest at 165 liters. Subtracting Neighbourhood D's 121 liters gives 44.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A sports laboratory measured twenty-metre sprint times for four training groups. Lower times are faster. The results are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Twenty-metre sprint time by group",
+        "x_label": "Group",
+        "y_label": "Time (seconds)",
+        "series": [
+          {"label": "Group A", "value": 3.42},
+          {"label": "Group B", "value": 3.28},
+          {"label": "Group C", "value": 3.51},
+          {"label": "Group D", "value": 3.36}
+        ]
+      },
+      "correct": "Group B was the fastest, finishing in 3.28 seconds, 0.14 second faster than Group A.",
+      "wrongs": [
+        "Group C was the fastest, finishing in 3.51 seconds.",
+        "Group D was the fastest, finishing in 3.36 seconds.",
+        "Every group finished in under 3.30 seconds."
+      ],
+      "why": [
+        "Group C's 3.51 seconds is the slowest time in the graph, not the fastest.",
+        "Group B's 3.28 seconds is lower than Group D's 3.36 seconds.",
+        "Only Group B finished under 3.30 seconds."
+      ],
+      "explanation": "The lowest time is Group B at 3.28 seconds. The gap to Group A is 3.42 minus 3.28, or 0.14 second.",
+      "difficulty": "Hard"
+    },
+    {
+      "scenario": "A museum recorded the average time visitors spent in four exhibition rooms. The averages are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Average dwell time by room",
+        "x_label": "Room",
+        "y_label": "Average dwell time (minutes)",
+        "series": [
+          {"label": "Room A", "value": 18},
+          {"label": "Room B", "value": 24},
+          {"label": "Room C", "value": 31},
+          {"label": "Room D", "value": 22}
+        ]
+      },
+      "correct": "Room C held visitors longest, 31 minutes on average, 7 minutes longer than Room B.",
+      "wrongs": [
+        "Room B held visitors longest, at 24 minutes on average.",
+        "Room A held visitors longest, at 18 minutes on average.",
+        "Rooms B and D had equal average dwell times."
+      ],
+      "why": [
+        "Room C's 31 minutes is above Room B's 24 minutes.",
+        "Room A's 18 minutes is the shortest average in the graph.",
+        "Room B averaged 24 minutes while Room D averaged 22 minutes, so they differ."
+      ],
+      "explanation": "Room C is highest at 31 minutes. Subtracting Room B's 24 minutes gives 7 minutes.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A telecommunications survey recorded the number of internet users per 100 people in four regions. The rates are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Internet users per 100 people",
+        "x_label": "Region",
+        "y_label": "Users per 100 people",
+        "series": [
+          {"label": "Region A", "value": 58},
+          {"label": "Region B", "value": 72},
+          {"label": "Region C", "value": 65},
+          {"label": "Region D", "value": 81}
+        ]
+      },
+      "correct": "Region D had the highest rate, 81 users per 100 people, 9 more than Region B.",
+      "wrongs": [
+        "Region B had the highest rate, at 72 users per 100 people.",
+        "Region A had the highest rate, at 58 users per 100 people.",
+        "All four regions had more than 70 users per 100 people."
+      ],
+      "why": [
+        "Region D's 81 users per 100 people is above Region B's 72.",
+        "Region A's 58 users per 100 people is the lowest rate in the graph.",
+        "Regions A and C both had fewer than 70 users per 100 people."
+      ],
+      "explanation": "Region D leads at 81 users per 100 people. The gap to Region B is 81 minus 72, or 9.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A council counted the potholes reported on four road sections in one month. The counts are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Potholes reported by road section",
+        "x_label": "Section",
+        "y_label": "Potholes reported",
+        "series": [
+          {"label": "Section A", "value": 46},
+          {"label": "Section B", "value": 62},
+          {"label": "Section C", "value": 38},
+          {"label": "Section D", "value": 57}
+        ]
+      },
+      "correct": "Section B had the most reports, 62, which was 5 more than Section D.",
+      "wrongs": [
+        "Section D had the most reports, at 57.",
+        "Section A had the most reports, at 46.",
+        "Sections B and D had the same number of reports."
+      ],
+      "why": [
+        "Section B's 62 reports are more than Section D's 57.",
+        "Section A's 46 reports are fewer than both Section B and Section D.",
+        "Section B recorded 62 reports while Section D recorded 57, so they differ."
+      ],
+      "explanation": "Section B leads at 62 reports. Subtracting Section D's 57 gives 5.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A county recorded the installed solar capacity in four counties at the end of one year. The capacities are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Installed solar capacity by county",
+        "x_label": "County",
+        "y_label": "Capacity (MW)",
+        "series": [
+          {"label": "County A", "value": 240},
+          {"label": "County B", "value": 315},
+          {"label": "County C", "value": 190},
+          {"label": "County D", "value": 275}
+        ]
+      },
+      "correct": "County B had the most installed capacity, 315 MW, 40 MW more than County D.",
+      "wrongs": [
+        "County D had the most capacity, at 275 MW.",
+        "County A had the most capacity, at 240 MW.",
+        "Every county installed more than 250 MW."
+      ],
+      "why": [
+        "County B's 315 MW is above County D's 275 MW.",
+        "County A's 240 MW is below both County B and County D.",
+        "Counties A and C both installed less than 250 MW."
+      ],
+      "explanation": "County B leads at 315 MW. The gap to County D is 315 minus 275, or 40 MW.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A farm trial compared the yield of five wheat varieties in tonnes per hectare. The yields are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Wheat yield by variety",
+        "x_label": "Variety",
+        "y_label": "Yield (t/ha)",
+        "series": [
+          {"label": "Variety A", "value": 5.8},
+          {"label": "Variety B", "value": 6.4},
+          {"label": "Variety C", "value": 7.1},
+          {"label": "Variety D", "value": 6.7},
+          {"label": "Variety E", "value": 5.5}
+        ]
+      },
+      "correct": "Variety C yielded the most, 7.1 tonnes per hectare, 0.4 more than Variety D.",
+      "wrongs": [
+        "Variety D yielded the most, at 6.7 tonnes per hectare.",
+        "Variety B yielded the most, at 6.4 tonnes per hectare.",
+        "Varieties A and E yielded the same amount."
+      ],
+      "why": [
+        "Variety C's 7.1 tonnes per hectare is above Variety D's 6.7.",
+        "Variety B's 6.4 tonnes per hectare is below both Variety C and Variety D.",
+        "Variety A yielded 5.8 tonnes per hectare while Variety E yielded 5.5, so they differ."
+      ],
+      "explanation": "Variety C leads at 7.1 tonnes per hectare. Subtracting Variety D's 6.7 gives 0.4.",
+      "difficulty": "Hard"
+    },
+    {
+      "scenario": "A tourism board counted visitors at four museums during one year. The totals are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Visitors by museum",
+        "x_label": "Museum",
+        "y_label": "Visitors (thousands)",
+        "series": [
+          {"label": "Museum A", "value": 410},
+          {"label": "Museum B", "value": 385},
+          {"label": "Museum C", "value": 462},
+          {"label": "Museum D", "value": 429}
+        ]
+      },
+      "correct": "Museum C drew the most visitors, 462 thousand, 33 thousand more than Museum D.",
+      "wrongs": [
+        "Museum D drew the most visitors, at 429 thousand.",
+        "Museum A drew the most visitors, at 410 thousand.",
+        "Every museum drew more than 430 thousand visitors."
+      ],
+      "why": [
+        "Museum C's 462 thousand is above Museum D's 429 thousand.",
+        "Museum A's 410 thousand is below both Museum C and Museum D.",
+        "Museums A and B both drew fewer than 430 thousand visitors."
+      ],
+      "explanation": "Museum C leads at 462 thousand visitors. The gap to Museum D is 462 minus 429, or 33 thousand.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A transport study measured the average commute time on four routes into a city centre. The averages are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Average commute time by route",
+        "x_label": "Route",
+        "y_label": "Average time (minutes)",
+        "series": [
+          {"label": "Route A", "value": 34},
+          {"label": "Route B", "value": 41},
+          {"label": "Route C", "value": 29},
+          {"label": "Route D", "value": 38}
+        ]
+      },
+      "correct": "Route C had the shortest average commute, 29 minutes, 9 minutes less than Route D.",
+      "wrongs": [
+        "Route D had the shortest commute, at 38 minutes.",
+        "Route A had the shortest commute, at 34 minutes.",
+        "Every route averaged more than 30 minutes."
+      ],
+      "why": [
+        "Route D's 38 minutes is one of the longer times, not the shortest.",
+        "Route A's 34 minutes is above Route C's 29 minutes.",
+        "Route C averaged 29 minutes, which is below 30."
+      ],
+      "explanation": "Route C is lowest at 29 minutes. The difference from Route D is 38 minus 29, or 9 minutes.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A seed company measured the survival rate of seedlings under four treatments. The rates are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Seedling survival by treatment",
+        "x_label": "Treatment",
+        "y_label": "Survival (%)",
+        "series": [
+          {"label": "Treatment A", "value": 72},
+          {"label": "Treatment B", "value": 84},
+          {"label": "Treatment C", "value": 78},
+          {"label": "Treatment D", "value": 91}
+        ]
+      },
+      "correct": "Treatment D had the highest survival, 91 percent, 7 percentage points above Treatment B.",
+      "wrongs": [
+        "Treatment B had the highest survival, at 84 percent.",
+        "Treatment C had the highest survival, at 78 percent.",
+        "All treatments had survival above 80 percent."
+      ],
+      "why": [
+        "Treatment D's 91 percent is above Treatment B's 84 percent.",
+        "Treatment C's 78 percent is below both Treatment B and Treatment D.",
+        "Treatments A and C both fell below 80 percent."
+      ],
+      "explanation": "Treatment D leads at 91 percent. The gap to Treatment B is 91 minus 84, or 7 percentage points.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "An acoustics laboratory measured background noise in four library rooms. The measurements are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Background noise by room",
+        "x_label": "Room",
+        "y_label": "Noise (dB)",
+        "series": [
+          {"label": "Room A", "value": 38},
+          {"label": "Room B", "value": 42},
+          {"label": "Room C", "value": 35},
+          {"label": "Room D", "value": 46}
+        ]
+      },
+      "correct": "Room D was the loudest, 46 dB, 4 dB above Room B.",
+      "wrongs": [
+        "Room B was the loudest, at 42 dB.",
+        "Room C was the loudest, at 35 dB.",
+        "Every room measured below 40 dB."
+      ],
+      "why": [
+        "Room D's 46 dB is above Room B's 42 dB.",
+        "Room C's 35 dB is the quietest measurement in the graph.",
+        "Rooms B and D both measured above 40 dB."
+      ],
+      "explanation": "Room D is highest at 46 dB. Subtracting Room B's 42 dB gives 4 dB.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "An ecologist counted bee visits to four flowering plots of equal size. The counts are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Bee visits per plot",
+        "x_label": "Plot",
+        "y_label": "Bee visits",
+        "series": [
+          {"label": "Plot A", "value": 56},
+          {"label": "Plot B", "value": 71},
+          {"label": "Plot C", "value": 63},
+          {"label": "Plot D", "value": 48}
+        ]
+      },
+      "correct": "Plot B recorded the most visits, 71, 8 more than Plot C.",
+      "wrongs": [
+        "Plot C recorded the most visits, at 63.",
+        "Plot A recorded the most visits, at 56.",
+        "Plots B and C recorded equal numbers of visits."
+      ],
+      "why": [
+        "Plot B's 71 visits are more than Plot C's 63.",
+        "Plot A's 56 visits are fewer than both Plot B and Plot C.",
+        "Plot B recorded 71 visits while Plot C recorded 63, so they differ."
+      ],
+      "explanation": "Plot B leads at 71 visits. Subtracting Plot C's 63 gives 8.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A battery laboratory measured how much capacity four cells retained after 500 charge cycles. The shares are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Capacity retained after 500 cycles",
+        "x_label": "Cell",
+        "y_label": "Capacity retained (%)",
+        "series": [
+          {"label": "Cell A", "value": 82},
+          {"label": "Cell B", "value": 76},
+          {"label": "Cell C", "value": 88},
+          {"label": "Cell D", "value": 79}
+        ]
+      },
+      "correct": "Cell C retained the most capacity, 88 percent, 6 percentage points above Cell A.",
+      "wrongs": [
+        "Cell A retained the most capacity, at 82 percent.",
+        "Cell D retained the most capacity, at 79 percent.",
+        "Every cell retained at least 85 percent."
+      ],
+      "why": [
+        "Cell C's 88 percent is above Cell A's 82 percent.",
+        "Cell D's 79 percent is below both Cell A and Cell C.",
+        "Cells B and D both retained less than 85 percent."
+      ],
+      "explanation": "Cell C leads at 88 percent. The gap to Cell A is 88 minus 82, or 6 percentage points.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A charity recorded the number of volunteers who joined four cleanup sites in one weekend. The counts are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Volunteers by cleanup site",
+        "x_label": "Site",
+        "y_label": "Volunteers",
+        "series": [
+          {"label": "Site A", "value": 24},
+          {"label": "Site B", "value": 31},
+          {"label": "Site C", "value": 28},
+          {"label": "Site D", "value": 37}
+        ]
+      },
+      "correct": "Site D drew the most volunteers, 37, 6 more than Site B.",
+      "wrongs": [
+        "Site B drew the most volunteers, at 31.",
+        "Site A drew the most volunteers, at 24.",
+        "Sites A and C drew the same number of volunteers."
+      ],
+      "why": [
+        "Site D's 37 volunteers are more than Site B's 31.",
+        "Site A's 24 volunteers are the fewest at any site.",
+        "Site A drew 24 volunteers while Site C drew 28, so they differ."
+      ],
+      "explanation": "Site D leads at 37 volunteers. Subtracting Site B's 31 gives 6.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A housing survey recorded the average monthly rent in four districts. The averages are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Average monthly rent by district",
+        "x_label": "District",
+        "y_label": "Average rent (dollars)",
+        "series": [
+          {"label": "District A", "value": 1240},
+          {"label": "District B", "value": 1410},
+          {"label": "District C", "value": 1180},
+          {"label": "District D", "value": 1320}
+        ]
+      },
+      "correct": "District B had the highest average rent, 1,410 dollars a month, 90 dollars more than District D.",
+      "wrongs": [
+        "District D had the highest rent, at 1,320 dollars a month.",
+        "District C had the highest rent, at 1,180 dollars a month.",
+        "Every district averaged more than 1,250 dollars a month."
+      ],
+      "why": [
+        "District B's 1,410 dollars is above District D's 1,320 dollars.",
+        "District C's 1,180 dollars is the lowest average in the graph.",
+        "Districts A and C both averaged less than 1,250 dollars a month."
+      ],
+      "explanation": "District B leads at 1,410 dollars. The gap to District D is 1,410 minus 1,320, or 90 dollars.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A marine programme measured live coral cover at four reefs. The shares are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Live coral cover by reef",
+        "x_label": "Reef",
+        "y_label": "Coral cover (%)",
+        "series": [
+          {"label": "Reef A", "value": 28},
+          {"label": "Reef B", "value": 19},
+          {"label": "Reef C", "value": 34},
+          {"label": "Reef D", "value": 23}
+        ]
+      },
+      "correct": "Reef C had the most coral cover, 34 percent, 6 percentage points above Reef A.",
+      "wrongs": [
+        "Reef A had the most coral cover, at 28 percent.",
+        "Reef D had the most coral cover, at 23 percent.",
+        "All reefs had more than 25 percent cover."
+      ],
+      "why": [
+        "Reef C's 34 percent is above Reef A's 28 percent.",
+        "Reef D's 23 percent is below both Reef A and Reef C.",
+        "Reefs B and D both had less than 25 percent cover."
+      ],
+      "explanation": "Reef C leads at 34 percent. Subtracting Reef A's 28 percent gives 6 percentage points.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "An airport authority recorded annual passenger numbers at four airports. The totals are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Annual passengers by airport",
+        "x_label": "Airport",
+        "y_label": "Passengers (millions)",
+        "series": [
+          {"label": "Airport A", "value": 42.6},
+          {"label": "Airport B", "value": 38.1},
+          {"label": "Airport C", "value": 45.2},
+          {"label": "Airport D", "value": 40.7}
+        ]
+      },
+      "correct": "Airport C handled the most passengers, 45.2 million, 4.5 million more than Airport D.",
+      "wrongs": [
+        "Airport A handled the most passengers, at 42.6 million.",
+        "Airport D handled the most passengers, at 40.7 million.",
+        "Every airport handled more than 42 million passengers."
+      ],
+      "why": [
+        "Airport C's 45.2 million is above Airport A's 42.6 million.",
+        "Airport D's 40.7 million is below both Airport A and Airport C.",
+        "Airports B and D both handled fewer than 42 million passengers."
+      ],
+      "explanation": "Airport C leads at 45.2 million passengers. The gap to Airport D is 45.2 minus 40.7, or 4.5 million.",
+      "difficulty": "Hard"
+    },
+    {
+      "scenario": "A fitness laboratory measured the calories burned per hour during four activities. The averages are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Calories burned per hour by activity",
+        "x_label": "Activity",
+        "y_label": "Calories per hour",
+        "series": [
+          {"label": "Activity A", "value": 410},
+          {"label": "Activity B", "value": 520},
+          {"label": "Activity C", "value": 480},
+          {"label": "Activity D", "value": 610}
+        ]
+      },
+      "correct": "Activity D burned the most calories, 610 per hour, 90 more than Activity B.",
+      "wrongs": [
+        "Activity B burned the most calories, at 520 per hour.",
+        "Activity C burned the most calories, at 480 per hour.",
+        "Every activity burned more than 500 calories per hour."
+      ],
+      "why": [
+        "Activity D's 610 calories is above Activity B's 520.",
+        "Activity C's 480 calories is below both Activity B and Activity D.",
+        "Activities A and C both burned fewer than 500 calories per hour."
+      ],
+      "explanation": "Activity D leads at 610 calories per hour. Subtracting Activity B's 520 gives 90.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A survey tested four reminder methods and recorded the share of recipients who responded. The shares are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "bar_chart",
+        "caption": "Response rate by reminder method",
+        "x_label": "Reminder",
+        "y_label": "Response rate (%)",
+        "series": [
+          {"label": "Reminder A", "value": 31},
+          {"label": "Reminder B", "value": 44},
+          {"label": "Reminder C", "value": 38},
+          {"label": "Reminder D", "value": 27}
+        ]
+      },
+      "correct": "Reminder B produced the highest response rate, 44 percent, 6 percentage points above Reminder C.",
+      "wrongs": [
+        "Reminder C produced the highest rate, at 38 percent.",
+        "Reminder A produced the highest rate, at 31 percent.",
+        "All four reminders produced rates above 30 percent."
+      ],
+      "why": [
+        "Reminder B's 44 percent is above Reminder C's 38 percent.",
+        "Reminder A's 31 percent is below both Reminder B and Reminder C.",
+        "Reminder D produced 27 percent, which is below 30."
+      ],
+      "explanation": "Reminder B leads at 44 percent. The gap to Reminder C is 44 minus 38, or 6 percentage points.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A classroom sensor logged the average indoor carbon dioxide concentration on five school days. The readings are shown in the graph.",
+      "prompt": "Which choice best describes the trend shown in the graph?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Average indoor carbon dioxide by day",
+        "x_label": "Day",
+        "y_label": "Carbon dioxide (ppm)",
+        "series": [
+          {"label": "Monday", "value": 620},
+          {"label": "Tuesday", "value": 710},
+          {"label": "Wednesday", "value": 680},
+          {"label": "Thursday", "value": 840},
+          {"label": "Friday", "value": 790}
+        ]
+      },
+      "correct": "The concentration peaked on Thursday at 840 ppm, 220 ppm above Monday.",
+      "wrongs": [
+        "It rose steadily from Monday to Friday without ever falling.",
+        "It peaked on Monday at 620 ppm.",
+        "It stayed below 700 ppm all week."
+      ],
+      "why": [
+        "The reading fell from Tuesday to Wednesday and from Thursday to Friday, so it was not a steady rise.",
+        "Monday has the lowest reading in the graph, not the peak.",
+        "Tuesday, Thursday and Friday all exceeded 700 ppm."
+      ],
+      "explanation": "The highest point is Thursday at 840 ppm. Subtracting Monday's 620 ppm gives 220 ppm.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A hydrology team recorded average daily river flow at one gauge from January to June. The readings are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Average daily river flow, January to June",
+        "x_label": "Month",
+        "y_label": "Flow (cubic meters per second)",
+        "series": [
+          {"label": "January", "value": 12.4},
+          {"label": "February", "value": 15.8},
+          {"label": "March", "value": 22.1},
+          {"label": "April", "value": 18.6},
+          {"label": "May", "value": 11.2},
+          {"label": "June", "value": 8.4}
+        ]
+      },
+      "correct": "Flow peaked in March at 22.1 cubic meters per second and fell to 8.4 by June.",
+      "wrongs": [
+        "Flow rose every month from January to June.",
+        "Flow was lowest in March at 22.1 cubic meters per second.",
+        "Flow in June was higher than in January."
+      ],
+      "why": [
+        "Flow fell after March, so it did not rise every month.",
+        "March has the highest reading in the graph, not the lowest.",
+        "June's 8.4 is lower than January's 12.4."
+      ],
+      "explanation": "The peak is March at 22.1. The June value is 8.4, which is the lowest reading shown.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A soil monitoring station measured moisture in the topsoil each week for five weeks. The readings are shown in the graph.",
+      "prompt": "Which choice best describes the trend shown in the graph?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Topsoil moisture over five weeks",
+        "x_label": "Week",
+        "y_label": "Moisture (%)",
+        "series": [
+          {"label": "Week 1", "value": 34},
+          {"label": "Week 2", "value": 31},
+          {"label": "Week 3", "value": 27},
+          {"label": "Week 4", "value": 22},
+          {"label": "Week 5", "value": 19}
+        ]
+      },
+      "correct": "Moisture declined each week, dropping 15 percentage points from week 1 to week 5.",
+      "wrongs": [
+        "Moisture rose from week 1 to week 5.",
+        "Moisture was lowest in week 1 at 34 percent.",
+        "Moisture stayed above 25 percent in every week."
+      ],
+      "why": [
+        "Every reading is lower than the one before it, so moisture fell rather than rose.",
+        "Week 1 has the highest reading in the graph, not the lowest.",
+        "Weeks 4 and 5 both fell below 25 percent."
+      ],
+      "explanation": "Each week is lower than the last, from 34 percent to 19 percent, a total decline of 15 percentage points.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A solar array's monthly output was recorded from January to June. The output is shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Monthly solar output",
+        "x_label": "Month",
+        "y_label": "Output (MW)",
+        "series": [
+          {"label": "January", "value": 18},
+          {"label": "February", "value": 24},
+          {"label": "March", "value": 31},
+          {"label": "April", "value": 38},
+          {"label": "May", "value": 35},
+          {"label": "June", "value": 29}
+        ]
+      },
+      "correct": "Output rose from January to April, then declined through June.",
+      "wrongs": [
+        "Output rose every month from January to June.",
+        "Output was highest in June at 29 MW.",
+        "Output in January was higher than in April."
+      ],
+      "why": [
+        "Output fell from April to June, so it did not rise every month.",
+        "June's 29 MW is below the April peak of 38 MW.",
+        "January's 18 MW is below April's 38 MW."
+      ],
+      "explanation": "The graph rises from 18 MW in January to 38 MW in April, then falls to 35 MW and 29 MW.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A hospital recorded admissions in each quarter of one year. The totals are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Hospital admissions by quarter",
+        "x_label": "Quarter",
+        "y_label": "Admissions",
+        "series": [
+          {"label": "Q1", "value": 420},
+          {"label": "Q2", "value": 465},
+          {"label": "Q3", "value": 510},
+          {"label": "Q4", "value": 480}
+        ]
+      },
+      "correct": "Admissions peaked in the third quarter at 510, 90 more than in the first quarter.",
+      "wrongs": [
+        "Admissions rose in every quarter.",
+        "Admissions were lowest in the third quarter at 510.",
+        "Admissions in the fourth quarter exceeded those in the third."
+      ],
+      "why": [
+        "Admissions fell from the third quarter to the fourth, so they did not rise every quarter.",
+        "510 is the highest reading in the graph, not the lowest.",
+        "The fourth quarter recorded 480, which is below the third quarter's 510."
+      ],
+      "explanation": "The peak is Q3 at 510. Subtracting Q1's 420 gives 90 admissions.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A weather station recorded the average monthly temperature from March to July. The averages are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Average monthly temperature, March to July",
+        "x_label": "Month",
+        "y_label": "Temperature (C)",
+        "series": [
+          {"label": "March", "value": 4.2},
+          {"label": "April", "value": 6.8},
+          {"label": "May", "value": 11.5},
+          {"label": "June", "value": 16.1},
+          {"label": "July", "value": 20.4}
+        ]
+      },
+      "correct": "The average temperature rose each month, from 4.2 C in March to 20.4 C in July.",
+      "wrongs": [
+        "The average temperature fell from March to July.",
+        "The average temperature was highest in March at 4.2 C.",
+        "The average temperature changed by less than 10 C across the period."
+      ],
+      "why": [
+        "Each reading is higher than the previous one, so the temperature rose.",
+        "March has the lowest reading, not the highest.",
+        "The change is 20.4 minus 4.2, or 16.2 C, which is more than 10 C."
+      ],
+      "explanation": "Every point is above the one before it, ending at 20.4 C, which is 16.2 C above the March value.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A library recorded visits in thousands for each month from January to June. The totals are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Library visits by month",
+        "x_label": "Month",
+        "y_label": "Visits (thousands)",
+        "series": [
+          {"label": "January", "value": 18},
+          {"label": "February", "value": 21},
+          {"label": "March", "value": 19},
+          {"label": "April", "value": 24},
+          {"label": "May", "value": 27},
+          {"label": "June", "value": 23}
+        ]
+      },
+      "correct": "Visits were highest in May at 27 thousand, 9 thousand more than in January.",
+      "wrongs": [
+        "Visits rose every month from January to June.",
+        "Visits were highest in January at 18 thousand.",
+        "Visits in June exceeded visits in May."
+      ],
+      "why": [
+        "Visits fell from February to March and from May to June, so they did not rise every month.",
+        "January's 18 thousand is the lowest total in the graph.",
+        "June's 23 thousand is below May's 27 thousand."
+      ],
+      "explanation": "The highest point is May at 27 thousand. Subtracting January's 18 thousand gives 9 thousand.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A transport agency estimated the share of new vehicles that were electric in each year from 2019 to 2024. The shares are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Electric share of new vehicles",
+        "x_label": "Year",
+        "y_label": "Share (%)",
+        "series": [
+          {"label": "2019", "value": 2.1},
+          {"label": "2020", "value": 3.4},
+          {"label": "2021", "value": 5.2},
+          {"label": "2022", "value": 7.8},
+          {"label": "2023", "value": 10.6},
+          {"label": "2024", "value": 13.9}
+        ]
+      },
+      "correct": "The share rose every year, from 2.1 percent in 2019 to 13.9 percent in 2024.",
+      "wrongs": [
+        "The share fell after 2022.",
+        "The share was unchanged between 2020 and 2021.",
+        "The share reached 20 percent by 2024."
+      ],
+      "why": [
+        "The readings from 2022 onward are higher than the one before them, so the share did not fall.",
+        "The share moved from 3.4 percent in 2020 to 5.2 percent in 2021.",
+        "The 2024 value is 13.9 percent, not 20 percent."
+      ],
+      "explanation": "Each year is above the previous one, ending at 13.9 percent, more than six times the 2019 value.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A clinic measured the average wait before triage over five weeks. The averages are shown in the graph.",
+      "prompt": "Which choice best describes the trend shown in the graph?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Average wait before triage",
+        "x_label": "Week",
+        "y_label": "Wait (minutes)",
+        "series": [
+          {"label": "Week 1", "value": 14},
+          {"label": "Week 2", "value": 12},
+          {"label": "Week 3", "value": 16},
+          {"label": "Week 4", "value": 11},
+          {"label": "Week 5", "value": 9}
+        ]
+      },
+      "correct": "The wait was shortest in week 5 at 9 minutes, 7 minutes less than in week 3.",
+      "wrongs": [
+        "The wait rose every week from week 1 to week 5.",
+        "The wait was shortest in week 1 at 14 minutes.",
+        "The wait never fell below 12 minutes."
+      ],
+      "why": [
+        "The wait fell from week 1 to week 2 and from week 3 to week 4, so it did not rise every week.",
+        "Week 1's 14 minutes is higher than the final three readings.",
+        "Weeks 4 and 5 recorded 11 and 9 minutes, both below 12."
+      ],
+      "explanation": "The lowest point is week 5 at 9 minutes. Subtracting it from week 3's 16 minutes gives 7.",
+      "difficulty": "Hard"
+    },
+    {
+      "scenario": "A farm recorded wheat yield in tonnes per hectare over five seasons. The yields are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Wheat yield over five seasons",
+        "x_label": "Season",
+        "y_label": "Yield (t/ha)",
+        "series": [
+          {"label": "Season 1", "value": 6.1},
+          {"label": "Season 2", "value": 6.4},
+          {"label": "Season 3", "value": 5.9},
+          {"label": "Season 4", "value": 6.8},
+          {"label": "Season 5", "value": 7.2}
+        ]
+      },
+      "correct": "Yield was highest in season 5 at 7.2 tonnes per hectare, 1.3 above season 3.",
+      "wrongs": [
+        "Yield was highest in season 3 at 5.9 tonnes per hectare.",
+        "Yield fell every season.",
+        "Yield in season 5 was lower than in season 1."
+      ],
+      "why": [
+        "Season 3's 5.9 tonnes per hectare is the lowest value in the graph.",
+        "Yield rose in seasons 2, 4 and 5, so it did not fall every season.",
+        "Season 5's 7.2 tonnes per hectare is above season 1's 6.1."
+      ],
+      "explanation": "The highest point is season 5 at 7.2. Subtracting season 3's 5.9 gives 1.3 tonnes per hectare.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A weather station recorded monthly rainfall from January to June. The totals are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Monthly rainfall, January to June",
+        "x_label": "Month",
+        "y_label": "Rainfall (mm)",
+        "series": [
+          {"label": "January", "value": 82},
+          {"label": "February", "value": 64},
+          {"label": "March", "value": 47},
+          {"label": "April", "value": 39},
+          {"label": "May", "value": 58},
+          {"label": "June", "value": 91}
+        ]
+      },
+      "correct": "Rainfall was lowest in April at 39 mm, 52 mm less than in June.",
+      "wrongs": [
+        "Rainfall rose every month from January to June.",
+        "Rainfall was lowest in June at 91 mm.",
+        "Rainfall in April exceeded rainfall in March."
+      ],
+      "why": [
+        "Rainfall fell from January to April, so it did not rise every month.",
+        "June's 91 mm is the highest total in the graph.",
+        "April's 39 mm is lower than March's 47 mm."
+      ],
+      "explanation": "The lowest point is April at 39 mm. Subtracting it from June's 91 mm gives 52 mm.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A club recorded its membership at the end of each year from 2020 to 2024. The totals are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Club membership, 2020 to 2024",
+        "x_label": "Year",
+        "y_label": "Members",
+        "series": [
+          {"label": "2020", "value": 240},
+          {"label": "2021", "value": 260},
+          {"label": "2022", "value": 285},
+          {"label": "2023", "value": 310},
+          {"label": "2024", "value": 340}
+        ]
+      },
+      "correct": "Membership rose every year, gaining 100 members between 2020 and 2024.",
+      "wrongs": [
+        "Membership fell each year.",
+        "Membership was highest in 2020 at 240.",
+        "Membership gained more than 150 members over the period."
+      ],
+      "why": [
+        "Each year is higher than the one before, so membership rose.",
+        "2020 has the lowest total in the graph, not the highest.",
+        "The gain is 340 minus 240, or 100 members, which is fewer than 150."
+      ],
+      "explanation": "Membership climbs from 240 to 340, a gain of 100 members across the five readings.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A transit agency recorded bus ridership in thousands over five years. The totals are shown in the graph.",
+      "prompt": "Which choice best describes the trend shown in the graph?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Bus ridership over five years",
+        "x_label": "Year",
+        "y_label": "Ridership (thousands)",
+        "series": [
+          {"label": "2019", "value": 52},
+          {"label": "2020", "value": 48},
+          {"label": "2021", "value": 44},
+          {"label": "2022", "value": 47},
+          {"label": "2023", "value": 55}
+        ]
+      },
+      "correct": "Ridership fell for three years before rising, and ended 3 thousand above its starting level.",
+      "wrongs": [
+        "Ridership rose in every year.",
+        "Ridership ended below its starting level.",
+        "Ridership was lowest in the final year."
+      ],
+      "why": [
+        "Ridership fell from 2019 to 2021, so it did not rise in every year.",
+        "The final value, 55, is above the first value, 52.",
+        "The final year has the highest value in the graph, not the lowest."
+      ],
+      "explanation": "The line falls from 52 to 44, then rises to 55, which is 3 thousand above the 2019 starting point.",
+      "difficulty": "Hard"
+    },
+    {
+      "scenario": "A school recorded the average test score in each of five terms. The averages are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Average test score by term",
+        "x_label": "Term",
+        "y_label": "Average score",
+        "series": [
+          {"label": "Term 1", "value": 61},
+          {"label": "Term 2", "value": 64},
+          {"label": "Term 3", "value": 63},
+          {"label": "Term 4", "value": 68},
+          {"label": "Term 5", "value": 72}
+        ]
+      },
+      "correct": "The average rose by 11 points overall, from 61 in the first term to 72 in the fifth.",
+      "wrongs": [
+        "The average fell overall.",
+        "The average was highest in the first term at 61.",
+        "The average changed by fewer than 5 points overall."
+      ],
+      "why": [
+        "The final average is higher than the first, so the overall change is a rise.",
+        "The first term has the lowest average in the graph.",
+        "The change is 72 minus 61, or 11 points, which is more than 5."
+      ],
+      "explanation": "The series ends 11 points above where it started, with a dip from 64 to 63 in the third term.",
+      "difficulty": "Easy"
+    },
+    {
+      "scenario": "A household's electricity use was recorded each month from January to June. The totals are shown in the graph.",
+      "prompt": "Which choice best describes the data in the graph?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Monthly electricity use",
+        "x_label": "Month",
+        "y_label": "Electricity use (kWh)",
+        "series": [
+          {"label": "January", "value": 410},
+          {"label": "February", "value": 380},
+          {"label": "March", "value": 350},
+          {"label": "April", "value": 330},
+          {"label": "May", "value": 360},
+          {"label": "June", "value": 420}
+        ]
+      },
+      "correct": "Use was lowest in April at 330 kWh, 90 kWh below June.",
+      "wrongs": [
+        "Use fell every month from January to June.",
+        "Use was lowest in June at 420 kWh.",
+        "Use in January was lower than in April."
+      ],
+      "why": [
+        "Use rose in May and June, so it did not fall every month.",
+        "June's 420 kWh is the highest total in the graph.",
+        "January's 410 kWh is higher than April's 330 kWh."
+      ],
+      "explanation": "The lowest point is April at 330 kWh. Subtracting it from June's 420 kWh gives 90 kWh.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A research station measured sea-ice thickness each month from November to April. The measurements are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Sea-ice thickness, November to April",
+        "x_label": "Month",
+        "y_label": "Thickness (cm)",
+        "series": [
+          {"label": "November", "value": 42},
+          {"label": "December", "value": 38},
+          {"label": "January", "value": 31},
+          {"label": "February", "value": 24},
+          {"label": "March", "value": 18},
+          {"label": "April", "value": 15}
+        ]
+      },
+      "correct": "The ice thinned every month, losing 27 cm between November and April.",
+      "wrongs": [
+        "The ice thickened from November to April.",
+        "The ice was thinnest in November at 42 cm.",
+        "The ice lost less than 20 cm over the period."
+      ],
+      "why": [
+        "Each reading is lower than the one before it, so the ice thinned.",
+        "November has the thickest reading in the graph, not the thinnest.",
+        "The loss is 42 minus 15, or 27 cm, which is more than 20."
+      ],
+      "explanation": "Thickness falls from 42 cm to 15 cm, a loss of 27 cm across the six measurements.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A long-term field trial measured the organic matter in a field's topsoil each year from 2019 to 2022. The readings are shown in the graph.",
+      "prompt": "Which choice best describes the trend shown in the graph?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Soil organic matter, 2019 to 2022",
+        "x_label": "Year",
+        "y_label": "Organic matter (%)",
+        "series": [
+          {"label": "2019", "value": 2.1},
+          {"label": "2020", "value": 2.4},
+          {"label": "2021", "value": 2.6},
+          {"label": "2022", "value": 3.0}
+        ]
+      },
+      "correct": "Organic matter rose from 2.1 percent in 2019 to 3.0 percent in 2022, a gain of 0.9 percentage points.",
+      "wrongs": [
+        "Organic matter fell each year.",
+        "Organic matter was highest in 2019 at 2.1 percent.",
+        "Organic matter rose by more than 2 percentage points."
+      ],
+      "why": [
+        "Each reading is higher than the previous one, so organic matter rose.",
+        "2019 has the lowest reading in the graph, not the highest.",
+        "The gain is 3.0 minus 2.1, or 0.9 percentage points, which is less than 2."
+      ],
+      "explanation": "The series climbs from 2.1 to 3.0, a total gain of 0.9 percentage points over four years.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A river authority tracked a fish population index over five years. The index is shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Fish population index",
+        "x_label": "Year",
+        "y_label": "Index (start = 100)",
+        "series": [
+          {"label": "Year 1", "value": 100},
+          {"label": "Year 2", "value": 92},
+          {"label": "Year 3", "value": 85},
+          {"label": "Year 4", "value": 88},
+          {"label": "Year 5", "value": 96}
+        ]
+      },
+      "correct": "The index fell to 85 before recovering to 96, ending 4 points below its starting value.",
+      "wrongs": [
+        "The index rose every year.",
+        "The index ended above its starting value.",
+        "The index reached its lowest value in the final year."
+      ],
+      "why": [
+        "The index fell in years 2 and 3, so it did not rise every year.",
+        "The final value, 96, is below the starting value of 100.",
+        "The final value is the highest since year 1, not the lowest."
+      ],
+      "explanation": "The index drops from 100 to 85, recovers to 96, and remains 4 points below where it began.",
+      "difficulty": "Hard"
+    },
+    {
+      "scenario": "A supermarket recorded the average length of the checkout queue in five periods of one day. The averages are shown in the graph.",
+      "prompt": "Which choice best describes the trend shown in the graph?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Average checkout queue by period",
+        "x_label": "Period",
+        "y_label": "People waiting",
+        "series": [
+          {"label": "Period 1", "value": 8},
+          {"label": "Period 2", "value": 11},
+          {"label": "Period 3", "value": 15},
+          {"label": "Period 4", "value": 12},
+          {"label": "Period 5", "value": 7}
+        ]
+      },
+      "correct": "The queue peaked at 15 in period 3 and fell to 7 by period 5, 8 fewer than the peak.",
+      "wrongs": [
+        "The queue grew steadily across all five periods.",
+        "The queue was longest in period 1 at 8.",
+        "The queue in period 5 was longer than in period 3."
+      ],
+      "why": [
+        "The queue fell after period 3, so it did not grow steadily.",
+        "Period 1 has the second-lowest reading in the graph, not the longest queue.",
+        "Period 5's 7 is below period 3's 15."
+      ],
+      "explanation": "The peak is period 3 at 15. Subtracting the final value of 7 gives 8 people.",
+      "difficulty": "Medium"
+    },
+    {
+      "scenario": "A conservation agency estimated forest cover in a watershed each year from 2018 to 2022. The estimates are shown in the graph.",
+      "prompt": "Which statement about the data in the graph is true?",
+      "figure": {
+        "type": "line_chart",
+        "caption": "Forest cover, 2018 to 2022",
+        "x_label": "Year",
+        "y_label": "Forest cover (%)",
+        "series": [
+          {"label": "2018", "value": 46},
+          {"label": "2019", "value": 44},
+          {"label": "2020", "value": 43},
+          {"label": "2021", "value": 41},
+          {"label": "2022", "value": 40}
+        ]
+      },
+      "correct": "Forest cover declined by 6 percentage points over the period, from 46 to 40.",
+      "wrongs": [
+        "Forest cover rose over the period.",
+        "Forest cover was lowest in 2018 at 46 percent.",
+        "Forest cover fell by more than 10 percentage points."
+      ],
+      "why": [
+        "Each reading is lower than the previous one, so cover declined.",
+        "2018 has the highest reading in the graph, not the lowest.",
+        "The decline is 46 minus 40, or 6 percentage points, which is less than 10."
+      ],
+      "explanation": "Cover drops from 46 percent to 40 percent, a net decline of 6 percentage points across five years.",
+      "difficulty": "Easy"
+    }
+  ]
+}
