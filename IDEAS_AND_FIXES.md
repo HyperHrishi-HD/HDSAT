@@ -212,3 +212,35 @@ Legend: ✅ shipped & verified · ▶ current · ☐ queued
 20. **M10 / M11 first pass (2026-10-27)** — 777 new R&W items through the QA gate (bank 6,970) and 40 new cards (deck 1,804). Parity with Math and a larger vocabulary source remain open content work, not code work.
 21. **Second R&W batch (2026-10-29)** — another 320 original items, 0 QA errors and 0 warnings; bank 7,290 (2,514 R&W / 4,776 Math). Roughly 2,262 R&W items still separate the two sections.
 22. **Deleting a simulation (2026-10-29)** — the run and its per-item responses are deleted on confirmation; the score survives in `test_score_log`, written by a database trigger, readable by its owner and unforgeable from the client. The log renders even when no saved simulations remain.
+
+---
+
+## Section 6 — Research notes for the deferred hardening work (2026-10-29, not implemented)
+
+Nothing in this section has been applied. It is the material for the three deferred items in Section 4 (security audit, Git purge, second database) and the hosting question.
+
+### 6.1 Hosting: the real ceiling is the PythonAnywhere worker
+- **Correction to an earlier assumption:** PythonAnywhere's **100 CPU-seconds/day** applies to consoles, scheduled tasks and always-on tasks, **not** to the web app. The free web app's actual limit is **one web worker**, which handles one request at a time; a burst queues. Bandwidth on free is described only as "low", with no published number. First paid tier is **Developer, $10/month**: 3 workers, 5 GB disk, 5,000 CPU-seconds for the non-web uses.
+- **Best free move:** the Vite build is pure static output, so **Cloudflare Pages Free** serves it with unlimited static requests and no adapter (500 builds/month, 20,000 files, 25 MiB/file). A Pages Function can replace `/api/health`; Workers Free covers 100k requests/day. Render's free static tier (5 GB/month egress) and GitHub Pages (100 GB/month soft) are alternatives; Vercel Hobby is non-commercial only; Fly.io no longer has a free tier.
+- **Supabase free** is still 500 MB DB, 5 GB egress + 5 GB cached, 50k MAU; Pro is $25/month with 8 GB DB and 250 GB egress. Serving the question bank from the app bundle (already true) keeps that egress off Supabase entirely.
+- **What breaks first at ~100 concurrent students:** the single PythonAnywhere worker, not the database. Moving static hosting to Cloudflare removes the front-end queue and leaves only the tiny health/functions traffic.
+
+### 6.2 Security audit: concrete checklist
+- Inventory every exposed table, view, RPC and storage bucket. The publishable key is public by design; authorization must come from `auth.uid()` and policies, never a client-supplied id.
+- Review **grants and policies together**. New Postgres functions are executable by `PUBLIC` by default — revoke globally, then grant each RPC only to `authenticated` (or `anon` where genuinely needed). RLS does not apply to functions.
+- For every `SECURITY DEFINER` function: `SET search_path = ''` and schema-qualify objects (or at minimum `public`), validate the caller and row ownership inside the body, and revoke execute from roles that do not need it.
+- **Answer keys are already in the bundled bank** because guest mode grades offline. That is acceptable for a free study tool (released practice keys are public anyway), but it means the coin economy is an honour system for guests. For signed-in students, grading and coins already run in Postgres. Do not pretend the leaderboard is cheat-proof; rate-limit award paths and keep the ledger append-only/idempotent.
+- Confirm `question_keys` stays unreadable through PostgREST (it is today), run Supabase Security Advisors, and add pgTAP tests that assert denied operations, not only allowed ones.
+- Auth throttles (Supabase's per-IP limits) are not app-level abuse controls. Coin/answer RPCs need their own per-user limits if farming becomes a problem.
+
+### 6.3 Git history purge: correct order
+1. Keep the repo private, pause pushes, and inventory every branch, tag, PR, Actions log and artifact for leaked credentials. A clean working tree proves nothing.
+2. **Rotate every credential first** (Supabase PAT, service key, Brevo SMTP/API keys that passed through chat, GitHub token). GitHub's own guidance: a committed secret is compromised even after history is rewritten.
+3. Rewrite in a fresh clone with **git-filter-repo** (2.47+ for `--sensitive-data-removal`): `--invert-paths --path …` for files, `--replace-text` for values. BFG is faster for simple path/blob removal but protects the latest commit by default.
+4. Force-push all refs (`git push --force --mirror origin`), then re-clone everywhere; stale clones must not push the old history back. GitHub Support is needed for cached PR views; forks cannot be erased.
+5. Re-scan, enable secret scanning + push protection, check Actions logs become public with the repo, and only then flip visibility. Push rulesets are disabled on a private-to-public change.
+
+### 6.4 Second database for non-user data
+- The lowest-risk option is **Neon (Postgres)**: Supabase → Neon logical replication can stream the catalogue tables, with direct connections (not the pooler), matching schemas and watched lag. DDL is not replicated, so migrations must be applied to both.
+- **Cloudflare D1 / Turso** are SQLite, not Postgres drop-ins: schema and SQL must be converted (no direct Postgres import).
+- A second database **does not inherit Supabase Auth or RLS**. Its credentials must stay behind a server/Worker, never in the SPA. Keep one writer, use shadow reads with a fallback, cut over with a freeze + checksum check, and keep the old source read-only for rollback. Avoid dual writes — two databases cannot commit atomically.
