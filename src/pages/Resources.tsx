@@ -34,10 +34,7 @@ export function ResourcesPage() {
       <Card>
         <div className="row-between">
           <div>
-            <h1>SAT &amp; PSAT Study Resource Library</h1>
-            <p className="muted">
-              Curated, verified external references, open textbooks (CC BY 4.0), and official specification guides.
-            </p>
+            <h1>Study Resources</h1>
           </div>
           <Badge tone="info">{filtered.length} resources</Badge>
         </div>

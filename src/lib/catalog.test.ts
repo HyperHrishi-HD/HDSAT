@@ -1,14 +1,27 @@
 /**
- * The store ladder: prices climb in unlock order, every emblem has its own
- * glyph (icon only, never text), and the server RPC charges exactly the price
- * the client displays.
+ * The store sells themes only. Emblems are earned from achievements, so the
+ * catalogue, the client purchase path and the purchase RPC must all agree that
+ * an emblem cannot be bought.
  */
 import { describe, expect, it } from 'vitest';
-import priceLadderSql from '../../supabase/migrations/20261020000100_cosmetic_price_ladder.sql?raw';
-import { ACHIEVEMENTS, STORE_ITEMS, achievementById, emblemFor, itemById, normalizeAchievementIds } from './catalog';
+import economySql from '../../supabase/migrations/20261025000200_emblems_earned.sql?raw';
+import {
+  ACHIEVEMENTS,
+  LEGACY_EMBLEMS,
+  STORE_ITEMS,
+  achievementById,
+  earnedEmblemIds,
+  emblemFor,
+  itemById,
+  normalizeAchievementIds,
+} from './catalog';
 
-describe('cosmetic price ladder', () => {
-  it('climbs in unlock order with no repeated price', () => {
+describe('theme store', () => {
+  it('sells themes only, climbing in unlock order with no repeated price', () => {
+    expect(STORE_ITEMS.every((item) => item.slot === 'theme')).toBe(true);
+    expect(STORE_ITEMS.every((item) => !item.icon)).toBe(true);
+    expect(STORE_ITEMS.some((item) => item.id.startsWith('badge-'))).toBe(false);
+
     const costs = STORE_ITEMS.map((item) => item.cost);
     expect(costs).toEqual([...costs].sort((a, b) => a - b));
     expect(new Set(costs).size).toBe(costs.length);
@@ -18,12 +31,17 @@ describe('cosmetic price ladder', () => {
 
   it('charges exactly what the client shows (server catalogue parity)', () => {
     for (const item of STORE_ITEMS) {
-      const match = priceLadderSql.match(new RegExp(`WHEN '${item.id}' THEN v_price := (\\d+)`));
+      const match = economySql.match(new RegExp(`WHEN '${item.id}' THEN v_price := (\\d+)`));
       expect(match, `missing server price for ${item.id}`).toBeTruthy();
       expect(Number(match![1]), item.id).toBe(item.cost);
     }
-    // No stray branch (the old function had ' plum-ink' with a leading space).
-    expect(priceLadderSql).not.toMatch(/WHEN ' /);
+    expect(economySql).not.toMatch(/WHEN ' /);
+  });
+
+  it('refuses emblem purchases on the server', () => {
+    expect(economySql).toMatch(/p_item_type IS DISTINCT FROM 'accent_theme'/);
+    expect(economySql).toContain('Emblems are earned through achievements and cannot be purchased');
+    expect(economySql).not.toMatch(/WHEN 'badge-/);
   });
 
   it('assigns positive HDCoin rewards to every achievement and normalizes legacy DB IDs', () => {
@@ -38,22 +56,31 @@ describe('cosmetic price ladder', () => {
   });
 });
 
-describe('emblem glyphs', () => {
-  it('gives every emblem its own icon and leaves themes without one', () => {
-    const emblems = STORE_ITEMS.filter((item) => item.id.startsWith('badge-'));
-    expect(emblems.length).toBeGreaterThan(1);
-    expect(emblems.every((item) => Boolean(item.icon))).toBe(true);
-    expect(new Set(emblems.map((item) => item.icon)).size).toBe(emblems.length);
-    expect(STORE_ITEMS.filter((item) => item.slot === 'theme').every((item) => !item.icon)).toBe(true);
+describe('earned emblems', () => {
+  it('gives every achievement its own emblem glyph', () => {
+    expect(ACHIEVEMENTS.every((a) => Boolean(a.icon))).toBe(true);
+    expect(new Set(ACHIEVEMENTS.map((a) => a.icon)).size).toBe(ACHIEVEMENTS.length);
   });
 
-  it('resolves an equipped emblem by id', () => {
+  it('resolves an equipped achievement or a legacy purchase, never a theme', () => {
+    expect(emblemFor('mastery-5')?.icon).toBe('award');
+    expect(emblemFor('mastery-5')?.name).toBe('Mastery');
     expect(emblemFor('badge-grapher')?.icon).toBe('graph');
-    expect(emblemFor('badge-navigator')?.icon).toBe('compass');
-    expect(emblemFor('badge-centurion')?.icon).toBe('crown');
     expect(emblemFor('oxford-navy')).toBeNull();
     expect(emblemFor(null)).toBeNull();
     expect(emblemFor('not-an-item')).toBeNull();
-    expect(itemById('badge-centurion')?.cost).toBe(400);
+    expect(itemById('badge-centurion')).toBeUndefined();
+    expect(LEGACY_EMBLEMS['badge-centurion']?.icon).toBe('crown');
+  });
+
+  it('only equips emblems the student has actually earned', () => {
+    expect(earnedEmblemIds([], [])).toEqual([]);
+    expect(earnedEmblemIds(['first-steps', 'not-a-real-achievement'], [])).toEqual([
+      'first-steps',
+    ]);
+    expect(earnedEmblemIds(['streak-7'], ['badge-navigator', 'oxford-navy'])).toEqual([
+      'streak-7',
+      'badge-navigator',
+    ]);
   });
 });

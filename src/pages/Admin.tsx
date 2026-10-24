@@ -5,13 +5,14 @@ import * as cloud from '../lib/cloud';
 import { sha256Hex } from '../lib/sha256';
 import { useApp } from '../lib/store';
 
-type SectionId = 'overview' | 'reports' | 'appeals' | 'students' | 'content';
+type SectionId = 'overview' | 'reports' | 'appeals' | 'students' | 'security' | 'content';
 
 const SECTIONS: { id: SectionId; label: string; icon: IconName }[] = [
   { id: 'overview', label: 'Overview', icon: 'dashboard' },
   { id: 'reports', label: 'Question reports', icon: 'flag' },
-  { id: 'appeals', label: 'Appeals & safety', icon: 'shield' },
+  { id: 'appeals', label: 'Appeals & safety', icon: 'clipboard-check' },
   { id: 'students', label: 'Students', icon: 'users' },
+  { id: 'security', label: 'Sign-in attempts', icon: 'shield' },
   { id: 'content', label: 'Content health', icon: 'layers' },
 ];
 
@@ -162,6 +163,7 @@ export function AdminPage() {
   const [reports, setReports] = useState<cloud.AdminPage<cloud.AdminReportRow> | null>(null);
   const [appeals, setAppeals] = useState<cloud.AdminPage<cloud.AdminAppealRow> | null>(null);
   const [students, setStudents] = useState<cloud.AdminPage<cloud.AdminStudentRow> | null>(null);
+  const [attempts, setAttempts] = useState<cloud.AdminLoginAttempt[] | null>(null);
   const [reasonOptions, setReasonOptions] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -312,6 +314,10 @@ export function AdminPage() {
           const page = await cloud.adminListStudents(adminToken, { limit: 100 });
           if (cancelled) return;
           setStudents(page);
+        } else if (section === 'security') {
+          const rows = await cloud.adminLoginAttempts(adminToken);
+          if (cancelled) return;
+          setAttempts(rows);
         }
       } catch (err) {
         if (!cancelled) setError((err as Error).message);
@@ -514,6 +520,7 @@ export function AdminPage() {
     setReports(null);
     setAppeals(null);
     setStudents(null);
+    setAttempts(null);
     setSelected(new Set());
     setReplyTarget(null);
     setReplyTitle('');
@@ -905,6 +912,9 @@ export function AdminPage() {
                 <span>{item.label}</span>
                 {item.id === 'reports' && openReports > 0 ? <em>{openReports}</em> : null}
                 {item.id === 'appeals' && openAppeals > 0 ? <em>{openAppeals}</em> : null}
+                {item.id === 'security' && (attempts?.length ?? 0) > 0 ? (
+                  <em>{attempts?.length}</em>
+                ) : null}
               </button>
             ))}
           </nav>
@@ -1263,6 +1273,91 @@ export function AdminPage() {
                             ? 'No accounts.'
                             : `${(students?.items ?? []).length} of ${students?.total ?? 0} accounts`}
                       </span>
+                    </div>
+                  </section>
+                </>
+              ) : null}
+
+              {section === 'security' ? (
+                <>
+                  <SectionHead title="Sign-in attempts" />
+                  {confirmBar()}
+
+                  <p className="adm-dim" style={{ marginTop: 0 }}>
+                    Wrong passcodes, one row per device. IP and browser come from the request
+                    itself.
+                  </p>
+
+                  <section className="adm-card adm-card-flush">
+                    <div className="adm-table-wrap">
+                      <table className="adm-table">
+                        <thead>
+                          <tr>
+                            <th>Device</th>
+                            <th>IP</th>
+                            <th>Tries</th>
+                            <th>First</th>
+                            <th>Last</th>
+                            <th aria-label="Actions" />
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {(attempts ?? []).map((row) => (
+                            <tr key={row.id}>
+                              <td title={row.device}>
+                                <span className="adm-device">{row.device}</span>
+                              </td>
+                              <td className="mono">{row.ip}</td>
+                              <td>{row.attempts}</td>
+                              <td className="adm-dim">{relativeAge(row.first_seen_at)}</td>
+                              <td className="adm-dim">{relativeAge(row.last_seen_at)}</td>
+                              <td>
+                                <button
+                                  type="button"
+                                  className="adm-row-action"
+                                  disabled={busy}
+                                  onClick={() =>
+                                    void runAction('Removed that device.', async () => {
+                                      await cloud.adminDeleteLoginAttempt(adminToken, row.id);
+                                    })
+                                  }
+                                >
+                                  Delete
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="adm-card-foot">
+                      <span className="adm-dim">
+                        {loading
+                          ? 'Loading…'
+                          : (attempts ?? []).length === 0
+                            ? 'No wrong passcodes recorded.'
+                            : `${(attempts ?? []).length} device${
+                                (attempts ?? []).length === 1 ? '' : 's'
+                              }`}
+                      </span>
+                      {(attempts ?? []).length > 0 ? (
+                        <button
+                          type="button"
+                          className="adm-row-action"
+                          disabled={busy}
+                          onClick={() =>
+                            setPendingConfirm({
+                              prompt: 'Delete every recorded device?',
+                              run: async () => {
+                                await cloud.adminClearLoginAttempts(adminToken);
+                                setActionMessage('Cleared the sign-in attempt log.');
+                              },
+                            })
+                          }
+                        >
+                          Clear all
+                        </button>
+                      ) : null}
                     </div>
                   </section>
                 </>

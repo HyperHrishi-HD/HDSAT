@@ -57,6 +57,7 @@ export type QuestState = Record<string, QuestProgress>;
 const QUEST_KEY = 'hdsat.quests.v1';
 const QOTD_DISMISS_KEY = 'hdsat.qotd.dismissed.v1';
 const QOTD_SOLVED_KEY = 'hdsat.qotd.solved.v1';
+const QOTD_OPEN_KEY = 'hdsat.qotd.open.v1';
 
 function emptyProgress(): QuestProgress {
   return { answered: [], correct: 0, completedAt: null };
@@ -157,4 +158,13 @@ export function isQuestionOfTheDaySolved(date: string = todayKey()): boolean {
 
 export function markQuestionOfTheDaySolved(date: string = todayKey()): void {
   writeJson(QOTD_SOLVED_KEY, date);
+}
+
+/** Dashboard strip: whether it was left open, so a reload keeps the choice. */
+export function isQuestionOfTheDayExpanded(): boolean {
+  return readJson<boolean>(QOTD_OPEN_KEY) === true;
+}
+
+export function setQuestionOfTheDayExpanded(open: boolean): void {
+  writeJson(QOTD_OPEN_KEY, open);
 }

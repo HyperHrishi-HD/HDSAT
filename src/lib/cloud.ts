@@ -1,5 +1,11 @@
 import type { SupabaseClient } from '@supabase/supabase-js';
 import { normalizeAchievementIds } from './catalog';
+import {
+  PASSWORD_RESET_REQUESTED_KEY,
+  type PasswordActionClaim,
+  type PasswordCooldown,
+  type PasswordPath,
+} from './password';
 import { getSupabase } from './supabaseClient';
 import type {
   AttemptMode,
@@ -39,6 +45,10 @@ export interface CloudSnapshot {
   testAttempts: TestAttempt[];
   preferredExam: string;
   displayName: string;
+  /** Null until the student proves they own the address with an emailed code. */
+  emailVerifiedAt: string | null;
+  /** ISO date (YYYY-MM-DD) of the real test, or null. */
+  targetTestDate: string | null;
 }
 
 const DB_MODE: Record<AttemptMode, string> = {
@@ -94,6 +104,14 @@ export function isConfirmedUser(user: { email_confirmed_at?: string | null; conf
   return Boolean(user && (user.email_confirmed_at || user.confirmed_at));
 }
 
+/** Thrown when signup is asked for an address that already has an account. */
+export class AccountExistsError extends Error {
+  constructor(email: string) {
+    super(`An account already exists for ${email}.`);
+    this.name = 'AccountExistsError';
+  }
+}
+
 export async function signUp(
   email: string,
   password: string,
@@ -114,27 +132,65 @@ export async function signUp(
   // with no identities. Say so plainly instead of pretending the signup worked.
   const identities = (data.user as { identities?: unknown[] } | null)?.identities;
   if (data.user && Array.isArray(identities) && identities.length === 0) {
-    throw new Error(
-      'An account already exists for this email. Check your password, or resend the confirmation email if you never confirmed it.'
-    );
+    throw new AccountExistsError(email.trim());
   }
   return data;
 }
 
 /**
- * Confirms a signup with the 6-digit token from the branded email. Works even
- * when the confirmation link cannot open on this device, and signs the student
- * in on success so their device-only practice can sync.
+ * Confirms an email with the 6-digit token from the branded email.
+ *
+ * Sign-in no longer waits for this: the account works immediately and the code
+ * is what marks it verified. Email OTP is used rather than the signup token so
+ * the same call works for an account that was created months ago, and it signs
+ * the student in on success (a no-op when their session is already live).
  */
 export async function verifySignupCode(email: string, token: string) {
   const supabase = client();
   const { data, error } = await supabase.auth.verifyOtp({
     email,
     token: token.trim(),
-    type: 'signup',
+    type: 'email',
   });
   if (error) throw error;
+  await markEmailVerified();
   return data;
+}
+
+/**
+ * Records the proof of address on the account. Idempotent, and safe to retry:
+ * the first success is the permanent answer.
+ */
+export async function markEmailVerified(): Promise<string | null> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('mark_email_verified');
+  if (error) throw error;
+  return (data as string | null) ?? null;
+}
+
+/**
+ * Today's remaining mail budget. Brevo's free plan allows 300 sends a day, so
+ * the app stops asking at 280 instead of letting the provider return an error.
+ * A missing RPC (older project) reports "allowed" — the per-address daily rule
+ * still applies.
+ */
+export async function emailSendBudget(): Promise<{ used: number; limit: number; remaining: number; allowed: boolean }> {
+  const fallback = { used: 0, limit: 280, remaining: 280, allowed: true };
+  const supabase = getSupabase();
+  if (!supabase) return fallback;
+  try {
+    const { data, error } = await supabase.rpc('email_send_budget');
+    if (error || !data) return fallback;
+    const row = data as { used?: number; limit?: number; remaining?: number; allowed?: boolean };
+    return {
+      used: Number(row.used ?? 0),
+      limit: Number(row.limit ?? 280),
+      remaining: Number(row.remaining ?? 280),
+      allowed: row.allowed !== false,
+    };
+  } catch {
+    return fallback;
+  }
 }
 
 /**
@@ -171,10 +227,11 @@ export async function signOutCloud() {
 
 export async function resendConfirmation(email: string) {
   const supabase = client();
-  const { error } = await supabase.auth.resend({
-    type: 'signup',
+  // Magic-link OTP, not a signup resend: accounts are usable before they are
+  // verified, so this has to work for any account age and must not create one.
+  const { error } = await supabase.auth.signInWithOtp({
     email,
-    options: { emailRedirectTo: authRedirectUrl() },
+    options: { shouldCreateUser: false, emailRedirectTo: authRedirectUrl() },
   });
   if (error) throw error;
 }
@@ -199,7 +256,11 @@ export async function fetchSnapshot(): Promise<CloudSnapshot> {
         .in('status', ['completed', 'abandoned'])
         .order('completed_at', { ascending: false })
         .limit(1000),
-      supabase.from('profiles').select('display_name, preferred_exam, unlocked_cosmetics').eq('user_id', userId).maybeSingle(),
+      supabase
+        .from('profiles')
+        .select('display_name, preferred_exam, unlocked_cosmetics, email_verified_at, target_test_date')
+        .eq('user_id', userId)
+        .maybeSingle(),
     ]);
 
   const statsRow = statsRes.data ?? {};
@@ -297,6 +358,8 @@ export async function fetchSnapshot(): Promise<CloudSnapshot> {
     testAttempts,
     preferredExam: String(profileRes.data?.preferred_exam ?? 'SAT'),
     displayName: String(profileRes.data?.display_name ?? 'Student'),
+    emailVerifiedAt: (profileRes.data?.email_verified_at as string | null) ?? null,
+    targetTestDate: (profileRes.data?.target_test_date as string | null) ?? null,
   };
 }
 
@@ -388,14 +451,14 @@ export async function completeActivityCloud(args: {
   return data as { coins_awarded: number; hd_coins: number };
 }
 
+/** Themes are the only purchasable cosmetic; the RPC refuses emblem slots. */
 export async function purchaseCosmeticCloud(
-  itemId: string,
-  itemType: 'accent_theme' | 'avatar_badge'
+  itemId: string
 ): Promise<{ ok: boolean; reason?: string; hd_coins?: number }> {
   const supabase = client();
   const { data, error } = await supabase.rpc('purchase_cosmetic_item', {
     p_item_id: itemId,
-    p_item_type: itemType,
+    p_item_type: 'accent_theme',
     p_local_request_id: `req-${Date.now()}`,
   });
   if (error) throw error;
@@ -407,6 +470,151 @@ export async function purchaseCosmeticCloud(
  * and the profiles mirror keeps the cloud snapshot (and any future admin view)
  * consistent with it.
  */
+/**
+ * Password changes are gated by the database (1 per hour, 1 recovery link per
+ * day). Supabase Auth performs the hash; this layer only asks permission, does
+ * the change and reports the outcome.
+ */
+function passwordRpcError(message: string): Error | null {
+  const routines = [
+    'claim_password_action',
+    'complete_password_action',
+    'cancel_password_action',
+    'password_action_status',
+  ];
+  if (routines.some((routine) => isMissingRoutineError(message, routine))) {
+    return new Error('Password changes are not available on this deployment yet.');
+  }
+  return null;
+}
+
+function readCooldown(raw: unknown): PasswordCooldown {
+  const value = (raw ?? {}) as { next_allowed_at?: string | null; retry_after_seconds?: number };
+  return {
+    nextAllowedAt: value.next_allowed_at ?? null,
+    retryAfterSeconds: Number(value.retry_after_seconds ?? 0),
+  };
+}
+
+export async function fetchPasswordCooldowns(
+  email: string
+): Promise<Record<PasswordPath, PasswordCooldown>> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('password_action_status');
+  if (error) throw passwordRpcError(error.message) ?? error;
+  const payload = (data ?? {}) as Record<string, unknown>;
+  // Recovery links are limited per address (so signed-out requests share the
+  // same daily budget); the password path is limited per account.
+  const wait = await emailRequestWait(email, 'reset').catch(() => 0);
+  return {
+    password: readCooldown(payload.password),
+    email: { nextAllowedAt: null, retryAfterSeconds: wait },
+  };
+}
+
+/** Reserves one action. `allowed: false` carries the wait that remains. */
+export async function claimPasswordAction(via: PasswordPath): Promise<PasswordActionClaim> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('claim_password_action', { p_via: via });
+  if (error) throw passwordRpcError(error.message) ?? error;
+  const payload = (data ?? {}) as {
+    allowed?: boolean;
+    action_id?: string | null;
+    next_allowed_at?: string | null;
+    retry_after_seconds?: number;
+  };
+  return {
+    allowed: Boolean(payload.allowed),
+    actionId: payload.action_id ?? null,
+    nextAllowedAt: payload.next_allowed_at ?? null,
+    retryAfterSeconds: Number(payload.retry_after_seconds ?? 0),
+  };
+}
+
+export async function completePasswordAction(actionId: string): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.rpc('complete_password_action', { p_action_id: actionId });
+  if (error) throw passwordRpcError(error.message) ?? error;
+}
+
+/** Releases a claim so a rejected password does not start a cooldown. */
+export async function cancelPasswordAction(actionId: string): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.rpc('cancel_password_action', { p_action_id: actionId });
+  if (error) throw passwordRpcError(error.message) ?? error;
+}
+
+/** Re-authenticates with the current password (never stored, never echoed). */
+export async function verifyCurrentPassword(password: string): Promise<boolean> {
+  const supabase = client();
+  const { data: userData } = await supabase.auth.getUser();
+  const email = userData.user?.email;
+  if (!email) throw new Error('Sign in again to change your password.');
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
+  if (!error) return true;
+  const message = error.message ?? '';
+  if (/invalid login credentials|invalid password/i.test(message)) return false;
+  throw error;
+}
+
+export async function updatePassword(password: string, signOutOthers: boolean): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.auth.updateUser({ password });
+  if (error) throw error;
+  if (!signOutOthers) return;
+  try {
+    await supabase.auth.signOut({ scope: 'others' });
+  } catch {
+    /* the password is already changed; the session sweep is best effort */
+  }
+}
+
+export type EmailRequestKind = 'reset' | 'confirm';
+
+/**
+ * Seconds left before this address may receive another email of this kind.
+ * Keyed by address, so it also covers people who are signed out.
+ */
+export async function emailRequestWait(email: string, kind: EmailRequestKind): Promise<number> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('email_request_next_allowed', {
+    p_email: email.trim(),
+    p_kind: kind,
+  });
+  if (error) throw error;
+  const iso = typeof data === 'string' ? data : null;
+  if (!iso) return 0;
+  const target = Date.parse(iso);
+  return Number.isNaN(target) ? 0 : Math.max(0, Math.ceil((target - Date.now()) / 1000));
+}
+
+/** Records a send that the mail provider accepted. Never call it before that. */
+export async function recordEmailRequest(email: string, kind: EmailRequestKind): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.rpc('record_email_request', {
+    p_email: email.trim(),
+    p_kind: kind,
+  });
+  if (error) throw error;
+}
+
+/**
+ * Sends the recovery link. The device marker lets main.tsx recognise the PKCE
+ * code as a recovery link rather than a signup confirmation.
+ */
+export async function requestPasswordReset(email: string): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+    redirectTo: authRedirectUrl(),
+  });
+  if (error) throw error;
+  try {
+    window.sessionStorage.setItem(PASSWORD_RESET_REQUESTED_KEY, String(Date.now()));
+  } catch {
+    /* private mode: the implicit flow still carries type=recovery */
+  }
+}
+
 export async function updateDisplayNameCloud(displayName: string): Promise<string> {
   const supabase = client();
   const name = displayName.trim().slice(0, 40);
@@ -431,6 +639,22 @@ export async function setPreferredExamCloud(exam: string) {
   const { error } = await supabase
     .from('profiles')
     .update({ preferred_exam: exam, updated_at: new Date().toISOString() })
+    .eq('user_id', userId);
+  if (error) throw error;
+}
+
+/** The assessment and its real test date are one goal; save them together. */
+export async function setTestGoalCloud(exam: string, testDate: string | null) {
+  const supabase = client();
+  const userId = await getUserId();
+  if (!userId) return;
+  const { error } = await supabase
+    .from('profiles')
+    .update({
+      preferred_exam: exam,
+      target_test_date: testDate || null,
+      updated_at: new Date().toISOString(),
+    })
     .eq('user_id', userId);
   if (error) throw error;
 }
@@ -471,6 +695,8 @@ export async function recordTestCloud(
     assessment: string;
     durationSeconds: number;
     status?: 'completed' | 'incomplete';
+    /** Unverified (light) account: keep the summary, skip per-item rows. */
+    light?: boolean;
   }
 ) {
   const supabase = client();
@@ -533,6 +759,13 @@ export async function recordTestCloud(
       }))
   );
 
+  // A light account has not confirmed its address, so the cloud keeps the
+  // attempt, score and module state (enough for reports and resume) and skips
+  // the per-item copy, which is the largest thing a test writes.
+  if (options.light && answered.length > 0) {
+    return { id: data.id as string, skippedResponses: answered.length, lightLimited: true };
+  }
+
   // Skip responses whose question has not been seeded into this project yet.
   // They remain in the browser and still appear in the local report; only the
   // cloud copy is limited until the bank is re-seeded.
@@ -561,7 +794,7 @@ export async function recordTestCloud(
     }
     if (responseError) throw responseError;
   }
-  return { id: data.id as string, skippedResponses };
+  return { id: data.id as string, skippedResponses, lightLimited: false };
 }
 
 /**
@@ -853,6 +1086,36 @@ export async function adminUnlock(args: {
   });
   if (error) throw error;
   return data as AdminUnlockResult;
+}
+
+export interface AdminLoginAttempt {
+  id: number;
+  ip: string;
+  device: string;
+  attempts: number;
+  first_seen_at: string;
+  last_seen_at: string;
+}
+
+/** Wrong-passcode rows, one per device (IP + user agent). */
+export async function adminLoginAttempts(token: string): Promise<AdminLoginAttempt[]> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('admin_list_login_attempts', { p_token: token });
+  if (error) throw error;
+  const payload = (data ?? {}) as { items?: AdminLoginAttempt[] };
+  return payload.items ?? [];
+}
+
+export async function adminDeleteLoginAttempt(token: string, id: number): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.rpc('admin_delete_login_attempt', { p_token: token, p_id: id });
+  if (error) throw error;
+}
+
+export async function adminClearLoginAttempts(token: string): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.rpc('admin_clear_login_attempts', { p_token: token });
+  if (error) throw error;
 }
 
 export async function adminSessionValid(token: string): Promise<boolean> {

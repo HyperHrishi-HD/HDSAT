@@ -173,6 +173,8 @@ export interface TestAttempt {
 
 export interface UserSettings {
   assessment: Assessment;
+  /** ISO date (YYYY-MM-DD) of the real test the student is working towards. */
+  testDate?: string | null;
   excludePreviouslyCorrect: boolean;
   excludeReleasedPracticeSet: boolean;
   timerSound: boolean;
@@ -217,19 +219,41 @@ export interface Achievement {
   id: string;
   name: string;
   description: string;
-  icon: string;
+  /** The emblem glyph this achievement grants when earned. */
+  icon: EmblemIcon;
   rewardCoins: number;
 }
 
-/** Emblem glyphs each cosmetic can render as in the top bar. */
-export type EmblemIcon = 'compass' | 'graph' | 'crown';
+/** Emblem glyphs an earned achievement (or a legacy purchase) renders in the top bar. */
+export type EmblemIcon =
+  | 'compass'
+  | 'graph'
+  | 'crown'
+  | 'footprints'
+  | 'hammer'
+  | 'target'
+  | 'calendar-check'
+  | 'calendar-heart'
+  | 'library'
+  | 'clipboard-check'
+  | 'zap'
+  | 'award'
+  | 'flame'
+  | 'layers'
+  | 'coins';
 
 export interface StoreItem {
   id: string;
   name: string;
   description: string;
   cost: number;
-  slot: 'theme' | 'flair' | 'utility';
-  /** Emblem items render this glyph (icon only, never a text label). */
+  /** Themes are the only purchasable cosmetic; emblems are earned. */
+  slot: 'theme';
   icon?: EmblemIcon;
+}
+
+export interface Emblem {
+  id: string;
+  name: string;
+  icon: EmblemIcon;
 }

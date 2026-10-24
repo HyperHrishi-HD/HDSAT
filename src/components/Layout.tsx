@@ -4,17 +4,15 @@ import { emblemFor } from '../lib/catalog';
 import { hasSeenWelcome, markWelcomeSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
 import { AuthModal } from './AuthModal';
+import { VerifyEmailBanner } from './VerifyEmailBanner';
 import {
   COPYRIGHT_PATH,
-  CREATOR_GITHUB_URL,
-  CREATOR_HANDLE,
-  CREATOR_YOUTUBE_URL,
+  CREATOR_NAME,
   CREDITS_PATH,
   PRIVACY_PATH,
-  SUPPORT_EMAIL,
   TERMS_PATH,
 } from '../lib/legal';
-import { Alert, Badge, Icon, InfoTip, type IconName } from './ui';
+import { Alert, Badge, Icon, type IconName } from './ui';
 
 const NAV: { to: string; label: string; icon: IconName; end?: boolean }[] = [
   { to: '/', label: 'Dashboard', icon: 'dashboard', end: true },
@@ -285,7 +283,7 @@ export function Layout() {
                   <Icon name="cloud" size={12} />
                   <ScrollName text={displayName} />
                 </span>
-              ) : pending ? (
+              ) : pending && !app.user ? (
                 <Badge tone="warn">
                   <button
                     type="button"
@@ -336,24 +334,9 @@ export function Layout() {
 
         {showWelcome && app.cloudConfigured && !app.user ? (
           <div className="welcome-banner" role="status">
-            <div className="row-between">
-              <div>
-                <strong>Welcome to HDSAT.</strong> Start studying right away — no account needed.
-                Practice, flashcards and full tests save automatically in <em>this browser</em>.
-              </div>
-              <InfoTip label="How guest & cloud sync work">
-                <ul style={{ margin: 0, paddingLeft: 18 }}>
-                  <li>
-                    <strong>HDCoins shown now are local and provisional.</strong> If you create an
-                    account and confirm your email, your cloud balance takes over.
-                  </li>
-                  <li>
-                    On your first sign-in we upload this device&apos;s history to your account once,
-                    so nothing you practised is lost.
-                  </li>
-                </ul>
-              </InfoTip>
-            </div>
+            <span>
+              <strong>Welcome to HDSAT.</strong> Saved on this device.
+            </span>
             <div className="welcome-actions">
               <button
                 type="button"
@@ -361,14 +344,16 @@ export function Layout() {
                 onClick={() => app.actions.openAuthModal(pending ? 'verify' : 'signin')}
               >
                 <Icon name="account" size={13} />
-                <span>Create account or sign in</span>
+                <span>Sign in to sync</span>
               </button>
               <button type="button" className="btn btn-outline btn-sm" onClick={dismissWelcome}>
-                Keep studying as a guest
+                Keep as guest
               </button>
             </div>
           </div>
         ) : null}
+
+        <VerifyEmailBanner />
 
         {app.error ? (
           <Alert tone="error" onDismiss={app.actions.dismissMessages}>
@@ -391,14 +376,7 @@ export function Layout() {
             <Link to={PRIVACY_PATH}>Privacy &amp; Data Rights</Link>
             <Link to={COPYRIGHT_PATH}>Copyright &amp; Content Policy</Link>
             <Link to={CREDITS_PATH}>Credits</Link>
-            <Link to="/account">Appeals &amp; safety reports</Link>
-            <a href={CREATOR_YOUTUBE_URL} target="_blank" rel="noopener noreferrer">
-              By {CREATOR_HANDLE} (YouTube)
-            </a>
-            <a href={CREATOR_GITHUB_URL} target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
-            {SUPPORT_EMAIL ? <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a> : null}
+            <span className="legal-credit">By {CREATOR_NAME}</span>
           </nav>
         </footer>
       </div>

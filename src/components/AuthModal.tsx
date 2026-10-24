@@ -1,14 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Alert, Button, Field, Select, Toggle } from './ui';
+import * as cloud from '../lib/cloud';
 import { validateConsent } from '../lib/dataRights';
 import { AGE_BANDS, COPYRIGHT_PATH, LEGAL_VERSION, MIN_AGE, PRIVACY_PATH, TERMS_PATH } from '../lib/legal';
+import { formatCooldown } from '../lib/password';
 import { formatRemainingHours } from '../lib/storage';
 import { useApp } from '../lib/store';
 
+/**
+ * One entry point for accounts.
+ *
+ * The sign-in card doubles as sign-up: a password that matches an account signs
+ * in, and a new address creates one. Whenever the account turns out to exist
+ * but is not confirmed, this opens a second, narrower card that asks only for
+ * the 6-digit code — the same fields and buttons, so the jump is obvious. There
+ * are no tabs: the code card appears exactly when a code is what is needed.
+ */
 export function AuthModal() {
   const app = useApp();
-  const [email, setEmail] = useState(app.pendingAccount?.email ?? '');
+  const [email, setEmail] = useState(app.pendingAccount?.email ?? app.user?.email ?? '');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState(app.pendingAccount?.displayName ?? '');
   const [ageBand, setAgeBand] = useState('');
@@ -27,6 +38,12 @@ export function AuthModal() {
     }
   }, [app.pendingAccount, email]);
 
+  // A signed-in light account is confirming the address it already owns, so the
+  // field arrives filled instead of asking them to retype it.
+  useEffect(() => {
+    if (app.authModalOpen && app.user?.email && !email) setEmail(app.user.email);
+  }, [app.authModalOpen, app.user?.email, email]);
+
   useEffect(() => {
     if (!app.authModalOpen) return;
     const onKeyDown = (e: KeyboardEvent) => {
@@ -44,6 +61,49 @@ export function AuthModal() {
   const remainingMs = app.pendingAccount
     ? Math.max(0, app.pendingAccount.expiresAt - Date.now())
     : 0;
+  const isVerify = app.authModalView === 'verify';
+
+  const openVerify = (address: string, message: string) => {
+    if (address) setEmail(address);
+    setPassword('');
+    setFormError(null);
+    setStatusMessage(message);
+    app.actions.openAuthModal('verify');
+  };
+
+  const sendRecoveryLink = async (address: string) => {
+    if (!address) {
+      setFormError('Enter your email address first.');
+      return;
+    }
+    const wait = await cloud.emailRequestWait(address, 'reset').catch(() => 0);
+    if (wait > 0) {
+      setStatusMessage(
+        `A recovery link was already sent to ${address}. You can request another in ${formatCooldown(wait)}.`
+      );
+      return;
+    }
+    await cloud.requestPasswordReset(address);
+    await cloud.recordEmailRequest(address, 'reset').catch(() => {});
+    setStatusMessage('Recovery link sent. Open it to set a new password.');
+  };
+
+  const handleForgotPassword = async () => {
+    setFormError(null);
+    setStatusMessage(null);
+    if (!targetEmail) {
+      setFormError('Enter your email address first.');
+      return;
+    }
+    setBusy(true);
+    try {
+      await sendRecoveryLink(targetEmail);
+    } catch (err) {
+      setFormError((err as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,9 +122,9 @@ export function AuthModal() {
         return;
       }
       if (attempt.reason === 'unconfirmed') {
-        app.actions.openAuthModal('verify');
-        setStatusMessage(
-          `Your account exists, and a confirmation email is active for ${email.trim()}. Enter the 6-digit code below.`
+        openVerify(
+          email.trim(),
+          `This account is waiting for its confirmation email. Enter the 6-digit code sent to ${email.trim()}.`
         );
         return;
       }
@@ -75,18 +135,34 @@ export function AuthModal() {
 
       const consent = validateConsent({ ageBand, guardianConsent, acceptedTerms });
       if (!consent.ok) {
-        setFormError('New account: ' + consent.errors.join(' '));
+        // The only way to know whether this address is already registered is to
+        // ask for a signup, which needs consent. Say that plainly instead of
+        // showing a bare "new account" validation error.
+        setFormError(
+          'That email and password did not sign in. New here? Complete the age and policy section below, then press Continue again — or use Forgot password.'
+        );
         return;
       }
-      const msg = await app.actions.signUp(
-        email.trim(),
-        password,
-        displayName.trim() || 'Student',
-        consent.metadata
-      );
-      setStatusMessage(msg);
-      setPassword('');
-      app.actions.openAuthModal('verify');
+      try {
+        const result = await app.actions.signUp(
+          email.trim(),
+          password,
+          displayName.trim() || 'Student',
+          consent.metadata
+        );
+        setPassword('');
+        setStatusMessage(result.message);
+        if (result.verificationRequired) app.actions.openAuthModal('verify');
+      } catch (err) {
+        if (err instanceof cloud.AccountExistsError) {
+          openVerify(
+            email.trim(),
+            `That email already has an account. Enter its 6-digit code, or request a recovery link below.`
+          );
+          return;
+        }
+        throw err;
+      }
     } catch (err) {
       setFormError((err as Error).message);
     } finally {
@@ -97,7 +173,6 @@ export function AuthModal() {
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
     setFormError(null);
-    setStatusMessage(null);
     if (!targetEmail || !verifyCode.trim()) {
       setFormError('Enter your email address and the 6-digit code from the confirmation email.');
       return;
@@ -123,11 +198,22 @@ export function AuthModal() {
     }
     try {
       await app.actions.resendVerification(targetEmail);
-      setStatusMessage(
-        'Confirmation email sent. Your 6-digit code works for a full 24 hours.'
-      );
+      setStatusMessage('Confirmation email sent. The 6-digit code works for 24 hours.');
     } catch (err) {
       setFormError((err as Error).message);
+    }
+  };
+
+  const handleRecoveryFromVerify = async () => {
+    setFormError(null);
+    setStatusMessage(null);
+    setVerifying(true);
+    try {
+      await sendRecoveryLink(targetEmail);
+    } catch (err) {
+      setFormError((err as Error).message);
+    } finally {
+      setVerifying(false);
     }
   };
 
@@ -136,54 +222,24 @@ export function AuthModal() {
       className="modal-backdrop"
       role="dialog"
       aria-modal="true"
-      aria-label="Sign in or create an account"
+      aria-label={isVerify ? 'Confirm your email' : 'Sign in or create an account'}
       onClick={(e) => {
         if (e.target === e.currentTarget) app.actions.closeAuthModal();
       }}
     >
-      <div className="modal-card auth-modal-card">
+      <div className={`modal-card auth-modal-card${isVerify ? ' auth-modal-confirm' : ''}`}>
         <div className="row-between" style={{ marginBottom: 8 }}>
           <div>
             <h2 style={{ margin: 0 }}>
-              {app.authModalView === 'verify'
-                ? 'Confirm your email (24-hour code)'
-                : 'Sign in or create an account'}
+              {isVerify ? 'Confirm your email' : 'Sign in or create an account'}
             </h2>
             <p className="muted" style={{ margin: '4px 0 0' }}>
-              {app.authModalView === 'verify'
-                ? 'Your confirmation code stays active for a full 24 hours so you only need one email.'
-                : 'Sync your practice history, streaks, and HDCoins across devices.'}
+              {isVerify ? 'The code works for 24 hours.' : 'Sync across devices.'}
             </p>
           </div>
           <Button variant="ghost" size="sm" onClick={app.actions.closeAuthModal}>
             Close
           </Button>
-        </div>
-
-        <div className="row" style={{ marginBottom: 12 }}>
-          <Button
-            type="button"
-            size="sm"
-            variant={app.authModalView === 'signin' ? 'primary' : 'outline'}
-            onClick={() => app.actions.openAuthModal('signin')}
-          >
-            Sign in / Sign up
-          </Button>
-          <Button
-            type="button"
-            size="sm"
-            variant={app.authModalView === 'verify' ? 'primary' : 'outline'}
-            onClick={() => app.actions.openAuthModal('verify')}
-          >
-            Enter 6-digit code
-          </Button>
-          <Link
-            to="/account"
-            className="btn btn-ghost btn-sm"
-            onClick={app.actions.closeAuthModal}
-          >
-            Full Account Page
-          </Link>
         </div>
 
         {statusMessage ? <Alert tone="notice">{statusMessage}</Alert> : null}
@@ -196,28 +252,25 @@ export function AuthModal() {
               Guest Mode on this device.
             </p>
           </div>
-        ) : app.authModalView === 'verify' ? (
+        ) : isVerify ? (
           <form onSubmit={handleVerify} className="stack">
-            <div className="muted-block">
-              <strong>One email per 24 hours</strong>
-              <p className="muted" style={{ margin: '4px 0 0' }}>
-                {app.pendingAccount && remainingMs > 0
-                  ? `Active code for ${app.pendingAccount.email} (${formatRemainingHours(
-                      remainingMs
-                    )} remaining in its 24-hour window). You can also confirm anytime from the Account tab.`
-                  : 'Enter the email address you signed up with and the 6-digit code from your confirmation email.'}
+            {app.user ? (
+              <p className="muted" style={{ margin: 0 }}>
+                You are signed in. Confirming lifts the light-account limit: full answer history and
+                test detail are kept in the cloud.
               </p>
-            </div>
+            ) : null}
             <Field label="Email Address">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@example.com"
+                autoComplete="email"
                 required
               />
             </Field>
-            <Field label="6-Digit Confirmation Code">
+            <Field label="6-digit code">
               <input
                 type="text"
                 inputMode="numeric"
@@ -225,17 +278,51 @@ export function AuthModal() {
                 onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
                 placeholder="123456"
                 autoComplete="one-time-code"
+                autoFocus
                 required
               />
             </Field>
             <div className="row">
               <Button type="submit" disabled={verifying}>
-                {verifying ? 'Confirming…' : 'Confirm & Sign In'}
+                {verifying ? 'Confirming…' : app.user ? 'Confirm' : 'Confirm & Sign In'}
               </Button>
-              <Button type="button" variant="outline" onClick={handleResend}>
-                Send / Check 24h Window
+              <Button type="button" variant="outline" onClick={() => void handleResend()}>
+                Resend
               </Button>
+              {app.user ? (
+                <Button type="button" variant="ghost" onClick={app.actions.closeAuthModal}>
+                  Later
+                </Button>
+              ) : null}
             </div>
+            {app.pendingAccount && remainingMs > 0 ? (
+              <p className="muted" style={{ margin: 0 }}>
+                {app.pendingAccount.email} · {formatRemainingHours(remainingMs)} left
+              </p>
+            ) : null}
+            <p className="auth-switch">
+              <button
+                type="button"
+                className="link-button"
+                onClick={() => void handleRecoveryFromVerify()}
+                disabled={verifying}
+              >
+                Email me a recovery link
+              </button>
+              <span className="muted"> · </span>
+              <button
+                type="button"
+                className="link-button"
+                onClick={() => {
+                  setFormError(null);
+                  setStatusMessage(null);
+                  if (app.user) app.actions.closeAuthModal();
+                  else app.actions.openAuthModal('signin');
+                }}
+              >
+                {app.user ? 'Close' : 'Back to sign in'}
+              </button>
+            </p>
           </form>
         ) : (
           <form onSubmit={handleSubmit}>
@@ -259,7 +346,17 @@ export function AuthModal() {
                 autoComplete="current-password"
               />
             </Field>
-            <Field label="Display name (for new accounts)">
+            <p style={{ margin: '0 0 10px' }}>
+              <button
+                type="button"
+                className="link-button"
+                onClick={() => void handleForgotPassword()}
+                disabled={busy}
+              >
+                Forgot password?
+              </button>
+            </p>
+            <Field label="Display name">
               <input
                 type="text"
                 value={displayName}
@@ -324,6 +421,21 @@ export function AuthModal() {
                 Continue in Guest Mode
               </Button>
             </div>
+
+            <p className="auth-switch">
+              <button
+                type="button"
+                className="link-button"
+                onClick={() =>
+                  openVerify(
+                    email.trim(),
+                    'Enter the 6-digit code from your confirmation email.'
+                  )
+                }
+              >
+                Have a confirmation code?
+              </button>
+            </p>
           </form>
         )}
       </div>

@@ -1,4 +1,4 @@
-import type { Achievement, StoreItem } from './types';
+import type { Achievement, DatasetSource, Emblem, EmblemIcon, StoreItem } from './types';
 
 export const ACHIEVEMENTS: Achievement[] = [
   { id: 'first-steps', name: 'First Steps', description: 'Complete your first practice question.', icon: 'footprints', rewardCoins: 5 },
@@ -17,6 +17,15 @@ export const ACHIEVEMENTS: Achievement[] = [
 
 export function achievementById(id: string): Achievement | undefined {
   return ACHIEVEMENTS.find((a) => a.id === id);
+}
+
+/**
+ * Every dataset keeps its own label, licence and attribution. Official College
+ * Board items are never merged into the HDSAT original bank: they carry their
+ * own source row, their own filter and their own attribution on each item.
+ */
+export function datasetLabel(source: DatasetSource): string {
+  return `${source.is_official_college_board ? 'Official' : 'HDSAT'} · ${source.name}`;
 }
 
 /**
@@ -46,55 +55,57 @@ export function normalizeAchievementIds(ids: string[]): string[] {
 }
 
 /**
- * Cosmetic catalogue. Prices climb in unlock order — starter themes, emblems,
- * and gradual exponential prestige themes — so the shop reads as a ladder:
- * 20 → 50 → 100 → 150 → 200 → 300 → 400 → 600 → 1000 → 1800 → 3500 HDCoins.
- * The same numbers live in the `purchase_cosmetic_item` RPC
- * (supabase/migrations/20261020000100_cosmetic_price_ladder.sql); change both
- * together or the client and server disagree.
+ * Cosmetic catalogue: themes only. Emblems are earned from achievements and can
+ * never be bought, so the store has one job.
+ *
+ * Prices climb in unlock order (20 → 50 → 100 → 150 → 600 → 1000 → 1800 →
+ * 3500 HDCoins). The same numbers live in the `purchase_cosmetic_item` RPC
+ * (supabase/migrations/20261025000200_emblems_earned.sql); change both together
+ * or the client and server disagree.
  */
 export const STORE_ITEMS: StoreItem[] = [
   { id: 'oxford-navy', name: 'Oxford Navy Theme', description: 'Deep academic navy accent palette.', cost: 20, slot: 'theme' },
   { id: 'forest-sage', name: 'Forest Sage Theme', description: 'Calm botanical green accent palette.', cost: 50, slot: 'theme' },
   { id: 'warm-amber', name: 'Warm Amber Theme', description: 'High-contrast warm amber study accent.', cost: 100, slot: 'theme' },
   { id: 'plum-ink', name: 'Plum Ink Theme', description: 'Editorial plum ink accent palette.', cost: 150, slot: 'theme' },
-  {
-    id: 'badge-navigator',
-    name: 'Adaptive Navigator Emblem',
-    description: 'Profile emblem celebrating adaptive test routing.',
-    cost: 200,
-    slot: 'flair',
-    icon: 'compass',
-  },
-  {
-    id: 'badge-grapher',
-    name: 'Desmos Tactician Emblem',
-    description: 'Profile emblem for graphing calculator mastery.',
-    cost: 300,
-    slot: 'flair',
-    icon: 'graph',
-  },
-  {
-    id: 'badge-centurion',
-    name: 'Centurion Scholar Emblem',
-    description: 'Prestigious emblem for dedicated SAT scholars.',
-    cost: 400,
-    slot: 'utility',
-    icon: 'crown',
-  },
   { id: 'slate-mono', name: 'Slate Mono Theme', description: 'Crisp architectural monochrome slate palette.', cost: 600, slot: 'theme' },
   { id: 'teal-current', name: 'Teal Current Theme', description: 'Deep oceanic teal and cool cyan study palette.', cost: 1000, slot: 'theme' },
   { id: 'rose-quartz', name: 'Rose Quartz Theme', description: 'Refined editorial crimson-rose prestige palette.', cost: 1800, slot: 'theme' },
   { id: 'royal-obsidian', name: 'Royal Obsidian Theme', description: 'High-tier indigo-obsidian mastery accent palette.', cost: 3500, slot: 'theme' },
 ];
 
+/**
+ * Emblems that were sold before the economy split. They stay wearable for the
+ * students who bought them, but they are no longer in the store and never will
+ * be again; new emblems come from achievements only.
+ */
+export const LEGACY_EMBLEMS: Record<string, { name: string; icon: EmblemIcon }> = {
+  'badge-navigator': { name: 'Adaptive Navigator', icon: 'compass' },
+  'badge-grapher': { name: 'Desmos Tactician', icon: 'graph' },
+  'badge-centurion': { name: 'Centurion Scholar', icon: 'crown' },
+};
+
 export function itemById(id: string): StoreItem | undefined {
   return STORE_ITEMS.find((item) => item.id === id);
 }
 
-/** The emblem glyph for an owned item, or null when it is a theme. */
-export function emblemFor(itemId: string | null | undefined): StoreItem | null {
-  if (!itemId) return null;
-  const item = itemById(itemId);
-  return item?.icon ? item : null;
+/** The emblem an equipped flair id resolves to, or null for a theme / unknown id. */
+export function emblemFor(flairId: string | null | undefined): Emblem | null {
+  if (!flairId) return null;
+  const achievement = achievementById(flairId);
+  if (achievement) {
+    return { id: achievement.id, name: achievement.name, icon: achievement.icon };
+  }
+  const legacy = LEGACY_EMBLEMS[flairId];
+  if (legacy) return { id: flairId, name: legacy.name, icon: legacy.icon };
+  return null;
+}
+
+/** Emblem ids a student has actually earned (equipment is checked against this). */
+export function earnedEmblemIds(achievementIds: string[], ownedItems: string[]): string[] {
+  const earned = new Set(achievementIds.filter((id) => Boolean(achievementById(id))));
+  for (const item of ownedItems) {
+    if (LEGACY_EMBLEMS[item]) earned.add(item);
+  }
+  return Array.from(earned);
 }

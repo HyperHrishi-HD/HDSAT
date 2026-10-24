@@ -5,6 +5,7 @@ import { DesmosFrame } from '../components/MathTools';
 import { ReferenceWindow } from '../components/ReferenceWindow';
 import { QuestionView, type Feedback } from '../components/QuestionView';
 import { Badge, Button, Card, EmptyState, Field, InfoTip, Select, Toggle } from '../components/ui';
+import { datasetLabel } from '../lib/catalog';
 import { filterQuestions } from '../lib/examEngine';
 import { useApp } from '../lib/store';
 import type { Assessment, Difficulty, Question, Section } from '../lib/types';
@@ -158,7 +159,17 @@ export function QuestionBankPage() {
                 <div>{app.licensingNote}</div>
                 {app.sources.map((src) => (
                   <div key={src.source_id}>
-                    <strong>{src.name}</strong> ({src.license}) — {src.record_count} items
+                    <strong>{datasetLabel(src)}</strong>
+                    {src.license_url ? (
+                      <>
+                        {' '}
+                        <a href={src.license_url} target="_blank" rel="noreferrer">
+                          {src.license}
+                        </a>
+                      </>
+                    ) : (
+                      <> {src.license}</>
+                    )}
                   </div>
                 ))}
               </div>
@@ -241,7 +252,7 @@ export function QuestionBankPage() {
             onChange={setSourceId}
             options={[
               { value: 'all', label: 'All Sources' },
-              ...app.sources.map((s) => ({ value: s.source_id, label: `${s.name} (${s.record_count})` })),
+              ...app.sources.map((s) => ({ value: s.source_id, label: datasetLabel(s) })),
             ]}
           />
         </div>

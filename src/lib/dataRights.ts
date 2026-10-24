@@ -92,7 +92,7 @@ export function downloadExport(payload: DataExport, user: { email: string } | nu
  * contains answer keys, explanations, distractor rationales, credentials or
  * other students' data.
  */
-export const AI_SNAPSHOT_VERSION = '1.0';
+export const AI_SNAPSHOT_VERSION = '2.0';
 
 export interface AiSnapshotInput {
   user: { id: string; email: string; displayName: string } | null;
@@ -107,7 +107,16 @@ export interface AiSnapshotInput {
     settings: Record<string, unknown>;
   };
   totals: { attempts: number; correct: number; accuracy: number; mastered: number; dueCards: number };
-  progress: Record<string, { attemptCount: number; correctCount: number; lastIsCorrect: boolean; status: string }>;
+  progress: Record<
+    string,
+    {
+      attemptCount: number;
+      correctCount: number;
+      lastIsCorrect: boolean;
+      status: string;
+      lastResponse?: string;
+    }
+  >;
   questions: {
     id: string;
     section: string;
@@ -116,6 +125,8 @@ export interface AiSnapshotInput {
     difficulty: string;
     prompt: string;
   }[];
+  /** Timed attempts from this device; used for the pacing block. */
+  attempts?: { questionId: string; seconds: number; isCorrect: boolean }[];
   saved: string[];
   flashcardProgress: Record<string, { stage?: string; repetitions?: number; nextDueAt?: string }>;
   testAttempts: {
@@ -133,129 +144,293 @@ export interface AiSnapshotInput {
 
 export interface AiSnapshot {
   schema_version: string;
-  generated_at: string;
-  account_type: string;
-  how_to_use: string;
-  student: { display_name: string; email: string | null; target_assessment: string };
-  progress: Record<string, unknown>;
-  domain_accuracy: { domain: string; section: string; attempted: number; correct: number; accuracy_pct: number; unseen: number }[];
-  weakest_domains: string[];
-  missed_items: { id: string; section: string; domain: string; skill: string; difficulty: string; prompt: string; status: string }[];
-  saved_question_ids: string[];
-  flashcards: { tracked: number; due_now: number };
-  tests: unknown[];
-  recent_activity: unknown[];
+  role: string;
+  data: {
+    student: { display_name: string; target_assessment: string };
+    goal: {
+      target_assessment: string;
+      daily_question_goal: number;
+      items_due_for_review: number;
+      flashcards_due: number;
+    };
+    accuracy: {
+      questions_answered: number;
+      questions_correct: number;
+      accuracy_pct: number;
+      mastered: number;
+      streak_days: number;
+      best_streak_days: number;
+    };
+    domains: {
+      section: string;
+      domain: string;
+      attempted: number;
+      correct: number;
+      accuracy_pct: number;
+    }[];
+    skills: {
+      section: string;
+      domain: string;
+      skill: string;
+      attempted: number;
+      correct: number;
+      accuracy_pct: number;
+    }[];
+    weakest_skills: { skill: string; section: string; accuracy_pct: number; attempted: number; correct: number }[];
+    missed_items: {
+      id: string;
+      section: string;
+      skill: string;
+      difficulty: string;
+      prompt: string;
+      your_answer: string;
+    }[];
+    slowest_correct: { id: string; skill: string; seconds: number }[];
+    slowest_incorrect: { id: string; skill: string; seconds: number; your_answer: string }[];
+    tests: {
+      taken_on: string;
+      assessment: string;
+      total_estimate: number | null;
+      rw_estimate: number | null;
+      math_estimate: number | null;
+      modules: { section: string; tier: string; correct: number; total: number }[];
+    }[];
+    last_14_days: { date: string; questions: number; correct: number }[];
+    flashcards: { tracked: number; due_now: number };
+  };
+  requested_output: {
+    format: string;
+    tasks: string[];
+    constraints: string[];
+  };
 }
 
+const DAY_MS = 24 * 60 * 60 * 1000;
+
+function localDateKey(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function pct(correct: number, attempted: number): number {
+  return attempted > 0 ? Math.round((correct / attempted) * 100) : 0;
+}
+
+function clip(text: string, limit: number): string {
+  const clean = text.replace(/\s+/g, ' ').trim();
+  return clean.length > limit ? `${clean.slice(0, limit - 1)}…` : clean;
+}
+
+/**
+ * Tutor brief.
+ *
+ * A single JSON document shaped as an instruction payload: what the student's
+ * own data says, then exactly what the model should produce. Deterministic
+ * ordering and stable field order make two exports diffable. No answer keys,
+ * no explanations, no email address, no other students' data.
+ */
 export function buildAiSnapshot(input: AiSnapshotInput, now: Date = new Date()): AiSnapshot {
-  const byId = new Map(input.questions.map((q) => [q.id, q]));
-  const domains = new Map<
+  const byId = new Map(input.questions.map((question) => [question.id, question]));
+
+  const domains = new Map<string, { section: string; domain: string; attempted: number; correct: number }>();
+  const skills = new Map<
     string,
-    { domain: string; section: string; attempted: number; correct: number; unseen: number }
+    { section: string; domain: string; skill: string; attempted: number; correct: number }
   >();
 
   input.questions.forEach((question) => {
-    const entry = domains.get(question.domain) ?? {
-      domain: question.domain,
+    const progress = input.progress[question.id];
+    const attempted = progress?.attemptCount ?? 0;
+    const correct = progress?.correctCount ?? 0;
+
+    const domainKey = `${question.section}|${question.domain}`;
+    const domain = domains.get(domainKey) ?? {
       section: question.section,
+      domain: question.domain,
       attempted: 0,
       correct: 0,
-      unseen: 0,
     };
-    const progress = input.progress[question.id];
-    if (!progress || progress.attemptCount === 0) entry.unseen += 1;
-    else {
-      entry.attempted += 1;
-      if (progress.lastIsCorrect) entry.correct += 1;
-    }
-    domains.set(question.domain, entry);
+    domain.attempted += attempted;
+    domain.correct += correct;
+    domains.set(domainKey, domain);
+
+    const skillKey = `${question.section}|${question.domain}|${question.skill}`;
+    const skill = skills.get(skillKey) ?? {
+      section: question.section,
+      domain: question.domain,
+      skill: question.skill,
+      attempted: 0,
+      correct: 0,
+    };
+    skill.attempted += attempted;
+    skill.correct += correct;
+    skills.set(skillKey, skill);
   });
 
-  const domainAccuracy = Array.from(domains.values())
-    .map((entry) => ({
-      ...entry,
-      accuracy_pct: entry.attempted > 0 ? Math.round((entry.correct / entry.attempted) * 100) : 0,
-    }))
-    .sort((a, b) => b.attempted - a.attempted || a.domain.localeCompare(b.domain));
+  const domainRows = [...domains.values()]
+    .map((entry) => ({ ...entry, accuracy_pct: pct(entry.correct, entry.attempted) }))
+    .filter((entry) => entry.attempted > 0)
+    .sort(
+      (a, b) =>
+        a.section.localeCompare(b.section) ||
+        b.attempted - a.attempted ||
+        a.domain.localeCompare(b.domain)
+    );
 
-  const weakest = domainAccuracy
-    .filter((entry) => entry.attempted > 0 && entry.accuracy_pct < 80)
-    .sort((a, b) => a.accuracy_pct - b.accuracy_pct || b.attempted - a.attempted)
-    .slice(0, 8)
-    .map((entry) => `${entry.domain} (${entry.accuracy_pct}% of ${entry.attempted})`);
+  const skillRows = [...skills.values()]
+    .map((entry) => ({ ...entry, accuracy_pct: pct(entry.correct, entry.attempted) }))
+    .filter((entry) => entry.attempted > 0)
+    .sort(
+      (a, b) =>
+        a.section.localeCompare(b.section) ||
+        a.domain.localeCompare(b.domain) ||
+        a.skill.localeCompare(b.skill)
+    )
+    .slice(0, 40);
+
+  const weakestSkills = [...skillRows]
+    .filter((entry) => entry.accuracy_pct < 80)
+    .sort(
+      (a, b) =>
+        a.accuracy_pct - b.accuracy_pct ||
+        b.attempted - a.attempted ||
+        a.skill.localeCompare(b.skill)
+    )
+    .slice(0, 6)
+    .map((entry) => ({
+      skill: entry.skill,
+      section: entry.section,
+      accuracy_pct: entry.accuracy_pct,
+      attempted: entry.attempted,
+      correct: entry.correct,
+    }));
 
   const missed = Object.entries(input.progress)
     .filter(([, progress]) => progress.attemptCount > 0 && !progress.lastIsCorrect)
-    .slice(0, 60)
+    .sort(([a], [b]) => a.localeCompare(b))
+    .slice(0, 12)
     .map(([id, progress]) => {
       const question = byId.get(id);
       return {
         id,
         section: question?.section ?? 'Unknown',
-        domain: question?.domain ?? 'Unknown',
         skill: question?.skill ?? 'Unknown',
         difficulty: question?.difficulty ?? 'Unknown',
-        prompt: (question?.prompt ?? '').slice(0, 400),
-        status: progress.status,
+        prompt: clip(question?.prompt ?? '', 180),
+        your_answer: clip(progress.lastResponse ?? '', 40),
       };
     });
 
-  const nowMs = now.getTime();
-  const dueNow = Object.values(input.flashcardProgress).filter((card) => {
-    if (!card.nextDueAt) return true;
-    return new Date(card.nextDueAt).getTime() <= nowMs;
-  }).length;
+  const timed = (input.attempts ?? [])
+    .filter((attempt) => attempt.seconds >= 3 && attempt.seconds <= 1200)
+    .map((attempt) => ({ ...attempt, question: byId.get(attempt.questionId) }))
+    .filter((attempt) => Boolean(attempt.question));
+
+  const slowestCorrect = [...timed]
+    .filter((attempt) => attempt.isCorrect)
+    .sort((a, b) => b.seconds - a.seconds || a.questionId.localeCompare(b.questionId))
+    .slice(0, 3)
+    .map((attempt) => ({
+      id: attempt.questionId,
+      skill: attempt.question?.skill ?? 'Unknown',
+      seconds: Math.round(attempt.seconds),
+    }));
+
+  const slowestIncorrect = [...timed]
+    .filter((attempt) => !attempt.isCorrect)
+    .sort((a, b) => b.seconds - a.seconds || a.questionId.localeCompare(b.questionId))
+    .slice(0, 3)
+    .map((attempt) => ({
+      id: attempt.questionId,
+      skill: attempt.question?.skill ?? 'Unknown',
+      seconds: Math.round(attempt.seconds),
+      your_answer: clip(input.progress[attempt.questionId]?.lastResponse ?? '', 40),
+    }));
+
+  const tests = input.testAttempts
+    .filter((attempt) => attempt.status !== 'incomplete')
+    .slice(0, 8)
+    .map((attempt) => ({
+      taken_on: attempt.createdAt.slice(0, 10),
+      assessment: attempt.assessment,
+      total_estimate: attempt.totalEstimate,
+      rw_estimate: attempt.rwEstimate,
+      math_estimate: attempt.mathEstimate,
+      modules: attempt.modules.map((module) => ({
+        section: module.section,
+        tier: module.tier,
+        correct: module.correct,
+        total: module.total,
+      })),
+    }));
+
+  // Dense window ending today, oldest first, so empty days are visible.
+  const activityByDate = new Map(input.dailyActivity.map((day) => [day.date, day]));
+  const last14 = Array.from({ length: 14 }, (_, index) => {
+    const day = new Date(now.getTime() - (13 - index) * DAY_MS);
+    const key = localDateKey(day);
+    const recorded = activityByDate.get(key);
+    return {
+      date: key,
+      questions: recorded?.questionsCompleted ?? 0,
+      correct: recorded?.correctQuestions ?? 0,
+    };
+  });
+
+  const dueCards = Object.values(input.flashcardProgress).filter(
+    (card) => !card.nextDueAt || Date.parse(card.nextDueAt) <= now.getTime()
+  ).length;
 
   return {
     schema_version: AI_SNAPSHOT_VERSION,
-    generated_at: now.toISOString(),
-    account_type: input.mode,
-    how_to_use:
-      'This JSON is one student\u2019s own HDSAT practice history. Use it to diagnose weak domains, choose what to study next, and build a study plan. It contains no answer keys, so ask the student to show a question if you need the choices.',
-    student: {
-      display_name: input.user?.displayName ?? 'Guest',
-      email: input.user?.email ?? null,
-      target_assessment: input.assessment,
+    role:
+      'You are an SAT tutor reviewing one student\\u2019s HDSAT practice history. Treat the data block as evidence, not as a score report.',
+    data: {
+      student: {
+        display_name: input.user?.displayName ?? 'Guest',
+        target_assessment: input.assessment,
+      },
+      goal: {
+        target_assessment: input.assessment,
+        daily_question_goal: 3,
+        items_due_for_review: Object.values(input.progress).filter(
+          (progress) => progress.status === 'incorrect'
+        ).length,
+        flashcards_due: dueCards,
+      },
+      accuracy: {
+        questions_answered: input.totals.attempts,
+        questions_correct: input.totals.correct,
+        accuracy_pct: Math.round(input.totals.accuracy * 100),
+        mastered: input.totals.mastered,
+        streak_days: input.account.currentStreak,
+        best_streak_days: input.account.bestStreak,
+      },
+      domains: domainRows,
+      skills: skillRows,
+      weakest_skills: weakestSkills,
+      missed_items: missed,
+      slowest_correct: slowestCorrect,
+      slowest_incorrect: slowestIncorrect,
+      tests,
+      last_14_days: last14,
+      flashcards: { tracked: Object.keys(input.flashcardProgress).length, due_now: dueCards },
     },
-    progress: {
-      hd_coins: input.account.hdCoins,
-      current_streak_days: input.account.currentStreak,
-      best_streak_days: input.account.bestStreak,
-      questions_answered: input.totals.attempts,
-      questions_correct: input.totals.correct,
-      accuracy_pct: Math.round(input.totals.accuracy * 100),
-      mastered_questions: input.totals.mastered,
-      achievements: input.account.achievements,
-      owned_cosmetics: input.account.ownedItems,
-      preferences: input.account.settings,
+    requested_output: {
+      format: 'markdown',
+      tasks: [
+        'Diagnose the two or three weakest skills, citing attempts and accuracy from the data.',
+        'Give a 7-day plan, 25-40 minutes a day, that uses HDSAT practice and review.',
+        'For each weak skill, name one technique and one check the student can use to verify progress.',
+      ],
+      constraints: [
+        'Use only the data in this document.',
+        'Say "thin evidence" when a skill has fewer than 5 attempts.',
+        'Do not invent question content, scores or answer keys.',
+      ],
     },
-    domain_accuracy: domainAccuracy,
-    weakest_domains: weakest,
-    missed_items: missed,
-    saved_question_ids: [...input.saved],
-    flashcards: { tracked: Object.keys(input.flashcardProgress).length, due_now: dueNow },
-    tests: input.testAttempts
-      .filter((attempt) => attempt.status !== 'incomplete')
-      .slice(0, 10)
-      .map((attempt) => ({
-        assessment: attempt.assessment,
-        taken_on: attempt.createdAt.slice(0, 10),
-        rw_estimate: attempt.rwEstimate,
-        math_estimate: attempt.mathEstimate,
-        total_estimate: attempt.totalEstimate,
-        modules: attempt.modules.map((module) => ({
-          section: module.section,
-          tier: module.tier,
-          correct: module.correct,
-          total: module.total,
-        })),
-      })),
-    recent_activity: input.dailyActivity.slice(-14).map((day) => ({
-      date: day.date,
-      questions: day.questionsCompleted,
-      correct: day.correctQuestions,
-      coins: day.coinsEarned,
-    })),
   };
 }
 

@@ -1095,11 +1095,18 @@ export function FullTestPage() {
                             type="button"
                             className={`bb-choice-box${isSelected ? ' is-selected' : ''}`}
                             onClick={() => {
-                              if (isElim) return;
                               setResponses((prev) => ({
                                 ...prev,
                                 [qId]: choice.id,
                               }));
+                              // Bluebook: picking a crossed-out choice lifts
+                              // the cross-out instead of being refused.
+                              if (isElim) {
+                                setEliminated((prev) => ({
+                                  ...prev,
+                                  [qId]: (prev[qId] ?? []).filter((c) => c !== choice.id),
+                                }));
+                              }
                             }}
                             aria-pressed={isSelected}
                           >

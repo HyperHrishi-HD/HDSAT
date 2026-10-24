@@ -6,10 +6,11 @@ import {
   APPEAL_SLA_HOURS,
   COPYRIGHT_PATH,
   CREATOR_GITHUB_URL,
-  CREATOR_HANDLE,
+  CREATOR_NAME,
   CREATOR_YOUTUBE_URL,
   CREDITS_PATH,
-  LEGAL_EFFECTIVE_DATE,
+  LEGAL_LAST_UPDATED,
+  LEGAL_STARTED_DATE,
   LEGAL_VERSION,
   MIN_AGE,
   OPERATOR_NAME,
@@ -26,17 +27,24 @@ function LegalShell({
   title,
   intro,
   children,
+  support = true,
+  started,
 }: {
   title: string;
   intro: string;
   children: ReactNode;
+  /** Credits is reachable from Account, so it does not repeat the appeal card. */
+  support?: boolean;
+  /** Opt in to the founding date next to the last-updated date. */
+  started?: boolean;
 }) {
   return (
     <div>
       <Card>
         <h1>{title}</h1>
         <p className="muted">
-          Version {LEGAL_VERSION} · Effective {LEGAL_EFFECTIVE_DATE} · {SITE_NAME}
+          {started ? `Started ${LEGAL_STARTED_DATE} · ` : `Version ${LEGAL_VERSION} · `}
+          Last updated {LEGAL_LAST_UPDATED}
         </p>
         <p>{intro}</p>
         <nav className="row legal-toc" aria-label="Policy pages">
@@ -47,6 +55,7 @@ function LegalShell({
         </nav>
       </Card>
       <Card className="legal">{children}</Card>
+      {support ? (
       <Card>
         <h2>Support <span className="muted">/ {SITE_NAME}</span></h2>
         {SUPPORT_EMAIL ? (
@@ -63,6 +72,7 @@ function LegalShell({
         )}
         <AppealForm />
       </Card>
+      ) : null}
     </div>
   );
 }
@@ -169,7 +179,7 @@ export function PrivacyPage() {
     >
       <h2>What we collect</h2>
       <ul>
-        <li><strong>Account details:</strong> email address and display name. Passwords are stored only as salted hashes by our authentication provider; we never see or store your password.</li>
+        <li><strong>Account details:</strong> email address and display name. Passwords are stored only as salted hashes by our authentication provider; we never see or store your password. Password-change timestamps, and a hashed record of confirmation and recovery emails, are kept so these actions can be rate-limited. Until you confirm your email address, your account stores your progress and scores but not the item-by-item answer history.</li>
         <li><strong>Age group and consent:</strong> a coarse age band (13–15, 16–17, 18+) and whether a parent or guardian consented, so we can apply the right privacy rules.</li>
         <li><strong>Practice activity:</strong> answers you submit, whether they were correct, time spent, attempt counts, streaks, study-day activity, flashcard scheduling, saved questions, HDCoins and unlocked cosmetics.</li>
         <li><strong>Reports you file:</strong> content reports and appeals, including any details and contact email you choose to give.</li>
@@ -337,12 +347,14 @@ export function CreditsPage() {
   return (
     <LegalShell
       title="Credits & Attribution"
-      intro={`${SITE_NAME} is built and maintained by ${CREATOR_HANDLE} as an open, accessible Digital SAT and PSAT preparation platform.`}
+      support={false}
+      started
+      intro={`${SITE_NAME} is built and maintained by ${CREATOR_NAME} as an open, accessible Digital SAT and PSAT preparation platform.`}
     >
       <h2>Creator &amp; Official Links</h2>
       <ul>
         <li>
-          <strong>Created by:</strong> {CREATOR_HANDLE}
+          <strong>Created by:</strong> {CREATOR_NAME}
         </li>
         <li>
           <strong>YouTube Channel:</strong>{' '}

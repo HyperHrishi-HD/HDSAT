@@ -92,12 +92,20 @@ def main() -> None:
     if not TEMPLATE.exists():
         sys.exit(f"missing template {TEMPLATE}")
 
+    template = TEMPLATE.read_text(encoding="utf-8")
     payload = {
         "site_url": SITE_URL,
         "uri_allow_list": ALLOW_LIST,
         "mailer_otp_length": 6,
+        # Accounts are usable before the address is verified ("light accounts"):
+        # sign-up issues a session immediately and never spends a send, and the
+        # code that lifts the light-account cap is an email OTP. Confirmation is
+        # therefore off, and the same branded template backs both flows.
+        "mailer_autoconfirm": True,
         "mailer_subjects_confirmation": "Confirm your HDSAT account",
-        "mailer_templates_confirmation_content": TEMPLATE.read_text(encoding="utf-8"),
+        "mailer_templates_confirmation_content": template,
+        "mailer_subjects_magic_link": "Confirm your HDSAT email",
+        "mailer_templates_magic_link_content": template,
         "smtp_host": host,
         # The Management API expects a string here, not a number.
         "smtp_port": str(port),
@@ -122,6 +130,8 @@ def main() -> None:
         "mailer_otp_length": 6,
         "rate_limit_email_sent": 30,
         "site_url": SITE_URL,
+        "mailer_autoconfirm": True,
+        "mailer_subjects_magic_link": "Confirm your HDSAT email",
     }
     failures = []
     for key, expected in checks.items():
@@ -130,13 +140,14 @@ def main() -> None:
         print(f"  [{'PASS' if good else 'FAIL'}] {key} = {actual}")
         if not good:
             failures.append(key)
-    template_ok = "{{ .Token }}" in (config.get("mailer_templates_confirmation_content") or "")
-    print(f"  [{'PASS' if template_ok else 'FAIL'}] branded template contains {{{{ .Token }}}}")
-    if not template_ok:
-        failures.append("template")
+    for key in ("mailer_templates_confirmation_content", "mailer_templates_magic_link_content"):
+        ok = "{{ .Token }}" in (config.get(key) or "")
+        print(f"  [{'PASS' if ok else 'FAIL'}] {key} contains {{{{ .Token }}}}")
+        if not ok:
+            failures.append(key)
     if failures:
         sys.exit(f"SMTP verification failed: {', '.join(failures)}")
-    print("SMTP AND CONFIRMATION EMAIL CONFIGURED")
+    print("SMTP AND EMAIL VERIFICATION CONFIGURED")
 
 
 if __name__ == "__main__":

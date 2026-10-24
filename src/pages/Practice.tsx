@@ -5,8 +5,12 @@ import { ReferenceWindow } from '../components/ReferenceWindow';
 import { PaneSwitch, SplitWorkbench, useSplitPane } from '../components/SplitWorkbench';
 import { QuestionView, type Feedback } from '../components/QuestionView';
 import { Badge, Button, Card, EmptyState, InfoTip, MultiSelect, Select, Stat, Toggle } from '../components/ui';
+import { datasetLabel } from '../lib/catalog';
 import { buildPracticeSession, filterQuestions, formatClock } from '../lib/examEngine';
+import { poolReadiness } from '../lib/review';
+import { clearPracticeSession, loadPracticeSession, savePracticeSession } from '../lib/session';
 import { newEventId } from '../lib/storage';
+import { typicalSeconds } from '../lib/timing';
 import { useApp } from '../lib/store';
 import type { Assessment, Difficulty, Question, Section } from '../lib/types';
 
@@ -24,6 +28,13 @@ export function PracticePage() {
   const [difficulties, setDifficulties] = useState<Difficulty[]>([]);
   const [sourceId, setSourceId] = useState<string>('all');
   const [count, setCount] = useState<number>(10);
+  // "Other…" is a direct picker: the chosen items ARE the session, so it is the
+  // only length option that bypasses the count and the review schedule.
+  const [countOther, setCountOther] = useState<boolean>(false);
+  const [picked, setPicked] = useState<string[]>([]);
+  const [pickerDomain, setPickerDomain] = useState<string>('all');
+  const [pickerSkill, setPickerSkill] = useState<string>('all');
+  const [pickerDifficulty, setPickerDifficulty] = useState<Difficulty | 'all'>('all');
   const [onlyIncorrect, setOnlyIncorrect] = useState<boolean>(searchParams.get('mode') === 'incorrect');
   const [onlySaved, setOnlySaved] = useState<boolean>(searchParams.get('mode') === 'saved');
   const [excludeCorrect, setExcludeCorrect] = useState<boolean>(app.settings.excludePreviouslyCorrect);
@@ -43,7 +54,11 @@ export function PracticePage() {
   const split = useSplitPane('hdsat.split.practice', { ratio: 46, minRatio: 30, maxRatio: 70 });
   const [showRef, setShowRef] = useState<boolean>(false);
   const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);
+  const [timings, setTimings] = useState<Record<string, number>>({});
+  const [readyNotice, setReadyNotice] = useState<string | null>(null);
   const questionStartRef = useRef<number>(Date.now());
+  const resumedRef = useRef(false);
+  const wantsResume = searchParams.get('resume') === '1';
 
   const domainOptions = useMemo(() => {
     const set = new Set<string>();
@@ -87,6 +102,103 @@ export function PracticePage() {
     ]
   );
 
+  const pickerDomainOptions = useMemo(() => {
+    const set = new Set<string>();
+    matchingPool.forEach((q) => set.add(q.domain));
+    return Array.from(set);
+  }, [matchingPool]);
+
+  const pickerSkillOptions = useMemo(() => {
+    const set = new Set<string>();
+    matchingPool.forEach((q) => {
+      if (pickerDomain === 'all' || q.domain === pickerDomain) set.add(q.skill);
+    });
+    return Array.from(set);
+  }, [matchingPool, pickerDomain]);
+
+  const pickerMatches = useMemo(
+    () =>
+      matchingPool.filter(
+        (q) =>
+          (pickerDomain === 'all' || q.domain === pickerDomain) &&
+          (pickerSkill === 'all' || q.skill === pickerSkill) &&
+          (pickerDifficulty === 'all' || q.difficulty === pickerDifficulty)
+      ),
+    [matchingPool, pickerDomain, pickerSkill, pickerDifficulty]
+  );
+
+  // Practice may draw unseen items plus items whose review date has arrived.
+  // Anything else waits, unless the student hand-picked the drill.
+  const allowScheduled = onlySaved || onlyIncorrect;
+  const readiness = useMemo(
+    () => poolReadiness(matchingPool, app.progress),
+    [matchingPool, app.progress]
+  );
+  const readyCount = allowScheduled ? matchingPool.length : readiness.ready;
+
+  // Restore a session that survived a refresh or a closed tab.
+  useEffect(() => {
+    if (!wantsResume || resumedRef.current) return;
+    const snapshot = loadPracticeSession();
+    if (!snapshot) return;
+    const byId = new Map(app.questions.map((q) => [q.id, q]));
+    const restored = snapshot.questionIds
+      .map((id) => byId.get(id))
+      .filter((q): q is Question => Boolean(q));
+    if (restored.length === 0) {
+      clearPracticeSession();
+      return;
+    }
+    resumedRef.current = true;
+    const known = new Set(restored.map((q) => q.id));
+    const onlyKnown = <T,>(record: Record<string, T>) =>
+      Object.fromEntries(Object.entries(record).filter(([id]) => known.has(id)));
+    // Continue at the first unanswered item, which is what the Dashboard strip
+    // promises; when everything is answered, keep the last position.
+    const answered = new Set(
+      Object.entries(snapshot.responses)
+        .filter(([, value]) => Boolean(value && value.trim()))
+        .map(([id]) => id)
+    );
+    const firstUnanswered = restored.findIndex((q) => !answered.has(q.id));
+    const index =
+      firstUnanswered >= 0
+        ? firstUnanswered
+        : Math.max(0, Math.min(snapshot.index, restored.length - 1));
+    setAssessment(snapshot.assessment as Assessment);
+    setSessionId(snapshot.sessionId || newEventId());
+    setSessionQuestions(restored);
+    setCurrentIndex(index);
+    setResponses(onlyKnown(snapshot.responses));
+    setFlagged(onlyKnown(snapshot.flagged));
+    setFeedbackMap(onlyKnown(snapshot.feedback) as Record<string, Feedback>);
+    setElapsedSeconds(snapshot.elapsedSeconds);
+    setSessionDone(false);
+    setReadyNotice(`Resumed at item ${index + 1} of ${restored.length}.`);
+    questionStartRef.current = Date.now();
+  }, [app.questions, wantsResume]);
+
+  // Keep the resume snapshot current. Elapsed time is read from state here but
+  // deliberately left out of the dependencies so the timer does not write
+  // localStorage every second.
+  useEffect(() => {
+    if (!sessionId || sessionDone || sessionQuestions.length === 0) return;
+    savePracticeSession({
+      version: 1,
+      sessionId,
+      questionIds: sessionQuestions.map((q) => q.id),
+      index: currentIndex,
+      responses,
+      flagged,
+      feedback: feedbackMap,
+      elapsedSeconds,
+      assessment,
+      startedAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sessionId, sessionDone, sessionQuestions, currentIndex, responses, flagged, feedbackMap]);
+
   // Elapsed timer for active custom session
   useEffect(() => {
     if (!sessionId || sessionDone) return;
@@ -97,6 +209,44 @@ export function PracticePage() {
   }, [sessionId, sessionDone]);
 
   const startCustomSession = () => {
+    const now = new Date();
+    if (countOther) {
+      const byId = new Map(app.questions.map((q) => [q.id, q]));
+      const pickedQuestions = picked
+        .map((id) => byId.get(id))
+        .filter((q): q is Question => Boolean(q));
+      if (pickedQuestions.length === 0) {
+        setReadyNotice('Pick at least one question, or choose a session length instead.');
+        return;
+      }
+      const sessionKey = newEventId();
+      setReadyNotice(null);
+      setSessionId(sessionKey);
+      setSessionQuestions(pickedQuestions);
+      setCurrentIndex(0);
+      setResponses({});
+      setEliminated({});
+      setFlagged({});
+      setFeedbackMap({});
+      setTimings({});
+      setSessionDone(false);
+      setElapsedSeconds(0);
+      questionStartRef.current = Date.now();
+      savePracticeSession({
+        version: 1,
+        sessionId: sessionKey,
+        questionIds: pickedQuestions.map((q) => q.id),
+        index: 0,
+        responses: {},
+        flagged: {},
+        feedback: {},
+        elapsedSeconds: 0,
+        assessment,
+        startedAt: now.toISOString(),
+        updatedAt: now.toISOString(),
+      });
+      return;
+    }
     const chosen = buildPracticeSession(
       app.questions,
       {
@@ -111,23 +261,44 @@ export function PracticePage() {
         excludeReleasedPracticeSet: excludeReleased,
       },
       {
-        count: Math.min(count, Math.max(1, matchingPool.length)),
+        count: Math.min(count, Math.max(1, readyCount)),
         progress: app.progress,
         savedIds: app.saved,
         seed: `custom:${Date.now()}`,
+        now,
+        allowScheduled,
       }
     );
-    if (chosen.length === 0) return;
-    setSessionId(newEventId());
+    if (chosen.length === 0) {
+      setReadyNotice('Nothing is due right now. Unseen items and reviews appear as your schedule advances.');
+      return;
+    }
+    const sessionKey = newEventId();
+    setReadyNotice(null);
+    setSessionId(sessionKey);
     setSessionQuestions(chosen);
     setCurrentIndex(0);
     setResponses({});
     setEliminated({});
     setFlagged({});
     setFeedbackMap({});
+    setTimings({});
     setSessionDone(false);
     setElapsedSeconds(0);
     questionStartRef.current = Date.now();
+    savePracticeSession({
+      version: 1,
+      sessionId: sessionKey,
+      questionIds: chosen.map((q) => q.id),
+      index: 0,
+      responses: {},
+      flagged: {},
+      feedback: {},
+      elapsedSeconds: 0,
+      assessment,
+      startedAt: now.toISOString(),
+      updatedAt: now.toISOString(),
+    });
   };
 
   const currentQuestion = sessionQuestions[currentIndex] ?? null;
@@ -142,6 +313,7 @@ export function PracticePage() {
       timeSpentSeconds: spent,
       sessionId,
     });
+    setTimings((prev) => ({ ...prev, [currentQuestion.id]: spent }));
     setFeedbackMap((prev) => ({
       ...prev,
       [currentQuestion.id]: {
@@ -155,6 +327,7 @@ export function PracticePage() {
 
   const finishCustomSession = async () => {
     setSessionDone(true);
+    clearPracticeSession();
     const answeredCount = Object.keys(feedbackMap).length;
     const correctCount = Object.values(feedbackMap).filter((f) => f.isCorrect).length;
     if (timedPerQuestion && answeredCount >= 3 && sessionId) {
@@ -296,7 +469,6 @@ export function PracticePage() {
               values={domains}
               onChange={setDomains}
               allLabel="All Domains"
-              hint="Mix as many domains as you like."
               options={domainOptions.map((d) => ({ value: d, label: d }))}
             />
             <MultiSelect
@@ -304,7 +476,6 @@ export function PracticePage() {
               values={difficulties}
               onChange={(next) => setDifficulties(next as Difficulty[])}
               allLabel="All Difficulties"
-              hint="Select any combination of levels."
               options={[
                 { value: 'Easy', label: 'Easy' },
                 { value: 'Medium', label: 'Medium' },
@@ -316,14 +487,21 @@ export function PracticePage() {
               value={sourceId}
               onChange={setSourceId}
               options={[
-                { value: 'all', label: 'All Licensed Sources' },
-                ...app.sources.map((s) => ({ value: s.source_id, label: s.name })),
+                { value: 'all', label: 'All Sources' },
+                ...app.sources.map((s) => ({ value: s.source_id, label: datasetLabel(s) })),
               ]}
             />
             <Select
               label="Session Length"
-              value={String(count)}
-              onChange={(v) => setCount(Number(v))}
+              value={countOther ? 'other' : String(count)}
+              onChange={(v) => {
+                if (v === 'other') {
+                  setCountOther(true);
+                  return;
+                }
+                setCountOther(false);
+                setCount(Number(v));
+              }}
               options={[
                 { value: '5', label: '5 questions' },
                 { value: '10', label: '10 questions' },
@@ -331,6 +509,7 @@ export function PracticePage() {
                 { value: '22', label: '22 questions' },
                 { value: '25', label: '25 questions' },
                 { value: '27', label: '27 questions' },
+                { value: 'other', label: 'Other…' },
               ]}
             />
           </div>
@@ -344,7 +523,6 @@ export function PracticePage() {
                   app.actions.updateSettings({ excludePreviouslyCorrect: val });
                 }}
                 label="Exclude previously correct questions"
-                hint="Only serve unseen or previously missed items."
               />
               <Toggle
                 checked={excludeReleased}
@@ -353,7 +531,6 @@ export function PracticePage() {
                   app.actions.updateSettings({ excludeReleasedPracticeSet: val });
                 }}
                 label="Exclude Benchmark Simulation Set items"
-                hint="Reserve designated full-length practice-set items so simulations stay fresh."
               />
             </div>
             <div>
@@ -361,33 +538,133 @@ export function PracticePage() {
                 checked={onlyIncorrect}
                 onChange={setOnlyIncorrect}
                 label="Incorrect-only drill"
-                hint="Focus strictly on questions your last attempt missed."
               />
               <Toggle
                 checked={onlySaved}
                 onChange={setOnlySaved}
                 label="Saved questions only"
-                hint="Practice items you bookmarked in the Question Bank."
               />
               <Toggle
                 checked={timedPerQuestion}
                 onChange={setTimedPerQuestion}
-                label="Track pace with session timer"
-                hint="Displays elapsed time and awards timed-session bonus HDCoins."
+                label="Session timer"
               />
             </div>
           </div>
 
+          {countOther ? (
+            <div className="picker-block">
+              <div className="row-between">
+                <h3 style={{ margin: 0 }}>Pick questions</h3>
+                <Badge tone={picked.length > 0 ? 'good' : 'info'}>{picked.length} selected</Badge>
+              </div>
+              <div className="card-grid" style={{ marginTop: 10 }}>
+                <Select
+                  label="Domain"
+                  value={pickerDomain}
+                  onChange={(v) => {
+                    setPickerDomain(v);
+                    setPickerSkill('all');
+                  }}
+                  options={[
+                    { value: 'all', label: 'All domains' },
+                    ...pickerDomainOptions.map((d) => ({ value: d, label: d })),
+                  ]}
+                />
+                <Select
+                  label="Skill"
+                  value={pickerSkill}
+                  onChange={setPickerSkill}
+                  options={[
+                    { value: 'all', label: 'All skills' },
+                    ...pickerSkillOptions.map((s) => ({ value: s, label: s })),
+                  ]}
+                />
+                <Select
+                  label="Difficulty"
+                  value={pickerDifficulty}
+                  onChange={(v) => setPickerDifficulty(v as Difficulty | 'all')}
+                  options={[
+                    { value: 'all', label: 'Any difficulty' },
+                    { value: 'Easy', label: 'Easy' },
+                    { value: 'Medium', label: 'Medium' },
+                    { value: 'Hard', label: 'Hard' },
+                  ]}
+                />
+              </div>
+              <div className="row" style={{ marginTop: 10 }}>
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() =>
+                    setPicked((prev) =>
+                      Array.from(new Set([...prev, ...pickerMatches.slice(0, 60).map((q) => q.id)]))
+                    )
+                  }
+                  disabled={pickerMatches.length === 0}
+                >
+                  Add all shown
+                </Button>
+                <Button
+                  size="sm"
+                  variant="ghost"
+                  onClick={() => setPicked([])}
+                  disabled={picked.length === 0}
+                >
+                  Clear
+                </Button>
+                <span className="muted">
+                  {pickerMatches.length} shown{pickerMatches.length > 80 ? ' · first 80 listed' : ''}
+                </span>
+              </div>
+              <div className="picker-list">
+                {pickerMatches.slice(0, 80).map((q) => {
+                  const on = picked.includes(q.id);
+                  return (
+                    <label key={q.id} className={`picker-row${on ? ' is-picked' : ''}`}>
+                      <input
+                        type="checkbox"
+                        checked={on}
+                        onChange={() =>
+                          setPicked((prev) =>
+                            on ? prev.filter((id) => id !== q.id) : [...prev, q.id]
+                          )
+                        }
+                      />
+                      <span className="picker-meta">
+                        {q.section === 'Math' ? 'Math' : 'R&W'} · {q.difficulty}
+                      </span>
+                      <span className="picker-prompt">{q.prompt}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          ) : null}
+
           <div className="row-between" style={{ marginTop: 14 }}>
             <span className="muted">
-              {matchingPool.length === 0
+              {countOther
+                ? `${picked.length} picked · ${pickerMatches.length} shown`
+                : matchingPool.length === 0
                 ? 'No questions match these filters yet.'
-                : `${Math.min(count, matchingPool.length)} items ready from ${matchingPool.length} matching.`}
+                : `${Math.min(count, readyCount)} ready${
+                    !allowScheduled && readiness.due > 0 ? ` · ${readiness.due} due for review` : ''
+                  }`}
             </span>
-            <Button icon="play" onClick={startCustomSession} disabled={matchingPool.length === 0}>
+            <Button
+              icon="play"
+              onClick={startCustomSession}
+              disabled={countOther ? picked.length === 0 : readyCount === 0}
+            >
               Start session
             </Button>
           </div>
+          {readyNotice ? (
+            <p className="muted" style={{ margin: '8px 0 0' }}>
+              {readyNotice}
+            </p>
+          ) : null}
         </Card>
       ) : null}
 
@@ -398,6 +675,7 @@ export function PracticePage() {
               <strong>Custom Practice · {assessment}</strong>
               <div className="muted">
                 Item {currentIndex + 1} of {sessionQuestions.length}
+                {(app.progress[currentQuestion.id]?.attemptCount ?? 0) > 0 ? ' · review' : ''}
               </div>
             </div>
             <div className="row">
@@ -421,6 +699,12 @@ export function PracticePage() {
               </Button>
             </div>
           </div>
+
+          {readyNotice ? (
+            <p className="muted" style={{ margin: '0 0 8px' }}>
+              {readyNotice}
+            </p>
+          ) : null}
 
           {showRef ? (
             <ReferenceWindow assessment={assessment} onClose={() => setShowRef(false)} />
@@ -486,6 +770,12 @@ export function PracticePage() {
                 setFlagged((prev) => ({ ...prev, [currentQuestion.id]: !prev[currentQuestion.id] }))
               }
               feedback={feedbackMap[currentQuestion.id] ?? null}
+              timeSpentSeconds={timings[currentQuestion.id]}
+              typicalSeconds={typicalSeconds(
+                app.timingSamples,
+                currentQuestion.section,
+                currentQuestion.difficulty
+              )}
               onSubmit={handleSubmitCurrent}
               onNext={() => {
                 if (currentIndex + 1 < sessionQuestions.length) {
@@ -542,7 +832,14 @@ export function PracticePage() {
               </p>
             </div>
             <div className="row">
-              <Button onClick={() => setSessionId(null)} variant="outline">
+              <Button
+                onClick={() => {
+                  clearPracticeSession();
+                  setSessionId(null);
+                  setReadyNotice(null);
+                }}
+                variant="outline"
+              >
                 Configure new session
               </Button>
               <Button onClick={startCustomSession}>Practice another set</Button>
@@ -573,11 +870,8 @@ export function PracticePage() {
 
       {tab === 'assistant' ? (
         <Card>
-          <h2>Deterministic Study Coach</h2>
-          <p className="muted">
-            Rule-based diagnostic engine that inspects your actual attempt history, domain accuracy, and spaced-repetition
-            queue—without generating synthetic questions or unverified advice.
-          </p>
+          <h2>Study Coach</h2>
+          <p className="muted">Picks your next drill from your own history.</p>
 
           {studyCoachPlan.length === 0 ? (
             <EmptyState title="No domains found" body="Select an assessment to view domain diagnostics." />
@@ -586,12 +880,12 @@ export function PracticePage() {
               {studyCoachPlan.map((d, idx) => {
                 const statusLabel =
                   d.attempted === 0
-                    ? 'Unexplored domain — start with 5 foundational items'
+                    ? 'Not started — begin with 5 items'
                     : d.accuracy < 0.6
-                    ? 'Priority focus — accuracy below 60% routing threshold'
+                    ? 'Priority — under 60%'
                     : d.accuracy < 0.85
-                    ? 'Developing — drill Medium/Hard items to lock in upper-module routing'
-                    : 'Strong mastery — maintain with periodic spaced review';
+                    ? 'Developing — drill Medium/Hard'
+                    : 'Strong — light review';
                 return (
                   <div key={d.domain} className="muted-block row-between">
                     <div>

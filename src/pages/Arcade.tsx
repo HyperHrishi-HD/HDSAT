@@ -191,27 +191,27 @@ const MINI_GAMES: {
   {
     id: 'lab',
     name: 'Desmos Lab',
-    blurb: 'Three guided graphing investigations next to a live Desmos calculator.',
+    blurb: 'Three guided graphing investigations with a live Desmos calculator.',
     icon: 'calculator',
   },
   {
     id: 'sprint',
     name: 'Equation Sprint',
-    blurb: 'Speed-solve fresh multiple-choice bank items against a 75-second clock.',
+    blurb: 'Speed-solve bank items in 75 seconds.',
     icon: 'bolt',
     best: 'sprint',
   },
   {
     id: 'transitions',
     name: 'Transition Match',
-    blurb: 'Train rhetorical transitions with real stimulus texts.',
+    blurb: 'Rhetorical transitions from real stimulus texts.',
     icon: 'spark',
     best: 'transitions',
   },
   {
     id: 'vocab',
     name: 'Vocab Precision',
-    blurb: 'Drill the whole vocabulary deck with four-way definitions.',
+    blurb: 'Vocabulary deck, four-way definitions.',
     icon: 'flashcards',
     best: 'vocab',
   },
@@ -342,7 +342,7 @@ export function ArcadePage() {
     const ok = clean === activeLesson.expectedAnswer;
     setLabFeedback({
       ok,
-      text: ok ? `Correct! ${activeLesson.explanation}` : `Hint: ${activeLesson.hint}`,
+      text: ok ? `Correct. ${activeLesson.explanation}` : `Hint: ${activeLesson.hint}`,
     });
   };
 
@@ -366,8 +366,8 @@ export function ArcadePage() {
     setLastFeedback(
       isCorrect
         ? delta > 10
-          ? `Correct! +${delta} (streak ×${nextCombo})`
-          : 'Correct! +10'
+          ? `Correct, +${delta} (streak ×${nextCombo})`
+          : 'Correct, +10'
         : `The answer was: ${items[gameIndex].correct}`
     );
 
@@ -399,19 +399,8 @@ export function ArcadePage() {
             <h1>Arcade</h1>
             <InfoTip label="How the Arcade works">
               <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55 }}>
-                <li>
-                  <strong>Rewards:</strong> answers earn HDCoins like any practice item; a completed
-                  game or quest run adds a session reward, capped per category each day so the
-                  economy cannot be farmed.
-                </li>
-                <li>
-                  <strong>Daily content:</strong> one Hard question and three quests per calendar
-                  day. Quests stop after 30 total questions.
-                </li>
-                <li>
-                  <strong>Practice Rush</strong> keeps a personal best for every duration, section
-                  and difficulty combination.
-                </li>
+                <li>Answers earn HDCoins; a finished run adds one session reward per category each day.</li>
+                <li>One Hard question and three quests per day, capped at 30 questions.</li>
               </ul>
             </InfoTip>
           </div>
@@ -455,12 +444,7 @@ export function ArcadePage() {
       {tab === 'minigames' && !game ? (
         <Card>
           <div className="row-between" style={{ marginBottom: 10 }}>
-            <div>
-              <h2 style={{ margin: 0 }}>Choose a mini-game</h2>
-              <p className="muted" style={{ margin: '2px 0 0' }}>
-                Pick one, set it up, then play. Each run draws fresh randomised items.
-              </p>
-            </div>
+            <h2 style={{ margin: 0 }}>Choose a mini-game</h2>
             <Badge tone="info">{GAME_SECONDS}s runs</Badge>
           </div>
           <div className="card-grid">
@@ -567,13 +551,7 @@ export function ArcadePage() {
           {game !== 'lab' && !running && !gameDone ? (
             <Card>
               <h2>Ready to play?</h2>
-              <p className="muted" style={{ margin: '12px 0' }}>
-                <strong>Equation Sprint</strong> speed-solves fresh bank items ·{' '}
-                <strong>Transition Match</strong> trains rhetorical transitions ·{' '}
-                <strong>Vocab Precision</strong> drills the vocabulary deck. Every run lasts{' '}
-                {GAME_SECONDS} seconds.
-              </p>
-              <div className="row">
+              <div className="row" style={{ marginTop: 12 }}>
                 <Button onClick={() => startGame(game)}>Start {GAME_SECONDS}-second run</Button>
               </div>
               <div className="card-grid" style={{ marginTop: 14 }}>
@@ -589,7 +567,7 @@ export function ArcadePage() {
               <div className="row-between">
                 <h2>Run complete</h2>
                 {isRecord ? (
-                  <Badge tone="good">New personal best!</Badge>
+                  <Badge tone="good">New personal best</Badge>
                 ) : (
                   <Badge tone="info">Best: {best[game as GameId].toLocaleString()}</Badge>
                 )}

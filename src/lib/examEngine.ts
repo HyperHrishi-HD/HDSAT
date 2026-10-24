@@ -1,3 +1,4 @@
+import { compareReviewOrder, isReviewDue } from './review';
 import type {
   Assessment,
   Difficulty,
@@ -888,6 +889,14 @@ export interface PracticeSessionOptions {
   progress?: Record<string, QuestionProgress>;
   savedIds?: string[];
   format?: 'both' | 'multiple_choice' | 'spr';
+  /** Clock used for review spacing; injectable so tests are deterministic. */
+  now?: Date;
+  /**
+   * Explicit drills (saved questions, incorrect-only) may revisit an item whose
+   * review date has not arrived, because the student picked it on purpose.
+   * Automatic sessions never do.
+   */
+  allowScheduled?: boolean;
 }
 
 export function filterQuestions(
@@ -924,20 +933,31 @@ export function filterQuestions(
 
 /**
  * Interleaves questions so consecutive items never share the same archetype
- * or skill when alternatives exist, while prioritizing unseen questions first.
+ * or skill when alternatives exist.
+ *
+ * Draw order is the schedule, not a filler rule: unseen items lead, then items
+ * whose review date has arrived (misses first, then one-off corrects, then
+ * mastered items, oldest wait first). A seen item that is not due yet is only
+ * admitted for an explicit drill (`allowScheduled`), so a mastered question can
+ * never drift back into a normal session by accident.
  */
 function diversifySequence(
   candidates: Question[],
   count: number,
   progress: Record<string, QuestionProgress>,
-  seed: string
+  seed: string,
+  options: { now?: Date; allowScheduled?: boolean } = {}
 ): Question[] {
   if (candidates.length === 0 || count <= 0) return [];
+  const now = options.now ?? new Date();
   const shuffled = seededShuffle(candidates, seed);
-  // Partition into unseen vs previously attempted so fresh items always lead
   const unseen = shuffled.filter((q) => !progress[q.id] || progress[q.id].attemptCount === 0);
   const seen = shuffled.filter((q) => progress[q.id] && progress[q.id].attemptCount > 0);
-  const working = [...unseen, ...seen];
+  const due = seen
+    .filter((q) => isReviewDue(progress[q.id], now))
+    .sort((a, b) => compareReviewOrder(progress[a.id], progress[b.id]));
+  const scheduled = seen.filter((q) => !isReviewDue(progress[q.id], now));
+  const working = [...unseen, ...due, ...(options.allowScheduled ? scheduled : [])];
 
   const picked: Question[] = [];
   const usedIds = new Set<string>();
@@ -1022,17 +1042,19 @@ export function buildPracticeSession(
     options.seed ??
     `practice:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`;
   const progress = options.progress ?? {};
+  const draw = { now: options.now, allowScheduled: options.allowScheduled };
 
   if (!filters.section || filters.section === 'all') {
     const rwPool = pool.filter((q) => q.section === 'Reading and Writing');
     const mathPool = pool.filter((q) => q.section === 'Math');
     const half = Math.ceil(options.count / 2);
-    const rwTake = diversifySequence(rwPool, half, progress, `${seed}:rw`);
+    const rwTake = diversifySequence(rwPool, half, progress, `${seed}:rw`, draw);
     const mathTake = diversifySequence(
       mathPool,
       Math.max(0, options.count - rwTake.length),
       progress,
-      `${seed}:math`
+      `${seed}:math`,
+      draw
     );
     const combined: Question[] = [];
     const maxLen = Math.max(rwTake.length, mathTake.length);
@@ -1046,14 +1068,15 @@ export function buildPracticeSession(
         pool.filter((q) => !used.has(q.id)),
         options.count - combined.length,
         progress,
-        `${seed}:extra`
+        `${seed}:extra`,
+        draw
       );
       combined.push(...extras);
     }
     return combined.slice(0, options.count);
   }
 
-  return diversifySequence(pool, options.count, progress, seed);
+  return diversifySequence(pool, options.count, progress, seed, draw);
 }
 
 export function averageDifficulty(questions: Question[]): number {

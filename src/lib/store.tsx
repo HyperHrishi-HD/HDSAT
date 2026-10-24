@@ -2,15 +2,17 @@ import React, { createContext, useCallback, useContext, useEffect, useMemo, useR
 import bankJson from '../data/questionBank.json';
 import flashcardsJson from '../data/flashcards.json';
 import resourcesJson from '../data/resources.json';
-import { achievementById } from './catalog';
+import { achievementById, itemById } from './catalog';
 import * as cloud from './cloud';
 import { getSupabase, isCloudConfigured } from './supabaseClient';
 import * as local from './storage';
+import { timingSamplesFromAttempts, type TimingSample } from './timing';
 import type {
   DailyActivity,
   DatasetSource,
   Flashcard,
   FlashcardProgress,
+  LocalAttempt,
   LocalProfile,
   Question,
   QuestionProgress,
@@ -45,6 +47,8 @@ export interface AppValue {
   user: { id: string; email: string; displayName: string } | null;
   /** 'pending' means an account exists but the email is not confirmed yet. */
   accountStatus: 'guest' | 'pending' | 'cloud';
+  /** Signed in, but the address has not been proven with an emailed code. */
+  emailVerified: boolean;
   pendingAccount: local.PendingAccount | null;
   bankVersion: string;
   licensingNote: string;
@@ -74,6 +78,10 @@ export interface AppValue {
     testsTaken: number;
   };
   settings: UserSettings;
+  /** Timed attempts recorded on this device, used for pacing comparisons. */
+  timingSamples: TimingSample[];
+  /** Recent device attempts, with per-item timing (guest and cloud alike). */
+  attempts: LocalAttempt[];
   syncing: boolean;
   syncMessage: string | null;
   error: string | null;
@@ -90,7 +98,7 @@ export interface AppValue {
       password: string,
       displayName: string,
       consent?: Record<string, string | boolean>
-    ) => Promise<string>;
+    ) => Promise<{ message: string; verificationRequired: boolean }>;
     signOut: () => Promise<void>;
     continueAsGuest: () => void;
     submitAttempt: (
@@ -178,8 +186,17 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const refreshSnapshot = useCallback(async () => {
     const data = await cloud.fetchSnapshot();
     setSnapshot(data);
+    // Adopt the cloud's test goal only when this device has none, so a local
+    // choice is never silently replaced by an older server copy.
+    const current = profileRef.current;
+    if (data.targetTestDate && !current.settings.testDate) {
+      persist({
+        ...current,
+        settings: { ...current.settings, testDate: data.targetTestDate },
+      });
+    }
     return data;
-  }, []);
+  }, [persist]);
 
   useEffect(() => {
     const supabase = getSupabase();
@@ -231,6 +248,9 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   }, [refreshSnapshot]);
 
   const mode: Mode = user && snapshot ? 'cloud' : 'guest';
+  // Light account: signed in, address not proven yet. Declared before the
+  // callbacks so they close over the current value.
+  const emailVerified = Boolean(snapshot?.emailVerifiedAt);
 
   const progress = useMemo<Record<string, QuestionProgress>>(
     () => (mode === 'cloud' && snapshot ? snapshot.progress : profile.progress),
@@ -380,21 +400,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const purchase = useCallback(
     async (itemId: string, cost: number) => {
+      const item = itemById(itemId);
+      if (!item || item.slot !== 'theme') {
+        return { ok: false, reason: 'Emblems are earned through achievements, not purchased.' };
+      }
       if (mode === 'cloud') {
         try {
-          const itemType = itemId.startsWith('badge-') ? 'avatar_badge' : 'accent_theme';
-          const result = await cloud.purchaseCosmeticCloud(itemId, itemType);
+          const result = await cloud.purchaseCosmeticCloud(itemId);
           await refreshSnapshot();
           if (result.ok) {
-            const isBadge = itemId.startsWith('badge-');
-            const next: LocalProfile = {
+            persist({
               ...profileRef.current,
-              settings: {
-                ...profileRef.current.settings,
-                ...(isBadge ? { activeFlair: itemId } : { activeTheme: itemId }),
-              },
-            };
-            persist(next);
+              settings: { ...profileRef.current.settings, activeTheme: itemId },
+            });
           }
           return { ok: Boolean(result.ok), reason: result.reason as string | undefined };
         } catch (err) {
@@ -450,9 +468,14 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             assessment: attempt.assessment,
             durationSeconds: attempt.durationSeconds,
             status: attempt.status,
+            light: !emailVerified,
           });
           await refreshSnapshot();
-          if (saved.skippedResponses > 0) {
+          if (saved.lightLimited) {
+            setNotice(
+              'Test saved to your account. Answer detail stays on this device until you confirm your email.'
+            );
+          } else if (saved.skippedResponses > 0) {
             setNotice(
               `Test saved to your account. ${saved.skippedResponses} answer(s) used newly added questions that are still being synced to the cloud bank, so those replies stay on this device for now.`
             );
@@ -466,7 +489,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         if (next !== profileRef.current) persist(next);
       }
     },
-    [mode, persist, refreshSnapshot]
+    [emailVerified, mode, persist, refreshSnapshot]
   );
 
   // Throttle for the in-progress cloud mirror: localStorage is written on every
@@ -610,29 +633,68 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       }
       await refreshSnapshot();
       if (data.user?.id) await importLocalHistoryOnce(data.user.id);
-      setNotice('Email confirmed — you are signed in and your device history is backed up.');
+      setNotice('Email confirmed — your account is now fully backed up.');
     },
     [importLocalHistoryOnce, refreshSnapshot]
   );
 
+  const sendVerificationCode = useCallback(
+    async (email: string): Promise<{ sent: boolean; message: string }> => {
+      const address = email.trim();
+      if (!address) return { sent: false, message: 'Enter your email address first.' };
+
+      // Brevo gives 300 sends a day. Stop asking at 280 so the provider never
+      // answers with an error; the account keeps working either way.
+      const budget = await cloud.emailSendBudget().catch(() => null);
+      if (budget && !budget.allowed) {
+        return {
+          sent: false,
+          message: 'Email verification is paused for today — come back tomorrow, keep studying signed in.',
+        };
+      }
+
+      const guard = local.canSendVerificationEmail(address);
+      if (!guard.allowed) {
+        setPendingAccount(guard.existing);
+        return {
+          sent: false,
+          message: `A code was already sent to ${address} (${local.formatRemainingHours(
+            guard.remainingMs
+          )} left).`,
+        };
+      }
+      let serverWait = 0;
+      try {
+        serverWait = await cloud.emailRequestWait(address, 'confirm');
+      } catch {
+        /* offline: the local guard above still applies */
+      }
+      if (serverWait > 0) {
+        return {
+          sent: false,
+          message: `A code was already sent to ${address} (${local.formatRemainingHours(
+            serverWait * 1000
+          )} left).`,
+        };
+      }
+      await cloud.resendConfirmation(address);
+      await cloud.recordEmailRequest(address, 'confirm').catch(() => {});
+      const saved = local.savePendingAccount({
+        email: address,
+        displayName: guard.existing?.displayName ?? user?.displayName ?? 'Student',
+      });
+      setPendingAccount(saved);
+      return { sent: true, message: `Code sent to ${address}. It works for 24 hours.` };
+    },
+    [user]
+  );
+
   const resendVerification = useCallback(async (email: string) => {
     setError(null);
-    const guard = local.canSendVerificationEmail(email);
-    if (!guard.allowed) {
-      throw new Error(
-        `A confirmation email was already sent to ${email.trim()}. That 6-digit code works for a full 24 hours (${local.formatRemainingHours(
-          guard.remainingMs
-        )} remaining). Enter the code from that email, use a different email address, or wait until the 24-hour window expires.`
-      );
-    }
-    await cloud.resendConfirmation(email);
-    const saved = local.savePendingAccount({
-      email: email.trim(),
-      displayName: guard.existing?.displayName ?? 'Student',
-    });
-    setPendingAccount(saved);
-    setNotice('Confirmation email sent. Your 6-digit code stays active for 24 hours.');
-  }, []);
+    const result = await sendVerificationCode(email);
+    if (!result.sent) throw new Error(result.message);
+    setNotice(result.message);
+  }, [sendVerificationCode]);
 
   const signUp = useCallback(
     async (
@@ -646,26 +708,67 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       if (!guard.allowed) {
         setPendingAccount(guard.existing);
         setAuthModalView('verify');
-        return `A confirmation email was already sent to ${email.trim()} (${local.formatRemainingHours(
-          guard.remainingMs
-        )} remaining in its 24-hour window). Enter the 6-digit code from that email below.`;
+        return {
+          message: `A confirmation email was already sent to ${email.trim()} (${local.formatRemainingHours(
+            guard.remainingMs
+          )} remaining in its 24-hour window). Enter the 6-digit code from that email below.`,
+          verificationRequired: true,
+        };
+      }
+      let serverWait = 0;
+      try {
+        serverWait = await cloud.emailRequestWait(email, 'confirm');
+      } catch {
+        /* offline: the local guard above still applies */
+      }
+      if (serverWait > 0) {
+        const record = local.savePendingAccount({
+          email: email.trim(),
+          displayName: displayName || 'Student',
+        });
+        setPendingAccount(record);
+        setAuthModalView('verify');
+        return {
+          message: `A confirmation email was already sent to ${email.trim()} (${local.formatRemainingHours(
+            serverWait * 1000
+          )} left). Enter the 6-digit code from that email below.`,
+          verificationRequired: true,
+        };
       }
       const data = await cloud.signUp(email, password, displayName, consent);
+      if (!data.session) {
+        // The signup email counts against the same one-per-day budget.
+        await cloud.recordEmailRequest(email, 'confirm').catch(() => {});
+      }
       if (data.session) {
         local.clearPendingAccount();
         setPendingAccount(null);
         await refreshSnapshot();
         if (data.user?.id) await importLocalHistoryOnce(data.user.id);
-        return 'Account created and signed in. Your device history is now backed up to the cloud.';
+        // The account is usable now. The code only lifts the light-account cap,
+        // so a mail failure must never read as a failed signup.
+        const send = await sendVerificationCode(email.trim()).catch((err: Error) => ({
+          sent: false,
+          message: err.message,
+        }));
+        return {
+          message: send.sent
+            ? `Account created. We emailed a 6-digit code to ${email.trim()} — enter it to confirm your address.`
+            : `Account created and signed in. ${send.message}`,
+          verificationRequired: true,
+        };
       }
       const record = local.savePendingAccount({
         email: email.trim(),
         displayName: displayName || 'Student',
       });
       setPendingAccount(record);
-      return `Account created for ${email}. We emailed a confirmation link and a 6-digit code that stays valid for 24 hours.`;
+      return {
+        message: `Account created for ${email}. We emailed a confirmation link and a 6-digit code that stays valid for 24 hours.`,
+        verificationRequired: true,
+      };
     },
-    [importLocalHistoryOnce, refreshSnapshot]
+    [importLocalHistoryOnce, refreshSnapshot, sendVerificationCode]
   );
 
   const attemptSignIn = useCallback(
@@ -736,13 +839,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         settings: { ...profileRef.current.settings, ...patch },
       };
       persist(next);
-      if (mode === 'cloud' && patch.assessment) {
-        cloud.setPreferredExamCloud(patch.assessment).catch((err: Error) =>
-          setError(`Could not save your preferred exam: ${err.message}`)
-        );
+      if (mode === 'cloud' && ('assessment' in patch || 'testDate' in patch)) {
+        cloud
+          .setTestGoalCloud(next.settings.assessment, next.settings.testDate ?? null)
+          .catch((err: Error) =>
+            setError(`Could not save your test goal: ${err.message}`)
+          );
       }
     },
-    [mode, persist, profile]
+    [mode, persist]
+  );
+
+  const timingSamples = useMemo(
+    () => timingSamplesFromAttempts(profile.attempts),
+    [profile.attempts]
   );
 
   const value: AppValue = {
@@ -751,6 +861,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     cloudConfigured: isCloudConfigured,
     user,
     accountStatus,
+    emailVerified,
     pendingAccount,
     bankVersion: bank.bank_version,
     licensingNote: bank.licensing_note,
@@ -771,6 +882,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     ownedItems: mode === 'cloud' && snapshot ? snapshot.ownedItems : profile.ownedItems,
     totals,
     settings: profile.settings,
+    timingSamples,
+    attempts: profile.attempts.slice(-600),
     syncing,
     syncMessage,
     error,

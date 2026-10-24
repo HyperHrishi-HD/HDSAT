@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Badge, Button, Card, Icon, InfoTip, Stat } from '../components/ui';
-import { ACHIEVEMENTS, STORE_ITEMS } from '../lib/catalog';
+import { ACHIEVEMENTS, STORE_ITEMS, emblemFor, earnedEmblemIds } from '../lib/catalog';
 import { DAILY_FLASHCARD_COIN_CAP, DAILY_QUESTION_COIN_CAP } from '../lib/storage';
 import { useApp } from '../lib/store';
 
@@ -11,32 +11,32 @@ export function RewardsPage() {
   const today = app.dailyActivity[app.dailyActivity.length - 1];
   const activeTheme = app.settings.activeTheme ?? null;
   const activeFlair = app.settings.activeFlair ?? null;
+  const activeEmblem = emblemFor(activeFlair);
+  const earnedEmblems = new Set(earnedEmblemIds(app.achievements, app.ownedItems));
 
   const handleBuy = async (itemId: string, cost: number, name: string) => {
     const res = await app.actions.purchase(itemId, cost);
-    if (res.ok) {
-      setFeedback({ ok: true, text: `Unlocked and applied ${name}!` });
-    } else {
-      setFeedback({ ok: false, text: res.reason ?? 'Could not complete purchase.' });
-    }
+    setFeedback(
+      res.ok
+        ? { ok: true, text: `Unlocked and applied ${name}.` }
+        : { ok: false, text: res.reason ?? 'Could not complete purchase.' }
+    );
   };
 
-  const handleEquip = (itemId: string, slot: 'theme' | 'flair' | 'utility', name: string) => {
-    if (slot === 'theme') {
-      const next = activeTheme === itemId ? null : itemId;
-      app.actions.updateSettings({ activeTheme: next });
-      setFeedback({
-        ok: true,
-        text: next ? `Applied ${name}.` : 'Restored default HDSAT Blue theme.',
-      });
-    } else {
-      const next = activeFlair === itemId ? null : itemId;
-      app.actions.updateSettings({ activeFlair: next });
-      setFeedback({
-        ok: true,
-        text: next ? `Equipped ${name}.` : 'Removed profile emblem.',
-      });
-    }
+  const equipTheme = (itemId: string, name: string) => {
+    const next = activeTheme === itemId ? null : itemId;
+    app.actions.updateSettings({ activeTheme: next });
+    setFeedback({
+      ok: true,
+      text: next ? `Applied ${name}.` : 'Restored default HDSAT Blue theme.',
+    });
+  };
+
+  const equipEmblem = (achievementId: string, name: string) => {
+    if (!earnedEmblems.has(achievementId)) return;
+    const next = activeFlair === achievementId ? null : achievementId;
+    app.actions.updateSettings({ activeFlair: next });
+    setFeedback({ ok: true, text: next ? `${name} emblem equipped.` : 'Emblem removed.' });
   };
 
   return (
@@ -45,73 +45,42 @@ export function RewardsPage() {
         <div className="row-between">
           <div>
             <div className="row">
-              <h1>Rewards &amp; Themes</h1>
+              <h1>Rewards</h1>
               <InfoTip label="Earning rules">
                 <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55 }}>
+                  <li>First attempt on a question: +1 HDCoin (once per question).</li>
                   <li>
-                    <strong>First attempt on a question:</strong> +1 HDCoin (once per question ID).
+                    First correct solution: +1 HDCoin (daily cap {DAILY_QUESTION_COIN_CAP}).
                   </li>
                   <li>
-                    <strong>First correct solution:</strong> +1 additional HDCoin (daily cap:{' '}
-                    {DAILY_QUESTION_COIN_CAP}).
+                    Due flashcard review: +1 HDCoin (up to {DAILY_FLASHCARD_COIN_CAP}/day).
                   </li>
-                  <li>
-                    <strong>Due flashcard review:</strong> +1 HDCoin (up to{' '}
-                    {DAILY_FLASHCARD_COIN_CAP}/day).
-                  </li>
-                  <li>
-                    <strong>Daily streak milestone:</strong> +5 HDCoins once/day (≥3 questions, ≥5
-                    flashcards, or Practice Rush).
-                  </li>
-                  <li>
-                    <strong>Full adaptive simulation:</strong> +25 HDCoins.
-                  </li>
-                  <li>
-                    <strong>Achievement milestones:</strong> +5 to +40 bonus HDCoins per badge
-                    unlocked.
-                  </li>
+                  <li>Streak milestone: +5 HDCoins once a day.</li>
+                  <li>Full adaptive simulation: +25 HDCoins.</li>
+                  <li>Achievements: +5 to +40 HDCoins each.</li>
                 </ul>
               </InfoTip>
             </div>
-            <p className="muted">
-              Earn HDCoins through practice, flashcards, and full tests to unlock UI themes and
-              emblems.
-            </p>
           </div>
           <Badge tone="good">{app.hdCoins} HDCoins</Badge>
         </div>
 
         <div className="card-grid" style={{ marginTop: 12 }}>
+          <Stat label="HDCoins" value={app.hdCoins} hint={`${today?.coinsEarned ?? 0} today`} />
           <Stat
-            label="HDCoins Balance"
-            value={app.hdCoins}
-            hint={`${today?.coinsEarned ?? 0} earned today`}
+            label="Study Streak"
+            value={`${app.currentStreak} d`}
+            hint={`Best ${app.bestStreak} d`}
           />
-          <Stat
-            label="Current Streak"
-            value={`${app.currentStreak} days`}
-            hint={`Best: ${app.bestStreak} days`}
-          />
-          <Stat
-            label="Achievements"
-            value={`${app.achievements.length} / ${ACHIEVEMENTS.length}`}
-          />
-          <Stat
-            label="Active Theme"
-            value={
-              activeTheme
-                ? STORE_ITEMS.find((i) => i.id === activeTheme)?.name.replace(/ Theme$/, '') ??
-                  'Custom'
-                : 'HDSAT Blue'
-            }
-          />
+          <Stat label="Achievements" value={`${app.achievements.length} / ${ACHIEVEMENTS.length}`} />
+          <Stat label="Theme" value={activeTheme ? STORE_ITEMS.find((i) => i.id === activeTheme)?.name.replace(/ Theme$/, '') ?? 'Custom' : 'HDSAT Blue'} />
         </div>
       </Card>
 
       {feedback ? (
         <Card>
           <p style={{ color: feedback.ok ? 'var(--good)' : 'var(--bad)', margin: 0 }}>
-            <strong>{feedback.text}</strong>
+            {feedback.text}
           </p>
         </Card>
       ) : null}
@@ -119,7 +88,7 @@ export function RewardsPage() {
       <div className="grid-2">
         <Card>
           <div className="row-between">
-            <h2>Theme &amp; Emblem Store</h2>
+            <h2>Theme Store</h2>
             {activeTheme ? (
               <Button
                 size="sm"
@@ -129,60 +98,37 @@ export function RewardsPage() {
                   setFeedback({ ok: true, text: 'Restored default HDSAT Blue theme.' });
                 }}
               >
-                Reset to Default Blue
+                Default Blue
               </Button>
             ) : null}
           </div>
           <div className="stack" style={{ marginTop: 12 }}>
             {STORE_ITEMS.map((item) => {
               const owned = app.ownedItems.includes(item.id);
-              const canAfford = app.hdCoins >= item.cost;
-              const isEquipped =
-                item.slot === 'theme' ? activeTheme === item.id : activeFlair === item.id;
+              const isActive = activeTheme === item.id;
               return (
                 <div key={item.id} className="muted-block row-between">
                   <div>
                     <div className="row">
-                      {item.icon ? (
-                        <span
-                          className={`emblem-glyph${isEquipped ? ' is-active' : ''}`}
-                          aria-hidden="true"
-                        >
-                          <Icon name={item.icon} size={14} />
-                        </span>
-                      ) : (
-                        <span className={`theme-swatch theme-swatch-${item.id}`} />
-                      )}
+                      <span className={`theme-swatch theme-swatch-${item.id}`} />
                       <strong>{item.name}</strong>
-                      <Badge tone={isEquipped ? 'good' : 'neutral'}>
-                        {isEquipped ? 'Active' : item.slot}
-                      </Badge>
+                      {isActive ? <Badge tone="good">Active</Badge> : null}
                     </div>
                     <div className="muted" style={{ marginTop: 4 }}>
                       {item.description}
                     </div>
                   </div>
-                  <div className="row">
-                    {owned ? (
-                      <Button
-                        size="sm"
-                        variant={isEquipped ? 'primary' : 'outline'}
-                        icon={isEquipped ? 'check' : 'palette'}
-                        onClick={() => handleEquip(item.id, item.slot, item.name)}
-                      >
-                        {isEquipped ? 'Active' : 'Apply'}
-                      </Button>
-                    ) : (
-                      <Button
-                        size="sm"
-                        icon="coins"
-                        disabled={!canAfford}
-                        onClick={() => handleBuy(item.id, item.cost, item.name)}
-                      >
-                        Unlock ({item.cost})
-                      </Button>
-                    )}
-                  </div>
+                  <Button
+                    size="sm"
+                    variant={isActive ? 'primary' : 'outline'}
+                    icon={owned ? (isActive ? 'check' : 'palette') : 'coins'}
+                    disabled={!owned && app.hdCoins < item.cost}
+                    onClick={() =>
+                      owned ? equipTheme(item.id, item.name) : void handleBuy(item.id, item.cost, item.name)
+                    }
+                  >
+                    {owned ? (isActive ? 'Active' : 'Apply') : `Unlock ${item.cost}`}
+                  </Button>
                 </div>
               );
             })}
@@ -190,22 +136,47 @@ export function RewardsPage() {
         </Card>
 
         <Card>
-          <h2>Achievements</h2>
+          <div className="row-between">
+            <h2>Achievements</h2>
+            {activeEmblem ? (
+              <Button
+                size="sm"
+                variant="subtle"
+                onClick={() => {
+                  app.actions.updateSettings({ activeFlair: null });
+                  setFeedback({ ok: true, text: 'Emblem removed.' });
+                }}
+              >
+                <Icon name={activeEmblem.icon} size={13} />
+                <span>{activeEmblem.name}</span>
+              </Button>
+            ) : null}
+          </div>
+          <p className="muted" style={{ marginTop: 4 }}>Each achievement earns its emblem.</p>
           <div className="stack" style={{ marginTop: 10 }}>
             {ACHIEVEMENTS.map((ach) => {
               const earned = app.achievements.includes(ach.id);
+              const equipped = activeFlair === ach.id;
               return (
                 <div key={ach.id} className="muted-block row-between">
                   <div>
                     <div className="row" style={{ gap: 8 }}>
+                      <span className={`emblem-glyph${equipped ? ' is-active' : ''}`}>
+                        <Icon name={ach.icon} size={14} />
+                      </span>
                       <strong>{ach.name}</strong>
-                      <Badge tone={earned ? 'good' : 'info'}>+{ach.rewardCoins} HDCoins</Badge>
+                      <Badge tone={earned ? 'good' : 'info'}>+{ach.rewardCoins}</Badge>
                     </div>
                     <div className="muted">{ach.description}</div>
                   </div>
-                  <Badge tone={earned ? 'good' : 'neutral'}>
-                    {earned ? 'Unlocked' : 'Locked'}
-                  </Badge>
+                  <Button
+                    size="sm"
+                    variant={equipped ? 'primary' : 'outline'}
+                    disabled={!earned}
+                    onClick={() => equipEmblem(ach.id, ach.name)}
+                  >
+                    {equipped ? 'Equipped' : earned ? 'Wear' : 'Locked'}
+                  </Button>
                 </div>
               );
             })}

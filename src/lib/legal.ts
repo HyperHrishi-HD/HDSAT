@@ -18,13 +18,17 @@ function clean(value: string | undefined): string {
 }
 
 /** Bump this whenever the policies below change materially. */
-export const LEGAL_VERSION = '1.0';
-export const LEGAL_EFFECTIVE_DATE = 'October 17, 2026';
+export const LEGAL_VERSION = '1.3';
+/** Founding date. Never changes. */
+export const LEGAL_STARTED_DATE = 'October 17, 2026';
+/** The day of the most recent material change. Update with every policy edit. */
+export const LEGAL_LAST_UPDATED = 'October 26, 2026';
 export const SITE_NAME = 'HDSAT';
 export const TERMS_PATH = '/terms';
 export const PRIVACY_PATH = '/privacy';
 export const COPYRIGHT_PATH = '/copyright';
 export const CREDITS_PATH = '/credits';
+export const CREATOR_NAME = 'HyperHrishi HD';
 export const CREATOR_HANDLE = 'HyperHrishi-HD';
 export const CREATOR_YOUTUBE_URL = 'https://www.youtube.com/@HyperHrishiHD';
 export const CREATOR_GITHUB_URL = 'https://github.com/HyperHrishi-HD/HDSAT';

@@ -36,7 +36,16 @@ export type IconName =
   | 'users'
   | 'layers'
   | 'strike'
-  | 'undo';
+  | 'undo'
+  | 'footprints'
+  | 'hammer'
+  | 'target'
+  | 'calendar-check'
+  | 'calendar-heart'
+  | 'library'
+  | 'clipboard-check'
+  | 'zap'
+  | 'award';
 
 export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
   const props = {
@@ -304,6 +313,72 @@ export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
         <svg {...props}>
           <path d="M9 14 4 9l5-5" />
           <path d="M4 9h10.5a5.5 5.5 0 0 1 5.5 5.5v0a5.5 5.5 0 0 1-5.5 5.5H11" />
+        </svg>
+      );
+    case 'footprints':
+      return (
+        <svg {...props}>
+          <ellipse cx="9" cy="14" rx="4" ry="6" />
+          <ellipse cx="16.5" cy="8.5" rx="3" ry="4.5" />
+        </svg>
+      );
+    case 'hammer':
+      return (
+        <svg {...props}>
+          <path d="m13 4 7 7-3 3-7-7z" />
+          <path d="m11 11-7 7 3 3 7-7" />
+        </svg>
+      );
+    case 'target':
+      return (
+        <svg {...props}>
+          <circle cx="12" cy="12" r="9" />
+          <circle cx="12" cy="12" r="4.5" />
+          <circle cx="12" cy="12" r="1" />
+        </svg>
+      );
+    case 'calendar-check':
+      return (
+        <svg {...props}>
+          <rect x="3" y="5" width="18" height="16" rx="2" />
+          <path d="M8 3v4M16 3v4M3 10h18" />
+          <path d="m9 15 2 2 4-4" />
+        </svg>
+      );
+    case 'calendar-heart':
+      return (
+        <svg {...props}>
+          <rect x="3" y="5" width="18" height="16" rx="2" />
+          <path d="M8 3v4M16 3v4M3 10h18" />
+          <path d="M12 19s-3-1.9-3-4a1.7 1.7 0 0 1 3-1 1.7 1.7 0 0 1 3 1c0 2.1-3 4-3 4z" />
+        </svg>
+      );
+    case 'library':
+      return (
+        <svg {...props}>
+          <path d="M4 4v16M9 4v16M14 4v16" />
+          <path d="m18 5 3.5 15" />
+        </svg>
+      );
+    case 'clipboard-check':
+      return (
+        <svg {...props}>
+          <rect x="6" y="4" width="12" height="17" rx="2" />
+          <path d="M9 4V3h6v1" />
+          <path d="m9 13 2 2 4-4" />
+        </svg>
+      );
+    case 'zap':
+      return (
+        <svg {...props}>
+          <path d="M13 2 4 14h6l-1 8 9-12h-6z" />
+        </svg>
+      );
+    case 'award':
+      return (
+        <svg {...props}>
+          <circle cx="12" cy="9" r="5" />
+          <path d="m9 14-1 8 4-2 4 2-1-8" />
         </svg>
       );
   }
@@ -669,6 +744,13 @@ export function Toggle({
   );
 }
 
+/**
+ * Thin status strip. Notices are convenience confirmations, so they fade after
+ * ten seconds; errors stay until the reader dismisses or fixes them.
+ */
+export const NOTICE_LIFETIME_MS = 10_000;
+const NOTICE_FADE_MS = 400;
+
 export function Alert({
   tone,
   children,
@@ -678,8 +760,31 @@ export function Alert({
   children: React.ReactNode;
   onDismiss?: () => void;
 }) {
+  const [fading, setFading] = useState(false);
+  const dismissRef = useRef(onDismiss);
+  dismissRef.current = onDismiss;
+
+  useEffect(() => {
+    if (tone !== 'notice' || !onDismiss) {
+      setFading(false);
+      return;
+    }
+    const fadeTimer = window.setTimeout(() => setFading(true), NOTICE_LIFETIME_MS);
+    const closeTimer = window.setTimeout(
+      () => dismissRef.current?.(),
+      NOTICE_LIFETIME_MS + NOTICE_FADE_MS
+    );
+    return () => {
+      window.clearTimeout(fadeTimer);
+      window.clearTimeout(closeTimer);
+    };
+  }, [tone, onDismiss, children]);
+
   return (
-    <div className={`alert alert-${tone}`} role={tone === 'error' ? 'alert' : 'status'}>
+    <div
+      className={`alert alert-${tone}${fading ? ' is-fading' : ''}`}
+      role={tone === 'error' ? 'alert' : 'status'}
+    >
       <span>{children}</span>
       {onDismiss ? (
         <button type="button" className="alert-close" onClick={onDismiss} aria-label="Dismiss">

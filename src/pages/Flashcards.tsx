@@ -9,11 +9,11 @@ type DeckId = 'vocabulary' | 'math_formula';
 const DECKS: Record<DeckId, { label: string; blurb: string }> = {
   vocabulary: {
     label: 'Vocabulary',
-    blurb: 'SAT high-utility and elevated vocabulary, spaced with SM-2. Every word is a separate card with its part of speech and definition — no math here.',
+    blurb: 'High-utility SAT vocabulary, one word per card with its part of speech and definition.',
   },
   math_formula: {
     label: 'Math Formulas & Identities',
-    blurb: 'SAT formulas, algebra identities, geometry, trigonometry and statistics — each card renders its expression in KaTeX. No vocabulary here.',
+    blurb: 'SAT formulas, identities, geometry, trigonometry and statistics, rendered in KaTeX.'
   },
 };
 
@@ -73,10 +73,10 @@ export function FlashcardsPage() {
         <div className="row-between">
           <div>
             <div className="row">
-              <h1>Flashcards (SM-2)</h1>
+              <h1>Flashcards</h1>
               <InfoTip label="About decks">
-                {DECKS[activeDeck].blurb} Reviewing due cards schedules intervals with the SM-2
-                algorithm and awards daily HDCoins.
+                {DECKS[activeDeck].blurb} Due reviews earn HDCoins and mastered cards return after 14
+                days.
               </InfoTip>
             </div>
           </div>
@@ -117,22 +117,20 @@ export function FlashcardsPage() {
         <div className="card-grid" style={{ marginTop: 12 }}>
           <Stat label="Due for Review" value={stats.due.toLocaleString()} />
           <Stat label="In Progress" value={stats.learning.toLocaleString()} />
-          <Stat label="Mastered (14+ day interval)" value={stats.mastered.toLocaleString()} />
+          <Stat label="Mastered" value={stats.mastered.toLocaleString()} />
         </div>
       </Card>
 
       {!currentCard ? (
         <Card>
           <EmptyState
-            title="All due cards in this deck are complete!"
+            title="No cards due"
             body={
               queueMode === 'due'
-                ? `You have cleared your ${
-                    DECKS[activeDeck].label
-                  } spaced-repetition queue. Switch to 'Browse All' to review ahead, or switch to the ${
+                ? `Switch to Browse All to review ahead, or open the ${
                     DECKS[otherDeck].label
                   } deck.`
-                : 'This deck is empty in the current build.'
+                : 'This deck has no cards.'
             }
             action={
               queueMode === 'due' ? (
@@ -182,7 +180,7 @@ export function FlashcardsPage() {
                 <p>{currentCard.back}</p>
               </div>
             ) : (
-              <p className="muted">Click card or press Reveal to check definition / formula</p>
+              <p className="muted">Click the card or press Reveal.</p>
             )}
           </div>
 
@@ -206,21 +204,18 @@ export function FlashcardsPage() {
             </div>
           ) : (
             <div style={{ marginTop: 14 }}>
-              <p className="muted" style={{ textAlign: 'center', marginBottom: 8 }}>
-                Rate your recall quality to schedule the next review:
-              </p>
               <div className="quality-row">
                 <Button variant="danger" onClick={() => handleGrade(1)}>
                   Again (1d)
                 </Button>
                 <Button variant="outline" onClick={() => handleGrade(3)}>
-                  Hard (short)
+                  Hard
                 </Button>
                 <Button variant="primary" onClick={() => handleGrade(4)}>
-                  Good (standard)
+                  Good
                 </Button>
                 <Button variant="subtle" onClick={() => handleGrade(5)}>
-                  Easy (boost)
+                  Easy
                 </Button>
               </div>
             </div>

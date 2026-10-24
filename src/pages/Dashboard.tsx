@@ -1,18 +1,28 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Button, Card, Icon, InfoTip, ProgressBar, Stat } from '../components/ui';
+import { MissedLog } from '../components/MissedLog';
 import { QuestionOfTheDay } from '../components/QuestionOfTheDay';
 import * as cloud from '../lib/cloud';
-import { dismissQuestionOfTheDay, isQuestionOfTheDayDismissed } from '../lib/daily';
-import { hasSeenIntro, markIntroSeen } from '../lib/storage';
+import {
+  dismissQuestionOfTheDay,
+  isQuestionOfTheDayDismissed,
+  isQuestionOfTheDaySolved,
+} from '../lib/daily';
+import { formatClock } from '../lib/examEngine';
+import { loadPracticeSession, practiceResumeSummary } from '../lib/session';
 import { useApp } from '../lib/store';
 
 export function DashboardPage() {
   const app = useApp();
-  const [showIntro, setShowIntro] = useState(() => !hasSeenIntro());
-  const [qotdHidden, setQotdHidden] = useState(() => isQuestionOfTheDayDismissed());
+  // Solved items disappear on the next visit, so the result stays readable
+  // right after answering instead of vanishing mid-feedback.
+  const [qotdHidden, setQotdHidden] = useState(
+    () => isQuestionOfTheDayDismissed() || isQuestionOfTheDaySolved()
+  );
   const [notification, setNotification] = useState<cloud.StudentNotification | null>(null);
   const [dismissingNotification, setDismissingNotification] = useState(false);
+  const [resume] = useState(() => practiceResumeSummary(loadPracticeSession()));
 
   // Operator replies arrive as one notification row and are shown exactly once:
   // dismissing marks every unseen row read so it never reappears.
@@ -86,48 +96,49 @@ export function DashboardPage() {
   const todayActivity = app.dailyActivity[app.dailyActivity.length - 1];
   const latestTest = app.testAttempts[0] ?? null;
 
-  const dismissIntro = () => {
-    markIntroSeen();
-    setShowIntro(false);
-  };
+  // A real test date is the only deadline that matters; without one the goal is
+  // the everyday "3+ questions" habit.
+  const goal = useMemo<{ tone: 'good' | 'info' | 'warn' | 'neutral'; label: string }>(() => {
+    const raw = app.settings.testDate;
+    if (raw) {
+      const target = new Date(`${raw}T23:59:59`);
+      if (!Number.isNaN(target.getTime())) {
+        const days = Math.ceil((target.getTime() - Date.now()) / 86_400_000);
+        const when = target.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+        if (days > 0) {
+          return {
+            tone: days <= 14 ? 'warn' : 'info',
+            label: `Goal: ${days} day${days === 1 ? '' : 's'} to ${when}`,
+          };
+        }
+        if (days === 0) return { tone: 'warn', label: `Goal: test is today (${when})` };
+        return { tone: 'neutral', label: `Test date was ${when}` };
+      }
+    }
+    return (todayActivity?.questionsCompleted ?? 0) >= 3
+      ? { tone: 'good', label: 'Daily goal met' }
+      : { tone: 'neutral', label: 'Goal: 3+ questions/day' };
+  }, [app.settings.testDate, todayActivity?.questionsCompleted]);
 
   return (
     <div>
-      {showIntro && !app.user ? (
-        <Card className="intro-card">
+      {resume ? (
+        <Card>
           <div className="row-between">
             <div>
-              <Badge tone="info">Welcome to HDSAT</Badge>
-              <h2 style={{ marginTop: 8, marginBottom: 4 }}>
-                Your Complete Digital SAT &amp; PSAT Command Center
-              </h2>
-              <p className="muted" style={{ maxWidth: 680 }}>
-                Practice with realistic adaptive simulations, targeted domain drills, interactive
-                Desmos &amp; reference sheets, spaced-repetition flashcards, and the Arcade reward
-                economy. Everything works immediately in local guest mode—or sign in anytime to sync
-                across devices.
+              <div className="row">
+                <Badge tone="info">In progress</Badge>
+                <strong>Custom practice · {resume.assessment}</strong>
+              </div>
+              <p className="muted" style={{ margin: '4px 0 0' }}>
+                Item {resume.nextNumber} of {resume.total} · {resume.answered} answered ·{' '}
+                {formatClock(resume.elapsedSeconds)}
               </p>
             </div>
-          </div>
-          <div className="row" style={{ marginTop: 12 }}>
-            <Link to="/practice" className="btn btn-primary" onClick={dismissIntro}>
-              <Icon name="practice" size={15} />
-              <span>Start First Practice</span>
+            <Link to="/practice?resume=1" className="btn btn-primary">
+              <Icon name="play" size={14} />
+              <span>Resume</span>
             </Link>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => {
-                dismissIntro();
-                app.actions.openAuthModal(app.accountStatus === 'pending' ? 'verify' : 'signin');
-              }}
-            >
-              <Icon name="account" size={14} />
-              <span>Sign In / Create Account</span>
-            </Button>
-            <Button type="button" variant="ghost" onClick={dismissIntro}>
-              Continue as Guest
-            </Button>
           </div>
         </Card>
       ) : null}
@@ -224,7 +235,7 @@ export function DashboardPage() {
             hint={
               app.totals.attempts > 0
                 ? `${app.totals.correct} correct · ${app.totals.mastered} mastered`
-                : 'Answer a question to compute'
+                : undefined
             }
           />
         </Card>
@@ -282,11 +293,7 @@ export function DashboardPage() {
                   {todayActivity?.flashcardsReviewed ?? 0} flashcards
                 </p>
               </div>
-              <Badge tone={(todayActivity?.questionsCompleted ?? 0) >= 3 ? 'good' : 'neutral'}>
-                {(todayActivity?.questionsCompleted ?? 0) >= 3
-                  ? 'Daily goal met'
-                  : 'Goal: 3+ questions/day'}
-              </Badge>
+              <Badge tone={goal.tone}>{goal.label}</Badge>
             </div>
             <div className="sparkline" aria-label="14-day question activity chart">
               {app.dailyActivity.map((day) => {
@@ -356,6 +363,7 @@ export function DashboardPage() {
                   <Icon name="bookmark" size={13} />
                   <span>View saved</span>
                 </Link>
+                <MissedLog />
                 <Link to="/arcade" className="btn btn-outline btn-sm">
                   <Icon name="arcade" size={13} />
                   <span>Arcade &amp; Lab</span>

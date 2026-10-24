@@ -3,6 +3,7 @@ import { FigureView, StimulusView } from './FigureView';
 import { MathText } from './MathText';
 import { ReportQuestion } from './ReportQuestion';
 import { Badge, Button, Icon } from './ui';
+import { paceComparison } from '../lib/timing';
 import type { Question } from '../lib/types';
 
 export interface Feedback {
@@ -27,6 +28,8 @@ export function QuestionView({
   onNext,
   disabled = false,
   showMeta = true,
+  timeSpentSeconds,
+  typicalSeconds,
 }: {
   question: Question;
   index: number;
@@ -44,9 +47,17 @@ export function QuestionView({
   onNext?: () => void;
   disabled?: boolean;
   showMeta?: boolean;
+  /** Time the student spent on this item, in seconds. */
+  timeSpentSeconds?: number;
+  /** Comparable typical time for this section and difficulty, in seconds. */
+  typicalSeconds?: number;
 }) {
   const [showRationales, setShowRationales] = useState(false);
   const eliminatedSet = new Set(eliminated ?? []);
+  const pace =
+    feedback && timeSpentSeconds && typicalSeconds
+      ? paceComparison(timeSpentSeconds, typicalSeconds)
+      : null;
 
   // Bluebook-style answer shortcuts + Enter to submit/advance, shared by
   // Practice, Rush and the bank.
@@ -163,17 +174,26 @@ export function QuestionView({
                   <button
                     type="button"
                     className="choice-main"
-                    onClick={() => onResponseChange(choice.id)}
+                    onClick={() => {
+                      // Bluebook: choosing a crossed-out option selects it and
+                      // lifts the cross-out; no undo click needed first.
+                      onResponseChange(choice.id);
+                      if (eliminatedSet.has(choice.id)) onToggleEliminate?.(choice.id);
+                    }}
                     disabled={disabled}
                     aria-pressed={selected}
                   >
                     <span className="choice-id">{choice.id}</span>
-                    <MathText text={choice.text} />
+                    <span className="choice-text">
+                      <MathText text={choice.text} />
+                    </span>
                   </button>
                   {onToggleEliminate ? (
                     <button
                       type="button"
-                      className="choice-eliminate"
+                      className={`choice-eliminate${
+                        eliminatedSet.has(choice.id) ? ' is-on' : ''
+                      }`}
                       onClick={() => onToggleEliminate(choice.id)}
                       title={
                         eliminatedSet.has(choice.id)
@@ -187,7 +207,7 @@ export function QuestionView({
                       }
                       aria-pressed={eliminatedSet.has(choice.id)}
                     >
-                      <Icon name={eliminatedSet.has(choice.id) ? 'undo' : 'strike'} size={15} />
+                      <Icon name="strike" size={15} />
                     </button>
                   ) : null}
                 </div>
@@ -211,10 +231,7 @@ export function QuestionView({
             disabled={disabled}
             aria-label="Your answer"
           />
-          <p className="field-hint">
-            Fractions such as 3/4 and decimals such as 0.75 are both accepted when they are
-            equivalent.
-          </p>
+          <p className="field-hint">Fractions and equivalent decimals are both accepted.</p>
         </div>
       )}
 
@@ -226,6 +243,7 @@ export function QuestionView({
           <p>
             <MathText text={feedback.explanation} />
           </p>
+          {pace ? <p className="pace-note">{pace}</p> : null}
           {feedback.distractorRationales &&
           Object.keys(feedback.distractorRationales).length > 0 ? (
             <button

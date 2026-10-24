@@ -190,26 +190,55 @@ describe('AI account snapshot', () => {
     ],
   };
 
-  it('describes domain accuracy and the weakest domains', () => {
+  it('describes domain and skill accuracy, including the weakest skills', () => {
     const snapshot = buildAiSnapshot(input, new Date('2026-10-22T12:00:00Z'));
-    const info = snapshot.domain_accuracy.find((d) => d.domain === 'Information and Ideas');
-    expect(info?.accuracy_pct).toBe(0);
-    expect(info?.attempted).toBe(1);
-    expect(snapshot.weakest_domains[0]).toContain('Information and Ideas');
-    expect(snapshot.weakest_domains.join(' ')).not.toContain('Algebra');
+    const info = snapshot.data.domains.find((d) => d.domain === 'Information and Ideas');
+    expect(info?.accuracy_pct).toBe(25);
+    expect(info?.attempted).toBe(4);
+    expect(snapshot.data.weakest_skills[0]).toMatchObject({
+      skill: 'Inferences',
+      accuracy_pct: 25,
+      attempted: 4,
+    });
+    expect(snapshot.data.weakest_skills.map((s) => s.skill)).not.toContain('Linear equations');
   });
 
-  it('lists missed items without any answer key or explanation', () => {
+  it('lists missed items without any answer key, explanation or email address', () => {
     const snapshot = buildAiSnapshot(input, new Date('2026-10-22T12:00:00Z'));
-    expect(snapshot.missed_items).toHaveLength(1);
-    expect(snapshot.missed_items[0].id).toBe('RW-INF-001');
+    expect(snapshot.data.missed_items).toHaveLength(1);
+    expect(snapshot.data.missed_items[0].id).toBe('RW-INF-001');
+    expect(snapshot.data.missed_items[0].prompt).toContain('main idea');
     const json = JSON.stringify(snapshot);
     expect(json).not.toContain('correct_answer');
     expect(json).not.toContain('explanation');
     expect(json).not.toContain('distractor_rationales');
-    // Only the student's own address appears, never somebody else's data.
-    expect(json).toContain('student@example.com');
-    expect(snapshot.flashcards.due_now).toBe(1);
-    expect(snapshot.tests).toHaveLength(1);
+    expect(json).not.toContain('student@example.com');
+    expect(json).toContain('Hrishi');
+    expect(snapshot.data.flashcards.due_now).toBe(1);
+    expect(snapshot.data.tests).toHaveLength(1);
+  });
+
+  it('is an instruction payload sized for a chat window', () => {
+    const snapshot = buildAiSnapshot(input, new Date('2026-10-22T12:00:00Z'));
+    expect(snapshot.schema_version).toBe('2.0');
+    expect(snapshot.role).toMatch(/SAT tutor/i);
+    expect(snapshot.requested_output.tasks).toHaveLength(3);
+    expect(snapshot.requested_output.constraints.join(' ')).toMatch(/thin evidence/i);
+    expect(JSON.stringify(snapshot, null, 2).length).toBeLessThan(15000);
+  });
+
+  it('dense last-14-days window ends today, oldest first, empty days included', () => {
+    const snapshot = buildAiSnapshot(input, new Date('2026-10-22T12:00:00Z'));
+    const days = snapshot.data.last_14_days;
+    expect(days).toHaveLength(14);
+    expect(days[13].date).toBe('2026-10-22');
+    expect(days[13].questions).toBe(12);
+    expect(days[0].questions).toBe(0);
+    expect(days.map((d) => d.date)).toEqual([...days.map((d) => d.date)].sort());
+  });
+
+  it('is deterministic for the same input', () => {
+    const at = new Date('2026-10-22T12:00:00Z');
+    expect(buildAiSnapshot(input, at)).toEqual(buildAiSnapshot(input, at));
   });
 });

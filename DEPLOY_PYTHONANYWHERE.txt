@@ -49,6 +49,18 @@ Target site URL after deployment: https://hdsat.pythonanywhere.com
    - Check:  https://hdsat.pythonanywhere.com/              -> HDSAT dashboard loads
    - Check a deep link, e.g. .../practice (HashRouter SPA, so any path serves the app)
 
+7. ONE-TIME MIGRATIONS (SQL Editor, in filename order)
+   - supabase/migrations/20261025000200_emblems_earned.sql
+     Stops emblem purchases server-side (themes are the only cosmetic sold).
+   - supabase/migrations/20261026000100_remove_weekly_coach.sql
+     Drops the retired weekly-coach objects (idempotent).
+   - supabase/migrations/20261026000200_password_change_limits.sql
+     Adds the password-change ledger and the cooldown RPCs (1 change/hour,
+     1 email link/day), enforced in the database.
+   - Authentication -> URL Configuration -> Redirect URLs must include the site
+     origin (https://hdsat.pythonanywhere.com/ and http://localhost:5173/). The
+     password-reset email uses the same allowlist as signup confirmation.
+
 TROUBLESHOOTING
    - 500 error: open the Error log on the Web tab; the most common cause is the WSGI file
      still containing PythonAnywhere's template code instead of the 4 lines above.

@@ -4,6 +4,10 @@ import 'katex/dist/katex.min.css';
 import './styles/global.css';
 import { App } from './App';
 import { AppProvider } from './lib/store';
+import {
+  PASSWORD_RECOVERY_FLAG,
+  PASSWORD_RESET_REQUESTED_KEY,
+} from './lib/password';
 import { getSupabase } from './lib/supabaseClient';
 
 const AUTH_CALLBACK_PATH = '/account';
@@ -25,6 +29,26 @@ function normaliseAdminEntry(): void {
 function landOnAccount(): void {
   const base = window.location.pathname + window.location.search;
   window.history.replaceState(null, '', `${base}#${AUTH_CALLBACK_PATH}`);
+}
+
+/** Remembers that this browser asked for a recovery link, so a PKCE `?code=`
+ *  return opens the new-password form instead of looking like a signup link. */
+function recoveryRequestedOnThisDevice(): boolean {
+  try {
+    const at = Number(window.sessionStorage.getItem(PASSWORD_RESET_REQUESTED_KEY) ?? 0);
+    return at > 0 && Date.now() - at < 60 * 60 * 1000;
+  } catch {
+    return false;
+  }
+}
+
+function markRecoveryLanding(): void {
+  try {
+    window.sessionStorage.setItem(PASSWORD_RECOVERY_FLAG, '1');
+    window.sessionStorage.removeItem(PASSWORD_RESET_REQUESTED_KEY);
+  } catch {
+    /* private mode: the Account page simply shows the Change password button */
+  }
 }
 
 /**
@@ -59,6 +83,7 @@ async function consumeAuthRedirect(): Promise<void> {
     if (supabase) {
       try {
         await supabase.auth.exchangeCodeForSession(code);
+        if (recoveryRequestedOnThisDevice()) markRecoveryLanding();
       } catch {
         window.sessionStorage.setItem(
           'hdsat.auth-error',
@@ -78,6 +103,7 @@ async function consumeAuthRedirect(): Promise<void> {
   if (supabase) {
     try {
       await supabase.auth.setSession({ access_token: accessToken, refresh_token: refreshToken });
+      if (params.get('type') === 'recovery') markRecoveryLanding();
     } catch {
       window.sessionStorage.setItem(
         'hdsat.auth-error',

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Alert, Badge, Button, Card, Field, Select, Toggle } from '../components/ui';
 import { AppealForm } from '../components/AppealForm';
+import { PasswordDialog } from '../components/PasswordDialog';
 import * as cloud from '../lib/cloud';
 import { buildAiSnapshot, buildDataExport, downloadExport } from '../lib/dataRights';
 import {
@@ -8,15 +9,13 @@ import {
   SITE_NAME,
   SUPPORT_EMAIL,
 } from '../lib/legal';
+import { PASSWORD_RECOVERY_FLAG } from '../lib/password';
 import { formatRemainingHours } from '../lib/storage';
 import { useApp } from '../lib/store';
 import type { Assessment } from '../lib/types';
 
 export function AccountPage() {
   const app = useApp();
-  const [verifyEmail, setVerifyEmail] = useState('');
-  const [verifyCode, setVerifyCode] = useState('');
-  const [verifying, setVerifying] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const [nameDraft, setNameDraft] = useState('');
@@ -28,6 +27,7 @@ export function AccountPage() {
   const [reports, setReports] = useState<{ id: string; question_id: string; reason: string; created_at: string }[] | null>(
     null
   );
+  const [passwordDialog, setPasswordDialog] = useState<'change' | 'recover' | null>(null);
 
   // A confirmation link that failed (expired, already used, wrong origin)
   // leaves a readable message for this page instead of a silent redirect.
@@ -38,40 +38,13 @@ export function AccountPage() {
     setFormError(message);
   }, []);
 
-  const handleVerifyCode = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError(null);
-    setStatusMessage(null);
-    const address = verifyEmail.trim() || app.pendingAccount?.email || '';
-    if (!address || !verifyCode.trim()) {
-      setFormError('Enter the 6-digit code from the confirmation email.');
-      return;
-    }
-    setVerifying(true);
-    try {
-      await app.actions.verifySignupCode(address, verifyCode.trim());
-      setStatusMessage('Email confirmed. Your device history is now saved to your account.');
-      setVerifyCode('');
-    } catch (err) {
-      setFormError((err as Error).message);
-    } finally {
-      setVerifying(false);
-    }
-  };
-
-  const handleResend = async () => {
-    setFormError(null);
-    const address = verifyEmail.trim() || app.pendingAccount?.email || '';
-    if (!address) {
-      setFormError('Enter your email address first.');
-      return;
-    }
-    try {
-      await app.actions.resendVerification(address);
-    } catch (err) {
-      setFormError((err as Error).message);
-    }
-  };
+  // A recovery link lands signed in; offer the new-password form straight away.
+  useEffect(() => {
+    if (!app.user) return;
+    if (window.sessionStorage.getItem(PASSWORD_RECOVERY_FLAG) !== '1') return;
+    window.sessionStorage.removeItem(PASSWORD_RECOVERY_FLAG);
+    setPasswordDialog('recover');
+  }, [app.user]);
 
   const saveDisplayName = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -140,6 +113,11 @@ export function AccountPage() {
         difficulty: question.difficulty,
         prompt: question.prompt,
       })),
+      attempts: app.attempts.map((attempt) => ({
+        questionId: attempt.questionId,
+        seconds: attempt.timeSpentSeconds,
+        isCorrect: attempt.isCorrect,
+      })),
       saved: app.saved,
       flashcardProgress: app.flashcardProgress,
       testAttempts: app.testAttempts.map((attempt) => ({
@@ -162,13 +140,9 @@ export function AccountPage() {
     const text = JSON.stringify(payload, null, 2);
     try {
       await navigator.clipboard.writeText(text);
-      setAiMessage(
-        `Copied a ${text.length.toLocaleString()}-character snapshot. Paste it into any AI tutor or into a Freebuff chat — it has no answer keys and no other students' data.`
-      );
+      setAiMessage(`Copied ${text.length.toLocaleString()} characters.`);
     } catch {
-      setAiMessage(
-        'Your browser blocked clipboard access. Use "Download data export (JSON)" above, or copy from the box below.'
-      );
+      setAiMessage('Clipboard blocked. Use the download export instead.');
     }
   };
 
@@ -208,20 +182,26 @@ export function AccountPage() {
       <Card>
         <div className="row-between">
           <div>
-            <h1>Account, Cloud Sync &amp; Preferences</h1>
-            <p className="muted">
-              Sign in with email and password to synchronize your question history, streaks, flashcards, and HDCoins
-              across devices, or continue in local guest mode.
-            </p>
+            <h1>Account</h1>
           </div>
           <Badge
-            tone={app.mode === 'cloud' ? 'good' : app.accountStatus === 'pending' ? 'info' : 'warn'}
+            tone={
+              app.mode === 'cloud'
+                ? app.emailVerified
+                  ? 'good'
+                  : 'warn'
+                : app.accountStatus === 'pending'
+                ? 'info'
+                : 'warn'
+            }
           >
             {app.mode === 'cloud'
-              ? 'Cloud Synchronized'
+              ? app.emailVerified
+                ? 'Cloud'
+                : 'Light account'
               : app.accountStatus === 'pending'
-              ? 'Confirmation pending'
-              : 'Local Guest Mode'}
+              ? 'Confirm email'
+              : 'Guest'}
           </Badge>
         </div>
       </Card>
@@ -231,17 +211,11 @@ export function AccountPage() {
         <Alert tone="info">
           <div>
             <strong>
-              Account created for {app.pendingAccount.email} — 24-hour confirmation active (
-              {formatRemainingHours(Math.max(0, app.pendingAccount.expiresAt - Date.now()))}{' '}
-              remaining).
+              Confirm {app.pendingAccount.email} (
+              {formatRemainingHours(Math.max(0, app.pendingAccount.expiresAt - Date.now()))} left)
             </strong>
-            <p style={{ margin: '6px 0' }}>
-              You can keep studying now. Answers, saves and past tests are stored on this device, and
-              the HDCoins above are <em>provisional</em>: they are replaced by your cloud balance when
-              you confirm. Your 6-digit code works for a full 24 hours so you only need one email.
-            </p>
             <p style={{ margin: '6px 0 0' }}>
-              Enter your 6-digit code in the confirmation panel below.
+              Study now; this device keeps your work. HDCoins stay provisional until you confirm.
             </p>
           </div>
         </Alert>
@@ -254,24 +228,33 @@ export function AccountPage() {
         <Card>
           {app.user ? (
             <div className="stack">
-              <h2>Signed-In Profile</h2>
+              <h2>{app.user.displayName}</h2>
               <div className="muted-block">
-                <div>
-                  <strong>Display Name:</strong> {app.user.displayName}
+                <div>{app.user.email}</div>
+                <div className="muted">
+                  {app.emailVerified
+                    ? 'Email confirmed'
+                    : 'Not confirmed — progress and scores sync, answer detail stays on this device.'}
                 </div>
-                <div>
-                  <strong>Email:</strong> {app.user.email}
+                <div className="muted">
+                  Policies v{LEGAL_VERSION} · ID <code>{app.user.id.slice(0, 8)}</code>
                 </div>
-                <div>
-                  <strong>User ID:</strong> <code>{app.user.id}</code>
-                </div>
-                <div>
-                  <strong>Policies accepted:</strong> version {LEGAL_VERSION}
-                </div>
+                {!app.emailVerified ? (
+                  <div style={{ marginTop: 8 }}>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      onClick={() => app.actions.openAuthModal('verify')}
+                    >
+                      Confirm email
+                    </Button>
+                  </div>
+                ) : null}
               </div>
 
               <form onSubmit={saveDisplayName} className="row" style={{ alignItems: 'flex-end' }}>
-                <Field label="Change display name" hint="Shown in the top bar and on your profile.">
+                <Field label="Change display name">
                   <input
                     type="text"
                     value={nameDraft}
@@ -290,18 +273,26 @@ export function AccountPage() {
                 </Button>
               </form>
 
+              <div className="row">
+                <Button
+                  type="button"
+                  size="sm"
+                  variant="outline"
+                  onClick={() => setPasswordDialog('change')}
+                >
+                  Change password
+                </Button>
+              </div>
+
               <div className="stack" style={{ marginTop: 8 }}>
-                <h3>Merge Browser Guest Progress</h3>
-                <p className="muted">
-                  Replays any local guest attempts, saved questions, and flashcard reviews into your cloud account using
-                  idempotent event keys so nothing is double-counted.
-                </p>
+                <h3>Sync this device</h3>
+                <p className="muted">Moves local attempts, saved questions and reviews into your account once.</p>
                 <div className="row">
                   <Button onClick={app.actions.syncGuestData} disabled={app.syncing}>
-                    {app.syncing ? 'Syncing guest history...' : 'Sync Guest History to Cloud'}
+                    {app.syncing ? 'Syncing…' : 'Sync device'}
                   </Button>
                   <Button variant="outline" onClick={app.actions.signOut}>
-                    Sign Out
+                    Sign out
                   </Button>
                 </div>
               </div>
@@ -309,12 +300,7 @@ export function AccountPage() {
           ) : (
             <div>
               <h2>Sign in or create an account</h2>
-              <p className="muted">
-                One form for both. Enter your email and password: if the account exists we sign you
-                in, otherwise we create it and email a confirmation link and code. You can keep
-                studying before confirming — this device keeps your work and your HDCoins stay
-                provisional until you do.
-              </p>
+              <p className="muted">One form for both. Sign in, or create an account on first use.</p>
 
               {!app.cloudConfigured ? (
                 <div className="muted-block">
@@ -327,10 +313,6 @@ export function AccountPage() {
                 </div>
               ) : (
                 <div className="muted-block">
-                  <p className="muted" style={{ marginTop: 0, marginBottom: 10 }}>
-                    Open the Sign-In popup to log into an existing account or create a new cloud
-                    account.
-                  </p>
                   <div className="row">
                     <Button
                       type="button"
@@ -340,34 +322,35 @@ export function AccountPage() {
                         )
                       }
                     >
-                      Open Sign-In / Sign-Up Modal
+                      Sign in
                     </Button>
                     <Button type="button" variant="outline" onClick={app.actions.continueAsGuest}>
-                      Continue in Guest Mode
+                      Continue as guest
                     </Button>
                   </div>
                 </div>
               )}
 
-              <div className="muted-block" style={{ marginTop: 16 }}>
-                <strong>Confirm an email with your 24-hour code</strong>
-                <p className="muted" style={{ margin: '6px 0 10px' }}>
-                  {app.pendingAccount
-                    ? `We sent a confirmation link and a 6-digit code to ${
-                        app.pendingAccount.email
-                      }. Your code stays active for 24 hours (${formatRemainingHours(
-                        Math.max(0, app.pendingAccount.expiresAt - Date.now())
-                      )} remaining) so you don't need to request another email.`
-                    : 'Already received a confirmation email within the last 24 hours? Enter your email address and the 6-digit code below to activate cloud sync.'}
-                </p>
-                {app.pendingAccount ? (
-                  <form onSubmit={saveDisplayName} className="row" style={{ alignItems: 'flex-end' }}>
-                    <Field label="Your name" hint="Used once you confirm; you can change it later.">
+              {app.pendingAccount ? (
+                <div className="muted-block" style={{ marginTop: 16 }}>
+                  <strong>Confirm your email</strong>
+                  <p className="muted" style={{ margin: '6px 0 10px' }}>
+                    {app.pendingAccount.email} ·{' '}
+                    {formatRemainingHours(Math.max(0, app.pendingAccount.expiresAt - Date.now()))}{' '}
+                    left
+                  </p>
+                  <div className="row">
+                    <Button size="sm" onClick={() => app.actions.openAuthModal('verify')}>
+                      Enter code
+                    </Button>
+                  </div>
+                  <form onSubmit={saveDisplayName} className="row" style={{ marginTop: 10, alignItems: 'flex-end' }}>
+                    <Field label="Your name">
                       <input
                         type="text"
                         value={nameDraft}
                         onChange={(e) => setNameDraft(e.target.value)}
-                        placeholder={app.pendingAccount?.displayName ?? 'Student'}
+                        placeholder={app.pendingAccount.displayName}
                         maxLength={40}
                         autoComplete="nickname"
                       />
@@ -381,44 +364,14 @@ export function AccountPage() {
                       {nameSaving ? 'Saving…' : 'Save name'}
                     </Button>
                   </form>
-                ) : null}
-                <form onSubmit={handleVerifyCode}>
-                  {!app.pendingAccount ? (
-                    <Field label="Email Address">
-                      <input
-                        type="email"
-                        value={verifyEmail}
-                        onChange={(e) => setVerifyEmail(e.target.value)}
-                        placeholder="you@example.com"
-                      />
-                    </Field>
-                  ) : null}
-                  <Field label="6-digit code from the email (valid 24 hours)">
-                    <input
-                      type="text"
-                      inputMode="numeric"
-                      value={verifyCode}
-                      onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                      placeholder="123456"
-                      autoComplete="one-time-code"
-                    />
-                  </Field>
-                  <div className="row">
-                    <Button type="submit" disabled={verifying}>
-                      {verifying ? 'Confirming…' : 'Confirm & continue'}
-                    </Button>
-                    <Button type="button" variant="outline" onClick={handleResend}>
-                      Resend email (after 24h)
-                    </Button>
-                  </div>
-                </form>
-              </div>
+                </div>
+              ) : null}
             </div>
           )}
         </Card>
 
         <Card>
-          <h2>Study Preferences &amp; Local Storage</h2>
+          <h2>Preferences</h2>
           <Select
             label="Default Assessment"
             value={app.settings.assessment}
@@ -430,27 +383,31 @@ export function AccountPage() {
               { value: 'PSAT 8/9', label: 'PSAT 8/9' },
             ]}
           />
+          <Field label="Test date" hint="Shown on the Dashboard as your goal.">
+            <input
+              type="date"
+              value={app.settings.testDate ?? ''}
+              min="2026-01-01"
+              max="2035-12-31"
+              onChange={(e) => app.actions.updateSettings({ testDate: e.target.value || null })}
+            />
+          </Field>
           <Toggle
             checked={app.settings.excludePreviouslyCorrect}
             onChange={(val) => app.actions.updateSettings({ excludePreviouslyCorrect: val })}
             label="Exclude previously correct items by default"
-            hint="Applies to new Custom Practice sessions."
           />
           <Toggle
             checked={app.settings.excludeReleasedPracticeSet}
             onChange={(val) => app.actions.updateSettings({ excludeReleasedPracticeSet: val })}
             label="Reserve Benchmark Simulation Set items"
-            hint="Prevents benchmark simulation questions from appearing in general drills."
           />
 
           <div className="muted-block" style={{ marginTop: 14 }}>
-            <h3>Local Guest Data</h3>
-            <p className="muted">
-              Your browser stores guest progress under <code>hdsat.profile.v1</code> so refreshing the page preserves
-              your attempts, saved items, and streak.
-            </p>
+            <h3>This device</h3>
+            <p className="muted">Guest progress is stored in this browser.</p>
             <Button variant="danger" size="sm" onClick={app.actions.resetGuestProgress}>
-              Reset Local Guest Progress
+              Reset local progress
             </Button>
           </div>
         </Card>
@@ -460,35 +417,25 @@ export function AccountPage() {
         <div className="row-between">
           <div>
             <h2>Safety &amp; Data Rights</h2>
-            <p className="muted">
-              Take a copy of your data, request deletion of your account or data, or file a safety,
-              copyright, access or accuracy appeal. You never need to email us to exercise these rights.
-            </p>
+            <p className="muted">Export, delete or appeal — no email required.</p>
           </div>
-          <Badge tone="info">Policy version {LEGAL_VERSION}</Badge>
+          <Badge tone="info">Policy v{LEGAL_VERSION}</Badge>
         </div>
 
         <div className="grid-2">
           <div className="muted-block">
             <h3>Download my data</h3>
-            <p className="muted">
-              Creates a JSON file containing your practice history, saved questions, flashcard scheduling, test results
-              and settings. It excludes other students&apos; data and all exam answer keys.
-            </p>
+            <p className="muted">Your history, saves, cards, tests and settings. No answer keys.</p>
             <Button variant="outline" size="sm" onClick={handleExport}>
-              Download data export (JSON)
+              Download JSON
             </Button>
           </div>
 
           <div className="muted-block">
-            <h3>Copy an AI-ready snapshot</h3>
-            <p className="muted">
-              One click copies a structured JSON snapshot of your progress, domain accuracy, missed
-              items, simulations and activity. Paste it into any AI tutor — or into Freebuff — and
-              ask what to study next. It contains no answer keys and no other students&apos; data.
-            </p>
+            <h3>AI snapshot</h3>
+            <p className="muted">Copies a tutor-ready brief. No answer keys.</p>
             <Button variant="outline" size="sm" onClick={() => void handleAiSnapshot()}>
-              Copy full account snapshot for AI
+              Copy snapshot
             </Button>
             {aiMessage ? (
               <p className="muted" style={{ margin: '8px 0 0', wordBreak: 'break-word' }}>
@@ -499,10 +446,7 @@ export function AccountPage() {
 
           <div className="muted-block">
             <h3>Delete my account</h3>
-            <p className="muted">
-              Permanently removes your account and every row tied to it — progress, saves, flashcards, coins, test
-              results and reports. This cannot be undone.
-            </p>
+            <p className="muted">Removes your account and every row tied to it. Permanent.</p>
             {app.user ? (
               <>
                 <Field label="Type DELETE to confirm">
@@ -524,8 +468,7 @@ export function AccountPage() {
               </>
             ) : (
               <p className="muted" style={{ margin: 0 }}>
-                Sign in to delete a cloud account, or use <em>Reset Local Guest Progress</em> above to erase device-only
-                data.
+                Sign in to delete an account. Device data can be reset above.
               </p>
             )}
           </div>
@@ -542,22 +485,19 @@ export function AccountPage() {
         >
           <summary style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px' }}>
             <div>
-              <strong>Your Submitted Question Reports</strong>
-              <span className="muted" style={{ display: 'block', fontSize: '0.86rem', fontWeight: 400 }}>
-                Expand to view the status and history of questions you have reported for review.
-              </span>
+              <strong>Your question reports</strong>
             </div>
             <Badge tone="neutral">{reports ? `${reports.length} filed` : 'Click to view'}</Badge>
           </summary>
           <div style={{ padding: '12px 16px' }}>
             {!app.user ? (
               <p className="muted" style={{ margin: 0 }}>
-                Sign in to view and track your submitted question reports across devices.
+                Sign in to track your reports.
               </p>
             ) : reports === null ? (
               <div className="row-between">
                 <p className="muted" style={{ margin: 0 }}>
-                  Loading your submitted question reports…
+                  Loading…
                 </p>
                 <Button variant="outline" size="sm" onClick={loadReports}>
                   Refresh reports
@@ -565,7 +505,7 @@ export function AccountPage() {
               </div>
             ) : reports.length === 0 ? (
               <p className="muted" style={{ margin: 0 }}>
-                You have not filed any question reports yet.
+                No reports filed.
               </p>
             ) : (
               <table>
@@ -601,6 +541,18 @@ export function AccountPage() {
           </p>
         )}
       </Card>
+
+      {passwordDialog && app.user ? (
+        <PasswordDialog
+          mode={passwordDialog}
+          email={app.user.email}
+          onClose={() => setPasswordDialog(null)}
+          onDone={(done) => {
+            setPasswordDialog(null);
+            setStatusMessage(done);
+          }}
+        />
+      ) : null}
     </div>
   );
 }

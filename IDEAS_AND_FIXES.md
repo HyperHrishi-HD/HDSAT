@@ -1,98 +1,188 @@
 # HDSAT — Master Roadmap, Decisions & Progress Tracker
 
-**Last updated:** 2026-10-22
-**Rule for this file:** Items are executed in **Milestones 1 → 5** (easiest → hardest), with full testing, commit, push, and PythonAnywhere deployment after every milestone. Items needing owner sign-off before live changes are documented in **Section 2 (Proposals & Pending Decisions)**.
+**Last updated:** 2026-10-26
+**Rule for this file:** work proceeds **one milestone at a time, in order**, stopping after each milestone for owner review. No milestone is "done" until it is typechecked, unit-tested, exercised against the live project, and (where the bundle changed) deployed. **Polish, not prototype.**
 
 ---
 
-## Section 1 — Milestone Execution Plan
+## Section 0 — Standing rules (apply to every milestone)
 
-### Milestone 1: Core UX, Practice Polish, Keyboard Controls & Anti-Repetition (COMPLETED ✅)
-- [x] **M1.1 · Cross-out text → Icons (`QuestionView.tsx` & `FullTest.tsx`):** Replace literal `"cross out"` / `"restore"` text buttons with crisp strikeout (`slash` / `eye-off` / `rotate-ccw`) icons while preserving `title` and `aria-label` accessibility.
-- [x] **M1.2 · Full Test `Shift + 1..4` / `Shift + A..D` strikeout (`FullTest.tsx`):** In the Bluebook full test runner only, holding `Shift` + pressing `A/B/C/D` or `1/2/3/4` toggles strikeout (elimination) on that choice.
-- [x] **M1.3 · `Enter` advances everywhere (`QuestionView.tsx`, `Practice.tsx`, `QuestionBank.tsx`, `FullTest.tsx`):** Pressing `Enter` submits the current answer (if unsubmitted in Practice/Bank) or moves to the next question once answered.
-- [x] **M1.4 · Custom Practice button reset fix (`Practice.tsx`):** Clicking the `"Custom Practice"` tab button (or header nav) when a practice session is finished or active cleanly resets/returns to the Custom Practice filter builder so the user isn't stuck having to click a separate button.
-- [x] **M1.5 · Anti-repetition & de-templating question selector (`examEngine.ts`):** Upgrade `selectPracticeQuestions` and `buildAdaptiveTestPlan` so consecutive questions never share the same template family (`questionTemplateKey`), skill cluster, or stimulus structure, and incorporate per-user random entropy + attempt history weighting so every student gets a fresh, unpredictable, realistic SAT mix.
-- [x] **M1.6 · Dashboard cleanup (`Dashboard.tsx`):** Remove the `"Target assessment"` dropdown and `"Target track"` subtitle from the Dashboard header (since it lives in Account Preferences). **Keep the Domain Mastery card**, and remove the parenthetical `({app.settings.assessment})` next to `"Domain Mastery"` so it simply reads `Domain Mastery` and aggregates across the user's preferred/active assessment cleanly.
-- [x] **M1.7 · Account Reports large expandable disclosure (`Account.tsx`):** Replace the small `"Load my reports"` button with a large full-width expandable disclosure card (`Your Submitted Question Reports`) that loads and expands the user's report table on click.
-
-### Milestone 2: Achievements Fix + Coin Payouts, Luxury Theme Ladder, Credits & Repo Hygiene (COMPLETED ✅)
-- [x] **M2.1 · Achievement ID unification + HDCoins payouts (`catalog.ts`, `storage.ts`, `store.tsx`, `Rewards.tsx`, Supabase SQL migration):**
-  - Reconcile client and database achievement IDs so cloud and guest modes match 1:1.
-  - Award one-time HDCoins for every unlocked achievement (First Steps +5, Warmed Up +10, Grinder +25, Flawless Module +30, Three Day Streak +10, Week Streak +25, Card Shark +10, Deck Master +25, Test Pilot +25, Rush Hour +20, Coin Collector +15, Mastery +40).
-  - Show human-readable achievement names + coin reward in the unlock popup and on the Rewards page badges.
-- [x] **M2.2 · High-tier / exponential theme ladder (`catalog.ts`, `global.css`, Supabase SQL migration):** Add 4 new themes (`Slate Mono` 600, `Teal Current` 1,000, `Rose Quartz` 1,800, `Royal Obsidian` 3,500 HDCoins) with swatch previews and full client/server price parity.
-- [x] **M2.3 · Credits & Attribution + Repo Hygiene (`Legal.tsx`, `Layout.tsx`, `README.md`, `LICENSE`, `SECURITY.md`):**
-  - Credit **HyperHrishi-HD** and link YouTube (`https://www.youtube.com/@HyperHrishiHD`) + GitHub (`https://github.com/HyperHrishi-HD/HDSAT`) in the site footer/credits (no support email needed; point users to in-app Question Reports & Appeals).
-  - Add clean `LICENSE`, `SECURITY.md`, and polished `README.md` ready for public GitHub visibility.
-  - Add `.github/workflows/pa-monthly-refresh.yml` + `.pa/refresh_webapp.py` to keep PythonAnywhere refreshed automatically.
-
-### Milestone 3: First-Run Intro Screen, Auth Pop-Up Modals & 24-Hour Brevo Email Protection (COMPLETED ✅)
-- [x] **M3.1 · First-run Dashboard Intro Screen (`Dashboard.tsx`):** When local browser storage is empty (`!localStorage['hdsat.intro.seen.v1']`), display an interactive welcome screen directly inside the Dashboard view with a one-click transition into the Dashboard that never nags again.
-- [x] **M3.2 · Sign-In / Sign-Up Pop-Up Modal (`AuthModal.tsx`, `Layout.tsx`, `Account.tsx`):** Clicking `"Sign in"` anywhere pops up a modal window for sign-in / account creation. Replaced the inline sign-in form on the Account page with a trigger for the popup modal while keeping the 24-hour confirmation panel, preferences, data export/delete, and reports/appeals.
-- [x] **M3.3 · 24-Hour Email Confirmation Window & Quota Guard (`AuthModal.tsx`, `Account.tsx`, `storage.ts`, `store.tsx`):**
-  - Store `pendingAccount` (`{ email, displayName, createdAt, sentAt, expiresAt: sentAt + 86_400_000 }`) in `localStorage`.
-  - Allow the user to open the confirmation code modal from Account or the top banner for a full **24 hours** without resending.
-  - Block duplicate confirmation emails to the same address for 24 hours so Brevo's daily quota can never be spammed or drained.
-- [x] **M3.4 · Require Sign-In for Question Reports (`ReportQuestion.tsx`, `AppealForm.tsx`, `cloud.ts`):** Require an authenticated user session to submit question reports and appeals (with a one-click `"Sign in to report"` button that opens the Sign-In modal) + enforce strict character limits.
-
-### Milestone 4: Arcade 3-Tab Overhaul, Daily Quests, Hard QOTD, Shareable Test Results & Backend Hardening
-- [x] **M4.1 · Move Practice Rush into Arcade & 3-Tab Layout (`Arcade.tsx`, `Practice.tsx`, `PracticeRush.tsx`, `CoordinateInterceptor.tsx`):**
-  - Removed Practice Rush from the Practice page (leaving Custom Practice + Study Coach).
-  - Arcade now has **3 clean tabs**:
-    1. **Interactive Arena:** the Coordinate Interceptor 2D canvas game (aim `y = mx + b` through plotted targets; 60-second runs; waves; pulses; arrow keys + Space), plus the daily quests and Hard QOTD.
-    2. **Skill Mini-Games:** an options menu (Desmos Lab, Equation Sprint, Transition Match, Vocab Precision) that is configured before starting, exactly like Custom Practice — not one tab per game.
-    3. **Practice Rush:** the full timed sprint with personal bests, difficulty curve and stopwatch/countdown modes.
-- [x] **M4.2 · Daily Quests (Arcade-only, 30 Q cap) & Daily Hard Question of the Day (`daily.ts`, `DailyQuests.tsx`, `QuestionOfTheDay.tsx`, `Dashboard.tsx`, `Arcade.tsx`):**
-  - 3 Daily Quests in the Arcade (5 R&W + 5 Math each = 30 questions maximum per day, reset at midnight).
-  - Daily Hard Question of the Day on the **Dashboard** with a Hide control that only affects the Dashboard, and permanently inside the **Arcade**.
-- [x] **M4.3 · Full Test Results Download & Shareable Public Link (`FullTest.tsx`, `testShare.ts`):**
-  - Completed Adaptive Full Tests now offer **Download score report (JSON)**, **Print / save as PDF**, and **Copy public share link**.
-  - The link (`/#/test?share=<code>`) carries a validated, base64url-encoded summary (assessment, date, section estimates, raw counts, module breakdown). It needs no account, server row or database write, contains no name/email/question ids/answers, and a hand-edited code is clamped into the real ranges rather than rendered.
-- [x] **M4.4 · Account Full JSON Snapshot for AI (`Account.tsx`, `dataRights.ts`):** One button in Account copies a structured JSON snapshot (progress, streak, coins, domain accuracy, weakest domains, missed items with prompts but no keys, simulations, flashcards due, 14-day activity, preferences) ready to paste into any AI tutor or Freebuff. Nine tests pin both exports.
-- [x] **M4.5 · Flask Backend Security Hardening (`backend/app.py`, `backend/test_app.py`):** HTTPS redirect in production via `X-Forwarded-Proto` (health endpoint exempt so the uptime monitor keeps working), strict CSP allowing Desmos and blocking `object-src`/`unsafe-eval`, per-IP sliding-window rate limiting on `/api/*` with `Retry-After`, 1 MiB payload cap with a JSON 413, `robots.txt` disallowing `/admin`, and COOP/CORP headers. 19 backend tests pass.
-
-### Milestone 5: Supabase Admin Console Wiring, Student Reply Notifications & Freebuff MCP Bridge (COMPLETED ✅ — applied to the live project)
-- [x] **M5.1 · Supabase Admin RPCs & Live Wiring (`Admin.tsx`, `cloud.ts`, `sha256.ts`, `20261023000100_admin_console.sql`, `20261024000100_admin_human_check.sql`):**
-  - Passcode gate: `admin_gate` holds a bcrypt (cost 12) hash, `admin_pow_challenges` issues single-use proof-of-work challenges, `admin_unlock_tokens` stores the sha256 of a random 32-byte token with an 8-hour expiry, and `admin_access_log` records unlock outcomes — all RLS with no `anon` grants. `SECURITY DEFINER` RPCs: `admin_human_check`, `admin_unlock` (session + solved challenge + passcode, 5 tries then a 15-minute lock), `admin_session_valid`, `admin_lock`, `admin_list_reports`, `admin_list_appeals`, `admin_list_students`, `admin_set_report_status`, `admin_set_appeal_status`, `admin_batch_delete_reports`, `admin_batch_delete_appeals`, `admin_reply_to_report`, `admin_reply_to_appeal`, `mark_my_notifications_seen`, plus the `assert_admin_unlocked()` guard every routine calls first.
-  - `/admin` shows a passcode text box with a self-hosted “I'm not a robot” check (SHA-256 proof of work, verified by Postgres, single-use, 10-minute expiry), then reads live rows with status + reason filters, relative ages and empty/error states. No account is privileged; the passcode is only ever compared inside Postgres. **Lock console** revokes the token, clears admin storage, drops drafts and leaves the route.
-- [x] **M5.2 · One-Time Student Dashboard Notification (`Dashboard.tsx`, `cloud.ts`):**
-  - Replies insert a `user_notifications` row; the student sees one message card on the Dashboard and dismissing it marks every unseen row read, so it never returns.
-- [x] **M5.3 · Freebuff Local Triage Bridge (`tools/admin_triage.py`):**
-  - `summary`, `reports`, `appeals`, `resolve`, `dismiss`, `close-appeal`, `reply`, `delete-reports`, `delete-appeals` against Supabase REST with a service key that stays in `.pa/`. Freebuff runs this whenever you ask me to check reports.
-
-**Batch / cleanup actions now available in `/admin` (specific list, as requested):**
-- Mark **resolved** or **dismissed** for any selected reports (and resolved/rejected for appeals).
-- **Delete selected** rows.
-- **Delete all resolved reports older than 7 days** (one click, two-step confirm).
-- **Delete every report from this student** and **every appeal from this student** (Students section, by user id).
-- **Reply to a report or appeal** → one Dashboard notification, or an honest “no account attached, reply by email” when there is none.
-
-**Status:** `20261023000100_admin_console.sql` and `20261024000100_admin_human_check.sql` are applied to the live project and the operator passcode is set; the human check, unlock, every section, batch status, reply composer and the lock purge were exercised end to end in a real browser, and the test rows and test account were removed afterwards. `20261024000200_admin_captcha_cleanup.sql` runs after the new bundle is deployed.
+1. **Dates.** `Started October 17, 2026` is the founding date and never changes. Every "Effective <date>" line becomes **"Last updated <date>"**, and that date is the day of the most recent material policy/content change. When legal or policy copy changes, bump the date in one place (`src/lib/legal.ts`) and update this file in the same change. Contract pages must never advertise a date older than the text they show.
+2. **Say less.** Public UI text is a liability. Explanations belong in the legal pages, the InfoTips and this file — not in the working surface. Default: label + action; one short hint at most, and only where a first-time user would otherwise be stuck. No meta-instructions about how to use exported data, no restated labels, no "what this does" sentences.
+3. **Credit placement.** GitHub lives in **Credits only**. The site footer carries exactly one attribution line: **"By HyperHrishi HD"**. No "(YouTube)" suffix, no repo link in the footer.
+4. **Nothing privileged in the client.** Passwords, passcodes, service keys and answer keys never enter `localStorage`, cookies, bundle or logs. Admin/unlock tokens are memory-only.
+5. **Verify against the live project**, not just the local build: Supabase RPCs, PythonAnywhere and Brevo are all real dependencies.
+6. **Console safety.** Anything the operator or an agent prints must survive a Windows `cp1252` console and a UTF-8 pipe (see R2·M1 regressions). Keep CLI output ASCII.
 
 ---
 
-## Section 2 — Proposals & Pending Decisions for Owner Review
+## Section 1 — Round 1 (shipped, verified, deployed)
 
-### 1. PythonAnywhere Monthly Auto-Refresh Bot
-- **How PythonAnywhere works:** Free PythonAnywhere webapps expire every 3 months unless refreshed in the web dashboard, and apps sleep when idle.
-- **What we built / can run:**
-  1. **Direct MCP Reload (Immediate & anytime you're in Freebuff):** `.pa/refresh_webapp.py` uses your `.pa/pa_credentials` and the official `pythonanywhere-mcp-server` (`reload_webapp`) plus an HTTP health ping to refresh the app immediately.
-  2. **Automated GitHub Action (`.github/workflows/pa-monthly-refresh.yml`):** Runs on the 1st and 15th of every month (`cron: '0 9 1,15 * *'`), calls the PythonAnywhere REST API `POST /api/v0/user/HDSAT/webapps/hdsat.pythonanywhere.com/reload/`, and verifies `/api/health`. (Note: For the once-every-3-months "Run until 3 months from today" button on free accounts, PythonAnywhere's REST API reloads the worker, while clicking the dashboard button or running a 20-line Playwright login script extends the 90-day expiry timer—both are included in `.pa/refresh_webapp.py`.)
+<details>
+<summary>Milestones M1–M5, kept for history and for "do not redo"</summary>
 
-### 2. 2D Interactive Arcade Game Proposal ("Coordinate Interceptor")
-- **Concept:** An HTML5 Canvas 2D graphing & trajectory game set on a Cartesian coordinate grid.
-- **Gameplay:** Targets and obstacles spawn at coordinates $(x, y)$. You adjust slope $m$ and y-intercept $b$ (or vertex $(h,k)$ in higher waves) using quick sliders/keys and fire a laser pulse along $y = mx + b$ to intercept all targets in one shot.
-- **Economy & Cooldown:** Awards up to **200 HDCoins/day** across interactive arcade runs. After 4 consecutive runs (or hitting the session limit), a **15-minute cooldown** activates so students don't binge—with an option to return to Practice or spend 25 HDCoins to unlock an extra run immediately.
+### M1 — Practice polish, keyboard controls, anti-repetition ✅
+Icon-based cross-out in `QuestionView`/`FullTest`; `Shift`+`A–D`/`1–4` strikeout in the runner; `Enter` advances; Custom Practice tab reset; de-templated selector (no repeated template family/near-duplicate stimulus in a row); Dashboard header cleanup; Account reports disclosure.
 
-### 3. Arcade Reward Economy — Shipped vs. Proposed
-- **Shipped now:** every arcade answer earns HDCoins through the normal attempt path (60/day question cap); a finished game, rush or quest adds a session reward through `complete_activity_session`, capped per category per day (rush 5 coins × 4 runs, mini-game 4 × 5 runs, timed session 3 × up to 15, simulation 25 × 2). Guest mode mirrors those caps locally so both paths pay the same.
-- **Proposed (needs owner sign-off, not built yet):** raise the *interactive* arcade allowance to **200 HDCoins/day** with a **cooldown** after a set number of runs (wait, or spend coins to keep playing). This needs a database migration on `complete_activity_session` plus a new `arcade_game` activity type, so it stays a proposal until you approve it.
-- **More 2D game ideas awaiting your pick:** Parabola Putt (place the vertex so the ball rolls through gates), Slope Siege (match a dashed line to incoming slopes before it hits the axis), System Solver Showdown (two lines must cross at a moving enemy) and Radical Reactor (simplify radicals under time pressure). All would live under the Interactive Arena tab with the same capped reward.
+### M2 — Achievements, coin payouts, theme ladder, credits, repo hygiene ✅
+Client/DB achievement ID unification with one-time coin payouts; four prestige themes (600 / 1,000 / 1,800 / 3,500) with client/server price parity; LICENSE, SECURITY.md, README, monthly PythonAnywhere refresh workflow.
 
-### 4. Admin Batch Delete & AI Triage Options
-- **Batch actions included in `/admin`:**
-  - *Delete all reports from this user* (1-click spam cleanup)
-  - *Delete all resolved/dismissed reports older than 7 days*
-  - *Retire question & resolve all linked reports*
-- **Note on deploying Admin SQL changes:** Per your instruction, we will push all code to Git and deploy tested frontend/backend updates, and we will list the exact Admin SQL RPC summary for your review before running any destructive database cleanup.
+### M3 — First-run intro, auth popup, 24-hour email protection ✅
+Dashboard intro (later replaced by the standalone homepage, R2·M9); sign-in/sign-up modal; 24-hour confirmation-code window with one-send-per-24h guard; reports/appeals require a session.
+
+### M4 — Arcade overhaul, quests, QOTD, shareable results, backend hardening ✅
+Three arcade rooms; daily quests capped at 30 questions; Hard QOTD; result download/print/share link; Flask HTTPS redirect, CSP, per-IP rate limit, 1 MiB cap, `robots.txt` for `/admin`; 19 backend tests.
+
+### M5 — Operator console, student replies, local triage bridge ✅
+`admin_gate` bcrypt passcode, single-use proof-of-work human check, SHA-256 token rows with 8 h expiry, `admin_access_log`; `SECURITY DEFINER` RPCs for list/status/batch-delete/reply; one-time Dashboard notification per reply. Console rail is hidden until unlock; the token is memory-only and every exit path (lock, navigate away, reload, sign-out, 10 idle minutes) purges it.
+
+</details>
+
+---
+
+## Section 2 — Round 2 milestone plan
+
+Ordering is deliberate: operator tooling first (asked for explicitly, and it unblocks every later report-driven fix), then the cheap high-visibility truth fixes, then account security, then the data/AI features, then the two large builds. **Stop for discussion after each.**
+
+Legend: ✅ shipped & verified · ▶ current · ☐ queued
+
+### ✅ R2·M1 — Operator triage v2 (read the queue, answer it in one consistent format)
+
+**Shipped 2026-10-23.** `tools/admin_triage.py` + `tools/test_admin_triage.py`.
+
+- [x] `digest`: one-screen markdown brief — open counts, every item past the 72 h window, oldest first, per-reason and per-question grouping, repeat reporters, newest rows.
+- [x] Structured reply templates (`wrong_key`, `explanation`, `typo_or_format`, `mistagged`, `copyright`, `no_fault`, `fixed_thanks`) rendered into one fixed shape: reference → what you sent → what we found → what changed → next step. `--dry-run` previews; `--yes` sends it as a one-time Dashboard notification and moves the row to `in_review`.
+- [x] `open`, `summary`, `reports`/`appeals` listing (text or `--json`), `resolve`, `dismiss`, `close-appeal`, `delete-reports`/`delete-appeals` with an unbounded-delete refusal.
+- [x] Email redaction by default (`--show-emails` opt-in), confirmation prompt on every write, append-only `.pa/triage_log.jsonl`.
+- [x] 18 offline unit tests + a live end-to-end run on a throwaway appeal.
+
+**Live verification (2026-10-23):** throwaway appeal `HDSAT-…` appeared in `digest` as not-overdue → `reply --dry-run` printed the full preview and wrote nothing (`user_notifications` still empty) → real `reply` delivered a 303-character notification and set the row to `in_review` → `close-appeal` set `resolved` → `open` no longer listed it → rows deleted, queue back to 0/0.
+
+**Regressions found and fixed while verifying (keep these):**
+1. The reply path selected `question_id` on `user_appeals`, which has no such column → PostgREST 400 and no reply. Column sets are now chosen per table by `reply_columns(kind)`, with a unit test that assertions the columns actually exist per table.
+2. The digest crashed on a Windows `cp1252` console (em dash, arrow, `↳`). Console output is now **pure ASCII** (pinned by `test_digest_is_plain_ascii`), and stdout is reconfigured to UTF-8 with `errors="replace"` as a safety net.
+
+### ✅ R2·M2 — Truth & copy pass (shipped 2026-10-23)
+- [x] Footer: GitHub lives only in Credits; single line **"By HyperHrishi HD"**. The `Appeals & safety reports` link was removed 2026-10-26 — the same page is reachable from the Account nav and the top bar.
+- [x] Credits: Support row removed; **"Started October 17, 2026"**; dates read **"Last updated <date>"** from `src/lib/legal.ts` only.
+- [x] Thin notice banners auto-dismiss after **10 s** (errors/actionable alerts stay). Larger cards unaffected.
+- [x] Copy audit across Dashboard / Practice / Bank / Account / Arcade / Rewards / Resources / Flashcards / Auth modal: restated labels, parentheticals and "what this does" sentences deleted. The owner chose the **thin** level.
+- [x] Kept: legal pages, InfoTips (shortened to at most two sentences), Bluebook runner chrome, score explanations after a test.
+
+**Trim level used everywhere:** label + action, one short hint at most. Examples of what went: "Track your study streak, domain accuracy…" under the Dashboard heading, "Filter the bank by assessment, section, domain…" in the Practice tip, the AI-snapshot paste-into-a-tutor paragraph, the Reports summary's second line, and every exclamation mark.
+
+### ✅ R2·M3 — Account security: password change overlay (shipped 2026-10-26)
+- [x] "Change password" button in Account (name editing unchanged) opens an overlay, no inline box. Copy is thin: two path tabs, three fields, one toggle.
+- [x] Path A — **current password + new password**: re-authenticates with `signInWithPassword`, then `updateUser({ password })`. **1 change per hour**.
+- [x] Path B — **email confirmation link**: `resetPasswordForEmail` → recovery link → new-password form. **1 request per day**. The Auth modal also offers "Forgot password?" for signed-out students.
+- [x] Both cooldowns live in `public.password_change_log` and are enforced by `claim_password_action` / `complete_password_action` / `cancel_password_action` / `password_action_status` (`20261026000200_password_change_limits.sql`). The table has RLS on with no policies and no client privileges; only the RPCs, scoped to `auth.uid()`, may touch it. A pending claim older than 15 minutes is treated as abandoned; a failed attempt is cancelled so it does not start a cooldown.
+- [x] The overlay mirrors the server deadline with a live countdown and disables the action instead of failing it.
+- [x] Standard hashed flow only: no password is stored, logged, prefilled or echoed. "Sign out other sessions" is on by default and calls `signOut({ scope: 'others' })` after the change.
+- [x] Recovery links land on Account; `main.tsx` consumes the implicit hash or PKCE code, sets a one-shot flag and the Account page opens "Set a new password". The recovery completion is **not** blocked by the 1-hour password cooldown (the link is the authorisation), but it records the change best-effort.
+
+**Live verification (2026-10-26):** `python .pa/apply_round2_migrations.py` applied both migrations and verified 8 schema facts; `python .pa/test_password_rpcs.py` ran 13 checks on a real session (first claim allowed, pending claim blocks, ~3600 s reported, complete → refused, email path independent, cancel frees the slot, foreign action id refused, signed-out 401/403, ledger unreadable) and deleted its throwaway account. In the browser: wrong current password → "Current password is incorrect." with no cooldown left behind; correct password → notice "Password updated. Other sessions signed out.", reopening shows "You can change your password in 60 min." with the button disabled; recovery flag → "Set a new password" → updated; signing out and back in with the new password succeeded. A real recovery link (generated with the admin API, never emailed) verified on **production**: Supabase redirected to `https://hdsat.pythonanywhere.com`, `main.tsx` consumed the implicit hash, the page landed on `#/account` and opened "Set a new password", which saved and reported success. Throwaway accounts deleted; project back to 7 users / 3 confirmed with an empty ledger.
+
+### ✅ R2·M4 — Question of the Day as a thin banner (shipped 2026-10-26)
+- [x] Dashboard QOTD is a collapsed one-line strip (`Daily · Question of the Day · section · domain · Open`) that expands in place; the full card is gone from the Dashboard.
+- [x] Open/closed state is remembered (`hdsat.qotd.open.v1`), so a reload keeps the student's choice. A solved question hides on the next visit — the feedback stays readable while it is on screen.
+- [x] Arcade keeps the full card. One component, two densities, no duplicated logic.
+
+### ✅ R2·M5 — AI snapshot v2 = a ready-to-use tutor prompt (shipped 2026-10-26)
+- [x] The payload is now `{ schema_version: 2.0, role, data, requested_output }`: a tutor role line, the evidence (`accuracy`, per-domain and per-skill rows with attempt counts, `weakest_skills`, `missed_items` with the student's own answer, `slowest_correct` / `slowest_incorrect`, test history, a dense `last_14_days` window and a `goal` block), then three tasks and three constraints. Under 15 KB, pinned by a test.
+- [x] Every "paste this into a tutor" sentence is gone from the payload; the Account card reads one line: "Copies a tutor-ready brief. No answer keys."
+- [x] Deterministic ordering and stable field order (two exports of the same data are byte-identical, pinned by a test). No email address, no answer keys, no explanations, no other students' data.
+- [x] Per-item timing comes from `AppValue.attempts` (recent device attempts, capped at 600), which also feeds the pacing line.
+
+### ✅ R2·M6 — Dashboard truth fixes (shipped 2026-10-26)
+- [x] **Spaced review replaces filler.** Mastery stays "2 in a row", but a seen item is now drawable only when its review date has arrived. Spacing: miss = due now, correct once = 1 day, mastered = 7 / 14 / 30 days by consecutive correct count. Unseen items always lead; if the unseen supply runs out, the session is shorter instead of quietly reusing mastered items. Saved and incorrect-only drills stay explicit (`allowScheduled`) because the student chose those items.
+- [x] Review state is visible: the Practice config reads `N ready · M due for review`, a drawn review item is labelled `review`, and the schedule lives in `src/lib/review.ts` with tests.
+- [x] 14-day chart: dense window ending today, oldest → newest, first bar flush left (no leading dead space), titled bars including empty days.
+- [x] **Test-date setting** in Account preferences (the assessment selector sits beside it), driving the `Goal:` badge. Stored in `profiles.target_test_date` (validated 2026–2035), adopted from the cloud only when the device has none, and rendered as `Goal: 12 days to Mar 13` (amber inside two weeks, "test is today" on the day).
+- [x] Incorrect questions: re-answering clears the item from the retry list (progress `lastIsCorrect`), while **Missed log** keeps every wrong answer this device recorded, newest first, with the student's own response, section, domain and date. Empty state included.
+
+### ✅ R2·M7 — Economy split: themes buyable, emblems earned (shipped 2026-10-23)
+- [x] Store shows **themes only** (`STORE_ITEMS` = 8 themes, 20 → 3500). Every achievement grants its own emblem glyph, and only earned emblems can be worn (Rewards → Achievements → Wear).
+- [x] DB: `purchase_cosmetic_item` refuses any non-theme type and the three legacy badge ids (`20261025000200_emblems_earned.sql`), verified live (both refusal paths returned 400). Legacy owners keep and can still wear their old emblem; nothing is refunded or removed.
+- [x] Client and server price lists stay in parity, enforced by `src/lib/catalog.test.ts` reading the migration.
+
+### ✅ R2·M8 — Practice polish (shipped 2026-10-26)
+- [x] Practice cross-out restored to Bluebook behaviour: always-visible control, a line through the option instead of fading it, and choosing a crossed-out option selects it and lifts the strike. Keyboard parity (Shift + A–D / 1–4) matches the runner.
+- [x] Custom practice count: **Other…** opens a direct question picker (domain, skill and difficulty filters plus multiselect, "Add all shown", Clear) whose selection defines the session; it is the only option that bypasses the count and the review schedule. `Start session` is disabled until something is picked.
+
+### ✅ R2·M9 — Starting homepage (shipped 2026-10-26)
+- [x] Full-page hero with a gradient wash, one primary **Start now** beside an "I have an account" secondary, three product facts and the legal footer — a homepage, not a Dashboard banner.
+- [x] Shown only when this browser has **no** stored profile and no account: `#/welcome`, reached by redirect from `/`. "Start now" writes the profile and enters the app for good; signing in from here also enters. Route-level, never a modal.
+- [x] Mobile-first (facts stack under 720 px), one heading, native buttons, keyboard focus, reduced-motion respected, and completely static — no bank, no network, nothing extra for PythonAnywhere to serve.
+
+### ☐ R2·M10 — Question bank authenticity
+- [ ] Import the **College Board Educator Question Bank** as a separate, clearly-labelled dataset that can be mixed into practice ("official-style") — licence/attribution reviewed before any import.
+- [ ] Add further openly-licensed / public SAT-style sets; normalise tables, charts and figures into the existing `FigureView` renderers so they actually render and work.
+- [ ] Validation gate: schema, one defensible key, explanation present, figure renders, no duplicate stems, difficulty/domain/skill tagged — nothing enters the bank otherwise.
+- [ ] Storage plan: figures as inline SVG/JSON, not binary blobs; keys stay in `question_keys`; measure the bank's effect on the PythonAnywhere quota before shipping.
+- [ ] **Balance the sections while adding.** Current bank: **4,776 Math vs 1,417 Reading & Writing** (2026-10-26). New items favour R&W until parity — about **3,359 R&W items** would match Math at this bank size — then 50/50. The dedupe backlog (481 repeated stems from templated generation) is deliberately **not** being rewritten; new content is the fix, and the QA gate stops more of the same entering.
+
+### ▶ R2·M11 — Flashcards expansion
+- [x] **Scheduler wording:** the page is just "Flashcards"; **every user-visible "SM-2" mention is gone** (heading, deck blurbs, tip). The scheduler itself is unchanged.
+- [ ] More R&W and Math cards from sourced, accurate material, each reviewed.
+- [ ] Wording: "due now" → "next".
+
+### ✅ R2·M12 — Study-loop additions (shipped 2026-10-23)
+- [x] **Resume strip.** Custom Practice snapshots itself to `hdsat.practice-session.v1`; the Dashboard shows `In progress · SAT · Item 3 of 10 · 1 answered · 00:42` with one Resume action, and resuming lands on the first unanswered item. A finished or 7-day-old session is discarded.
+- [x] **Pacing on review.** After each answer: `You 2:10 · typical 1:25`. "Typical" is the student's own median for that section+difficulty once 5 timed attempts exist, then the section median, then the official pace (71 s R&W / 95 s Math).
+- [x] ~~**Weekly coach email**~~ — **removed 2026-10-26** at the owner's request. The sender tool, its tests, the frontend toggle and the live database objects (columns, ledger table, both RPCs) are gone; `20261026000100_remove_weekly_coach.sql` is the live cleanup.
+- [x] **Content QA harness.** `tools/content_qa.py` checks duplicate ids/stems, near-duplicate stems inside a section+skill, defensible keys, duplicate/empty choices, explanation length, figure kinds, metadata and per-skill key bias. The importer runs it on any `--file` dataset and refuses to write when it finds errors; `--qa` audits the whole merged bank. 24 offline tests.
+- [x] **Official dataset stays separate.** A dataset merged with `--file` keeps its own source row, name, licence, attribution and `is_official_college_board` flag in both the client bank and the seed SQL; the Bank and Practice selectors label it `Official · …`, and the QA gate requires an official attribution. The earlier code path silently dropped external sources at output time and would have crashed on their items; that is fixed and exercised with a synthetic official item.
+
+---
+
+## Section 3 — Answers to standing questions (keep updated)
+
+1. **"Mastered, 2+ in a row" — how does the item come back?** `status` becomes `mastered` after two consecutive correct answers on the *same* item, counted across sessions (`consecutiveCorrect >= 2` in `src/lib/storage.ts` and the `submit_question_attempt` RPC). Since 2026-10-23 practice no longer uses old items as filler: after the unseen supply is used, only items whose review date has arrived can be drawn (miss = now, correct once = 1 day, mastered = 7/14/30 days). A normal session can therefore be shorter than requested — that is the schedule working, not a shortage. `src/lib/review.ts` owns the rule and `src/lib/practice-schedule.test.ts` pins it.
+2. **What "SM-2" means here.** The classic spaced-repetition scheduler used by the flashcard deck: each review scores recall 0–5, which nudges an ease factor (floor 1.3). A score below 3 resets the interval to 1 day; successes step 1 → 3 → then `interval × ease`, and a 14-day interval marks the card `mastered`. `src/lib/sm2.ts` mirrors the PL/pgSQL so guest and cloud schedules agree. It is deliberately **not named in the UI** any more.
+3. **Storage reality and how many students fit (measured 2026-10-26).** Supabase DB = **25 MB** total: 4.3 MB of `questions` row data (6,193 rows, ~700 B each after TOAST), 2.8 MB `question_keys`, 0.5 MB `flashcards` (1,764 cards), and everything owned by students is **0.03 MB of row data** across 7 accounts (37 tracked attempts, 15 tests) — 0.8 MB once table and index overhead is counted. Live project: **7 auth users, 3 confirmed**. At the same density the free plan's **500 MB database** holds ~**300k questions with keys**, or the current bank plus roughly 475 MB of history.
+
+   **Per student, per year (heavy user: ~3,000 attempts, 20 full tests):** attempts 0.5 MB, test attempts + responses 0.25 MB, progress rows 0.3 MB, daily activity 0.03 MB → **≈1.2 MB with indexes**. A casual student (~500 attempts) is ≈0.2 MB. So the free database holds roughly **400 heavy students or ~2,300 casual ones for a full year of history**; Pro's 8 GB multiplies that by 16 (~6,500 heavy / ~37,000 casual).
+
+   **What actually runs out first is hosting, not rows.** Supabase free adds **5 GB egress/month** and **50k MAU**: at 655 KB gzipped first load that is ~7,600 *new* visitors per month (returning visitors revalidate cheaply). PythonAnywhere free is **one web worker with 100 CPU-seconds/day** — fine for a few dozen simultaneous readers, the real ceiling for a launch spike, and the reason to move to a paid plan (more workers/CPU) before pushing traffic. PythonAnywhere stores no question data: it serves the compiled bundle, which embeds the bank JSON (≈9.4 MB raw, 655 KB gzipped) as a build asset, not a second database.
+4. **Is the bank stored twice?** Yes, on purpose, and neither copy is redundant: the JSON bundle lets guest mode work offline and gives instant filtering with no round trip, while the Supabase `questions`/`question_keys` rows are what every cloud RPC writes against (foreign keys) and what the server grades with. The JSON is the source of truth; the database is a derived copy that `import_questions.py` → `apply_seed.py` rebuilds. Dropping either one breaks a supported mode.
+5. **Discoverability.** HDSAT is a brand-new exact-match name, which is the easy case: one page that owns the term, `sitemap.xml`, canonical URLs, `Organization`/`WebSite` structured data, Search Console + Bing submission, and a handful of real inbound links (the YouTube channel, GitHub repo, a couple of forum/Reddit answers where genuinely useful). No paid ads needed at this size. Deferred to Section 4.
+
+6. **What happens on the 301st email of the day (Brevo free = 300/day)?** Nothing blocks a student any more. Sign-up issues a session immediately and sign-in never needs mail, so an exhausted quota only pauses **verification**: the account keeps working as a light account, and the confirm strip says "Email verification is paused for today — come back tomorrow, keep studying signed in." The app stops asking at **280** (`email_send_budget()` counts `email_request_log.send_count` for the UTC day) so the provider is never handed a request it must refuse, and only ~280 *different* addresses can spend the budget because each address gets one confirmation and one recovery message a day. Recovery links are the one thing still affected in that window; the long-term fix is a paid Brevo plan or a second provider, and Google sign-in (Section 4.5) removes the verification email from the signup path entirely.
+
+8. **How many accounts fit now that light accounts exist?** Two things changed. A light account keeps `user_question_progress`, `user_stats`, `daily_activity`, `flashcards`, `saved_questions` and a test **summary**; a trigger blanks the `question_attempts` payload (response + timing) and a second trigger skips `test_responses`. Measured density: a compact attempt row is ~60–80 B against ~150 B before, and a full test drops from ~12 KB of response rows to zero. A heavy light student (3,000 attempts + 20 tests a year) therefore costs roughly **0.5 MB**, a casual one (500 attempts) about **0.1 MB**; a verified heavy student stays at **~1.2 MB**. The free 500 MB database therefore holds roughly **800–1,000 heavy light accounts, ~4,000 casual light accounts, or ~400 verified heavy accounts** for a full year of history, and the 8 GB Pro plan multiplies that by 16. Auth users add ~1–2 KB each, which is negligible at these counts.
+
+   **Storage is not what breaks first.** Supabase free also caps **50,000 MAU** (far above this bank's reach) and **5 GB egress/month** — at the current 661 KB gzipped bundle that is ~7,600 *new* visitors a month (returning visitors revalidate cheaply). PythonAnywhere free is **one web worker with 100 CPU-seconds a day**, which is the real launch ceiling. So the practical answer is: ~1,000 heavy or ~4,000 casual **light** accounts of history fit the database, but plan paid hosting before roughly a hundred simultaneous students.
+
+7. **Does a wrong password lock a student account?** No. Student accounts have **no lockout** — a wrong password is just a failed sign-in, and the app never counts or blocks. The 5-try / 15-minute lock belongs only to the **operator console gate** (passcode + human check), which is a separate mechanism in Postgres. The only student-side limits are the credential cooldowns: 1 password change/hour and 1 recovery link/address/day. Supabase itself rate-limits auth requests per IP above our layer, which can briefly slow down a scripted attack but never locks a real account.
+
+---
+
+## Section 4 — Deferred until v1.0 is frozen (do **not** start)
+
+1. **Offline open-source fork** — unlink Supabase / PythonAnywhere / Brevo, replace the GitHub with the offline clone, keep only a 1,000-question representative mix, prune themes/achievements to match. Owner starts this explicitly.
+2. **Other exams tab** — ACT / NEET etc. as a separate area with its own data.
+3. **Study guides** — long-form, visual, researched guides (Acely/Khan style) as their own pages.
+4. **SEO / discoverability** — see Section 3.4 for the playbook; after launch polish.
+5. **Compressed cloud storage for every account** — owner asked (2026-10-26) to shrink what is kept in the cloud in general, not only for light accounts, but explicitly **not yet** so no existing history is lost. The shape to review later: drop per-attempt `response` text for everyone (it is only used for the student's own review), roll `daily_activity` into monthly buckets after a year, and purge `test_responses` for completed tests older than N months. Nothing here should run until there is a migration plan that keeps exports whole.
+
+6. **Google sign-in (OAuth)** — owner asked to add it, explicitly **not now**. Adding a provider means verifying branding + a consent screen, registering exact redirect URLs for the live origin and localhost, and testing account linking (an existing email/password account signing in with Google). Do it after the site polish pass, as its own milestone with its own review — never as a side change during another one.
+
+---
+
+## Section 5 — Decisions (resolved 2026-10-23)
+
+1. **Copy trim aggression** — **thin**: label + action, one short hint at most, applied to every working page (see R2·M2).
+2. **College Board Educator Question Bank** — **accepted as a separate dataset.** Official items keep their own source row, licence, attribution and `is_official_college_board` flag, are labelled `Official · …` in the Bank and Practice selectors, and pass through the QA gate before they can be written. No College Board content has been imported yet; the pipeline is ready (R2·M10).
+3. **Password email path** — **1 request/day per account** accepted (R2·M3 still to build).
+4. **Emblems** — **the purchase option is removed entirely.** Store = themes only; achievements earn emblems (R2·M7). Legacy emblems stay wearable, not refunded.
+5. **Mastery** — keep "2 in a row" and fix the filler flaw with spaced review rather than changing the definition (R2·M6).
+6. **Flashcards** — scheduler stays as SM-2; the name never appears in the UI (R2·M11).
+7. **Weekly email** — **removed 2026-10-26.** No weekly digest, no opt-in, no sender.
+8. **Password change** — shipped 2026-10-26: 1 change/hour, 1 recovery link/day, both in the database; "sign out other sessions" defaults on. Using a recovery link is not blocked by the hourly cooldown.
+9. **Bank growth** — new questions skew **Reading & Writing** until it matches Math (4,776 vs 1,417 today); duplicate cleanup is skipped in favour of adding better items.
+10. **Email limits** (2026-10-26) — one confirmation email and one recovery link **per address per day**, enforced in Postgres (`email_request_log`, address stored as SHA-256 only) and mirrored by a device guard. Keyed by address so signed-out students are covered, and recorded for every address whether or not an account exists (no account enumeration). A failed send never starts a cooldown.
+11. **Operator sign-in attempts** (2026-10-26) — a wrong passcode records **one row per device** (IP + user agent read from the request headers, never from the browser), with an attempt counter. Capped at 100 devices, and the console can delete one row or clear all. Student accounts are **not** locked by wrong passwords; only the console gate has the 5-try / 15-minute lock.
+12. **Google OAuth** — accepted as a future item, deferred to Section 4.5.
+13. **Light accounts** (2026-10-26) — email confirmation is **off**; sign-up signs in immediately and the emailed 6-digit code only lifts the light-account cap. Capping is enforced in Postgres (compact attempt ledger, no `test_responses` rows), never as a paywall: progress, coins, streaks, flashcards, tests, reports and account deletion all work. The owner's preferred quote wins the day: "come back tomorrow, keep studying signed in."
+14. **Test date** — one optional date per account, synced in `profiles.target_test_date`, shown as the Dashboard goal. It never blocks practice or a full test.
+15. **Starting homepage** — a route-level hero, blank slate only; a signed-in student or an existing local profile can never see it, and "Start now" is the one-way door.

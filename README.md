@@ -14,6 +14,8 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
 - **Spaced-Repetition Flashcards (SM-2):** 1,764 verified cards in two fully separate decks — 1,639 vocabulary entries (24 authored SAT items + 1,615 CC0-dedicated elevated-vocabulary entries) and 125 math formulas/identities with KaTeX rendering, scheduled via the SM-2 algorithm.
 - **HDCoins Economy, Streaks & Achievements:** Duplicate-resistant, anti-farming reward ledger enforced identically in local Guest Mode and Supabase SECURITY DEFINER RPCs.
 - **Guest Mode & Cloud Sync:** Full local persistence (`localStorage` key `hdsat.profile.v1`) with idempotent replay into a signed-in Supabase account.
+- **Accounts usable before the email is confirmed:** sign-up issues a session immediately, so a mail-provider quota can never lock a student out. An address that has not entered its emailed 6-digit code is a **light account**: progress, coins, streaks, flashcards and test scores sync, while the two per-answer ledgers (`question_attempts` payload, `test_responses`) are trimmed in Postgres. A confirm strip never appears in the timed runner, and the 300/day Brevo budget stops at 280 with a plain "come back tomorrow" message.
+- **Starting homepage:** a static full-page hero shown only before this browser has any profile and no account is signed in; one click enters the app for good.
 
 ---
 
@@ -55,7 +57,8 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
 │   │   ├── types.ts            # Shared TypeScript interfaces
 │   │   └── engine.test.ts      # Vitest unit test suite
 │   └── pages/
-│       ├── Dashboard.tsx       # Real-time metrics, 14-day sparkline, domain mastery, recent tests
+│       ├── Welcome.tsx         # Starting homepage (blank slate only), static and route-level
+│       ├── Dashboard.tsx       # Real-time metrics, 14-day sparkline, test-date goal, missed log
 │       ├── Practice.tsx        # Custom practice, Practice Rush, Deterministic Study Coach
 │       ├── FullTest.tsx        # Timed multistage adaptive test runner & score report
 │       ├── QuestionBank.tsx    # Searchable catalog, live item solver, provenance registry
@@ -142,7 +145,7 @@ Target project: `qijfmwjcaminecxmbtcf` (`https://supabase.com/dashboard/project/
 1. Open the **Supabase SQL Editor** for project `qijfmwjcaminecxmbtcf` (or use `supabase db push`).
 2. Run `supabase/migrations/20261014000100_init_hdsat_schema.sql` to create all 16 tables, Row Level Security (RLS) policies, `on_auth_user_created` profile/stats triggers, and `SECURITY DEFINER` RPCs (`verify_question_answer`, `submit_question_attempt`, `submit_flashcard_review`, `complete_activity_session`, `purchase_cosmetic_item`, `grade_module_responses`).
 3. Run `supabase/seed/0001_seed_hdsat.sql` to upsert the verified `dataset_sources`, `questions`, `question_keys`, and `flashcards` records.
-4. Run `supabase/migrations/20261017000100_safety_compliance.sql`, `20261020000100_cosmetic_price_ladder.sql`, `20261023000100_admin_console.sql` (admin console, notifications, triage RPCs) and `20261024000100_admin_human_check.sql` (self-hosted human check). After the build that uses it is deployed, run `20261024000200_admin_captcha_cleanup.sql` to drop the old arithmetic-captcha path.
+4. Run `supabase/migrations/20261017000100_safety_compliance.sql`, `20261020000100_cosmetic_price_ladder.sql`, `20261023000100_admin_console.sql` (admin console, notifications, triage RPCs) and `20261024000100_admin_human_check.sql` (self-hosted human check). After the build that uses it is deployed, run `20261024000200_admin_captcha_cleanup.sql` to drop the old arithmetic-captcha path. Then `20261025000200_emblems_earned.sql` (emblems are earned, not bought), `20261026000200_password_change_limits.sql` (password/recovery cooldowns), `20261026000300_email_request_limits.sql` (one confirmation email and one recovery link per address per day), `20261026000400_admin_attempt_log.sql` (wrong-passcode rows per device), `20261026000500_light_accounts.sql` (verification flag, storage caps for unverified accounts, mail budget), `20261026000600_coin_category_fix.sql` (the `achievement_reward` coin category) and `20261027000100_test_goal.sql` (dashboard test-date goal). `python .pa/apply_round2_migrations.py` applies and verifies the whole set.
 5. In **Authentication → Providers → Email**, ensure Email/Password sign-in is enabled.
 6. Set the operator passcode once, in the SQL editor (or with a service key). Only a bcrypt hash is stored; the plaintext never enters this repository, the bundle or the browser:
 
@@ -157,6 +160,7 @@ Changing the passcode clears every outstanding console session.
 ## Operator Console & Report Triage
 
 - `/admin` (also reachable as `/#/admin`) asks for a signed-in session, a human check and the operator passcode. The human check is self-hosted: Postgres issues a random salt and difficulty, the browser finds a nonce whose SHA-256(salt + nonce) has four leading zero nibbles, and the same function re-computes it, burning the challenge on use. No third-party widget, key or account is involved. The passcode is compared inside Postgres against a bcrypt (cost 12) hash, five wrong tries lock the console for 15 minutes, and a correct unlock returns a random 8-hour token that every admin RPC re-checks by hash. No account is privileged and no service-role key ever reaches the browser.
+- A wrong passcode writes **one row per device** into `admin_login_attempts` — client IP and user agent read from the request headers inside Postgres, never from the browser — and later tries only increment that row. The **Sign-in attempts** section lists them (device, IP, tries, first/last seen) with Delete per row and Clear all; the table is capped at 100 devices. Student accounts are never locked by wrong passwords; only this gate has the 5-try lock.
 - The token is held in memory only. A reload, a closed tab, leaving the site or ten idle minutes all end the session: the token is revoked, admin storage keys and cookies are scrubbed and the gate comes back. The section rail does not render until the console is unlocked.
 - **Lock console** revokes the token server-side, clears the admin keys from `sessionStorage`/`localStorage`, drops every in-memory copy (tables, filters, reply drafts, passcode field, challenge and solution), removes the console route from browser history and returns to the app.
 - The console calls only `SECURITY DEFINER` RPCs (`admin_human_check`, `admin_unlock`, `admin_session_valid`, `admin_lock`, `admin_list_reports`, `admin_list_appeals`, `admin_set_report_status`, `admin_batch_delete_reports`, `admin_reply_to_report`, `admin_list_students`, …); the underlying tables have RLS enabled and `anon` has no EXECUTE on any of them.

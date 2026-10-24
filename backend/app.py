@@ -29,7 +29,7 @@ DATA_DIR = ROOT_DIR / "src" / "data"
 
 # Compliance defaults surfaced by /api/legal so the published policies can be
 # audited from the running deployment without reading the bundle.
-LEGAL_VERSION = os.environ.get("HDSAT_LEGAL_VERSION", "1.0")
+LEGAL_VERSION = os.environ.get("HDSAT_LEGAL_VERSION", "1.3")
 MIN_AGE = 13
 APPEAL_SLA_HOURS = 72
 POLICY_PATHS = {

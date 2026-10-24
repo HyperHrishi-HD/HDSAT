@@ -1,4 +1,4 @@
-import { ACHIEVEMENTS, achievementById, normalizeAchievementIds } from './catalog';
+import { ACHIEVEMENTS, achievementById, itemById, normalizeAchievementIds } from './catalog';
 import { checkAnswer } from './grading';
 import { scheduleReview } from './sm2';
 import type {
@@ -73,6 +73,7 @@ export function emptyProfile(): LocalProfile {
     rushScores: {},
     settings: {
       assessment: 'SAT',
+      testDate: null,
       excludePreviouslyCorrect: false,
       excludeReleasedPracticeSet: false,
       timerSound: false,
@@ -80,6 +81,35 @@ export function emptyProfile(): LocalProfile {
       activeFlair: null,
     },
   };
+}
+
+/**
+ * True once this browser has a profile at all (even an empty one). That is what
+ * tells the starting homepage apart from a returning student.
+ */
+export function hasStoredProfile(): boolean {
+  if (typeof localStorage === 'undefined') return false;
+  try {
+    return localStorage.getItem(STORAGE_KEY) !== null;
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * One-way door out of the starting homepage: the visitor chose to begin, so a
+ * profile now exists and the homepage never returns. It writes an empty profile
+ * rather than a flag so the rest of the app has one source of truth.
+ */
+export function markEntered(): void {
+  if (typeof localStorage === 'undefined') return;
+  try {
+    if (localStorage.getItem(STORAGE_KEY) === null) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(emptyProfile()));
+    }
+  } catch {
+    /* storage disabled: the homepage simply shows again next time */
+  }
 }
 
 export function loadProfile(): LocalProfile {
@@ -633,28 +663,32 @@ export function toggleSaved(profile: LocalProfile, questionId: string): LocalPro
   };
 }
 
+/**
+ * Themes are the only purchasable cosmetic. Emblems are proof of an earned
+ * achievement, so buying one is refused here as well as in the database.
+ */
 export function purchaseItem(
   profile: LocalProfile,
   itemId: string,
   cost: number
 ): { profile: LocalProfile; ok: boolean; reason?: string } {
-  if (profile.ownedItems.includes(itemId)) {
-    return { profile, ok: false, reason: 'You already own this item.' };
+  const item = itemById(itemId);
+  if (!item || item.slot !== 'theme') {
+    return { profile, ok: false, reason: 'Emblems are earned through achievements, not purchased.' };
   }
-  if (profile.hdCoins < cost) {
+  if (profile.ownedItems.includes(item.id)) {
+    return { profile, ok: false, reason: 'You already own this theme.' };
+  }
+  const price = Math.max(0, item.cost || cost);
+  if (profile.hdCoins < price) {
     return { profile, ok: false, reason: 'Not enough HDCoins yet.' };
   }
-  const isBadge = itemId.startsWith('badge-');
-  const nextSettings = {
-    ...profile.settings,
-    ...(isBadge ? { activeFlair: itemId } : { activeTheme: itemId }),
-  };
   return {
     profile: {
       ...profile,
-      hdCoins: profile.hdCoins - cost,
-      ownedItems: [...profile.ownedItems, itemId],
-      settings: nextSettings,
+      hdCoins: profile.hdCoins - price,
+      ownedItems: [...profile.ownedItems, item.id],
+      settings: { ...profile.settings, activeTheme: item.id },
     },
     ok: true,
   };

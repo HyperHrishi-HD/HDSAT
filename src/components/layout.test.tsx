@@ -158,7 +158,7 @@ describe('welcome banner', () => {
   it('stays hidden after the guest dismisses it', () => {
     render();
     const dismiss = [...container.querySelectorAll('button')].find((b) =>
-      b.textContent?.includes('Keep studying as a guest')
+      b.textContent?.includes('Keep as guest')
     );
     expect(dismiss).toBeTruthy();
     act(() => {

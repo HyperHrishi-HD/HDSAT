@@ -2,12 +2,20 @@ import { useMemo, useState } from 'react';
 import { FigureView, StimulusView } from './FigureView';
 import { MathText } from './MathText';
 import { Badge, Button, Card } from './ui';
-import { dailyHardQuestion, isQuestionOfTheDaySolved, markQuestionOfTheDaySolved } from '../lib/daily';
+import {
+  dailyHardQuestion,
+  isQuestionOfTheDayExpanded,
+  isQuestionOfTheDaySolved,
+  markQuestionOfTheDaySolved,
+  setQuestionOfTheDayExpanded,
+} from '../lib/daily';
 import { useApp } from '../lib/store';
 
 /**
- * One Hard item per calendar day, the same one everywhere it appears. The
- * Dashboard copy can be dismissed for the day; the Arcade copy is permanent.
+ * One Hard item per calendar day, the same one everywhere it appears.
+ *
+ * `compact` is the Dashboard: a single-line strip that expands in place, so the
+ * question never pushes the rest of the page down. `full` is the Arcade card.
  */
 export function QuestionOfTheDay({
   variant = 'full',
@@ -24,6 +32,7 @@ export function QuestionOfTheDay({
   const [response, setResponse] = useState('');
   const [feedback, setFeedback] = useState<{ correct: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
+  const [expanded, setExpanded] = useState(() => isQuestionOfTheDayExpanded());
 
   if (!question) return null;
 
@@ -42,31 +51,8 @@ export function QuestionOfTheDay({
     }
   };
 
-  return (
-    <Card className="qotd-card">
-      <div className="row-between" style={{ marginBottom: 8 }}>
-        <div className="row">
-          <Badge tone="warn">Hard</Badge>
-          <h3 style={{ margin: 0 }}>Question of the Day</h3>
-        </div>
-        <div className="row">
-          <Badge tone="info">
-            {question.section === 'Math' ? 'Math' : 'R&W'} · {question.domain}
-          </Badge>
-          {variant === 'compact' && onDismiss ? (
-            <button
-              type="button"
-              className="link-button"
-              aria-label="Hide the Question of the Day on the Dashboard"
-              title="Hide on Dashboard (it stays in the Arcade)"
-              onClick={onDismiss}
-            >
-              Hide
-            </button>
-          ) : null}
-        </div>
-      </div>
-
+  const body = (
+    <>
       <FigureView question={question} />
       {question.stimulus ? (
         <div className="stimulus">
@@ -126,7 +112,6 @@ export function QuestionOfTheDay({
           <Button onClick={() => void submit()} disabled={busy || !response.trim()}>
             {busy ? 'Checking…' : 'Submit answer'}
           </Button>
-          <span className="muted">Answering earns HDCoins like any practice item.</span>
         </div>
       ) : (
         <div className={`feedback ${feedback.correct ? 'is-correct' : 'is-incorrect'}`}>
@@ -137,9 +122,63 @@ export function QuestionOfTheDay({
 
       {solved && isQuestionOfTheDaySolved() && !feedback ? (
         <p className="muted" style={{ marginBottom: 0 }}>
-          You already solved today&apos;s question. A new one arrives tomorrow.
+          A new question arrives tomorrow.
         </p>
       ) : null}
+    </>
+  );
+
+  if (variant === 'compact') {
+    const scope = `${question.section === 'Math' ? 'Math' : 'R&W'} · ${question.domain}`;
+    return (
+      <Card className={`qotd-card qotd-strip${expanded ? ' is-open' : ''}`}>
+        <div className="qotd-strip-row">
+          <button
+            type="button"
+            className="qotd-strip-main"
+            aria-expanded={expanded}
+            onClick={() =>
+              setExpanded((open) => {
+                setQuestionOfTheDayExpanded(!open);
+                return !open;
+              })
+            }
+          >
+            <Badge tone="warn">Daily</Badge>
+            <strong>Question of the Day</strong>
+            <span className="qotd-strip-scope">{scope}</span>
+            {solved ? <Badge tone="good">Solved</Badge> : null}
+            <span className="qotd-strip-toggle">{expanded ? 'Close' : 'Open'}</span>
+          </button>
+          {onDismiss ? (
+            <button
+              type="button"
+              className="link-button qotd-strip-hide"
+              aria-label="Hide the Question of the Day on the Dashboard"
+              title="Hide on Dashboard (it stays in the Arcade)"
+              onClick={onDismiss}
+            >
+              Hide
+            </button>
+          ) : null}
+        </div>
+        {expanded ? <div className="qotd-strip-body">{body}</div> : null}
+      </Card>
+    );
+  }
+
+  return (
+    <Card className="qotd-card">
+      <div className="row-between" style={{ marginBottom: 8 }}>
+        <div className="row">
+          <Badge tone="warn">Hard</Badge>
+          <h3 style={{ margin: 0 }}>Question of the Day</h3>
+        </div>
+        <Badge tone="info">
+          {question.section === 'Math' ? 'Math' : 'R&W'} · {question.domain}
+        </Badge>
+      </div>
+      {body}
     </Card>
   );
 }
