@@ -57,6 +57,8 @@ export interface AppValue {
   flashcards: Flashcard[];
   resources: StudyResource[];
   hdCoins: number;
+  /** Total earned across the life of the account; purchases do not reduce it. */
+  lifetimeCoins: number;
   currentStreak: number;
   bestStreak: number;
   progress: Record<string, QuestionProgress>;
@@ -870,6 +872,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     flashcards: deck.cards,
     resources: library.resources,
     hdCoins: mode === 'cloud' && snapshot ? snapshot.stats.hdCoins : profile.hdCoins,
+    lifetimeCoins:
+      mode === 'cloud' && snapshot ? snapshot.stats.lifetimeCoins : profile.lifetimeCoins,
     currentStreak: mode === 'cloud' && snapshot ? snapshot.stats.currentStreak : profile.currentStreak,
     bestStreak: mode === 'cloud' && snapshot ? snapshot.stats.bestStreak : profile.bestStreak,
     progress,

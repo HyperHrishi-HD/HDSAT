@@ -402,6 +402,17 @@ export function CreditsPage() {
         Found an issue with a question or want to suggest an improvement? Use the <strong>Report a problem</strong>{' '}
         button on any question card or submit the appeal form below.
       </p>
+
+      <h2>The Starting Page</h2>
+      <p className="muted">
+        The full-page introduction a blank browser lands on. Nothing changes if you open it — it is
+        the same page, with the same one-click way back in.
+      </p>
+      <p style={{ margin: 0 }}>
+        <Link to="/welcome" className="btn btn-outline btn-sm">
+          View the starting page
+        </Link>
+      </p>
     </LegalShell>
   );
 }

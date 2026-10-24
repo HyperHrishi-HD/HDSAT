@@ -108,14 +108,14 @@ export function FlashcardsPage() {
               setRevealed(false);
             }}
             options={[
-              { value: 'due', label: 'Due Now' },
+              { value: 'due', label: 'Next' },
               { value: 'all', label: 'Browse All' },
             ]}
           />
         </div>
 
         <div className="card-grid" style={{ marginTop: 12 }}>
-          <Stat label="Due for Review" value={stats.due.toLocaleString()} />
+          <Stat label="Next up" value={stats.due.toLocaleString()} />
           <Stat label="In Progress" value={stats.learning.toLocaleString()} />
           <Stat label="Mastered" value={stats.mastered.toLocaleString()} />
         </div>
@@ -124,7 +124,7 @@ export function FlashcardsPage() {
       {!currentCard ? (
         <Card>
           <EmptyState
-            title="No cards due"
+            title="Nothing next"
             body={
               queueMode === 'due'
                 ? `Switch to Browse All to review ahead, or open the ${

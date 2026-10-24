@@ -211,12 +211,17 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--dry-run", action="store_true", help="show the batch plan only")
     parser.add_argument("--verify-only", action="store_true", help="check live row counts only")
+    parser.add_argument(
+        "--seed",
+        default=str(SEED),
+        help="seed file to apply (default: the full generated seed)",
+    )
     args = parser.parse_args()
 
     statements = order_statements(
         [
             statement
-            for statement in split_sql(SEED.read_text(encoding="utf-8"))
+            for statement in split_sql(pathlib.Path(args.seed).read_text(encoding="utf-8"))
             if statement.upper() not in {"BEGIN", "COMMIT"}
         ]
     )

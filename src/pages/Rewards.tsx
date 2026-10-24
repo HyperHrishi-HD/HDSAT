@@ -70,10 +70,25 @@ export function RewardsPage() {
           <Stat
             label="Study Streak"
             value={`${app.currentStreak} d`}
-            hint={`Best ${app.bestStreak} d`}
+            hint={`${today?.questionsCompleted ?? 0} questions today`}
           />
           <Stat label="Achievements" value={`${app.achievements.length} / ${ACHIEVEMENTS.length}`} />
           <Stat label="Theme" value={activeTheme ? STORE_ITEMS.find((i) => i.id === activeTheme)?.name.replace(/ Theme$/, '') ?? 'Custom' : 'HDSAT Blue'} />
+        </div>
+
+        {/* Totals that only ever go up, kept small: the four cards above are the
+            live numbers, these two are the record. */}
+        <div className="stat-pair">
+          <Stat
+            label="Lifetime HDCoins"
+            value={app.lifetimeCoins.toLocaleString()}
+            hint="every coin earned"
+          />
+          <Stat
+            label="Best streak"
+            value={`${app.bestStreak} d`}
+            hint="personal record"
+          />
         </div>
       </Card>
 

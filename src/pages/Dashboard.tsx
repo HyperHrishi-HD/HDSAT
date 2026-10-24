@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Button, Card, Icon, InfoTip, ProgressBar, Stat } from '../components/ui';
+import { Leaderboard } from '../components/Leaderboard';
 import { MissedLog } from '../components/MissedLog';
 import { QuestionOfTheDay } from '../components/QuestionOfTheDay';
 import * as cloud from '../lib/cloud';
@@ -350,10 +351,10 @@ export function DashboardPage() {
             )}
           </Card>
 
-          <Card>
-            <div className="row-between">
-              <div>
-                <h3>Saved &amp; Missed</h3>
+        <Card>
+          <div className="row-between">
+            <div>
+              <h3>Saved &amp; Missed</h3>
                 <p className="muted">
                   {app.saved.length} saved · {incorrectCount} missed
                 </p>
@@ -373,6 +374,8 @@ export function DashboardPage() {
           </Card>
         </div>
       </div>
+
+      <Leaderboard />
     </div>
   );
 }

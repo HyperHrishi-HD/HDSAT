@@ -59,6 +59,7 @@ export function emptyProfile(): LocalProfile {
     version: PROFILE_VERSION,
     createdAt: new Date().toISOString(),
     hdCoins: 0,
+    lifetimeCoins: 0,
     currentStreak: 0,
     bestStreak: 0,
     lastActiveDate: null,
@@ -119,9 +120,17 @@ export function loadProfile(): LocalProfile {
     if (!raw) return emptyProfile();
     const parsed = JSON.parse(raw) as Partial<LocalProfile>;
     const base = emptyProfile();
+    // Older profiles never counted lifetime earnings. The best reconstruction
+    // is the balance plus what was spent on the themes they now own.
+    const spent = (parsed.ownedItems ?? []).reduce(
+      (sum, id) => sum + (itemById(id)?.cost ?? 0),
+      0
+    );
     return {
       ...base,
       ...parsed,
+      hdCoins: parsed.hdCoins ?? 0,
+      lifetimeCoins: parsed.lifetimeCoins ?? (parsed.hdCoins ?? 0) + spent,
       settings: { ...base.settings, ...(parsed.settings ?? {}) },
       dailyActivity: parsed.dailyActivity ?? {},
       progress: parsed.progress ?? {},
@@ -319,6 +328,19 @@ function previousDateKey(date: Date): string {
   return todayKey(copy);
 }
 
+/**
+ * One place where coins are credited, so the spendable balance and the
+ * lifetime total can never drift apart. Spending goes through purchaseItem.
+ */
+function withEarned(profile: LocalProfile, amount: number): LocalProfile {
+  if (!Number.isFinite(amount) || amount <= 0) return profile;
+  return {
+    ...profile,
+    hdCoins: profile.hdCoins + amount,
+    lifetimeCoins: profile.lifetimeCoins + amount,
+  };
+}
+
 export function updateStreak(profile: LocalProfile, date: string): LocalProfile {
   if (profile.lastActiveDate === date) return profile;
   const yesterday = previousDateKey(new Date(`${date}T12:00:00`));
@@ -433,7 +455,7 @@ export function applyAttempt(
 
   next = updateStreak(next, date);
   if (coinsAwarded > 0) {
-    next = { ...next, hdCoins: next.hdCoins + coinsAwarded };
+    next = withEarned(next, coinsAwarded);
     next = bumpDay(next, date, { coinsEarned: coinsAwarded });
   }
 
@@ -444,6 +466,7 @@ export function applyAttempt(
       ...next,
       achievements: [...next.achievements, ...unlocked],
       hdCoins: next.hdCoins + bonus,
+      lifetimeCoins: next.lifetimeCoins + bonus,
     };
     if (bonus > 0) {
       next = bumpDay(next, date, { coinsEarned: bonus });
@@ -490,7 +513,7 @@ export function applyFlashcardReview(
   let coinsAwarded = 0;
   if (wasDue && !alreadyRewarded && coinsToday < DAILY_FLASHCARD_COIN_CAP) {
     coinsAwarded = 1;
-    next = { ...next, hdCoins: next.hdCoins + 1 };
+    next = withEarned(next, 1);
     next = bumpDay(next, date, { coinsEarned: coinsAwarded });
   }
 
@@ -501,6 +524,7 @@ export function applyFlashcardReview(
       ...next,
       achievements: [...next.achievements, ...unlocked],
       hdCoins: next.hdCoins + bonus,
+      lifetimeCoins: next.lifetimeCoins + bonus,
     };
     if (bonus > 0) {
       next = bumpDay(next, date, { coinsEarned: bonus });
@@ -530,6 +554,7 @@ export function recordTestAttempt(profile: LocalProfile, attempt: TestAttempt): 
         ...next,
         achievements: [...next.achievements, ...unlocked],
         hdCoins: next.hdCoins + bonus,
+        lifetimeCoins: next.lifetimeCoins + bonus,
       };
       if (bonus > 0) next = bumpDay(next, date, { coinsEarned: bonus });
     }
@@ -642,6 +667,7 @@ export function awardSessionCoins(
     next = {
       ...next,
       hdCoins: next.hdCoins + reward,
+      lifetimeCoins: next.lifetimeCoins + reward,
       dailyActivity: {
         ...next.dailyActivity,
         [date]: {
@@ -731,5 +757,6 @@ export function perfectModuleAchievement(
     ...profile,
     achievements: [...profile.achievements, 'perfect-module'],
     hdCoins: profile.hdCoins + bonus,
+    lifetimeCoins: profile.lifetimeCoins + bonus,
   };
 }

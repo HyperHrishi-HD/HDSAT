@@ -1,0 +1,494 @@
+{
+  "pairs": [
+    {
+      "before": "The first prototype absorbed impacts well in laboratory tests.",
+      "after": "the same design cracked after a week of repeated loading on the test track.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Therefore", "For example", "Likewise"]
+    },
+    {
+      "before": "City officials expected the new bus lanes to shorten commutes for most riders.",
+      "after": "surveys six months later showed that average trip times had barely changed.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Consequently", "For instance", "Similarly"]
+    },
+    {
+      "before": "The antibiotic cleared the infection in nearly every patient during the trial.",
+      "after": "a small group reported persistent symptoms several weeks after treatment ended.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Therefore", "In addition", "For example"]
+    },
+    {
+      "before": "The mountain trail looks gentle on a printed map.",
+      "after": "hikers who walk it describe a punishing climb of nearly two thousand meters.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["As a result", "For example", "Likewise"]
+    },
+    {
+      "before": "The company's engineers predicted that the new battery would last a decade.",
+      "after": "independent tests found that capacity dropped sharply after three years.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Therefore", "For example", "Similarly"]
+    },
+    {
+      "before": "Many readers assume that the novel was written in a single burst of inspiration.",
+      "after": "the surviving manuscripts show four separate drafts spanning nearly a decade.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Consequently", "For instance", "In addition"]
+    },
+    {
+      "before": "The orchard produced its largest harvest in years.",
+      "after": "growers earned less than in the previous season because prices collapsed.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Therefore", "For example", "Likewise"]
+    },
+    {
+      "before": "The new library was designed to be quiet.",
+      "after": "its central atrium, open to every floor, carries sound throughout the building.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["As a result", "For example", "Similarly"]
+    },
+    {
+      "before": "Researchers expected the colder water to slow the fish's growth.",
+      "after": "specimens in the chilled tanks grew faster than those kept at room temperature.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Therefore", "For instance", "In addition"]
+    },
+    {
+      "before": "The old bridge has carried traffic for more than a century.",
+      "after": "engineers have restricted it to light vehicles while they assess its cables.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Consequently", "For example", "Likewise"]
+    },
+    {
+      "before": "The museum's new wing was praised by architecture critics.",
+      "after": "visitor numbers fell for the third year in a row.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Therefore", "For example", "Similarly"]
+    },
+    {
+      "before": "Volunteers planted ten thousand saplings along the eroded bank.",
+      "after": "flooding the following spring washed most of them away.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Consequently", "For instance", "In addition"]
+    },
+    {
+      "before": "The software update was described as a minor security patch.",
+      "after": "it changed how every saved password is stored and forced users to sign in again.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Therefore", "For example", "Likewise"]
+    },
+    {
+      "before": "The two villages lie only eight kilometres apart.",
+      "after": "their dialects are different enough that residents struggle to understand each other.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["As a result", "For example", "Similarly"]
+    },
+    {
+      "before": "The chef's early dishes were praised for their simplicity.",
+      "after": "her later menus depend on dozens of ingredients in a single plate.",
+      "relation": "contrast",
+      "correct": "By contrast",
+      "distractors": ["Therefore", "For instance", "In addition"]
+    },
+    {
+      "before": "The survey found that students who slept seven hours or more scored higher on the practice test.",
+      "after": "it recorded fewer reported illnesses in the same group.",
+      "relation": "addition",
+      "correct": "In addition",
+      "distractors": ["However", "For example", "Otherwise"]
+    },
+    {
+      "before": "The new railway cuts the journey between the two cities to under an hour.",
+      "after": "it removes an estimated four thousand car trips from the road each day.",
+      "relation": "addition",
+      "correct": "Moreover",
+      "distractors": ["Nevertheless", "For instance", "Meanwhile"]
+    },
+    {
+      "before": "The coating resists scratches and stains.",
+      "after": "it can be applied without special equipment or training.",
+      "relation": "addition",
+      "correct": "In addition",
+      "distractors": ["However", "Therefore", "For example"]
+    },
+    {
+      "before": "The archive holds letters, ledgers and photographs from the period.",
+      "after": "its collection includes more than two hundred recorded interviews.",
+      "relation": "addition",
+      "correct": "Moreover",
+      "distractors": ["However", "As a result", "For instance"]
+    },
+    {
+      "before": "The vaccine reduced hospital admissions in every age group studied.",
+      "after": "its side effects were mild and short lived.",
+      "relation": "addition",
+      "correct": "In addition",
+      "distractors": ["Nevertheless", "Therefore", "For example"]
+    },
+    {
+      "before": "The park's wetlands filter runoff before it reaches the river.",
+      "after": "they provide nesting habitat for more than sixty species of birds.",
+      "relation": "addition",
+      "correct": "Moreover",
+      "distractors": ["However", "Consequently", "For instance"]
+    },
+    {
+      "before": "The new material conducts heat efficiently.",
+      "after": "it remains stable at temperatures that melt ordinary steel.",
+      "relation": "addition",
+      "correct": "In addition",
+      "distractors": ["However", "Therefore", "For example"]
+    },
+    {
+      "before": "The program pays for tuition and books.",
+      "after": "it covers travel between home and campus.",
+      "relation": "addition",
+      "correct": "Moreover",
+      "distractors": ["Nevertheless", "For example", "Otherwise"]
+    },
+    {
+      "before": "The telescope's mirror is lighter than the design it replaced.",
+      "after": "it holds its shape more accurately as the temperature changes.",
+      "relation": "addition",
+      "correct": "In addition",
+      "distractors": ["However", "Therefore", "For instance"]
+    },
+    {
+      "before": "The cafe roasts its own beans.",
+      "after": "it trains local students in espresso preparation each summer.",
+      "relation": "addition",
+      "correct": "Moreover",
+      "distractors": ["However", "As a result", "For instance"]
+    },
+    {
+      "before": "Several cities have redesigned intersections to reduce serious crashes.",
+      "after": "one downtown district cut injury collisions by nearly half after adding raised crossings.",
+      "relation": "example",
+      "correct": "For example",
+      "distractors": ["Nevertheless", "Therefore", "Meanwhile"]
+    },
+    {
+      "before": "Some animals can regrow lost body parts.",
+      "after": "a salamander can replace a severed limb, complete with bones and nerves.",
+      "relation": "example",
+      "correct": "For instance",
+      "distractors": ["However", "Consequently", "Similarly"]
+    },
+    {
+      "before": "Households waste less food when they plan meals in advance.",
+      "after": "families that posted a weekly menu threw away a third less than those that did not.",
+      "relation": "example",
+      "correct": "For example",
+      "distractors": ["Nevertheless", "Therefore", "In addition"]
+    },
+    {
+      "before": "Ancient builders used locally available stone whenever possible.",
+      "after": "the temples on the plateau were cut from the same limestone that forms the cliffs below them.",
+      "relation": "example",
+      "correct": "For instance",
+      "distractors": ["However", "As a result", "Moreover"]
+    },
+    {
+      "before": "Small changes in wording can shift how people answer a survey.",
+      "after": "respondents asked whether they were concerned reported stronger opinions than those asked whether they were interested.",
+      "relation": "example",
+      "correct": "For example",
+      "distractors": ["Nevertheless", "Consequently", "Meanwhile"]
+    },
+    {
+      "before": "Certain plants defend themselves chemically.",
+      "after": "tomato leaves release compounds that slow the growth of insects feeding on them.",
+      "relation": "example",
+      "correct": "For instance",
+      "distractors": ["However", "Therefore", "Similarly"]
+    },
+    {
+      "before": "Public libraries have expanded well beyond lending books.",
+      "after": "many now run tool-lending collections, language classes and job-search clinics.",
+      "relation": "example",
+      "correct": "For example",
+      "distractors": ["Nevertheless", "As a result", "Likewise"]
+    },
+    {
+      "before": "Weather forecasting has improved steadily over the past forty years.",
+      "after": "five-day predictions today are about as accurate as two-day predictions were in 1980.",
+      "relation": "example",
+      "correct": "For instance",
+      "distractors": ["However", "Therefore", "In addition"]
+    },
+    {
+      "before": "Some industries recover quickly after a recession.",
+      "after": "restaurants often rehire most of their staff within a year, while shipbuilders may wait far longer.",
+      "relation": "example",
+      "correct": "For example",
+      "distractors": ["Nevertheless", "Consequently", "Similarly"]
+    },
+    {
+      "before": "Noise affects wildlife in ways that are easy to overlook.",
+      "after": "songbirds near busy roads change the pitch of their calls to be heard.",
+      "relation": "example",
+      "correct": "For instance",
+      "distractors": ["However", "Therefore", "Meanwhile"]
+    },
+    {
+      "before": "The study offers the strongest evidence yet that the policy reduced emissions.",
+      "after": "its authors acknowledge that they could not measure changes in nearby towns.",
+      "relation": "concession",
+      "correct": "Admittedly",
+      "distractors": ["Therefore", "For example", "Similarly"]
+    },
+    {
+      "before": "The findings strongly support the theory.",
+      "after": "the sample was small and drawn from a single region.",
+      "relation": "concession",
+      "correct": "Admittedly",
+      "distractors": ["Consequently", "For instance", "Likewise"]
+    },
+    {
+      "before": "The bridge design is elegant and efficient.",
+      "after": "it requires maintenance crews to close two lanes every spring.",
+      "relation": "concession",
+      "correct": "Admittedly",
+      "distractors": ["Therefore", "For example", "In addition"]
+    },
+    {
+      "before": "The treatment works faster than any available alternative.",
+      "after": "it must be kept refrigerated, which limits where it can be used.",
+      "relation": "concession",
+      "correct": "Admittedly",
+      "distractors": ["Therefore", "For example", "Likewise"]
+    },
+    {
+      "before": "The archive's catalog is remarkably complete.",
+      "after": "some of the earliest ledgers were lost in a fire a century ago.",
+      "relation": "concession",
+      "correct": "Admittedly",
+      "distractors": ["Consequently", "For instance", "Similarly"]
+    },
+    {
+      "before": "The engine is far more efficient than its predecessor.",
+      "after": "it costs nearly twice as much to manufacture.",
+      "relation": "concession",
+      "correct": "Admittedly",
+      "distractors": ["Therefore", "For example", "In addition"]
+    },
+    {
+      "before": "The hike is suitable for beginners.",
+      "after": "the final kilometre climbs steeply and should be avoided in wet weather.",
+      "relation": "concession",
+      "correct": "Admittedly",
+      "distractors": ["Consequently", "For instance", "Likewise"]
+    },
+    {
+      "before": "The data show a clear link between the two variables.",
+      "after": "correlation alone cannot establish which one causes the other.",
+      "relation": "concession",
+      "correct": "Admittedly",
+      "distractors": ["Therefore", "For example", "Similarly"]
+    },
+    {
+      "before": "The reservoir silted up faster than engineers had predicted.",
+      "after": "the town below now draws its water from a pipeline thirty kilometres away.",
+      "relation": "result",
+      "correct": "As a result",
+      "distractors": ["However", "For example", "Similarly"]
+    },
+    {
+      "before": "The factory switched to a closed-loop cooling system.",
+      "after": "its water use fell by more than eighty percent.",
+      "relation": "result",
+      "correct": "Consequently",
+      "distractors": ["Nevertheless", "For instance", "Meanwhile"]
+    },
+    {
+      "before": "The airline canceled hundreds of flights during the storm.",
+      "after": "thousands of passengers spent the night in terminal buildings.",
+      "relation": "result",
+      "correct": "As a result",
+      "distractors": ["However", "For example", "In addition"]
+    },
+    {
+      "before": "The seeds were sown three weeks later than usual.",
+      "after": "the harvest arrived too late for the autumn market.",
+      "relation": "result",
+      "correct": "Consequently",
+      "distractors": ["Nevertheless", "For example", "Similarly"]
+    },
+    {
+      "before": "The city removed the parking minimum for new apartment buildings.",
+      "after": "developers began building smaller, cheaper units near transit stops.",
+      "relation": "result",
+      "correct": "As a result",
+      "distractors": ["However", "For instance", "Likewise"]
+    },
+    {
+      "before": "The team replaced the worn bearings and realigned the shaft.",
+      "after": "vibration readings returned to normal within a day.",
+      "relation": "result",
+      "correct": "Consequently",
+      "distractors": ["Nevertheless", "For example", "In addition"]
+    },
+    {
+      "before": "The clinic added Saturday appointments.",
+      "after": "the number of missed follow-ups fell by a quarter.",
+      "relation": "result",
+      "correct": "As a result",
+      "distractors": ["However", "For instance", "Similarly"]
+    },
+    {
+      "before": "The report recommended merging the two departments.",
+      "after": "half of the duplicated administrative roles were eliminated.",
+      "relation": "result",
+      "correct": "Consequently",
+      "distractors": ["Nevertheless", "For example", "Meanwhile"]
+    },
+    {
+      "before": "The glacier retreated several hundred meters in a decade.",
+      "after": "the valley's summer water supply has become unreliable.",
+      "relation": "result",
+      "correct": "As a result",
+      "distractors": ["However", "For instance", "Likewise"]
+    },
+    {
+      "before": "The first settlers cleared the lower slopes and planted grain.",
+      "after": "they dug irrigation channels to carry water to the higher fields.",
+      "relation": "sequence",
+      "correct": "Later",
+      "distractors": ["However", "Therefore", "For example"]
+    },
+    {
+      "before": "The engineers tested the hull in a wave tank at a tenth of full scale.",
+      "after": "they built a full-size section and repeated the tests in open water.",
+      "relation": "sequence",
+      "correct": "Eventually",
+      "distractors": ["However", "For example", "Similarly"]
+    },
+    {
+      "before": "The manuscript passed through the hands of three collectors.",
+      "after": "it was donated to a university library, where it remains today.",
+      "relation": "sequence",
+      "correct": "Eventually",
+      "distractors": ["However", "Consequently", "For instance"]
+    },
+    {
+      "before": "The chef marinates the meat overnight.",
+      "after": "she sears it over high heat and lets it rest before slicing.",
+      "relation": "sequence",
+      "correct": "Then",
+      "distractors": ["However", "Therefore", "For example"]
+    },
+    {
+      "before": "The team published its first results in a short conference paper.",
+      "after": "it released the full dataset two years later.",
+      "relation": "sequence",
+      "correct": "Later",
+      "distractors": ["However", "As a result", "For instance"]
+    },
+    {
+      "before": "The city planted shade trees along the avenue.",
+      "after": "crews repaved the sidewalk and added benches beneath them.",
+      "relation": "sequence",
+      "correct": "Meanwhile",
+      "distractors": ["However", "Therefore", "For example"]
+    },
+    {
+      "before": "The students built a small model of the bridge.",
+      "after": "they loaded it until it failed and recorded where the break began.",
+      "relation": "sequence",
+      "correct": "Then",
+      "distractors": ["However", "Consequently", "For instance"]
+    },
+    {
+      "before": "The storm knocked out power across the valley.",
+      "after": "repair crews restored service to most homes within three days.",
+      "relation": "sequence",
+      "correct": "Eventually",
+      "distractors": ["However", "For example", "Similarly"]
+    },
+    {
+      "before": "The manual claims the device needs no calibration.",
+      "after": "its readings drifted noticeably after the first month of use.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Therefore", "For example", "Likewise"]
+    },
+    {
+      "before": "The novel sold poorly when it first appeared.",
+      "after": "it is now required reading in several university courses.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Consequently", "For instance", "Similarly"]
+    },
+    {
+      "before": "The village sits in one of the driest regions of the country.",
+      "after": "its orchards are among the most productive in the region, fed by a spring that never runs dry.",
+      "relation": "contrast",
+      "correct": "Nevertheless",
+      "distractors": ["Therefore", "For example", "In addition"]
+    },
+    {
+      "before": "The doctor expected the scan to show a fracture.",
+      "after": "it revealed only a badly bruised muscle.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Consequently", "For instance", "Likewise"]
+    },
+    {
+      "before": "The plan looked cheap on paper.",
+      "after": "the hidden costs of maintenance outweighed the savings within five years.",
+      "relation": "contrast",
+      "correct": "However",
+      "distractors": ["Therefore", "For example", "Similarly"]
+    },
+    {
+      "before": "The workshop teaches basic woodworking skills.",
+      "after": "it lends tools to graduates who cannot afford their own.",
+      "relation": "addition",
+      "correct": "In addition",
+      "distractors": ["However", "Therefore", "For example"]
+    },
+    {
+      "before": "The app works without an internet connection.",
+      "after": "it syncs automatically once a connection returns.",
+      "relation": "addition",
+      "correct": "Moreover",
+      "distractors": ["Nevertheless", "For example", "Otherwise"]
+    },
+    {
+      "before": "The study measured how long participants slept.",
+      "after": "it tracked their caffeine intake and exercise habits.",
+      "relation": "addition",
+      "correct": "In addition",
+      "distractors": ["However", "Consequently", "For instance"]
+    },
+    {
+      "before": "The town replaced its tungsten streetlights with LEDs.",
+      "after": "electricity spending for lighting fell by more than half.",
+      "relation": "result",
+      "correct": "As a result",
+      "distractors": ["However", "For example", "Similarly"]
+    },
+    {
+      "before": "The company moved its support team to a single time zone.",
+      "after": "customers in Asia began waiting a full day for replies.",
+      "relation": "result",
+      "correct": "Consequently",
+      "distractors": ["Nevertheless", "For instance", "In addition"]
+    }
+  ]
+}

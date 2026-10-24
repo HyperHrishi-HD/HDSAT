@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthModal } from '../components/AuthModal';
 import {
@@ -9,26 +9,34 @@ import {
   SITE_NAME,
   TERMS_PATH,
 } from '../lib/legal';
+import { takeNextMotto } from '../lib/motto';
 import { markEntered, markWelcomeSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
 
 /**
- * The starting homepage. A separate screen, not a banner: it exists only before
- * this browser has any HDSAT profile and no account is signed in, and one click
- * enters the app for good.
+ * The starting homepage. A separate screen, not a banner: it is what a blank
+ * browser lands on, and one click enters the app for good.
  *
  * It is deliberately static — no question bank, no network — so it costs
- * nothing on hosting and appears instantly.
+ * nothing on hosting and appears instantly. The only moving parts are CSS:
+ * two drifting light pools behind the hero, which stop for anyone who asks
+ * their system for reduced motion.
  */
 export function WelcomePage() {
   const app = useApp();
   const navigate = useNavigate();
 
-  // Signing in from here is the other way in; once a session exists the
-  // homepage has done its job.
+  // A student who signs in *here* is entering the app; someone who typed
+  // /welcome with a session already running is only visiting, so the page
+  // stays put until they press a button.
+  const signedInOnMount = useRef(Boolean(app.user));
   useEffect(() => {
-    if (app.user) navigate('/', { replace: true });
+    if (!signedInOnMount.current && app.user) navigate('/', { replace: true });
   }, [app.user, navigate]);
+
+  // One line per visit, advanced on every open. Computed once per mount so a
+  // re-render cannot flick it to a different motto mid-read.
+  const [motto] = useState(() => takeNextMotto());
 
   const enter = () => {
     markEntered();
@@ -40,6 +48,12 @@ export function WelcomePage() {
 
   return (
     <div className="welcome-page">
+      <div className="welcome-aurora" aria-hidden="true">
+        <span className="welcome-pool welcome-pool-a" />
+        <span className="welcome-pool welcome-pool-b" />
+        <span className="welcome-pool welcome-pool-c" />
+      </div>
+
       <header className="welcome-top">
         <span className="welcome-brand">
           <span className="brand-mark" aria-hidden="true">
@@ -51,7 +65,7 @@ export function WelcomePage() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
               />
-              <circle cx="48" cy="14" r="4.5" fill="#93c5fd" />
+              <circle cx="48" cy="14" r="4.5" fill="#bfdbfe" />
             </svg>
           </span>
           <strong>HDSAT</strong>
@@ -66,15 +80,27 @@ export function WelcomePage() {
       </header>
 
       <main className="welcome-hero">
+        <span className="welcome-emblem" aria-hidden="true">
+          <svg width="40" height="40" viewBox="0 0 64 64" fill="none">
+            <path
+              d="M16 14V50M48 14V50M16 32H48"
+              stroke="currentColor"
+              strokeWidth="7.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <circle cx="48" cy="14" r="4.5" fill="#bfdbfe" />
+          </svg>
+        </span>
+
         <p className="welcome-eyebrow">Digital SAT &amp; PSAT practice</p>
         <h1>
-          Practise the way
+          Practice the way
           <br />
           the test is built.
         </h1>
         <p className="welcome-sub">
-          Adaptive full tests, drills that schedule themselves, and flashcards. Works offline in
-          this browser.
+          Adaptive full length tests, in depth practice and drills, flashcards and arcades.
         </p>
 
         <div className="welcome-actions">
@@ -89,6 +115,12 @@ export function WelcomePage() {
             I have an account
           </button>
         </div>
+
+        <p className="welcome-motto" key={motto}>
+          <span aria-hidden="true">“</span>
+          {motto}
+          <span aria-hidden="true">”</span>
+        </p>
 
         <ul className="welcome-facts">
           <li>

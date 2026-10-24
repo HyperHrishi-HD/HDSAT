@@ -1,0 +1,886 @@
+{
+  "items": [
+    {
+      "notes": ["A 2016 survey of 24 kelp forests off California compared sites with and without sea otters.", "Sites with otters averaged 62 percent canopy cover; sites without otters averaged 19 percent.", "Sea otters eat sea urchins, which graze on kelp holdfasts."],
+      "goal": "The student wants to emphasize the contrast in kelp cover between the two kinds of site. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Kelp forests with sea otters averaged 62 percent canopy cover, compared with 19 percent where otters were absent.",
+      "wrongs": ["Sea otters eat sea urchins, which graze on kelp holdfasts.", "The 2016 survey examined 24 kelp forests off the California coast.", "Sea otters are present at some kelp forests off California and absent at others."],
+      "why": ["This choice gives the mechanism but no comparison of cover.", "This choice reports only the size and location of the survey.", "This choice notes the two conditions without giving any result."]
+    },
+    {
+      "notes": ["Roman concrete piers in the Mediterranean have survived two thousand years of wave action.", "Analysis of samples found that seawater reacts with volcanic ash to form a rare mineral, aluminous tobermorite.", "Lab mixes that included volcanic ash gained strength after two years in seawater."],
+      "goal": "The student wants to explain why Roman harbour concrete has lasted so long. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Seawater reacts with the volcanic ash in Roman harbour concrete to form aluminous tobermorite, which strengthens the material over time.",
+      "wrongs": ["Roman concrete piers in the Mediterranean have survived two thousand years of wave action.", "Lab mixes that included volcanic ash gained strength after two years in seawater.", "Some Roman harbour concrete contains a rare mineral called aluminous tobermorite."],
+      "why": ["This choice reports the durability but not its cause.", "This choice describes a lab result without linking it to the Roman structure.", "This choice names the mineral without explaining how it forms or why it matters."]
+    },
+    {
+      "notes": ["Many moths can hear the echolocation calls of hunting bats.", "In a 2019 trial, 78 percent of moths with intact ears took evasive flight when a recorded call was played.", "Only 21 percent of moths whose ears had been covered did so."],
+      "goal": "The student wants to emphasize how much hearing improves a moth's chance of escaping a bat. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Intact ears raised the share of moths that took evasive flight from 21 percent to 78 percent when a bat call was played.",
+      "wrongs": ["Many moths can hear the echolocation calls of hunting bats.", "The 2019 trial played recorded bat calls to moths in a laboratory.", "Moths whose ears had been covered took evasive flight less often."],
+      "why": ["This choice states the general ability without any measurement.", "This choice describes the method rather than the size of the effect.", "This choice gives one group's result without the comparison."]
+    },
+    {
+      "notes": ["Periodical cicadas in a single brood emerge together after 13 or 17 years underground.", "A brood that emerges too early or too late is unlikely to find mates, because the insects live only a few weeks above ground.", "Predators such as birds and raccoons cannot specialise on cicadas that appear so rarely."],
+      "goal": "The student wants to explain why synchronized emergence benefits periodical cicadas. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Emerging in a single vast brood lets the insects find mates during their few weeks above ground while predators cannot specialise in them.",
+      "wrongs": ["Periodical cicadas spend 13 or 17 years underground before emerging.", "Cicadas live only a few weeks above ground once they emerge.", "Birds and raccoons eat cicadas when a brood appears."],
+      "why": ["This choice gives the timing but not the benefit of synchrony.", "This choice states the short adult life without explaining the advantage.", "This choice names predators without connecting them to synchronized emergence."]
+    },
+    {
+      "notes": ["Ottoman coffeehouses in the sixteenth century served as places where books, news and gossip circulated.", "Court records from Istanbul list more than 600 coffeehouses by 1600.", "Several sultans banned them and then relented within a few years."],
+      "goal": "The student wants to show that coffeehouses became a widespread institution despite official opposition. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Even though several sultans banned coffeehouses, Istanbul court records list more than 600 of them by 1600.",
+      "wrongs": ["Ottoman coffeehouses were places where books, news and gossip circulated.", "Several sultans banned coffeehouses and then relented within a few years.", "Court records from Istanbul mention coffeehouses in the sixteenth century."],
+      "why": ["This choice describes their social function but not their spread.", "This choice mentions the bans but not how common the coffeehouses became.", "This choice is too vague to show that the institution was widespread."]
+    },
+    {
+      "notes": ["Farmers in the Peruvian Andes built terraces on steep slopes, held up by stone retaining walls.", "A 2018 study found that terraced plots held roughly three times more soil moisture than unterraced slopes nearby.", "Terraced plots also lost less topsoil during the heaviest rains."],
+      "goal": "The student wants to show that terracing protects both water and soil. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Terraced plots held about three times more soil moisture than unterraced slopes and lost less topsoil in heavy rain.",
+      "wrongs": ["Andean farmers built stone retaining walls on steep slopes.", "A 2018 study compared terraced plots with unterraced slopes nearby.", "Terraces kept more soil moisture than unterraced slopes."],
+      "why": ["This choice describes construction without any result.", "This choice reports the design of the study, not its findings.", "This choice covers only moisture and omits the soil result."]
+    },
+    {
+      "notes": ["Peat bogs store more carbon per hectare than tropical rainforest.", "When a bog is drained for agriculture, the peat oxidises and releases carbon dioxide for decades.", "Restoring a bog by blocking drains can stop most of that loss within five years."],
+      "goal": "The student wants to recommend restoration of drained bogs. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Because drained bogs release carbon dioxide for decades while blocking drains stops most of the loss within five years, restoring them is worthwhile.",
+      "wrongs": ["Peat bogs store more carbon per hectare than tropical rainforest.", "Draining a bog for agriculture causes the peat to oxidise.", "Bog restoration involves blocking the drains that were cut for farming."],
+      "why": ["This choice gives a comparison but no reason to act.", "This choice describes the harm without the remedy.", "This choice describes the method without the benefit."]
+    },
+    {
+      "notes": ["Monarch butterflies east of the Rocky Mountains fly up to 4,000 kilometres to winter sites in central Mexico.", "No single butterfly makes the round trip; the return journey is completed by descendants two or three generations later.", "The winter sites are the same groves used the previous year."],
+      "goal": "The student wants to emphasize how remarkable the monarch migration is. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Butterflies that have never made the trip arrive at the same Mexican groves their ancestors used, completing a journey of up to 4,000 kilometres over several generations.",
+      "wrongs": ["Monarch butterflies east of the Rocky Mountains migrate south for the winter.", "The return journey is completed by descendants two or three generations later.", "Monarchs gather in groves in central Mexico each winter."],
+      "why": ["This choice states the migration without its scale or the navigational puzzle.", "This choice gives only the generational detail.", "This choice describes the destination but not the achievement."]
+    },
+    {
+      "notes": ["A transit agency replaced 40 diesel buses with electric models on routes with frequent stops.", "Energy use per kilometre fell by 71 percent, and brake maintenance fell by half because electric buses recover energy when braking.", "The buses cost more to buy, and charging required a new substation."],
+      "goal": "The student wants to present a balanced recommendation to a transit board. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Electric buses cut energy use per kilometre by 71 percent and halved brake maintenance, though they cost more up front and required a new substation.",
+      "wrongs": ["A transit agency replaced 40 diesel buses with electric models.", "Energy use per kilometre fell by 71 percent on the electrified routes.", "Electric buses recover energy when braking, which reduces brake wear."],
+      "why": ["This choice reports the change without any outcome.", "This choice gives one benefit and hides the costs.", "This choice explains one benefit but makes no recommendation."]
+    },
+    {
+      "notes": ["A vertical farm in a converted warehouse grows lettuce in stacked trays under LED lights.", "It uses 95 percent less water than field lettuce and no pesticides, but its electricity use per head is far higher.", "Most of that electricity goes to lighting."],
+      "goal": "The student wants to explain the main trade-off of vertical farming. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Vertical farms use 95 percent less water and no pesticides, but they consume far more electricity per head, mostly for lighting.",
+      "wrongs": ["A vertical farm grows lettuce in stacked trays under LED lights.", "Vertical farms use almost no water compared with field lettuce.", "Most of a vertical farm's electricity goes to lighting."],
+      "why": ["This choice describes the setup without the trade-off.", "This choice gives only the benefit.", "This choice gives only one part of the cost."]
+    },
+    {
+      "notes": ["Coral restoration projects often grow fragments in nurseries and then transplant them onto damaged reefs.", "A five-year study in the Caribbean found that transplanted corals survived at 68 percent, against 41 percent for fragments simply left on the reef.", "Survival was highest where herbivorous fish were abundant."],
+      "goal": "The student wants to show that nursery rearing improves coral survival. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Corals raised in nurseries and transplanted survived at 68 percent over five years, compared with 41 percent for fragments left on the reef.",
+      "wrongs": ["Coral restoration projects grow fragments in nurseries before transplanting them.", "Survival was highest where herbivorous fish were abundant.", "A five-year study in the Caribbean tracked transplanted corals."],
+      "why": ["This choice describes the practice without the result.", "This choice names a condition but not the main comparison.", "This choice gives the study's setting and length only."]
+    },
+    {
+      "notes": ["Antarctic ice cores trap air bubbles that preserve samples of the atmosphere.", "A core from East Antarctica contains ice up to 800,000 years old.", "Carbon dioxide in the oldest ice was about 180 parts per million, against roughly 420 today."],
+      "goal": "The student wants to emphasize how far current carbon dioxide levels exceed the pre-industrial range. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Air in 800,000-year-old Antarctic ice held about 180 parts per million of carbon dioxide, less than half today's roughly 420.",
+      "wrongs": ["Antarctic ice cores trap air bubbles that preserve ancient atmosphere.", "A core from East Antarctica contains ice up to 800,000 years old.", "Carbon dioxide in the oldest ice was about 180 parts per million."],
+      "why": ["This choice explains the method without any comparison.", "This choice gives the age but not the gas measurement.", "This choice gives the old value without the present one."]
+    },
+    {
+      "notes": ["Honeybees communicate the direction of food with a waggle dance performed inside the hive.", "The angle of the dance relative to vertical matches the angle of the food relative to the sun.", "Researchers who rotated a hive by 90 degrees found that dancers adjusted their angle within minutes."],
+      "goal": "The student wants to show that the dance encodes direction rather than a fixed routine. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "When researchers rotated a hive by 90 degrees, bees changed the angle of their waggle dance within minutes to match the new orientation.",
+      "wrongs": ["Honeybees communicate the direction of food with a waggle dance.", "The angle of the dance relative to vertical matches the angle of the food relative to the sun.", "Waggle dances take place inside the hive."],
+      "why": ["This choice states the general claim without evidence for it.", "This choice describes the rule but not the test of it.", "This choice gives a setting detail only."]
+    },
+    {
+      "notes": ["Bamboo scaffolding is common in Hong Kong, where it is used on buildings many storeys high.", "A bamboo pole is light enough for one worker to carry and flexible enough to absorb gusts.", "Steel scaffolding is stronger but costs more and takes longer to erect."],
+      "goal": "The student wants to explain why bamboo remains competitive for scaffolding. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Bamboo poles are light enough for one worker to carry and flexible enough to absorb gusts, which keeps them cheaper and faster to erect than steel.",
+      "wrongs": ["Bamboo scaffolding is common in Hong Kong.", "Steel scaffolding is stronger than bamboo scaffolding.", "A bamboo scaffold can be used on buildings many storeys high."],
+      "why": ["This choice reports the practice without a reason.", "This choice gives the disadvantage only.", "This choice gives height but not the trade-off."]
+    },
+    {
+      "notes": ["Recycling one tonne of office paper saves about 17 trees and 26,000 liters of water.", "Paper can be recycled five to seven times before the fibres become too short.", "Each cycle shortens the fibres slightly, so recycled paper is often blended with new pulp."],
+      "goal": "The student wants to explain a limitation of paper recycling. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Paper can be recycled only five to seven times because each cycle shortens its fibres, so recycled paper is usually blended with new pulp.",
+      "wrongs": ["Recycling one tonne of office paper saves about 17 trees.", "Recycling paper also saves about 26,000 liters of water per tonne.", "Recycled paper is often blended with new pulp."],
+      "why": ["This choice gives a benefit, not a limitation.", "This choice gives another benefit.", "This choice states the practice without the reason for it."]
+    },
+    {
+      "notes": ["Tidal turbines generate electricity from moving water rather than from a dam.", "A test array in a Scottish sound produced power on 92 percent of days over two years.", "Output varied with the tide and fell to near zero during slack water."],
+      "goal": "The student wants to describe both the reliability and the variability of tidal power. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "The array produced power on 92 percent of days over two years, though output fell to near zero during slack water.",
+      "wrongs": ["Tidal turbines generate electricity from moving water rather than from a dam.", "A test array in a Scottish sound operated for two years.", "Output from the tidal array varied with the tide."],
+      "why": ["This choice explains the technology without any result.", "This choice gives the setting and duration only.", "This choice mentions variability but not the high availability."]
+    },
+    {
+      "notes": ["Museum conservators limit light exposure because ultraviolet radiation fades dyes and yellows paper.", "A watercolour may receive no more than 50 lux for part of each year.", "LED lamps now produce useful light with far less ultraviolet output than the halogen lamps they replaced."],
+      "goal": "The student wants to explain why many museums have switched to LED lighting. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Because light fades dyes and yellows paper, museums use LEDs, which give useful light with far less ultraviolet than halogen lamps.",
+      "wrongs": ["Museum conservators limit how much light an object receives.", "A watercolour may receive no more than 50 lux for part of each year.", "Ultraviolet radiation fades dyes and yellows paper."],
+      "why": ["This choice states the policy without the reason for LEDs.", "This choice gives a limit without explaining the switch.", "This choice names the harm but not the solution."]
+    },
+    {
+      "notes": ["Some Roman roads were built in three layers: large stones, then gravel, then fitted paving blocks.", "The layers spread the weight of carts and shed water quickly.", "Routes built this way remained usable for centuries, and some are still walked today."],
+      "goal": "The student wants to connect Roman road construction to their durability. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Because their layered construction spread the weight of carts and shed water quickly, some Roman roads remained usable for centuries.",
+      "wrongs": ["Roman roads were built in three layers.", "Roman roads used large stones, gravel and fitted paving blocks.", "Some Roman roads are still walked today."],
+      "why": ["This choice gives the structure without the consequence.", "This choice lists materials but not the reason they worked.", "This choice gives the outcome without the cause."]
+    },
+    {
+      "notes": ["Coffee beans are fermented before drying to develop flavour.", "A trial compared beans fermented for 12 hours with beans fermented for 36 hours.", "Cuppers rated the 36-hour beans higher for fruitiness but lower for consistency between batches."],
+      "goal": "The student wants to report a trade-off found in the trial. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Longer fermentation produced fruitier coffee, but the 36-hour batches varied more from one another than the 12-hour batches.",
+      "wrongs": ["Coffee beans are fermented before they are dried.", "The trial compared 12-hour and 36-hour fermentation.", "Cuppers rated the fruitiness of the beans."],
+      "why": ["This choice describes the process without any result.", "This choice gives the design but not the finding.", "This choice mentions one rating and not the trade-off."]
+    },
+    {
+      "notes": ["Swift nests are built from saliva and plant material and are harvested for soup.", "Demand has pushed prices high enough that some collectors now take nests before chicks fledge.", "Artificial nest houses in Indonesia produced nests without reducing wild populations."],
+      "goal": "The student wants to recommend artificial nest houses as a solution. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Because wild nests are now taken before chicks fledge, artificial nest houses offer a way to supply the market without reducing wild populations.",
+      "wrongs": ["Swift nests are built from saliva and plant material.", "Demand for swift nests has pushed prices very high.", "Collectors sometimes take nests before the chicks have fledged."],
+      "why": ["This choice describes the material but not the problem or solution.", "This choice gives the cause of pressure without the remedy.", "This choice states the harm without the alternative."]
+    },
+    {
+      "notes": ["Permafrost is ground that stays frozen for at least two years.", "When it thaws, soil microbes decompose stored organic matter and release carbon dioxide and methane.", "Arctic permafrost holds roughly twice as much carbon as the atmosphere currently contains."],
+      "goal": "The student wants to emphasize the scale of the risk from thawing permafrost. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Arctic permafrost holds about twice as much carbon as the atmosphere, and thawing lets microbes release it as carbon dioxide and methane.",
+      "wrongs": ["Permafrost is ground that stays frozen for at least two years.", "Thawing permafrost releases carbon dioxide and methane.", "Soil microbes decompose organic matter when permafrost thaws."],
+      "why": ["This choice gives a definition only.", "This choice names the gases but not the scale.", "This choice explains the mechanism without the quantity."]
+    },
+    {
+      "notes": ["Desalination removes salt from seawater, usually by forcing water through a membrane.", "A plant in the Gulf produces 300,000 cubic meters of fresh water a day.", "The process uses a great deal of energy, and the leftover brine must be disposed of carefully."],
+      "goal": "The student wants to present desalination as a large but costly option. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "One Gulf plant produces 300,000 cubic meters of fresh water a day, but desalination uses large amounts of energy and leaves brine that must be disposed of.",
+      "wrongs": ["Desalination removes salt from seawater.", "Desalination usually works by forcing water through a membrane.", "The leftover brine from desalination must be disposed of carefully."],
+      "why": ["This choice defines the process without scale or cost.", "This choice explains the method only.", "This choice gives one cost without the benefit."]
+    },
+    {
+      "notes": ["A sourdough starter is a community of wild yeasts and bacteria kept alive in flour and water.", "Starters from different bakeries have measurably different microbial communities.", "Yet a starter moved to a new city usually keeps its original community for years."],
+      "goal": "The student wants to show that a starter's microbes are more stable than its location. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Even when a starter is moved to a new city, it usually keeps its original microbial community for years.",
+      "wrongs": ["A sourdough starter is a community of wild yeasts and bacteria.", "Starters from different bakeries differ in their microbes.", "Starters are kept alive in flour and water."],
+      "why": ["This choice defines a starter without the finding.", "This choice shows difference between starters, not stability within one.", "This choice gives a maintenance detail only."]
+    },
+    {
+      "notes": ["Restoring forest by drone can plant up to 40,000 seed pods a day.", "A trial in a degraded catchment found that 12 percent of pods established seedlings after one year.", "Hand planting in the same area cost about twenty times more per surviving seedling."],
+      "goal": "The student wants to describe the trade-off between speed and success in drone seeding. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Drones planted up to 40,000 pods a day, but only 12 percent became seedlings, though hand planting cost about twenty times more per survivor.",
+      "wrongs": ["Drones can plant up to 40,000 seed pods a day.", "A trial in a degraded catchment measured seedling establishment.", "Hand planting costs more per surviving seedling than drone seeding."],
+      "why": ["This choice gives speed without the success rate.", "This choice reports the trial without its result.", "This choice gives the cost comparison without the establishment rate."]
+    },
+    {
+      "notes": ["Night-shift workers often sleep fewer than six hours in a 24-hour period.", "A study of 120 hospital staff found that those on rotating shifts scored 18 percent lower on a test of attention than those on fixed shifts.", "The difference persisted after the researchers accounted for age and experience."],
+      "goal": "The student wants to emphasize that the effect is not explained by age or experience. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Rotating-shift staff scored 18 percent lower on an attention test than fixed-shift staff, and the gap remained after age and experience were accounted for.",
+      "wrongs": ["Night-shift workers often sleep fewer than six hours.", "The study followed 120 hospital staff.", "Attention was measured with a standard test."],
+      "why": ["This choice gives the sleep pattern but not the finding.", "This choice gives the sample only.", "This choice describes the measure without the result."]
+    },
+    {
+      "notes": ["Students who take notes by hand usually write fewer words than students who type.", "In one experiment, laptop note-takers recorded 30 percent more words but performed worse on questions about concepts.", "Hand note-takers performed better on transfer questions that asked them to apply an idea."],
+      "goal": "The student wants to explain why more notes did not mean better learning. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Laptop note-takers recorded 30 percent more words but did worse on concept questions, while hand note-takers did better on questions that applied an idea.",
+      "wrongs": ["Students who take notes by hand usually write fewer words.", "One experiment compared laptop and handwritten notes.", "Hand note-takers performed better on transfer questions."],
+      "why": ["This choice gives the word count only.", "This choice reports the comparison without a result.", "This choice gives one result but not the contrast."]
+    },
+    {
+      "notes": ["A campus shuttle ran every 12 minutes along a single loop.", "After a redesign, it ran every 6 minutes and the average wait fell from 5.4 to 2.1 minutes.", "Ridership rose by 23 percent within a semester."],
+      "goal": "The student wants to link the schedule change to higher ridership. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Cutting the headway from 12 to 6 minutes halved the average wait to 2.1 minutes, and ridership rose 23 percent within a semester.",
+      "wrongs": ["The campus shuttle ran every 12 minutes along a single loop.", "The redesign changed the shuttle's schedule.", "Ridership on the shuttle rose by 23 percent."],
+      "why": ["This choice describes the original service only.", "This choice mentions a redesign without any numbers.", "This choice gives the outcome without the cause."]
+    },
+    {
+      "notes": ["Solar cookstoves concentrate sunlight with a reflective dish.", "A field trial in Kenya found that households used 40 percent less charcoal after receiving a stove.", "Use dropped sharply during the rainy season, when the stoves could not reach cooking temperature."],
+      "goal": "The student wants to describe both the benefit and the limitation of solar cookstoves. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Households used 40 percent less charcoal, but use fell during the rainy season when the stoves could not get hot enough.",
+      "wrongs": ["Solar cookstoves concentrate sunlight with a reflective dish.", "A field trial in Kenya gave stoves to households.", "Solar cookstoves cannot reach cooking temperature in cloudy weather."],
+      "why": ["This choice explains the device only.", "This choice reports the setting of the trial.", "This choice gives the limitation without the benefit."]
+    },
+    {
+      "notes": ["Glass can be recycled indefinitely without losing quality, because it is melted rather than broken down chemically.", "Recycling glass saves about 30 percent of the energy needed to make new glass from sand.", "Clear glass must be separated from colored glass, or the recycled batch becomes discoloured."],
+      "goal": "The student wants to explain a practical condition for glass recycling. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Because clear and colored glass must be kept apart to avoid discolouring the batch, sorting is essential to recycling glass well.",
+      "wrongs": ["Glass can be recycled indefinitely without losing quality.", "Recycling glass saves about 30 percent of the energy used to make new glass.", "Glass is melted rather than broken down chemically."],
+      "why": ["This choice gives a general advantage, not a condition.", "This choice gives a benefit without the sorting requirement.", "This choice explains why glass is recyclable but not the practical issue."]
+    },
+    {
+      "notes": ["Oyster reefs once lined much of the eastern United States coast.", "A restored reef in one estuary supported 211 oyster spat per square meter in its second year.", "Nearby unrestored mud bottom supported 14."],
+      "goal": "The student wants to show how quickly a restored reef can support new oysters. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "In its second year, the restored reef supported 211 oyster spat per square meter, against 14 on nearby unrestored mud.",
+      "wrongs": ["Oyster reefs once lined much of the eastern coast.", "A restoration project rebuilt a reef in one estuary.", "Oyster spat settle on hard surfaces."],
+      "why": ["This choice gives the historical background only.", "This choice describes the project without a result.", "This choice states a general fact without the comparison."]
+    },
+    {
+      "notes": ["Bats cross roads less often where the road is wide and traffic is heavy.", "Engineers have built bat bridges: wire structures that cross above the carriageway.", "Monitoring at one bridge found that bats crossed along the wires rather than over the road, but only at a quarter of the rate seen before the road was widened."],
+      "goal": "The student wants to present the bat bridge as a partial success. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Bats used the bridge's wires instead of crossing the road, but at only a quarter of the rate recorded before the road was widened.",
+      "wrongs": ["Engineers have built wire structures called bat bridges over roads.", "Bats cross roads less often where traffic is heavy.", "Monitoring measured how often bats crossed the road at one bridge."],
+      "why": ["This choice describes the structure without the result.", "This choice gives the problem the bridge addresses.", "This choice describes the measurement without the finding."]
+    },
+    {
+      "notes": ["Roadside verges are often mown several times a year.", "A trial left 30 verges uncut until late summer and found wildflower species richness rose from 9 to 16 species per verge.", "Insect counts on those verges were twice those on mown verges."],
+      "goal": "The student wants to recommend later mowing to a local council. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Leaving verges uncut until late summer raised wildflower richness from 9 to 16 species and doubled insect counts, so later mowing would help.",
+      "wrongs": ["Roadside verges are often mown several times a year.", "The trial compared mown verges with verges left uncut.", "Insect counts were twice as high on the uncut verges."],
+      "why": ["This choice describes the current practice only.", "This choice gives the design without the result.", "This choice gives one result but no recommendation."]
+    },
+    {
+      "notes": ["Cross-laminated timber is made by gluing layers of lumber at right angles.", "A timber frame weighs about a fifth as much as an equivalent concrete frame.", "Timber construction is faster, but the panels must be protected from moisture during assembly."],
+      "goal": "The student wants to explain why more mid-rise buildings use timber frames. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "A timber frame weighs about a fifth as much as concrete and goes up faster, which makes it attractive for mid-rise buildings.",
+      "wrongs": ["Cross-laminated timber is made by gluing lumber at right angles.", "Timber panels must be protected from moisture.", "Concrete frames are heavier than timber frames."],
+      "why": ["This choice explains how the material is made.", "This choice gives a drawback only.", "This choice gives the comparison without the reason it matters."]
+    },
+    {
+      "notes": ["Many rivers were straightened for navigation and drainage.", "A restoration project reconnected a river to its floodplain over 3 kilometres.", "Peak flood height downstream fell by 0.4 meters, and young fish counts rose fivefold."],
+      "goal": "The student wants to show that river restoration can reduce flooding and help fish. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Reconnecting the river to its floodplain lowered downstream peak flood height by 0.4 meters and raised young fish counts fivefold.",
+      "wrongs": ["Many rivers were straightened for navigation and drainage.", "A restoration project reconnected 3 kilometres of river to its floodplain.", "Flood height downstream fell after the restoration."],
+      "why": ["This choice gives historical background only.", "This choice describes the work without outcomes.", "This choice gives one outcome and omits the other."]
+    },
+    {
+      "notes": ["Some bacteria produce enzymes that break the chemical bonds in PET plastic.", "A trial at 30 degrees Celsius broke down 90 percent of a PET sample in 20 hours.", "At 20 degrees the same enzyme needed more than a week."],
+      "goal": "The student wants to emphasize how much temperature affects the enzyme's speed. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "The enzyme broke down 90 percent of a PET sample in 20 hours at 30 degrees but needed more than a week at 20 degrees.",
+      "wrongs": ["Some bacteria produce enzymes that break down PET plastic.", "The trial used an enzyme that attacks the bonds in PET.", "The enzyme broke down most of the sample."],
+      "why": ["This choice states the general ability without measurement.", "This choice describes the mechanism only.", "This choice gives one result without the temperature comparison."]
+    },
+    {
+      "notes": ["Coral larvae can settle on a reef within days of hatching.", "An experiment played recordings of reef sound at settlement tiles.", "Tiles with sound recordings attracted twice as many larvae as silent tiles."],
+      "goal": "The student wants to support using sound to help restore reefs. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Tiles playing reef sounds attracted twice as many coral larvae as silent tiles, suggesting sound could help draw larvae to restored reefs.",
+      "wrongs": ["Coral larvae settle on a reef within days of hatching.", "An experiment placed settlement tiles in the water.", "Recordings of reef sound were played near the tiles."],
+      "why": ["This choice gives the life cycle but not the experiment.", "This choice describes the setup without the result.", "This choice reports the method without the finding."]
+    },
+    {
+      "notes": ["Soil carbon is held in organic matter and in root structures.", "A ten-year study compared pastures grazed continuously with pastures rested in rotation.", "Rested pastures gained 0.6 tonnes of soil carbon per hectare per year; continuously grazed pastures lost 0.2."],
+      "goal": "The student wants to show that rotation changes whether soil gains or loses carbon. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Rested pastures gained 0.6 tonnes of soil carbon per hectare each year, while continuously grazed pastures lost 0.2 tonnes.",
+      "wrongs": ["Soil carbon is held in organic matter and roots.", "The study compared two grazing methods over ten years.", "Continuously grazed pastures lost soil carbon."],
+      "why": ["This choice explains where carbon is stored, not the result.", "This choice gives the design without the finding.", "This choice reports one half of the comparison."]
+    },
+    {
+      "notes": ["A city measured air temperature inside buses without air conditioning.", "On a 33 degree day, cabin temperatures reached 41 degrees on routes with frequent stops.", "Express routes stayed near 35 degrees because the doors opened less often."],
+      "goal": "The student wants to explain why stop frequency matters for passenger heat. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Frequent stops let hot outside air in, so cabins reached 41 degrees while express routes stayed near 35.",
+      "wrongs": ["The city measured temperatures inside buses.", "The measurements were taken on a 33 degree day.", "Express routes kept their doors closed more often."],
+      "why": ["This choice describes the measurement only.", "This choice gives the weather but not the finding.", "This choice names the cause without the temperatures."]
+    },
+    {
+      "notes": ["A library extended opening hours from 8 pm to 11 pm on weekdays.", "Visits after 8 pm rose from 120 to 410 per week.", "Most of the new visitors were students who lived more than 5 kilometres away."],
+      "goal": "The student wants to show that the later hours served students with long commutes. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Late visits rose from 120 to 410 a week, and most of the new visitors lived more than 5 kilometres from the library.",
+      "wrongs": ["The library extended its weekday opening hours.", "The library is open until 11 pm on weekdays.", "Visits after 8 pm increased after the change."],
+      "why": ["This choice describes the policy without the outcome.", "This choice states the hours only.", "This choice gives the increase but not who came."]
+    },
+    {
+      "notes": ["Protected bicycle lanes separated from traffic by a kerb were added to two avenues.", "Cyclist counts rose 55 percent within a year.", "Reported cyclist injuries fell by 30 percent over the same period."],
+      "goal": "The student wants to argue that the lanes improved both uptake and safety. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Cyclist counts rose 55 percent and reported injuries fell 30 percent after protected lanes were added.",
+      "wrongs": ["Bicycle lanes were added to two avenues.", "The lanes were separated from traffic by a kerb.", "Cyclist injuries fell after the lanes opened."],
+      "why": ["This choice describes the change without outcomes.", "This choice gives a design detail only.", "This choice gives one outcome and omits the other."]
+    },
+    {
+      "notes": ["Traffic noise masks the low frequencies of many bird songs.", "A study of 30 urban sites found that birds sang at a higher minimum frequency where traffic was loudest.", "The shift was largest in species with naturally low songs."],
+      "goal": "The student wants to present the song shift as a response to noise. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "At the loudest sites, birds raised the lowest frequency of their songs, and the shift was largest in species with naturally low songs.",
+      "wrongs": ["Traffic noise masks the low frequencies of bird songs.", "The study examined 30 urban sites.", "Some bird species have naturally low songs."],
+      "why": ["This choice gives the problem without the response.", "This choice gives the sample only.", "This choice states a fact about species without the finding."]
+    },
+    {
+      "notes": ["Cacao grown in full sun produces more pods per tree.", "A trial in Ghana found that shaded trees yielded 15 percent fewer pods but suffered less heat damage.", "Beans from shaded trees scored higher in flavour tests."],
+      "goal": "The student wants to describe a trade-off between yield and quality. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Shaded cacao yielded 15 percent fewer pods but produced beans that scored higher in flavour tests.",
+      "wrongs": ["Cacao in full sun produces more pods per tree.", "The trial took place in Ghana.", "Beans from shaded trees scored higher in flavour tests."],
+      "why": ["This choice gives one side of the trade-off only.", "This choice gives the location only.", "This choice gives one benefit without the cost."]
+    },
+    {
+      "notes": ["Flooded rice paddies produce methane as bacteria break down organic matter without oxygen.", "Alternate wetting and drying lets a field dry for a few days before reflooding.", "A trial found that this practice cut methane emissions by 48 percent with no loss in yield."],
+      "goal": "The student wants to recommend alternate wetting and drying to farmers. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Letting paddies dry briefly cut methane emissions by 48 percent without reducing yield, which makes the practice worth adopting.",
+      "wrongs": ["Flooded rice paddies produce methane.", "Alternate wetting and drying lets a field dry before reflooding.", "Bacteria break down organic matter in flooded fields."],
+      "why": ["This choice states the problem without the remedy.", "This choice describes the method without the result.", "This choice explains the mechanism only."]
+    },
+    {
+      "notes": ["Seed banks store seeds at low temperature and low humidity.", "A bank in Norway holds more than a million samples in a frozen mountain vault.", "Some seeds, such as those of oak and mango, cannot survive drying and freezing, so they must be kept as living trees."],
+      "goal": "The student wants to explain why seed banks do not cover every plant. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Some seeds, like oak and mango, cannot survive drying and freezing, so those species must be kept as living trees instead.",
+      "wrongs": ["Seed banks store seeds at low temperature and humidity.", "A Norwegian bank holds more than a million samples.", "The vault is built inside a frozen mountain."],
+      "why": ["This choice describes the method, not its limit.", "This choice gives the scale of one bank only.", "This choice gives a building detail only."]
+    },
+    {
+      "notes": ["Whale surveys from ships are slow and depend on good weather.", "A trial used fixed-wing drones to photograph a bay from 120 meters.", "The drones recorded 94 percent of the whales seen by a ship crew on the same day and could fly in conditions that kept ships in port."],
+      "goal": "The student wants to show that drones can match ship surveys. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Drones recorded 94 percent of the whales a ship crew saw on the same day and could fly when the ships could not leave port.",
+      "wrongs": ["Whale surveys from ships are slow.", "The trial flew drones at 120 meters over a bay.", "Drones depend less on weather than ships do."],
+      "why": ["This choice describes the limitation without the trial.", "This choice gives the altitude only.", "This choice states an advantage without the comparison."]
+    },
+    {
+      "notes": ["Low-cost air sensors measure particulate matter but drift over time.", "A city deployed 200 sensors and recalibrated them every six weeks against a reference station.", "Reported hourly readings matched the reference station within 12 percent."],
+      "goal": "The student wants to explain how the city kept the sensor network accurate. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Recalibrating the 200 sensors every six weeks against a reference station kept readings within 12 percent of the reference.",
+      "wrongs": ["Low-cost air sensors measure particulate matter.", "The city deployed 200 sensors.", "Sensor readings were compared with a reference station."],
+      "why": ["This choice describes the device only.", "This choice gives the size of the network.", "This choice mentions the comparison but not the schedule or result."]
+    },
+    {
+      "notes": ["Ancient Greek water clocks measured time by the flow of water through a small hole.", "Because water pressure falls as the vessel empties, the flow slows and the clock runs unevenly.", "Later designs kept the water level constant by adding a second supply vessel."],
+      "goal": "The student wants to explain why a second vessel improved water clocks. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "A second vessel kept the water level constant, which stopped the flow from slowing and made the clock run evenly.",
+      "wrongs": ["Greek water clocks measured time by flowing water.", "The flow slows as the vessel empties.", "Later clocks used a second supply vessel."],
+      "why": ["This choice explains the basic mechanism only.", "This choice states the problem without the fix.", "This choice mentions the change without its effect."]
+    },
+    {
+      "notes": ["Viking navigators crossed open ocean without a magnetic compass.", "A reconstructed sun compass uses a shadow to track direction, but it requires visible sun.", "A calcite crystal found on a sixteenth-century wreck can locate the sun through cloud by splitting light into two images."],
+      "goal": "The student wants to explain how cloud cover might have been overcome. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "A calcite crystal can find the sun through cloud by splitting its light, which would let a sun compass work when the sky is overcast.",
+      "wrongs": ["Viking navigators crossed open ocean without a compass.", "A reconstructed sun compass tracks direction with a shadow.", "A calcite crystal was found on a sixteenth-century wreck."],
+      "why": ["This choice states the achievement without the method.", "This choice describes the compass but not its weakness.", "This choice reports a find without explaining its use."]
+    },
+    {
+      "notes": ["Desalination and pipelines are expensive, so some dry regions have considered towing icebergs.", "An iceberg of 100 million tonnes could supply a city of 200,000 people for about a year.", "Most of an iceberg melts or breaks apart during a tow of several thousand kilometres."],
+      "goal": "The student wants to present iceberg towing as an idea with a major weakness. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "A 100 million tonne iceberg could supply 200,000 people for a year, but most of it would melt or break apart during the tow.",
+      "wrongs": ["Some dry regions have considered towing icebergs.", "Desalination and pipelines are expensive.", "An iceberg can hold a great deal of fresh water."],
+      "why": ["This choice mentions the idea without scale or difficulty.", "This choice gives the motive only.", "This choice is too general to show the weakness."]
+    },
+    {
+      "notes": ["Solar windows use transparent films that absorb some light and convert it to electricity.", "A prototype window produced 60 watts per square meter while letting through 70 percent of visible light.", "The film cost three times as much as ordinary window glass."],
+      "goal": "The student wants to describe the promise and the cost of solar windows. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "The prototype produced 60 watts per square meter while letting through 70 percent of visible light, but the film cost three times as much as ordinary glass.",
+      "wrongs": ["Solar windows use transparent films that absorb light.", "The prototype let through 70 percent of visible light.", "The film used in the prototype was expensive."],
+      "why": ["This choice explains the technology only.", "This choice gives one specification without output.", "This choice gives the cost without the benefit."]
+    },
+    {
+      "notes": ["Wind turbines produce low-frequency sound that can travel several kilometres.", "A study at four wind farms found that residents reported annoyance more often where turbine sound exceeded 40 decibels at night.", "The study did not measure sleep quality directly."],
+      "goal": "The student wants to present the finding while noting its limit. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Annoyance was more common where turbine sound exceeded 40 decibels at night, though the study did not measure sleep quality.",
+      "wrongs": ["Wind turbines produce low-frequency sound.", "The study took place at four wind farms.", "Turbine sound can travel several kilometres."],
+      "why": ["This choice gives background without the finding.", "This choice gives the setting only.", "This choice states a fact about sound travel."]
+    },
+    {
+      "notes": ["New Caledonian crows make hooks from twigs to extract grubs.", "In a lab, crows that had seen a hook used solved a new task more than twice as often as crows that had not.", "The successful birds modified their tools after a single failure."],
+      "goal": "The student wants to show that crows learn from observing a tool. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Crows that had seen a hooked tool used solved a new task more than twice as often as those that had not.",
+      "wrongs": ["New Caledonian crows make hooks from twigs.", "The experiment took place in a laboratory.", "The successful birds modified their tools after one failure."],
+      "why": ["This choice describes the species' habit only.", "This choice gives the setting only.", "This choice reports persistence without the comparison."]
+    },
+    {
+      "notes": ["Chimpanzees in one forest use stones to crack nuts, a behavior absent in neighboring groups.", "Young chimps watch their mothers and practice on soft nuts for years before succeeding.", "The skill spreads along family lines rather than across the whole population."],
+      "goal": "The student wants to explain why the nut-cracking skill is limited to some groups. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Young chimps learn nut-cracking by watching their mothers, so the skill spreads along family lines instead of through the whole population.",
+      "wrongs": ["Chimpanzees in one forest crack nuts with stones.", "Neighbouring groups do not crack nuts.", "Young chimps practice on soft nuts for years."],
+      "why": ["This choice states the behavior without explaining its distribution.", "This choice gives the contrast only.", "This choice describes practice without the transmission."]
+    },
+    {
+      "notes": ["Elephants can recognize the calls of many other elephants.", "In a playback experiment, elephants responded more strongly to the calls of long-term associates than to those of strangers.", "They also responded to the calls of relatives they had not met for over a decade."],
+      "goal": "The student wants to emphasize the durability of elephant social memory. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Elephants responded to calls from relatives they had not met for more than a decade, which shows how long their social memory lasts.",
+      "wrongs": ["Elephants can recognize the calls of many other elephants.", "The experiment played recorded calls.", "Elephants responded more strongly to long-term associates."],
+      "why": ["This choice states the ability generally.", "This choice describes the method only.", "This choice gives one result but not the long interval."]
+    },
+    {
+      "notes": ["Shorebirds stop at estuaries to feed during long migrations.", "A survey found that birds stayed 40 percent longer at estuaries with wide mudflats.", "Mudflats shrink when upstream dams reduce the sediment carried by rivers."],
+      "goal": "The student wants to link upstream dams to shorebird migration. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Dams reduce the sediment that builds mudflats, where birds stayed 40 percent longer, so upstream dams can shorten migration stops.",
+      "wrongs": ["Shorebirds stop at estuaries during migration.", "Birds stayed longer at estuaries with wide mudflats.", "Mudflats shrink when rivers carry less sediment."],
+      "why": ["This choice gives the habit without the mechanism.", "This choice gives one finding but not the cause.", "This choice gives the mechanism without the bird result."]
+    },
+    {
+      "notes": ["Dams block salmon from reaching their spawning grounds.", "Fish ladders are a series of stepped pools that let fish climb past a dam.", "A ladder on one river passed 82 percent of tagged salmon, but fewer than 30 percent on a taller dam nearby."],
+      "goal": "The student wants to show that fish ladders work better on some dams than others. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "One ladder passed 82 percent of tagged salmon, while a ladder on a taller dam nearby passed fewer than 30 percent.",
+      "wrongs": ["Dams block salmon from reaching their spawning grounds.", "Fish ladders are stepped pools that let fish climb past a dam.", "Tagged salmon were used to measure passage."],
+      "why": ["This choice states the problem without the solution.", "This choice defines a ladder only.", "This choice describes the method without results."]
+    },
+    {
+      "notes": ["Beavers build dams that slow streams and create ponds.", "A study of 14 streams found that beaver ponds stored more water and released it slowly during dry months.", "Downstream flows in late summer were 30 percent higher below beaver ponds."],
+      "goal": "The student wants to show that beavers help with late-summer water supply. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Ponds built by beavers released water slowly, and late-summer flows were 30 percent higher below them.",
+      "wrongs": ["Beavers build dams that slow streams.", "The study examined 14 streams.", "Beaver ponds store water."],
+      "why": ["This choice describes the behavior only.", "This choice gives the sample size.", "This choice states storage without the downstream effect."]
+    },
+    {
+      "notes": ["Planting trees is often proposed to capture carbon.", "Grasslands store much of their carbon underground and are less likely to burn than young forests.", "In one region, converting grassland to forest lost more soil carbon in the first decade than the trees gained."],
+      "goal": "The student wants to caution against planting trees on grassland. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Converting grassland to forest lost more soil carbon in the first decade than the trees gained, which argues against planting trees there.",
+      "wrongs": ["Planting trees is often proposed to capture carbon.", "Grasslands store much of their carbon underground.", "Young forests are more likely to burn than grasslands."],
+      "why": ["This choice states the proposal without the caution.", "This choice explains where the carbon sits but not the loss.", "This choice gives a risk without the carbon result."]
+    },
+    {
+      "notes": ["Compost piles heat up as microbes break down material.", "A community garden buried pipes in its compost and used the heat to warm a greenhouse.", "The pile stayed above 50 degrees Celsius for nine weeks and kept the greenhouse 8 degrees warmer than outside."],
+      "goal": "The student wants to show that compost heat can be useful. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "The compost stayed above 50 degrees for nine weeks and kept the greenhouse 8 degrees warmer than the air outside.",
+      "wrongs": ["Compost piles heat up as microbes break down material.", "The garden buried pipes in the compost.", "A greenhouse was warmed by heat from compost."],
+      "why": ["This choice explains the source of heat only.", "This choice describes the setup without a result.", "This choice states the idea without numbers."]
+    },
+    {
+      "notes": ["Green roofs are planted with shallow-rooted species on waterproofed decks.", "A study of 12 roofs found summer surface temperatures 20 degrees lower than on conventional roofs.", "The green roofs also delayed rainwater runoff by up to 40 minutes."],
+      "goal": "The student wants to show that green roofs help with both heat and storm water. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Green roofs stayed 20 degrees cooler in summer and delayed rainwater runoff by up to 40 minutes.",
+      "wrongs": ["Green roofs use shallow-rooted plants.", "The study examined 12 roofs.", "Green roofs delayed rainwater runoff."],
+      "why": ["This choice describes the design only.", "This choice gives the sample size.", "This choice gives one benefit and omits the other."]
+    },
+    {
+      "notes": ["Urban ponds are often built to hold storm water.", "A survey of 20 ponds found that those with shallow edges supported more dragonfly species.", "Ponds with fish had fewer dragonfly larvae, because fish eat them."],
+      "goal": "The student wants to explain what limits dragonflies in urban ponds. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Ponds with fish had fewer dragonfly larvae because fish eat them, while shallow-edged ponds supported more species.",
+      "wrongs": ["Urban ponds are often built to hold storm water.", "The survey looked at 20 ponds.", "Shallow edges are good for dragonflies."],
+      "why": ["This choice gives the purpose of the ponds only.", "This choice gives the sample size.", "This choice states a pattern without the reason."]
+    },
+    {
+      "notes": ["A residential street was narrowed at its entrance to slow traffic.", "Average speeds fell from 38 to 24 kilometres per hour.", "Reported collisions fell by half, and cycling by children rose."],
+      "goal": "The student wants to recommend the same treatment elsewhere. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Average speeds fell from 38 to 24 kilometres per hour, collisions halved, and child cycling rose, so the treatment is worth repeating.",
+      "wrongs": ["A street was narrowed at its entrance.", "Traffic calming aims to slow vehicles.", "Collisions on the street fell after the change."],
+      "why": ["This choice describes the change without results.", "This choice states a general aim.", "This choice gives one result and no recommendation."]
+    },
+    {
+      "notes": ["Teenagers' body clocks shift later during adolescence.", "A district moved high school start times from 7:30 to 8:45.", "Average sleep rose by 34 minutes, and absences fell by 12 percent."],
+      "goal": "The student wants to argue that later starts improve attendance. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "After start times moved to 8:45, students slept 34 minutes longer on average and absences fell by 12 percent.",
+      "wrongs": ["Teenagers' body clocks shift later.", "The district changed its high school start time.", "Students slept longer after the change."],
+      "why": ["This choice gives the biology without the policy result.", "This choice describes the change only.", "This choice gives sleep but not attendance."]
+    },
+    {
+      "notes": ["A university tested recall after students studied a list once or twice.", "Students who studied twice scored higher immediately.", "After a week, students who had tested themselves once scored higher than those who had restudied."],
+      "goal": "The student wants to show that self-testing beats rereading over time. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Although rereading helped immediately, students who tested themselves once scored higher a week later.",
+      "wrongs": ["Students were asked to recall a list of items.", "Rereading improved scores immediately.", "The study compared two study methods."],
+      "why": ["This choice describes the task only.", "This choice gives only the short-term result.", "This choice names the comparison without a finding."]
+    },
+    {
+      "notes": ["Bilingual children sometimes score lower on vocabulary tests in each language alone.", "When both languages are counted, their total vocabulary matches or exceeds that of monolingual peers.", "The effect is strongest for children who hear both languages daily."],
+      "goal": "The student wants to correct a misleading impression about bilingual children. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Bilingual children may know fewer words in each language alone, but their combined vocabulary matches or exceeds that of monolingual peers.",
+      "wrongs": ["Bilingual children hear two languages.", "Vocabulary was measured in each language separately.", "The effect is strongest for children who hear both languages daily."],
+      "why": ["This choice states a fact about their situation only.", "This choice describes the measure without the result.", "This choice gives a condition without the main point."]
+    },
+    {
+      "notes": ["Musicians who practice in short daily sessions often progress faster than those who practice once a week for longer.", "A study of 60 students found that daily practice of 20 minutes produced more measurable improvement than weekly practice of two hours.", "Students who recorded their practice were more likely to keep to the schedule."],
+      "goal": "The student wants to recommend a practice routine. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Twenty minutes of daily practice produced more improvement than two hours once a week, so students should practice in short daily sessions.",
+      "wrongs": ["Some musicians practice daily and others weekly.", "The study followed 60 music students.", "Students who recorded their practice kept to the schedule."],
+      "why": ["This choice describes the two routines without a result.", "This choice gives the sample only.", "This choice gives a supporting habit, not the recommendation."]
+    },
+    {
+      "notes": ["Handwashing reduces the spread of infections in hospitals.", "A ward placed signs at every sink and asked staff to clean their hands on entering a bay.", "Compliance rose from 54 to 81 percent over three months."],
+      "goal": "The student wants to show that simple reminders changed behavior. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Signs at every sink and a request at each bay raised handwashing compliance from 54 to 81 percent in three months.",
+      "wrongs": ["Handwashing reduces the spread of infections.", "The ward placed signs at every sink.", "Staff were asked to clean their hands on entering a bay."],
+      "why": ["This choice states the general benefit only.", "This choice describes one part of the change.", "This choice describes the instruction without the result."]
+    },
+    {
+      "notes": ["A cafeteria placed fruit at eye level and moved desserts lower.", "Fruit sales rose 18 percent, and dessert sales fell 12 percent.", "Total spending per student did not change."],
+      "goal": "The student wants to show that layout changed choices without costing more. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Moving fruit to eye level raised fruit sales 18 percent and cut dessert sales 12 percent while total spending stayed the same.",
+      "wrongs": ["The cafeteria rearranged where food was displayed.", "Fruit sales rose after the change.", "Dessert sales fell after the change."],
+      "why": ["This choice describes the change without results.", "This choice gives one result only.", "This choice gives the other result and omits spending."]
+    },
+    {
+      "notes": ["Recycling bins with pictures of accepted items collect less contamination than bins with text alone.", "A campus switched 90 bins to picture labels.", "Contamination fell from 22 to 9 percent by weight."],
+      "goal": "The student wants to recommend picture labels for recycling bins. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Switching to picture labels cut contamination from 22 to 9 percent, so picture labels should be used on recycling bins.",
+      "wrongs": ["Recycling bins can be labeled with text or pictures.", "The campus changed 90 bins.", "Contamination in recycling bins fell after the change."],
+      "why": ["This choice names the options without a result.", "This choice gives the scale only.", "This choice gives the outcome without the recommendation."]
+    },
+    {
+      "notes": ["Text-message reminders can raise attendance at medical appointments.", "A clinic sent reminders two days and two hours before each appointment.", "Missed appointments fell from 19 to 11 percent."],
+      "goal": "The student wants to show the size of the improvement from reminders. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Sending reminders two days and two hours ahead cut missed appointments from 19 to 11 percent.",
+      "wrongs": ["Text-message reminders can raise attendance.", "The clinic sent two reminders before each appointment.", "Missed appointments became less common."],
+      "why": ["This choice states the general claim without numbers.", "This choice describes the schedule only.", "This choice gives no measurement."]
+    },
+    {
+      "notes": ["Walking for 20 minutes can improve mood for several hours.", "A trial compared a 20-minute outdoor walk with 20 minutes of sitting.", "Walkers reported a 14 percent improvement in mood scores; sitters reported no change."],
+      "goal": "The student wants to describe the trial's comparison clearly. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Walkers improved their mood scores by 14 percent, while those who sat for the same time reported no change.",
+      "wrongs": ["Walking can improve mood for several hours.", "The trial lasted 20 minutes for each group.", "Participants were assigned to walk or sit."],
+      "why": ["This choice states a general claim without the comparison.", "This choice gives the duration only.", "This choice describes the groups without results."]
+    },
+    {
+      "notes": ["Standing desks are often promoted for office workers.", "A six-month study found no difference in back pain between standing-desk users and seated workers.", "Standing-desk users did take more short breaks from sitting."],
+      "goal": "The student wants to present a cautious conclusion about standing desks. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "A six-month study found no difference in back pain between standing-desk users and seated workers, though standers took more breaks.",
+      "wrongs": ["Standing desks are often promoted for office workers.", "The study lasted six months.", "Standing-desk users took more short breaks."],
+      "why": ["This choice describes the promotion, not the evidence.", "This choice gives only the duration.", "This choice gives one supporting detail without the main result."]
+    },
+    {
+      "notes": ["Indoor plants are said to improve office air quality.", "A study of 12 offices found that plants removed some volatile compounds but at rates far below those of the building's ventilation.", "Measured air quality did not differ between planted and unplanted offices."],
+      "goal": "The student wants to qualify the claim that office plants clean the air. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Plants removed some volatile compounds, but at rates far below the building's ventilation, and measured air quality did not differ.",
+      "wrongs": ["Indoor plants are said to improve air quality.", "The study examined 12 offices.", "Some plants remove volatile compounds."],
+      "why": ["This choice repeats the claim without evidence.", "This choice gives the sample only.", "This choice states a fact without the comparison."]
+    },
+    {
+      "notes": ["Daylight exposure affects alertness during the workday.", "Employees sitting within 2 meters of a window reported 46 minutes less sleepiness per day than those in interior offices.", "The effect was strongest in winter."],
+      "goal": "The student wants to argue for placing desks near windows. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Employees within 2 meters of a window reported 46 minutes less sleepiness a day, so desks should be placed near windows.",
+      "wrongs": ["Daylight affects alertness at work.", "The effect was strongest in winter.", "Some employees sat in interior offices."],
+      "why": ["This choice states the general claim only.", "This choice gives a detail without the main result.", "This choice describes a group without any measurement."]
+    },
+    {
+      "notes": ["Classroom noise makes it harder for children to hear the teacher.", "A school replaced hard ceiling tiles with sound-absorbing panels.", "Speech intelligibility scores rose from 62 to 84 percent, and teachers reported less voice strain."],
+      "goal": "The student wants to show that acoustic treatment helps both students and teachers. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Absorbent panels raised speech intelligibility from 62 to 84 percent and reduced teachers' reported voice strain.",
+      "wrongs": ["Classroom noise makes it harder to hear the teacher.", "The school replaced hard ceiling tiles.", "Speech intelligibility was measured before and after."],
+      "why": ["This choice gives the problem only.", "This choice describes the change without results.", "This choice mentions the measure but not the finding."]
+    },
+    {
+      "notes": ["LED bulbs use less electricity than fluorescent tubes for the same light output.", "A school replaced 1,200 fluorescent tubes with LEDs.", "Electricity use for lighting fell 45 percent, but the LEDs cost more to install."],
+      "goal": "The student wants to present the switch as a saving with an upfront cost. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Replacing 1,200 tubes with LEDs cut lighting electricity by 45 percent, though the LEDs cost more to install.",
+      "wrongs": ["LED bulbs use less electricity than fluorescent tubes.", "The school replaced 1,200 tubes.", "Lighting electricity use fell after the switch."],
+      "why": ["This choice gives the general fact only.", "This choice gives the scale without the result.", "This choice gives the saving without the cost."]
+    },
+    {
+      "notes": ["Reading on paper and on screen can produce different comprehension results.", "A review of 54 studies found a small advantage for paper on long texts.", "The advantage was larger for readers who reported less experience with digital devices."],
+      "goal": "The student wants to report the finding with its condition. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Across 54 studies, paper held a small advantage for long texts, and the advantage was larger for less experienced digital readers.",
+      "wrongs": ["Reading on paper and on screen may differ.", "The review examined 54 studies.", "Some readers have less experience with digital devices."],
+      "why": ["This choice states the question without the answer.", "This choice gives the sample only.", "This choice describes a group without the result."]
+    },
+    {
+      "notes": ["Audiobooks and printed books present the same words through different channels.", "A study of 100 adults found equal comprehension for narrative texts in both formats.", "For texts with maps or tables, print readers scored higher."],
+      "goal": "The student wants to show that format matters most for some kinds of text. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Comprehension was equal for narrative texts, but print readers scored higher on texts that included maps or tables.",
+      "wrongs": ["Audiobooks and printed books present the same words.", "The study included 100 adults.", "Print readers scored higher on some texts."],
+      "why": ["This choice states the premise without the finding.", "This choice gives the sample only.", "This choice gives one half of the comparison."]
+    },
+    {
+      "notes": ["Museum labels are often written for adults.", "A museum rewrote 40 labels in shorter sentences and larger type.", "Visitors spent 35 percent longer reading the labels, and a follow-up quiz showed better recall."],
+      "goal": "The student wants to recommend rewriting labels for visitors. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Rewriting 40 labels in shorter sentences and larger type kept visitors reading 35 percent longer and improved recall, so other museums should follow.",
+      "wrongs": ["Museum labels are often written for adults.", "The museum rewrote 40 labels.", "Visitors spent longer reading the rewritten labels."],
+      "why": ["This choice states the problem without the remedy.", "This choice gives the scale only.", "This choice gives one result and no recommendation."]
+    },
+    {
+      "notes": ["People often ask staff for directions in large buildings.", "A hospital added colored floor lines from the entrance to four departments.", "Requests for directions at the front desk fell 28 percent."],
+      "goal": "The student wants to show that the floor lines reduced dependence on staff. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Adding colored floor lines to four departments cut front-desk requests for directions by 28 percent.",
+      "wrongs": ["People often ask staff for directions.", "The hospital added colored lines to the floor.", "Requests for directions fell after the change."],
+      "why": ["This choice gives the problem only.", "This choice describes the change without numbers.", "This choice gives the result without the measure."]
+    },
+    {
+      "notes": ["Web forms with many fields are often abandoned.", "A service cut its sign-up form from 12 fields to 5.", "Completion rose from 61 to 79 percent."],
+      "goal": "The student wants to recommend shorter forms. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Cutting the form from 12 fields to 5 raised completion from 61 to 79 percent, so the shorter form should be kept.",
+      "wrongs": ["Web forms with many fields are often abandoned.", "The service reduced its sign-up form.", "Completion of the form rose after the change."],
+      "why": ["This choice gives the general problem only.", "This choice describes the change without numbers.", "This choice gives the result without the recommendation."]
+    },
+    {
+      "notes": ["Captions help viewers who are deaf or hard of hearing.", "A study compared captions shown at 120 and 180 words per minute.", "Viewers understood more at 120 words per minute, but reported that 180 felt more natural."],
+      "goal": "The student wants to describe the trade-off in caption speed. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Captions at 120 words per minute were understood better, while 180 words per minute felt more natural to viewers.",
+      "wrongs": ["Captions help viewers who are deaf or hard of hearing.", "The study compared two caption speeds.", "Viewers preferred the faster captions."],
+      "why": ["This choice gives the purpose of captions only.", "This choice names the comparison without results.", "This choice gives one side of the trade-off."]
+    },
+    {
+      "notes": ["Small type can slow reading for people with low vision.", "A study tested 12, 14 and 18 point text on a phone screen.", "Reading speed rose with size up to 18 point, but so did the number of page turns."],
+      "goal": "The student wants to explain a cost of larger type on phones. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Larger type raised reading speed up to 18 point, but it also increased the number of page turns.",
+      "wrongs": ["Small type can slow reading for some people.", "The study tested three text sizes.", "Reading speed rose with larger type."],
+      "why": ["This choice gives the problem only.", "This choice lists the conditions without results.", "This choice gives the benefit without the cost."]
+    },
+    {
+      "notes": ["Low-contrast text is hard to read in bright light.", "A test compared gray-on-white text with black-on-white text outdoors.", "Reading time rose 22 percent for the low-contrast version."],
+      "goal": "The student wants to recommend stronger contrast for outdoor screens. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Gray-on-white text took 22 percent longer to read outdoors than black-on-white, so outdoor screens should use stronger contrast.",
+      "wrongs": ["Low-contrast text is hard to read in bright light.", "The test was run outdoors.", "Reading time was measured for two versions."],
+      "why": ["This choice states the general problem only.", "This choice gives the setting only.", "This choice describes the measure without the result."]
+    },
+    {
+      "notes": ["Small touch targets are hard to hit accurately.", "A study asked participants to tap 24, 32 and 44 pixel buttons.", "Error rates fell sharply as button size increased, with little further gain above 44 pixels."],
+      "goal": "The student wants to recommend a minimum touch target size. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Error rates fell sharply as buttons grew, with little gain beyond 44 pixels, which makes 44 pixels a sensible minimum.",
+      "wrongs": ["Small touch targets are hard to hit.", "The study tested three button sizes.", "Error rates fell as buttons grew larger."],
+      "why": ["This choice gives the problem only.", "This choice lists the conditions.", "This choice gives a trend without the recommendation."]
+    },
+    {
+      "notes": ["Long sentences with technical terms slow comprehension.", "A health service rewrote 30 sentences in plain language.", "Readers answered 25 percent more comprehension questions correctly."],
+      "goal": "The student wants to show the benefit of plain language. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Rewriting 30 sentences in plain language raised correct answers to comprehension questions by 25 percent.",
+      "wrongs": ["Long sentences with technical terms slow comprehension.", "The health service rewrote 30 sentences.", "Comprehension questions were asked after reading."],
+      "why": ["This choice states the problem without the result.", "This choice gives the scale only.", "This choice describes the test without the finding."]
+    },
+    {
+      "notes": ["Machine translation has improved quickly for common language pairs.", "A test of 200 sentences found that human reviewers preferred machine output for 61 percent of English to Spanish translations.", "For idioms, reviewers preferred human translation in 78 percent of cases."],
+      "goal": "The student wants to show where machine translation still struggles. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Reviewers preferred human translation for 78 percent of idioms, even though they favored machine output for most ordinary sentences.",
+      "wrongs": ["Machine translation has improved quickly.", "The test used 200 sentences.", "Reviewers compared machine and human translations."],
+      "why": ["This choice gives the trend without the weakness.", "This choice gives the sample only.", "This choice describes the method without results."]
+    },
+    {
+      "notes": ["Speech recognition systems have historically made more errors on some accents.", "A test of four systems measured word error rates on 20 accents.", "Error rates ranged from 8 percent to 31 percent, and the gap narrowed only slightly after recent updates."],
+      "goal": "The student wants to emphasize that the accent gap remains. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Word error rates ranged from 8 to 31 percent across 20 accents, and the gap narrowed only slightly after recent updates.",
+      "wrongs": ["Speech recognition has improved over time.", "The test examined four systems.", "Twenty accents were included in the test."],
+      "why": ["This choice gives the general trend only.", "This choice gives the number of systems.", "This choice gives the number of accents only."]
+    },
+    {
+      "notes": ["Weather forecasts become less certain further ahead.", "A forecast five days out was accurate within 2 degrees on 84 percent of days in one year.", "A forecast ten days out was accurate within 2 degrees on 51 percent."],
+      "goal": "The student wants to show how accuracy changes with forecast length. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Accuracy within 2 degrees fell from 84 percent at five days to 51 percent at ten days.",
+      "wrongs": ["Forecasts become less certain further ahead.", "The measurements covered one year.", "A ten-day forecast is less reliable than a five-day one."],
+      "why": ["This choice states the general pattern without numbers.", "This choice gives the period only.", "This choice repeats the pattern without the figures."]
+    },
+    {
+      "notes": ["Flash floods can arrive within an hour of heavy rain.", "A city sent automated alerts to phones in affected districts.", "Residents who received an alert reached higher ground 18 minutes sooner on average."],
+      "goal": "The student wants to show that alerts save time in a flood. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Residents who received an automated alert reached higher ground 18 minutes sooner than those who did not.",
+      "wrongs": ["Flash floods can arrive within an hour.", "The city sent alerts to phones in affected districts.", "Alerts warned residents about flooding."],
+      "why": ["This choice gives the hazard only.", "This choice describes the system without its effect.", "This choice states the purpose without the result."]
+    },
+    {
+      "notes": ["Earthquake early warning systems detect fast-moving waves before slower, damaging waves arrive.", "A system in one region gives alerts 10 to 30 seconds before strong shaking.", "Automated actions such as stopping trains and opening fire doors can run in that time."],
+      "goal": "The student wants to explain what the warning seconds are used for. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Because alerts arrive 10 to 30 seconds before strong shaking, trains can stop and fire doors can open automatically in that time.",
+      "wrongs": ["Earthquake systems detect fast waves before slower ones.", "The system gives alerts before strong shaking.", "Automated actions can be triggered by an alert."],
+      "why": ["This choice explains the physics without the use.", "This choice gives the lead time only.", "This choice mentions automation without the interval."]
+    },
+    {
+      "notes": ["Tsunami sirens must be heard over wind and traffic.", "A coastal town tested sirens at three volumes.", "The loudest setting was heard by 96 percent of residents but prompted complaints from 40 percent."],
+      "goal": "The student wants to describe the trade-off in siren volume. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "The loudest sirens reached 96 percent of residents but drew complaints from 40 percent, which shows the trade-off in volume.",
+      "wrongs": ["Tsunami sirens must be heard over wind and traffic.", "The town tested sirens at three volumes.", "Most residents heard the loudest siren."],
+      "why": ["This choice gives the requirement only.", "This choice describes the test without results.", "This choice gives one side of the trade-off."]
+    },
+    {
+      "notes": ["Wildfire smoke can travel hundreds of kilometres.", "A city began issuing smoke alerts based on sensor readings rather than on the smell of smoke.", "The number of days with a public alert rose, but so did the number of days residents wore masks outdoors."],
+      "goal": "The student wants to show that sensor-based alerts changed behavior. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Moving to sensor-based smoke alerts increased alert days and also increased the days residents wore masks outdoors.",
+      "wrongs": ["Wildfire smoke can travel hundreds of kilometres.", "The city changed how it issued smoke alerts.", "Residents wore masks outdoors on more days."],
+      "why": ["This choice gives background only.", "This choice describes the change without its effect.", "This choice gives the outcome without the cause."]
+    },
+    {
+      "notes": ["Heat waves cause more deaths than any other weather hazard in many countries.", "A city opened cooling centers and offered free transport to them.", "Visits rose sharply during the first heat wave after the program began."],
+      "goal": "The student wants to show that transport removed a barrier to cooling centers. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Offering free transport to cooling centers was followed by a sharp rise in visits during the first heat wave.",
+      "wrongs": ["Heat waves cause many deaths.", "The city opened cooling centers.", "Visits to cooling centers rose during a heat wave."],
+      "why": ["This choice gives the hazard only.", "This choice describes one part of the program.", "This choice gives the rise without the transport measure."]
+    },
+    {
+      "notes": ["Some vaccines must be kept between 2 and 8 degrees Celsius.", "A clinic used a solar-powered cooler with a phase-change material rather than batteries.", "Vaccine losses fell from 9 percent to 1 percent over one season."],
+      "goal": "The student wants to recommend the solar cooler for remote clinics. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "A solar-powered cooler cut vaccine losses from 9 to 1 percent over a season, which makes it a strong option for remote clinics.",
+      "wrongs": ["Some vaccines must be kept cold.", "The clinic used a cooler with phase-change material.", "Vaccine losses fell after the cooler was introduced."],
+      "why": ["This choice gives the requirement only.", "This choice describes the device without results.", "This choice gives the outcome without the recommendation."]
+    },
+    {
+      "notes": ["Road salt lowers the freezing point of water but can harm freshwater life.", "A town switched to a beet-juice additive on two bridges.", "Salt use fell 27 percent, and chloride levels in a nearby stream fell by a third."],
+      "goal": "The student wants to show that the additive reduced environmental harm. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Using a beet-juice additive cut salt use by 27 percent and lowered chloride in a nearby stream by a third.",
+      "wrongs": ["Road salt can harm freshwater life.", "The town treated two bridges.", "Salt use fell after the switch."],
+      "why": ["This choice states the problem only.", "This choice gives the scale of the trial.", "This choice gives one result without the stream measure."]
+    },
+    {
+      "notes": ["Some cities paint roofs white to reflect sunlight.", "A study found that white roofs lowered attic temperatures by up to 6 degrees in summer.", "In winter, the same roofs slightly increased heating demand."],
+      "goal": "The student wants to describe the seasonal trade-off of white roofs. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "White roofs lowered summer attic temperatures by up to 6 degrees but slightly increased winter heating demand.",
+      "wrongs": ["Some cities paint roofs white.", "The study measured attic temperatures.", "White roofs reflect sunlight."],
+      "why": ["This choice describes the practice only.", "This choice describes the measure only.", "This choice explains the mechanism without results."]
+    },
+    {
+      "notes": ["Street trees can shade parked cars and pavements.", "A measurement campaign found surface temperatures 9 degrees lower under tree canopy.", "The cooling extended about 6 meters beyond the canopy edge."],
+      "goal": "The student wants to show that tree shade reaches beyond the canopy. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Surface temperatures were 9 degrees lower under the canopy, and the cooling reached about 6 meters beyond its edge.",
+      "wrongs": ["Street trees can shade cars and pavements.", "The campaign measured surface temperatures.", "Shade lowers surface temperatures."],
+      "why": ["This choice gives the general benefit only.", "This choice describes the measurement only.", "This choice states the mechanism without numbers."]
+    },
+    {
+      "notes": ["Public benches are used more when they face activity rather than a wall.", "A park rearranged 20 benches to face a playground.", "Average sitting time per bench rose from 14 to 26 minutes a day."],
+      "goal": "The student wants to recommend orienting benches toward activity. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Turning benches toward a playground raised average sitting time from 14 to 26 minutes, so benches should face activity.",
+      "wrongs": ["Public benches are used more when they face activity.", "The park rearranged 20 benches.", "Sitting time rose after the rearrangement."],
+      "why": ["This choice states the general pattern only.", "This choice gives the scale only.", "This choice gives the result without the recommendation."]
+    },
+    {
+      "notes": ["Museum visitors often stop at only a few exhibits.", "A gallery added a short map at the entrance showing three routes.", "Visitors who took a map saw 40 percent more exhibits."],
+      "goal": "The student wants to show that a simple map changed visitor behavior. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Visitors who picked up the entrance map saw 40 percent more exhibits than those who did not.",
+      "wrongs": ["Museum visitors often stop at only a few exhibits.", "The gallery added a map at the entrance.", "The map showed three routes."],
+      "why": ["This choice states the problem only.", "This choice describes the change without its effect.", "This choice describes the map without results."]
+    },
+    {
+      "notes": ["Some students avoid asking questions in large lectures.", "A course added an anonymous question form during class.", "Questions submitted per lecture rose from 3 to 19."],
+      "goal": "The student wants to show that anonymity increased participation. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Adding an anonymous question form raised questions per lecture from 3 to 19.",
+      "wrongs": ["Some students avoid asking questions in large lectures.", "The course added a question form.", "Students could submit questions during class."],
+      "why": ["This choice gives the problem only.", "This choice describes the tool without its effect.", "This choice describes the method without numbers."]
+    },
+    {
+      "notes": ["Cycling to school depends on safe routes.", "A town built a continuous path separated from a main road.", "The share of children cycling to one primary school rose from 6 to 21 percent."],
+      "goal": "The student wants to link the new path to a change in travel habits. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "After a separated path was built, the share of children cycling to one primary school rose from 6 to 21 percent.",
+      "wrongs": ["Cycling to school depends on safe routes.", "The town built a path separated from the road.", "More children cycled to school after the path opened."],
+      "why": ["This choice states the general condition only.", "This choice describes the path without results.", "This choice gives the change without numbers."]
+    },
+    {
+      "notes": ["Food waste in schools often comes from fixed portion sizes.", "A school let students choose between two portion sizes.", "Waste fell 31 percent, and the share of students reporting hunger did not rise."],
+      "goal": "The student wants to show that smaller portions did not leave students hungry. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Offering two portion sizes cut waste by 31 percent, and the share of students reporting hunger did not rise.",
+      "wrongs": ["Food waste often comes from fixed portions.", "Students chose between two portion sizes.", "Food waste fell after the change."],
+      "why": ["This choice gives the cause of waste only.", "This choice describes the change without results.", "This choice gives one result and omits hunger."]
+    },
+    {
+      "notes": ["Some public toilets are avoided because they feel unsafe.", "A park added better lighting and removed blind corners.", "Recorded use rose 38 percent, and reports of vandalism fell."],
+      "goal": "The student wants to show that the design changes improved both use and safety. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Better lighting and fewer blind corners raised recorded use by 38 percent and reduced reports of vandalism.",
+      "wrongs": ["Some public toilets are avoided because they feel unsafe.", "The park changed its lighting.", "Use of the toilets rose after the changes."],
+      "why": ["This choice gives the problem only.", "This choice describes one change only.", "This choice gives one outcome and omits safety."]
+    },
+    {
+      "notes": ["Some libraries lend tools as well as books.", "A library began lending drills, ladders and sewing machines.", "Tool loans averaged 64 a month, and 40 percent went to people who had not borrowed a book that year."],
+      "goal": "The student wants to show that tool lending reached new users. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Tool loans averaged 64 a month, and 40 percent went to people who had not borrowed a book that year.",
+      "wrongs": ["Some libraries lend tools as well as books.", "The library lends drills, ladders and sewing machines.", "Tool loans were recorded each month."],
+      "why": ["This choice states the practice only.", "This choice lists the items without results.", "This choice describes the measure without the finding."]
+    },
+    {
+      "notes": ["Repair cafes invite people to fix broken items with volunteer help.", "A cafe held 12 events in a year.", "Volunteers repaired 68 percent of the items brought in, and most items were small appliances and clothing."],
+      "goal": "The student wants to show how effective the repair cafe was. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Volunteers repaired 68 percent of the items brought to 12 events over a year.",
+      "wrongs": ["Repair cafes invite people to fix broken items.", "The cafe held 12 events.", "Most items were small appliances and clothing."],
+      "why": ["This choice describes the concept only.", "This choice gives the number of events only.", "This choice describes the items without a success rate."]
+    },
+    {
+      "notes": ["Some neighborhoods have few places to sit in the shade.", "A program planted 80 trees along walking routes to a clinic.", "Summer surface temperatures on those routes fell by 7 degrees within five years."],
+      "goal": "The student wants to show that the trees changed conditions on the routes. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Planting 80 trees along routes to a clinic lowered summer surface temperatures there by 7 degrees within five years.",
+      "wrongs": ["Some neighborhoods have few shaded places to sit.", "The program planted 80 trees.", "Trees can lower surface temperatures."],
+      "why": ["This choice gives the problem only.", "This choice gives the scale without the result.", "This choice states a general effect without numbers."]
+    },
+    {
+      "notes": ["Bees are important pollinators for many crops.", "A farm set aside a strip of wildflowers beside an orchard.", "Bee visits to the orchard rose 45 percent, and fruit set improved."],
+      "goal": "The student wants to recommend wildflower strips to orchard growers. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "A wildflower strip raised bee visits to the orchard by 45 percent and improved fruit set, which makes the strips worth planting.",
+      "wrongs": ["Bees are important pollinators.", "The farm set aside a strip of wildflowers.", "Bee visits to the orchard rose."],
+      "why": ["This choice states the general importance only.", "This choice describes the change without results.", "This choice gives the rise without the fruit result."]
+    },
+    {
+      "notes": ["Some seeds germinate only after exposure to cold.", "A nursery chilled seeds for 8, 12 and 16 weeks.", "Germination rose with chilling up to 12 weeks, then did not improve."],
+      "goal": "The student wants to recommend a chilling period. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Germination improved with chilling up to 12 weeks and did not improve further, so 12 weeks is the useful minimum.",
+      "wrongs": ["Some seeds need cold before they germinate.", "The nursery tested three chilling periods.", "Germination rose with longer chilling."],
+      "why": ["This choice gives the requirement only.", "This choice lists the conditions.", "This choice gives a trend without the recommendation."]
+    },
+    {
+      "notes": ["Road verges can act as corridors for small mammals.", "A survey compared verges beside busy roads with those beside quiet lanes.", "Small mammal tracks were 2.4 times more frequent beside quiet lanes."],
+      "goal": "The student wants to show that traffic reduces use of roadside habitat. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Small mammal tracks were 2.4 times more frequent beside quiet lanes than beside busy roads.",
+      "wrongs": ["Road verges can act as corridors.", "The survey compared two kinds of road.", "Small mammals leave tracks in verges."],
+      "why": ["This choice states the idea only.", "This choice describes the comparison without results.", "This choice gives a background fact only."]
+    },
+    {
+      "notes": ["Some coastal towns rely on tourism during a short season.", "A town extended its walking festival from one week to four.", "Visitor nights rose 22 percent, and most of the increase fell outside the previous peak week."],
+      "goal": "The student wants to show that the longer festival spread tourism over more of the year. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Extending the festival to four weeks raised visitor nights 22 percent, with most of the gain outside the old peak week.",
+      "wrongs": ["Some coastal towns rely on a short tourist season.", "The festival lasted one week before the change.", "Visitor nights rose after the festival was extended."],
+      "why": ["This choice gives the background only.", "This choice describes the old schedule only.", "This choice gives the rise without the timing."]
+    },
+    {
+      "notes": ["Museums often display objects behind glass, which creates reflections.", "A gallery replaced standard glass with anti-reflective glass in one room.", "Visitors spent 28 percent longer in that room."],
+      "goal": "The student wants to recommend anti-reflective glass. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Anti-reflective glass kept visitors in the room 28 percent longer, so the gallery should use it more widely.",
+      "wrongs": ["Objects are often displayed behind glass.", "Glass can create reflections.", "Visitors spent longer in the refurbished room."],
+      "why": ["This choice describes the setting only.", "This choice gives the problem only.", "This choice gives the result without the recommendation."]
+    },
+    {
+      "notes": ["Some students struggle to read dense textbook pages.", "A publisher increased line spacing and margins in one edition.", "Reading speed rose 9 percent and reported fatigue fell."],
+      "goal": "The student wants to describe the effect of the layout change. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Increasing line spacing and margins raised reading speed by 9 percent and reduced reported fatigue.",
+      "wrongs": ["Some students struggle with dense pages.", "The publisher changed one edition.", "Reading speed was measured for the new edition."],
+      "why": ["This choice gives the problem only.", "This choice describes the change without results.", "This choice mentions the measure without the finding."]
+    },
+    {
+      "notes": ["Some public notices use dense legal wording.", "A council rewrote a parking notice in plain language.", "Inquiries to the council about the notice fell by half."],
+      "goal": "The student wants to show that plain wording reduced confusion. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Rewriting a parking notice in plain language cut council inquiries about it by half.",
+      "wrongs": ["Public notices often use legal wording.", "The council rewrote one notice.", "Inquiries about the notice fell."],
+      "why": ["This choice gives the general problem only.", "This choice describes the change without its effect.", "This choice gives the result without the cause."]
+    },
+    {
+      "notes": ["Some people avoid online forms because they fear data misuse.", "A service added a one-line explanation of how each field would be used.", "Form completion rose from 54 to 72 percent."],
+      "goal": "The student wants to recommend explaining each field. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Explaining how each field would be used raised completion from 54 to 72 percent, so the explanation should be kept.",
+      "wrongs": ["Some people avoid online forms.", "The service added an explanation to each field.", "Form completion rose after the change."],
+      "why": ["This choice gives the problem only.", "This choice describes the change without numbers.", "This choice gives the result without the recommendation."]
+    },
+    {
+      "notes": ["Long waiting times reduce satisfaction in clinics.", "A clinic displayed an estimated wait time on a screen.", "Reported satisfaction rose even though actual waits did not change."],
+      "goal": "The student wants to show that information alone changed how patients felt. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Displaying an estimated wait time raised satisfaction even though the actual waits stayed the same.",
+      "wrongs": ["Long waits reduce satisfaction.", "The clinic displayed a wait time on a screen.", "Patients reported higher satisfaction."],
+      "why": ["This choice gives the problem only.", "This choice describes the change without its effect.", "This choice gives the result without the comparison."]
+    },
+    {
+      "notes": ["Some parks are used mostly by nearby residents.", "A park added a small cafe and toilets at its far entrance.", "Visitors from more than 2 kilometres away rose 33 percent."],
+      "goal": "The student wants to show that facilities widened the park's catchment. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Adding a cafe and toilets raised visits from more than 2 kilometres away by 33 percent, widening the park's catchment.",
+      "wrongs": ["Some parks are used mostly by nearby residents.", "The park added a cafe and toilets.", "Visits from further away rose."],
+      "why": ["This choice gives the pattern only.", "This choice describes the change without results.", "This choice gives the result without numbers."]
+    },
+    {
+      "notes": ["Some households do not know which plastics their council accepts.", "A council sent a fridge magnet listing accepted items.", "Contamination in recycling bins fell 17 percent."],
+      "goal": "The student wants to recommend the magnet to other councils. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "A fridge magnet listing accepted items cut recycling contamination by 17 percent, so other councils should consider it.",
+      "wrongs": ["Some households do not know what their council accepts.", "The council sent a fridge magnet.", "Contamination fell after the magnet was sent."],
+      "why": ["This choice gives the problem only.", "This choice describes the item without its effect.", "This choice gives the outcome without the recommendation."]
+    },
+    {
+      "notes": ["Some pedestrians cross at unmarked points.", "A street added a raised crossing with a different surface texture.", "Drivers slowed by 9 kilometres per hour on average at the crossing."],
+      "goal": "The student wants to show that the design slowed traffic. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Adding a raised crossing with a distinct surface texture slowed drivers by 9 kilometres per hour on average.",
+      "wrongs": ["Some pedestrians cross at unmarked points.", "The street added a raised crossing.", "Drivers slowed at the crossing."],
+      "why": ["This choice gives the behavior only.", "This choice describes the change without numbers.", "This choice gives the result without the measurement."]
+    },
+    {
+      "notes": ["Some older adults avoid online banking.", "A bank offered a 30-minute in-branch session on using its app.", "App use among attendees rose from 12 to 61 percent within three months."],
+      "goal": "The student wants to show that a short session changed behavior. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "A 30-minute session raised app use among attendees from 12 to 61 percent within three months.",
+      "wrongs": ["Some older adults avoid online banking.", "The bank offered a session in a branch.", "Attendees were surveyed after three months."],
+      "why": ["This choice gives the problem only.", "This choice describes the session without numbers.", "This choice describes the measure without the finding."]
+    },
+    {
+      "notes": ["Some cities test noise levels before allowing concerts in parks.", "A park limited concerts to 20 per year and required sound checks.", "Complaints fell from 41 to 12 per season."],
+      "goal": "The student wants to show that limits reduced complaints. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Limiting concerts to 20 a year with required sound checks cut complaints from 41 to 12 per season.",
+      "wrongs": ["Some cities test noise before allowing concerts.", "The park limited concerts to 20 a year.", "Complaints about concerts fell."],
+      "why": ["This choice describes the practice generally.", "This choice gives one part of the policy.", "This choice gives the result without numbers."]
+    },
+    {
+      "notes": ["Some students do not know how to use a library catalog.", "A library ran 15-minute drop-in sessions at the start of term.", "Catalog searches per student rose 2.7 times."],
+      "goal": "The student wants to recommend the drop-in sessions. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Fifteen-minute drop-in sessions raised catalog searches per student 2.7 times, so the library should keep running them.",
+      "wrongs": ["Some students do not know how to use the catalog.", "The library ran sessions at the start of term.", "Catalog searches rose after the sessions."],
+      "why": ["This choice gives the problem only.", "This choice describes the timing only.", "This choice gives the result without the recommendation."]
+    },
+    {
+      "notes": ["Many people abandon long online courses.", "A course divided its material into daily 10-minute lessons.", "Completion rose from 14 to 47 percent, and the total study time remained similar."],
+      "goal": "The student wants to show that shorter lessons improved completion without reducing study time. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Daily 10-minute lessons raised completion from 14 to 47 percent while total study time stayed about the same.",
+      "wrongs": ["Many people abandon long online courses.", "The course divided its material into daily lessons.", "Completion rose after the change."],
+      "why": ["This choice gives the problem only.", "This choice describes the format without results.", "This choice gives one result and omits study time."]
+    },
+    {
+      "notes": ["Some neighborhoods have few places for children to play.", "A closed street was opened to play on weekend afternoons.", "Children's outdoor play time rose by 40 minutes on those days."],
+      "goal": "The student wants to show the benefit of the play street. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Opening a closed street on weekend afternoons increased children's outdoor play by 40 minutes on those days.",
+      "wrongs": ["Some neighborhoods have few places to play.", "The street was closed to traffic on weekends.", "Children played outdoors on those days."],
+      "why": ["This choice gives the problem only.", "This choice describes the change without its effect.", "This choice states the activity without numbers."]
+    },
+    {
+      "notes": ["Some people find it hard to keep up with local recycling rules.", "A council sent a short monthly text with one rule and a link.", "Search requests for the full rules fell 26 percent."],
+      "goal": "The student wants to show that the texts reduced confusion about the rules. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Monthly texts with one rule at a time cut search requests for the full rules by 26 percent.",
+      "wrongs": ["Some people find recycling rules hard to follow.", "The council sent a monthly text.", "Search requests for the rules fell."],
+      "why": ["This choice gives the problem only.", "This choice describes the message without its effect.", "This choice gives the result without numbers."]
+    },
+    {
+      "notes": ["Some students read below grade level in secondary school.", "A program paired 20 minutes of daily reading with short quizzes.", "Reading scores rose 1.4 grade levels in a year, twice the gain of a comparison group."],
+      "goal": "The student wants to emphasize the size of the program's effect. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "correct": "Students in the program gained 1.4 grade levels in a year, twice the gain of the comparison group.",
+      "wrongs": ["Some secondary students read below grade level.", "The program included daily reading and quizzes.", "Reading scores were measured after a year."],
+      "why": ["This choice gives the problem only.", "This choice describes the program without results.", "This choice describes the measure without the finding."]
+    }
+  ]
+}

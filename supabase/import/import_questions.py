@@ -12,6 +12,7 @@ import csv
 import importlib.util
 import json
 import os
+import sys
 import random
 import re
 from datetime import datetime, timezone
@@ -1087,7 +1088,7 @@ RESOURCES = [
     {"id": "R-003", "title": "Digital SAT Suite: what to expect", "provider": "College Board", "url": "https://satsuite.collegeboard.org/digital/what-to-expect", "type": "reference", "cost": "free", "description": "Official structure: module lengths, timing, adaptive second modules and the built-in calculator.", "tags": ["sat", "structure", "official"]},
     {"id": "R-004", "title": "PSAT/NMSQT and PSAT 10 overview", "provider": "College Board", "url": "https://satsuite.collegeboard.org/psat-nmsqt", "type": "reference", "cost": "free", "description": "Assessment structure, timing and scoring for the PSAT/NMSQT; a useful companion for PSAT 10 and PSAT 8/9 practice.", "tags": ["psat", "structure", "official"]},
     {"id": "R-005", "title": "SAT Suite Question Bank", "provider": "College Board", "url": "https://satsuitequestionbank.collegeboard.org/", "type": "reference", "cost": "free", "description": "Searchable bank of real released questions. Read-only: College Board's terms do not permit re-hosting these items, so HDSAT links to it instead of importing it.", "tags": ["sat", "question-bank", "official", "licensing"]},
-    {"id": "R-006", "title": "Desmos Graphing Calculator", "provider": "Desmos", "url": "https://www.desmos.com/calculator", "type": "tool", "cost": "free", "description": "The same graphing calculator embedded in Bluebook. Practise with it here, or use the HDSAT Desmos Lab page.", "tags": ["math", "calculator", "tool"]},
+    {"id": "R-006", "title": "Desmos Graphing Calculator", "provider": "Desmos", "url": "https://www.desmos.com/calculator", "type": "tool", "cost": "free", "description": "The same graphing calculator embedded in Bluebook. Practice with it here, or use the HDSAT Desmos Lab page.", "tags": ["math", "calculator", "tool"]},
     {"id": "R-007", "title": "Desmos API documentation", "provider": "Desmos", "url": "https://www.desmos.com/api/v1.12/docs/index.html", "type": "reference", "cost": "free", "description": "How the embeddable calculator API works, including the options HDSAT's Desmos Lab uses.", "tags": ["math", "calculator", "developers"]},
     {"id": "R-008", "title": "Digital SAT Math reference sheet", "provider": "College Board", "url": "https://satsuite.collegeboard.org/media/pdf/digital-sat-math-reference-sheet.pdf", "type": "reference", "cost": "free", "description": "The reference sheet provided inside the digital test. HDSAT renders the same formulas in its in-test reference panel.", "tags": ["math", "formulas", "official"]},
     {"id": "R-009", "title": "OpenStax College Algebra 2e", "provider": "OpenStax (Rice University)", "url": "https://openstax.org/details/books/college-algebra-2e", "type": "textbook", "cost": "free", "description": "Peer-reviewed open textbook, CC BY 4.0. Chapters 2, 5 and 7 map closely onto the Algebra and Advanced Math domains.", "tags": ["math", "algebra", "textbook", "open-license"]},
@@ -1507,6 +1508,13 @@ def load_expansion(base_dir=None):
     if os.path.exists(q_path):
         with open(q_path, "r", encoding="utf-8") as fh:
             questions = json.load(fh).get("questions", [])
+    # R2-M10 content (Words in Context, Boundaries, Transitions, passages,
+    # Rhetorical Synthesis and quantitative evidence) is generated separately
+    # so it can be extended without rebuilding the volume tier.
+    m10_path = os.path.join(exp_dir, "extra_rw_m10.json")
+    if os.path.exists(m10_path):
+        with open(m10_path, "r", encoding="utf-8") as fh:
+            questions = questions + json.load(fh).get("questions", [])
     if os.path.exists(c_path):
         with open(c_path, "r", encoding="utf-8") as fh:
             cards = json.load(fh).get("cards", [])
@@ -1695,6 +1703,25 @@ def main(argv=None):
 
     if args.check:
         return 0
+
+    # Safety net: the shipped bank may legitimately contain items that are not
+    # reproducible from these input files (the R2-M10 batch is merged in by
+    # merge_bank_m10.py). Rebuilding from inputs alone would silently drop them,
+    # so refuse to shrink the bank without an explicit override.
+    existing_path = os.path.join(DATA_DIR, "questionBank.json")
+    if os.path.exists(existing_path) and "--force-shrink" not in sys.argv:
+        try:
+            with open(existing_path, "r", encoding="utf-8") as fh:
+                existing_count = len(json.load(fh).get("questions", []))
+        except (OSError, ValueError):
+            existing_count = 0
+        if existing_count > len(questions):
+            print(
+                f"REFUSING TO WRITE: the shipped bank has {existing_count} items but these "
+                f"inputs only produce {len(questions)}. Merge with merge_bank_m10.py, or pass "
+                "--force-shrink if a smaller bank is intended."
+            )
+            return 1
 
     written = write_outputs(questions, all_cards, RESOURCES, sources)
     for label, path in written.items():

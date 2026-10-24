@@ -97,6 +97,9 @@ def main() -> None:
         "site_url": SITE_URL,
         "uri_allow_list": ALLOW_LIST,
         "mailer_otp_length": 6,
+        # One day, so a code read on a phone after school still works at night.
+        # Supabase ties the emailed link's lifetime to the same value.
+        "mailer_otp_exp": 86400,
         # Accounts are usable before the address is verified ("light accounts"):
         # sign-up issues a session immediately and never spends a send, and the
         # code that lifts the light-account cap is an email OTP. Confirmation is
@@ -128,6 +131,7 @@ def main() -> None:
         "smtp_user": user,
         "smtp_sender_name": sender_name,
         "mailer_otp_length": 6,
+        "mailer_otp_exp": 86400,
         "rate_limit_email_sent": 30,
         "site_url": SITE_URL,
         "mailer_autoconfirm": True,
@@ -141,9 +145,14 @@ def main() -> None:
         if not good:
             failures.append(key)
     for key in ("mailer_templates_confirmation_content", "mailer_templates_magic_link_content"):
-        ok = "{{ .Token }}" in (config.get(key) or "")
-        print(f"  [{'PASS' if ok else 'FAIL'}] {key} contains {{{{ .Token }}}}")
-        if not ok:
+        body = config.get(key) or ""
+        has_token = "{{ .Token }}" in body
+        has_link = "{{ .ConfirmationURL }}" in body
+        print(
+            f"  [{'PASS' if has_token and has_link else 'FAIL'}] {key} carries both "
+            f"{{{{ .ConfirmationURL }}}} and {{{{ .Token }}}}"
+        )
+        if not (has_token and has_link):
             failures.append(key)
     if failures:
         sys.exit(f"SMTP verification failed: {', '.join(failures)}")

@@ -198,7 +198,10 @@ export interface RushScoreRecord {
 export interface LocalProfile {
   version: number;
   createdAt: string;
+  /** Spendable balance. */
   hdCoins: number;
+  /** Every HDCoin ever earned; purchases never reduce it. */
+  lifetimeCoins: number;
   currentStreak: number;
   bestStreak: number;
   lastActiveDate: string | null;

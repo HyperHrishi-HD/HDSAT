@@ -1,0 +1,2792 @@
+{
+  "items": [
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Lichen grows so slowly that its hold on a gravestone can serve as a clock. Researchers measure the largest thallus on a stone and divide its radius by a growth rate calibrated to the local climate. On churchyard monuments of known age, the method usually lands within a few years. It fails on porous limestone and in polluted air, where growth stalls unpredictably.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Lichen size can estimate the age of a gravestone, but only under favorable conditions.",
+      "wrongs": [
+        "Lichen grows quickly enough to record the exact year a stone was carved.",
+        "Churchyard monuments are usually older than their inscriptions claim.",
+        "Porous limestone offers the most reliable setting for lichen dating."
+      ],
+      "why": [
+        "The text calls lichen a slow grower, not a fast one.",
+        "No claim is made about inscriptions being wrong.",
+        "Limestone is named as one of the surfaces where the method fails."
+      ],
+      "explanation": "The passage explains the dating method, notes its apparent accuracy on dated monuments, and then names two conditions that break it."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Before the nineteenth century, most European paper was made from linen rags. Cotton and linen fibres are long and interlock into a sheet that resists acid. When cheap wood pulp replaced rags, paper became far more plentiful, but the pulp carried lignin and residual acids that slowly break fibre bonds. Libraries now spend large sums on chemical treatment for volumes printed after 1850.",
+      "prompt": "Which choice best explains why books printed after 1850 often need conservation?",
+      "correct": "Wood pulp introduced acids and lignin that weaken the paper over time.",
+      "wrongs": [
+        "Post-1850 ink corrodes the binding thread faster than earlier ink.",
+        "Later books were manufactured on thinner paper to cut transport weight.",
+        "Libraries stored the newer volumes in damper rooms than the older ones."
+      ],
+      "why": [
+        "Ink is not mentioned; the change is in the paper itself.",
+        "Thickness is not offered as a cause.",
+        "Storage conditions are never compared in the text."
+      ],
+      "explanation": "The passage contrasts acid-resistant rag paper with acidic, lignin-bearing wood pulp and ties the conservation expense to that shift."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A peat bog is a waterlogged archive. Because standing water excludes oxygen and slows decay, plant material accumulates for thousands of years. Each layer records the pollen that fell that season, so a core from a bog reads like a calendar of regional vegetation. Draining a bog for fuel or farmland reverses the guarantee: oxygen enters, decay resumes, and the archive is lost.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Bogs preserve layered evidence of past vegetation only while they remain wet.",
+      "wrongs": [
+        "Peat burns well because it holds very little water.",
+        "Bog cores record animal populations more reliably than plants.",
+        "Draining a bog speeds up the formation of new peat layers."
+      ],
+      "why": [
+        "The text stresses that bogs are waterlogged, not water-poor.",
+        "Pollen is the recorded evidence, not animals.",
+        "Draining is described as ending preservation, not aiding it."
+      ],
+      "explanation": "The passage explains how waterlogged conditions stop decay and create a pollen record, then warns that drainage destroys it."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Bats that hunt near foliage use long, low-frequency calls that travel well but resolve detail poorly. Bats hunting in cluttered woods switch to brief, high-frequency calls that fade quickly yet return sharp echoes from nearby shapes. When researchers recorded a single species hunting in both habitats, the calls matched the setting rather than the animal: individuals changed call design as they crossed from open field to canopy.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Bats adjust their calls to the habitat they are hunting in at that moment.",
+      "wrongs": [
+        "Each bat species uses one fixed call design from birth.",
+        "High-frequency calls travel farther than low-frequency calls.",
+        "Open-field hunting demands sharper detail than hunting inside woods."
+      ],
+      "why": [
+        "The recorded individuals changed calls within one species.",
+        "The text says high-frequency calls fade quickly, so they travel less far.",
+        "It is the cluttered woods that require resolution of nearby shapes."
+      ],
+      "explanation": "The passage gives the trade-off between call designs, then reports that one species changed its design as it moved between habitats."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Bamboo scaffolding still rises around skyscrapers in some cities. The traditional material is cheap, light enough to be carried by hand, and quickly cut to length. Critics point to fire risk and to the absence of formal design codes. Practitioners answer that the lashings are the structure: a properly tied joint spreads load across several culms, so the frame gives slightly instead of snapping in typhoon winds.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Bamboo scaffolding offers genuine structural advantages, though it also carries risks.",
+      "wrongs": [
+        "Bamboo scaffolding has replaced steel on most high-rise construction sites.",
+        "Fire risk has made bamboo scaffolding unacceptable in every city.",
+        "Lashings are decorative and play no part in supporting the frame."
+      ],
+      "why": [
+        "The text says \"some cities,\" not most sites.",
+        "Risk is acknowledged but not described as a universal ban.",
+        "The passage calls the lashings the structure itself."
+      ],
+      "explanation": "The passage balances practical advantages against fire and code concerns, then explains how tied joints distribute load."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Seed banks cannot simply freeze every seed and forget it. Some species die if dried to the standard moisture level; others survive only if cooled slowly. Germination tests therefore run on samples withdrawn at fixed intervals, and a fraction of each collection is regrown so fresh seed replaces ageing stock. A bank's value lies less in its freezer than in this repeated cycle of testing and renewal.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Keeping seeds viable requires ongoing testing and regeneration, not storage alone.",
+      "wrongs": [
+        "Freezing at a single standard moisture level works for all species.",
+        "Seed banks regrow samples only when a species becomes extinct in the wild.",
+        "Germination tests are performed once, when a collection first arrives."
+      ],
+      "why": [
+        "The text names species that die at the standard level.",
+        "Regrowth is routine renewal, not a response to extinction.",
+        "Tests run at fixed intervals throughout storage."
+      ],
+      "explanation": "The passage lists species-specific handling, describes periodic testing and regrowth, and concludes that this cycle is the bank's real value."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "On some glaciers, small balls of moss roll slowly downhill as the ice moves beneath them. The balls stay green on the outside and die at the base, where they touch the ice. Because each ball turns only as fast as the surface it rides, its motion is set by the glacier rather than by the wind. Researchers have used them as passive markers of ice flow.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Glacier moss balls move with the ice and can therefore serve as markers of its flow.",
+      "wrongs": [
+        "Glacier moss balls are blown downhill by strong katabatic winds.",
+        "The moss stays alive throughout the ball, including where it meets the ice.",
+        "Researchers move the balls deliberately to chart ice movement."
+      ],
+      "why": [
+        "The text says motion is set by the glacier, not by wind.",
+        "The base dies where it touches the ice.",
+        "They are passive markers, not tools the researchers reposition."
+      ],
+      "explanation": "The passage describes the balls, explains that ice movement drives them, and states that researchers use them as passive flow markers."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Tide pools high on a rocky shore heat up faster than pools near the waterline. During low tide on a sunny day, a shallow upper pool can climb several degrees above the surrounding ocean. Species that cannot tolerate the swing retreat downward, leaving the upper pools to a few heat-tolerant specialists. On cool, foggy coasts the same pools stay far closer to ocean temperature.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "A pool's height on the shore shapes how extreme its temperature becomes and which species survive there.",
+      "wrongs": [
+        "Upper tide pools are always cooler than pools near the waterline.",
+        "All tide-pool species tolerate the same range of temperatures.",
+        "Foggy coasts produce the widest temperature swings in tide pools."
+      ],
+      "why": [
+        "The text says upper pools heat faster and climb higher.",
+        "Species differ in tolerance, which is why some retreat.",
+        "Foggy coasts keep pools closer to ocean temperature."
+      ],
+      "explanation": "The passage links pool height to temperature extremes, notes that sensitive species move down, and contrasts sunny with foggy coasts."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "The painted clay figures buried near Xi'an retained traces of pigment because the burial chamber stayed dark, dry and chemically stable. Once excavated, the surface met air and light for the first time in two thousand years. Conservators now record color within minutes of exposure, and some figures are reburied rather than displayed, because the safest environment for the paint is the one it left.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "The pigment survives best in the buried conditions that exposure destroys.",
+      "wrongs": [
+        "The figures were originally painted with pigments that resist light.",
+        "Conservators display every figure as soon as it is excavated.",
+        "Reburial damages the paint more than museum display does."
+      ],
+      "why": [
+        "The text says exposure damages the paint; it never calls it light-resistant.",
+        "Some figures are reburied instead of displayed.",
+        "Reburial is described as the safer option."
+      ],
+      "explanation": "The passage credits the stable burial chamber, describes the threat posed by air and light, and explains choices made to protect the paint."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A subway diagram is not a map. To make routes readable, designers straighten lines, space stations evenly and enlarge the city center. The result distorts distance so badly that a two-stop ride downtown may be shorter on the ground than a one-stop ride in the suburbs. Riders accept the distortion because the diagram answers the question they actually ask: which line to take, not how far they will travel.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Subway diagrams deliberately distort distance in order to make routes easier to follow.",
+      "wrongs": [
+        "Subway diagrams are drawn to preserve true geographic distance.",
+        "Riders reject diagrams that fail to show exact travel distances.",
+        "Outer stations are always spaced more widely than central ones."
+      ],
+      "why": [
+        "The text says designers straighten lines and space stations evenly.",
+        "The passage says riders accept the distortion.",
+        "Central stations are enlarged and spread out, not the reverse."
+      ],
+      "explanation": "The passage describes the distortions, gives an example of their effect, and explains why riders tolerate them."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A sourdough starter is a stable community of wild yeasts and lactic-acid bacteria. Feed it flour and water on a regular schedule and the same species tend to dominate for years, even if the kitchen is not sterile. Change the feeding rhythm or the flour, however, and the balance shifts. Bakers describe the result as a change in character: sharper, slower to rise, or suddenly vigorous.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "A starter's microbial balance stays stable under routine feeding but responds to changes in it.",
+      "wrongs": [
+        "Sterile kitchens are required to keep a starter free of unwanted microbes.",
+        "A starter's species composition never changes once it is established.",
+        "Switching flour has no measurable effect on how a starter behaves."
+      ],
+      "why": [
+        "The text says the community persists even in an unsterile kitchen.",
+        "The passage says the balance shifts when conditions change.",
+        "Flour is named as one of the changes that alters the balance."
+      ],
+      "explanation": "The passage presents the starter as a stable community, then describes how feeding rhythm and flour change its behavior."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Ice cores preserve dust in annual layers. A band rich in mineral dust usually marks a year when winds carried more material from exposed ground, often during a dry period. Because the layers are ordered and countable, a core gives both a sequence of events and a rough timescale. The dust itself does not measure temperature; it records atmospheric transport, which researchers interpret alongside other signals.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Dust layers in ice cores record atmospheric transport and give a dated sequence, not a direct temperature reading.",
+      "wrongs": [
+        "Dust layers in ice cores are a direct measurement of past temperature.",
+        "Ice-core layers cannot be counted, so they provide no timescale.",
+        "Mineral dust in ice cores comes mainly from volcanic eruptions."
+      ],
+      "why": [
+        "The text explicitly denies that dust measures temperature.",
+        "It says the layers are countable and give a rough timescale.",
+        "The dust is described as wind-blown from exposed ground."
+      ],
+      "explanation": "The passage explains what a dust band represents, notes the countable layering, and limits the interpretation to atmospheric transport."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "When a whale carcass sinks, it supports a succession of communities for decades. Scavengers strip soft tissue within months. Bone-eating worms and mussels then colonise the skeleton, using fats locked inside the bone. Only after those reserves are exhausted do sulphide-loving microbes take over the remaining mineral structure. The same carcass passes through several distinct ecosystems without moving.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "A single sunken carcass supports a long sequence of different communities as its resources are used up.",
+      "wrongs": [
+        "Whale carcasses are consumed entirely within a few months of sinking.",
+        "Bone-eating species arrive before soft tissue scavengers.",
+        "The communities at a carcass all depend on the same food source."
+      ],
+      "why": [
+        "The text says the process lasts for decades.",
+        "Scavengers strip soft tissue first, then bone specialists arrive.",
+        "Each stage uses a different resource, from tissue to bone fat to minerals."
+      ],
+      "explanation": "The passage orders the stages of a whale fall and shows that each community exploits a different remaining resource."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Before radio, fire lookouts located fires by triangulation. Two towers sighted the same smoke plume and reported the bearing from each. Drawn on a map, the two bearings crossed at a single point. Accuracy depended on clear sightlines and on towers being far enough apart that the lines met at a wide angle; towers nearly in line produced a crossing so shallow that a small error moved the reported fire by miles.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Triangulation worked well only when the sighting towers were positioned to produce a wide crossing angle.",
+      "wrongs": [
+        "A single lookout could locate a fire without help from another tower.",
+        "Fire lookouts relied on radio to report bearings before triangulation.",
+        "Towers placed close together produced the most accurate crossings."
+      ],
+      "why": [
+        "The method requires two bearings from two towers.",
+        "The text places triangulation before radio.",
+        "Close or nearly aligned towers produced shallow, inaccurate crossings."
+      ],
+      "explanation": "The passage describes the two-bearing method and explains why wide angles made the crossing reliable while shallow ones amplified error."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Oyster reefs once formed low walls along many estuaries. The shells break incoming waves before the water reaches the shore, and the spaces between them shelter juvenile fish. When reefs were dredged away for lime and road fill, shorelines began to erode faster. Restoration projects now lay shell bags in shallow water, where new larvae settle on old shell and rebuild the structure over several seasons.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Oyster reefs protect shorelines and can be rebuilt by giving larvae a shell base to settle on.",
+      "wrongs": [
+        "Oyster reefs increase wave energy reaching the shore.",
+        "Restored reefs form within a single season without intervention.",
+        "Dredging reefs improved shoreline stability in most estuaries."
+      ],
+      "why": [
+        "The text says reefs break waves before they reach shore.",
+        "Rebuilding takes several seasons.",
+        "Dredging is linked to faster erosion."
+      ],
+      "explanation": "The passage describes the protective role of reefs, the consequence of removing them, and the shell-bag method of restoration."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Japanese joinery connects beams without nails or glue. A dovetail or mortise-and-tenon joint relies on shaped surfaces that lock together under load, and a well-cut joint can be dismantled and reassembled without losing grip. The technique demands precise handwork, since a gap of a millimetre defeats the interlock. Modern timber frames sometimes combine such joints with concealed steel, using the metal where the wood alone would creep.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Wooden joints can carry structural loads through precise shaping, though modern practice sometimes adds hidden reinforcement.",
+      "wrongs": [
+        "Japanese joinery depends on glue to hold its shaped surfaces together.",
+        "Machine-cut joints are more precise than hand-cut ones and have replaced them.",
+        "Steel reinforcement makes traditional joints impossible to dismantle."
+      ],
+      "why": [
+        "The text says the joints use no nails or glue.",
+        "Precision is attributed to handwork, not machines.",
+        "The passage does not say reinforced frames cannot be dismantled."
+      ],
+      "explanation": "The passage explains how interlocking shapes carry load, stresses the need for precision, and notes where modern builders add concealed steel."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Tea leaves begin to oxidise as soon as they are rolled. To make green tea, growers heat the leaves quickly to stop the reaction; to make black tea, they let it run. The same bush can therefore produce either style. What changes is not the plant but the moment at which the process is halted, which is why a single garden may sell several very different teas from one harvest.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "The style of tea depends on when oxidation is stopped, not on a different plant.",
+      "wrongs": [
+        "Green tea and black tea come from different species of bush.",
+        "Black tea is made by halting oxidation immediately after rolling.",
+        "A single garden can produce only one style of tea per harvest."
+      ],
+      "why": [
+        "The text says the same bush can produce either style.",
+        "Black tea lets oxidation continue.",
+        "One harvest can yield several styles."
+      ],
+      "explanation": "The passage contrasts the two processes and concludes that timing, not the plant, determines the style."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Most microplastic fibres in coastal water come from clothing. Washing releases them because fabric rubs against itself in the drum, breaking weak filaments. Filters fitted to washing machines catch a share of the fibres, but the smallest fragments pass through. Researchers therefore compare fibre loads downstream of treatment plants with those from households, trying to separate what a plant removes from what it simply delays.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Washing clothes releases microplastic fibres that treatment plants only partly remove.",
+      "wrongs": [
+        "Microplastic fibres in coastal water originate mainly from fishing gear.",
+        "Machine filters capture every fibre released during a wash.",
+        "Treatment plants prevent all microplastic fibres from reaching the sea."
+      ],
+      "why": [
+        "The text identifies clothing as the main source.",
+        "The smallest fragments pass through filters.",
+        "The plants capture a share, not everything."
+      ],
+      "explanation": "The passage names washing as the main source, explains the release mechanism, and notes that filters and plants capture only part of the load."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "In dry regions, a sand dam is built across a seasonal riverbed. During the rains, sand washes down and lodges behind the wall, and water fills the pores between the grains. Because the sand shields the water from sun and evaporation, the stored supply can outlast an open reservoir of similar volume. Wells sunk into the sand then draw water through the dry season.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Sand dams store water in the pores of trapped sand, which limits evaporation and keeps supply available through dry months.",
+      "wrongs": [
+        "Sand dams are open reservoirs that lose water quickly to evaporation.",
+        "The wall of a sand dam blocks sand while allowing water to pass downstream.",
+        "Wells dug into sand dams yield water only during the rainy season."
+      ],
+      "why": [
+        "The text says the sand shields the water, unlike an open reservoir.",
+        "The wall traps the sand, and water is held among the grains.",
+        "Wells draw on the stored water through the dry season."
+      ],
+      "explanation": "The passage describes how sand collects behind the wall, how water is held between grains, and why that limits evaporation."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Many birds moult their flight feathers on a schedule that avoids the demands of migration and breeding. Waterfowl often drop all primaries at once and cannot fly for several weeks, so they gather on open water where predators are easier to see. Smaller songbirds replace feathers gradually, keeping enough lift to fly throughout. Both strategies are ways of managing the same trade-off between repair and mobility.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Moult strategies differ because birds balance feather replacement against the need to stay mobile.",
+      "wrongs": [
+        "All birds replace their flight feathers at exactly the same time of year.",
+        "Waterfowl keep flying normally while they replace every primary feather.",
+        "Songbirds moult only when they have finished migrating for the year."
+      ],
+      "why": [
+        "The passage describes two different schedules.",
+        "Waterfowl cannot fly for weeks after dropping all primaries.",
+        "The text does not tie songbird moult to migration completion."
+      ],
+      "explanation": "The passage contrasts simultaneous and gradual moult and explains that both manage the trade-off between repair and staying airborne."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Lunar soil contains no organic binder, so engineers have tested sintering it with microwaves into solid bricks. The process melts grains at contact points, fusing them without additives. A furnace would have to carry its own power and mass to the Moon, which makes the energy budget the central design constraint. Tests on simulated regolith show that bricks strong enough for a landing pad are possible, but only at temperatures that demand substantial equipment.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Sintering lunar soil can make strong bricks, but the energy and equipment required are the main obstacles.",
+      "wrongs": [
+        "Lunar soil already contains a natural binder that holds bricks together.",
+        "Engineers have built landing pads on the Moon from sintered regolith.",
+        "Microwave sintering requires additives shipped from Earth."
+      ],
+      "why": [
+        "The text says the soil has no organic binder.",
+        "The tests are on simulated regolith on Earth.",
+        "The process fuses grains without additives."
+      ],
+      "explanation": "The passage explains the sintering method, identifies energy as the constraint, and limits the result to laboratory tests."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A hand-bound book is held together by thread sewn through the folds of its sections. The sewing must be tight enough to keep the pages aligned but loose enough that the spine can open without cracking the paper. Binders therefore choose thread thickness and stitch spacing for the paper in front of them. A method that works for heavy drawing paper will tear thin text paper at the fold.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Binding choices must be matched to the paper, because a stitch that suits one paper damages another.",
+      "wrongs": [
+        "Hand binding uses glue instead of thread to hold sections together.",
+        "Tight sewing is always better because it prevents pages from shifting.",
+        "Thread thickness has no effect on whether a spine can open."
+      ],
+      "why": [
+        "The text describes thread sewn through folds.",
+        "The passage warns that too tight a stitch cracks the paper.",
+        "Thread thickness is named as a choice binders make."
+      ],
+      "explanation": "The passage explains the tension in sewing, then states that thread and spacing are selected per paper, with a concrete failure example."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Beavers change the hydrology of a valley long before anyone measures it. A dam raises the water table, slows spring runoff and spreads water across the floodplain. Downstream, the peak of a flood arrives later and lower. Removing beavers reverses the effect quickly, which is why some water managers now treat them as inexpensive infrastructure rather than as nuisance rodents.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Beaver dams alter water storage and timing in ways that can be useful to water managers.",
+      "wrongs": [
+        "Beaver dams raise flood peaks downstream.",
+        "Beaver activity has no measurable effect on the water table.",
+        "Water managers universally regard beavers as pests to be removed."
+      ],
+      "why": [
+        "The text says the downstream peak arrives later and lower.",
+        "The dam is said to raise the water table.",
+        "The passage describes a shift toward treating them as infrastructure."
+      ],
+      "explanation": "The passage describes the hydrological effects and notes that managers increasingly value them."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Soil microbes respire carbon the way animals do, releasing it as carbon dioxide. Whether a soil stores or loses carbon depends on how much of that respiration is offset by plant inputs and by organic matter sticking to mineral surfaces. Warming speeds microbial activity, but it can also dry the soil and reduce plant growth. The net effect therefore varies by site, which is why estimates from one grassland do not transfer to another.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Whether warming makes a soil a carbon source or sink depends on local conditions.",
+      "wrongs": [
+        "Warming always causes soil to release more carbon than it stores.",
+        "Soil microbes store carbon directly in their cells without respiring.",
+        "Results from one grassland reliably predict another's carbon balance."
+      ],
+      "why": [
+        "The text says the net effect varies.",
+        "Microbes are described as respiring carbon dioxide.",
+        "The passage says estimates do not transfer between sites."
+      ],
+      "explanation": "The passage sets respiration against plant inputs and mineral binding, then concludes that the outcome is site-specific."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A star catalog is a snapshot that ages. Stars move, and a position recorded with great precision in one decade can be wrong by a noticeable margin a century later. Astronomers therefore re-measure reference stars to track proper motion, the slow drift across the sky. Older catalogues remain useful not despite their age but because of it: the long interval between observations is what makes the drift visible.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Old star catalogues gain value from their age, because the time gap reveals how stars have moved.",
+      "wrongs": [
+        "Stars hold fixed positions, so old catalogues remain accurate indefinitely.",
+        "Proper motion makes historical catalogues useless for modern astronomy.",
+        "Astronomers measure proper motion by observing a star only once."
+      ],
+      "why": [
+        "The text says positions drift over time.",
+        "Old catalogues are described as useful precisely because of their age.",
+        "Motion requires comparison across observations."
+      ],
+      "explanation": "The passage explains drift, the need for re-measurement, and the special value of long time baselines."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Inca suspension bridges were woven from grass rope and rebuilt every year. The span was anchored to stone abutments on each bank, and the cables were kept taut by tension applied at the anchors rather than by mid-span supports. Because the material degraded in rain and sun, annual renewal was part of the design, not a repair. The bridge existed as a repeated event rather than as a permanent object.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Annual rebuilding was integral to how these grass-rope bridges worked, not a failure of maintenance.",
+      "wrongs": [
+        "The bridges were made from rope that did not degrade in weather.",
+        "Stone abutments supported the middle of each span.",
+        "The bridges were permanent structures rebuilt only after accidents."
+      ],
+      "why": [
+        "The text says the material degraded in rain and sun.",
+        "The abutments anchored the ends; there were no mid-span supports.",
+        "Renewal was annual and planned, not a response to accidents."
+      ],
+      "explanation": "The passage describes the structure and concludes that renewal belonged to the design."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Honey crystallises because it is a supersaturated sugar solution. Glucose comes out of solution first, forming small crystals; the rest of the honey then sets around them. Gentle warming redissolves the crystals, but overheating destroys the enzymes that make honey distinctive. Whether a jar crystallises quickly depends mostly on its ratio of glucose to fructose, which varies with the flowers the bees visited.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Crystallisation is a natural consequence of honey's sugar balance and can be reversed without overheating.",
+      "wrongs": [
+        "Crystallisation indicates that honey has begun to spoil.",
+        "Heating honey strongly is the recommended way to restore it.",
+        "The glucose-to-fructose ratio is identical in every jar of honey."
+      ],
+      "why": [
+        "The passage treats crystallisation as physical, not spoilage.",
+        "Overheating destroys enzymes, so strong heat is not recommended.",
+        "The ratio varies with the flowers visited."
+      ],
+      "explanation": "The passage explains the chemistry, the safe remedy, and the floral source of variation."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Rock art is hard to photograph without flattening it. A camera pointed straight at a carved panel loses the shadows that make the figures legible. Photogrammetry solves this by taking many overlapping images from different angles and rebuilding the surface as a three-dimensional model. Light can then be aimed across the digital surface from any direction, revealing carving depth that no single photograph recorded.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Photogrammetry preserves the surface relief of rock art that ordinary photographs flatten.",
+      "wrongs": [
+        "Photogrammetry requires a single photograph taken in flat light.",
+        "Carved panels are easier to read in photographs than in person.",
+        "The digital model removes the need to record the site at all."
+      ],
+      "why": [
+        "The method uses many overlapping images.",
+        "The text says photographs lose the shadows that make figures legible.",
+        "The model is a record of the site, not a replacement for recording."
+      ],
+      "explanation": "The passage contrasts flat photography with multi-angle reconstruction and explains the advantage of relighting the model."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A fish ladder is a staircase of small pools built around a dam. Each pool is low enough for a fish to jump or swim into, and the flow between pools is kept slow enough that the animal is not swept back. Designs differ by species: a ladder tuned for salmon, which leap, may be unusable for bottom-dwelling fish that cannot clear a step at all.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Fish ladders must be designed for the swimming and jumping abilities of the species that need them.",
+      "wrongs": [
+        "A single ladder design works for every species in a river.",
+        "Fish ladders are built to speed water past a dam rather than to help fish.",
+        "Bottom-dwelling fish pass ladders more easily than salmon do."
+      ],
+      "why": [
+        "The text says designs differ by species.",
+        "The pools are built to let fish ascend.",
+        "Bottom-dwelling fish may be unable to clear a step."
+      ],
+      "explanation": "The passage describes the pool staircase and explains why a design suited to jumpers can fail other species."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Adobe walls stay comfortable in hot, dry climates because they combine mass with delay. During the day the wall absorbs heat slowly; by the time that heat reaches the interior, the outside air has cooled. Thick walls work because the delay is long, not because the material insulates especially well. In humid climates the same walls can trap moisture, which is why the technique spread most widely in dry regions.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Adobe's comfort comes from the delay created by wall mass, which suits dry climates better than humid ones.",
+      "wrongs": [
+        "Adobe walls cool a room by insulating it almost perfectly.",
+        "Thin adobe walls are more effective than thick ones in hot climates.",
+        "Adobe construction performs best in humid regions."
+      ],
+      "why": [
+        "The text says the delay, not insulation, is the key.",
+        "The passage credits thick walls with a longer delay.",
+        "Humid climates can trap moisture in adobe."
+      ],
+      "explanation": "The passage explains the thermal delay and ties the technique's distribution to dry climates."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Some seeds germinate only after fire. Their coats are impermeable to water until heat cracks them, and some species also respond to chemicals in smoke. This delays germination until a fire has cleared competing vegetation and returned nutrients to the soil. A seed that sprouted immediately would face shade and competition; waiting is an advantage, not a delay.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Fire-triggered germination is advantageous because it times sprouting to conditions after a fire.",
+      "wrongs": [
+        "Fire destroys the seed coats of every species in a burned area.",
+        "Smoke chemicals prevent seeds from germinating after a fire.",
+        "Seeds that germinate immediately gain an advantage over fire-followers."
+      ],
+      "why": [
+        "The text describes some seeds, not every species.",
+        "Smoke chemicals can trigger germination.",
+        "The passage says waiting avoids shade and competition."
+      ],
+      "explanation": "The passage explains the mechanism and the benefit of timing germination to post-fire conditions."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Corten steel is formulated to rust in a controlled way. Its alloying elements form a dense, adherent oxide layer on the surface, which then slows further corrosion. Ordinary steel rusts through because its oxide flakes away and exposes fresh metal. Corten therefore needs the right cycle of wetting and drying to develop its protective skin; in constant damp or in salt air the layer may never stabilise.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Corten steel resists corrosion by forming a stable oxide layer, but only under suitable weathering conditions.",
+      "wrongs": [
+        "Corten steel never corrodes at all because it contains no iron.",
+        "Ordinary steel forms a tighter oxide layer than corten steel does.",
+        "Corten performs best where surfaces stay constantly wet."
+      ],
+      "why": [
+        "The text describes controlled rusting, not immunity to corrosion.",
+        "Ordinary steel's oxide flakes away.",
+        "Constant damp can prevent the layer from stabilising."
+      ],
+      "explanation": "The passage contrasts corten with ordinary steel and names the wetting cycle needed for the protective layer."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Glass must be cooled slowly after shaping. Rapid cooling sets the outside while the inside is still contracting, which leaves stresses locked in the object. An annealing oven holds the piece just below its softening point and then lowers the temperature over hours, letting the interior catch up. Skip that step and a bowl may shatter weeks later, long after it has left the workshop.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Slow, controlled cooling prevents the internal stresses that make glass fail later.",
+      "wrongs": [
+        "Rapid cooling strengthens glass by locking the outside in compression.",
+        "Annealing raises glass above its softening point and holds it there.",
+        "Glass that cools too quickly fails immediately, never later."
+      ],
+      "why": [
+        "The passage presents rapid cooling as the cause of failure.",
+        "Annealing holds the piece just below the softening point.",
+        "The text says a bowl may shatter weeks later."
+      ],
+      "explanation": "The passage explains the stress created by fast cooling and the schedule that avoids it."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Tardigrades survive desiccation by replacing most of their body water with a sugar that turns their cells into a glass-like state. Metabolism stops, membranes hold their shape, and the animal can revive when water returns. The trick is not unique to tardigrades, but their version is unusually effective. What the sugar does is physical rather than chemical: it immobilises molecules so they cannot react or unfold.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "A glass-forming sugar protects tardigrades during drought by physically immobilising their cells.",
+      "wrongs": [
+        "Tardigrades survive drought by keeping their normal metabolism running.",
+        "The protective sugar works through a chemical reaction that repairs DNA.",
+        "Only tardigrades possess any mechanism for surviving desiccation."
+      ],
+      "why": [
+        "The text says metabolism stops.",
+        "The passage calls the effect physical, not chemical.",
+        "The trick is not unique to tardigrades."
+      ],
+      "explanation": "The passage describes the dried state and explains the physical protective role of the sugar."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Fog-collecting nets work because droplets in fog are large enough to strike mesh fibres and coalesce. The water then runs down the strands into a trough. Fine mesh catches more droplets but clogs with dust, while coarse mesh sheds water well but misses much of it. Designers therefore tune mesh density to the local fog, which is why installations from different coastal deserts look so unlike one another.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Fog nets must be tuned to local conditions because mesh density trades capture against clogging.",
+      "wrongs": [
+        "Fine mesh always outperforms coarse mesh in every climate.",
+        "Fog nets collect water by condensing vapour inside a tank.",
+        "Mesh density has no effect on how much water a net gathers."
+      ],
+      "why": [
+        "Fine mesh clogs with dust, so it is not always better.",
+        "Collection relies on droplets striking mesh, not a tank.",
+        "Density is described as the key trade-off."
+      ],
+      "explanation": "The passage explains droplet capture and the competing costs of mesh density, then links design differences to local fog."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "City trees cool streets in two ways: they cast shade and they release water vapour through their leaves. Shade acts immediately on surfaces below the canopy, while evaporation lowers air temperature more gradually. A single young tree does little of either, and a row of trees in sealed pavement may never reach the size needed. Cooling benefits therefore depend on long-term growth as much as on planting.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Urban tree cooling depends on the trees surviving and growing large, not only on how many are planted.",
+      "wrongs": [
+        "Trees cool streets only by casting shade, with no evaporative effect.",
+        "Young trees provide more cooling than mature ones.",
+        "Sealed pavement helps street trees reach full size faster."
+      ],
+      "why": [
+        "The passage names evaporation as a second mechanism.",
+        "The text says a young tree does little.",
+        "Sealed pavement is described as a barrier to growth."
+      ],
+      "explanation": "The passage presents the two cooling mechanisms and stresses that benefit grows with the tree."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Krill gather in swarms so dense that sonar can mistake them for the seabed. The swarm is not a herd in the usual sense: individuals do not follow a leader but adjust to neighbors, and the group darkens as it thickens, which may confuse predators. Because swarms shift shape quickly, surveys that sample one patch may badly misestimate the population of a whole region.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Krill swarms form through local interactions and move in ways that make population surveys hard.",
+      "wrongs": [
+        "Krill swarms are led by a single dominant individual.",
+        "Sonar accurately counts krill because swarms scatter sound weakly.",
+        "Krill swarms keep a fixed shape throughout the day."
+      ],
+      "why": [
+        "The text says individuals adjust to neighbors, not a leader.",
+        "Sonar can mistake swarms for the seabed, which is not accuracy.",
+        "The swarms shift shape quickly."
+      ],
+      "explanation": "The passage explains neighbor-based grouping, the effect on predators, and the difficulty for surveys."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A lightning rod does not attract lightning from a distance. It provides a low-resistance path from roof to ground, so that a strike arriving nearby passes through metal instead of through timber. The sharp tip matters less than the continuous connection: a rod with a broken conductor is worse than none, because it invites a discharge it cannot carry away.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "A lightning rod protects a building by giving current a continuous path to the ground.",
+      "wrongs": [
+        "A lightning rod pulls strikes toward a building from far away.",
+        "The sharpness of the tip is the only feature that provides protection.",
+        "A rod with a broken conductor still protects the structure."
+      ],
+      "why": [
+        "The text denies that the rod attracts lightning from a distance.",
+        "The passage says the continuous connection matters more than the tip.",
+        "A broken conductor is described as worse than no rod."
+      ],
+      "explanation": "The passage defines the rod's job as a conductive path and stresses that the path must be unbroken."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Every flat map distorts something. Mercator preserves direction, which is why it suited navigation, but it stretches area toward the poles so that Greenland appears larger than Africa. A projection that preserves area must give up shape, and one that preserves shape must give up area. The choice is not a matter of accuracy but of which property a particular map is meant to show.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Map projections trade one geometric property for another, so the right map depends on its purpose.",
+      "wrongs": [
+        "Mercator is the only projection that preserves true area.",
+        "It is possible to preserve area, shape and direction on one flat map.",
+        "Greenland is in fact larger in area than Africa."
+      ],
+      "why": [
+        "Mercator preserves direction and stretches area.",
+        "The passage says preserving one property requires giving up another.",
+        "The text uses Greenland's apparent size as an example of distortion."
+      ],
+      "explanation": "The passage names the trade-offs and concludes that purpose determines the choice."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A camel's hump stores fat, not water. Burning that fat releases energy and also produces water as a by-product, which helps in dry conditions. Concentrating the store on the back also keeps the animal cooler than an even layer of fat would, since heat can escape from the rest of the body. The hump therefore serves both as fuel reserve and as a way of managing heat.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "The hump stores energy and helps regulate heat, rather than holding water directly.",
+      "wrongs": [
+        "The hump is a sac of liquid water carried for long journeys.",
+        "Fat spread evenly over the body would keep a camel cooler.",
+        "Burning fat consumes water rather than producing it."
+      ],
+      "why": [
+        "The text says the hump stores fat, not water.",
+        "The passage says an even layer would be less cool.",
+        "Burning fat produces water as a by-product."
+      ],
+      "explanation": "The passage corrects the water myth and explains both the energy and heat-management roles."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "An octopus changes color by stretching pigment sacs in its skin. Muscles pull each sac open or closed, so the change is under direct neural control and can happen in under a second. The skin also carries reflective cells that scatter light, which lets the animal match a surface even when its pigments alone could not. Color change is therefore both fast and structural.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Octopus color change is fast because it is muscular and structural rather than chemical.",
+      "wrongs": [
+        "Octopuses change color slowly as pigments are produced chemically.",
+        "Reflective cells prevent the skin from matching a surface.",
+        "The pigment sacs cannot be controlled by the animal."
+      ],
+      "why": [
+        "The text says the change takes under a second and is neural.",
+        "Reflective cells help the match.",
+        "Muscles under neural control open and close the sacs."
+      ],
+      "explanation": "The passage describes muscular pigment sacs and reflective cells and concludes that the mechanism is fast and structural."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A vaccine that leaves the factory must stay cold all the way to the clinic. Each transfer between a refrigerator, a vehicle and a field cooler is a chance for the chain to break. Health programs therefore attach temperature indicators to every box and train staff to reject a shipment whose indicator has changed, even if the vials look normal. The vial itself gives no warning.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Because spoiled vaccine may look unchanged, programs rely on temperature indicators and strict handling rules.",
+      "wrongs": [
+        "Vaccines remain effective after any number of breaks in the cold chain.",
+        "Staff can tell a spoiled shipment by inspecting the vials.",
+        "Temperature indicators are attached only after a shipment reaches a clinic."
+      ],
+      "why": [
+        "The text treats each transfer as a risk.",
+        "The passage says the vial gives no warning.",
+        "Indicators are attached to every box before transit."
+      ],
+      "explanation": "The passage explains the fragile chain and the visual check that replaces inspecting the vials."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Mangrove seedlings are planted in mud that shifts with every tide. A propagule pushed into soft sediment may be washed out before its roots take hold, so planters often use bamboo stakes or biodegradable anchors. Survival also depends on hydrology: seedlings placed too low are flooded too often, while those placed too high dry out. Successful restoration is therefore a matter of choosing the right elevation as much as planting.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Mangrove restoration succeeds only when seedlings are anchored and planted at the right tidal elevation.",
+      "wrongs": [
+        "Mangrove seedlings survive equally well at any height above the tide line.",
+        "Bamboo stakes are used to raise seedlings above the reach of tides.",
+        "Planting alone is enough, regardless of where seedlings are placed."
+      ],
+      "why": [
+        "The text says elevation determines flooding and drying.",
+        "Stakes anchor seedlings in soft mud; they do not raise them.",
+        "Placement is described as decisive."
+      ],
+      "explanation": "The passage describes the two risks, anchoring and elevation, and concludes that placement matters as much as planting."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Desert varnish is a thin dark coating that accumulates on stable rock surfaces over thousands of years. It forms as wind-blown clay and microbes deposit manganese and iron oxides. Because the coating builds slowly and only where rock stays undisturbed, archaeologists use its thickness and chemistry to estimate how long a surface has been exposed. A varnish date is a minimum age for the carving beneath it.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Desert varnish accumulates slowly on undisturbed rock and can give a minimum age for carvings.",
+      "wrongs": [
+        "Desert varnish forms quickly wherever rock is exposed to rain.",
+        "Varnish dates give the exact year a carving was made.",
+        "The coating is composed mainly of organic material from plants."
+      ],
+      "why": [
+        "The text says it accumulates over thousands of years.",
+        "It provides a minimum age, not an exact year.",
+        "The coating is clay plus manganese and iron oxides."
+      ],
+      "explanation": "The passage explains the slow formation and the cautious minimum-age interpretation."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "An ancient stone amphitheatre can carry a whisper from the stage to the highest tier. The curved wall reflects sound back toward the center, and the seating steps scatter it so that it arrives with little delay. Modern concrete halls often need amplification because their flat surfaces absorb or diffuse energy. The old design worked with geometry rather than with power.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "The amphitheatre's curved geometry carried sound effectively without electronic amplification.",
+      "wrongs": [
+        "Ancient amphitheatres relied on hidden amplification devices.",
+        "Flat modern surfaces reflect sound more efficiently than curved ones.",
+        "The seating steps absorbed sound before it reached the upper tiers."
+      ],
+      "why": [
+        "No amplification is described; geometry does the work.",
+        "The text says flat surfaces absorb or diffuse energy.",
+        "The steps scatter sound so it arrives with little delay."
+      ],
+      "explanation": "The passage contrasts curved stone geometry with flat modern surfaces and notes that the old design needed no power."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A pollinator strip is a band of flowers sown along a field edge. It offers nectar and pollen through the season, so bees and hoverflies remain nearby instead of dispersing. Studies find more pollinators inside adjacent crops, though the effect depends on which flowers are sown and on whether pesticides drift onto the strip. A strip that blooms for two weeks helps far less than one that flowers across the growing season.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Pollinator strips can support nearby crops, but their benefit depends on duration and on how they are managed.",
+      "wrongs": [
+        "Any flower strip guarantees a larger harvest in the adjacent field.",
+        "Pollinator strips work best when they bloom for only a short period.",
+        "Pesticide drift improves the value of a pollinator strip."
+      ],
+      "why": [
+        "The text says the effect depends on species and pesticide drift.",
+        "The passage says a long flowering season helps more.",
+        "Drift is named as a factor that can reduce the benefit."
+      ],
+      "explanation": "The passage describes the mechanism, notes the conditional benefits, and contrasts short and long blooming."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Newsprint made before the 1870s was manufactured from rags and remains flexible. Later papers used groundwood pulp, which retains lignin and turns brittle as it oxidises. A single brittle volume can crack its neighbors as it is shelved and pulled. Conservators therefore box each fragile item separately, slowing the transfer of acid and preventing mechanical damage from the book beside it.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Lignin-rich paper becomes brittle, so fragile volumes are boxed separately to prevent damage to neighbors.",
+      "wrongs": [
+        "Rag paper turns brittle faster than groundwood paper.",
+        "Boxing a volume increases the acid it transfers to its neighbors.",
+        "Lignin makes paper more flexible as it ages."
+      ],
+      "why": [
+        "The text says rag paper remains flexible.",
+        "Boxing slows acid transfer rather than increasing it.",
+        "The passage says lignin-bearing paper turns brittle."
+      ],
+      "explanation": "The passage contrasts the two papers and explains why separate boxes protect a collection."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A tidal turbine blade works in water far denser than air, so the same diameter extracts far more power than a wind turbine's. That density also loads the blade heavily and wears its leading edge, and salt water corrodes fittings that would last decades in air. Designs therefore favor thick, simple sections that tolerate abrasion rather than the slender aerofoils used on wind farms.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Tidal turbines gain power from dense water but must be built more ruggedly than wind turbines.",
+      "wrongs": [
+        "Tidal turbines produce less power than wind turbines of the same diameter.",
+        "Salt water protects tidal turbine fittings from corrosion.",
+        "Slender aerofoil sections are preferred for tidal blades."
+      ],
+      "why": [
+        "The text says dense water yields far more power.",
+        "Salt water is described as corrosive.",
+        "The passage says tidal designs favor thick sections."
+      ],
+      "explanation": "The passage explains the power advantage and the wear and corrosion penalties that shape the design."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Coffee beans crack audibly twice during roasting. The first crack marks the point at which water and gases force their way out of the bean; the second comes later as the structure begins to fracture. Roasters listen for these sounds because they mark stages that are hard to judge by color alone. A bean pulled at the first crack tastes quite different from one taken past the second.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "The two cracking sounds give roasters reliable markers for stages that color alone cannot show.",
+      "wrongs": [
+        "Coffee beans crack only once, at the very end of roasting.",
+        "Roasters rely on color because the cracks are inaudible.",
+        "Beans taken at the first and second cracks taste the same."
+      ],
+      "why": [
+        "The text describes two distinct cracks.",
+        "The passage says the cracks mark stages hard to judge by color.",
+        "The text says the flavours differ."
+      ],
+      "explanation": "The passage describes the physical cause of each crack and explains why roasters use them."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "Banknote paper is made from cotton and linen fibres rather than wood pulp. The long fibres flex without tearing, and the sheet is sized so that ink sits on the surface instead of soaking through. A watermark is formed during manufacture by pressing the wet sheet against a shaped mould, which thins the paper in a pattern that becomes visible when held to light. The security feature is part of the sheet, not printed on it.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Durable fibres and a watermark formed within the sheet make banknote paper hard to copy.",
+      "wrongs": [
+        "Banknote paper is made from wood pulp for extra stiffness.",
+        "The watermark is printed onto the finished sheet with ink.",
+        "Short fibres make banknote paper more resistant to tearing."
+      ],
+      "why": [
+        "The text says cotton and linen, not wood pulp.",
+        "The watermark is formed during manufacture, not printed.",
+        "The passage attributes durability to long fibres."
+      ],
+      "explanation": "The passage explains the fibre choice, the sizing, and the in-sheet watermark that makes the note hard to forge."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A museum's climate system is designed around slow change rather than constant conditions. Materials such as wood and ivory expand and contract as humidity shifts, and repeated cycling does more damage than a steady level slightly outside the ideal range. Curators therefore accept small departures from the target if the readings stay stable, and they watch the rate of change as closely as the value itself.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Stable conditions matter more than hitting an exact target, because repeated swings damage objects.",
+      "wrongs": [
+        "Museums should keep every gallery at the exact ideal humidity at all times.",
+        "Wood and ivory are unaffected by changes in humidity.",
+        "The rate of change is irrelevant if the average value is correct."
+      ],
+      "why": [
+        "The text accepts small departures when readings are stable.",
+        "The passage says such materials expand and contract.",
+        "Curators watch the rate of change closely."
+      ],
+      "explanation": "The passage contrasts cycling with stability and concludes that rate of change is a key measure."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A traditional windmill's sails turn a central shaft that drives millstones through gears. The stones must turn at a steady speed: too fast and the flour heats and loses quality, too slow and the grain is not cut cleanly. Millers therefore adjust the gap between the stones and the amount of sail cloth according to the wind, a constant negotiation between power and control.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "A miller's work is a continual adjustment of gearing and sail area to keep the stones turning at the right speed.",
+      "wrongs": [
+        "Millstones work best when they turn as fast as the wind allows.",
+        "The gap between the stones has no effect on the flour.",
+        "Sail cloth is fixed and never adjusted by the miller."
+      ],
+      "why": [
+        "The text says too fast heats the flour and loses quality.",
+        "The gap is one of the two adjustments described.",
+        "Millers adjust sail cloth according to the wind."
+      ],
+      "explanation": "The passage explains why steady speed matters and names the two controls a miller uses."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A cathedral's stained glass looks dull from outside because the colored glass is translucent, not reflective. The design assumes light passing through from behind, so the images face inward. On an overcast day the effect weakens, and on a bright day the leading between panes throws dark lines across the figures. The window is therefore a device for shaping transmitted light rather than a painted surface.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Stained glass is designed for transmitted light, which is why it looks different from outside or under changing skies.",
+      "wrongs": [
+        "Stained glass is painted to be read by reflected light from outside.",
+        "Overcast weather makes the images brighter and sharper.",
+        "The leading between panes has no visual effect on the figures."
+      ],
+      "why": [
+        "The text says the glass is translucent and lit from behind.",
+        "The passage says the effect weakens on overcast days.",
+        "Leading throws dark lines across the figures."
+      ],
+      "explanation": "The passage explains the transmission model and the visible consequences of weather and leading."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "An arch carries load by compression. Each stone pushes against its neighbors, and the whole curve transfers the weight outward to the supports. Because stone is strong in compression but weak in tension, an arch needs thick abutments to resist that outward push. A crack at the crown often signals that the supports have spread rather than that the stones themselves have failed.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "An arch works through compression and needs strong abutments to resist the outward thrust.",
+      "wrongs": [
+        "An arch carries load mainly through tension in its stones.",
+        "Thin abutments are sufficient because the arch pushes inward.",
+        "A crack at the crown always means the stones have failed."
+      ],
+      "why": [
+        "The text says load travels by compression.",
+        "The arch pushes outward, so thick abutments are needed.",
+        "The passage says such a crack often indicates spreading supports."
+      ],
+      "explanation": "The passage explains the compressive path and interprets crown cracks as a sign of support movement."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "The first public aquariums were built as windows into the sea, but the water inside them quickly went stale. Early keepers learned that a tank needs circulation, light and plants to stay clear, and that a closed system collapses without them. Modern aquariums still depend on the same three elements, though they now add filters and chillers. The biology has not changed, only the machinery.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Aquarium keeping depends on circulation, light and plants, and modern equipment only refines those basics.",
+      "wrongs": [
+        "Early aquariums stayed clear because they were sealed off from air.",
+        "Modern aquariums no longer need plants or light.",
+        "Water in an aquarium improves when it is kept still."
+      ],
+      "why": [
+        "The text says closed systems collapse.",
+        "The passage says the same three elements remain necessary.",
+        "Circulation is one of the requirements."
+      ],
+      "explanation": "The passage describes the early failures and the enduring requirements, noting that technology changed but biology did not."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A weather station in a city park records warmer nights than one at the airport outside town. The difference is the urban heat island: buildings and roads release heat stored during the day, and the city's rough surfaces trap it. The effect is strongest on clear, still nights, when rural ground radiates heat freely to the sky. On windy nights the two stations converge.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Cities stay warmer than surrounding land mainly on clear, still nights, because built surfaces release and trap heat.",
+      "wrongs": [
+        "Cities are always cooler than rural areas at night.",
+        "Windy nights produce the largest urban-rural temperature gap.",
+        "Airport stations record the heat island more strongly than park stations."
+      ],
+      "why": [
+        "The text says the city park records warmer nights.",
+        "The passage says the effect is strongest on still nights.",
+        "The park station shows the warmer reading."
+      ],
+      "explanation": "The passage defines the heat island and explains why it peaks under clear, calm conditions."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A hand saw cuts on the forward stroke because its teeth are set to lift waste clear of the kerf. Pushing the saw back does little cutting; the return stroke only repositions the blade. Sawyers therefore apply pressure on the push and relax on the return, letting the tool do the work. A saw used with even pressure both ways dulls faster and wanders from the line.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "A hand saw is designed to cut on one stroke, so even pressure in both directions is wasteful and less accurate.",
+      "wrongs": [
+        "A hand saw cuts equally well on the forward and return strokes.",
+        "Teeth set to lift waste make the saw dull more slowly.",
+        "Applying pressure on the return stroke keeps the blade on line."
+      ],
+      "why": [
+        "The text says the return stroke does little cutting.",
+        "No such claim is made about wear and the tooth set.",
+        "Even pressure both ways makes the saw wander."
+      ],
+      "explanation": "The passage explains the tooth set and the correct stroke, then describes the consequences of ignoring it."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A lighthouse lens does not need to be large to be seen far away. A Fresnel design rings a small central lens with concentric prisms, each bending light from the lamp into a narrow horizontal beam. The result is the reach of a much larger lens at a fraction of the weight and cost. The principle is still used in solar concentrators and in some vehicle lights.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "The Fresnel lens achieves long-range beams with a compact, light assembly.",
+      "wrongs": [
+        "Fresnel lenses work by absorbing light from the lamp and re-emitting it.",
+        "A large solid lens is cheaper to make than a Fresnel lens.",
+        "The Fresnel design was abandoned and is no longer used."
+      ],
+      "why": [
+        "The prisms bend light; absorption is not the mechanism.",
+        "The text says the design costs a fraction of a larger lens.",
+        "The principle is still used today."
+      ],
+      "explanation": "The passage describes the prism rings and their advantage in reach, weight and cost."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A salt flat looks empty but records water. As a shallow brine pool dries, minerals crystallise in a sequence determined by their solubility, leaving rings of different salts. A core through the crust therefore preserves a history of wet and dry periods. Interpreting that history requires care, because later floods can dissolve and redeposit the very layers a reader hopes to date.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "Salt crusts record wet and dry periods in layers, though later floods can disturb the record.",
+      "wrongs": [
+        "Salt flats contain no evidence of past water.",
+        "Minerals crystallise in a random order unrelated to solubility.",
+        "Later floods make the layers easier to date."
+      ],
+      "why": [
+        "The text says the flat records water history.",
+        "The sequence is determined by solubility.",
+        "Floods can dissolve and redeposit layers, complicating dating."
+      ],
+      "explanation": "The passage explains the layered record and the disturbance that limits interpretation."
+    },
+    {
+      "skill": "Central Ideas and Details",
+      "passage": "A violin's soundpost is a small dowel wedged between the front and back plates inside the instrument. It is not glued; friction and the curve of the plates hold it in place. Moving it a millimetre changes how the instrument responds, which is why players guard it carefully. The post transfers vibration between the plates, and a loose post can make an otherwise healthy violin sound thin.",
+      "prompt": "Which choice best states the main idea of the text?",
+      "correct": "The soundpost is a precisely placed, unglued brace whose position and fit strongly affect a violin's sound.",
+      "wrongs": [
+        "The soundpost is glued in place so that it cannot move.",
+        "Its exact position has little effect on the instrument's sound.",
+        "A loose soundpost improves the tone of a violin."
+      ],
+      "why": [
+        "The text says it is not glued.",
+        "A millimetre of movement changes the response.",
+        "A loose post can make the violin sound thin."
+      ],
+      "explanation": "The passage describes the post's placement and its role in transferring vibration."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Antarctic sponges grow extremely slowly, adding only a fraction of a millimetre each year. A specimen collected at 200 meters had growth bands that took decades to form. Because the bands record the chemistry of the water in which they formed, a single large sponge can preserve a record of changing ocean conditions stretching back further than most instrument series.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Old sponges can serve as archives of ocean chemistry that predate modern measurements.",
+      "wrongs": [
+        "Antarctic sponges grow quickly enough to record daily changes in seawater.",
+        "Growth bands are unrelated to the chemistry of the surrounding water.",
+        "Instrument series are always longer than a sponge's growth record."
+      ],
+      "why": [
+        "The text describes growth as extremely slow.",
+        "The bands are said to record water chemistry.",
+        "The passage says the sponge record stretches back further."
+      ],
+      "explanation": "Slow growth plus chemistry-bearing bands means a long, pre-instrument archive."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A Roman water wheel recovered from a riverbed had wooden paddles worn thin on one face only. The wear pattern matches contact with flowing water rather than with sand or gravel. The wheel's axle showed no sign of having been turned by an animal. Together these details suggest that the wheel was driven by the current itself.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The wheel was a water-powered device rather than one turned by animals or people.",
+      "wrongs": [
+        "The wheel was turned by oxen walking on a circular track.",
+        "The wear on the paddles came from abrasive gravel in the riverbed.",
+        "The wheel was never used and was abandoned before installation."
+      ],
+      "why": [
+        "The axle shows no animal-drive wear.",
+        "The wear matches flowing water, not sand or gravel.",
+        "Use is implied by the wear pattern."
+      ],
+      "explanation": "The evidence points to current-driven rotation and away from animal power or abrasion."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Bats emit calls at frequencies too high for most people to hear. A detector that records ultrasound can therefore reveal species that mist-netting misses, because nets catch only animals flying at net height. In one survey, detectors registered eight species at a site where nets had caught three. The two methods were not measuring the same thing.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Combining acoustic detectors with nets gives a fuller species list than either method alone.",
+      "wrongs": [
+        "Mist-netting is more reliable than acoustic detection for every species.",
+        "Acoustic detectors capture bats physically for identification.",
+        "The survey proved that only three species live at the site."
+      ],
+      "why": [
+        "Nets missed five species the detectors found.",
+        "Detectors record sound; nets catch animals.",
+        "The detectors found eight species, so three is incomplete."
+      ],
+      "explanation": "Each method samples differently, so the union is more complete than either alone."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Legumes host bacteria in root nodules that convert atmospheric nitrogen into a form plants can use. A field planted with legumes for one season contains more available nitrogen the following year, even after the plants are harvested. Farmers who rotate legumes with cereals often reduce their fertiliser use without lowering yields.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The nitrogen fixed by legumes remains in the soil and benefits the next crop.",
+      "wrongs": [
+        "Legumes remove nitrogen from the soil and deplete it for later crops.",
+        "Cereal yields fall whenever legumes are grown in rotation.",
+        "Root-nodule bacteria convert nitrogen into a gas that plants cannot use."
+      ],
+      "why": [
+        "The passage says available nitrogen increases.",
+        "Yields are maintained while fertiliser falls.",
+        "The bacteria produce a usable form."
+      ],
+      "explanation": "The rotation effect follows from fixed nitrogen remaining available to the following crop."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Lighthouse keepers recorded weather every few hours for over a century. Their logs note wind direction, cloud cover and the first appearance of ice. Historians comparing these entries with ships' logs from the same waters find close agreement on storms but frequent disagreement on calm days. The keepers' records are therefore most valuable for severe weather.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The logs are most trustworthy where independent records confirm them, especially during storms.",
+      "wrongs": [
+        "The keepers' logs should be discarded because they disagree with ships' logs.",
+        "Calm days are the best evidence of the keepers' accuracy.",
+        "Ships' logs are unreliable because they were written at sea."
+      ],
+      "why": [
+        "Agreement on storms makes the logs useful there.",
+        "Disagreement is most frequent on calm days.",
+        "The passage does not accuse ships' logs of unreliability."
+      ],
+      "explanation": "Agreement during storms supports using the logs for severe weather, not for calm conditions."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Paper marbling floats pigments on a thickened bath, then lays paper on the surface to lift the pattern. Because the bath is viscous, the colors move slowly and can be combed before printing. Two sheets made minutes apart from the same bath differ, since each lift removes pigment. No two marbled sheets are identical.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Each print is unique because lifting the paper removes pigment from the bath.",
+      "wrongs": [
+        "Marbled sheets are identical because the bath is stirred between prints.",
+        "Pigments sink immediately in the thickened bath.",
+        "The combing step prevents any pattern from forming."
+      ],
+      "why": [
+        "The passage says each lift removes pigment and changes the pattern.",
+        "The viscous bath slows movement rather than sinking.",
+        "Combing shapes the pattern before printing."
+      ],
+      "explanation": "Depletion of pigment at each lift explains the uniqueness of every sheet."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A lake core contains a thin, pale layer of volcanic ash between darker organic sediment. The ash layer is the same thickness at both ends of the lake, which is unusual for sediment that normally thins away from shore. Geologists conclude that the ash fell directly onto the lake surface across its whole extent in a very short interval.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The layer records a single airborne deposit rather than material washed in from the shore.",
+      "wrongs": [
+        "The ash drifted in slowly from one shoreline over many years.",
+        "The layer was deposited by a river entering the lake.",
+        "The lake was dry when the ash fell."
+      ],
+      "why": [
+        "A direct fall explains uniform thickness across the lake.",
+        "River input would thin away from the inlet.",
+        "A dry lake would not preserve an even layer in sediment."
+      ],
+      "explanation": "Uniform thickness across the basin points to airborne deposition over a short time."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Nest temperature determines the sex of some turtle hatchlings. On beaches where shade from vegetation has increased, nests stay cooler and produce more males. Conservationists who move nests to open sand to protect them from tides may unintentionally raise temperatures. Protection and sex ratio can therefore pull in opposite directions.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "A nest-relocation program should consider temperature as well as protection from tides.",
+      "wrongs": [
+        "Moving nests to open sand guarantees a balanced sex ratio.",
+        "Shade has no effect on hatchling sex.",
+        "Tides are the only threat to nests on shaded beaches."
+      ],
+      "why": [
+        "Open sand is warmer, which skews the ratio.",
+        "The passage says temperature determines sex.",
+        "The text mentions vegetation and temperature, not only tides."
+      ],
+      "explanation": "The two goals conflict, so relocation must account for both."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Iron-gall ink etches paper as it ages because it releases acid. A manuscript written in the fifteenth century may have holes where the ink was thickest, even though the surrounding paper is sound. Conservators treat such leaves cautiously: washing removes acid but can also loosen the remaining ink, so a treatment that helps the paper may erase the text.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Preservation choices must balance saving the paper against losing the writing on it.",
+      "wrongs": [
+        "Washing always restores both the paper and the ink.",
+        "Iron-gall ink strengthens paper where it is applied.",
+        "Holes appear where the ink was thinnest."
+      ],
+      "why": [
+        "Washing can loosen the ink.",
+        "The ink releases acid and etches the paper.",
+        "Holes appear where the ink was thickest."
+      ],
+      "explanation": "The risk of losing ink sets a limit on acid removal."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Tree rings are wide in years with abundant moisture and narrow in dry years. A stand of oaks on a dry ridge shows narrow rings in the same years as a stand in a wet valley nearby. Because both stands respond to the same regional rainfall, the shared pattern lets researchers cross-date the two records and build one longer chronology.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "A climate signal common to both sites allows their rings to be aligned in time.",
+      "wrongs": [
+        "The two stands grew at different rates and cannot be compared.",
+        "Wide rings indicate drought at both sites.",
+        "Cross-dating depends on counting rings from the outside inward."
+      ],
+      "why": [
+        "The shared narrow years make alignment possible.",
+        "Wide rings indicate moisture, not drought.",
+        "The passage explains alignment by shared climate, not by a counting direction."
+      ],
+      "explanation": "A shared rainfall signal produces matching narrow years that align the chronologies."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A foraging bee that finds a rich patch returns to the hive and performs a figure-eight dance. The angle of the dance's straight run relative to vertical corresponds to the direction of the food relative to the sun. When researchers rotated the hive, the dancers adjusted the angle, and the other bees still found the patch.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The dance encodes direction in a way that stays accurate as the hive's orientation changes.",
+      "wrongs": [
+        "The dance communicates only the distance to food, not its direction.",
+        "Rotating the hive made the other bees unable to find the patch.",
+        "The angle of the dance is fixed and unrelated to the sun."
+      ],
+      "why": [
+        "The angle corresponds to direction.",
+        "The bees still found the patch after rotation.",
+        "The angle is measured relative to the sun."
+      ],
+      "explanation": "Adjustment after rotation shows the angle carries usable directional information."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Roman fish sauce was made by packing fish with salt and leaving the mixture in the sun for weeks. The salt drew water out of the tissue and suppressed the bacteria that would otherwise spoil it. Amphorae found on shipwrecks still contain residues of the sauce, and their sealed interiors kept the contents from exchanging with seawater.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Salt preservation and sealed storage together kept the sauce chemically distinct for centuries.",
+      "wrongs": [
+        "The sauce survived because seawater flushed through the amphorae.",
+        "Salt encouraged the bacteria that spoil fish.",
+        "The residues found on shipwrecks are unrelated to fish sauce."
+      ],
+      "why": [
+        "Sealed interiors are said to have kept seawater out.",
+        "Salt suppressed spoilage bacteria.",
+        "The passage identifies the residues as the sauce."
+      ],
+      "explanation": "Preservation plus sealing explains why residues survived intact."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Deep-sea corals grow in cold water and lack the algae that feed shallow reefs. They capture food from passing currents instead, and their skeletons grow slowly enough that a colony may be centuries old. Radiocarbon dating of a specimen showed that its base was far older than its living branches, so the colony is best understood as a long-lived structure rather than a single animal.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The age of a coral colony is set by the whole structure, not only by its living tissue.",
+      "wrongs": [
+        "Cold-water corals grow faster than shallow-water corals.",
+        "The living branches are the oldest part of the colony.",
+        "Deep-sea corals depend on algae for food."
+      ],
+      "why": [
+        "The passage says their skeletons grow slowly.",
+        "The base is older than the living branches.",
+        "They lack symbiotic algae and catch food from currents."
+      ],
+      "explanation": "Dating the base older than the branches shows the structure's age spans the whole colony."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Readers of old books sometimes wrote in the margins. A note may correct a printer's error, argue with the author, or record the date a reader finished the volume. Because marginalia are attached to a specific copy, they can show how one book traveled between owners. Historians therefore treat them as evidence of reading practice rather than as damage to be removed.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The value of marginalia lies in what they reveal about the people who used a particular copy.",
+      "wrongs": [
+        "Marginalia are valuable mainly because they restore the printed text.",
+        "All marginal notes record the same kind of information.",
+        "Removing marginalia improves the historical record."
+      ],
+      "why": [
+        "Their value is evidence of use, not restoration.",
+        "The passage lists several different kinds of note.",
+        "Historians treat the notes as evidence, not damage."
+      ],
+      "explanation": "The notes attach evidence of reading and ownership to a specific copy."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A retreating glacier leaves a valley with steep sides and a flat floor. A river valley of similar size usually has a V-shaped cross-section, because running water cuts downward and inward. The U-shape of a glaciated valley therefore records that ice, which erodes sideways as well as downward, once filled the space.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The shape of a valley can indicate whether ice or a river formed it.",
+      "wrongs": [
+        "Rivers carve U-shaped valleys more often than glaciers do.",
+        "A retreating glacier leaves a deep V-shaped trench.",
+        "Valley shape is unrelated to the agent of erosion."
+      ],
+      "why": [
+        "The text attributes U-shapes to ice and V-shapes to rivers.",
+        "Glacial valleys are described as U-shaped.",
+        "The passage draws the conclusion from shape."
+      ],
+      "explanation": "The contrast between U- and V-shaped profiles is the evidence for the erosional agent."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Coffee grown under shade trees ripens more slowly than coffee grown in full sun. The slower ripening produces denser beans, and tasters often describe the cup as more complex. Yields per hectare, however, are lower under shade, and farmers must weigh the price premium against the reduced volume harvested.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Shade-grown coffee can earn more per bean while producing fewer beans overall.",
+      "wrongs": [
+        "Shade-grown coffee always earns more per hectare than sun-grown coffee.",
+        "Full-sun coffee produces denser beans than shade-grown coffee.",
+        "Shade trees raise yields without affecting quality."
+      ],
+      "why": [
+        "The passage says yields are lower, so per-hectare earnings are not guaranteed.",
+        "Slower ripening under shade produces denser beans.",
+        "The text says shade lowers yields."
+      ],
+      "explanation": "Quality and price rise while volume falls, creating a trade-off."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Honey often contains pollen grains from the flowers the bees visited. Because pollen grains have distinctive shapes, a sample can reveal which plants were in bloom. Analysis of a jar from a market stall showed pollen from a plant that flowers only in early spring, several months before the honey was sold. The jar was probably not from the most recent harvest.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Pollen can date honey by showing which flowering season produced it.",
+      "wrongs": [
+        "Pollen analysis cannot distinguish one season's honey from another's.",
+        "The jar was certainly made from artificial honey.",
+        "Bees visit only one plant species in a season."
+      ],
+      "why": [
+        "Distinctive pollen tied to a season is exactly what enables dating.",
+        "The passage infers age, not adulteration.",
+        "The passage describes pollen from visited flowers generally."
+      ],
+      "explanation": "Season-specific pollen in a jar sold later points to an earlier harvest."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Shipworms bore into wooden hulls and pilings, digesting the wood with the help of bacteria. A hull recovered from a cold, low-oxygen harbour showed far less damage than one from a warm estuary. Conservators now store excavated timbers in tanks where oxygen is limited, because the animals that attack wood need oxygen as well as wood.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Limiting oxygen slows the organisms that would otherwise consume waterlogged wood.",
+      "wrongs": [
+        "Warm water protects wood from shipworms.",
+        "Shipworms digest wood without the help of bacteria.",
+        "Oxygen has no effect on wood-boring animals."
+      ],
+      "why": [
+        "The warm estuary showed more damage.",
+        "The passage mentions bacterial help.",
+        "The storage method relies on oxygen limitation."
+      ],
+      "explanation": "The comparison and the storage practice both turn on oxygen."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A solar still collects drinking water by evaporating brine under a transparent cover and condensing the vapour on the underside. Output depends on sunlight and on the area of the cover. On a cloudy day a small still may produce only a few spoonfuls, while a larger still in full sun produces liters. The device is therefore a supplement rather than a stand-alone supply.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "A solar still's output is too weather-dependent to guarantee water on its own.",
+      "wrongs": [
+        "A solar still produces the same output in all weather.",
+        "Small stills outperform large ones in full sun.",
+        "Condensation reduces the amount of water collected."
+      ],
+      "why": [
+        "The passage describes output varying with sunlight and area.",
+        "Larger stills in full sun produce liters.",
+        "Condensation is the collection step."
+      ],
+      "explanation": "Variable output under clouds explains why the device is a supplement."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Fish ferment faster in warm weather, and salt slows the process. Communities that live where temperatures stay high use more salt in their preserved fish than communities in cooler regions. A recipe that works in one place can therefore fail in another, not because the method is wrong but because the conditions have changed.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Preservation recipes have to be adjusted to local temperature.",
+      "wrongs": [
+        "Salt speeds fermentation in warm weather.",
+        "Cooler regions require more salt than warmer ones.",
+        "A recipe that works in one region always works in another."
+      ],
+      "why": [
+        "Salt slows fermentation.",
+        "The passage says warmer communities use more salt.",
+        "The passage says a recipe can fail when conditions change."
+      ],
+      "explanation": "Temperature changes the rate of fermentation, so salt amounts must adapt."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A cathedral bell is tuned by grinding metal from its rim. Removing material lowers the pitch and can also change the relationships among the bell's partial tones. Founders therefore remove metal in small stages, testing between each. A bell ground too far cannot be restored, because the metal cannot be added back.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Tuning is irreversible, so it proceeds cautiously and in measured steps.",
+      "wrongs": [
+        "Founders grind the rim quickly because extra metal can be added later.",
+        "Grinding raises the pitch of a bell.",
+        "Partial tones are unaffected by removing metal."
+      ],
+      "why": [
+        "Metal cannot be added back.",
+        "The passage says removing material lowers pitch.",
+        "Grinding can change the partial relationships."
+      ],
+      "explanation": "Irreversibility explains the incremental method."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Compacted soil resists root growth even when it holds enough water. Roots follow pores and cracks, and compaction closes those channels. In a field where machinery has passed repeatedly, roots may spread sideways above a hard layer instead of reaching deeper moisture. The plants survive but depend on rain in the upper soil.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Compaction makes crops more vulnerable to drought in the upper soil.",
+      "wrongs": [
+        "Compaction helps roots reach deeper water.",
+        "Roots grow through compacted soil more easily than through pores.",
+        "Machinery traffic improves the soil's pore structure."
+      ],
+      "why": [
+        "Roots are blocked from deeper layers.",
+        "Roots follow pores, which compaction closes.",
+        "Traffic is the cause of the compaction described."
+      ],
+      "explanation": "Shallow rooting ties survival to upper-soil moisture."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Soot deposits on cave ceilings accumulate in thin layers that record the fires below. A layer rich in charcoal indicates a larger or more frequent fire; a gap indicates a period without burning. Archaeologists reading a sequence of layers can therefore reconstruct how often people used a cave, even when no tools survive.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Soot layers provide a record of human activity independent of artefacts.",
+      "wrongs": [
+        "Soot layers form only when a cave is empty of people.",
+        "A gap in the layers proves that the cave was never visited.",
+        "Charcoal-rich layers indicate cold weather rather than fires."
+      ],
+      "why": [
+        "The passage says the layers record use.",
+        "A gap indicates a period without burning, not no visits.",
+        "Charcoal richness tracks fire size or frequency."
+      ],
+      "explanation": "Burning evidence alone can show occupation frequency."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Harbour sediment traps lead, copper and organic matter washed from streets and ships. A core taken near a former shipyard contains a sharp peak in copper at the depth corresponding to the yard's busiest decades. Above that layer, concentrations fall as the yard closed and runoff was diverted. The core therefore reads as a history of industrial activity.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Chemical layers in harbour mud can be tied to the rise and fall of nearby industry.",
+      "wrongs": [
+        "Copper concentrations rise after the shipyard closed.",
+        "Harbour sediment carries no trace of industrial activity.",
+        "The peak in copper came from natural erosion only."
+      ],
+      "why": [
+        "Concentrations fall above the peak as the yard closed.",
+        "The passage describes clear traces.",
+        "The peak corresponds to the yard's busiest decades."
+      ],
+      "explanation": "The copper profile matches the yard's timeline."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Bats that hibernate through winter need high humidity as well as steady cold. Dry air draws water from their skin and wings, and an aroused bat burns fat it cannot replace until spring. A cave that is cold but draughty can therefore be worse for a colony than one that is slightly warmer but still.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Stable, humid conditions matter more to hibernating bats than cold alone.",
+      "wrongs": [
+        "Warm, dry caves are ideal for hibernating bats.",
+        "Bats can replace fat easily during winter.",
+        "Air movement has no effect on hibernating bats."
+      ],
+      "why": [
+        "Dry air causes water loss and arousal.",
+        "The passage says fat cannot be replaced until spring.",
+        "Draughty caves are described as harmful."
+      ],
+      "explanation": "Humidity and stillness protect the fat reserve that must last the winter."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Roof tiles are laid so that each row overlaps the one below. Water running down the slope crosses from one tile to the next without reaching the deck beneath. If the overlap is too small, wind-driven rain can be forced upward under the edge. The overlap is therefore a specification, not a decorative choice.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Overlap width must be set to withstand the weather a roof will face.",
+      "wrongs": [
+        "A smaller overlap gives better protection in strong wind.",
+        "Water runs upward across the roof under normal conditions.",
+        "The overlap has no effect on whether rain reaches the deck."
+      ],
+      "why": [
+        "Too small an overlap lets wind-driven rain under the edge.",
+        "Water runs down the slope; only driven rain moves upward.",
+        "The overlap determines whether water crosses safely."
+      ],
+      "explanation": "Weather exposure sets the minimum overlap."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Some plants rely on ants to carry their seeds. The seed carries a fleshy appendage that ants eat, and the seed itself is discarded underground. Seeds moved this way end up buried, where they escape drying and some seed-eaters. The plant pays a small food cost for dispersal and burial.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The food reward buys the seed both transport and a safer place to germinate.",
+      "wrongs": [
+        "Ants destroy the seeds they carry.",
+        "The appendage prevents ants from moving the seed.",
+        "Seeds left on the surface survive better than buried ones."
+      ],
+      "why": [
+        "The seed is discarded intact underground.",
+        "The appendage is the reward that attracts ants.",
+        "Burial is described as protection."
+      ],
+      "explanation": "Transport plus burial explains the benefit of the food cost."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Clipper ships carried tea from China to London, and speed mattered because early arrivals sold at higher prices. Their hulls were narrow and their sail area large, which made them fast in strong winds but hard to handle in a calm. After steamships offered reliable schedules, the clippers lost their advantage.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Reliability of arrival proved more valuable than the fastest possible passage.",
+      "wrongs": [
+        "Clippers remained the fastest option after steamships appeared.",
+        "Calm weather was the clippers' greatest advantage.",
+        "Speed had no effect on the price tea fetched."
+      ],
+      "why": [
+        "Clippers lost their advantage to steamships.",
+        "The narrow hull was hard to handle in a calm.",
+        "The passage says early arrivals sold higher."
+      ],
+      "explanation": "Steam's dependable schedule displaced the clipper's speed premium."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Some birds lay eggs with thinner shells where the soil is low in calcium. The birds cannot manufacture calcium, so they must take it from food or grit. Studies of a population on calcium-poor ground found thinner shells and more breakages than in a population on limestone. The difference tracked geology, not species.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Access to calcium in the environment shapes shell thickness in these birds.",
+      "wrongs": [
+        "Shell thickness is fixed by the species and cannot vary.",
+        "Calcium-poor soil produces thicker shells.",
+        "Birds can synthesise calcium without eating it."
+      ],
+      "why": [
+        "The two populations differ within the same species.",
+        "Thin shells occur on poor ground.",
+        "The passage says birds must obtain calcium from food or grit."
+      ],
+      "explanation": "The geologic contrast, with the same species, isolates calcium availability."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Residue inside Roman amphorae can be identified by its chemical signature. Jars found in a storage room contained traces of olive oil, while jars from a nearby shop contained fish sauce. The two sets were the same shape. Shape alone therefore does not tell an archaeologist what a vessel carried.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Contents must be identified chemically, because form does not reveal use.",
+      "wrongs": [
+        "Amphora shape reliably indicates what was stored inside.",
+        "Fish sauce and olive oil leave identical residues.",
+        "All jars in a storage room held the same product."
+      ],
+      "why": [
+        "Identical shapes held different contents.",
+        "The distinction comes from chemical signatures.",
+        "The passage contrasts two nearby sets."
+      ],
+      "explanation": "Same shape, different contents forces chemical identification."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Pencil leads are graded by hardness, which depends on the ratio of graphite to clay. More clay makes a harder lead that holds a sharp point and prints lightly; more graphite makes a softer lead that darkens the page and wears quickly. A drafter choosing a lead is choosing between precision and darkness.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "No single lead suits both fine detail and dense shading equally well.",
+      "wrongs": [
+        "Hard leads darken the page more than soft leads.",
+        "Clay increases the darkness of a pencil line.",
+        "The graphite-to-clay ratio has no effect on wear."
+      ],
+      "why": [
+        "Hard leads print lightly; soft leads darken.",
+        "Graphite provides darkness, not clay.",
+        "The ratio determines both darkness and wear."
+      ],
+      "explanation": "The trade-off between point retention and darkness is the basis of the grading scale."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A bleached coral reef can recover if the algae that live inside the coral return while the coral is still alive. Recovery is slower where the reef is also stressed by sediment or warm water. Surveys find that reefs with cleaner water regain color sooner after a bleaching event than reefs near river mouths.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Reducing local stress helps a reef recover from bleaching.",
+      "wrongs": [
+        "Sediment speeds the return of algae to coral.",
+        "Bleached coral is always dead and cannot recover.",
+        "Warm water improves recovery after bleaching."
+      ],
+      "why": [
+        "Cleaner-water reefs recovered sooner.",
+        "The passage describes recovery while the coral is alive.",
+        "Warm water is named as an additional stress."
+      ],
+      "explanation": "The comparison points to local stress as a brake on recovery."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Salmon that die after spawning leave carcasses in streams. Their bodies carry nitrogen from the ocean, which enters the food web as the carcasses decay. Trees along a stream with many spawning salmon contain more marine-derived nitrogen than trees along a stream without them. The forest is therefore linked to the ocean by the fish.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Marine nutrients reach streamside forests through the bodies of spawning fish.",
+      "wrongs": [
+        "Trees cannot take up nitrogen from decaying fish.",
+        "Salmon remove nitrogen from streamside forests.",
+        "The connection exists only in streams without spawning salmon."
+      ],
+      "why": [
+        "The passage reports elevated nitrogen in those trees.",
+        "The carcasses add nitrogen.",
+        "The contrast is between streams with and without salmon."
+      ],
+      "explanation": "The nitrogen signature in trees traces the marine source through the carcasses."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A windmill's sails turn a shaft, and gearing converts that slow, powerful rotation into a faster one at the millstone. Changing the gear ratio changes the speed of the stone without changing the wind. Millers keep several gears on hand so that a strong wind and a light one can both be used.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Gearing lets a miller match the stone's speed to the available wind.",
+      "wrongs": [
+        "Gearing changes the amount of wind reaching the sails.",
+        "A single fixed gear ratio suits every wind condition.",
+        "The millstone turns more slowly than the shaft in all gears."
+      ],
+      "why": [
+        "Gearing converts rotation, not wind.",
+        "The passage describes changing ratios for different winds.",
+        "The gearing speeds the rotation up at the stone."
+      ],
+      "explanation": "Multiple gears exist to keep stone speed steady across wind strengths."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A manuscript written with acidic ink can lose text at the same time it loses paper. Washing a leaf removes acid but may also lift the ink, so conservators first test a small, unimportant area. If the ink survives the test, the leaf can be washed; if not, it is stored dry and digitised instead.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Treatment decisions depend on evidence from a test before the whole leaf is exposed.",
+      "wrongs": [
+        "Every leaf can be washed safely with acidic ink.",
+        "Testing a small area damages the whole manuscript.",
+        "Digitisation removes acid from the paper."
+      ],
+      "why": [
+        "Washing may lift the ink.",
+        "The test uses an unimportant area precisely to avoid damage.",
+        "Digitisation creates a copy; it does not treat the paper."
+      ],
+      "explanation": "The small-area test governs whether the full treatment is safe."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Moss on a stone wall is thickest on the side that receives the most moisture, not always the side that receives the most light. On a wall shaded by trees, moss may cover the whole face, while an exposed wall carries moss in a band near the ground. Anyone reading moss as a compass would need to know the local conditions.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Moss growth reflects moisture and shade, so it is an unreliable direction indicator without local context.",
+      "wrongs": [
+        "Moss always grows on the north side of a wall regardless of shade.",
+        "Moss requires full sunlight and avoids damp surfaces.",
+        "A shaded wall carries less moss than an exposed one."
+      ],
+      "why": [
+        "The passage says moisture matters more than direction.",
+        "Moss is thickest where moisture is greatest.",
+        "The shaded wall may be covered entirely."
+      ],
+      "explanation": "Moisture and shade dominate, which defeats naive compass use."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Volcanic lightning occurs in ash clouds when particles collide and separate charge. The effect is more common in eruptions that produce fine ash and vigorous convection. Observers have used lightning detection to track eruptions at night and in bad weather, when cameras see little. The electrical signal becomes a remote sensing tool.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Detecting lightning can reveal an eruption that visibility would hide.",
+      "wrongs": [
+        "Volcanic lightning occurs only in eruptions with no ash.",
+        "Lightning detection replaces the need to monitor volcanoes.",
+        "Cameras see eruptions better at night than detectors do."
+      ],
+      "why": [
+        "The passage ties lightning to fine ash and convection.",
+        "It is a tool, not a replacement for monitoring.",
+        "The text says cameras see little at night and in bad weather."
+      ],
+      "explanation": "The electrical signal works when visual observation fails."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Wool takes dye unevenly if its scales are damaged. Makers therefore clean fleece gently and avoid sudden temperature changes during dyeing, since a rapid shift can shock the fibres. A dye lot that looks patchy often records a handling error rather than a fault in the dye itself.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Even color depends on gentle handling as much as on the dye recipe.",
+      "wrongs": [
+        "Rapid temperature changes improve the evenness of dye uptake.",
+        "Damaged scales help wool absorb dye uniformly.",
+        "Patchiness always indicates a faulty dye."
+      ],
+      "why": [
+        "The passage warns that rapid shifts shock the fibres.",
+        "Damage is described as causing uneven uptake.",
+        "Patchiness often reflects handling, not the dye."
+      ],
+      "explanation": "Handling errors, not the dye, explain many patchy lots."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Charcoal in lake sediment comes from fires in the surrounding catchment. A layer with abundant charcoal often coincides with a shift from forest pollen to grass pollen. The two signals together suggest that fire removed trees and allowed grasses to spread. Neither signal alone would establish the sequence.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Combining charcoal and pollen evidence links fire to vegetation change.",
+      "wrongs": [
+        "Charcoal layers indicate that no fire occurred in the catchment.",
+        "Pollen shifts always precede fires by several centuries.",
+        "Grass pollen excludes the possibility of fire."
+      ],
+      "why": [
+        "Charcoal records fire.",
+        "The signals are described as coinciding.",
+        "Grass pollen follows fire in the proposed sequence."
+      ],
+      "explanation": "The coincidence of the two proxies is what ties fire to the vegetation shift."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A tea clipper's narrow hull reduced drag but also reduced cargo space. Owners packed light, high-value cargo such as tea and raced for the first market. When the Suez Canal opened, steamships could take a shorter route that sailing ships could not use reliably. The clippers' advantage narrowed.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "A route change reduced the value of the clippers' speed and small capacity.",
+      "wrongs": [
+        "The Suez Canal made the clippers' route shorter than the steamships'.",
+        "Clippers carried bulk cargo more cheaply after the canal opened.",
+        "Narrow hulls increased cargo capacity."
+      ],
+      "why": [
+        "Steamships took the shorter route the clippers could not use.",
+        "Clippers carried light, high-value cargo.",
+        "The passage says the narrow hull reduced capacity."
+      ],
+      "explanation": "The canal favored steam, eroding the clipper's niche."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A bell foundry casts a bell slightly larger than its final size because tuning removes metal. The founder also adjusts the profile so that the bell's partial tones form the intended chord. Changing the profile after casting is nearly impossible, so the shape must be right before the metal cools.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Most of a bell's tonal character is fixed at casting, with tuning only refining it.",
+      "wrongs": [
+        "A bell's profile can be reshaped easily after casting.",
+        "Tuning adds metal to raise the pitch.",
+        "The partial tones are unrelated to the bell's shape."
+      ],
+      "why": [
+        "The passage says reshaping after casting is nearly impossible.",
+        "Tuning removes metal.",
+        "The profile is adjusted to shape the partials."
+      ],
+      "explanation": "Since profile cannot be changed later, the cast shape carries the tonal design."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "An oyster reef filters water as its inhabitants feed. A dense reef can clear suspended particles from a large volume in a day. When reefs were removed, water clarity fell and sunlight reached less deeply. Seagrasses, which need light, declined in the same estuaries.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Losing oyster reefs can reduce water clarity enough to harm seagrass.",
+      "wrongs": [
+        "Oyster reefs increase suspended particles in the water.",
+        "Seagrasses grow better in turbid water.",
+        "Water clarity improved after reefs were removed."
+      ],
+      "why": [
+        "The reef filters particles out.",
+        "Seagrass needs light, which turbidity blocks.",
+        "The passage says clarity fell."
+      ],
+      "explanation": "Filtration loss, lower clarity and seagrass decline form the causal chain."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A mudbrick wall shrinks as it dries. If the outer surface dries faster than the core, the difference in shrinkage pulls the surface apart. Builders therefore mix straw into the clay, which slows drying and gives the shrinking mass something to hold onto. The cracks that appear in unstrawed brick begin at the surface.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Straw reduces cracking by evening out the drying of a mudbrick.",
+      "wrongs": [
+        "Straw speeds drying and increases surface shrinkage.",
+        "Mudbrick does not change size as it dries.",
+        "Cracks in unstrawed brick start at the core."
+      ],
+      "why": [
+        "The passage says straw slows drying.",
+        "The wall shrinks as it dries.",
+        "The text says cracks begin at the surface."
+      ],
+      "explanation": "Straw moderates the moisture gradient that causes surface cracking."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Goats browse young trees before they can grow above reach. On islands where goats were removed, tree lines moved upslope within decades. On islands where goats remained, the same species stayed low and sparse. The difference between the islands tracks the presence of goats rather than climate.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Grazing animals can hold a tree line in place.",
+      "wrongs": [
+        "Tree lines are determined entirely by temperature.",
+        "Removing goats prevented trees from spreading.",
+        "Goats help young trees grow above browsing height."
+      ],
+      "why": [
+        "The paired islands share climate but differ in goats.",
+        "Tree lines moved upslope after removal.",
+        "Goats browse young trees before they escape reach."
+      ],
+      "explanation": "The island comparison isolates grazing as the cause."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Lichens absorb water and nutrients directly through their surfaces, which also means they absorb pollutants. A lichen transplanted from a clean site to a city center accumulates metals within months. Species differ in tolerance, so a survey of which lichens survive can map pollution without instruments.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Lichen communities can act as biological pollution monitors.",
+      "wrongs": [
+        "Lichens filter out pollutants and remain unaffected.",
+        "All lichen species respond to pollution in the same way.",
+        "Transplanted lichens cannot accumulate metals."
+      ],
+      "why": [
+        "The passage says they absorb pollutants.",
+        "Tolerance differs by species.",
+        "The transplant accumulated metals within months."
+      ],
+      "explanation": "Absorption plus species-specific tolerance supports biomonitoring."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Dredging records show how often a harbour was cleared. Sediment cores show layers of coarse material where dredging mixed the bed. Where the two records agree, historians can date a period of increased shipping. Where they disagree, one source is probably incomplete.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Agreement between independent records strengthens a claim about harbour use.",
+      "wrongs": [
+        "Dredging records and sediment cores always agree.",
+        "Coarse sediment indicates that no dredging occurred.",
+        "Disagreement proves both records are correct."
+      ],
+      "why": [
+        "The passage describes cases where they disagree.",
+        "Mixed beds leave coarse layers.",
+        "Disagreement is explained as incompleteness in one source."
+      ],
+      "explanation": "Cross-checking two independent records is what supports the dating."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "In permafrost, ice wedges form when meltwater enters cracks and refreezes. Repeated widening pushes the surrounding ground upward and outward, creating patterned polygons at the surface. Where the climate warms, wedges melt and the polygons subside. The pattern is therefore a visible record of ground temperature.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Changing polygon patterns can signal thawing permafrost.",
+      "wrongs": [
+        "Polygons form only where the ground never freezes.",
+        "Melting ice wedges raises the ground surface.",
+        "The patterns are unrelated to temperature."
+      ],
+      "why": [
+        "Freezing meltwater is the mechanism.",
+        "Melting causes subsidence.",
+        "The passage links the pattern to ground temperature."
+      ],
+      "explanation": "The surface pattern tracks the state of the ice wedges."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A fresco is painted on wet lime plaster. As the plaster sets, the pigment becomes part of the wall, which is why the color lasts. The painter must work quickly, because once the plaster dries the surface will not accept pigment in the same way. Frescoes were therefore planned in sections sized to one day's work.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The technique's durability depends on painting before the plaster sets.",
+      "wrongs": [
+        "Fresco pigment sits on top of dry plaster.",
+        "A painter could return to the same section weeks later.",
+        "The sections were sized to the painter's arm length only."
+      ],
+      "why": [
+        "The pigment becomes part of the wall as it sets.",
+        "Dry plaster will not accept pigment the same way.",
+        "Sections matched a day's work, not arm length."
+      ],
+      "explanation": "The wet-plaster window explains both durability and the daily section plan."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A bridge cable is protected from rust by a galvanised coating that corrodes before the steel beneath. The coating is sacrificial: it gives up metal so the cable does not. Once the coating is consumed, the steel begins to rust, so inspectors measure coating thickness rather than waiting for visible damage.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Measuring the protective layer gives earlier warning than looking for rust.",
+      "wrongs": [
+        "Galvanising makes steel immune to corrosion.",
+        "Inspectors should ignore the coating and wait for rust.",
+        "The coating outlasts the steel it protects."
+      ],
+      "why": [
+        "The coating corrodes so the steel does not.",
+        "By the time rust shows, the coating is gone.",
+        "Once consumed, the steel begins to rust."
+      ],
+      "explanation": "Coating thickness is an early indicator of remaining protection."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "A fish's otolith grows in annual rings, much like a tree. The rings record the temperature and chemistry of the water the fish inhabited, and a single otolith carries the whole life history of one animal. Researchers can therefore place a fish in particular waters at particular ages, even after it has been caught far away.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Otoliths preserve a dated record of the environments a fish moved through.",
+      "wrongs": [
+        "Otolith rings record only the fish's age, not its environment.",
+        "An otolith changes after the fish dies, erasing its history.",
+        "Otoliths grow without annual layers."
+      ],
+      "why": [
+        "The rings record water chemistry as well as age.",
+        "The record survives in the recovered ear stone.",
+        "The passage describes annual rings."
+      ],
+      "explanation": "Annual layers with environmental chemistry allow life-history reconstruction."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "In stony deserts, stones sometimes sit on pedestals of fine soil. Wind removes the loose material around a stone but cannot lift the stone itself, so the ground beneath it erodes more slowly. Over time the stone appears to rise. The pedestal is therefore a record of wind erosion, not of the stone being pushed upward.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "The surrounding ground has been lowered, leaving the stone elevated.",
+      "wrongs": [
+        "The stone is gradually lifted by rising air currents.",
+        "Wind deposits soil beneath the stone.",
+        "Pedestals form only where the ground is fully protected from wind."
+      ],
+      "why": [
+        "Deflation removes material around the stone.",
+        "The pedestal remains because erosion is slower beneath the stone.",
+        "Wind erosion is the mechanism, not protection."
+      ],
+      "explanation": "Differential deflation lowers the surrounding plain."
+    },
+    {
+      "skill": "Inferences",
+      "passage": "Many mushrooms fruit after rain, but rain alone is not enough. The mycelium must already have stored enough nutrients, and the air must cool enough to trigger development. A dry summer followed by a single storm often produces no flush, while a wet autumn with mild nights produces a large one.",
+      "prompt": "Which choice most logically completes the text?",
+      "correct": "Fruiting depends on accumulated reserves and temperature as well as moisture.",
+      "wrongs": [
+        "A single storm is sufficient to produce a mushroom flush.",
+        "Mushrooms fruit best in dry, warm conditions.",
+        "Mycelium stores no nutrients before fruiting."
+      ],
+      "why": [
+        "The passage says rain alone is not enough.",
+        "Cooling nights and wet weather favor fruiting.",
+        "Reserves are described as necessary."
+      ],
+      "explanation": "The passage names three conditions, not one."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "People often assume that a desert is empty of life because it looks bare. A closer look at a single square meter of sand can reveal seeds, dormant eggs and buried insects waiting for rain. Within days of a storm, the same ground may be covered with seedlings and insects that were invisible before.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It states a common assumption and then presents evidence that contradicts it.",
+      "wrongs": [
+        "It lists several causes and ranks them by importance.",
+        "It describes a process step by step from beginning to end.",
+        "It compares two deserts and concludes that they are identical."
+      ],
+      "why": [
+        "There is no ranking of causes.",
+        "No sequential process is described.",
+        "Only one setting is discussed."
+      ],
+      "explanation": "The passage opens with an assumption, then offers hidden life as the correction."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A hand loom and a power loom produce the same cloth, but they organize work differently. On a hand loom the weaver controls pace and pattern at every pass. A power loom fixes the pace and moves pattern control into the punch card or the computer. The change is less about speed than about where decisions sit.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To explain how mechanisation shifted control over pattern and pace away from the weaver.",
+      "wrongs": [
+        "To argue that hand-woven cloth is of better quality.",
+        "To describe the technical steps of warping a loom.",
+        "To show that power looms produce no patterned cloth."
+      ],
+      "why": [
+        "Quality is not compared.",
+        "Warping is never mentioned.",
+        "Pattern control is relocated, not eliminated."
+      ],
+      "explanation": "The passage contrasts two looms and locates the real change in decision-making."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "Early maps of the ocean floor were assembled from lead lines dropped over the side. Each sounding gave one depth at one point. A century later, sonar surveyed whole swaths in a single pass. The difference is not merely accuracy: it is the shift from a scatter of points to a continuous surface.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It contrasts two surveying methods and explains what the change made possible.",
+      "wrongs": [
+        "It narrates a single voyage in chronological order.",
+        "It lists the materials used to build sounding lines.",
+        "It argues that early maps were more accurate than sonar maps."
+      ],
+      "why": [
+        "No voyage is described.",
+        "Materials are not listed.",
+        "Sonar is presented as the advance."
+      ],
+      "explanation": "The passage juxtaposes lead-line and sonar surveys and names the conceptual gain."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A paper conservator faced with a brittle volume has two options. Washing removes acid but risks the ink. Deacidification spray neutralises acid with less moisture but penetrates unevenly. The choice depends on the ink, the paper and how much time the collection can spare.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It presents two options, notes the risk of each, and says the choice is conditional.",
+      "wrongs": [
+        "It recommends one treatment as correct in every case.",
+        "It describes the history of paper manufacture in order.",
+        "It explains why brittle paper cannot be treated at all."
+      ],
+      "why": [
+        "The passage says the choice is conditional.",
+        "No manufacturing history is given.",
+        "Treatments are offered, not ruled out."
+      ],
+      "explanation": "Two treatments, their risks, and conditional advice structure the passage."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "Bamboo is often called a grass, and the label matters. It grows from an underground rhizome, sends up hollow stems, and dies back after flowering. Each of these traits is shared with grasses and not with the trees it resembles. The resemblance to wood is a matter of size, not of family.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To explain why bamboo's botanical traits place it with grasses rather than trees.",
+      "wrongs": [
+        "To argue that bamboo should be classified as a hardwood.",
+        "To describe how bamboo is harvested and dried.",
+        "To compare the strength of bamboo and steel."
+      ],
+      "why": [
+        "The passage separates bamboo from trees.",
+        "Harvesting is not discussed.",
+        "No strength comparison appears."
+      ],
+      "explanation": "Shared grass traits are the evidence behind the classification."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A new bridge design was tested in a wind tunnel at increasing speeds. At low speeds the deck behaved as predicted. At a critical speed the deck began to twist, and the twisting grew instead of settling. The test was stopped, and the section was reshaped before the next run.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It narrates a test in sequence and ends with the response to a failure.",
+      "wrongs": [
+        "It compares two bridge designs and declares one superior.",
+        "It explains the theory of wind loading without describing a test.",
+        "It lists several failures from different laboratories."
+      ],
+      "why": [
+        "Only one design is tested.",
+        "A concrete test is described.",
+        "There is a single test sequence."
+      ],
+      "explanation": "The passage follows the test from low speed to failure to redesign."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "Salt marshes absorb wave energy, store carbon and shelter young fish. They also migrate inland as sea level rises, but only if the land behind them is open. Where a seawall blocks that retreat, the marsh is squeezed against a hard edge and drowns. Protection therefore depends on what lies behind the marsh.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It lists benefits, introduces a condition for survival, and draws a conclusion about that condition.",
+      "wrongs": [
+        "It describes the formation of salt marshes from bare mud.",
+        "It argues that seawalls are the best way to protect marshes.",
+        "It compares marshes in two countries and finds no difference."
+      ],
+      "why": [
+        "Formation from mud is not described.",
+        "Seawalls are the obstacle in the example.",
+        "No country comparison appears."
+      ],
+      "explanation": "Benefits, a migration condition, and the blocking seawall build to the conclusion."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "The claim that goldfish have three-second memories is repeated so often that it has become a fact in popular telling. Experiments with trained fish show them returning to a feeding site weeks later. The repetition of the claim, not the evidence, explains its persistence.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To challenge a widely repeated claim by pointing to contrary evidence.",
+      "wrongs": [
+        "To explain how to train a goldfish to feed on cue.",
+        "To confirm that goldfish memory lasts only seconds.",
+        "To describe the anatomy of the goldfish brain."
+      ],
+      "why": [
+        "Training is mentioned as evidence, not as instruction.",
+        "The passage contradicts the three-second claim.",
+        "Anatomy is never discussed."
+      ],
+      "explanation": "The passage sets a popular claim against experimental evidence and explains its persistence."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A weaver preparing a warp winds hundreds of threads onto a beam, keeping each at even tension. If one thread is tighter, it pulls the cloth out of shape later. The preparation is slow and invisible in the finished fabric, which is why it is easy to skimp and expensive to get wrong.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To explain why an invisible preparatory step matters to the final product.",
+      "wrongs": [
+        "To describe the visible pattern of a finished cloth.",
+        "To argue that warp preparation can safely be skipped.",
+        "To compare two kinds of loom in detail."
+      ],
+      "why": [
+        "The step's invisibility is the point.",
+        "Skimping is described as costly.",
+        "Looms are not compared here."
+      ],
+      "explanation": "The passage connects an unseen preparation to a visible consequence."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "Some seeds remain dormant for decades even when conditions seem right. Scarification, whether by heat, abrasion or passage through an animal, can break that dormancy. The seed is not waiting passively; it is holding a lock that only particular events can open.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It describes an observation, illustrates it with examples, and closes with a comparison.",
+      "wrongs": [
+        "It presents a chronological history of seed science.",
+        "It argues that dormancy is simply a passive waiting period.",
+        "It lists the chemical steps of germination in order."
+      ],
+      "why": [
+        "No historical sequence is offered.",
+        "The final sentence rejects pure passivity.",
+        "Chemical steps are not given."
+      ],
+      "explanation": "Observation, examples, then the lock metaphor shape the passage."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "An acoustic engineer testing a lecture hall found that speech was clear in the front rows but muddled at the back. The ceiling reflected sound back to the front while the rear received echoes from a flat wall. Adding curved diffusers at the rear changed the pattern without adding amplification.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It describes a problem, identifies its cause, and reports a solution.",
+      "wrongs": [
+        "It compares two halls and finds both equally clear.",
+        "It lists materials used in hall construction.",
+        "It argues that amplification is the only solution."
+      ],
+      "why": [
+        "Only one hall is discussed.",
+        "Materials are incidental.",
+        "The solution avoids amplification."
+      ],
+      "explanation": "Problem, cause and remedy structure the paragraph."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A river that once meandered across a floodplain was straightened for navigation. The shortened channel carried water away faster, which deepened the bed and lowered the water table beside it. Farmland that had relied on the high water table dried, and the river began to cut downward rather than spread sideways.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It traces a chain of consequences that followed a single alteration.",
+      "wrongs": [
+        "It compares two rivers and ranks their water quality.",
+        "It describes the construction of a navigation lock.",
+        "It argues that straightening a river has no downstream effects."
+      ],
+      "why": [
+        "One river is followed.",
+        "No lock construction is described.",
+        "Consequences are the subject of the passage."
+      ],
+      "explanation": "The paragraph moves from straightening to deepening to a lowered water table and dried farmland."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A museum label once told visitors that a wooden mask was used in ceremonies. No record supported the claim. When the catalog was revised, the label was replaced with a note that the mask's use is unknown and that the wood dates to the twelfth century. The absence of evidence became part of the display.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To show how acknowledging missing evidence can improve an exhibit.",
+      "wrongs": [
+        "To describe the carving techniques used on the mask.",
+        "To prove that the mask was used in ceremonies.",
+        "To explain how wooden objects are dated by museums."
+      ],
+      "why": [
+        "Carving is not described.",
+        "The passage says the ceremony claim lacked support.",
+        "Dating is mentioned but not explained."
+      ],
+      "explanation": "The revision turns an unsupported claim into an honest label."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "Two methods exist for measuring a forest's carbon. One counts every tree in sample plots and estimates the rest. The other uses laser scanning from an aircraft to map canopy height. Plot counts are accurate but slow; scanning is fast but needs calibration against plots. Neither stands alone.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It compares two methods, names the limits of each, and concludes that they depend on one another.",
+      "wrongs": [
+        "It recommends abandoning plot counts in favor of scanning.",
+        "It describes a single method in step-by-step detail.",
+        "It argues that forest carbon cannot be measured."
+      ],
+      "why": [
+        "Plot counts are needed for calibration.",
+        "Two methods are compared.",
+        "Measurement is described as possible."
+      ],
+      "explanation": "The contrast and the calibration requirement produce the joint conclusion."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A bell is rung once and the sound continues for many seconds. A listener hears a fundamental note plus weaker tones above it. The shape of the bell determines which of those tones are strong, and shifting one part of the profile can make a bell sound bright or dull without changing its fundamental pitch.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To explain how a bell's shape shapes its tone beyond the fundamental note.",
+      "wrongs": [
+        "To describe the metal alloy used in bell casting.",
+        "To argue that a bell produces only one tone.",
+        "To explain how bell ringers time their strokes."
+      ],
+      "why": [
+        "Alloy is not mentioned.",
+        "The passage describes multiple tones.",
+        "Ringing technique is not discussed."
+      ],
+      "explanation": "The passage links profile shape to the strength of upper tones."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "Coastal dunes form when wind carries sand inland until vegetation slows it. The plants trap grains, and the dune grows upward. A single storm can cut the dune back, but the roots usually survive. The dune is therefore built slowly and destroyed quickly, a pattern that shapes how coastlines are managed.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It explains a formation process, notes a countervailing force, and draws a management implication.",
+      "wrongs": [
+        "It tells the history of one particular coastline.",
+        "It argues that storms build dunes faster than vegetation does.",
+        "It lists the plant species found on dunes."
+      ],
+      "why": [
+        "No specific coastline is followed.",
+        "Storms cut dunes back.",
+        "Species are not listed."
+      ],
+      "explanation": "Growth, storm damage and management follow one another."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "Every year the same lake freezes later than it did a century ago. Records kept by a monastery note the first day of ice each winter. The series is not continuous, but the trend survives the gaps. A record kept for another purpose has become evidence for a changing climate.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To show how an incidental historical record can document long-term change.",
+      "wrongs": [
+        "To describe the physics of lake freezing in detail.",
+        "To argue that the monastery records are useless.",
+        "To compare two lakes and explain their differences."
+      ],
+      "why": [
+        "The physics is not the subject.",
+        "The records are presented as valuable.",
+        "Only one lake is discussed."
+      ],
+      "explanation": "The final sentence states the reinterpretation of an old record."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A chef testing a new oven found that the same recipe produced different results on different shelves. The top shelf browned too quickly, the bottom stayed pale. The chef rotated the trays halfway through and the variation fell. The oven's heat was uneven, and the method had been hiding it.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It reports observations, describes a fix, and explains what the observations revealed.",
+      "wrongs": [
+        "It argues that oven shelves make no difference.",
+        "It lists the ingredients of the recipe.",
+        "It compares two ovens made by different manufacturers."
+      ],
+      "why": [
+        "Shelf position is the variable.",
+        "Ingredients are not listed.",
+        "One oven is tested."
+      ],
+      "explanation": "Observation, remedy and diagnosis form the sequence."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "Some desert plants open their pores at night rather than during the day. The cooler air reduces water loss, and the plant stores the carbon it takes in until daylight. The strategy trades a slower process for a much smaller water bill, which matters where rain is rare.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To explain how a night-time strategy reduces water loss in dry conditions.",
+      "wrongs": [
+        "To describe how desert plants store water in their leaves.",
+        "To argue that opening pores at midday is more efficient.",
+        "To compare desert plants with rainforest species."
+      ],
+      "why": [
+        "Storage of water is not described.",
+        "Midday opening would increase loss.",
+        "No rainforest comparison appears."
+      ],
+      "explanation": "The passage links timing, temperature and water loss."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A clockmaker adjusts a pendulum's length to change its period. A longer pendulum swings more slowly; a shorter one swings faster. Temperature matters too, because metal expands in warmth. Precision clocks therefore use alloys that change little with heat, or compensate with a second metal that expands in the opposite direction.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It states a basic relationship, introduces a complication, and describes two responses to it.",
+      "wrongs": [
+        "It narrates the invention of the pendulum clock.",
+        "It argues that temperature has no effect on clocks.",
+        "It lists the parts of a clock in the order they are assembled."
+      ],
+      "why": [
+        "No invention narrative appears.",
+        "Temperature is the complication.",
+        "No assembly order is given."
+      ],
+      "explanation": "The period-length relation, thermal expansion, and two compensations build the paragraph."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A farmer plants a cover crop after harvest. The roots hold soil through winter rains, and the plants add organic matter when they are turned in. The field looks idle, but the cover crop is working. Yield in the following season often rises even though nothing was harvested in between.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To explain the unseen benefits of a crop grown between harvests.",
+      "wrongs": [
+        "To describe how to harvest a cover crop for profit.",
+        "To argue that bare soil is better for yields.",
+        "To compare two fertiliser brands."
+      ],
+      "why": [
+        "Nothing is harvested from the cover crop.",
+        "Bare soil is the contrast case.",
+        "No brands are compared."
+      ],
+      "explanation": "The passage explains what the cover crop does while looking idle."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "The first tests of a new vaccine measure immune response, not protection. A later trial follows thousands of people to see who becomes ill. The two stages answer different questions, and a strong immune response in the first does not guarantee success in the second. Reading the first result as a verdict is a common error.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It distinguishes two stages, explains what each measures, and warns against conflating them.",
+      "wrongs": [
+        "It describes the manufacturing process of a vaccine.",
+        "It argues that early trials are unnecessary.",
+        "It reports the results of a completed field trial."
+      ],
+      "why": [
+        "Manufacturing is not described.",
+        "Early trials are presented as one stage.",
+        "No results are reported."
+      ],
+      "explanation": "The paragraph separates the two questions and names the mistake of merging them."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A stone arch bridge carries load by compression. Each block pushes against its neighbors, and the curve directs the force into the abutments. The bridge can stand for centuries because the material is strong in compression. It fails when water scours the foundation and the abutments move, not because the stone crumbles.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It explains the structural principle and then names the usual cause of failure.",
+      "wrongs": [
+        "It compares stone and steel bridges and prefers steel.",
+        "It describes the construction sequence of a bridge.",
+        "It argues that arches carry load in tension."
+      ],
+      "why": [
+        "No steel comparison appears.",
+        "Construction order is not given.",
+        "The passage specifies compression."
+      ],
+      "explanation": "The principle of compression is followed by scour as the failure mode."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "An archive received a box of letters with no catalog. A conservator noted the paper, ink and postmarks before anyone read them. The postmarks placed the letters in three decades; the ink identified two writers. Reading came last, after the physical evidence had narrowed the possibilities.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It narrates a sequence in which physical analysis precedes reading.",
+      "wrongs": [
+        "It argues that letters should be read before being examined.",
+        "It lists the contents of the box in detail.",
+        "It describes how paper is manufactured."
+      ],
+      "why": [
+        "Reading comes last in the passage.",
+        "Contents are summarized, not listed.",
+        "Manufacture is not discussed."
+      ],
+      "explanation": "The order of steps is the structure the question asks about."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A tidal flat looks uniform from a distance. Up close it holds channels, pools and patches of mud of different grain sizes. Each patch drains at a different rate, so the animals living in them experience different periods of exposure. A single square meter can contain several distinct habitats.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To show how small-scale variation creates distinct habitats on a seemingly uniform flat.",
+      "wrongs": [
+        "To describe the tides that cover a flat twice a day.",
+        "To argue that grain size has no effect on drainage.",
+        "To list the species found on tidal flats."
+      ],
+      "why": [
+        "Tide timing is not the subject.",
+        "Grain size is tied to drainage.",
+        "Species are mentioned generally."
+      ],
+      "explanation": "The contrast between distant and close views carries the point."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A baker's starter failed after a move to a new city. The flour was different, and so was the water. Replacing the flour restored the rise within a week, which suggested that the water was not the problem. The starter had been selective about its food all along.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It describes a problem, tests one cause, and draws a conclusion from the result.",
+      "wrongs": [
+        "It compares two cities and their baking traditions.",
+        "It argues that water quality never affects baking.",
+        "It lists the steps for making a starter from scratch."
+      ],
+      "why": [
+        "No traditions are compared.",
+        "Water is ruled out only after the flour test.",
+        "No recipe is given."
+      ],
+      "explanation": "The flour swap isolates the cause and produces the conclusion."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A lighthouse's beam is narrow because a wide beam spreads its light too thin to be seen far. Rotating the beam sweeps the horizon, so a distant ship sees a flash rather than a steady glow. The flash pattern identifies the lighthouse, which is why each station has a different interval.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It explains a design choice, describes its effect, and states a further function of that effect.",
+      "wrongs": [
+        "It narrates the construction of a lighthouse tower.",
+        "It argues that a wide beam is easier to see at sea.",
+        "It compares two lighthouses of different heights."
+      ],
+      "why": [
+        "Construction is not described.",
+        "A wide beam spreads light too thin.",
+        "Heights are not compared."
+      ],
+      "explanation": "Narrow beam, rotation and identifying flash build on one another."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A museum once displayed a bronze horse without its stand because the stand was thought to be a later addition. Analysis of the metal showed the stand and the horse were cast together. The display was changed, and the label now explains that the two parts belong to one object.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To show how material analysis corrected an assumption about an object's parts.",
+      "wrongs": [
+        "To describe the process of casting bronze.",
+        "To argue that museum labels are never revised.",
+        "To compare two bronze horses from different museums."
+      ],
+      "why": [
+        "Casting technique is not explained.",
+        "A revision is the subject.",
+        "One object is discussed."
+      ],
+      "explanation": "The passage contrasts an old assumption with the analysis that overturned it."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A floodplain is not wasted land. When a river overtops its banks, the water slows and drops sediment that renews the soil. The same flood that damages a road may improve a field. Building levees everywhere removes the benefit along with the risk, which is why some rivers are now reconnected to their floodplains.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It challenges a common view, explains a benefit, and describes a policy response.",
+      "wrongs": [
+        "It argues that levees are the only sensible flood policy.",
+        "It describes the geology of a river delta.",
+        "It lists the costs of flooding without mentioning benefits."
+      ],
+      "why": [
+        "Levees are presented as removing a benefit.",
+        "Delta geology is not described.",
+        "Benefits are central to the passage."
+      ],
+      "explanation": "The opening reframing leads to the sediment benefit and the reconnection policy."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A new telescope's mirror is made of many hexagonal segments. Each segment is adjusted by actuators so that the whole surface behaves as one curve. A single large mirror would be too heavy to launch, so the design trades complexity on the ground for a lighter payload in orbit.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It explains a design, describes how it works, and states the trade-off that motivated it.",
+      "wrongs": [
+        "It describes the launch sequence of a rocket.",
+        "It argues that a single large mirror is easier to launch.",
+        "It compares the images from two telescopes."
+      ],
+      "why": [
+        "No launch sequence appears.",
+        "A single mirror is too heavy.",
+        "No images are compared."
+      ],
+      "explanation": "Segment design, actuation and the launch-weight trade-off structure the passage."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A seed catalog lists a tomato as resistant to a disease. Resistance does not mean immunity: the plant may still show symptoms under heavy pressure. Gardeners who read the label as a guarantee are disappointed, though the variety may still outperform others in the same bed.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To clarify a term that is easily misread as a stronger promise than it is.",
+      "wrongs": [
+        "To describe how to grow tomatoes from seed.",
+        "To argue that resistant varieties never show symptoms.",
+        "To compare two tomato varieties for flavour."
+      ],
+      "why": [
+        "Growing instructions are absent.",
+        "Symptoms can still appear.",
+        "Flavour is not discussed."
+      ],
+      "explanation": "The passage defines resistance against a common misreading."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A choral conductor asks singers to breathe in the same place in a phrase. The instruction is not about stamina. A shared breath makes the consonants land together, which is what the audience hears as precision. The technique is therefore about ensemble rather than endurance.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It states an instruction, rejects an obvious explanation, and gives the real one.",
+      "wrongs": [
+        "It describes the history of choral music.",
+        "It argues that singers should breathe whenever they choose.",
+        "It explains how to train a solo voice."
+      ],
+      "why": [
+        "No history is given.",
+        "Shared breathing is the instruction.",
+        "The focus is ensemble, not solo training."
+      ],
+      "explanation": "The passage moves from instruction to rejected reason to the ensemble explanation."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A concrete path cracks because it is restrained at the edges while the slab expands in heat. The crack relieves the stress at one point but concentrates it at the ends. A line of joints cut across the path gives the concrete places to move, so the cracks form where they were planned instead of randomly.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It explains a failure, describes how it propagates, and presents a design that controls it.",
+      "wrongs": [
+        "It compares two kinds of concrete and ranks their strength.",
+        "It argues that joints make cracking worse.",
+        "It describes the mixing of a concrete batch."
+      ],
+      "why": [
+        "No strength ranking appears.",
+        "Joints control where cracks form.",
+        "Mixing is not discussed."
+      ],
+      "explanation": "Cause, propagation and control joints form the sequence."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A historian reading a merchant's ledger noticed that the same cargo was recorded twice, once on departure and once on arrival. The two entries differ by a small amount, which probably reflects loss in transit. Such gaps, collected across many voyages, can estimate how much cargo never reached port.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It describes a detail in a source and explains how that detail can be used at scale.",
+      "wrongs": [
+        "It narrates a single voyage from departure to arrival.",
+        "It argues that ledgers are too unreliable to use.",
+        "It compares two merchants and their profits."
+      ],
+      "why": [
+        "No voyage narrative is given.",
+        "The ledger is used, not dismissed.",
+        "One merchant is discussed."
+      ],
+      "explanation": "A small discrepancy becomes a method when aggregated over many records."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "Some spiders build webs that reflect ultraviolet light. Insects see ultraviolet, so the web appears as a bright pattern to them while remaining nearly invisible to birds that might tear through it. The silk is not decorative; it is tuned to the vision of a particular audience.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To explain how a web's appearance is shaped by the vision of different animals.",
+      "wrongs": [
+        "To describe how spiders spin silk threads.",
+        "To argue that birds are attracted to ultraviolet webs.",
+        "To compare the strength of two kinds of spider silk."
+      ],
+      "why": [
+        "Spinning is not described.",
+        "Birds see the web as nearly invisible.",
+        "Strength is not compared."
+      ],
+      "explanation": "The UV reflection is explained by what insects and birds can see."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A town's water supply came from a spring above the town. The pipe ran downhill, so no pump was needed, but the pressure at the top of the hill was too low for firefighting. A second tank halfway up solved the problem by holding water at a height that gave pressure without a pump.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It describes a system, names a shortcoming, and explains the remedy.",
+      "wrongs": [
+        "It compares two towns and their water supplies.",
+        "It argues that pumps are always necessary.",
+        "It describes the construction of a spring house."
+      ],
+      "why": [
+        "One town is discussed.",
+        "The solutions avoid pumps.",
+        "No spring house is described."
+      ],
+      "explanation": "Gravity feed, weak pressure uphill, and a mid-level tank form the sequence."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A paper was retracted after readers found that two figures were identical. The authors said the duplication was an error in assembling the manuscript. The journal's notice did not decide intent, only that the published record could no longer be relied on. Correction and misconduct are separate questions.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It reports an event, notes the authors' explanation, and distinguishes two issues the notice leaves separate.",
+      "wrongs": [
+        "It argues that every retraction proves misconduct.",
+        "It describes how to assemble figures for publication.",
+        "It compares two journals and their retraction policies."
+      ],
+      "why": [
+        "The passage separates correction from misconduct.",
+        "Figure assembly is mentioned but not explained.",
+        "One journal is discussed."
+      ],
+      "explanation": "The final sentence draws the distinction the notice preserves."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A beekeeper inspects a hive less often in winter. Opening the hive releases heat the colony has stored, and the bees must spend energy replacing it. A quick check may cost less than a cold night. The timing of an inspection is therefore a calculation, not a habit.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It describes a practice and explains the cost that justifies it.",
+      "wrongs": [
+        "It describes how bees make honey.",
+        "It argues that hives should be opened daily in winter.",
+        "It compares two species of bee."
+      ],
+      "why": [
+        "Honey making is not described.",
+        "The passage recommends less frequent inspection.",
+        "One species is discussed."
+      ],
+      "explanation": "The heat cost explains why inspections are rationed."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A geologist found shells on a mountain top. The shells are marine, and the rock around them formed under water. The explanation is not that the sea once reached this height, but that the rock was lifted. Uplift is slow, which is why the shells remain intact rather than being crushed.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It poses an observation, rejects one explanation, and supplies another with supporting detail.",
+      "wrongs": [
+        "It narrates a climb to a mountain summit.",
+        "It argues that the shells were carried up by birds.",
+        "It compares two mountain ranges."
+      ],
+      "why": [
+        "No climb is described.",
+        "Birds are not mentioned.",
+        "One location is discussed."
+      ],
+      "explanation": "The observation, rejected sea-level explanation and uplift account form the structure."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A violin maker chooses wood for how it rings when tapped. A plate that rings too long sounds hollow under the bow; one that dies quickly sounds thin. The maker removes wood from the edges until the tap tone falls into a range learned from experience rather than measured on a scale.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To explain a judgement made by ear rather than by measurement.",
+      "wrongs": [
+        "To describe the chemical treatment of violin varnish.",
+        "To argue that tap tone is irrelevant to violin sound.",
+        "To compare two famous violin makers."
+      ],
+      "why": [
+        "Varnish is not discussed.",
+        "Tap tone is central.",
+        "No makers are compared."
+      ],
+      "explanation": "The passage contrasts an experienced ear with a measured scale."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A long drought exposed a submerged bridge in a reservoir. The bridge was built before the valley was flooded and had been underwater for sixty years. Its piers were intact, but the deck had sagged where water had entered the joints. The reservoir's low level turned a hidden structure into a visible record of its own construction.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It begins with a chance event and uses it to describe what the revealed structure shows.",
+      "wrongs": [
+        "It argues that the bridge should never have been flooded.",
+        "It describes the engineering of reservoir dams.",
+        "It lists the materials used in bridge piers."
+      ],
+      "why": [
+        "No judgement about flooding is offered.",
+        "Dams are not described.",
+        "Materials are not listed."
+      ],
+      "explanation": "The drought is the occasion; the bridge's condition is the content."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A museum's textile gallery dims its lights. Dyes fade in proportion to the light they receive, and a year of bright display can do more damage than a century in a drawer. Visitors sometimes complain about the gloom, but the alternative is the gradual disappearance of the objects they came to see.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It explains a policy, gives its rationale, and acknowledges a cost.",
+      "wrongs": [
+        "It argues that bright lighting preserves textiles.",
+        "It describes the manufacture of natural dyes.",
+        "It compares two museums and their visitor numbers."
+      ],
+      "why": [
+        "Light causes fading.",
+        "Dye manufacture is not described.",
+        "Visitor numbers are not compared."
+      ],
+      "explanation": "Dim lighting, the fading mechanism and the visitor complaint complete the structure."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A new bridge was built beside the old one rather than on its site. Keeping the old bridge open during construction meant traffic never stopped, but it also meant the new structure had to fit a narrower corridor. The builders accepted the constraint because the alternative was months of closure.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It describes a decision and explains the trade-off that justified it.",
+      "wrongs": [
+        "It compares the cost of two bridges in detail.",
+        "It narrates the failure of the old bridge.",
+        "It argues that road closures are always preferable."
+      ],
+      "why": [
+        "No cost figures are given.",
+        "The old bridge stayed open.",
+        "Closures are the alternative that was avoided."
+      ],
+      "explanation": "The siting decision and its traffic trade-off are the passage's content."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A seed's size limits how far the wind can carry it. Small, winged seeds travel far but carry little stored food, so a seedling must establish quickly. Large seeds land near the parent but have reserves to survive shade. The trade-off shapes which species colonise open ground and which persist in closed forest.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It states a constraint, contrasts two strategies, and draws a consequence for where species grow.",
+      "wrongs": [
+        "It describes the anatomy of a seed in detail.",
+        "It argues that large seeds travel farther than small ones.",
+        "It lists the animals that disperse seeds."
+      ],
+      "why": [
+        "Anatomy is not the subject.",
+        "Small winged seeds travel farther.",
+        "No animals are listed."
+      ],
+      "explanation": "Size, dispersal and establishment lead to the habitat conclusion."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "An archaeologist found a hearth with ash, burnt bone and a ring of stones. The stones were not local. Analysis matched them to a riverbed two days' walk away. The hearth therefore records not only a fire but a decision to carry heavy material to a place where it was wanted.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It presents evidence, links it to a distant source, and infers deliberate behavior.",
+      "wrongs": [
+        "It narrates a journey to a riverbed.",
+        "It argues that the stones arrived by natural transport.",
+        "It compares two hearths from different sites."
+      ],
+      "why": [
+        "The journey is inferred, not narrated.",
+        "The analysis ties the stones to the riverbed.",
+        "One hearth is discussed."
+      ],
+      "explanation": "Evidence, provenance and inference about effort form the structure."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A textile printer tests a dye on a scrap before committing a whole bolt. The scrap is washed, dried and exposed to light in conditions harsher than ordinary use. If the color survives that, the bolt is printed. The test is a small, deliberate failure used to prevent a large one.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To explain why a small destructive test protects a larger investment.",
+      "wrongs": [
+        "To describe how dye is extracted from plants.",
+        "To argue that testing scraps is a waste of material.",
+        "To compare two printing machines."
+      ],
+      "why": [
+        "Extraction is not described.",
+        "The test prevents loss.",
+        "No machines are compared."
+      ],
+      "explanation": "The last sentence states the logic of the sample test."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A city planted trees along a new road. Within five years, half had died, mostly in the pits cut into compacted ground. The failures were not caused by drought or disease but by roots unable to spread beyond the pit. Later plantings broke the surrounding compaction before planting.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It reports an outcome, rules out two explanations, and identifies the real cause.",
+      "wrongs": [
+        "It narrates the construction of the road.",
+        "It argues that tree pits are the best place to plant.",
+        "It lists the species of trees planted."
+      ],
+      "why": [
+        "Road construction is incidental.",
+        "Pits are the problem.",
+        "Species are not listed."
+      ],
+      "explanation": "Mortality, rejected causes and compaction form the paragraph."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A stone tool's edge dulls at a rate that depends on what it cuts. Microscopic wear on a blade can distinguish hide from wood from bone. An archaeologist can therefore infer what a tool was used for without finding the material it worked on. The evidence is the surface, not the residue.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To explain how wear patterns on a tool reveal its past use.",
+      "wrongs": [
+        "To describe how stone tools are made.",
+        "To argue that tools cannot reveal their function.",
+        "To compare two archaeological sites."
+      ],
+      "why": [
+        "Manufacture is not described.",
+        "Function is the subject.",
+        "No sites are compared."
+      ],
+      "explanation": "The passage explains wear analysis and its inferential reach."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A wick must be the right size for a candle. Too small and the flame starves; too large and it smokes, leaving soot on the glass. Candle makers match wick diameter to the wax and the container. A wick that works in one candle may fail in another of the same height.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It describes a requirement, gives failure modes, and concludes that the choice is specific.",
+      "wrongs": [
+        "It narrates the history of candle making.",
+        "It argues that one wick size suits every candle.",
+        "It describes how wax is refined."
+      ],
+      "why": [
+        "No history is given.",
+        "The passage says a wick can fail in another candle.",
+        "Wax refining is not discussed."
+      ],
+      "explanation": "Requirement, failure modes and the specificity conclusion build the text."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "An island's birds were larger than their mainland relatives. With no ground predators, large size was not a liability. When people introduced rats, the largest ground-nesting species vanished first. Size had been an advantage that became a disadvantage in one generation.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It describes a pattern, explains its original cause, and shows how a new factor reversed it.",
+      "wrongs": [
+        "It compares two islands and their climates.",
+        "It argues that island birds are always smaller than mainland birds.",
+        "It lists the predators introduced to the island."
+      ],
+      "why": [
+        "Only one island is discussed.",
+        "The passage says the birds were larger.",
+        "One predator is named, not listed as a group."
+      ],
+      "explanation": "Advantage, explanation and reversal form the arc."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A manuscript's margins are wide because the skin was expensive and the scribe planned them. Ruling lines left faint grooves that are still visible. The widths are consistent across a whole scriptorium, which suggests a standard rather than an individual choice. The page layout is therefore evidence of workshop practice.",
+      "prompt": "Which choice best describes the purpose of the text?",
+      "correct": "To show how a page's physical features can reveal how it was produced.",
+      "wrongs": [
+        "To describe the animals whose skin was used.",
+        "To argue that margins were always random.",
+        "To compare two scribes and their handwriting."
+      ],
+      "why": [
+        "Animals are not described.",
+        "The widths are consistent.",
+        "Handwriting is not compared."
+      ],
+      "explanation": "Margins and ruling grooves are read as evidence of workshop standards."
+    },
+    {
+      "skill": "Text Structure and Purpose",
+      "passage": "A wing's shape produces lift because air moves faster over the curved upper surface. That faster air has lower pressure, and the difference pushes the wing upward. The explanation is often simplified as a longer path over the top, but the length of the path is not what matters. Pressure, not distance, does the work.",
+      "prompt": "Which choice best describes the overall structure of the text?",
+      "correct": "It states a mechanism, corrects a popular version of it, and names the real cause.",
+      "wrongs": [
+        "It describes the history of aviation in order.",
+        "It argues that wing shape has no effect on lift.",
+        "It lists the forces acting on a paper plane."
+      ],
+      "why": [
+        "No history is given.",
+        "Shape produces lift in the passage.",
+        "No forces are listed."
+      ],
+      "explanation": "The passage presents the pressure difference and corrects the equal-transit explanation."
+    }
+  ]
+}

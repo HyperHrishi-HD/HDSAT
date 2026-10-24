@@ -114,17 +114,19 @@ Legend: ✅ shipped & verified · ▶ current · ☐ queued
 - [x] Shown only when this browser has **no** stored profile and no account: `#/welcome`, reached by redirect from `/`. "Start now" writes the profile and enters the app for good; signing in from here also enters. Route-level, never a modal.
 - [x] Mobile-first (facts stack under 720 px), one heading, native buttons, keyboard focus, reduced-motion respected, and completely static — no bank, no network, nothing extra for PythonAnywhere to serve.
 
-### ☐ R2·M10 — Question bank authenticity
-- [ ] Import the **College Board Educator Question Bank** as a separate, clearly-labelled dataset that can be mixed into practice ("official-style") — licence/attribution reviewed before any import.
-- [ ] Add further openly-licensed / public SAT-style sets; normalise tables, charts and figures into the existing `FigureView` renderers so they actually render and work.
-- [ ] Validation gate: schema, one defensible key, explanation present, figure renders, no duplicate stems, difficulty/domain/skill tagged — nothing enters the bank otherwise.
-- [ ] Storage plan: figures as inline SVG/JSON, not binary blobs; keys stay in `question_keys`; measure the bank's effect on the PythonAnywhere quota before shipping.
-- [ ] **Balance the sections while adding.** Current bank: **4,776 Math vs 1,417 Reading & Writing** (2026-10-26). New items favour R&W until parity — about **3,359 R&W items** would match Math at this bank size — then 50/50. The dedupe backlog (481 repeated stems from templated generation) is deliberately **not** being rewritten; new content is the fix, and the QA gate stops more of the same entering.
+### ◐ R2·M10 — Question bank authenticity (first pass shipped 2026-10-27)
+- [x] **The expansion pipeline.** `generate_bank_rw_m10.py` builds the batch from `supabase/import/data/m10/*.json`; `merge_bank_m10.py` adds it to the shipped bank without rewriting a single existing item and writes its own idempotent seed (`0002_m10_rw_expansion.sql`). Re-running replaces only the M10 rows.
+- [x] **777 new Reading & Writing items, every one through the QA gate** (0 errors, 0 near-duplicate warnings on the batch): 120 Words in Context with authored context sentences, 20 Boundaries, 160 Transitions, 100 Central Ideas, 82 Inferences, 73 Text Structure and Purpose, 182 Rhetorical Synthesis, 40 quantitative-evidence items with real table / bar / line figures.
+- [x] **Bank now 6,970 items: 2,194 R&W / 4,776 Math** (was 1,417 / 4,776). Every figure renders through the existing `FigureView` and is covered by `rendering.test.tsx`; the live database holds the same 6,970 questions and keys.
+- [x] **Validation gate:** schema, one defensible key, explanation and a rationale per wrong choice, figure parses, no duplicate or near-duplicate stem — the merge refuses to write on any error.
+- [ ] **Parity is not reached.** Matching Math needs about **2,582 more R&W items** (~3,359 at the old bank size). Templated generation cannot supply them without failing the near-duplicate gate, so further batches are authored content: extend `data/m10/*.json` and re-run the two scripts. Nothing existing should be deleted to fake parity.
+- [ ] **College Board items are still not imported.** Their licence does not permit redistribution; the `--file` path, separate source row, `Official · …` label and QA gate are ready for an operator-supplied, licensed export. No College Board content is in the bank today.
+- [ ] The dedupe backlog (481 repeated stems from the earlier templated Math tier) is deliberately **not** being rewritten; the gate stops new repeats.
 
-### ▶ R2·M11 — Flashcards expansion
-- [x] **Scheduler wording:** the page is just "Flashcards"; **every user-visible "SM-2" mention is gone** (heading, deck blurbs, tip). The scheduler itself is unchanged.
-- [ ] More R&W and Math cards from sourced, accurate material, each reviewed.
-- [ ] Wording: "due now" → "next".
+### ◐ R2·M11 — Flashcards expansion (first pass shipped 2026-10-27)
+- [x] **Scheduler wording:** the page is just "Flashcards"; **every user-visible "SM-2" mention is gone**. The queue control now reads **Next**, the stat **Next up**, and the empty state **Nothing next**.
+- [x] **Deck grew from 1,764 to 1,804 cards**: 36 new Math reference cards (median/mode/range, weighted mean, probability and independence, perpendicular and parallel slopes, midpoint and distance, point-slope and standard form, system cases, vertex and discriminant, roots, function notation and transforms, variation, sequences, growth models, density, unit rate, similar triangles, polygon angles, arc length and radians, best fit and margin of error) and 4 new vocabulary words. The 1,615-word CC0 corpus was already fully used, and 74 of the 78 proposed words were already in the deck, so vocabulary growth now needs new sourced lists rather than more duplication.
+- [ ] A larger vocabulary source and a second Math batch remain; the merge script is the repeatable path.
 
 ### ✅ R2·M12 — Study-loop additions (shipped 2026-10-23)
 - [x] **Resume strip.** Custom Practice snapshots itself to `hdsat.practice-session.v1`; the Dashboard shows `In progress · SAT · Item 3 of 10 · 1 answered · 00:42` with one Resume action, and resuming lands on the first unanswered item. A finished or 7-day-old session is discarded.
@@ -139,7 +141,7 @@ Legend: ✅ shipped & verified · ▶ current · ☐ queued
 
 1. **"Mastered, 2+ in a row" — how does the item come back?** `status` becomes `mastered` after two consecutive correct answers on the *same* item, counted across sessions (`consecutiveCorrect >= 2` in `src/lib/storage.ts` and the `submit_question_attempt` RPC). Since 2026-10-23 practice no longer uses old items as filler: after the unseen supply is used, only items whose review date has arrived can be drawn (miss = now, correct once = 1 day, mastered = 7/14/30 days). A normal session can therefore be shorter than requested — that is the schedule working, not a shortage. `src/lib/review.ts` owns the rule and `src/lib/practice-schedule.test.ts` pins it.
 2. **What "SM-2" means here.** The classic spaced-repetition scheduler used by the flashcard deck: each review scores recall 0–5, which nudges an ease factor (floor 1.3). A score below 3 resets the interval to 1 day; successes step 1 → 3 → then `interval × ease`, and a 14-day interval marks the card `mastered`. `src/lib/sm2.ts` mirrors the PL/pgSQL so guest and cloud schedules agree. It is deliberately **not named in the UI** any more.
-3. **Storage reality and how many students fit (measured 2026-10-26).** Supabase DB = **25 MB** total: 4.3 MB of `questions` row data (6,193 rows, ~700 B each after TOAST), 2.8 MB `question_keys`, 0.5 MB `flashcards` (1,764 cards), and everything owned by students is **0.03 MB of row data** across 7 accounts (37 tracked attempts, 15 tests) — 0.8 MB once table and index overhead is counted. Live project: **7 auth users, 3 confirmed**. At the same density the free plan's **500 MB database** holds ~**300k questions with keys**, or the current bank plus roughly 475 MB of history.
+3. **Storage reality and how many students fit (measured 2026-10-27).** Supabase DB = **26 MB** total: 9.7 MB `questions` (6,970 rows after the M10 expansion), 3.2 MB `question_keys`, 0.5 MB `flashcards` (1,793 rows), and everything owned by students is still under **0.05 MB of row data**. At the same density the free plan's **500 MB database** holds roughly **270k questions with keys**, or the current bank plus about 470 MB of history.
 
    **Per student, per year (heavy user: ~3,000 attempts, 20 full tests):** attempts 0.5 MB, test attempts + responses 0.25 MB, progress rows 0.3 MB, daily activity 0.03 MB → **≈1.2 MB with indexes**. A casual student (~500 attempts) is ≈0.2 MB. So the free database holds roughly **400 heavy students or ~2,300 casual ones for a full year of history**; Pro's 8 GB multiplies that by 16 (~6,500 heavy / ~37,000 casual).
 
@@ -167,6 +169,12 @@ Legend: ✅ shipped & verified · ▶ current · ☐ queued
 
 6. **Google sign-in (OAuth)** — owner asked to add it, explicitly **not now**. Adding a provider means verifying branding + a consent screen, registering exact redirect URLs for the live origin and localhost, and testing account linking (an existing email/password account signing in with Google). Do it after the site polish pass, as its own milestone with its own review — never as a side change during another one.
 
+7. **Security hardening audit** — owner asked (2026-10-27), explicitly **not now**. One pass that treats the browser as hostile: confirm no RPC trusts a client-supplied user id, coin amount or price; review every RLS policy and `SECURITY DEFINER` function for search_path and grant mistakes; confirm answers cannot be read from PostgREST; keep the admin passcode bcrypt-hashed with token expiry and the device log; check rate limits and storage-bucket exposure. Cheating through devtools is already limited (grading and coins run in Postgres), but the audit should prove it endpoint by endpoint before launch.
+
+8. **Purge and republish the Git history** — owner asked (2026-10-27), **after the site is final**, not now. Replace the current history with a clean open-source-friendly one (no old revisions of credentials or experiments), then publish. Never rewrite the history while remote work is in flight.
+
+9. **A second database for non-user data** — owner asked (2026-10-27), **not now**. Split question/flashcard catalogues and any analytics onto another provider so Supabase holds only accounts and student history (or the reverse, if that audits better). A migration plan and a dual-read period would be required; nothing should move until the site is frozen.
+
 ---
 
 ## Section 5 — Decisions (resolved 2026-10-23)
@@ -185,4 +193,9 @@ Legend: ✅ shipped & verified · ▶ current · ☐ queued
 12. **Google OAuth** — accepted as a future item, deferred to Section 4.5.
 13. **Light accounts** (2026-10-26) — email confirmation is **off**; sign-up signs in immediately and the emailed 6-digit code only lifts the light-account cap. Capping is enforced in Postgres (compact attempt ledger, no `test_responses` rows), never as a paywall: progress, coins, streaks, flashcards, tests, reports and account deletion all work. The owner's preferred quote wins the day: "come back tomorrow, keep studying signed in."
 14. **Test date** — one optional date per account, synced in `profiles.target_test_date`, shown as the Dashboard goal. It never blocks practice or a full test.
-15. **Starting homepage** — a route-level hero, blank slate only; a signed-in student or an existing local profile can never see it, and "Start now" is the one-way door.
+15. **Starting homepage** — a route-level hero, blank slate only; a signed-in student or an existing local profile can never see it on the way in, and "Start now" is the one-way door.
+16. **Homepage motto (2026-10-27)** — one original line per visit, always different from the last, stored in `hdsat.welcome-motto.v1`. The page also keeps a slow brand glow and two drifting light pools, all disabled under `prefers-reduced-motion`. Reaching `#/welcome` on purpose (Credits links there) shows the page even with a session; it no longer bounces a signed-in student away.
+17. **Leaderboard (2026-10-27)** — top five by HDCoin balance, signed-in only, name + coins + best streak + attempts only. `get_leaderboard` is `SECURITY DEFINER`, granted to `authenticated` alone, and replaces any name containing `@` or markup with "Student". An off-board student still sees their own rank.
+18. **Lifetime HDCoins (2026-10-27)** — `user_stats.lifetime_coins`, maintained by a trigger on the coin ledger and backfilled from it; purchases reduce the balance but never the lifetime total. Guest mode keeps the same counter in `LocalProfile`.
+19. **Confirmation email (2026-10-27)** — one template carries **both** the link and the 6-digit code, and both stay valid for **24 hours** (`mailer_otp_exp = 86400`).
+20. **M10 / M11 first pass (2026-10-27)** — 777 new R&W items through the QA gate (bank 6,970) and 40 new cards (deck 1,804). Parity with Math and a larger vocabulary source remain open content work, not code work.

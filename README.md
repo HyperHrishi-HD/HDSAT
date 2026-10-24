@@ -4,18 +4,19 @@
 
 HDSAT is a minimalist, responsive digital SAT and PSAT preparation application supporting:
 - **Assessments:** Digital SAT, PSAT/NMSQT, PSAT 10, and PSAT 8/9.
-- **Persistent Question Bank:** 6,193 original items (1,557 Reading and Writing, 4,636 Math) filterable by assessment, section, domain, skill, difficulty, mastery status, bookmarked state, and licensed dataset source.
+- **Persistent Question Bank:** 6,970 original items (2,194 Reading and Writing, 4,776 Math) filterable by assessment, section, domain, skill, difficulty, mastery status, bookmarked state, and licensed dataset source.
 - **Multistage Adaptive Practice Simulations:** Section-level Module 1 baseline followed by deterministic Module 2 routing (`upper` vs. `lower` difficulty tier at the 60% threshold). The bank now fills the FULL Digital SAT blueprint (54 R&W + 44 Math items, full module timers) with a fresh randomized item mix per run, and a compact bank still degrades proportionally with a transparent coverage notice.
 - **Custom Practice:** Untimed or timed custom drills with toggles to exclude previously correct questions or reserve Benchmark Simulation Set items, plus a deterministic Study Coach that targets your lowest-accuracy domains.
 - **Arcade (three rooms):** *Interactive Arena* (the Coordinate Interceptor 2D canvas game, the daily Hard Question of the Day, and three daily quests capped at 30 questions a day), *Skill Mini-Games* (Desmos Lab, Equation Sprint, Transition Match, Vocab Precision, configured before you start) and *Practice Rush* (1/3/5-minute highs-score sprints).
 - **Shareable results & AI snapshots:** a completed full simulation can be downloaded as JSON, printed, or shared as a self-contained read-only link, and Account can copy a validated JSON snapshot of your own progress for any AI tutor.
 - **Operator console:** `/admin` reads live question reports and appeals through Supabase `SECURITY DEFINER` RPCs, with status filters, batch resolve/dismiss/delete, per-student cleanup, and replies that appear once on the student's Dashboard.
 - **In-App Math Tools:** The official College Board version of the Desmos graphing calculator beside every Math item — Custom Practice, Practice Rush, the Desmos Lab, Equation Sprint, the Question Bank, and every Math module of the full-screen test — plus the SAT Suite Math Reference Sheet. The tool pane is drag-resizable, a one-tap curved-arrow switch swaps it between the left and right side, and the reference sheet is a floating window you can drag by its header and resize from any edge or corner. On phones the calculator stacks under the question instead of squeezing it.
-- **Spaced-Repetition Flashcards (SM-2):** 1,764 verified cards in two fully separate decks — 1,639 vocabulary entries (24 authored SAT items + 1,615 CC0-dedicated elevated-vocabulary entries) and 125 math formulas/identities with KaTeX rendering, scheduled via the SM-2 algorithm.
-- **HDCoins Economy, Streaks & Achievements:** Duplicate-resistant, anti-farming reward ledger enforced identically in local Guest Mode and Supabase SECURITY DEFINER RPCs.
+- **Spaced-Repetition Flashcards (SM-2):** 1,804 verified cards in two fully separate decks — 1,678 vocabulary entries (59 authored SAT items + 1,615 CC0-dedicated elevated-vocabulary entries) and 126 math formulas/identities with KaTeX rendering, scheduled via the SM-2 algorithm.
+- **HDCoins Economy, Streaks & Achievements:** Duplicate-resistant, anti-farming reward ledger enforced identically in local Guest Mode and Supabase SECURITY DEFINER RPCs, with a lifetime-earned total that purchases never reduce.
+- **Leaderboard:** a compact Dashboard card with the five students holding the most HDCoins. It returns a display name, coin balance, best streak and attempt count only — never an email, an id or any answer — and only a signed-in student can call it. An address used as a display name is replaced with "Student" inside Postgres.
 - **Guest Mode & Cloud Sync:** Full local persistence (`localStorage` key `hdsat.profile.v1`) with idempotent replay into a signed-in Supabase account.
-- **Accounts usable before the email is confirmed:** sign-up issues a session immediately, so a mail-provider quota can never lock a student out. An address that has not entered its emailed 6-digit code is a **light account**: progress, coins, streaks, flashcards and test scores sync, while the two per-answer ledgers (`question_attempts` payload, `test_responses`) are trimmed in Postgres. A confirm strip never appears in the timed runner, and the 300/day Brevo budget stops at 280 with a plain "come back tomorrow" message.
-- **Starting homepage:** a static full-page hero shown only before this browser has any profile and no account is signed in; one click enters the app for good.
+- **Accounts usable before the email is confirmed:** sign-up issues a session immediately, so a mail-provider quota can never lock a student out. An address that has not entered its emailed 6-digit code is a **light account** (the email carries both a link and a 6-digit code, both valid for 24 hours): progress, coins, streaks, flashcards and test scores sync, while the two per-answer ledgers (`question_attempts` payload, `test_responses`) are trimmed in Postgres. A confirm strip never appears in the timed runner, and the 300/day Brevo budget stops at 280 with a plain "come back tomorrow" message.
+- **Starting homepage:** a full-page hero shown only before this browser has any profile and no account is signed in; one click enters the app for good. A different original motto rotates on every visit, the brand mark carries a slow glow, and two drifting light pools sit behind the content (all motion stops for `prefers-reduced-motion`). Credits links back to it.
 
 ---
 
@@ -41,7 +42,7 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
 │   │   ├── QuestionView.tsx    # Digital testing question view (stimulus, tables, MC cross-out, SPR)
 │   │   └── ui.tsx              # Minimalist UI primitives
 │   ├── data/
-│   │   ├── questionBank.json   # Generated verified question bank (4,975 items)
+│   │   ├── questionBank.json   # Generated verified question bank (6,970 items)
 │   │   ├── flashcards.json     # Generated SM-2 study deck (46 cards)
 │   │   └── resources.json      # Curated study resource library (18 verified links)
 │   ├── lib/
@@ -189,9 +190,8 @@ HDSAT strictly prohibits scraping or re-hosting copyrighted College Board Bluebo
    Original practice questions reserved as a designated benchmark simulation set (`is_official_college_board = false`, `is_released_practice_set = true`) so students can toggle "Exclude Benchmark Simulation Set" during routine drills.
 
 **Current Verified Counts:**
-- **Questions:** 4,975 total (339 Reading and Writing, 4,636 Math; 1,205 Easy, 3,057 Medium, 713 Hard; multiple-choice and student-produced response `spr`). Authored items come from `supabase/import/generate_bank_expansion.py`; the volume tier is generated by `supabase/import/generate_bank_scale.py` (exact-arithmetic parameter sweeps). A re-run regenerates `supabase/import/expansion/*.json`.
-- **Flashcards:** 1,764 total (1,639 vocabulary entries + 125 math formulas, `CC-BY-4.0`; the vocabulary corpus derives from the CC0-dedicated *A New Word Every Day* word list, recorded in `flashcards.json` → `vocabulary_source`).
-- **Flashcards:** 46 total (24 SAT Vocabulary + 22 SAT Math Formulas, `CC-BY-4.0`).
+- **Questions:** 6,970 total (2,194 Reading and Writing, 4,776 Math; multiple-choice and student-produced response `spr`). Authored items come from `supabase/import/generate_bank_expansion.py`, the volume tier from `generate_bank_scale.py`, and the R2-M10 Reading & Writing expansion from `generate_bank_rw_m10.py` (Words in Context, Boundaries, Transitions, passages, Rhetorical Synthesis, quantitative-evidence figures). `merge_bank_m10.py` adds the M10 batch to the shipped bank and writes its own seed; nothing existing is rewritten.
+- **Flashcards:** 1,804 total (1,678 vocabulary entries + 126 math formulas, `CC-BY-4.0`; the vocabulary corpus derives from the CC0-dedicated *A New Word Every Day* word list, recorded in `flashcards.json` → `vocabulary_source`, plus authored SAT words).
 - **Study Resources:** 18 verified links (College Board official specifications, Khan Academy, Desmos, OpenStax CC BY 4.0 textbooks, Purdue OWL).
 
 ### Running the Validator & Importer
@@ -262,5 +262,5 @@ PYTHONPATH=. .venv/bin/pytest -v
 
 ## Current Limitations
 
-- **Question Bank Size vs. Full Blueprint Length:** A full-length official Digital SAT requires 54 Reading & Writing items (27 per module) and 44 Math items (22 per module), plus an additional second-stage routing pool (81 R&W / 66 Math unique items). The bank's original, licensed pool now exceeds those minimums (339 R&W / 4,636 Math unique items), so every assessment fills the full blueprint with a fresh randomized mix per run and no repeats within a single test. Proportional scaling with a transparent coverage notice remains the fallback if the bank is later trimmed.
+- **Question Bank Size vs. Full Blueprint Length:** A full-length official Digital SAT requires 54 Reading & Writing items (27 per module) and 44 Math items (22 per module), plus an additional second-stage routing pool (81 R&W / 66 Math unique items). The bank's original, licensed pool now exceeds those minimums (2,194 R&W / 4,776 Math unique items), so every assessment fills the full blueprint with a fresh randomized mix per run and no repeats within a single test. Proportional scaling with a transparent coverage notice remains the fallback if the bank is later trimmed.
 - **Estimated Scaled Scores:** Adaptive simulation scores (400–1600) are practice estimates calculated from raw accuracy and Stage-2 module tier routing, not official College Board equated scores.

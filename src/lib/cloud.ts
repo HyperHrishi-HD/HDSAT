@@ -24,6 +24,8 @@ import type {
  */
 export interface CloudStats {
   hdCoins: number;
+  /** Every HDCoin earned, unaffected by cosmetic purchases. */
+  lifetimeCoins: number;
   currentStreak: number;
   bestStreak: number;
   totalAttempts: number;
@@ -336,6 +338,7 @@ export async function fetchSnapshot(): Promise<CloudSnapshot> {
   return {
     stats: {
       hdCoins: Number(statsRow.hd_coins ?? 0),
+      lifetimeCoins: Number(statsRow.lifetime_coins ?? statsRow.hd_coins ?? 0),
       currentStreak: Number(statsRow.current_streak ?? 0),
       bestStreak: Number(statsRow.best_streak ?? 0),
       totalAttempts: Number(statsRow.total_attempts ?? 0),
@@ -360,6 +363,62 @@ export async function fetchSnapshot(): Promise<CloudSnapshot> {
     displayName: String(profileRes.data?.display_name ?? 'Student'),
     emailVerifiedAt: (profileRes.data?.email_verified_at as string | null) ?? null,
     targetTestDate: (profileRes.data?.target_test_date as string | null) ?? null,
+  };
+}
+
+export interface LeaderboardRow {
+  rank: number;
+  displayName: string;
+  hdCoins: number;
+  bestStreak: number;
+  totalAttempts: number;
+  isMe: boolean;
+}
+
+export interface Leaderboard {
+  /** The board itself, at most `limit` rows. */
+  rows: LeaderboardRow[];
+  /** Where the signed-in student sits, even when they are off the board. */
+  myRank: number | null;
+  /** The student's own row when it fell outside the top slice. */
+  outsideTop: LeaderboardRow | null;
+  totalPlayers: number;
+}
+
+function mapLeaderboardRow(row: Record<string, unknown>): LeaderboardRow {
+  return {
+    rank: Number(row.rank ?? 0),
+    displayName: String(row.display_name ?? 'Student'),
+    hdCoins: Number(row.hd_coins ?? 0),
+    bestStreak: Number(row.best_streak ?? 0),
+    totalAttempts: Number(row.total_attempts ?? 0),
+    isMe: Boolean(row.is_me),
+  };
+}
+
+/**
+ * Top students by HDCoin balance. The database returns a name and three
+ * numbers only — no email, no id, no answers — and it is granted to signed-in
+ * students alone, so a guest never queries it.
+ */
+export async function fetchLeaderboard(limit = 5): Promise<Leaderboard> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('get_leaderboard', { p_limit: limit });
+  if (error) throw error;
+  const source = (data ?? []) as Record<string, unknown>[];
+  const all = source.map((row) => ({
+    ...mapLeaderboardRow(row),
+    outsideTop: Boolean(row.outside_top),
+  }));
+  const strip = ({ outsideTop: _drop, ...row }: (typeof all)[number]): LeaderboardRow => row;
+  const rows = all.filter((row) => !row.outsideTop).map(strip);
+  const outside = all.find((row) => row.outsideTop);
+  const rawRank = source[0]?.my_rank;
+  return {
+    rows,
+    myRank: rawRank === null || rawRank === undefined ? null : Number(rawRank),
+    outsideTop: outside ? strip(outside) : null,
+    totalPlayers: Number(source[0]?.total_players ?? rows.length),
   };
 }
 
