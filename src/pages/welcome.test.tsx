@@ -16,10 +16,12 @@ declare global {
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
 
 const markEntered = vi.fn();
+const markWelcomeSeen = vi.fn();
 const openAuthModal = vi.fn();
 
 vi.mock('../lib/storage', () => ({
   markEntered: () => markEntered(),
+  markWelcomeSeen: () => markWelcomeSeen(),
 }));
 
 vi.mock('../lib/store', () => ({
@@ -43,6 +45,7 @@ beforeEach(() => {
     actions: { openAuthModal, closeAuthModal: () => {} },
   };
   markEntered.mockClear();
+  markWelcomeSeen.mockClear();
   openAuthModal.mockClear();
   window.localStorage.clear();
   container = document.createElement('div');
@@ -88,6 +91,7 @@ describe('starting homepage', () => {
       start.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
     expect(markEntered).toHaveBeenCalledTimes(1);
+    expect(markWelcomeSeen).toHaveBeenCalledTimes(1);
     expect(container.textContent).toContain('app shell');
   });
 

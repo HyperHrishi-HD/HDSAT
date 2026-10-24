@@ -9,7 +9,7 @@ import {
   SITE_NAME,
   TERMS_PATH,
 } from '../lib/legal';
-import { markEntered } from '../lib/storage';
+import { markEntered, markWelcomeSeen } from '../lib/storage';
 import { useApp } from '../lib/store';
 
 /**
@@ -32,6 +32,9 @@ export function WelcomePage() {
 
   const enter = () => {
     markEntered();
+    // The homepage replaces the old in-app onboarding banner; showing both in
+    // a row would be the same welcome twice.
+    markWelcomeSeen();
     navigate('/', { replace: true });
   };
 
