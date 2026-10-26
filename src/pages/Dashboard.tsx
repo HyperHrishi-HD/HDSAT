@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { Badge, Button, Card, Icon, InfoTip, ProgressBar, Stat } from '../components/ui';
 import { Leaderboard } from '../components/Leaderboard';
 import { MissedLog } from '../components/MissedLog';
@@ -11,6 +11,7 @@ import {
   isQuestionOfTheDayDismissed,
   isQuestionOfTheDaySolved,
 } from '../lib/daily';
+import { DASHBOARD_SECTIONS } from '../lib/sections';
 import { formatClock } from '../lib/examEngine';
 import { loadPracticeSession, practiceResumeSummary } from '../lib/session';
 import { useApp } from '../lib/store';
@@ -170,24 +171,6 @@ export function DashboardPage() {
             <Icon name="practice" size={15} />
             <span>Start custom practice</span>
           </Link>
-          <Link to="/test" className="btn btn-outline">
-            <Icon name="test" size={15} />
-            <span>Adaptive full simulation</span>
-          </Link>
-          <Link to="/bank" className="btn btn-outline">
-            <Icon name="bank" size={15} />
-            <span>Browse question bank</span>
-          </Link>
-          <Link to="/flashcards" className="btn btn-outline">
-            <Icon name="flashcards" size={15} />
-            <span>Review flashcards</span>
-          </Link>
-          {/* The bottom tab bar stops at five entries, so the Arcade needs its
-              own door on phones. Hidden on every wider layout. */}
-          <Link to="/arcade" className="btn btn-outline only-mobile">
-            <Icon name="arcade" size={15} />
-            <span>Arcade</span>
-          </Link>
           {incorrectCount > 0 ? (
             <Link to="/practice?mode=incorrect" className="btn btn-subtle">
               <Icon name="refresh" size={14} />
@@ -197,6 +180,22 @@ export function DashboardPage() {
             </Link>
           ) : null}
         </div>
+
+        {/* The phone's tab bar carries five sections; everything else lives
+            here, and on a wide screen this is the Dashboard's own index rather
+            than a duplicate of the sidebar. */}
+        <nav className="dash-sections" aria-label="All sections">
+          {DASHBOARD_SECTIONS.map((section) => (
+            <NavLink
+              key={section.to}
+              to={section.to}
+              className={({ isActive }) => `dash-section${isActive ? ' is-active' : ''}`}
+            >
+              <Icon name={section.icon} size={16} />
+              <span>{section.label}</span>
+            </NavLink>
+          ))}
+        </nav>
       </Card>
 
       {notification ? (

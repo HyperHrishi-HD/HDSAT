@@ -36,6 +36,41 @@ export const EMAIL_QUEUE_MAX = 5;
 /** How many parked sends one app open may flush. */
 export const EMAIL_QUEUE_PER_OPEN = 2;
 
+/**
+ * The last few sends of the day are kept for recovery links.
+ *
+ * A confirmation is a nudge — the account already works, and the reminder
+ * strip says so. A recovery link is the only way back into an account whose
+ * password is gone. When the day's budget is down to its last 20 sends, only
+ * recovery spends them; a confirmation requested in that window waits for the
+ * reset, exactly as it would if the budget were gone.
+ */
+export const EMAIL_BUDGET_RESERVE = 20;
+
+export interface SendBudget {
+  used: number;
+  limit: number;
+  remaining: number;
+  allowed: boolean;
+}
+
+/**
+ * Whether this kind of mail may be sent right now.
+ *
+ * An unknown budget (offline, RPC failed) is not a refusal: the request goes
+ * out and the database's own rate limiter has the final say. Order matters —
+ * recovery first, then confirmation.
+ */
+export function budgetAllows(kind: EmailKind, budget: SendBudget | null): boolean {
+  if (!budget) return true;
+  if (!budget.allowed) return false;
+  if (kind === 'reset') return true;
+  return budget.remaining > EMAIL_BUDGET_RESERVE;
+}
+
+/** Recovery links first, then the request that has waited longest. */
+const KIND_RANK: Record<EmailKind, number> = { reset: 0, confirm: 1 };
+
 /** The UTC calendar day a timestamp falls in, as YYYY-MM-DD. */
 export function utcDay(now: number): string {
   return new Date(now).toISOString().slice(0, 10);
@@ -129,15 +164,24 @@ export function removeQueuedEmail(
   return next;
 }
 
-/** Requests that may be attempted now: inside their window, not tried today. */
+/**
+ * Requests that may be attempted now: inside their window, not tried today,
+ * recovery before confirmation and oldest first inside each kind. The order is
+ * the answer to "who needs the scarce mail first" — a locked-out student
+ * before a nudge — and it is stable, so a flush that spends two sends spends
+ * them on the two that have been waiting longest in the higher rank.
+ */
 export function dueQueuedEmails(
   queue: QueuedEmail[],
   now: number = Date.now()
 ): QueuedEmail[] {
   const today = utcDay(now);
-  return queue.filter(
-    (entry) => now - entry.queuedAt <= EMAIL_QUEUE_TTL_MS && entry.lastAttemptDay !== today
-  );
+  return queue
+    .filter(
+      (entry) => now - entry.queuedAt <= EMAIL_QUEUE_TTL_MS && entry.lastAttemptDay !== today
+    )
+    .slice()
+    .sort((a, b) => KIND_RANK[a.kind] - KIND_RANK[b.kind] || a.queuedAt - b.queuedAt);
 }
 
 /** Record that today's attempt happened, so a failed send cannot loop. */

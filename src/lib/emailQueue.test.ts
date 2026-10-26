@@ -7,10 +7,12 @@
  */
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
+  EMAIL_BUDGET_RESERVE,
   EMAIL_QUEUE_KEY,
   EMAIL_QUEUE_MAX,
   EMAIL_QUEUE_PER_OPEN,
   EMAIL_QUEUE_TTL_MS,
+  budgetAllows,
   dueQueuedEmails,
   loadEmailQueue,
   markQueuedAttempt,
@@ -99,6 +101,44 @@ describe('deferred email queue', () => {
     expect(loadEmailQueue(NOON)).toEqual([]);
     expect(() => queueEmail('student@example.com', 'confirm', NOON)).not.toThrow();
     expect(loadEmailQueue(NOON)).toHaveLength(1);
+  });
+
+  it('spends the scarce sends on recovery links before confirmations', () => {
+    // The confirmation was asked for an hour earlier, and still waits.
+    queueEmail('nudge@example.com', 'confirm', NOON - 3_600_000);
+    queueEmail('locked-out@example.com', 'reset', NOON);
+
+    const due = dueQueuedEmails(loadEmailQueue(NOON), NOON);
+    expect(due.map((entry) => entry.kind)).toEqual(['reset', 'confirm']);
+  });
+
+  it('orders the same kind oldest first, so waiting is what earns a send', () => {
+    queueEmail('newer@example.com', 'confirm', NOON);
+    queueEmail('older@example.com', 'confirm', NOON - 60_000);
+
+    const due = dueQueuedEmails(loadEmailQueue(NOON), NOON);
+    expect(due.map((entry) => entry.email)).toEqual(['older@example.com', 'newer@example.com']);
+  });
+
+  it('keeps the tail of the day for recovery links', () => {
+    const tail = {
+      used: 280 - EMAIL_BUDGET_RESERVE,
+      limit: 280,
+      remaining: EMAIL_BUDGET_RESERVE,
+      allowed: true,
+    };
+    expect(budgetAllows('reset', tail)).toBe(true);
+    expect(budgetAllows('confirm', tail)).toBe(false);
+
+    const roomy = { used: 10, limit: 280, remaining: 270, allowed: true };
+    expect(budgetAllows('confirm', roomy)).toBe(true);
+
+    const spent = { used: 280, limit: 280, remaining: 0, allowed: false };
+    expect(budgetAllows('reset', spent)).toBe(false);
+    expect(budgetAllows('confirm', spent)).toBe(false);
+
+    // An unknown budget is not a refusal: the server's own limiter is the judge.
+    expect(budgetAllows('confirm', null)).toBe(true);
   });
 
   it('ignores entries with no address', () => {

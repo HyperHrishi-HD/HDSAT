@@ -12,26 +12,8 @@ import {
   PRIVACY_PATH,
   TERMS_PATH,
 } from '../lib/legal';
-import { Alert, Badge, Icon, type IconName } from './ui';
-
-const NAV: { to: string; label: string; icon: IconName; end?: boolean }[] = [
-  { to: '/', label: 'Dashboard', icon: 'dashboard', end: true },
-  { to: '/practice', label: 'Practice', icon: 'practice' },
-  { to: '/test', label: 'Full test', icon: 'test' },
-  { to: '/bank', label: 'Question bank', icon: 'bank' },
-  { to: '/flashcards', label: 'Flashcards', icon: 'flashcards' },
-  { to: '/arcade', label: 'Arcade', icon: 'arcade' },
-  { to: '/resources', label: 'Resources', icon: 'resources' },
-  { to: '/rewards', label: 'Rewards', icon: 'rewards' },
-  { to: '/account', label: 'Account', icon: 'account' },
-];
-
-/**
- * The bottom bar carries every section except the Arcade, which has its own
- * door on the Dashboard — phones do not get an Arcade tab, and a ninth pill
- * would squeeze the row past the width of a thumb.
- */
-const MOBILE_NAV = NAV.filter((item) => item.to !== '/arcade');
+import { Alert, Badge, Icon } from './ui';
+import { MOBILE_NAV, SECTIONS as NAV } from '../lib/sections';
 
 /**
  * A name that scrolls back and forth inside its pill once it is too long to
@@ -158,10 +140,9 @@ export function Layout() {
   ]);
 
   /**
-   * Eight bottom tabs on a phone are 45px wide. That is not enough for
-   * "Flashcards" on one line, so the row steps down rather than dropping the
-   * words entirely: full labels while they fit, small two-line labels while a
-   * thumb-width remains, icons alone only when even that is impossible.
+   * Five bottom tabs are ~76px wide on a 390px phone, which fits "Question
+   * bank" on two lines. The step-down stays anyway: a very narrow phone, or a
+   * system font scaled up, must not push the row past the edge.
    */
   useEffect(() => {
     const nav = mobileNavRef.current;
@@ -169,14 +150,21 @@ export function Layout() {
     const check = () => {
       const count = nav.querySelectorAll('.mobile-link').length || MOBILE_NAV.length;
       const per = nav.clientWidth > 0 ? nav.clientWidth / count : 0;
-      setNavSize(per >= 78 ? 'full' : per >= 42 ? 'compact' : 'icons');
+      // Five tabs give ~75px each on a 390px phone, which is enough for
+      // "Question bank" on two lines; the step-downs only catch a 320px phone
+      // or a system font scaled up past the default.
+      setNavSize(per >= 68 ? 'full' : per >= 40 ? 'compact' : 'icons');
     };
     check();
+    // The bar is display:none on a wide layout, so the first measurement can be
+    // 0 and every tab would come out icon-only. One frame later the box exists.
+    const frame = requestAnimationFrame(check);
     window.addEventListener('resize', check);
     const observer =
       typeof ResizeObserver !== 'undefined' ? new ResizeObserver(check) : null;
     if (observer) observer.observe(nav);
     return () => {
+      cancelAnimationFrame(frame);
       window.removeEventListener('resize', check);
       observer?.disconnect();
     };

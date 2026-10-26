@@ -128,12 +128,14 @@ CORS surfaces and two places for an answer key to leak.
   UPDATE revoked from `profiles` and `user_question_progress`, and
   `complete_activity_session` now clamps a claimed score to the attempts the
   server actually graded.
-- **Open-source repo** — prepared, not executed: `tools/export_open_source.py
-  --verify` builds the sanitised tree (127 files, 1,000 stratified questions,
-  300 cards, no `.pa`/`supabase`/`backend`/admin console, `isCloudConfigured`
-  stubbed to false) and typechecks it clean. The history purge stays a
-  deliberate, separate action — runbook in that script's docstring; rotate any
-  secret that was ever committed first.
+- **The stripped repository** — done, private: `HyperHrishi-HD/HDSAT-standalone`
+  is a fresh history with exactly one branch (`main`) and one commit. 126 files,
+  1,000 stratified questions, 300 cards; no `.pa`, no `supabase`, no `backend`,
+  no admin console, no deployment notes, `isCloudConfigured` stubbed to false and
+  the Account copy rewritten so it never names a provider. `tools/export_open_source.py
+  --verify` typechecks and builds that tree before it is pushed, and the leak
+  scan (project ref, host, provider keys, service role, `VITE_SUPABASE_*`) is
+  clean. The existing `HDSAT` repo keeps the full history and hosting.
 
 ## What is left before launch
 

@@ -692,9 +692,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       if (!address) return { sent: false, message: 'Enter your email address first.' };
 
       // Brevo gives 300 sends a day. Stop asking at 280 so the provider never
-      // answers with an error; the account keeps working either way.
+      // answers with an error, and keep the last 20 for recovery links — the
+      // account keeps working either way.
       const budget = await cloud.emailSendBudget().catch(() => null);
-      if (budget && !budget.allowed) {
+      if (!emailQueue.budgetAllows('confirm', budget)) {
         // Park the request instead of losing it. The account is already usable
         // — confirmation only lifts the light-account cap — so the cost of
         // waiting is the reminder strip, not access to the app.
@@ -770,9 +771,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     if (due.length === 0) return;
     const budget = await cloud.emailSendBudget().catch(() => null);
     if (budget && !budget.allowed) return;
-
+    // The queue is ordered recovery-first, so the cheap cap is the whole
+    // policy: an open spends at most two sends and never more than the day has
+    // left, and a confirmation in the reserved tail is skipped rather than
+    // blocking the recovery link queued behind it.
+    const room = budget ? Math.min(emailQueue.EMAIL_QUEUE_PER_OPEN, budget.remaining) : emailQueue.EMAIL_QUEUE_PER_OPEN;
     let sent = 0;
-    for (const entry of due.slice(0, emailQueue.EMAIL_QUEUE_PER_OPEN)) {
+    for (const entry of due) {
+      if (sent >= room) break;
+      if (!emailQueue.budgetAllows(entry.kind, budget)) continue;
       emailQueue.markQueuedAttempt(entry.email, entry.kind);
       try {
         if (entry.kind === 'reset') {

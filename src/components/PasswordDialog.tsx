@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Alert, Button, Field, Toggle } from './ui';
 import * as cloud from '../lib/cloud';
-import { queueEmail, removeQueuedEmail } from '../lib/emailQueue';
+import { budgetAllows, queueEmail, removeQueuedEmail } from '../lib/emailQueue';
 import {
   PASSWORD_MIN_LENGTH,
   cooldownMessage,
@@ -154,7 +154,7 @@ export function PasswordDialog({ mode, email, onClose, onDone }: PasswordDialogP
       // the request waits for the next open after the UTC reset instead of
       // disappearing.
       const budget = await cloud.emailSendBudget().catch(() => null);
-      if (budget && !budget.allowed) {
+      if (!budgetAllows('reset', budget)) {
         queueEmail(email, 'reset');
         setMessage(
           `Today's email limit is used up. The recovery link is queued and goes out the next time you open HDSAT after midnight UTC.`

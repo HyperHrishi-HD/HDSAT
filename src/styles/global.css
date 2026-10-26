@@ -180,6 +180,50 @@ code { font-family: var(--mono); background: var(--surface-2); padding: 1px 5px;
 .pill strong { color: var(--ink); }
 .content { padding: 22px; max-width: 1120px; width: 100%; }
 .mobile-nav { display: none; }
+
+/* The Dashboard's index of every section. Auto-fit means one row on a laptop,
+   two columns on a phone, and no horizontal squeeze at 320px. */
+.dash-sections {
+  display: grid;
+  /* Eight sections, so two or four columns always divide evenly. An auto-fit
+     track count would leave one tile stranded on its own row. */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+@media (min-width: 640px) {
+  .dash-sections { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+.dash-section {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 44px;
+  padding: 9px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--ink);
+  font-size: 0.86rem;
+  text-decoration: none;
+  transition: 120ms ease;
+}
+.dash-section .ui-icon { flex-shrink: 0; color: var(--muted); }
+.dash-section:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.dash-section:hover .ui-icon { color: var(--accent); }
+.dash-section.is-active {
+  border-color: var(--accent);
+  background: var(--accent-soft, var(--surface-2));
+  color: var(--accent);
+  font-weight: 600;
+}
+.dash-section.is-active .ui-icon { color: var(--accent); }
+@media (max-width: 420px) {
+  .dash-section { font-size: 0.82rem; padding: 9px 10px; }
+}
 .boot { display: grid; place-items: center; height: 100vh; height: 100dvh; gap: 6px; }
 .boot-mark { font-weight: 700; letter-spacing: 0.3em; }
 
@@ -2382,6 +2426,7 @@ mark.bb-hl[data-has-note='true']::after {
 .mobile-link {
   flex: 1 1 0;
   min-width: 0;
+  min-height: 46px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -4466,15 +4511,10 @@ explanation can never be clipped by the panel again. */
 }
 
 /* ---------- Arcade on phones ---------- */
-/* The bottom tab bar is capped at five entries, so the Arcade gets a door of
-   its own on the Dashboard exactly where the tabs run out. */
-/* Must match the breakpoint that hides the sidebar (900px): between 761 and
-   900 there is no side rail, so the Dashboard door is the only way into the
-   Arcade. */
-.only-mobile { display: none !important; }
-@media (max-width: 900px) {
-  .only-mobile { display: inline-flex !important; }
-}
+/* The bottom tab bar carries five sections, so the Arcade, Flashcards,
+   Resources and Account are reached from the Dashboard's section list (and
+   Account from the top bar). Nothing here is hidden behind a breakpoint: the
+   list is the same grid on a laptop and a phone. */
 
 @media (max-width: 760px) {
   .game-shell-bar { gap: 8px; }

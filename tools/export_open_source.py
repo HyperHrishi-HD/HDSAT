@@ -81,6 +81,12 @@ DROP_FILES = {
     "DEPLOY_PYTHONANYWHERE.txt",
     "SECURITY.md",
     "README.md",
+    # Working notes about the hosted deployment: the operator's journal, the
+    # deferral plan and the fix list all name the project, the host and the
+    # provider. They describe how this copy is run, not how the app works.
+    "CONTEXT.md",
+    "NEXT.md",
+    "IDEAS_AND_FIXES.md",
     "wsgi.py",
     "requirements.txt",
     "tools/admin_triage.py",
@@ -194,7 +200,7 @@ practice, a 1,000-item question bank with figures, flashcards on a spaced
 repetition schedule, and a small arcade where the games are built out of real
 questions.
 
-This is the open-source build. **There is no server and no account system.**
+This is the standalone build. **There is no server and no account system.**
 Everything — progress, coins, streaks, flashcard scheduling, saved questions —
 lives in this browser's `localStorage`, and it works with no connection at all
 once the app has loaded.
@@ -220,6 +226,9 @@ it from a `file://` path for a single-device copy.
 | `src/components/` | the Bluebook-style runner, figures, tools, games |
 | `src/data/` | 1,000 questions, 300 flashcards, public study resources |
 | `tools/` | content QA and the icon generator |
+
+No backend, database, mail provider, operator console or credential of any kind
+is part of this repository, and none is needed to run it.
 
 ## Content licences
 
@@ -307,6 +316,21 @@ def verify_export(sample: int) -> None:
         if result.returncode != 0:
             print(result.stdout[-4000:])
             print(result.stderr[-2000:])
+            sys.exit(1)
+
+        # A typecheck is not a working app: the export must also build from the
+        # files it actually ships (index.html, vite config, bundled bank).
+        build_run = subprocess.run(
+            [shutil.which("npx") or shutil.which("npx.cmd") or "npx", "vite", "build"],
+            cwd=staging,
+            capture_output=True,
+            text=True,
+        )
+        built = (staging / "dist" / "index.html").exists()
+        print("build:", "clean" if build_run.returncode == 0 and built else "FAILED")
+        if build_run.returncode != 0 or not built:
+            print(build_run.stdout[-3000:])
+            print(build_run.stderr[-2000:])
             sys.exit(1)
     finally:
         shutil.rmtree(staging, ignore_errors=True)

@@ -115,8 +115,8 @@ describe('shareable score summaries', () => {
 
   it('builds a link that reloads the same report', () => {
     const code = encodeSharedSummary(buildSharedSummary(attempt));
-    const url = shareUrl(code, 'https://hdsat.pythonanywhere.com', '/');
-    expect(url.startsWith('https://hdsat.pythonanywhere.com/#/test?share=')).toBe(true);
+    const url = shareUrl(code, 'https://example.com', '/');
+    expect(url.startsWith('https://example.com/#/test?share=')).toBe(true);
     expect(decodeSharedSummary(url.split('share=')[1])?.total).toBe(1470);
   });
 

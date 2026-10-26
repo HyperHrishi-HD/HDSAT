@@ -6,11 +6,7 @@ import { DatePicker } from '../components/DatePicker';
 import { PasswordDialog } from '../components/PasswordDialog';
 import * as cloud from '../lib/cloud';
 import { buildAiSnapshot, buildDataExport, downloadExport } from '../lib/dataRights';
-import {
-  LEGAL_VERSION,
-  SITE_NAME,
-  SUPPORT_EMAIL,
-} from '../lib/legal';
+import { LEGAL_VERSION, SITE_NAME } from '../lib/legal';
 import { PASSWORD_RECOVERY_FLAG } from '../lib/password';
 import { formatRemainingHours } from '../lib/storage';
 import { useApp } from '../lib/store';
@@ -308,10 +304,9 @@ export function AccountPage() {
               {!app.cloudConfigured ? (
                 <div className="muted-block">
                   <p style={{ margin: 0 }}>
-                    <strong>Cloud authentication is not configured in this build.</strong> Set{' '}
-                    <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> in your
-                    environment to enable email-and-password accounts. Every practice, test,
-                    flashcard and reward feature still works in local Guest Mode.
+                    <strong>Accounts are not part of this build.</strong> Every practice, test,
+                    flashcard and reward feature works offline, saved in this browser, and
+                    nothing here ever leaves the device.
                   </p>
                 </div>
               ) : (
@@ -546,9 +541,8 @@ export function AccountPage() {
           <AppealForm />
         ) : (
           <p className="muted">
-            Appeals need the {SITE_NAME} backend. Configure{' '}
-            <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code>
-            {SUPPORT_EMAIL ? `, or email ${SUPPORT_EMAIL}` : ''} to enable the appeal form.
+            Appeals go through the hosted {SITE_NAME} account service, which this build does
+            not use. Everything you answer stays on this device either way.
           </p>
         )}
       </Card>

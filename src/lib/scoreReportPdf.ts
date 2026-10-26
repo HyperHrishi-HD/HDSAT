@@ -299,9 +299,21 @@ function drawNotes(canvas: PageCanvas, input: ScoreReportInput, startY: number):
   }
 }
 
+/**
+ * The host the report was produced on, without a scheme. A printed page should
+ * say where it came from, and reading it from the page means a build served
+ * from anywhere (the hosted app, a local copy, an installed app) is correct
+ * without a hard-coded domain.
+ */
+function reportHost(): string {
+  if (typeof window === 'undefined') return 'HDSAT';
+  const host = window.location.host;
+  return host || 'HDSAT';
+}
+
 function drawFooter(canvas: PageCanvas, generatedAt: string): void {
   canvas.line(MARGIN, 62, PAGE_W - MARGIN, 62, RULE);
-  canvas.text(`Generated ${longDate(generatedAt)} - HDSAT - hdsat.pythonanywhere.com`, MARGIN, 48, {
+  canvas.text(`Generated ${longDate(generatedAt)} - HDSAT - ${reportHost()}`, MARGIN, 48, {
     size: 7.5,
     color: MUTED,
   });
