@@ -231,6 +231,141 @@ export function questionArchetypeKey(q: Question): string {
   return k;
 }
 
+/**
+ * Question families: everything that makes two items "the same question" to a
+ * student who has already seen one of them.
+ *
+ * A template key ignores the digits (so "if 3x + 5 = 20" and "if 4x + 7 = 31"
+ * are one family), a stimulus key covers every item built on the same passage or
+ * figure, and a content key covers an exact repeat. These are deliberately
+ * narrower than the archetype key: an archetype is a *shape* ("Which choice
+ * completes the text...") and there are hundreds of legitimate items in one,
+ * while a family is a near-duplicate. Families drive cross-session spacing; the
+ * archetype only keeps neighbours inside one session from looking alike.
+ */
+export interface FamilyHistory {
+  /** Family key -> epoch ms of the most recent attempt anywhere in that family. */
+  lastSeen: Map<string, number>;
+}
+
+/**
+ * How long a family stays out of the draw. A drill bank reuses a template with
+ * new numbers dozens of times, so an absolute ban would exhaust the Math bank
+ * after a handful of sessions; three weeks is long enough that the student
+ * never notices the repeat, and short enough that the pool refills itself.
+ */
+export const FAMILY_COOLDOWN_DAYS = 21;
+
+export function questionFamilyKeys(q: Question): string[] {
+  const keys = [questionTemplateKey(q), questionContentKey(q)];
+  const stimKey = questionStimulusKey(q);
+  if (stimKey) keys.push(stimKey);
+  return keys;
+}
+
+/**
+ * Indexes what the student has already been shown, by family. Only attempted
+ * questions contribute, so an untouched bank has an empty history.
+ */
+export function buildFamilyHistory(
+  all: Question[],
+  progress: Record<string, QuestionProgress>
+): FamilyHistory {
+  const lastSeen = new Map<string, number>();
+  const byId = new Map(all.map((q) => [q.id, q]));
+  for (const [id, record] of Object.entries(progress ?? {})) {
+    if (!record || record.attemptCount <= 0) continue;
+    const question = byId.get(id);
+    if (!question) continue;
+    const parsed = Date.parse(record.lastAttemptedAt);
+    const when = Number.isFinite(parsed) ? parsed : Date.now();
+    for (const key of questionFamilyKeys(question)) {
+      lastSeen.set(key, Math.max(lastSeen.get(key) ?? 0, when));
+    }
+  }
+  return { lastSeen };
+}
+
+/**
+ * Same index, built straight from a list of attempted question IDs. A full test
+ * stores only those, and rebuilding the index from the same list is what lets a
+ * resumed attempt reproduce its original plan.
+ */
+export function buildFamilyHistoryFromIds(
+  all: Question[],
+  ids: Iterable<string>,
+  attemptedAt: string = new Date().toISOString()
+): FamilyHistory {
+  const lastSeen = new Map<string, number>();
+  const wanted = ids instanceof Set ? (ids as Set<string>) : new Set(ids);
+  if (wanted.size === 0) return { lastSeen };
+  const parsed = Date.parse(attemptedAt);
+  const when = Number.isFinite(parsed) ? parsed : Date.now();
+  for (const question of all) {
+    if (!wanted.has(question.id)) continue;
+    for (const key of questionFamilyKeys(question)) {
+      lastSeen.set(key, Math.max(lastSeen.get(key) ?? 0, when));
+    }
+  }
+  return { lastSeen };
+}
+
+/**
+ * False while any near-duplicate of this item has been attempted recently.
+ * Exact repeats are covered by the template/stimulus keys, so this one rule
+ * handles both "same question" and "same question with new numbers".
+ */
+export function isFamilyFresh(
+  q: Question,
+  history: FamilyHistory,
+  now: number = Date.now()
+): boolean {
+  if (history.lastSeen.size === 0) return true;
+  const cutoff = now - FAMILY_COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
+  return questionFamilyKeys(q).every((key) => (history.lastSeen.get(key) ?? 0) < cutoff);
+}
+
+/**
+ * Sorts a pool so families outside the cooldown come before near-duplicates the
+ * student has met recently. Order inside each half is preserved, so the caller's
+ * schedule (unseen, then due reviews) still decides what comes first.
+ */
+export function preferFreshFamilies(
+  pool: Question[],
+  history: FamilyHistory | undefined,
+  now: number = Date.now()
+): Question[] {
+  if (!history || history.lastSeen.size === 0) return pool;
+  const fresh: Question[] = [];
+  const repeated: Question[] = [];
+  for (const q of pool) (isFamilyFresh(q, history, now) ? fresh : repeated).push(q);
+  return [...fresh, ...repeated];
+}
+
+/**
+ * Question-bank status with template mastery folded in.
+ *
+ * Two items built from one template — same wording, different numbers — are the
+ * same question to the student. Once one of them has been answered correctly
+ * twice in a row, the bank shows its siblings as mastered too, instead of
+ * leaving them as items to study again.
+ */
+export function templateMasteryIds(
+  all: Question[],
+  progress: Record<string, QuestionProgress>
+): Set<string> {
+  const masteredTemplates = new Set<string>();
+  for (const q of all) {
+    if (progress[q.id]?.status === 'mastered') masteredTemplates.add(questionTemplateKey(q));
+  }
+  const out = new Set<string>();
+  if (masteredTemplates.size === 0) return out;
+  for (const q of all) {
+    if (masteredTemplates.has(questionTemplateKey(q))) out.add(q.id);
+  }
+  return out;
+}
+
 function markQuestionUsed(q: Question, used: Set<string>): void {
   used.add(q.id);
   used.add(questionContentKey(q));
@@ -657,6 +792,9 @@ export function buildTestPlan(all: Question[], options: TestPlanOptions): TestPl
   const assessmentStr = String(options.assessment);
   const difficultyPolicy = assessmentDifficultyPolicy(assessmentStr);
   const seen = new Set(options.seenQuestionIds ?? []);
+  // Derived from the same seen set the modules are built from, so resuming a
+  // saved attempt (which replays this exact call) reproduces the same plan.
+  const family = buildFamilyHistoryFromIds(all, seen);
 
   for (const section of SECTION_ORDER) {
     const spec = SECTION_SPECS[section];
@@ -673,23 +811,29 @@ export function buildTestPlan(all: Question[], options: TestPlanOptions): TestPl
 
     // Fresh-item mode: a full run needs target * 3 unique items (module 1 plus
     // whichever routed module is used). Draw only unseen items while the supply
-    // allows it, then fall back to repeats with a transparent warning.
+    // allows it, then fall back to near-duplicates, and only after that to
+    // repeats — each step with a transparent warning.
     const needed = target * 3;
-    const unseen = eligible.filter((q) => !seen.has(q.id));
+    const untouched = eligible.filter((q) => !seen.has(q.id));
+    const fresh = untouched.filter((q) => isFamilyFresh(q, family));
+    const similar = untouched.filter((q) => !isFamilyFresh(q, family));
     const repeated = eligible.filter((q) => seen.has(q.id));
     let poolSources: Question[][];
-    if (seen.size === 0) {
-      poolSources = [eligible];
-    } else if (unseen.length >= needed) {
-      poolSources = [unseen];
+    if (fresh.length >= needed) {
+      poolSources = [fresh];
+    } else if (fresh.length + similar.length >= needed) {
+      // Unanswered, but from a family met inside the cooldown. Served after the
+      // genuinely new items; no warning, the student asked for the freshest set
+      // the bank can build.
+      poolSources = [fresh, similar];
     } else {
       warnings.push(
-        `${section}: fresh-item mode found only ${unseen.length} unanswered item(s) for this assessment, so ${Math.min(
+        `${section}: fresh-item mode found only ${fresh.length + similar.length} unanswered item(s) for this assessment, so ${Math.min(
           repeated.length,
-          needed - unseen.length
+          needed - fresh.length - similar.length
         )} previously attempted item(s) are repeated to fill the adaptive modules.`
       );
-      poolSources = [unseen, repeated];
+      poolSources = [fresh, similar, repeated];
     }
     const pool = poolSources.flatMap((source, idx) =>
       seededShuffle(source, `${seed}:${section}:${idx}`)
@@ -946,7 +1090,7 @@ function diversifySequence(
   count: number,
   progress: Record<string, QuestionProgress>,
   seed: string,
-  options: { now?: Date; allowScheduled?: boolean } = {}
+  options: { now?: Date; allowScheduled?: boolean; family?: FamilyHistory } = {}
 ): Question[] {
   if (candidates.length === 0 || count <= 0) return [];
   const now = options.now ?? new Date();
@@ -957,7 +1101,15 @@ function diversifySequence(
     .filter((q) => isReviewDue(progress[q.id], now))
     .sort((a, b) => compareReviewOrder(progress[a.id], progress[b.id]));
   const scheduled = seen.filter((q) => !isReviewDue(progress[q.id], now));
-  const working = [...unseen, ...due, ...(options.allowScheduled ? scheduled : [])];
+  // Reviews whose date has arrived keep their priority; among the *new* items,
+  // a family the student has never met comes first. That is what stops a
+  // practice set from handing out four rewordings of the same template while a
+  // genuinely unseen question sits at the back of the draw.
+  const working = [
+    ...preferFreshFamilies(unseen, options.family),
+    ...due,
+    ...(options.allowScheduled ? scheduled : []),
+  ];
 
   const picked: Question[] = [];
   const usedIds = new Set<string>();
@@ -1042,7 +1194,8 @@ export function buildPracticeSession(
     options.seed ??
     `practice:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`;
   const progress = options.progress ?? {};
-  const draw = { now: options.now, allowScheduled: options.allowScheduled };
+  const family = buildFamilyHistory(all, progress);
+  const draw = { now: options.now, allowScheduled: options.allowScheduled, family };
 
   if (!filters.section || filters.section === 'all') {
     const rwPool = pool.filter((q) => q.section === 'Reading and Writing');

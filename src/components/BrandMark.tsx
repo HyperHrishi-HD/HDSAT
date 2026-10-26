@@ -1,10 +1,11 @@
 /**
- * The HDSAT tile: a rounded blue square with a white H.
+ * The HDSAT tile: a rounded blue square carrying the wide H and the mark's
+ * light-blue dot.
  *
- * The glyph is drawn symmetrically inside its 64-unit view box (ink from 13 to
- * 51 on both axes), so the letter sits dead centre in the tile at every size.
- * It used to carry a light-blue dot on the top-right stroke, which read as a
- * clipped or half-drawn letter at 22 px.
+ * The dot sits at the top of the right stroke, overlapping the round cap, so it
+ * reads as part of the letter instead of a separate dot floating above it. The
+ * same geometry is used by `public/favicon.svg` and the welcome emblem, so the
+ * tab icon and the on-page tile are one logo.
  */
 export function BrandMark({
   size = 34,
@@ -22,18 +23,19 @@ export function BrandMark({
       role={title ? 'img' : undefined}
     >
       <svg
-        width={Math.round(size * 0.66)}
-        height={Math.round(size * 0.66)}
+        width={Math.round(size * 0.68)}
+        height={Math.round(size * 0.68)}
         viewBox="0 0 64 64"
         fill="none"
       >
         <path
-          d="M17 15V49M47 15V49M17 32H47"
+          d="M16 14V50M48 14V50M16 32H48"
           stroke="currentColor"
-          strokeWidth="8"
+          strokeWidth="7.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
+        <circle cx="48" cy="14" r="4.5" fill="#bfdbfe" />
       </svg>
     </span>
   );

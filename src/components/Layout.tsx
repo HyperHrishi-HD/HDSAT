@@ -27,6 +27,13 @@ const NAV: { to: string; label: string; icon: IconName; end?: boolean }[] = [
 ];
 
 /**
+ * The bottom bar carries every section except the Arcade, which has its own
+ * door on the Dashboard — phones do not get an Arcade tab, and a ninth pill
+ * would squeeze the row past the width of a thumb.
+ */
+const MOBILE_NAV = NAV.filter((item) => item.to !== '/arcade');
+
+/**
  * A name that scrolls back and forth inside its pill once it is too long to
  * fit. The animation distance is measured, so short names stay still and a
  * long display name is still readable on a narrow top bar.
@@ -75,7 +82,7 @@ export function Layout() {
   const accountRef = useRef<HTMLElement | null>(null);
   const mobileNavRef = useRef<HTMLElement | null>(null);
   const [compact, setCompact] = useState(false);
-  const [navLabels, setNavLabels] = useState(true);
+  const [navSize, setNavSize] = useState<'full' | 'compact' | 'icons'>('full');
 
   const activeTheme = app.settings?.activeTheme ?? null;
   const activeEmblem = emblemFor(app.settings?.activeFlair);
@@ -150,14 +157,19 @@ export function Layout() {
     activeEmblem?.id,
   ]);
 
-  // Bottom tabs keep their labels only while the row has room for the longest
-  // one; otherwise the icons stand alone instead of squeezing.
+  /**
+   * Eight bottom tabs on a phone are 45px wide. That is not enough for
+   * "Flashcards" on one line, so the row steps down rather than dropping the
+   * words entirely: full labels while they fit, small two-line labels while a
+   * thumb-width remains, icons alone only when even that is impossible.
+   */
   useEffect(() => {
     const nav = mobileNavRef.current;
     if (!nav) return;
     const check = () => {
-      const count = nav.querySelectorAll('.mobile-link').length || 5;
-      setNavLabels(nav.clientWidth > 0 && nav.clientWidth / count >= 80);
+      const count = nav.querySelectorAll('.mobile-link').length || MOBILE_NAV.length;
+      const per = nav.clientWidth > 0 ? nav.clientWidth / count : 0;
+      setNavSize(per >= 78 ? 'full' : per >= 42 ? 'compact' : 'icons');
     };
     check();
     window.addEventListener('resize', check);
@@ -326,15 +338,22 @@ export function Layout() {
         </footer>
       </div>
 
-      <nav className={`mobile-nav${navLabels ? '' : ' is-icon-only'}`} ref={mobileNavRef}>
-        {NAV.slice(0, 5).map((item) => (
+      <nav
+        className={`mobile-nav${
+          navSize === 'icons' ? ' is-icon-only' : navSize === 'compact' ? ' is-compact' : ''
+        }`}
+        ref={mobileNavRef}
+        aria-label="Sections"
+      >
+        {MOBILE_NAV.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}
             end={item.end}
+            aria-label={item.label}
             className={({ isActive }) => `mobile-link${isActive ? ' is-active' : ''}`}
           >
-            <Icon name={item.icon} size={17} />
+            <Icon name={item.icon} size={navSize === 'icons' ? 19 : navSize === 'compact' ? 16 : 17} />
             <span>{item.label}</span>
           </NavLink>
         ))}

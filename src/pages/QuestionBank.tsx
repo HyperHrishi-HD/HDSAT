@@ -6,7 +6,7 @@ import { ReferenceWindow } from '../components/ReferenceWindow';
 import { QuestionView, type Feedback } from '../components/QuestionView';
 import { Badge, Button, Card, EmptyState, Field, InfoTip, Select, Toggle } from '../components/ui';
 import { datasetLabel } from '../lib/catalog';
-import { filterQuestions } from '../lib/examEngine';
+import { filterQuestions, templateMasteryIds } from '../lib/examEngine';
 import { useApp } from '../lib/store';
 import type { Assessment, Difficulty, Question, Section } from '../lib/types';
 
@@ -45,6 +45,15 @@ export function QuestionBankPage() {
     return Array.from(s);
   }, [app.questions, section]);
 
+  // A mastered template masters its siblings in the catalog (see
+  // templateMasteryIds). Built once per progress change, not per row.
+  const templateMastered = useMemo(
+    () => templateMasteryIds(app.questions, app.progress),
+    [app.questions, app.progress]
+  );
+  const statusOf = (id: string) =>
+    templateMastered.has(id) ? 'mastered' : app.progress[id]?.status ?? 'unseen';
+
   const filteredQuestions = useMemo(() => {
     const base = filterQuestions(
       app.questions,
@@ -65,7 +74,7 @@ export function QuestionBankPage() {
     const qLower = search.trim().toLowerCase();
     return base.filter((q) => {
       if (statusFilter !== 'all') {
-        const st = app.progress[q.id]?.status ?? 'unseen';
+        const st = templateMastered.has(q.id) ? 'mastered' : app.progress[q.id]?.status ?? 'unseen';
         if (st !== statusFilter) return false;
       }
       if (!qLower) return true;
@@ -81,6 +90,7 @@ export function QuestionBankPage() {
     app.questions,
     app.progress,
     app.saved,
+    templateMastered,
     assessment,
     section,
     domain,
@@ -318,7 +328,7 @@ export function QuestionBankPage() {
                 </thead>
                 <tbody>
                   {visibleQuestions.map((q) => {
-                    const st = app.progress[q.id]?.status ?? 'unseen';
+                    const st = statusOf(q.id);
                     const isSaved = app.saved.includes(q.id);
                     const isSelected = activeQuestion?.id === q.id;
                     return (

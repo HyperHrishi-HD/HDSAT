@@ -4,6 +4,8 @@ import { DesmosPane } from '../components/MathTools';
 import { PaneSwitch, SplitWorkbench, useSplitPane } from '../components/SplitWorkbench';
 import { MathText } from '../components/MathText';
 import { CoordinateInterceptor } from '../components/CoordinateInterceptor';
+import { ChatQuest } from '../components/ChatQuest';
+import { RuneVault } from '../components/RuneVault';
 import { DailyQuests } from '../components/DailyQuests';
 import { PracticeRush } from '../components/PracticeRush';
 import { QuestionOfTheDay } from '../components/QuestionOfTheDay';
@@ -27,6 +29,7 @@ import { useApp } from '../lib/store';
 type TabId = 'arena' | 'minigames' | 'rush';
 type GameId = 'sprint' | 'transitions' | 'vocab';
 type MiniGameId = GameId | 'lab';
+type ArenaGameId = 'interceptor' | 'talk' | 'vault';
 
 interface GameQuestion {
   key: string;
@@ -220,6 +223,7 @@ const MINI_GAMES: {
 export function ArcadePage() {
   const app = useApp();
   const [tab, setTab] = useState<TabId>('arena');
+  const [arenaGame, setArenaGame] = useState<ArenaGameId>('interceptor');
   const [game, setGame] = useState<MiniGameId | null>(null);
   const [runSeed, setRunSeed] = useState<string>(() => `arc:${Date.now()}`);
   const [showCalc, setShowCalc] = useState(true);
@@ -400,7 +404,8 @@ export function ArcadePage() {
             <InfoTip label="How the Arcade works">
               <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55 }}>
                 <li>Answers earn HDCoins; a finished run adds one session reward per category each day.</li>
-                <li>One Hard question and three quests per day, capped at 30 questions.</li>
+                <li>Three quests per day, capped at 30 questions, then the games as long as you like.</li>
+                <li>Daily Quests open the arena; the Hard Question of the Day closes it.</li>
               </ul>
             </InfoTip>
           </div>
@@ -435,9 +440,65 @@ export function ArcadePage() {
 
       {tab === 'arena' ? (
         <div className="stack">
-          <CoordinateInterceptor />
-          <QuestionOfTheDay />
           <DailyQuests />
+
+          <Card>
+            <div className="row-between" style={{ marginBottom: 10 }}>
+              <div className="row">
+                <Icon name="arcade" size={16} />
+                <h2 style={{ margin: 0 }}>Interactive games</h2>
+              </div>
+              <Badge tone="neutral">3 rooms</Badge>
+            </div>
+            <div className="arena-games">
+              {[
+                {
+                  id: 'interceptor' as ArenaGameId,
+                  name: 'Coordinate Interceptor',
+                  blurb: 'Aim y = mx + b through drifting asteroids.',
+                  icon: 'target' as const,
+                  tag: 'Math',
+                },
+                {
+                  id: 'talk' as ArenaGameId,
+                  name: 'Table Talk',
+                  blurb: 'Answer Hrishi’s reading cards by replying in chat.',
+                  icon: 'chat' as const,
+                  tag: 'Reading',
+                },
+                {
+                  id: 'vault' as ArenaGameId,
+                  name: 'The Rune Vault',
+                  blurb: 'A side-view vault where each gate is a question.',
+                  icon: 'castle' as const,
+                  tag: 'Mixed',
+                },
+              ].map((entry) => (
+                <button
+                  key={entry.id}
+                  type="button"
+                  className={`arena-tile${arenaGame === entry.id ? ' is-active' : ''}`}
+                  aria-pressed={arenaGame === entry.id}
+                  onClick={() => setArenaGame(entry.id)}
+                >
+                  <span className="arena-tile-icon">
+                    <Icon name={entry.icon} size={18} />
+                  </span>
+                  <span className="arena-tile-body">
+                    <strong>{entry.name}</strong>
+                    <span className="muted">{entry.blurb}</span>
+                  </span>
+                  <Badge tone={arenaGame === entry.id ? 'good' : 'neutral'}>{entry.tag}</Badge>
+                </button>
+              ))}
+            </div>
+          </Card>
+
+          {arenaGame === 'interceptor' ? <CoordinateInterceptor /> : null}
+          {arenaGame === 'talk' ? <ChatQuest /> : null}
+          {arenaGame === 'vault' ? <RuneVault /> : null}
+
+          <QuestionOfTheDay />
         </div>
       ) : null}
 

@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 import { FigureView, StimulusView } from './FigureView';
+import { FloatingToolWindow } from './FloatingToolWindow';
+import { DesmosFrame } from './MathTools';
 import { MathText } from './MathText';
+import { ReferenceWindow } from './ReferenceWindow';
 import { Badge, Button, Card } from './ui';
 import {
   dailyHardQuestion,
@@ -25,16 +28,21 @@ export function QuestionOfTheDay({
   onDismiss?: () => void;
 }) {
   const app = useApp();
+  // The pick is cached per date inside dailyHardQuestion, so progress changing
+  // as the student answers cannot swap the card out from under them.
   const question = useMemo(
-    () => dailyHardQuestion(app.questions, app.settings.assessment),
-    [app.questions, app.settings.assessment]
+    () => dailyHardQuestion(app.questions, app.settings.assessment, undefined, app.progress),
+    [app.questions, app.settings.assessment, app.progress]
   );
   const [response, setResponse] = useState('');
   const [feedback, setFeedback] = useState<{ correct: boolean } | null>(null);
   const [busy, setBusy] = useState(false);
   const [expanded, setExpanded] = useState(() => isQuestionOfTheDayExpanded());
+  const [calcOpen, setCalcOpen] = useState(false);
+  const [refOpen, setRefOpen] = useState(false);
 
   if (!question) return null;
+  const isMath = question.section === 'Math';
 
   const solved = isQuestionOfTheDaySolved() || Boolean(feedback);
 
@@ -53,6 +61,29 @@ export function QuestionOfTheDay({
 
   const body = (
     <>
+      {/* A Math item gets the same two tools as the rest of the workspace, and
+          neither is open until the student asks for it. */}
+      {isMath ? (
+        <div className="row qotd-tools" style={{ gap: 6, marginBottom: 8 }}>
+          <Button
+            size="sm"
+            variant={calcOpen ? 'primary' : 'subtle'}
+            onClick={() => setCalcOpen((open) => !open)}
+            title="Open the Desmos calculator beside this question"
+          >
+            Desmos
+          </Button>
+          <Button
+            size="sm"
+            variant={refOpen ? 'primary' : 'subtle'}
+            onClick={() => setRefOpen((open) => !open)}
+            title="Open the math reference sheet"
+          >
+            Reference
+          </Button>
+        </div>
+      ) : null}
+
       <FigureView question={question} />
       {question.stimulus ? (
         <div className="stimulus">
@@ -124,6 +155,30 @@ export function QuestionOfTheDay({
         <p className="muted" style={{ marginBottom: 0 }}>
           A new question arrives tomorrow.
         </p>
+      ) : null}
+
+      {isMath && calcOpen ? (
+        <FloatingToolWindow
+          title="Desmos Graphing Calculator"
+          onClose={() => setCalcOpen(false)}
+          storageKey="hdsat.window.qotd-calc"
+          defaultWidth={520}
+          defaultHeight={500}
+          placement="bottom"
+          minWidth={280}
+          minHeight={260}
+          bodyClassName="bb-calc-window-body"
+          testId="qotd-calculator-window"
+        >
+          <DesmosFrame />
+        </FloatingToolWindow>
+      ) : null}
+
+      {isMath && refOpen ? (
+        <ReferenceWindow
+          assessment={app.settings.assessment}
+          onClose={() => setRefOpen(false)}
+        />
       ) : null}
     </>
   );

@@ -45,7 +45,11 @@ export type IconName =
   | 'library'
   | 'clipboard-check'
   | 'zap'
-  | 'award';
+  | 'chat'
+  | 'castle'
+  | 'award'
+  | 'expand'
+  | 'collapse';
 
 export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
   const props = {
@@ -104,6 +108,20 @@ export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
       return (
         <svg {...props}>
           <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+        </svg>
+      );
+    case 'chat':
+      return (
+        <svg {...props}>
+          <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9.6 9.6 0 0 1-3.9-.8L3 21l1.9-4.6A8.4 8.4 0 0 1 4 11.5 8.4 8.4 0 0 1 12.5 3 8.4 8.4 0 0 1 21 11.5z" />
+          <path d="M8.5 11.5h.01M12.5 11.5h.01M16.5 11.5h.01" />
+        </svg>
+      );
+    case 'castle':
+      return (
+        <svg {...props}>
+          <path d="M4 21V8l3 2 3-2v3l2-2 2 2V8l3 2 3-2v13z" />
+          <path d="M9 21v-5a3 3 0 0 1 6 0v5" />
         </svg>
       );
     case 'resources':
@@ -379,6 +397,18 @@ export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
         <svg {...props}>
           <circle cx="12" cy="9" r="5" />
           <path d="m9 14-1 8 4-2 4 2-1-8" />
+        </svg>
+      );
+    case 'expand':
+      return (
+        <svg {...props}>
+          <path d="M4 9V4h5M20 15v5h-5M15 4h5v5M9 20H4v-5" />
+        </svg>
+      );
+    case 'collapse':
+      return (
+        <svg {...props}>
+          <path d="M9 4v5H4M15 20v-5h5M20 9h-5V4M4 15h5v5" />
         </svg>
       );
   }

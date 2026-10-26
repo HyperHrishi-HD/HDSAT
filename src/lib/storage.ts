@@ -751,6 +751,41 @@ function saveSessionLedger(ledger: SessionLedger): void {
 
 export type SessionActivityType = 'practice_rush' | 'timed_session' | 'full_simulation' | 'mini_game';
 
+/**
+ * What one finished session pays, mirroring `complete_activity_session` in the
+ * database exactly.
+ *
+ * Mini-games used to be a flat 4 HDCoins, which felt like nothing next to the
+ * work a Rune Vault room or an eight-card Table Talk sitting asks for. They now
+ * pay from a 5-coin floor up to a 100-coin ceiling, driven by three things a
+ * player can actually influence: how many items they got right, how much work
+ * the run was, and how clean the answers were. A single-room vault run is
+ * deliberately capped so one easy question cannot pay like a full session.
+ */
+export function sessionCoinReward(args: {
+  activityType: SessionActivityType;
+  questions: number;
+  correct: number;
+}): number {
+  const questions = Math.max(0, Math.floor(args.questions));
+  const correct = Math.max(0, Math.min(Math.floor(args.correct), questions));
+
+  if (args.activityType === 'practice_rush') return questions >= 3 ? 5 : 0;
+  if (args.activityType === 'full_simulation') return questions >= 3 ? 25 : 0;
+  if (args.activityType === 'timed_session') {
+    return questions >= 3 ? Math.min(15, Math.max(5, Math.round(questions * 0.6))) : 0;
+  }
+
+  // mini_game
+  if (questions < 1) return 0;
+  const accuracy = correct / questions;
+  const volumeBonus = questions >= 20 ? 8 : questions >= 10 ? 6 : questions >= 6 ? 3 : 0;
+  const accuracyBonus = accuracy >= 0.95 ? 6 : accuracy >= 0.8 ? 4 : accuracy >= 0.6 ? 2 : 0;
+  const reward = 5 + correct * 3 + volumeBonus + accuracyBonus;
+  const ceiling = questions <= 2 ? 12 : 100;
+  return Math.min(ceiling, reward);
+}
+
 export function awardSessionCoins(
   profile: LocalProfile,
   args: {
@@ -767,12 +802,12 @@ export function awardSessionCoins(
   const cap = SESSION_REWARD_CAPS[args.activityType] ?? 0;
   let reward = 0;
 
-  if (args.questions >= 3 && runsToday < cap) {
-    if (args.activityType === 'practice_rush') reward = 5;
-    else if (args.activityType === 'timed_session') {
-      reward = Math.min(15, Math.max(5, Math.round(args.questions * 0.6)));
-    } else if (args.activityType === 'full_simulation') reward = 25;
-    else if (args.activityType === 'mini_game' && args.correct >= 3) reward = 4;
+  if (runsToday < cap) {
+    reward = sessionCoinReward({
+      activityType: args.activityType,
+      questions: args.questions,
+      correct: args.correct,
+    });
   }
 
   // The ledger records a rewarded run only, so a failed run never eats a slot.

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Alert, Badge, Button, Card, Field, Select, Toggle } from '../components/ui';
+import { InstallApp } from '../components/InstallApp';
 import { AppealForm } from '../components/AppealForm';
+import { DatePicker } from '../components/DatePicker';
 import { PasswordDialog } from '../components/PasswordDialog';
 import * as cloud from '../lib/cloud';
 import { buildAiSnapshot, buildDataExport, downloadExport } from '../lib/dataRights';
@@ -384,15 +386,22 @@ export function AccountPage() {
               { value: 'PSAT 8/9', label: 'PSAT 8/9' },
             ]}
           />
-          <Field label="Test date" hint="Shown on the Dashboard as your goal.">
-            <input
-              type="date"
-              value={app.settings.testDate ?? ''}
+          {/* Not a <Field>: that renders a <label>, and a label forwards any
+              click inside it to its button — which would re-open the calendar
+              the moment a day is picked. */}
+          <div className="field" role="group" aria-labelledby="test-date-label">
+            <span className="field-label" id="test-date-label">
+              Test date
+            </span>
+            <DatePicker
+              value={app.settings.testDate ?? null}
               min="2026-01-01"
               max="2035-12-31"
-              onChange={(e) => app.actions.updateSettings({ testDate: e.target.value || null })}
+              placeholder="Pick your test day"
+              onChange={(next) => app.actions.updateSettings({ testDate: next })}
             />
-          </Field>
+            <span className="field-hint">Shown on the Dashboard as your goal.</span>
+          </div>
           <Toggle
             checked={app.settings.excludePreviouslyCorrect}
             onChange={(val) => app.actions.updateSettings({ excludePreviouslyCorrect: val })}
@@ -410,6 +419,7 @@ export function AccountPage() {
             <Button variant="danger" size="sm" onClick={app.actions.resetGuestProgress}>
               Reset local progress
             </Button>
+            <InstallApp />
           </div>
         </Card>
       </div>

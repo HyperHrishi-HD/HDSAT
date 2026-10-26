@@ -4,8 +4,13 @@ import { applyWindowResize, RESIZE_DIRS, type Rect, type ResizeDir } from '../li
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
 /** Height the bottom tab bar takes on a phone; the window must never hide behind it. */
-const mobileReserve = () =>
-  typeof window !== 'undefined' && window.matchMedia('(max-width: 900px)').matches ? 78 : 0;
+const mobileReserve = () => {
+  if (typeof window === 'undefined') return 0;
+  // matchMedia is universal in browsers but not in every embedded/test webview;
+  // a missing one must only cost the phone offset, never the window.
+  const query = window.matchMedia?.('(max-width: 900px)');
+  return query?.matches ? 78 : 0;
+};
 
 function defaultGeometry(width: number, height: number, placement: 'top' | 'bottom' = 'top'): Rect {
   const vw = typeof window === 'undefined' ? 1200 : window.innerWidth;

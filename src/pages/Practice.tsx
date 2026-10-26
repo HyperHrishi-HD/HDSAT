@@ -50,7 +50,7 @@ export function PracticePage() {
   const [flagged, setFlagged] = useState<Record<string, boolean>>({});
   const [feedbackMap, setFeedbackMap] = useState<Record<string, Feedback>>({});
   const [sessionDone, setSessionDone] = useState<boolean>(false);
-  const [showCalc, setShowCalc] = useState<boolean>(true);
+  const [showCalc, setShowCalc] = useState<boolean>(false);
   const split = useSplitPane('hdsat.split.practice', { ratio: 46, minRatio: 30, maxRatio: 70 });
   const [showRef, setShowRef] = useState<boolean>(false);
   const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);

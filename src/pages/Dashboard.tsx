@@ -182,6 +182,12 @@ export function DashboardPage() {
             <Icon name="flashcards" size={15} />
             <span>Review flashcards</span>
           </Link>
+          {/* The bottom tab bar stops at five entries, so the Arcade needs its
+              own door on phones. Hidden on every wider layout. */}
+          <Link to="/arcade" className="btn btn-outline only-mobile">
+            <Icon name="arcade" size={15} />
+            <span>Arcade</span>
+          </Link>
           {incorrectCount > 0 ? (
             <Link to="/practice?mode=incorrect" className="btn btn-subtle">
               <Icon name="refresh" size={14} />
@@ -370,7 +376,7 @@ export function DashboardPage() {
                 <MissedLog />
                 <Link to="/arcade" className="btn btn-outline btn-sm">
                   <Icon name="arcade" size={13} />
-                  <span>Arcade &amp; Lab</span>
+                  <span>Arcade</span>
                 </Link>
               </div>
             </div>

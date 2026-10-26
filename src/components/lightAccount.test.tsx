@@ -30,6 +30,7 @@ let container: HTMLDivElement;
 let root: Root;
 
 const resendVerification = vi.fn(async () => {});
+const flushQueuedEmails = vi.fn(async () => {});
 
 function baseApp(overrides: MinimalApp = {}): MinimalApp {
   return {
@@ -41,6 +42,7 @@ function baseApp(overrides: MinimalApp = {}): MinimalApp {
     actions: {
       openAuthModal: () => {},
       resendVerification,
+      flushQueuedEmails,
     },
     ...overrides,
   };
@@ -59,6 +61,7 @@ beforeEach(() => {
   document.body.appendChild(container);
   root = createRoot(container);
   resendVerification.mockClear();
+  flushQueuedEmails.mockClear();
   vi.useFakeTimers();
 });
 
@@ -69,6 +72,11 @@ afterEach(() => {
 });
 
 describe('confirm-email reminder', () => {
+  it('asks the store to send any request parked by yesterday\'s mail ceiling', () => {
+    render(<VerifyEmailBanner />);
+    expect(flushQueuedEmails).toHaveBeenCalledTimes(1);
+  });
+
   it('holds back briefly, then invites an unverified account to confirm', () => {
     render(<VerifyEmailBanner />);
     expect(container.querySelector('.verify-banner')).toBeNull();

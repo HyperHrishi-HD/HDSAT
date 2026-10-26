@@ -73,12 +73,13 @@ export function WelcomePage() {
         <span className="welcome-emblem" aria-hidden="true">
           <svg width="40" height="40" viewBox="0 0 64 64" fill="none">
             <path
-              d="M17 15V49M47 15V49M17 32H47"
+              d="M16 14V50M48 14V50M16 32H48"
               stroke="currentColor"
-              strokeWidth="8"
+              strokeWidth="7.5"
               strokeLinecap="round"
               strokeLinejoin="round"
             />
+            <circle cx="48" cy="14" r="4.5" fill="#bfdbfe" />
           </svg>
         </span>
 

@@ -530,3 +530,250 @@ Whenever the owner asks in chat to "check reports / appeals", run
   stems and about 5,000 near-duplicate pairs from earlier volume tiers; the new
   batch is clean. A dedupe/archive pass needs the owner's decision because
   removing ids would drop rows students may already have practiced.
+
+## 2026-11-01 — Arcade rooms, World Bank evidence batch, bank hygiene
+
+- **Arcade order.** Interactive Arena now opens with Daily Quests, then the
+  game picker and the active room, then the Question of the Day. Order is
+  asserted in the page structure, not just visually: quests above games above
+  the daily item.
+- **Coordinate Interceptor is a space shooter.** Starfield, ship at the
+  intercept, drifting asteroid targets with per-asteroid outlines, a real beam
+  on fire, particle bursts, screen shake and a live slope/intercept readout on
+  a 900x460 canvas. Same scoring and reward path.
+- **Table Talk (new).** A conversation game for Reading & Writing: Noor at a
+  rainy late-night table, CSS-only portrait (blinks, breathes, mouth moves
+  while she "types"), eight exchanges per sitting, a large pool of correct and
+  corrective replies so lines rarely repeat, and the full passage presented as a
+  card on the table. Answers run through the standard mini-game session reward.
+- **The Rune Vault (new).** Side-view platformer with procedural rooms: WASD or
+  arrow keys, space to jump, torchlight, sealed gates opened by a mixed R&W/Math
+  item, permanent room depth, falling only walks you back. The canvas runs an
+  internal fixed-step loop and pauses physics while a question is open.
+- **M14 R&W batch: 49 quantitative-evidence items on World Bank data.**
+  `supabase/import/generate_bank_rw_m14.py` downloads nine indicators for ten
+  countries (literacy, internet use, renewables, urban share, health and
+  education spending, forest cover, life expectancy, CO2 per person), caches
+  them in `data/m14/worldbank.json`, and builds line-chart trend, table
+  comparison, table peak and bar-chart change items. Every key is computed from
+  the same rounded numbers the figure shows, every distractor is checked false,
+  and items credit World Bank Open Data (CC BY 4.0) in their attribution.
+- **Bank hygiene.** `tools/clean_bank.py` removes exact duplicate stems (511
+  rows, mostly `Function composition and evaluation` and `Mean, median and
+  mode` repeats from earlier volume tiers) and strips dangling "(Series 1.)" /
+  "(Table 2.)" references from 45 text-only items whose figure had been
+  removed. The QA gate now reports 0 errors; 5,009 warnings remain, almost all
+  near-duplicate math stems within one skill.
+- Bank version `2026.11.01-open-core-7`: 7,132 items, 2,626 R&W / 4,506 Math.
+  Reading & Writing is still the smaller section, so future batches should be
+  R&W first. Dedupe removes ids; a student whose saved/missed history points at
+  a removed duplicate simply loses that pointer, never their answers.
+
+## 2026-11-02 — Games fixed, deepened and made playable on a phone
+
+**Coordinate Interceptor.** The aim was broken: the beam was drawn from the
+ship at the height of the *y-intercept* instead of from the plane's left edge,
+so the line on screen was shifted by 6m from the line the hit test checked. A
+correct read missed, which is why it felt stuck near horizontal. The plane is
+now equal-scale on both axes (75px per unit, so m = 1 is exactly 45°), the beam
+is drawn where y = mx + b really is, and waves are generated *from* a line —
+2–4 collinear targets on integer coordinates — so every wave is clearable by
+reading the slope between two printed points. Targets on the current line light
+up LOCK before firing, dragging on the plane aims the beam, and a five-button
+pad covers slope, intercept and fire for touch.
+
+**Table Talk.** The character is Hrishi now. The avatar is clipped to its ring
+(`overflow: hidden`, centred with margins) instead of letting hair and scarf
+poke out, option borders are 2px, and a wrong answer waits for a "Next card"
+button so the correction can actually be read instead of being scrolled past.
+
+**Rune Vault.** Rooms have machinery: pushable stone crates you can stand on to
+reach ledges, and from room two a lever that either drops a drawbridge over a
+chasm too wide to jump or lifts a portcullis barring the corridor. The lever is
+always on the near side, so no room can strand the player. All of the physics
+moved into `src/lib/vaultPhysics.ts` — a pure step function — because the
+render loop is untestable; the tests pin standing, jumping, shoving, levers,
+falls and both door states.
+
+**Rewards.** Mini-games pay 5–100 HDCoins instead of a flat 4: 5 base, +3 per
+correct answer, +3/+6/+8 for a run of 6/10/20 items, +2/+4/+6 for 60/80/95%
+accuracy, capped at 12 for a one- or two-item room and 100 overall. The same
+formula lives in `sessionCoinReward` (client) and `complete_activity_session`
+(SQL), and the SQL now accepts a single-item mini-game session (it rejected the
+vault's one-rune rooms outright).
+
+**Phones.** Every 2D room has a Full screen control: a fixed overlay that also
+calls the Fullscreen API (asking for landscape where the browser allows it),
+with a rotate prompt when held upright. The interceptor pad shows on coarse
+pointers and in fullscreen, the vault's D-pad grows to finger size, and the
+Dashboard carries an Arcade button that only exists below 760px, where the
+bottom tab bar runs out of slots.
+
+## 2026-11-03 — Full screen actually full, a real difficulty ramp, and the old mark
+
+**Full screen.** "Exit full screen" did nothing, and the cause was a stale
+closure: `toggle` was memoised on `[enterFullscreen, exitFullscreen]`, so it
+kept the initial `isFull === false` forever and called *enter* on every press.
+`isFull` is a dependency now. The boards also stopped sitting at their
+intrinsic size in the middle of a wide screen: `useCanvasFit` measures the box
+and writes an explicit pixel size at the canvas's own ratio, so the interceptor
+and the vault fill whatever height they are given. The vault's canvas is
+positioned absolutely inside a clipped stage, so a bigger room can never push
+the movement pad off a phone in landscape.
+
+**Coordinate Interceptor.** Waves 1–2 print every coordinate and mark LOCK;
+from wave 3 the middle labels go (the two outermost always stay, which is all
+you need to recover the line), LOCK switches off at wave 5, pulses drop from
+three to two, and the tolerance tightens. High score and last score persist per
+device and show on the briefing and the results. The button pad is gone: the
+controls are sliders everywhere, in one row with Fire in full screen. W/A/S/D
+and the arrow keys drive the line from anywhere on the page, Space or Enter
+fires, and long labels near the bottom edge flip above their asteroid.
+
+**Table Talk.** The reply pools roughly doubled (36 right, 36 wrong, 12
+greetings, 22 openers) and the picker refuses to repeat the previous line.
+
+**Rune Vault.** Mechanics now arrive on a schedule rather than all at once:
+room 1 pits, room 2 crates, room 3 drawbridge and portcullis, room 4 ropes,
+room 5 walls, room 6 spikes, room 7 bear traps, room 8 snakes. A room is a run
+of blocks, each starting on flat ground; ledges exist only above a rope that
+reaches them (nothing floats), every wall has a rope on its face or a crate on
+its approach, and nothing lethal is within 120px of the door. Ropes climb with
+Space and descend with S/▼. Spikes, traps and snakes all send you back to the
+door — never a lost run — and snakes give chase at walking speed when you are
+close. The rooms are validated by tests: reachability, wall passability, hazard
+clearance, gate placement, and the first-room-is-simple rule.
+
+**Math tools in the games.** A Math rune opens the Desmos pane and the
+reference sheet on demand (the panel's height is fixed, so opening either one
+never moves the game). The Question of the Day carried the same two tools for
+Math. Practice and the full test now start with the calculator closed, so the
+tool is always a click the student makes.
+
+**Mark.** The tile is the old mark again — the wide H with its light-blue dot
+at the top of the right stroke, in `BrandMark` and `public/favicon.svg`.
+
+## 2026-11-04 — Curves, ships and a vault that keeps its promises
+
+**Table Talk.** The rain loop was leaping every time it wrapped: the gradient
+has a 15px period and the old 48px vertical travel was 1.6 periods, so the
+stripes snapped back. The travel is 62px now — exactly one period on the
+vertical — the layer is 80% oversized so no gap appears, and both the rain and
+the portrait breathe on `translate3d` so the compositor keeps them smooth.
+
+**Coordinate Interceptor.** Waves are curves, not scatters. Waves 1–4 are
+straight lines with printed coordinates and LOCK marks; from wave 5 every other
+wave is a parabola, so the second firing mode becomes necessary. Silver ships
+arrive in wave 3 or 4 (seed-derived, never wave 1) and nudge a few tenths of a
+unit around their anchor, so the shot has to be timed; their printed label stays
+at the anchor so the wave remains solvable. Space swaps linear
+`y = mx + b` with quadratic `y = a(x − h)² + k`; ←/→/A/D drive `m` or `h`,
+↑/↓/W/S drive `b` or `k`, Q/E drive `a`, and Enter fires. Sliders stay on
+screen for touch. Every two to five waves a Math question opens as a real pause
+— the clock is frozen, the board is replaced, and the same resizable Desmos pane
+and draggable reference window are one click away. The "pulses per wave" spoiler
+is gone from the briefing; high score and last run remain.
+
+**Rune Vault.** Room one is a real room now: a chasm, a rope to a ledge and a
+wall with a crate step, then spikes (2), machinery (3), bear traps (4) and
+snakes (5), mixed after that. The intro no longer prints the schedule; the live
+hint and the intro stat describe what the current room actually contains.
+Crates are only placed where a wall needs them, and shoving one moves the whole
+touching row plus anything stacked on it, so two crates can no longer jam a
+room. A rope now tops out just above the ledge it serves, so a climb finishes on
+the ledge instead of stopping a body-length short. The rune panel becomes a
+full-screen sheet under 900px, its body scrolls independently of the card, and
+opening Desmos no longer changes the panel's height. The reference window sits
+above the game overlay (z-index 95), so it works in full screen too.
+
+## 2026-10-25 — One mark, one family
+
+**Mark.** Back to the first tile: the wide H with the small light-blue dot on
+the top of the right stroke, no gap cut through the letter. `BrandMark`,
+`public/favicon.svg` and the welcome emblem all use the same geometry
+(`M16 14V50M48 14V50M16 32H48`, dot `r=4.5` at `48,14`), and the tile centres
+its SVG exactly.
+
+**Question families.** `examEngine` now indexes what a student has met by
+*family* — the template key with digits normalised away, the stimulus key (one
+passage or figure) and the exact content key. A family stays out of the draw
+for `FAMILY_COOLDOWN_DAYS = 21`; after that it is eligible again, which matters
+because the Math bank is a drill bank (4,506 items over 248 templates, some
+families 400 strong) and a permanent ban would empty it in a week. The rule is
+applied in practice and rush (`diversifySequence` orders unseen items
+fresh-family first), full tests (`buildTestPlan` prefers untouched families,
+derived from the persisted seen-ID list so a resumed attempt rebuilds exactly),
+the daily quests (assignment frozen per day, one item per family), the Question
+of the Day (pick frozen per day), and both arcade pools (family-unique pools,
+fresh-first). Practice reviews that are due keep their priority.
+`templateMasteryIds` makes the Question bank show a direct template duplicate as
+mastered once either sibling has two correct answers in a row.
+
+**Credits copy.** `licensing_note` / `provenance_summary` (bank JSON, importer,
+seed SQL) now say the bank incorporates public datasets of SAT-style practice
+content instead of the drafting-process line.
+
+**Test date.** Account → Preferences uses `DatePicker`, a calendar panel in the
+app's own palette (month/year selects, weekday grid, today ring, Clear, Escape
+and outside-click close), replacing `<input type="date">`. It is deliberately
+not inside `<Field>`: a `<label>` forwards clicks to its first button, which
+re-opened the panel on every day click.
+
+## 2026-10-25 — Ladders that finish
+
+**Coordinate Interceptor.** LOCK now follows the *aim* for the first parabola
+waves too (`locksEnabled`): waves 1–4 always, plus the quadratic waves 5 and 7,
+then off from 8. Turning the mark off exactly when the curve arrives left the
+new mode with no feedback at all. The briefing says so, and a test locks every
+target of a real generated parabola wave.
+
+**Rune Vault — the climb.** Two separate faults made a rope look like it stopped
+halfway:
+
+* The keyboard handler treated a repeated `keydown` as a release, to stop
+  auto-jumping. Holding space therefore cut the climb off after the OS's first
+  repeat. `applyVaultKey` ignores repeats — a repeat is not a release — and the
+  jump is still consumed once per press, so holding cannot bunny-hop.
+* The rope's top was ten pixels above the ledge and the physics clamp stopped
+  the feet two pixels past it, so the climb ended in mid-air over the lip and
+  gravity dropped the player back to the door. The rope now ends exactly at the
+  ledge surface, the clamp puts the feet on it, the ledge reaches back under the
+  whole climb band, and the wall rope tops out 30px above the cap (10px was not
+  enough room to step across).
+
+Every ledge in 72 generated rooms is now climbed and stood on in the tests,
+starting from the left edge of the band with the key auto-repeating. The wall
+rope gets the same treatment.
+
+## 2026-10-25 — Eight tabs, a broken ledge and a climb with a job
+
+**Bottom tabs.** The phone bar now carries every section except the Arcade,
+which keeps its own door on the Dashboard (both Dashboard buttons read just
+"Arcade" now). That is eight pills at 390px, ~48px each, so the row steps down
+instead of dropping the words: `full` labels ≥78px per tab, `compact` at ≥42px
+(two-line, 0.55rem), icons alone below that. Below 42px even "Rewards" would
+clip.
+
+**Interceptor.** Shift + ←/→ changes the parabola's `a`, the same job Q/E does,
+so the hand never has to leave the arrow cluster; the slider label says so.
+Checked live in quadratic mode (a −0.25 → −0.15, h untouched); the mobile
+sliders still drive a/h/k.
+
+**Vault: a climb that earns its place.** `highroute` (stage 3+) is a spike bed
+300px wide — no 175px jump clears it — with a rope up to a broken ledge line.
+The first shelf carries the climb, the second is an 84px hop away and carries on
+past the spikes, so the rope is the only crossing. A test walks the whole route:
+climb, hop the gap, land on the far floor, no hurt.
+
+**Vault: denser, faster, longer.** Room pieces go from five at stage 1 to twelve
+(`5 + stage/2`). From stage 7 a snake floor carries two snakes, and snake speed
+scales `+4px/s per stage` to a cap of 118/s — always slower than the 265/s walk.
+Snakes already chase the player and every one of them resets to its start on a
+bite.
+
+**Vault on a phone.** Inline and full-screen, the pad splits for two thumbs:
+◀ ▶ on the left edge, Jump ▼ on the right (`margin-left: auto` on the third key,
+no gap-hiding wrappers). Verified at 390×844 and 844×390, plus exit full screen.
+
+**Intro.** "New each room" now shows a room rolled for this mount, so the
+readout is a real sample rather than the same fixed preview line.

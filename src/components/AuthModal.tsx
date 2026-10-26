@@ -6,6 +6,7 @@ import { validateConsent } from '../lib/dataRights';
 import { AGE_BANDS, COPYRIGHT_PATH, LEGAL_VERSION, MIN_AGE, PRIVACY_PATH, TERMS_PATH } from '../lib/legal';
 import { formatCooldown } from '../lib/password';
 import { formatRemainingHours } from '../lib/storage';
+import { queueEmail, removeQueuedEmail } from '../lib/emailQueue';
 import { useApp } from '../lib/store';
 
 /**
@@ -83,8 +84,20 @@ export function AuthModal() {
       );
       return;
     }
+    // The day's provider allowance covers recovery links too. When it is gone,
+    // the request is parked rather than refused: the link goes out on the next
+    // app open after the UTC reset.
+    const budget = await cloud.emailSendBudget().catch(() => null);
+    if (budget && !budget.allowed) {
+      queueEmail(address, 'reset');
+      setStatusMessage(
+        `Today's email limit is used up, so this recovery link is queued: it goes out the next time you open HDSAT after midnight UTC. Your password is unchanged until you open it.`
+      );
+      return;
+    }
     await cloud.requestPasswordReset(address);
     await cloud.recordEmailRequest(address, 'reset').catch(() => {});
+    removeQueuedEmail(address, 'reset');
     setStatusMessage('Recovery link sent. Open it to set a new password.');
   };
 

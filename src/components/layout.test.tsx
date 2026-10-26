@@ -47,6 +47,7 @@ function baseApp(overrides: MinimalApp = {}): MinimalApp {
       dismissMessages: () => {},
       openAuthModal: () => {},
       closeAuthModal: () => {},
+      flushQueuedEmails: async () => {},
     },
     ...overrides,
   };

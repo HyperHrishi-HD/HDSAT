@@ -45,6 +45,15 @@ export function VerifyEmailBanner() {
     return () => window.clearTimeout(timer);
   }, [eligible, inTest]);
 
+  // A light account is also where a request parked by yesterday's mail ceiling
+  // gets sent: opening the app after the UTC reset is the trigger, and the
+  // store refuses to send twice for the same address in one day.
+  const flushQueued = app.actions.flushQueuedEmails;
+  useEffect(() => {
+    if (!eligible || inTest) return;
+    void flushQueued();
+  }, [eligible, inTest, flushQueued]);
+
   useEffect(() => {
     if (!eligible || inTest) return;
     const id = window.setInterval(() => {

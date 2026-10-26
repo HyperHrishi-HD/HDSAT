@@ -9,6 +9,7 @@ import {
   PASSWORD_RESET_REQUESTED_KEY,
 } from './lib/password';
 import { getSupabase } from './lib/supabaseClient';
+import './lib/pwa';
 
 const AUTH_CALLBACK_PATH = '/account';
 
@@ -115,7 +116,23 @@ async function consumeAuthRedirect(): Promise<void> {
   landOnAccount();
 }
 
+/**
+ * Install the service worker in a built app only. It precaches the shell and the
+ * hashed assets so the installed app opens offline; in development it would
+ * fight Vite's hot reload, so it is skipped there.
+ */
+function registerServiceWorker(): void {
+  if (!import.meta.env.PROD) return;
+  if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return;
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js').catch(() => {
+      /* private mode, or a browser without workers: the app works anyway */
+    });
+  });
+}
+
 normaliseAdminEntry();
+registerServiceWorker();
 
 void consumeAuthRedirect().finally(() => {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

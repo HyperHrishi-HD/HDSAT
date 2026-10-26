@@ -39,7 +39,7 @@ export function DailyQuests() {
   }, [app.questions]);
 
   const questQuestions = (questId: string): Question[] =>
-    questQuestionIds(app.questions, questId, app.settings.assessment, date)
+    questQuestionIds(app.questions, questId, app.settings.assessment, date, app.progress)
       .map((id) => byId.get(id))
       .filter((q): q is Question => Boolean(q));
 

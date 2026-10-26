@@ -148,7 +148,7 @@ export function FullTestPage() {
   // Bluebook UI toggles
   const [showDirections, setShowDirections] = useState<boolean>(false);
   const [hideClock, setHideClock] = useState<boolean>(false);
-  const [showCalc, setShowCalc] = useState<boolean>(true);
+  const [showCalc, setShowCalc] = useState<boolean>(false);
   const [showRef, setShowRef] = useState<boolean>(false);
   const [showReportModal, setShowReportModal] = useState<boolean>(false);
   const [showNavPopover, setShowNavPopover] = useState<boolean>(false);

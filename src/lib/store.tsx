@@ -6,6 +6,7 @@ import { achievementById, itemById } from './catalog';
 import * as cloud from './cloud';
 import { getSupabase, isCloudConfigured } from './supabaseClient';
 import * as local from './storage';
+import * as emailQueue from './emailQueue';
 import { timingSamplesFromAttempts, type TimingSample } from './timing';
 import type {
   DailyActivity,
@@ -136,6 +137,12 @@ export interface AppValue {
     flushTestSync: (attempt: TestAttempt, clientSessionId: string) => void;
     verifySignupCode: (email: string, token: string) => Promise<void>;
     resendVerification: (email: string) => Promise<void>;
+    /**
+     * Sends the confirmation emails that were parked when the day's mail budget
+     * ran out. Called when the app opens, and again when the confirm strip is
+     * shown, so a queued request goes out on the first open after the reset.
+     */
+    flushQueuedEmails: () => Promise<void>;
     syncGuestData: () => Promise<void>;
     updateSettings: (patch: Partial<UserSettings>) => void;
     /** Rename the signed-in student, or the name remembered for a pending signup. */
@@ -680,7 +687,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   );
 
   const sendVerificationCode = useCallback(
-    async (email: string): Promise<{ sent: boolean; message: string }> => {
+    async (email: string): Promise<{ sent: boolean; queued?: boolean; message: string }> => {
       const address = email.trim();
       if (!address) return { sent: false, message: 'Enter your email address first.' };
 
@@ -688,9 +695,19 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       // answers with an error; the account keeps working either way.
       const budget = await cloud.emailSendBudget().catch(() => null);
       if (budget && !budget.allowed) {
+        // Park the request instead of losing it. The account is already usable
+        // — confirmation only lifts the light-account cap — so the cost of
+        // waiting is the reminder strip, not access to the app.
+        emailQueue.queueEmail(address, 'confirm');
+        const parked = local.savePendingAccount({
+          email: address,
+          displayName: user?.displayName ?? 'Student',
+        });
+        setPendingAccount(parked);
         return {
           sent: false,
-          message: 'Email verification is paused for today — come back tomorrow, keep studying signed in.',
+          queued: true,
+          message: `The daily email limit is used up, so ${address} is queued: the code goes out the next time you open HDSAT after midnight UTC. Keep studying signed in — nothing else is affected.`,
         };
       }
 
@@ -720,6 +737,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       }
       await cloud.resendConfirmation(address);
       await cloud.recordEmailRequest(address, 'confirm').catch(() => {});
+      // A send for this address makes any parked copy redundant.
+      emailQueue.removeQueuedEmail(address, 'confirm');
       const saved = local.savePendingAccount({
         email: address,
         displayName: guard.existing?.displayName ?? user?.displayName ?? 'Student',
@@ -736,6 +755,48 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     if (!result.sent) throw new Error(result.message);
     setNotice(result.message);
   }, [sendVerificationCode]);
+
+  /**
+   * Send whatever was parked when yesterday's budget ran out.
+   *
+   * Runs when the app opens for a light account, which is the only reason a
+   * request gets queued in the first place. One attempt per address per UTC day
+   * (recorded before the send, so a thrown error cannot turn into a loop) and
+   * at most two sends per open, because a queue is not a licence to burn the
+   * new day's budget in one page load.
+   */
+  const flushQueuedEmails = useCallback(async () => {
+    const due = emailQueue.dueQueuedEmails(emailQueue.loadEmailQueue());
+    if (due.length === 0) return;
+    const budget = await cloud.emailSendBudget().catch(() => null);
+    if (budget && !budget.allowed) return;
+
+    let sent = 0;
+    for (const entry of due.slice(0, emailQueue.EMAIL_QUEUE_PER_OPEN)) {
+      emailQueue.markQueuedAttempt(entry.email, entry.kind);
+      try {
+        if (entry.kind === 'reset') {
+          await cloud.requestPasswordReset(entry.email);
+          await cloud.recordEmailRequest(entry.email, 'reset').catch(() => {});
+        } else {
+          await cloud.resendConfirmation(entry.email);
+          await cloud.recordEmailRequest(entry.email, 'confirm').catch(() => {});
+        }
+        emailQueue.removeQueuedEmail(entry.email, entry.kind);
+        sent += 1;
+      } catch {
+        /* still queued: the next open after the reset tries once more */
+      }
+    }
+
+    if (sent > 0) {
+      setNotice(
+        sent === 1
+          ? 'The confirmation email you asked for yesterday has been sent. Check your inbox for the 6-digit code.'
+          : `${sent} queued emails have been sent. Check your inbox.`
+      );
+    }
+  }, []);
 
   const signUp = useCallback(
     async (
@@ -961,6 +1022,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       flushTestSync,
       verifySignupCode,
       resendVerification,
+      flushQueuedEmails,
       syncGuestData,
       updateSettings,
       updateDisplayName,

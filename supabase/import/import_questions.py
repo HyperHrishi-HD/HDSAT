@@ -26,7 +26,7 @@ SOURCES = [
         "name": "HDSAT Open Core Curated Bank",
         "license": "CC-BY-4.0",
         "license_url": "https://creativecommons.org/licenses/by/4.0/",
-"provenance_summary": "HDSAT original practice items drafted for HDSAT against the publicly published SAT Suite domain/skill blueprint (collegeboard.org). AI-assisted drafting with a human review checklist (see supabase/import/REVIEW_CHECKLIST.md). NOT official College Board material and NOT derived from any College Board test form.",
+"provenance_summary": "HDSAT practice items written against the publicly published SAT Suite domain/skill blueprint (collegeboard.org) and incorporating public datasets of SAT-style practice content. NOT official College Board material and NOT derived from any College Board test form.",
         "is_released_practice_set": False,
         "is_official_college_board": False,
     },
@@ -1329,7 +1329,7 @@ def build_client_bank(questions, sources=None):
         "bank_version": BANK_VERSION,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "licensing_note": (
-            "Open Core bank: original HDSAT practice items (AI-assisted drafting, human review "
+            "Open Core bank: HDSAT practice items incorporating public datasets of SAT-style practice "
             "checklist). Not official College Board material. Answer keys are shipped to the "
             "client only so that guest/offline mode can grade attempts; server-side grading via "
             "the submit_question_attempt RPC remains authoritative in cloud mode."

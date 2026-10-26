@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Alert, Button, Field, Toggle } from './ui';
 import * as cloud from '../lib/cloud';
+import { queueEmail, removeQueuedEmail } from '../lib/emailQueue';
 import {
   PASSWORD_MIN_LENGTH,
   cooldownMessage,
@@ -149,11 +150,23 @@ export function PasswordDialog({ mode, email, onClose, onDone }: PasswordDialogP
     }
     setBusy(true);
     try {
+      // The day's provider allowance covers recovery links. Out of allowance,
+      // the request waits for the next open after the UTC reset instead of
+      // disappearing.
+      const budget = await cloud.emailSendBudget().catch(() => null);
+      if (budget && !budget.allowed) {
+        queueEmail(email, 'reset');
+        setMessage(
+          `Today's email limit is used up. The recovery link is queued and goes out the next time you open HDSAT after midnight UTC.`
+        );
+        return;
+      }
       // One recovery link per address per day, counted by the server. The row is
       // written only after Supabase accepts the send, so a failure never locks
       // this address out for 24 hours.
       await cloud.requestPasswordReset(email);
       await cloud.recordEmailRequest(email, 'reset').catch(() => {});
+      removeQueuedEmail(email, 'reset');
       setCooldowns((previous) => ({
         ...previous,
         email: { nextAllowedAt: null, retryAfterSeconds: 24 * 60 * 60 },
