@@ -249,12 +249,14 @@ export interface FamilyHistory {
 }
 
 /**
- * How long a family stays out of the draw. A drill bank reuses a template with
- * new numbers dozens of times, so an absolute ban would exhaust the Math bank
- * after a handful of sessions; three weeks is long enough that the student
- * never notices the repeat, and short enough that the pool refills itself.
+ * How long a family stays out of the draw. Semester-length, because the
+ * complaint that started this was recognising a question two weeks later: a
+ * template with new numbers is the same question to a student. A drill bank
+ * reuses templates, so an absolute ban would exhaust the Math bank, and the
+ * draw is ordered rather than filtered — fresh families first, near-duplicates
+ * only once the fresh pool cannot fill the session.
  */
-export const FAMILY_COOLDOWN_DAYS = 21;
+export const FAMILY_COOLDOWN_DAYS = 45;
 
 export function questionFamilyKeys(q: Question): string[] {
   const keys = [questionTemplateKey(q), questionContentKey(q)];

@@ -395,18 +395,23 @@ export function QuestionBankPage() {
                     <Badge>{activeQuestion.assessments.join(', ')}</Badge>
                   </div>
                   <div className="row">
+                    {/* Calculator and Reference Sheet are Math tools. Offering
+                        the reference on a Reading & Writing item was a bug:
+                        the real test does not. */}
                     {activeQuestion.section === 'Math' ? (
-                      <Button
-                        size="sm"
-                        variant="subtle"
-                        onClick={() => setShowCalc((v) => !v)}
-                      >
-                        {showCalc ? 'Hide Calculator' : 'Calculator'}
-                      </Button>
+                      <>
+                        <Button
+                          size="sm"
+                          variant="subtle"
+                          onClick={() => setShowCalc((v) => !v)}
+                        >
+                          {showCalc ? 'Hide Calculator' : 'Calculator'}
+                        </Button>
+                        <Button size="sm" variant="subtle" onClick={() => setShowRef((v) => !v)}>
+                          {showRef ? 'Hide Reference' : 'Reference Sheet'}
+                        </Button>
+                      </>
                     ) : null}
-                    <Button size="sm" variant="subtle" onClick={() => setShowRef((v) => !v)}>
-                      {showRef ? 'Hide Reference' : 'Reference Sheet'}
-                    </Button>
                     <Button
                       size="sm"
                       variant="outline"
@@ -433,7 +438,7 @@ export function QuestionBankPage() {
                   </div>
                 </div>
 
-                {showRef ? (
+                {showRef && activeQuestion.section === 'Math' ? (
                   <ReferenceWindow
                     assessment={activeQuestion.assessments[0]}
                     onClose={() => setShowRef(false)}

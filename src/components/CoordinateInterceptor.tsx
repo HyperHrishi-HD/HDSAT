@@ -22,6 +22,7 @@ import {
   type InterceptWave,
 } from '../lib/arcadeGames';
 import { useCanvasFit } from '../lib/canvasFit';
+import { buildFamilyHistory, preferFreshFamilies } from '../lib/examEngine';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
 import type { Question } from '../lib/types';
@@ -339,7 +340,12 @@ export function CoordinateInterceptor() {
           !breakUsedRef.current.has(question.id)
       );
       if (pool.length === 0) return false;
-      const picked = pool[Math.floor(Math.random() * pool.length)];
+      // A break is still a study mode: draw from the same family-spaced pool as
+      // practice and the vault instead of a flat random pick, which could serve
+      // a near-duplicate of something answered an hour ago.
+      const ranked = preferFreshFamilies(pool, buildFamilyHistory(app.questions, app.progress));
+      const window = ranked.slice(0, Math.min(12, ranked.length));
+      const picked = window[Math.floor(Math.random() * window.length)];
       breakUsedRef.current.add(picked.id);
       setBreakQuestion(picked);
       setBreakPick(null);
@@ -348,7 +354,7 @@ export function CoordinateInterceptor() {
       setMessage(null);
       return true;
     },
-    [app.questions]
+    [app.questions, app.progress]
   );
 
   const start = () => {

@@ -174,11 +174,10 @@ export function FullTestPage() {
     [app.questions, assessment, excludeReleased, seenQuestionIds]
   );
 
-  // Every math module opens with Desmos already on screen. The student can
-  // still hide it for the current module; starting another module reopens it.
-  useEffect(() => {
-    if (activeStage?.plan.section === 'Math') setShowCalc(true);
-  }, [activeStage?.plan.section, activeStage?.stageNumber]);
+  // The calculator is a button, not a default panel: opening it on every math
+  // module shifted the question under the student between stages, and the tool
+  // is one click away in the toolbar. The panel keeps its own toggle state for
+  // the module, so it stays open once opened until they close it.
 
   // Module countdown timer. Expiry is handled by the effect below, not inside
   // the state updater: updaters must stay pure (StrictMode calls them twice)

@@ -158,6 +158,16 @@ describe('question families', () => {
     expect(isFamilyFresh(templateB1, history)).toBe(true);
   });
 
+  it('keeps a sibling out for weeks, not days', () => {
+    // Six weeks is still inside the window: a template with new numbers reads as
+    // the same question, and the complaint was recognising it a fortnight later.
+    const recent = progressFor(templateA1, 'correct', 1);
+    recent.lastAttemptedAt = '2026-09-15T12:00:00.000Z';
+    const history = buildFamilyHistory([templateA1, templateA2], { [templateA1.id]: recent });
+    const now = Date.parse('2026-10-25T12:00:00.000Z');
+    expect(isFamilyFresh(templateA2, history, now)).toBe(false);
+  });
+
   it('lets the family back in once the cooldown has passed', () => {
     const old = progressFor(templateA1, 'correct', 1);
     old.lastAttemptedAt = '2026-09-01T12:00:00.000Z';

@@ -680,17 +680,20 @@ export function PracticePage() {
             </div>
             <div className="row">
               {timedPerQuestion ? <span className="timer">{formatClock(elapsedSeconds)}</span> : null}
+              {/* The Desmos calculator and the Math Reference Sheet belong to
+                  Math only, exactly as in the real app; a Reading & Writing
+                  item used to keep the Reference button. */}
               {currentQuestion.section === 'Math' ? (
                 <>
                   <Button size="sm" variant="subtle" onClick={() => setShowCalc((v) => !v)}>
                     {showCalc ? 'Hide Calculator' : 'Calculator'}
                   </Button>
+                  <Button size="sm" variant="subtle" onClick={() => setShowRef((v) => !v)}>
+                    {showRef ? 'Hide Reference' : 'Reference Sheet'}
+                  </Button>
                   <PaneSwitch side={split.side} onClick={split.toggleSide} />
                 </>
               ) : null}
-              <Button size="sm" variant="subtle" onClick={() => setShowRef((v) => !v)}>
-                {showRef ? 'Hide Reference' : 'Reference Sheet'}
-              </Button>
               <Button size="sm" variant="subtle" onClick={() => app.actions.toggleSaved(currentQuestion.id)}>
                 {app.saved.includes(currentQuestion.id) ? 'Saved ★' : 'Save ☆'}
               </Button>
@@ -706,7 +709,7 @@ export function PracticePage() {
             </p>
           ) : null}
 
-          {showRef ? (
+          {showRef && currentQuestion.section === 'Math' ? (
             <ReferenceWindow assessment={assessment} onClose={() => setShowRef(false)} />
           ) : null}
 
