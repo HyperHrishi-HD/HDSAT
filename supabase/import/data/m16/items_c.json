@@ -1,0 +1,296 @@
+{
+ "pages": {
+  "Coral bleaching": {
+   "excerpt": "Coral bleaching is the process where corals become white due to loss of symbiotic algae and photosynthetic pigments. This loss of pigment can be caused by various stressors, such as changes in water temperature, light, salinity, or nutrients. A bleached coral is under stress, more vulnerable to starvation and disease, and at risk of death. The leading cause of coral bleaching is rising ocean temperatures due to climate change. Take up of carbon dioxide from the atmosphere also has been acidifying the oceans and affects coral health. Large-scale bleaching events can devastate entire reef ecosystems, affecting biodiversity and the livelihoods of coastal communities that depend on healthy reefs for food, tourism, and protection from storm surges.",
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Coral bleaching, driven mainly by warming oceans, threatens reefs and the communities that depend on them.",
+     "wrongs": [
+      "Coral bleaching is caused primarily by pollution from coastal communities.",
+      "Bleached corals are already dead and cannot recover.",
+      "Coral bleaching increases the biodiversity of reef ecosystems."
+     ],
+     "why": [
+      "The text names rising ocean temperatures as the leading cause and does not identify coastal pollution as the cause.",
+      "The text says a bleached coral is under stress and at risk of death, not that it is already dead.",
+      "The text says large-scale bleaching can devastate reef ecosystems and affect biodiversity, not increase it."
+     ],
+     "explanation": "The passage defines bleaching, lists its causes with rising ocean temperatures as the leading one, describes the stress it places on corals, and notes the consequences for reefs and coastal communities."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "correct": "reefs that support coastal fisheries may deteriorate when corals bleach.",
+     "wrongs": [
+      "bleached corals attract more fish than healthy corals do.",
+      "storm surges become more frequent when reefs are healthy.",
+      "coral bleaching raises the salinity of coastal waters."
+     ],
+     "why": [
+      "The text links bleaching to vulnerability and death, not to attracting fish.",
+      "Healthy reefs are described as protection from storm surges, not as a cause of them.",
+      "Salinity is listed as a possible stressor, not as a result of bleaching."
+     ],
+     "explanation": "The text says coastal communities depend on healthy reefs for food, and that bleaching can devastate reef ecosystems, which supports the inference that fisheries depending on those reefs may suffer."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines bleaching, lists its causes, and describes its effects on corals and coastal communities.",
+     "wrongs": [
+      "It describes a solution to bleaching and evaluates how well the solution works.",
+      "It compares bleaching in the Atlantic and Pacific oceans.",
+      "It traces the discovery of coral bleaching through the work of a single researcher."
+     ],
+     "why": [
+      "No solution is proposed or evaluated.",
+      "No comparison between oceans is made.",
+      "No researcher or history of discovery is mentioned."
+     ],
+     "explanation": "The passage defines the process, names stressors and the leading cause, and then moves to consequences for corals, reefs and people."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that coral bleaching has economic consequences for people?",
+     "correct": "Large-scale bleaching events can devastate entire reef ecosystems, affecting biodiversity and the livelihoods of coastal communities that depend on healthy reefs for food, tourism, and protection from storm surges.",
+     "wrongs": [
+      "The leading cause of coral bleaching is rising ocean temperatures due to climate change.",
+      "A bleached coral is under stress, more vulnerable to starvation and disease, and at risk of death.",
+      "This loss of pigment can be caused by various stressors, such as changes in water temperature, light, salinity, or nutrients."
+     ],
+     "why": [
+      "This sentence identifies the leading cause, not an economic effect.",
+      "This sentence describes the condition of a bleached coral.",
+      "This sentence lists stressors that can cause bleaching."
+     ],
+     "explanation": "Only the quotation mentions livelihoods, food and tourism, which are the economic consequences the claim concerns."
+    }
+   ]
+  },
+  "Voyager Golden Record": {
+   "excerpt": "The Voyager Golden Records are two identical phonograph records, with one copy aboard each of the two Voyager spacecraft launched in 1977. The records contain sounds and data to reconstruct raster scan images selected to portray the diversity of life and culture on Earth, and are intended for any intelligent extraterrestrial life form who may find them. The records are a time capsule.\nAlthough neither Voyager spacecraft is heading toward any particular star, Voyager 1 will pass within 1.6 light-years' distance of the star Gliese 445, currently in the constellation Camelopardalis, in about 40,000 years.",
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Voyager Golden Records are a time capsule of Earth's diversity, intended for any extraterrestrial finders.",
+     "wrongs": [
+      "The records were designed to guide the Voyager spacecraft toward Gliese 445.",
+      "The records contain only music and no images or data.",
+      "Two different records were placed aboard a single spacecraft."
+     ],
+     "why": [
+      "The text says neither spacecraft is heading toward a particular star.",
+      "The records contain sounds and data for reconstructing images.",
+      "The records are identical, and one copy is aboard each of the two spacecraft."
+     ],
+     "explanation": "The passage describes the records, their contents and intended audience, and calls them a time capsule; it also notes the enormous timescale of the journey."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "correct": "be found and interpreted anytime soon.",
+     "wrongs": [
+      "survive the journey beyond the solar system.",
+      "pass near the star Gliese 445.",
+      "contain information about life on Earth."
+     ],
+     "why": [
+      "The text does not question whether the records will survive.",
+      "The text states that Voyager 1 will pass near Gliese 445, so this is not a matter of likelihood.",
+      "The text states that the records do contain such information."
+     ],
+     "explanation": "The text places the nearest stellar approach about 40,000 years away, which supports the inference that the records are unlikely to be found and interpreted in the near future."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes what the records are and contain, then notes the vast distance and time involved in their journey.",
+     "wrongs": [
+      "It explains how the spacecraft were engineered and compares their instruments.",
+      "It argues that the records should have included more languages.",
+      "It describes the discovery of the records by extraterrestrial life."
+     ],
+     "why": [
+      "No engineering detail or instrument comparison is given.",
+      "No argument about the records' contents is made.",
+      "No discovery is described; the records are intended for a possible future finder."
+     ],
+     "explanation": "The first paragraph covers the records, their contents and purpose; the second covers the spacecraft's path and the 40,000-year timescale."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the records were assembled to represent the variety of Earth's life and culture?",
+     "correct": "The records contain sounds and data to reconstruct raster scan images selected to portray the diversity of life and culture on Earth",
+     "wrongs": [
+      "The Voyager Golden Records are two identical phonograph records, with one copy aboard each of the two Voyager spacecraft launched in 1977.",
+      "The records are a time capsule.",
+      "Voyager 1 will pass within 1.6 light-years' distance of the star Gliese 445"
+     ],
+     "why": [
+      "This sentence describes the number of records and their placement.",
+      "This sentence characterizes the records but does not mention diversity.",
+      "This sentence describes the spacecraft's path."
+     ],
+     "explanation": "The quotation explicitly says the selected sounds and images portray the diversity of life and culture on Earth."
+    }
+   ]
+  },
+  "Standard time": {
+   "excerpt": "Standard time is the synchronisation of clocks within a geographical region to a single time standard, rather than different localities in the region using their own local mean time. The term is also used to contrast with daylight saving time, a period of the year when clocks are shifted ahead one hour, supposedly to make better use of daily sunlight from spring to fall. Applied globally in the 20th century, the geographical regions became time zones. The standard time in each time zone has come to be defined as an offset from Universal Time. A further offset is applied for part of the year in regions with daylight saving time. Generally, standard time agrees with the local mean time at some meridian that passes through the region, often near the centre of the region. Historically, standard time was established during the 19th century to aid weather forecasting and train travel.",
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Standard time synchronizes clocks across a region and was adopted to support weather forecasting and rail travel.",
+     "wrongs": [
+      "Standard time was introduced in order to make daylight saving time possible.",
+      "Standard time requires each locality to keep its own local mean time.",
+      "Time zones were established in the 19th century and later replaced by Universal Time."
+     ],
+     "why": [
+      "The text contrasts standard time with daylight saving time rather than presenting it as a prerequisite.",
+      "The text defines standard time as a single standard for a region rather than separate local times.",
+      "The text says time zones were applied globally in the 20th century and defined as offsets from Universal Time, not replaced by it."
+     ],
+     "explanation": "The passage defines standard time as regional synchronization, distinguishes it from daylight saving time, explains its relation to Universal Time, and gives its historical purpose."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "correct": "trains crossing a region might have kept clocks that disagreed with one another.",
+     "wrongs": [
+      "weather forecasting was impossible.",
+      "rail travel was unaffected by local time.",
+      "every region already used Universal Time."
+     ],
+     "why": [
+      "The text says standard time aided forecasting, not that forecasting was impossible without it.",
+      "The text presents train travel as a reason for adopting standard time, which implies local time did affect it.",
+      "Universal Time is described as the reference for modern time zones, not as a pre-existing standard everywhere."
+     ],
+     "explanation": "Before standard time, localities used their own local mean time. The text says standard time was established to aid train travel, which supports the inference that differing local clocks caused problems for railways."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines standard time, contrasts it with daylight saving time, explains how time zones relate to Universal Time, and gives a historical reason for its adoption.",
+     "wrongs": [
+      "It narrates the invention of the mechanical clock and its spread through Europe.",
+      "It compares the accuracy of several timekeeping devices and ranks them.",
+      "It argues that daylight saving time should be abolished."
+     ],
+     "why": [
+      "No history of the mechanical clock is given.",
+      "No timekeeping devices are compared or ranked.",
+      "Daylight saving time is explained, not criticized."
+     ],
+     "explanation": "The text proceeds from definition to contrast to the modern offset system and ends with the nineteenth-century reasons for adopting standard time."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that practical coordination, rather than astronomy alone, drove the adoption of standard time?",
+     "correct": "Historically, standard time was established during the 19th century to aid weather forecasting and train travel.",
+     "wrongs": [
+      "Generally, standard time agrees with the local mean time at some meridian that passes through the region, often near the centre of the region.",
+      "The standard time in each time zone has come to be defined as an offset from Universal Time.",
+      "The term is also used to contrast with daylight saving time, a period of the year when clocks are shifted ahead one hour"
+     ],
+     "why": [
+      "This sentence describes the astronomical basis of standard time, not the reason it was adopted.",
+      "This sentence describes how time zones are defined today.",
+      "This sentence distinguishes standard time from daylight saving time."
+     ],
+     "explanation": "The quotation names weather forecasting and train travel as the purposes behind standard time, which are practical coordination needs rather than astronomical ones."
+    }
+   ]
+  },
+  "Peatland": {
+   "excerpt": "A peatland is a type of wetland whose soils consist of organic matter from decaying plants, forming layers of peat. Peatlands arise because of incomplete decomposition of organic matter, usually litter from vegetation, due to water-logging and subsequent anoxia. Peatlands are unusual landforms that derive mostly from biological rather than physical processes, and can take on characteristic shapes and surface patterning.\nThe formation of peatlands is primarily controlled by climatic conditions such as precipitation and temperature, although terrain relief is a major factor as waterlogging occurs more easily on flatter ground and in basins. Peat formation typically initiates as a paludification of a mineral soil forest, terrestrialisation of lakes, or primary peat formation on bare soils on previously glaciated areas. A peatland that is actively forming peat is called a mire. All types of mires share the common characteristic of being saturated with water, at least seasonally with actively forming peat, while having their own ecosystem.\nPeatlands are the largest natural carbon store on land.",
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Peatlands form where waterlogged, oxygen-poor conditions slow decay, and they store large amounts of carbon.",
+     "wrongs": [
+      "Peatlands form because plant matter decomposes unusually quickly.",
+      "Peatlands are shaped mainly by physical processes such as erosion and glaciation.",
+      "Peatlands store less carbon than any other natural environment on land."
+     ],
+     "why": [
+      "The text attributes peat formation to incomplete decomposition, the opposite of rapid decay.",
+      "The text says peatlands derive mostly from biological rather than physical processes.",
+      "The text calls peatlands the largest natural carbon store on land."
+     ],
+     "explanation": "The passage explains that waterlogging and anoxia prevent complete decomposition, describes how peatlands form, and ends by identifying them as the largest natural carbon store on land."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "correct": "allow stored organic matter to decompose more quickly.",
+     "wrongs": [
+      "increase the rate at which new peat forms.",
+      "have no effect on the carbon stored in the peat.",
+      "turn the peatland into a mire."
+     ],
+     "why": [
+      "Waterlogging is what slows decomposition, so removing it would work against further peat formation.",
+      "The text ties carbon storage to waterlogged, oxygen-poor conditions, so changing those conditions would affect the stored carbon.",
+      "A mire is a peatland that is actively forming peat, which draining would not promote."
+     ],
+     "explanation": "Peat accumulates because waterlogging and anoxia inhibit decomposition. Draining removes that inhibition, so the stored organic matter would break down faster."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines peatlands, explains the conditions and processes that form them, and emphasizes their role as a carbon store.",
+     "wrongs": [
+      "It describes peatlands and then argues that they should be drained for agriculture.",
+      "It compares peatlands with tropical rainforests and ranks their biodiversity.",
+      "It traces the history of peat extraction from the nineteenth century to the present."
+     ],
+     "why": [
+      "No argument for draining peatlands is made.",
+      "Rainforests are not mentioned.",
+      "Peat extraction and its history are not discussed."
+     ],
+     "explanation": "The text proceeds from a definition to the biological cause of peat formation, then to the climatic and topographic controls on where peatlands form, and closes with their carbon storage."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that peatlands are important for global carbon storage?",
+     "correct": "Peatlands are the largest natural carbon store on land.",
+     "wrongs": [
+      "A peatland is a type of wetland whose soils consist of organic matter from decaying plants, forming layers of peat.",
+      "Peatlands are unusual landforms that derive mostly from biological rather than physical processes",
+      "A peatland that is actively forming peat is called a mire."
+     ],
+     "why": [
+      "This sentence defines peatlands and their soils.",
+      "This sentence describes the origin of peatland landforms.",
+      "This sentence defines the term mire."
+     ],
+     "explanation": "Only the final sentence directly states the scale of carbon storage, which is the claim being supported."
+    }
+   ]
+  }
+ }
+}

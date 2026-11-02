@@ -130,7 +130,16 @@ def main():
     bank = json.loads(BANK.read_text(encoding="utf-8"))
     existing = bank["questions"]
     sources = [dict(s) for s in bank["sources"]]
-    incoming = json.loads(incoming_path.read_text(encoding="utf-8"))["questions"]
+    incoming_payload = json.loads(incoming_path.read_text(encoding="utf-8"))
+    incoming = incoming_payload["questions"]
+    # A batch may introduce a source the shipped bank has never seen (for
+    # example a differently licensed text corpus). Register it before the QA
+    # gate runs, otherwise every item from it fails metadata.unknown_source.
+    known_sources = {s["source_id"] for s in sources}
+    for source in incoming_payload.get("sources") or []:
+        if source.get("source_id") and source["source_id"] not in known_sources:
+            sources.append(dict(source))
+            known_sources.add(source["source_id"])
     print(f"bank: {len(existing)} items; incoming: {len(incoming)} from {incoming_path.name}")
 
     known_ids = {q["id"] for q in existing}

@@ -1,0 +1,296 @@
+{
+ "pages": {
+  "Kelp forest": {
+   "excerpt": "Kelp forests are underwater areas with a high density of kelp, which covers a large part of the world's coastlines. Smaller areas of anchored kelp are called kelp beds. They are recognized as one of the most productive and dynamic ecosystems on Earth. Although algal kelp forest combined with coral reefs only cover 0.1% of Earth's total surface, they account for 0.9% of global primary productivity. Kelp forests occur worldwide throughout temperate and polar coastal oceans. In 2007, kelp forests were also discovered in tropical waters near Ecuador.",
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Kelp forests are exceptionally productive coastal ecosystems that grow in a wide range of ocean waters.",
+     "wrongs": [
+      "Kelp beds cover a larger area than kelp forests and support more marine species.",
+      "Kelp forests are restricted to the temperate and polar coastal oceans.",
+      "Coral reefs account for a larger share of global primary productivity than kelp forests do."
+     ],
+     "why": [
+      "The text defines kelp beds as the smaller areas of anchored kelp, not the larger ones.",
+      "The final sentence reports kelp forests discovered in tropical waters near Ecuador, so the range is wider than the choice allows.",
+      "The text gives a combined figure for kelp forests and coral reefs and never compares the two."
+     ],
+     "explanation": "The text presents kelp forests as highly productive, notes that they cover very little of Earth's surface yet contribute disproportionately to primary productivity, and describes a range that extends from polar to tropical waters. The other choices reverse a detail or invent a comparison."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "correct": "grow in waters with very different temperature conditions.",
+     "wrongs": [
+      "survive only where coral reefs are also present.",
+      "thrive best in the warm waters near Ecuador.",
+      "expand only when ocean temperatures are falling."
+     ],
+     "why": [
+      "The text never ties kelp forests to the presence of coral reefs.",
+      "The Ecuador discovery shows kelp forests can grow in tropical water; it does not show that they do best there.",
+      "Nothing in the text links kelp expansion to falling temperatures."
+     ],
+     "explanation": "The passage places kelp forests in temperate, polar and, since 2007, tropical waters. A range spanning such different climates supports the inference that the forests tolerate a broad range of temperatures."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines kelp forests, stresses their productivity relative to their area, and describes where they grow.",
+     "wrongs": [
+      "It traces the history of kelp research from its beginnings to the present.",
+      "It compares two competing explanations for the decline of kelp forests.",
+      "It presents a problem caused by kelp beds and then proposes a solution."
+     ],
+     "why": [
+      "The text does not describe the history of research on kelp.",
+      "No decline is mentioned, and no competing explanations are offered.",
+      "Kelp beds are defined, not presented as a problem, and no solution is proposed."
+     ],
+     "explanation": "The text opens with a definition, turns to the contrast between the small area kelp forests cover and their large contribution to productivity, and closes with their geographic range."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that kelp forests contribute far more to global productivity than their share of Earth's surface would suggest?",
+     "correct": "Although algal kelp forest combined with coral reefs only cover 0.1% of Earth's total surface, they account for 0.9% of global primary productivity.",
+     "wrongs": [
+      "They are recognized as one of the most productive and dynamic ecosystems on Earth.",
+      "Kelp forests occur worldwide throughout temperate and polar coastal oceans.",
+      "Smaller areas of anchored kelp are called kelp beds."
+     ],
+     "why": [
+      "This sentence asserts high productivity but gives no measure of area, so it cannot show a disproportion.",
+      "This sentence describes geographic range, not productivity.",
+      "This sentence defines a term and says nothing about productivity."
+     ],
+     "explanation": "Only the sentence pairing 0.1% of Earth's surface with 0.9% of global primary productivity supplies the comparison the claim depends on."
+    }
+   ]
+  },
+  "Roman concrete": {
+   "excerpt": "Roman concrete, also called opus caementicium, was used in construction in ancient Rome. Like its modern equivalent, Roman concrete was based on a hydraulic-setting cement added to an aggregate. Many buildings and structures still standing today, such as bridges, reservoirs and aqueducts, were built with this material, which attests to both its versatility and its durability. It was previously thought that its strength was enhanced by the incorporation of pozzolanic ash where available (particularly in the Bay of Naples). The addition of ash prevented cracks from spreading. However, research in 2023 has shown that the incorporation of mixtures of different types of lime, forming conglomerate \"clasts\" allowed the concrete to self-repair cracks, which was more likely the case.",
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The durability of Roman concrete is now attributed to lime clasts that let the material repair its own cracks.",
+     "wrongs": [
+      "Roman concrete was less durable than modern concrete because it contained no aggregate.",
+      "Pozzolanic ash has been confirmed as the only reason Roman structures are still standing.",
+      "Roman builders added lime clasts to concrete in order to decorate interior surfaces."
+     ],
+     "why": [
+      "The text compares Roman concrete to its modern equivalent but never calls it less durable, and it says the material contained aggregate.",
+      "The ash explanation is described as the earlier view, which 2023 research revised.",
+      "Interior decoration is mentioned separately, through stucco, frescoes and marble, not as the purpose of lime clasts."
+     ],
+     "explanation": "The passage sets up the earlier ash explanation and then presents 2023 research showing that lime clasts allowed the concrete to self-repair cracks."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "correct": "lime clasts that could seal cracks as they formed.",
+     "wrongs": [
+      "pozzolanic ash imported from the Bay of Naples.",
+      "the absence of aggregate in the Roman mixture.",
+      "stucco and marble applied to interior surfaces."
+     ],
+     "why": [
+      "The ash explanation is the older view that the 2023 research displaced.",
+      "The text says Roman concrete was based on cement added to an aggregate, so the mixture was not aggregate-free.",
+      "Stucco and marble are described as interior decoration, not as a cause of crack resistance."
+     ],
+     "explanation": "The 2023 finding is that lime clasts allowed self-repair. Completing the sentence with lime clasts follows directly from that finding; the other completions either contradict the text or name unrelated details."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes a material's durability, contrasts an earlier explanation with newer research, and notes when the material came into use.",
+     "wrongs": [
+      "It explains how to mix Roman concrete and urges modern builders to copy the method.",
+      "It argues that ancient engineering was superior by comparing Roman bridges with modern reservoirs.",
+      "It traces the decline of Roman concrete after the end of the Roman Empire."
+     ],
+     "why": [
+      "The text offers no mixing instructions and no recommendation to builders.",
+      "It mentions modern concrete only for comparison and never ranks the two.",
+      "The decline of Roman concrete is not discussed."
+     ],
+     "explanation": "The text establishes durability, presents the older ash explanation, revises it with 2023 research, and adds the date from which the material was widely used."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that Roman concrete could repair cracks without human intervention?",
+     "correct": "allowed the concrete to self-repair cracks",
+     "wrongs": [
+      "Many buildings and structures still standing today, such as bridges, reservoirs and aqueducts, were built with this material",
+      "The addition of ash prevented cracks from spreading.",
+      "Roman concrete was in widespread use from about 150 BC"
+     ],
+     "why": [
+      "Long-standing buildings show durability but not the ability to repair damage.",
+      "Preventing cracks from spreading describes the older ash explanation, not self-repair.",
+      "The date of widespread use says nothing about how the material responds to cracks."
+     ],
+     "explanation": "The phrase naming self-repair is the only quotation that describes the concrete healing cracks on its own; the others concern durability, the earlier explanation, or dating."
+    }
+   ]
+  },
+  "Waggle dance": {
+   "excerpt": "Waggle dance is a term used in beekeeping and ethology for a particular figure-eight dance of the honey bee. By performing this dance, successful foragers can share information about the direction and distance to patches of flowers yielding nectar and pollen, to water sources, or to new nest-site locations with other members of the colony. The waggle dance and the round dance are two forms of dance behaviour that are part of a continuous transition. As the distance between the resource and the hive increases, the round dance transforms into variations of a transitional dance, which, when communicating resources at even greater distances, becomes the waggle dance. In the case of Apis mellifera ligustica, the round dance is performed until the resource is about ten metres (33 ft) away from the hive, transitional dances are performed when the resource is at a distance of twenty to thirty metres (66 to 98 ft) away from the hive, and finally, when it is located at distances greater than forty metres (130 ft) from the hive, the waggle dance is performed.",
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Honeybees share the direction and distance of resources through dances whose form changes as the resource gets farther away.",
+     "wrongs": [
+      "The waggle dance is performed only for resources more than forty metres from the hive.",
+      "Round dances communicate direction, while waggle dances communicate only distance.",
+      "Karl von Frisch was the first person to observe honeybees dancing."
+     ],
+     "why": [
+      "The forty-metre figure describes when the full waggle dance appears in one subspecies, not the only circumstance in which it is used.",
+      "The text says the dance shares both direction and distance, and it presents the two dances as points on a continuum.",
+      "Von Frisch is not mentioned in this part of the article, and the text does not claim he was the first observer."
+     ],
+     "explanation": "The passage defines the dance, says it conveys direction and distance, and then describes how the dance shifts from round to transitional to waggle as distance increases."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "correct": "perform a transitional dance rather than either the round dance or the full waggle dance.",
+     "wrongs": [
+      "perform the round dance until the resource is ten metres away.",
+      "perform the full waggle dance because the resource is beyond forty metres.",
+      "abandon dancing and lead the colony directly to the resource."
+     ],
+     "why": [
+      "Ten metres marks the upper end of the round dance, not a resource twenty-five metres away.",
+      "Forty metres is the threshold for the full waggle dance; twenty-five metres falls below it.",
+      "The text describes dancing as the means of sharing information and never mentions leading by flight."
+     ],
+     "explanation": "In Apis mellifera ligustica the transitional dances occur at twenty to thirty metres, so a forager returning from twenty-five metres would perform a transitional dance."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines a behavior, explains what the behavior communicates, and traces how its form changes with distance.",
+     "wrongs": [
+      "It compares two theories about bee navigation and concludes that neither is supported.",
+      "It describes the life cycle of a honeybee colony from founding to decline.",
+      "It argues that the term round dance should replace the term waggle dance."
+     ],
+     "why": [
+      "No competing theories are presented, and no conclusion about their support is drawn.",
+      "The colony's life cycle is not described.",
+      "The text notes a suggestion about terminology but does not argue for replacing one term with the other."
+     ],
+     "explanation": "The text moves from definition to function to the distance-dependent progression from round dance to waggle dance."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Hard",
+     "prompt": "Which quotation from the text most directly supports the claim that the type of dance a honeybee performs depends on how far away a resource is?",
+     "correct": "the round dance is performed until the resource is about ten metres (33 ft) away from the hive, transitional dances are performed when the resource is at a distance of twenty to thirty metres (66 to 98 ft) away from the hive, and finally, when it is located at distances greater than forty metres (130 ft) from the hive, the waggle dance is performed",
+     "wrongs": [
+      "By performing this dance, successful foragers can share information about the direction and distance to patches of flowers yielding nectar and pollen",
+      "The waggle dance and the round dance are two forms of dance behaviour that are part of a continuous transition.",
+      "Waggle dance is a term used in beekeeping and ethology for a particular figure-eight dance of the honey bee."
+     ],
+     "why": [
+      "This sentence says distance is communicated but does not link the form of the dance to distance.",
+      "This sentence calls the dances a continuum without giving the distances involved.",
+      "This sentence defines the term and gives the shape of the dance."
+     ],
+     "explanation": "The quotation assigns a different dance to each distance band, which is exactly the dependence the claim describes."
+    }
+   ]
+  },
+  "Printing press": {
+   "excerpt": "A printing press is a machine that applies pressure to transfer ink onto a surface made of paper, cloth, or a similar material. Its workers are known as printing press operators. It marked a significant improvement on earlier methods, in which the paper was rubbed by hand to transfer applied ink to the printing surface. The printing press was invented by the German goldsmith Johannes Gutenberg around 1440, and its subsequent global spread revolutionized literary production and communication during the early modern period. The spread of printing brought about an era of mass communication in European society, allowing information to quickly spread across Europe and contributing to the Reformation and the Scientific Revolution. The cost of printed texts declined and their availability increased, facilitating higher adult literacy rates across Europe. Books increasingly appeared in vernacular languages rather than Latin, and national languages were standardized.",
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The printing press spread quickly and reshaped communication, literacy, and language in early modern Europe.",
+     "wrongs": [
+      "The printing press was invented in order to standardize European national languages.",
+      "Printed texts became more expensive but more widely available after 1440.",
+      "The Reformation and the Scientific Revolution slowed the spread of printing."
+     ],
+     "why": [
+      "Language standardization is described as a consequence of printing, not its purpose.",
+      "The text says the cost of printed texts declined while availability increased.",
+      "The text says printing contributed to those movements, not that they slowed printing."
+     ],
+     "explanation": "The passage describes the invention, the rapid spread of printing, and several consequences: mass communication, cheaper and more available texts, higher literacy, and the rise of vernacular and standardized national languages."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "correct": "the decline of Latin as the dominant language of European books.",
+     "wrongs": [
+      "the invention of the wooden handpress.",
+      "a rise in the price of printed texts.",
+      "the disappearance of national languages."
+     ],
+     "why": [
+      "The handpress is the machine itself, not a consequence of vernacular printing.",
+      "The text reports that the cost of printed texts declined.",
+      "The text says national languages were standardized, not that they disappeared."
+     ],
+     "explanation": "The text states that books increasingly appeared in vernacular languages rather than Latin, which supports the inference that Latin's dominance in printed books declined."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines a machine, describes its invention and spread, and lists several consequences of that spread.",
+     "wrongs": [
+      "It compares manuscript copying with printing and concludes that copying was more accurate.",
+      "It explains the mechanics of the handpress in detail and gives instructions for operating one.",
+      "It traces the decline of printing after the Scientific Revolution."
+     ],
+     "why": [
+      "The text mentions hand rubbing only to contrast it with the press and makes no claim about accuracy.",
+      "The text gives no mechanical detail or operating instructions.",
+      "The text presents printing as contributing to the Scientific Revolution, not declining after it."
+     ],
+     "explanation": "The opening defines the press, the middle describes Gutenberg's invention and its spread, and the final sentences list effects on communication, literacy and language."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that printing changed which languages Europeans read, not only how many books they could obtain?",
+     "correct": "Books increasingly appeared in vernacular languages rather than Latin, and national languages were standardized.",
+     "wrongs": [
+      "The cost of printed texts declined and their availability increased, facilitating higher adult literacy rates across Europe.",
+      "The printing press was invented by the German goldsmith Johannes Gutenberg around 1440",
+      "The basic design of the wooden handpress was largely consistent for over three centuries"
+     ],
+     "why": [
+      "This sentence is about cost, availability and literacy, not about which languages were read.",
+      "This sentence dates and credits the invention.",
+      "This sentence describes the durability of the press design."
+     ],
+     "explanation": "Only the quotation about vernacular languages and standardization addresses a change in the languages of printed books."
+    }
+   ]
+  }
+ }
+}

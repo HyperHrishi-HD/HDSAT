@@ -1,6 +1,6 @@
 {
- "bank_version": "2026.11.02-open-core-8",
- "generated_at": "2026-11-02T21:09:40.788656+00:00",
+ "bank_version": "2026.11.02-open-core-9",
+ "generated_at": "2026-11-02T21:34:21.043323+00:00",
  "licensing_note": "Open Core bank: HDSAT practice items incorporating public datasets of SAT-style practice content. Not official College Board material. Answer keys are shipped to the client only so that guest/offline mode can grade attempts; server-side grading via the submit_question_attempt RPC remains authoritative in cloud mode.",
  "sources": [
   {
@@ -22,6 +22,16 @@
    "is_released_practice_set": true,
    "is_official_college_board": false,
    "record_count": 7
+  },
+  {
+   "source_id": "wikipedia-cc-by-sa-4",
+   "name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "license_url": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "provenance_summary": "Verbatim introductory extracts from English Wikipedia articles, retrieved 2026-11-02 through the MediaWiki API. Every item names its article and URL in its attribution. Question stems, choices and rationales are original to HDSAT.",
+   "is_released_practice_set": false,
+   "is_official_college_board": false,
+   "record_count": 48
   }
  ],
  "questions": [
@@ -336911,6 +336921,2502 @@
     "C": "2007 is not the highest point; the graph reaches 92.1%."
    },
    "choice_order_seed": "hdsat-choice-order:RW-M15-WB-T131-IT2005"
+  },
+  {
+   "id": "RW-M16-CI001",
+   "external_id": "HDSAT-RW-M16-CI001",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Kelp forests are underwater areas with a high density of kelp, which covers a large part of the world's coastlines. Smaller areas of anchored kelp are called kelp beds. They are recognized as one of the most productive and dynamic ecosystems on Earth. Although algal kelp forest combined with coral reefs only cover 0.1% of Earth's total surface, they account for 0.9% of global primary productivity. Kelp forests occur worldwide throughout temperate and polar coastal oceans. In 2007, kelp forests were also discovered in tropical waters near Ecuador.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Kelp beds cover a larger area than kelp forests and support more marine species."
+    },
+    {
+     "id": "B",
+     "text": "Kelp forests are exceptionally productive coastal ecosystems that grow in a wide range of ocean waters."
+    },
+    {
+     "id": "C",
+     "text": "Kelp forests are restricted to the temperate and polar coastal oceans."
+    },
+    {
+     "id": "D",
+     "text": "Coral reefs account for a larger share of global primary productivity than kelp forests do."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Kelp forest\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Kelp_forest",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The text presents kelp forests as highly productive, notes that they cover very little of Earth's surface yet contribute disproportionately to primary productivity, and describes a range that extends from polar to tropical waters. The other choices reverse a detail or invent a comparison.",
+   "distractor_rationales": {
+    "A": "The text defines kelp beds as the smaller areas of anchored kelp, not the larger ones.",
+    "C": "The final sentence reports kelp forests discovered in tropical waters near Ecuador, so the range is wider than the choice allows.",
+    "D": "The text gives a combined figure for kelp forests and coral reefs and never compares the two."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI001"
+  },
+  {
+   "id": "RW-M16-INF001",
+   "external_id": "HDSAT-RW-M16-INF001",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Kelp forests are underwater areas with a high density of kelp, which covers a large part of the world's coastlines. Smaller areas of anchored kelp are called kelp beds. They are recognized as one of the most productive and dynamic ecosystems on Earth. Although algal kelp forest combined with coral reefs only cover 0.1% of Earth's total surface, they account for 0.9% of global primary productivity. Kelp forests occur worldwide throughout temperate and polar coastal oceans. In 2007, kelp forests were also discovered in tropical waters near Ecuador.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "expand only when ocean temperatures are falling."
+    },
+    {
+     "id": "B",
+     "text": "grow in waters with very different temperature conditions."
+    },
+    {
+     "id": "C",
+     "text": "survive only where coral reefs are also present."
+    },
+    {
+     "id": "D",
+     "text": "thrive best in the warm waters near Ecuador."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Kelp forest\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Kelp_forest",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The passage places kelp forests in temperate, polar and, since 2007, tropical waters. A range spanning such different climates supports the inference that the forests tolerate a broad range of temperatures.",
+   "distractor_rationales": {
+    "C": "The text never ties kelp forests to the presence of coral reefs.",
+    "D": "The Ecuador discovery shows kelp forests can grow in tropical water; it does not show that they do best there.",
+    "A": "Nothing in the text links kelp expansion to falling temperatures."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF001"
+  },
+  {
+   "id": "RW-M16-TS001",
+   "external_id": "HDSAT-RW-M16-TS001",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Kelp forests are underwater areas with a high density of kelp, which covers a large part of the world's coastlines. Smaller areas of anchored kelp are called kelp beds. They are recognized as one of the most productive and dynamic ecosystems on Earth. Although algal kelp forest combined with coral reefs only cover 0.1% of Earth's total surface, they account for 0.9% of global primary productivity. Kelp forests occur worldwide throughout temperate and polar coastal oceans. In 2007, kelp forests were also discovered in tropical waters near Ecuador.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It defines kelp forests, stresses their productivity relative to their area, and describes where they grow."
+    },
+    {
+     "id": "B",
+     "text": "It traces the history of kelp research from its beginnings to the present."
+    },
+    {
+     "id": "C",
+     "text": "It presents a problem caused by kelp beds and then proposes a solution."
+    },
+    {
+     "id": "D",
+     "text": "It compares two competing explanations for the decline of kelp forests."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Kelp forest\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Kelp_forest",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The text opens with a definition, turns to the contrast between the small area kelp forests cover and their large contribution to productivity, and closes with their geographic range.",
+   "distractor_rationales": {
+    "B": "The text does not describe the history of research on kelp.",
+    "D": "No decline is mentioned, and no competing explanations are offered.",
+    "C": "Kelp beds are defined, not presented as a problem, and no solution is proposed."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS001"
+  },
+  {
+   "id": "RW-M16-CE001",
+   "external_id": "HDSAT-RW-M16-CE001",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Kelp forests are underwater areas with a high density of kelp, which covers a large part of the world's coastlines. Smaller areas of anchored kelp are called kelp beds. They are recognized as one of the most productive and dynamic ecosystems on Earth. Although algal kelp forest combined with coral reefs only cover 0.1% of Earth's total surface, they account for 0.9% of global primary productivity. Kelp forests occur worldwide throughout temperate and polar coastal oceans. In 2007, kelp forests were also discovered in tropical waters near Ecuador.",
+   "prompt": "Which quotation from the text most directly supports the claim that kelp forests contribute far more to global productivity than their share of Earth's surface would suggest?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Although algal kelp forest combined with coral reefs only cover 0.1% of Earth's total surface, they account for 0.9% of global primary productivity."
+    },
+    {
+     "id": "B",
+     "text": "They are recognized as one of the most productive and dynamic ecosystems on Earth."
+    },
+    {
+     "id": "C",
+     "text": "Smaller areas of anchored kelp are called kelp beds."
+    },
+    {
+     "id": "D",
+     "text": "Kelp forests occur worldwide throughout temperate and polar coastal oceans."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Kelp forest\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Kelp_forest",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Only the sentence pairing 0.1% of Earth's surface with 0.9% of global primary productivity supplies the comparison the claim depends on.",
+   "distractor_rationales": {
+    "B": "This sentence asserts high productivity but gives no measure of area, so it cannot show a disproportion.",
+    "D": "This sentence describes geographic range, not productivity.",
+    "C": "This sentence defines a term and says nothing about productivity."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE001"
+  },
+  {
+   "id": "RW-M16-CI002",
+   "external_id": "HDSAT-RW-M16-CI002",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Roman concrete, also called opus caementicium, was used in construction in ancient Rome. Like its modern equivalent, Roman concrete was based on a hydraulic-setting cement added to an aggregate. Many buildings and structures still standing today, such as bridges, reservoirs and aqueducts, were built with this material, which attests to both its versatility and its durability. It was previously thought that its strength was enhanced by the incorporation of pozzolanic ash where available (particularly in the Bay of Naples). The addition of ash prevented cracks from spreading. However, research in 2023 has shown that the incorporation of mixtures of different types of lime, forming conglomerate \"clasts\" allowed the concrete to self-repair cracks, which was more likely the case.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Pozzolanic ash has been confirmed as the only reason Roman structures are still standing."
+    },
+    {
+     "id": "B",
+     "text": "The durability of Roman concrete is now attributed to lime clasts that let the material repair its own cracks."
+    },
+    {
+     "id": "C",
+     "text": "Roman concrete was less durable than modern concrete because it contained no aggregate."
+    },
+    {
+     "id": "D",
+     "text": "Roman builders added lime clasts to concrete in order to decorate interior surfaces."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Roman concrete\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Roman_concrete",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The passage sets up the earlier ash explanation and then presents 2023 research showing that lime clasts allowed the concrete to self-repair cracks.",
+   "distractor_rationales": {
+    "C": "The text compares Roman concrete to its modern equivalent but never calls it less durable, and it says the material contained aggregate.",
+    "A": "The ash explanation is described as the earlier view, which 2023 research revised.",
+    "D": "Interior decoration is mentioned separately, through stucco, frescoes and marble, not as the purpose of lime clasts."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI002"
+  },
+  {
+   "id": "RW-M16-INF002",
+   "external_id": "HDSAT-RW-M16-INF002",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Roman concrete, also called opus caementicium, was used in construction in ancient Rome. Like its modern equivalent, Roman concrete was based on a hydraulic-setting cement added to an aggregate. Many buildings and structures still standing today, such as bridges, reservoirs and aqueducts, were built with this material, which attests to both its versatility and its durability. It was previously thought that its strength was enhanced by the incorporation of pozzolanic ash where available (particularly in the Bay of Naples). The addition of ash prevented cracks from spreading. However, research in 2023 has shown that the incorporation of mixtures of different types of lime, forming conglomerate \"clasts\" allowed the concrete to self-repair cracks, which was more likely the case.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "the absence of aggregate in the Roman mixture."
+    },
+    {
+     "id": "B",
+     "text": "stucco and marble applied to interior surfaces."
+    },
+    {
+     "id": "C",
+     "text": "pozzolanic ash imported from the Bay of Naples."
+    },
+    {
+     "id": "D",
+     "text": "lime clasts that could seal cracks as they formed."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Roman concrete\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Roman_concrete",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The 2023 finding is that lime clasts allowed self-repair. Completing the sentence with lime clasts follows directly from that finding; the other completions either contradict the text or name unrelated details.",
+   "distractor_rationales": {
+    "C": "The ash explanation is the older view that the 2023 research displaced.",
+    "A": "The text says Roman concrete was based on cement added to an aggregate, so the mixture was not aggregate-free.",
+    "B": "Stucco and marble are described as interior decoration, not as a cause of crack resistance."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF002"
+  },
+  {
+   "id": "RW-M16-TS002",
+   "external_id": "HDSAT-RW-M16-TS002",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Roman concrete, also called opus caementicium, was used in construction in ancient Rome. Like its modern equivalent, Roman concrete was based on a hydraulic-setting cement added to an aggregate. Many buildings and structures still standing today, such as bridges, reservoirs and aqueducts, were built with this material, which attests to both its versatility and its durability. It was previously thought that its strength was enhanced by the incorporation of pozzolanic ash where available (particularly in the Bay of Naples). The addition of ash prevented cracks from spreading. However, research in 2023 has shown that the incorporation of mixtures of different types of lime, forming conglomerate \"clasts\" allowed the concrete to self-repair cracks, which was more likely the case.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It describes a material's durability, contrasts an earlier explanation with newer research, and notes when the material came into use."
+    },
+    {
+     "id": "B",
+     "text": "It argues that ancient engineering was superior by comparing Roman bridges with modern reservoirs."
+    },
+    {
+     "id": "C",
+     "text": "It traces the decline of Roman concrete after the end of the Roman Empire."
+    },
+    {
+     "id": "D",
+     "text": "It explains how to mix Roman concrete and urges modern builders to copy the method."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Roman concrete\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Roman_concrete",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The text establishes durability, presents the older ash explanation, revises it with 2023 research, and adds the date from which the material was widely used.",
+   "distractor_rationales": {
+    "D": "The text offers no mixing instructions and no recommendation to builders.",
+    "B": "It mentions modern concrete only for comparison and never ranks the two.",
+    "C": "The decline of Roman concrete is not discussed."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS002"
+  },
+  {
+   "id": "RW-M16-CE002",
+   "external_id": "HDSAT-RW-M16-CE002",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Roman concrete, also called opus caementicium, was used in construction in ancient Rome. Like its modern equivalent, Roman concrete was based on a hydraulic-setting cement added to an aggregate. Many buildings and structures still standing today, such as bridges, reservoirs and aqueducts, were built with this material, which attests to both its versatility and its durability. It was previously thought that its strength was enhanced by the incorporation of pozzolanic ash where available (particularly in the Bay of Naples). The addition of ash prevented cracks from spreading. However, research in 2023 has shown that the incorporation of mixtures of different types of lime, forming conglomerate \"clasts\" allowed the concrete to self-repair cracks, which was more likely the case.",
+   "prompt": "Which quotation from the text most directly supports the claim that Roman concrete could repair cracks without human intervention?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Roman concrete was in widespread use from about 150 BC"
+    },
+    {
+     "id": "B",
+     "text": "allowed the concrete to self-repair cracks"
+    },
+    {
+     "id": "C",
+     "text": "Many buildings and structures still standing today, such as bridges, reservoirs and aqueducts, were built with this material"
+    },
+    {
+     "id": "D",
+     "text": "The addition of ash prevented cracks from spreading."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Roman concrete\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Roman_concrete",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The phrase naming self-repair is the only quotation that describes the concrete healing cracks on its own; the others concern durability, the earlier explanation, or dating.",
+   "distractor_rationales": {
+    "C": "Long-standing buildings show durability but not the ability to repair damage.",
+    "D": "Preventing cracks from spreading describes the older ash explanation, not self-repair.",
+    "A": "The date of widespread use says nothing about how the material responds to cracks."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE002"
+  },
+  {
+   "id": "RW-M16-CI003",
+   "external_id": "HDSAT-RW-M16-CI003",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Waggle dance is a term used in beekeeping and ethology for a particular figure-eight dance of the honey bee. By performing this dance, successful foragers can share information about the direction and distance to patches of flowers yielding nectar and pollen, to water sources, or to new nest-site locations with other members of the colony. The waggle dance and the round dance are two forms of dance behaviour that are part of a continuous transition. As the distance between the resource and the hive increases, the round dance transforms into variations of a transitional dance, which, when communicating resources at even greater distances, becomes the waggle dance. In the case of Apis mellifera ligustica, the round dance is performed until the resource is about ten metres (33 ft) away from the hive, transitional dances are performed when the resource is at a distance of twenty to thirty metres (66 to 98 ft) away from the hive, and finally, when it is located at distances greater than forty metres (130 ft) from the hive, the waggle dance is performed.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Round dances communicate direction, while waggle dances communicate only distance."
+    },
+    {
+     "id": "B",
+     "text": "The waggle dance is performed only for resources more than forty metres from the hive."
+    },
+    {
+     "id": "C",
+     "text": "Karl von Frisch was the first person to observe honeybees dancing."
+    },
+    {
+     "id": "D",
+     "text": "Honeybees share the direction and distance of resources through dances whose form changes as the resource gets farther away."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Waggle dance\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Waggle_dance",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The passage defines the dance, says it conveys direction and distance, and then describes how the dance shifts from round to transitional to waggle as distance increases.",
+   "distractor_rationales": {
+    "B": "The forty-metre figure describes when the full waggle dance appears in one subspecies, not the only circumstance in which it is used.",
+    "A": "The text says the dance shares both direction and distance, and it presents the two dances as points on a continuum.",
+    "C": "Von Frisch is not mentioned in this part of the article, and the text does not claim he was the first observer."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI003"
+  },
+  {
+   "id": "RW-M16-INF003",
+   "external_id": "HDSAT-RW-M16-INF003",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Waggle dance is a term used in beekeeping and ethology for a particular figure-eight dance of the honey bee. By performing this dance, successful foragers can share information about the direction and distance to patches of flowers yielding nectar and pollen, to water sources, or to new nest-site locations with other members of the colony. The waggle dance and the round dance are two forms of dance behaviour that are part of a continuous transition. As the distance between the resource and the hive increases, the round dance transforms into variations of a transitional dance, which, when communicating resources at even greater distances, becomes the waggle dance. In the case of Apis mellifera ligustica, the round dance is performed until the resource is about ten metres (33 ft) away from the hive, transitional dances are performed when the resource is at a distance of twenty to thirty metres (66 to 98 ft) away from the hive, and finally, when it is located at distances greater than forty metres (130 ft) from the hive, the waggle dance is performed.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "perform the full waggle dance because the resource is beyond forty metres."
+    },
+    {
+     "id": "B",
+     "text": "perform a transitional dance rather than either the round dance or the full waggle dance."
+    },
+    {
+     "id": "C",
+     "text": "abandon dancing and lead the colony directly to the resource."
+    },
+    {
+     "id": "D",
+     "text": "perform the round dance until the resource is ten metres away."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Waggle dance\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Waggle_dance",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "In Apis mellifera ligustica the transitional dances occur at twenty to thirty metres, so a forager returning from twenty-five metres would perform a transitional dance.",
+   "distractor_rationales": {
+    "D": "Ten metres marks the upper end of the round dance, not a resource twenty-five metres away.",
+    "A": "Forty metres is the threshold for the full waggle dance; twenty-five metres falls below it.",
+    "C": "The text describes dancing as the means of sharing information and never mentions leading by flight."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF003"
+  },
+  {
+   "id": "RW-M16-TS003",
+   "external_id": "HDSAT-RW-M16-TS003",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Waggle dance is a term used in beekeeping and ethology for a particular figure-eight dance of the honey bee. By performing this dance, successful foragers can share information about the direction and distance to patches of flowers yielding nectar and pollen, to water sources, or to new nest-site locations with other members of the colony. The waggle dance and the round dance are two forms of dance behaviour that are part of a continuous transition. As the distance between the resource and the hive increases, the round dance transforms into variations of a transitional dance, which, when communicating resources at even greater distances, becomes the waggle dance. In the case of Apis mellifera ligustica, the round dance is performed until the resource is about ten metres (33 ft) away from the hive, transitional dances are performed when the resource is at a distance of twenty to thirty metres (66 to 98 ft) away from the hive, and finally, when it is located at distances greater than forty metres (130 ft) from the hive, the waggle dance is performed.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It argues that the term round dance should replace the term waggle dance."
+    },
+    {
+     "id": "B",
+     "text": "It compares two theories about bee navigation and concludes that neither is supported."
+    },
+    {
+     "id": "C",
+     "text": "It describes the life cycle of a honeybee colony from founding to decline."
+    },
+    {
+     "id": "D",
+     "text": "It defines a behavior, explains what the behavior communicates, and traces how its form changes with distance."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Waggle dance\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Waggle_dance",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The text moves from definition to function to the distance-dependent progression from round dance to waggle dance.",
+   "distractor_rationales": {
+    "B": "No competing theories are presented, and no conclusion about their support is drawn.",
+    "C": "The colony's life cycle is not described.",
+    "A": "The text notes a suggestion about terminology but does not argue for replacing one term with the other."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS003"
+  },
+  {
+   "id": "RW-M16-CE003",
+   "external_id": "HDSAT-RW-M16-CE003",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Waggle dance is a term used in beekeeping and ethology for a particular figure-eight dance of the honey bee. By performing this dance, successful foragers can share information about the direction and distance to patches of flowers yielding nectar and pollen, to water sources, or to new nest-site locations with other members of the colony. The waggle dance and the round dance are two forms of dance behaviour that are part of a continuous transition. As the distance between the resource and the hive increases, the round dance transforms into variations of a transitional dance, which, when communicating resources at even greater distances, becomes the waggle dance. In the case of Apis mellifera ligustica, the round dance is performed until the resource is about ten metres (33 ft) away from the hive, transitional dances are performed when the resource is at a distance of twenty to thirty metres (66 to 98 ft) away from the hive, and finally, when it is located at distances greater than forty metres (130 ft) from the hive, the waggle dance is performed.",
+   "prompt": "Which quotation from the text most directly supports the claim that the type of dance a honeybee performs depends on how far away a resource is?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "The waggle dance and the round dance are two forms of dance behaviour that are part of a continuous transition."
+    },
+    {
+     "id": "B",
+     "text": "By performing this dance, successful foragers can share information about the direction and distance to patches of flowers yielding nectar and pollen"
+    },
+    {
+     "id": "C",
+     "text": "the round dance is performed until the resource is about ten metres (33 ft) away from the hive, transitional dances are performed when the resource is at a distance of twenty to thirty metres (66 to 98 ft) away from the hive, and finally, when it is located at distances greater than forty metres (130 ft) from the hive, the waggle dance is performed"
+    },
+    {
+     "id": "D",
+     "text": "Waggle dance is a term used in beekeeping and ethology for a particular figure-eight dance of the honey bee."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Waggle dance\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Waggle_dance",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The quotation assigns a different dance to each distance band, which is exactly the dependence the claim describes.",
+   "distractor_rationales": {
+    "B": "This sentence says distance is communicated but does not link the form of the dance to distance.",
+    "A": "This sentence calls the dances a continuum without giving the distances involved.",
+    "D": "This sentence defines the term and gives the shape of the dance."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE003"
+  },
+  {
+   "id": "RW-M16-CI004",
+   "external_id": "HDSAT-RW-M16-CI004",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A printing press is a machine that applies pressure to transfer ink onto a surface made of paper, cloth, or a similar material. Its workers are known as printing press operators. It marked a significant improvement on earlier methods, in which the paper was rubbed by hand to transfer applied ink to the printing surface. The printing press was invented by the German goldsmith Johannes Gutenberg around 1440, and its subsequent global spread revolutionized literary production and communication during the early modern period. The spread of printing brought about an era of mass communication in European society, allowing information to quickly spread across Europe and contributing to the Reformation and the Scientific Revolution. The cost of printed texts declined and their availability increased, facilitating higher adult literacy rates across Europe. Books increasingly appeared in vernacular languages rather than Latin, and national languages were standardized.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Printed texts became more expensive but more widely available after 1440."
+    },
+    {
+     "id": "B",
+     "text": "The Reformation and the Scientific Revolution slowed the spread of printing."
+    },
+    {
+     "id": "C",
+     "text": "The printing press was invented in order to standardize European national languages."
+    },
+    {
+     "id": "D",
+     "text": "The printing press spread quickly and reshaped communication, literacy, and language in early modern Europe."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Printing press\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Printing_press",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The passage describes the invention, the rapid spread of printing, and several consequences: mass communication, cheaper and more available texts, higher literacy, and the rise of vernacular and standardized national languages.",
+   "distractor_rationales": {
+    "C": "Language standardization is described as a consequence of printing, not its purpose.",
+    "A": "The text says the cost of printed texts declined while availability increased.",
+    "B": "The text says printing contributed to those movements, not that they slowed printing."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI004"
+  },
+  {
+   "id": "RW-M16-INF004",
+   "external_id": "HDSAT-RW-M16-INF004",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A printing press is a machine that applies pressure to transfer ink onto a surface made of paper, cloth, or a similar material. Its workers are known as printing press operators. It marked a significant improvement on earlier methods, in which the paper was rubbed by hand to transfer applied ink to the printing surface. The printing press was invented by the German goldsmith Johannes Gutenberg around 1440, and its subsequent global spread revolutionized literary production and communication during the early modern period. The spread of printing brought about an era of mass communication in European society, allowing information to quickly spread across Europe and contributing to the Reformation and the Scientific Revolution. The cost of printed texts declined and their availability increased, facilitating higher adult literacy rates across Europe. Books increasingly appeared in vernacular languages rather than Latin, and national languages were standardized.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "the invention of the wooden handpress."
+    },
+    {
+     "id": "B",
+     "text": "a rise in the price of printed texts."
+    },
+    {
+     "id": "C",
+     "text": "the decline of Latin as the dominant language of European books."
+    },
+    {
+     "id": "D",
+     "text": "the disappearance of national languages."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Printing press\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Printing_press",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The text states that books increasingly appeared in vernacular languages rather than Latin, which supports the inference that Latin's dominance in printed books declined.",
+   "distractor_rationales": {
+    "A": "The handpress is the machine itself, not a consequence of vernacular printing.",
+    "B": "The text reports that the cost of printed texts declined.",
+    "D": "The text says national languages were standardized, not that they disappeared."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF004"
+  },
+  {
+   "id": "RW-M16-TS004",
+   "external_id": "HDSAT-RW-M16-TS004",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A printing press is a machine that applies pressure to transfer ink onto a surface made of paper, cloth, or a similar material. Its workers are known as printing press operators. It marked a significant improvement on earlier methods, in which the paper was rubbed by hand to transfer applied ink to the printing surface. The printing press was invented by the German goldsmith Johannes Gutenberg around 1440, and its subsequent global spread revolutionized literary production and communication during the early modern period. The spread of printing brought about an era of mass communication in European society, allowing information to quickly spread across Europe and contributing to the Reformation and the Scientific Revolution. The cost of printed texts declined and their availability increased, facilitating higher adult literacy rates across Europe. Books increasingly appeared in vernacular languages rather than Latin, and national languages were standardized.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It defines a machine, describes its invention and spread, and lists several consequences of that spread."
+    },
+    {
+     "id": "B",
+     "text": "It explains the mechanics of the handpress in detail and gives instructions for operating one."
+    },
+    {
+     "id": "C",
+     "text": "It compares manuscript copying with printing and concludes that copying was more accurate."
+    },
+    {
+     "id": "D",
+     "text": "It traces the decline of printing after the Scientific Revolution."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Printing press\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Printing_press",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The opening defines the press, the middle describes Gutenberg's invention and its spread, and the final sentences list effects on communication, literacy and language.",
+   "distractor_rationales": {
+    "C": "The text mentions hand rubbing only to contrast it with the press and makes no claim about accuracy.",
+    "B": "The text gives no mechanical detail or operating instructions.",
+    "D": "The text presents printing as contributing to the Scientific Revolution, not declining after it."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS004"
+  },
+  {
+   "id": "RW-M16-CE004",
+   "external_id": "HDSAT-RW-M16-CE004",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A printing press is a machine that applies pressure to transfer ink onto a surface made of paper, cloth, or a similar material. Its workers are known as printing press operators. It marked a significant improvement on earlier methods, in which the paper was rubbed by hand to transfer applied ink to the printing surface. The printing press was invented by the German goldsmith Johannes Gutenberg around 1440, and its subsequent global spread revolutionized literary production and communication during the early modern period. The spread of printing brought about an era of mass communication in European society, allowing information to quickly spread across Europe and contributing to the Reformation and the Scientific Revolution. The cost of printed texts declined and their availability increased, facilitating higher adult literacy rates across Europe. Books increasingly appeared in vernacular languages rather than Latin, and national languages were standardized.",
+   "prompt": "Which quotation from the text most directly supports the claim that printing changed which languages Europeans read, not only how many books they could obtain?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "The basic design of the wooden handpress was largely consistent for over three centuries"
+    },
+    {
+     "id": "B",
+     "text": "Books increasingly appeared in vernacular languages rather than Latin, and national languages were standardized."
+    },
+    {
+     "id": "C",
+     "text": "The printing press was invented by the German goldsmith Johannes Gutenberg around 1440"
+    },
+    {
+     "id": "D",
+     "text": "The cost of printed texts declined and their availability increased, facilitating higher adult literacy rates across Europe."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Printing press\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Printing_press",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Only the quotation about vernacular languages and standardization addresses a change in the languages of printed books.",
+   "distractor_rationales": {
+    "D": "This sentence is about cost, availability and literacy, not about which languages were read.",
+    "C": "This sentence dates and credits the invention.",
+    "A": "This sentence describes the durability of the press design."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE004"
+  },
+  {
+   "id": "RW-M16-CI005",
+   "external_id": "HDSAT-RW-M16-CI005",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The urban heat island (UHI) effect is a meteorological and climatological phenomenon in which urban areas experience significantly warmer temperatures than surrounding rural areas. The temperature difference is usually larger at night than during the day, and is most apparent when winds are weak, under block conditions, noticeably during the summer and winter. The main cause of the UHI effect is from the modification of land surfaces, while waste heat generated by energy usage is a secondary contributor. Urban areas occupy about 0.5% of the Earth's land surface but host more than half of the world's population. As a population center grows, it tends to expand its area and increase its average temperature. Another key term is heat island; the term can be used to refer to any area that is relatively hotter than the surroundings, but generally refers to human-disturbed areas.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Waste heat from energy use is the main cause of the urban heat island effect."
+    },
+    {
+     "id": "B",
+     "text": "Urban areas tend to be warmer than surrounding rural areas, mainly because their land surfaces have been modified."
+    },
+    {
+     "id": "C",
+     "text": "Urban areas occupy about half of Earth's land surface."
+    },
+    {
+     "id": "D",
+     "text": "The temperature difference between city and countryside is largest during the day."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Urban heat island\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Urban_heat_island",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The passage defines the effect, names land-surface modification as its main cause with waste heat secondary, and gives the scale of urban land. The other choices misstate one of those details.",
+   "distractor_rationales": {
+    "A": "The text calls waste heat a secondary contributor, not the main cause.",
+    "D": "The text says the difference is usually larger at night than during the day.",
+    "C": "The text gives 0.5% of Earth's land surface, not half."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI005"
+  },
+  {
+   "id": "RW-M16-INF005",
+   "external_id": "HDSAT-RW-M16-INF005",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "The urban heat island (UHI) effect is a meteorological and climatological phenomenon in which urban areas experience significantly warmer temperatures than surrounding rural areas. The temperature difference is usually larger at night than during the day, and is most apparent when winds are weak, under block conditions, noticeably during the summer and winter. The main cause of the UHI effect is from the modification of land surfaces, while waste heat generated by energy usage is a secondary contributor. Urban areas occupy about 0.5% of the Earth's land surface but host more than half of the world's population. As a population center grows, it tends to expand its area and increase its average temperature. Another key term is heat island; the term can be used to refer to any area that is relatively hotter than the surroundings, but generally refers to human-disturbed areas.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "a windy night."
+    },
+    {
+     "id": "B",
+     "text": "a calm afternoon."
+    },
+    {
+     "id": "C",
+     "text": "a windy afternoon."
+    },
+    {
+     "id": "D",
+     "text": "a calm night."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Urban heat island\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Urban_heat_island",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The text says the urban-rural difference is larger at night and most apparent when winds are weak, so a calm night combines both conditions.",
+   "distractor_rationales": {
+    "C": "Wind weakens the effect, and daytime differences are usually smaller.",
+    "A": "Weak winds favor the effect, but the text says the difference is usually larger at night.",
+    "B": "Calm conditions favor the effect, but the daytime difference is usually smaller."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF005"
+  },
+  {
+   "id": "RW-M16-TS005",
+   "external_id": "HDSAT-RW-M16-TS005",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "The urban heat island (UHI) effect is a meteorological and climatological phenomenon in which urban areas experience significantly warmer temperatures than surrounding rural areas. The temperature difference is usually larger at night than during the day, and is most apparent when winds are weak, under block conditions, noticeably during the summer and winter. The main cause of the UHI effect is from the modification of land surfaces, while waste heat generated by energy usage is a secondary contributor. Urban areas occupy about 0.5% of the Earth's land surface but host more than half of the world's population. As a population center grows, it tends to expand its area and increase its average temperature. Another key term is heat island; the term can be used to refer to any area that is relatively hotter than the surroundings, but generally refers to human-disturbed areas.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It traces the history of research on urban temperatures from the nineteenth century onward."
+    },
+    {
+     "id": "B",
+     "text": "It compares several cities and ranks them by the strength of their heat islands."
+    },
+    {
+     "id": "C",
+     "text": "It defines the effect, identifies its causes, notes the scale of urban land, and clarifies the term."
+    },
+    {
+     "id": "D",
+     "text": "It describes the effect and then proposes engineering solutions to reduce it."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Urban heat island\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Urban_heat_island",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The text moves from a definition to causes, then to the small share of land cities occupy, and ends by explaining how the term heat island is used.",
+   "distractor_rationales": {
+    "B": "No individual cities are compared or ranked.",
+    "D": "No solutions are proposed in this passage.",
+    "A": "No historical account of the research is given."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS005"
+  },
+  {
+   "id": "RW-M16-CE005",
+   "external_id": "HDSAT-RW-M16-CE005",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The urban heat island (UHI) effect is a meteorological and climatological phenomenon in which urban areas experience significantly warmer temperatures than surrounding rural areas. The temperature difference is usually larger at night than during the day, and is most apparent when winds are weak, under block conditions, noticeably during the summer and winter. The main cause of the UHI effect is from the modification of land surfaces, while waste heat generated by energy usage is a secondary contributor. Urban areas occupy about 0.5% of the Earth's land surface but host more than half of the world's population. As a population center grows, it tends to expand its area and increase its average temperature. Another key term is heat island; the term can be used to refer to any area that is relatively hotter than the surroundings, but generally refers to human-disturbed areas.",
+   "prompt": "Which quotation from the text most directly supports the claim that the urban heat island affects conditions beyond temperature itself?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Increases in heat within urban centers increase the length of growing seasons, decrease air quality by increasing the production of pollutants such as ozone, and decrease water quality as warmer waters flow into area streams and put stress on their ecosystems."
+    },
+    {
+     "id": "B",
+     "text": "Urban areas occupy about 0.5% of the Earth's land surface but host more than half of the world's population."
+    },
+    {
+     "id": "C",
+     "text": "The temperature difference is usually larger at night than during the day, and is most apparent when winds are weak"
+    },
+    {
+     "id": "D",
+     "text": "The main cause of the UHI effect is from the modification of land surfaces, while waste heat generated by energy usage is a secondary contributor."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Urban heat island\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Urban_heat_island",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Only the quotation lists consequences for growing seasons, air quality and water quality, which are effects beyond temperature.",
+   "distractor_rationales": {
+    "C": "This sentence describes when the temperature difference is strongest, not its wider effects.",
+    "B": "This sentence gives the scale of urban land and population.",
+    "D": "This sentence identifies the causes of the effect."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE005"
+  },
+  {
+   "id": "RW-M16-CI006",
+   "external_id": "HDSAT-RW-M16-CI006",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The Svalbard Global Seed Vault (Norwegian: Svalbard globale frøhvelv) is a secure backup facility for the Earth's crop diversity on the Norwegian island of Spitsbergen in the remote Arctic Svalbard archipelago. The Seed Vault provides long-term storage for duplicates of seeds from around the world, conserved in gene banks. The Seed Vault is managed under terms spelled out in a tripartite agreement among the Norwegian government, the Crop Trust, and the Nordic Genetic Resource Center (NordGen). The Norwegian government entirely funded the Seed Vault's approximately 45 million kr (US$8.8 million in 2008) construction cost. Norway and the Crop Trust pay for operational costs. Storing seeds in the vault is free to depositors.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "The Seed Vault is a working gene bank that lends seeds to farmers around the world."
+    },
+    {
+     "id": "B",
+     "text": "The Seed Vault was built and is operated entirely by the Crop Trust."
+    },
+    {
+     "id": "C",
+     "text": "Storing seeds in the vault costs depositors about 45 million kr."
+    },
+    {
+     "id": "D",
+     "text": "The Svalbard Global Seed Vault stores backup copies of the world's crop seeds, and depositors pay nothing to use it."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Svalbard Global Seed Vault\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Svalbard_Global_Seed_Vault",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The text presents the vault as a secure backup for crop diversity, describes the tripartite management and funding, and states that storage is free to depositors.",
+   "distractor_rationales": {
+    "A": "The text describes the vault as a backup that stores duplicates, not as a lending collection.",
+    "B": "Construction was funded by the Norwegian government, and Norway and the Crop Trust share operating costs.",
+    "C": "The 45 million kr figure is the construction cost, and storage is free to depositors."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI006"
+  },
+  {
+   "id": "RW-M16-INF006",
+   "external_id": "HDSAT-RW-M16-INF006",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The Svalbard Global Seed Vault (Norwegian: Svalbard globale frøhvelv) is a secure backup facility for the Earth's crop diversity on the Norwegian island of Spitsbergen in the remote Arctic Svalbard archipelago. The Seed Vault provides long-term storage for duplicates of seeds from around the world, conserved in gene banks. The Seed Vault is managed under terms spelled out in a tripartite agreement among the Norwegian government, the Crop Trust, and the Nordic Genetic Resource Center (NordGen). The Norwegian government entirely funded the Seed Vault's approximately 45 million kr (US$8.8 million in 2008) construction cost. Norway and the Crop Trust pay for operational costs. Storing seeds in the vault is free to depositors.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "let gene banks preserve backup copies without adding storage costs."
+    },
+    {
+     "id": "B",
+     "text": "earn revenue by charging depositors for storage."
+    },
+    {
+     "id": "C",
+     "text": "limit deposits to seeds produced in Norway."
+    },
+    {
+     "id": "D",
+     "text": "replace the gene banks that hold the original seeds."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Svalbard Global Seed Vault\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Svalbard_Global_Seed_Vault",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Because storage is free and the vault holds duplicates of seeds conserved elsewhere, the arrangement lets gene banks keep backups without paying for additional storage.",
+   "distractor_rationales": {
+    "B": "The text says storing seeds is free to depositors, so the vault does not earn revenue that way.",
+    "D": "The vault stores duplicates of seeds conserved in gene banks, which implies the gene banks continue to hold the originals.",
+    "C": "No national restriction on deposits is described."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF006"
+  },
+  {
+   "id": "RW-M16-TS006",
+   "external_id": "HDSAT-RW-M16-TS006",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "The Svalbard Global Seed Vault (Norwegian: Svalbard globale frøhvelv) is a secure backup facility for the Earth's crop diversity on the Norwegian island of Spitsbergen in the remote Arctic Svalbard archipelago. The Seed Vault provides long-term storage for duplicates of seeds from around the world, conserved in gene banks. The Seed Vault is managed under terms spelled out in a tripartite agreement among the Norwegian government, the Crop Trust, and the Nordic Genetic Resource Center (NordGen). The Norwegian government entirely funded the Seed Vault's approximately 45 million kr (US$8.8 million in 2008) construction cost. Norway and the Crop Trust pay for operational costs. Storing seeds in the vault is free to depositors.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It describes the construction of the vault in technical detail and evaluates its engineering."
+    },
+    {
+     "id": "B",
+     "text": "It identifies a facility and its location, explains its purpose, and describes how it is managed and funded."
+    },
+    {
+     "id": "C",
+     "text": "It compares the vault with other seed banks and argues that one of them is superior."
+    },
+    {
+     "id": "D",
+     "text": "It recounts the history of crop domestication before introducing the vault."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Svalbard Global Seed Vault\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Svalbard_Global_Seed_Vault",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The passage introduces the vault and its Arctic location, states that it stores duplicate seeds, and then covers management and funding.",
+   "distractor_rationales": {
+    "A": "The text gives no engineering detail or evaluation.",
+    "C": "No other seed banks are compared or ranked.",
+    "D": "The history of crop domestication is not discussed."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS006"
+  },
+  {
+   "id": "RW-M16-CE006",
+   "external_id": "HDSAT-RW-M16-CE006",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "The Svalbard Global Seed Vault (Norwegian: Svalbard globale frøhvelv) is a secure backup facility for the Earth's crop diversity on the Norwegian island of Spitsbergen in the remote Arctic Svalbard archipelago. The Seed Vault provides long-term storage for duplicates of seeds from around the world, conserved in gene banks. The Seed Vault is managed under terms spelled out in a tripartite agreement among the Norwegian government, the Crop Trust, and the Nordic Genetic Resource Center (NordGen). The Norwegian government entirely funded the Seed Vault's approximately 45 million kr (US$8.8 million in 2008) construction cost. Norway and the Crop Trust pay for operational costs. Storing seeds in the vault is free to depositors.",
+   "prompt": "Which quotation from the text most directly supports the claim that the Seed Vault is a safeguard rather than a substitute for existing collections?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Storing seeds in the vault is free to depositors."
+    },
+    {
+     "id": "B",
+     "text": "The Seed Vault is managed under terms spelled out in a tripartite agreement among the Norwegian government, the Crop Trust, and the Nordic Genetic Resource Center (NordGen)."
+    },
+    {
+     "id": "C",
+     "text": "The Seed Vault provides long-term storage for duplicates of seeds from around the world, conserved in gene banks."
+    },
+    {
+     "id": "D",
+     "text": "The Norwegian government entirely funded the Seed Vault's approximately 45 million kr (US$8.8 million in 2008) construction cost."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Svalbard Global Seed Vault\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Svalbard_Global_Seed_Vault",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The word duplicates, together with conserved in gene banks, shows that the vault backs up collections held elsewhere rather than replacing them.",
+   "distractor_rationales": {
+    "D": "This sentence describes funding, not the vault's relation to existing collections.",
+    "A": "This sentence describes the cost to depositors.",
+    "B": "This sentence describes management, not the role of the stored seeds."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE006"
+  },
+  {
+   "id": "RW-M16-CI007",
+   "external_id": "HDSAT-RW-M16-CI007",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The Antikythera mechanism ( AN-tik-ih-THEER-ə, US also  AN-ty-kih-) is an ancient Greek hand-powered orrery (model of the Solar System) built in the 2nd century BC and discovered in 1901. It is the oldest known example of an analogue computer. It could be used to predict astronomical positions and eclipses decades in advance. It could also be used to track the four-year cycle of athletic games similar to an olympiad, the cycle of the ancient Olympic Games.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "The Antikythera mechanism is the oldest known example of a geared clock."
+    },
+    {
+     "id": "B",
+     "text": "The Antikythera mechanism was built in the 2nd century AD to track the modern Olympic Games."
+    },
+    {
+     "id": "C",
+     "text": "The mechanism was discovered intact and is displayed today as a single fragment."
+    },
+    {
+     "id": "D",
+     "text": "The Antikythera mechanism is the oldest known analogue computer, built to predict astronomical events and athletic cycles."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Antikythera mechanism\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Antikythera_mechanism",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The passage identifies the object, dates it, calls it the oldest known analogue computer, and lists what it could predict and track.",
+   "distractor_rationales": {
+    "B": "The text dates it to the 2nd century BC and compares its athletic cycle to the ancient Olympic Games.",
+    "A": "The text calls it an analogue computer, not a clock.",
+    "C": "It was found as one lump and later separated into fragments, so it was not discovered intact."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI007"
+  },
+  {
+   "id": "RW-M16-INF007",
+   "external_id": "HDSAT-RW-M16-INF007",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "The Antikythera mechanism ( AN-tik-ih-THEER-ə, US also  AN-ty-kih-) is an ancient Greek hand-powered orrery (model of the Solar System) built in the 2nd century BC and discovered in 1901. It is the oldest known example of an analogue computer. It could be used to predict astronomical positions and eclipses decades in advance. It could also be used to track the four-year cycle of athletic games similar to an olympiad, the cycle of the ancient Olympic Games.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "replace written calendars throughout the Greek world."
+    },
+    {
+     "id": "B",
+     "text": "measure the weight of cargo carried by Greek ships."
+    },
+    {
+     "id": "C",
+     "text": "record the positions of the stars at one particular moment."
+    },
+    {
+     "id": "D",
+     "text": "model recurring cycles rather than perform a single calculation."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Antikythera mechanism\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Antikythera_mechanism",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The mechanism tracked the four-year athletic cycle and predicted astronomical positions decades ahead, both of which are recurring patterns rather than one-off calculations.",
+   "distractor_rationales": {
+    "B": "The text describes astronomical and athletic cycles, not cargo weight.",
+    "A": "Nothing in the text says the device replaced calendars.",
+    "C": "A device that predicts decades in advance is not limited to one moment."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF007"
+  },
+  {
+   "id": "RW-M16-TS007",
+   "external_id": "HDSAT-RW-M16-TS007",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "The Antikythera mechanism ( AN-tik-ih-THEER-ə, US also  AN-ty-kih-) is an ancient Greek hand-powered orrery (model of the Solar System) built in the 2nd century BC and discovered in 1901. It is the oldest known example of an analogue computer. It could be used to predict astronomical positions and eclipses decades in advance. It could also be used to track the four-year cycle of athletic games similar to an olympiad, the cycle of the ancient Olympic Games.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It identifies the object and its date, then describes what the object could do."
+    },
+    {
+     "id": "B",
+     "text": "It describes the shipwreck in detail and explains how the wreck was located."
+    },
+    {
+     "id": "C",
+     "text": "It compares the mechanism with modern computers and ranks their accuracy."
+    },
+    {
+     "id": "D",
+     "text": "It presents a debate about the mechanism's age and settles it with new evidence."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Antikythera mechanism\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Antikythera_mechanism",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage introduces the mechanism and its date, names it the oldest known analogue computer, and lists its predictive functions.",
+   "distractor_rationales": {
+    "B": "The shipwreck is mentioned only as the place of discovery, without detail.",
+    "C": "Modern computers are not discussed.",
+    "D": "No debate about the age is presented."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS007"
+  },
+  {
+   "id": "RW-M16-CE007",
+   "external_id": "HDSAT-RW-M16-CE007",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The Antikythera mechanism ( AN-tik-ih-THEER-ə, US also  AN-ty-kih-) is an ancient Greek hand-powered orrery (model of the Solar System) built in the 2nd century BC and discovered in 1901. It is the oldest known example of an analogue computer. It could be used to predict astronomical positions and eclipses decades in advance. It could also be used to track the four-year cycle of athletic games similar to an olympiad, the cycle of the ancient Olympic Games.",
+   "prompt": "Which quotation from the text most directly supports the claim that the Antikythera mechanism was a predictive instrument?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It could also be used to track the four-year cycle of athletic games similar to an olympiad"
+    },
+    {
+     "id": "B",
+     "text": "It is the oldest known example of an analogue computer."
+    },
+    {
+     "id": "C",
+     "text": "built in the 2nd century BC and discovered in 1901"
+    },
+    {
+     "id": "D",
+     "text": "It could be used to predict astronomical positions and eclipses decades in advance."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Antikythera mechanism\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Antikythera_mechanism",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The quotation explicitly names prediction of astronomical positions and eclipses, which is the claim being supported.",
+   "distractor_rationales": {
+    "B": "This sentence ranks the device among computers but does not say what it predicted.",
+    "C": "This fragment gives its date and discovery.",
+    "A": "Tracking a cycle is a function, but this quotation does not mention prediction."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE007"
+  },
+  {
+   "id": "RW-M16-CI008",
+   "external_id": "HDSAT-RW-M16-CI008",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A mycorrhizal network (also known as a common mycorrhizal network or CMN) is an underground network found in forests and other plant communities, created by the hyphae of mycorrhizal fungi joining with plant roots. This network connects individual plants together. Mycorrhizal relationships are most commonly mutualistic, with both partners benefiting, but can be commensal or parasitic, and a single partnership may change between any of the three types of symbiosis at different times. Mycorrhizal networks were discovered in 1997 by Suzanne Simard, professor of forest ecology at the University of British Columbia in Canada. Simard grew up in Canadian forests where her family had made a living as foresters for generations. Her field studies revealed that trees are linked to neighboring trees by an underground network of fungi that resembles the neural networks in the brain. In one study, Simard watched as a Douglas fir that had been injured by insects appeared to send chemical warning signals to a ponderosa pine growing nearby. The pine tree then produced defense enzymes to protect against the insect.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "All mycorrhizal relationships benefit both partners equally."
+    },
+    {
+     "id": "B",
+     "text": "The networks are made of tree roots that fuse together underground."
+    },
+    {
+     "id": "C",
+     "text": "Mycorrhizal networks link plants underground and can carry warning signals between neighboring trees."
+    },
+    {
+     "id": "D",
+     "text": "Suzanne Simard discovered the networks while working as a forester."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Mycorrhizal network\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Mycorrhizal_network",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The passage defines the network, explains that relationships vary, and describes Simard's study in which an injured fir appeared to warn a nearby pine, which then produced defense enzymes.",
+   "distractor_rationales": {
+    "A": "The text says relationships can be mutualistic, commensal or parasitic, and can change over time.",
+    "B": "The networks are created by fungal hyphae joining plant roots, not by roots fusing.",
+    "D": "Simard is described as a professor whose family were foresters; the text does not say she worked as one."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI008"
+  },
+  {
+   "id": "RW-M16-INF008",
+   "external_id": "HDSAT-RW-M16-INF008",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "A mycorrhizal network (also known as a common mycorrhizal network or CMN) is an underground network found in forests and other plant communities, created by the hyphae of mycorrhizal fungi joining with plant roots. This network connects individual plants together. Mycorrhizal relationships are most commonly mutualistic, with both partners benefiting, but can be commensal or parasitic, and a single partnership may change between any of the three types of symbiosis at different times. Mycorrhizal networks were discovered in 1997 by Suzanne Simard, professor of forest ecology at the University of British Columbia in Canada. Simard grew up in Canadian forests where her family had made a living as foresters for generations. Her field studies revealed that trees are linked to neighboring trees by an underground network of fungi that resembles the neural networks in the brain. In one study, Simard watched as a Douglas fir that had been injured by insects appeared to send chemical warning signals to a ponderosa pine growing nearby. The pine tree then produced defense enzymes to protect against the insect.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "a tree can produce a chemical defense after a neighboring tree is damaged."
+    },
+    {
+     "id": "B",
+     "text": "insects prefer ponderosa pines to Douglas firs."
+    },
+    {
+     "id": "C",
+     "text": "injured trees stop sending signals to their neighbors."
+    },
+    {
+     "id": "D",
+     "text": "the fungi produce the defense enzymes themselves."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Mycorrhizal network\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Mycorrhizal_network",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The pine produced defense enzymes after the fir was injured and appeared to send warning signals, which supports the inference that damage to one tree can trigger a chemical defense in another.",
+   "distractor_rationales": {
+    "B": "The study does not compare insect preference between the two species.",
+    "D": "The text says the pine produced the enzymes, not the fungi.",
+    "C": "The injured fir appeared to send signals, which is the opposite of stopping."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF008"
+  },
+  {
+   "id": "RW-M16-TS008",
+   "external_id": "HDSAT-RW-M16-TS008",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A mycorrhizal network (also known as a common mycorrhizal network or CMN) is an underground network found in forests and other plant communities, created by the hyphae of mycorrhizal fungi joining with plant roots. This network connects individual plants together. Mycorrhizal relationships are most commonly mutualistic, with both partners benefiting, but can be commensal or parasitic, and a single partnership may change between any of the three types of symbiosis at different times. Mycorrhizal networks were discovered in 1997 by Suzanne Simard, professor of forest ecology at the University of British Columbia in Canada. Simard grew up in Canadian forests where her family had made a living as foresters for generations. Her field studies revealed that trees are linked to neighboring trees by an underground network of fungi that resembles the neural networks in the brain. In one study, Simard watched as a Douglas fir that had been injured by insects appeared to send chemical warning signals to a ponderosa pine growing nearby. The pine tree then produced defense enzymes to protect against the insect.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It compares two competing definitions of a scientific term and rejects one of them."
+    },
+    {
+     "id": "B",
+     "text": "It argues that foresters should plant only Douglas fir and ponderosa pine together."
+    },
+    {
+     "id": "C",
+     "text": "It describes the life cycle of mycorrhizal fungi from spore to mature hypha."
+    },
+    {
+     "id": "D",
+     "text": "It defines a network, explains the types of relationships involved, and describes a study of signaling between trees."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Mycorrhizal network\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Mycorrhizal_network",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The text defines the network, describes the range of symbiotic relationships, and then presents Simard's field study of signaling between a fir and a pine.",
+   "distractor_rationales": {
+    "A": "Only one definition is given, and neither of two definitions is rejected.",
+    "C": "The fungal life cycle is not described.",
+    "B": "No planting recommendation is made."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS008"
+  },
+  {
+   "id": "RW-M16-CE008",
+   "external_id": "HDSAT-RW-M16-CE008",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A mycorrhizal network (also known as a common mycorrhizal network or CMN) is an underground network found in forests and other plant communities, created by the hyphae of mycorrhizal fungi joining with plant roots. This network connects individual plants together. Mycorrhizal relationships are most commonly mutualistic, with both partners benefiting, but can be commensal or parasitic, and a single partnership may change between any of the three types of symbiosis at different times. Mycorrhizal networks were discovered in 1997 by Suzanne Simard, professor of forest ecology at the University of British Columbia in Canada. Simard grew up in Canadian forests where her family had made a living as foresters for generations. Her field studies revealed that trees are linked to neighboring trees by an underground network of fungi that resembles the neural networks in the brain. In one study, Simard watched as a Douglas fir that had been injured by insects appeared to send chemical warning signals to a ponderosa pine growing nearby. The pine tree then produced defense enzymes to protect against the insect.",
+   "prompt": "Which quotation from the text most directly supports the claim that trees in a mycorrhizal network can respond to damage suffered by a neighbor?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Mycorrhizal networks were discovered in 1997 by Suzanne Simard, professor of forest ecology at the University of British Columbia in Canada."
+    },
+    {
+     "id": "B",
+     "text": "In one study, Simard watched as a Douglas fir that had been injured by insects appeared to send chemical warning signals to a ponderosa pine growing nearby. The pine tree then produced defense enzymes to protect against the insect."
+    },
+    {
+     "id": "C",
+     "text": "Mycorrhizal relationships are most commonly mutualistic, with both partners benefiting"
+    },
+    {
+     "id": "D",
+     "text": "A mycorrhizal network (also known as a common mycorrhizal network or CMN) is an underground network found in forests and other plant communities"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Mycorrhizal network\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Mycorrhizal_network",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Only the quotation describes injury, a warning signal and a defensive response in the neighboring tree.",
+   "distractor_rationales": {
+    "C": "This sentence describes the general type of relationship, not a response to damage.",
+    "A": "This sentence credits the discovery.",
+    "D": "This sentence defines the network and where it is found."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE008"
+  },
+  {
+   "id": "RW-M16-CI009",
+   "external_id": "HDSAT-RW-M16-CI009",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Coral bleaching is the process where corals become white due to loss of symbiotic algae and photosynthetic pigments. This loss of pigment can be caused by various stressors, such as changes in water temperature, light, salinity, or nutrients. A bleached coral is under stress, more vulnerable to starvation and disease, and at risk of death. The leading cause of coral bleaching is rising ocean temperatures due to climate change. Take up of carbon dioxide from the atmosphere also has been acidifying the oceans and affects coral health. Large-scale bleaching events can devastate entire reef ecosystems, affecting biodiversity and the livelihoods of coastal communities that depend on healthy reefs for food, tourism, and protection from storm surges.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Coral bleaching is caused primarily by pollution from coastal communities."
+    },
+    {
+     "id": "B",
+     "text": "Coral bleaching increases the biodiversity of reef ecosystems."
+    },
+    {
+     "id": "C",
+     "text": "Bleached corals are already dead and cannot recover."
+    },
+    {
+     "id": "D",
+     "text": "Coral bleaching, driven mainly by warming oceans, threatens reefs and the communities that depend on them."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Coral bleaching\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Coral_bleaching",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The passage defines bleaching, lists its causes with rising ocean temperatures as the leading one, describes the stress it places on corals, and notes the consequences for reefs and coastal communities.",
+   "distractor_rationales": {
+    "A": "The text names rising ocean temperatures as the leading cause and does not identify coastal pollution as the cause.",
+    "C": "The text says a bleached coral is under stress and at risk of death, not that it is already dead.",
+    "B": "The text says large-scale bleaching can devastate reef ecosystems and affect biodiversity, not increase it."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI009"
+  },
+  {
+   "id": "RW-M16-INF009",
+   "external_id": "HDSAT-RW-M16-INF009",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Coral bleaching is the process where corals become white due to loss of symbiotic algae and photosynthetic pigments. This loss of pigment can be caused by various stressors, such as changes in water temperature, light, salinity, or nutrients. A bleached coral is under stress, more vulnerable to starvation and disease, and at risk of death. The leading cause of coral bleaching is rising ocean temperatures due to climate change. Take up of carbon dioxide from the atmosphere also has been acidifying the oceans and affects coral health. Large-scale bleaching events can devastate entire reef ecosystems, affecting biodiversity and the livelihoods of coastal communities that depend on healthy reefs for food, tourism, and protection from storm surges.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "storm surges become more frequent when reefs are healthy."
+    },
+    {
+     "id": "B",
+     "text": "coral bleaching raises the salinity of coastal waters."
+    },
+    {
+     "id": "C",
+     "text": "reefs that support coastal fisheries may deteriorate when corals bleach."
+    },
+    {
+     "id": "D",
+     "text": "bleached corals attract more fish than healthy corals do."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Coral bleaching\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Coral_bleaching",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The text says coastal communities depend on healthy reefs for food, and that bleaching can devastate reef ecosystems, which supports the inference that fisheries depending on those reefs may suffer.",
+   "distractor_rationales": {
+    "D": "The text links bleaching to vulnerability and death, not to attracting fish.",
+    "A": "Healthy reefs are described as protection from storm surges, not as a cause of them.",
+    "B": "Salinity is listed as a possible stressor, not as a result of bleaching."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF009"
+  },
+  {
+   "id": "RW-M16-TS009",
+   "external_id": "HDSAT-RW-M16-TS009",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Coral bleaching is the process where corals become white due to loss of symbiotic algae and photosynthetic pigments. This loss of pigment can be caused by various stressors, such as changes in water temperature, light, salinity, or nutrients. A bleached coral is under stress, more vulnerable to starvation and disease, and at risk of death. The leading cause of coral bleaching is rising ocean temperatures due to climate change. Take up of carbon dioxide from the atmosphere also has been acidifying the oceans and affects coral health. Large-scale bleaching events can devastate entire reef ecosystems, affecting biodiversity and the livelihoods of coastal communities that depend on healthy reefs for food, tourism, and protection from storm surges.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It describes a solution to bleaching and evaluates how well the solution works."
+    },
+    {
+     "id": "B",
+     "text": "It defines bleaching, lists its causes, and describes its effects on corals and coastal communities."
+    },
+    {
+     "id": "C",
+     "text": "It compares bleaching in the Atlantic and Pacific oceans."
+    },
+    {
+     "id": "D",
+     "text": "It traces the discovery of coral bleaching through the work of a single researcher."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Coral bleaching\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Coral_bleaching",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The passage defines the process, names stressors and the leading cause, and then moves to consequences for corals, reefs and people.",
+   "distractor_rationales": {
+    "A": "No solution is proposed or evaluated.",
+    "C": "No comparison between oceans is made.",
+    "D": "No researcher or history of discovery is mentioned."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS009"
+  },
+  {
+   "id": "RW-M16-CE009",
+   "external_id": "HDSAT-RW-M16-CE009",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Coral bleaching is the process where corals become white due to loss of symbiotic algae and photosynthetic pigments. This loss of pigment can be caused by various stressors, such as changes in water temperature, light, salinity, or nutrients. A bleached coral is under stress, more vulnerable to starvation and disease, and at risk of death. The leading cause of coral bleaching is rising ocean temperatures due to climate change. Take up of carbon dioxide from the atmosphere also has been acidifying the oceans and affects coral health. Large-scale bleaching events can devastate entire reef ecosystems, affecting biodiversity and the livelihoods of coastal communities that depend on healthy reefs for food, tourism, and protection from storm surges.",
+   "prompt": "Which quotation from the text most directly supports the claim that coral bleaching has economic consequences for people?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "This loss of pigment can be caused by various stressors, such as changes in water temperature, light, salinity, or nutrients."
+    },
+    {
+     "id": "B",
+     "text": "Large-scale bleaching events can devastate entire reef ecosystems, affecting biodiversity and the livelihoods of coastal communities that depend on healthy reefs for food, tourism, and protection from storm surges."
+    },
+    {
+     "id": "C",
+     "text": "A bleached coral is under stress, more vulnerable to starvation and disease, and at risk of death."
+    },
+    {
+     "id": "D",
+     "text": "The leading cause of coral bleaching is rising ocean temperatures due to climate change."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Coral bleaching\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Coral_bleaching",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Only the quotation mentions livelihoods, food and tourism, which are the economic consequences the claim concerns.",
+   "distractor_rationales": {
+    "D": "This sentence identifies the leading cause, not an economic effect.",
+    "C": "This sentence describes the condition of a bleached coral.",
+    "A": "This sentence lists stressors that can cause bleaching."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE009"
+  },
+  {
+   "id": "RW-M16-CI010",
+   "external_id": "HDSAT-RW-M16-CI010",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The Voyager Golden Records are two identical phonograph records, with one copy aboard each of the two Voyager spacecraft launched in 1977. The records contain sounds and data to reconstruct raster scan images selected to portray the diversity of life and culture on Earth, and are intended for any intelligent extraterrestrial life form who may find them. The records are a time capsule.\nAlthough neither Voyager spacecraft is heading toward any particular star, Voyager 1 will pass within 1.6 light-years' distance of the star Gliese 445, currently in the constellation Camelopardalis, in about 40,000 years.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "The records were designed to guide the Voyager spacecraft toward Gliese 445."
+    },
+    {
+     "id": "B",
+     "text": "The records contain only music and no images or data."
+    },
+    {
+     "id": "C",
+     "text": "Two different records were placed aboard a single spacecraft."
+    },
+    {
+     "id": "D",
+     "text": "The Voyager Golden Records are a time capsule of Earth's diversity, intended for any extraterrestrial finders."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Voyager Golden Record\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Voyager_Golden_Record",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The passage describes the records, their contents and intended audience, and calls them a time capsule; it also notes the enormous timescale of the journey.",
+   "distractor_rationales": {
+    "A": "The text says neither spacecraft is heading toward a particular star.",
+    "B": "The records contain sounds and data for reconstructing images.",
+    "C": "The records are identical, and one copy is aboard each of the two spacecraft."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI010"
+  },
+  {
+   "id": "RW-M16-INF010",
+   "external_id": "HDSAT-RW-M16-INF010",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "The Voyager Golden Records are two identical phonograph records, with one copy aboard each of the two Voyager spacecraft launched in 1977. The records contain sounds and data to reconstruct raster scan images selected to portray the diversity of life and culture on Earth, and are intended for any intelligent extraterrestrial life form who may find them. The records are a time capsule.\nAlthough neither Voyager spacecraft is heading toward any particular star, Voyager 1 will pass within 1.6 light-years' distance of the star Gliese 445, currently in the constellation Camelopardalis, in about 40,000 years.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "be found and interpreted anytime soon."
+    },
+    {
+     "id": "B",
+     "text": "contain information about life on Earth."
+    },
+    {
+     "id": "C",
+     "text": "pass near the star Gliese 445."
+    },
+    {
+     "id": "D",
+     "text": "survive the journey beyond the solar system."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Voyager Golden Record\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Voyager_Golden_Record",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The text places the nearest stellar approach about 40,000 years away, which supports the inference that the records are unlikely to be found and interpreted in the near future.",
+   "distractor_rationales": {
+    "D": "The text does not question whether the records will survive.",
+    "C": "The text states that Voyager 1 will pass near Gliese 445, so this is not a matter of likelihood.",
+    "B": "The text states that the records do contain such information."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF010"
+  },
+  {
+   "id": "RW-M16-TS010",
+   "external_id": "HDSAT-RW-M16-TS010",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "The Voyager Golden Records are two identical phonograph records, with one copy aboard each of the two Voyager spacecraft launched in 1977. The records contain sounds and data to reconstruct raster scan images selected to portray the diversity of life and culture on Earth, and are intended for any intelligent extraterrestrial life form who may find them. The records are a time capsule.\nAlthough neither Voyager spacecraft is heading toward any particular star, Voyager 1 will pass within 1.6 light-years' distance of the star Gliese 445, currently in the constellation Camelopardalis, in about 40,000 years.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It describes the discovery of the records by extraterrestrial life."
+    },
+    {
+     "id": "B",
+     "text": "It argues that the records should have included more languages."
+    },
+    {
+     "id": "C",
+     "text": "It explains how the spacecraft were engineered and compares their instruments."
+    },
+    {
+     "id": "D",
+     "text": "It describes what the records are and contain, then notes the vast distance and time involved in their journey."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Voyager Golden Record\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Voyager_Golden_Record",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The first paragraph covers the records, their contents and purpose; the second covers the spacecraft's path and the 40,000-year timescale.",
+   "distractor_rationales": {
+    "C": "No engineering detail or instrument comparison is given.",
+    "B": "No argument about the records' contents is made.",
+    "A": "No discovery is described; the records are intended for a possible future finder."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS010"
+  },
+  {
+   "id": "RW-M16-CE010",
+   "external_id": "HDSAT-RW-M16-CE010",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The Voyager Golden Records are two identical phonograph records, with one copy aboard each of the two Voyager spacecraft launched in 1977. The records contain sounds and data to reconstruct raster scan images selected to portray the diversity of life and culture on Earth, and are intended for any intelligent extraterrestrial life form who may find them. The records are a time capsule.\nAlthough neither Voyager spacecraft is heading toward any particular star, Voyager 1 will pass within 1.6 light-years' distance of the star Gliese 445, currently in the constellation Camelopardalis, in about 40,000 years.",
+   "prompt": "Which quotation from the text most directly supports the claim that the records were assembled to represent the variety of Earth's life and culture?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "The records contain sounds and data to reconstruct raster scan images selected to portray the diversity of life and culture on Earth"
+    },
+    {
+     "id": "B",
+     "text": "The records are a time capsule."
+    },
+    {
+     "id": "C",
+     "text": "Voyager 1 will pass within 1.6 light-years' distance of the star Gliese 445"
+    },
+    {
+     "id": "D",
+     "text": "The Voyager Golden Records are two identical phonograph records, with one copy aboard each of the two Voyager spacecraft launched in 1977."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Voyager Golden Record\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Voyager_Golden_Record",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The quotation explicitly says the selected sounds and images portray the diversity of life and culture on Earth.",
+   "distractor_rationales": {
+    "D": "This sentence describes the number of records and their placement.",
+    "B": "This sentence characterizes the records but does not mention diversity.",
+    "C": "This sentence describes the spacecraft's path."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE010"
+  },
+  {
+   "id": "RW-M16-CI011",
+   "external_id": "HDSAT-RW-M16-CI011",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Standard time is the synchronisation of clocks within a geographical region to a single time standard, rather than different localities in the region using their own local mean time. The term is also used to contrast with daylight saving time, a period of the year when clocks are shifted ahead one hour, supposedly to make better use of daily sunlight from spring to fall. Applied globally in the 20th century, the geographical regions became time zones. The standard time in each time zone has come to be defined as an offset from Universal Time. A further offset is applied for part of the year in regions with daylight saving time. Generally, standard time agrees with the local mean time at some meridian that passes through the region, often near the centre of the region. Historically, standard time was established during the 19th century to aid weather forecasting and train travel.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Standard time synchronizes clocks across a region and was adopted to support weather forecasting and rail travel."
+    },
+    {
+     "id": "B",
+     "text": "Time zones were established in the 19th century and later replaced by Universal Time."
+    },
+    {
+     "id": "C",
+     "text": "Standard time was introduced in order to make daylight saving time possible."
+    },
+    {
+     "id": "D",
+     "text": "Standard time requires each locality to keep its own local mean time."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Standard time\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Standard_time",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The passage defines standard time as regional synchronization, distinguishes it from daylight saving time, explains its relation to Universal Time, and gives its historical purpose.",
+   "distractor_rationales": {
+    "C": "The text contrasts standard time with daylight saving time rather than presenting it as a prerequisite.",
+    "D": "The text defines standard time as a single standard for a region rather than separate local times.",
+    "B": "The text says time zones were applied globally in the 20th century and defined as offsets from Universal Time, not replaced by it."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI011"
+  },
+  {
+   "id": "RW-M16-INF011",
+   "external_id": "HDSAT-RW-M16-INF011",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Standard time is the synchronisation of clocks within a geographical region to a single time standard, rather than different localities in the region using their own local mean time. The term is also used to contrast with daylight saving time, a period of the year when clocks are shifted ahead one hour, supposedly to make better use of daily sunlight from spring to fall. Applied globally in the 20th century, the geographical regions became time zones. The standard time in each time zone has come to be defined as an offset from Universal Time. A further offset is applied for part of the year in regions with daylight saving time. Generally, standard time agrees with the local mean time at some meridian that passes through the region, often near the centre of the region. Historically, standard time was established during the 19th century to aid weather forecasting and train travel.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "every region already used Universal Time."
+    },
+    {
+     "id": "B",
+     "text": "trains crossing a region might have kept clocks that disagreed with one another."
+    },
+    {
+     "id": "C",
+     "text": "rail travel was unaffected by local time."
+    },
+    {
+     "id": "D",
+     "text": "weather forecasting was impossible."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Standard time\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Standard_time",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Before standard time, localities used their own local mean time. The text says standard time was established to aid train travel, which supports the inference that differing local clocks caused problems for railways.",
+   "distractor_rationales": {
+    "D": "The text says standard time aided forecasting, not that forecasting was impossible without it.",
+    "C": "The text presents train travel as a reason for adopting standard time, which implies local time did affect it.",
+    "A": "Universal Time is described as the reference for modern time zones, not as a pre-existing standard everywhere."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF011"
+  },
+  {
+   "id": "RW-M16-TS011",
+   "external_id": "HDSAT-RW-M16-TS011",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Standard time is the synchronisation of clocks within a geographical region to a single time standard, rather than different localities in the region using their own local mean time. The term is also used to contrast with daylight saving time, a period of the year when clocks are shifted ahead one hour, supposedly to make better use of daily sunlight from spring to fall. Applied globally in the 20th century, the geographical regions became time zones. The standard time in each time zone has come to be defined as an offset from Universal Time. A further offset is applied for part of the year in regions with daylight saving time. Generally, standard time agrees with the local mean time at some meridian that passes through the region, often near the centre of the region. Historically, standard time was established during the 19th century to aid weather forecasting and train travel.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It narrates the invention of the mechanical clock and its spread through Europe."
+    },
+    {
+     "id": "B",
+     "text": "It compares the accuracy of several timekeeping devices and ranks them."
+    },
+    {
+     "id": "C",
+     "text": "It defines standard time, contrasts it with daylight saving time, explains how time zones relate to Universal Time, and gives a historical reason for its adoption."
+    },
+    {
+     "id": "D",
+     "text": "It argues that daylight saving time should be abolished."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Standard time\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Standard_time",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The text proceeds from definition to contrast to the modern offset system and ends with the nineteenth-century reasons for adopting standard time.",
+   "distractor_rationales": {
+    "A": "No history of the mechanical clock is given.",
+    "B": "No timekeeping devices are compared or ranked.",
+    "D": "Daylight saving time is explained, not criticized."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS011"
+  },
+  {
+   "id": "RW-M16-CE011",
+   "external_id": "HDSAT-RW-M16-CE011",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Standard time is the synchronisation of clocks within a geographical region to a single time standard, rather than different localities in the region using their own local mean time. The term is also used to contrast with daylight saving time, a period of the year when clocks are shifted ahead one hour, supposedly to make better use of daily sunlight from spring to fall. Applied globally in the 20th century, the geographical regions became time zones. The standard time in each time zone has come to be defined as an offset from Universal Time. A further offset is applied for part of the year in regions with daylight saving time. Generally, standard time agrees with the local mean time at some meridian that passes through the region, often near the centre of the region. Historically, standard time was established during the 19th century to aid weather forecasting and train travel.",
+   "prompt": "Which quotation from the text most directly supports the claim that practical coordination, rather than astronomy alone, drove the adoption of standard time?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Generally, standard time agrees with the local mean time at some meridian that passes through the region, often near the centre of the region."
+    },
+    {
+     "id": "B",
+     "text": "The standard time in each time zone has come to be defined as an offset from Universal Time."
+    },
+    {
+     "id": "C",
+     "text": "The term is also used to contrast with daylight saving time, a period of the year when clocks are shifted ahead one hour"
+    },
+    {
+     "id": "D",
+     "text": "Historically, standard time was established during the 19th century to aid weather forecasting and train travel."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Standard time\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Standard_time",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The quotation names weather forecasting and train travel as the purposes behind standard time, which are practical coordination needs rather than astronomical ones.",
+   "distractor_rationales": {
+    "A": "This sentence describes the astronomical basis of standard time, not the reason it was adopted.",
+    "B": "This sentence describes how time zones are defined today.",
+    "C": "This sentence distinguishes standard time from daylight saving time."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE011"
+  },
+  {
+   "id": "RW-M16-CI012",
+   "external_id": "HDSAT-RW-M16-CI012",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Central Ideas and Details",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A peatland is a type of wetland whose soils consist of organic matter from decaying plants, forming layers of peat. Peatlands arise because of incomplete decomposition of organic matter, usually litter from vegetation, due to water-logging and subsequent anoxia. Peatlands are unusual landforms that derive mostly from biological rather than physical processes, and can take on characteristic shapes and surface patterning.\nThe formation of peatlands is primarily controlled by climatic conditions such as precipitation and temperature, although terrain relief is a major factor as waterlogging occurs more easily on flatter ground and in basins. Peat formation typically initiates as a paludification of a mineral soil forest, terrestrialisation of lakes, or primary peat formation on bare soils on previously glaciated areas. A peatland that is actively forming peat is called a mire. All types of mires share the common characteristic of being saturated with water, at least seasonally with actively forming peat, while having their own ecosystem.\nPeatlands are the largest natural carbon store on land.",
+   "prompt": "Which choice best states the main idea of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Peatlands form because plant matter decomposes unusually quickly."
+    },
+    {
+     "id": "B",
+     "text": "Peatlands form where waterlogged, oxygen-poor conditions slow decay, and they store large amounts of carbon."
+    },
+    {
+     "id": "C",
+     "text": "Peatlands store less carbon than any other natural environment on land."
+    },
+    {
+     "id": "D",
+     "text": "Peatlands are shaped mainly by physical processes such as erosion and glaciation."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Peatland\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Peatland",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The passage explains that waterlogging and anoxia prevent complete decomposition, describes how peatlands form, and ends by identifying them as the largest natural carbon store on land.",
+   "distractor_rationales": {
+    "A": "The text attributes peat formation to incomplete decomposition, the opposite of rapid decay.",
+    "D": "The text says peatlands derive mostly from biological rather than physical processes.",
+    "C": "The text calls peatlands the largest natural carbon store on land."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CI012"
+  },
+  {
+   "id": "RW-M16-INF012",
+   "external_id": "HDSAT-RW-M16-INF012",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Inferences",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "A peatland is a type of wetland whose soils consist of organic matter from decaying plants, forming layers of peat. Peatlands arise because of incomplete decomposition of organic matter, usually litter from vegetation, due to water-logging and subsequent anoxia. Peatlands are unusual landforms that derive mostly from biological rather than physical processes, and can take on characteristic shapes and surface patterning.\nThe formation of peatlands is primarily controlled by climatic conditions such as precipitation and temperature, although terrain relief is a major factor as waterlogging occurs more easily on flatter ground and in basins. Peat formation typically initiates as a paludification of a mineral soil forest, terrestrialisation of lakes, or primary peat formation on bare soils on previously glaciated areas. A peatland that is actively forming peat is called a mire. All types of mires share the common characteristic of being saturated with water, at least seasonally with actively forming peat, while having their own ecosystem.\nPeatlands are the largest natural carbon store on land.",
+   "prompt": "Which choice most logically completes the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "increase the rate at which new peat forms."
+    },
+    {
+     "id": "B",
+     "text": "have no effect on the carbon stored in the peat."
+    },
+    {
+     "id": "C",
+     "text": "turn the peatland into a mire."
+    },
+    {
+     "id": "D",
+     "text": "allow stored organic matter to decompose more quickly."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Peatland\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Peatland",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "Peat accumulates because waterlogging and anoxia inhibit decomposition. Draining removes that inhibition, so the stored organic matter would break down faster.",
+   "distractor_rationales": {
+    "A": "Waterlogging is what slows decomposition, so removing it would work against further peat formation.",
+    "B": "The text ties carbon storage to waterlogged, oxygen-poor conditions, so changing those conditions would affect the stored carbon.",
+    "C": "A mire is a peatland that is actively forming peat, which draining would not promote."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-INF012"
+  },
+  {
+   "id": "RW-M16-TS012",
+   "external_id": "HDSAT-RW-M16-TS012",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Text Structure and Purpose",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A peatland is a type of wetland whose soils consist of organic matter from decaying plants, forming layers of peat. Peatlands arise because of incomplete decomposition of organic matter, usually litter from vegetation, due to water-logging and subsequent anoxia. Peatlands are unusual landforms that derive mostly from biological rather than physical processes, and can take on characteristic shapes and surface patterning.\nThe formation of peatlands is primarily controlled by climatic conditions such as precipitation and temperature, although terrain relief is a major factor as waterlogging occurs more easily on flatter ground and in basins. Peat formation typically initiates as a paludification of a mineral soil forest, terrestrialisation of lakes, or primary peat formation on bare soils on previously glaciated areas. A peatland that is actively forming peat is called a mire. All types of mires share the common characteristic of being saturated with water, at least seasonally with actively forming peat, while having their own ecosystem.\nPeatlands are the largest natural carbon store on land.",
+   "prompt": "Which choice best describes the overall structure of the text?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "It defines peatlands, explains the conditions and processes that form them, and emphasizes their role as a carbon store."
+    },
+    {
+     "id": "B",
+     "text": "It traces the history of peat extraction from the nineteenth century to the present."
+    },
+    {
+     "id": "C",
+     "text": "It describes peatlands and then argues that they should be drained for agriculture."
+    },
+    {
+     "id": "D",
+     "text": "It compares peatlands with tropical rainforests and ranks their biodiversity."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Peatland\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Peatland",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The text proceeds from a definition to the biological cause of peat formation, then to the climatic and topographic controls on where peatlands form, and closes with their carbon storage.",
+   "distractor_rationales": {
+    "C": "No argument for draining peatlands is made.",
+    "D": "Rainforests are not mentioned.",
+    "B": "Peat extraction and its history are not discussed."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-TS012"
+  },
+  {
+   "id": "RW-M16-CE012",
+   "external_id": "HDSAT-RW-M16-CE012",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Information and Ideas",
+   "skill": "Command of Evidence (Textual)",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "A peatland is a type of wetland whose soils consist of organic matter from decaying plants, forming layers of peat. Peatlands arise because of incomplete decomposition of organic matter, usually litter from vegetation, due to water-logging and subsequent anoxia. Peatlands are unusual landforms that derive mostly from biological rather than physical processes, and can take on characteristic shapes and surface patterning.\nThe formation of peatlands is primarily controlled by climatic conditions such as precipitation and temperature, although terrain relief is a major factor as waterlogging occurs more easily on flatter ground and in basins. Peat formation typically initiates as a paludification of a mineral soil forest, terrestrialisation of lakes, or primary peat formation on bare soils on previously glaciated areas. A peatland that is actively forming peat is called a mire. All types of mires share the common characteristic of being saturated with water, at least seasonally with actively forming peat, while having their own ecosystem.\nPeatlands are the largest natural carbon store on land.",
+   "prompt": "Which quotation from the text most directly supports the claim that peatlands are important for global carbon storage?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Peatlands are the largest natural carbon store on land."
+    },
+    {
+     "id": "B",
+     "text": "A peatland is a type of wetland whose soils consist of organic matter from decaying plants, forming layers of peat."
+    },
+    {
+     "id": "C",
+     "text": "Peatlands are unusual landforms that derive mostly from biological rather than physical processes"
+    },
+    {
+     "id": "D",
+     "text": "A peatland that is actively forming peat is called a mire."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Peatland\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Peatland",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Only the final sentence directly states the scale of carbon storage, which is the claim being supported.",
+   "distractor_rationales": {
+    "B": "This sentence defines peatlands and their soils.",
+    "C": "This sentence describes the origin of peatland landforms.",
+    "D": "This sentence defines the term mire."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M16-CE012"
   }
  ]
 }
