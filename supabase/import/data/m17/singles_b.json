@@ -1,0 +1,300 @@
+{
+ "pages": {
+  "Urban sprawl": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Urban sprawl is low-density, automobile-dependent expansion that brings environmental and economic costs.",
+     "wrongs": [
+      "Urban sprawl is a form of dense, mixed-use development that reduces car use.",
+      "Urban sprawl benefits cities mainly by lowering infrastructure costs.",
+      "Urban sprawl refers only to the growth of medieval suburbs."
+     ],
+     "why": [
+      "The text defines sprawl as low-density with single-use zoning and increased reliance on private automobiles.",
+      "The text lists increased transport costs and pollution among sprawl's disadvantages.",
+      "Medieval suburbs are one historical example, not the definition of sprawl."
+     ],
+     "explanation": "The passage defines sprawl through low density, single-use zoning and car dependence, then lists travel time, transport costs, pollution and countryside destruction among its costs."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because urban sprawl is characterized by increased reliance on private automobiles, efforts to reduce sprawl's travel costs would most likely involve ______",
+     "correct": "making it easier for residents to use alternatives to driving.",
+     "wrongs": [
+      "building more roads at the edges of cities.",
+      "encouraging single-use zoning.",
+      "lowering property taxes in new suburbs."
+     ],
+     "why": [
+      "More roads at the edges would extend the automobile-dependent pattern rather than reduce its costs.",
+      "Single-use zoning is identified as a feature of sprawl, not a remedy for it.",
+      "The text mentions property and sales taxes as revenue sources, not as a way to reduce travel costs."
+     ],
+     "explanation": "If car dependence produces the travel costs, reducing those costs means giving residents ways to travel without cars. The passage supports no other remedy."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines urban sprawl, notes complications in applying the label, and lists its modern disadvantages.",
+     "wrongs": [
+      "It traces the history of medieval warfare and its effect on cities.",
+      "It argues that urban sprawl is beneficial for most residents.",
+      "It compares the tax policies of two metropolitan areas."
+     ],
+     "why": [
+      "Medieval suburbs appear only as a comparison point; the text is not about warfare.",
+      "The text describes sprawl's costs rather than arguing that it benefits residents.",
+      "Taxes are mentioned as a revenue source, not compared across areas."
+     ],
+     "explanation": "The text opens with a definition and quoted characterization, observes that some places labeled sprawl are denser than expected, and closes with the modern costs."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that urban sprawl is associated with environmental harm?",
+     "correct": "The modern disadvantages and costs of urban sprawl include increased travel time, transport costs, pollution, and destruction of the countryside.",
+     "wrongs": [
+      "Medieval suburbs suffered from the loss of protection of city walls, before the advent of industrial warfare.",
+      "Sometimes the urban areas described as the most \"sprawling\" are the most densely populated.",
+      "The revenue for building and maintaining urban infrastructure in these areas is gained mostly through property and sales taxes."
+     ],
+     "why": [
+      "This sentence concerns medieval suburbs and city walls, not modern environmental harm.",
+      "This sentence complicates the use of the label rather than describing harm.",
+      "This sentence concerns how infrastructure is funded."
+     ],
+     "explanation": "The correct quotation names pollution and destruction of the countryside among sprawl's costs, which directly supports the claim."
+    }
+   ]
+  },
+  "Zoo": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Zoos range from small enclosures to large reserves and are criticized over animal welfare despite their conservation role.",
+     "wrongs": [
+      "All zoos are large natural-habitat reserves spanning thousands of acres.",
+      "Zoos exist only for entertainment and play no role in conservation.",
+      "Animal welfare groups support zoos without reservation."
+     ],
+     "why": [
+      "The text says zoos range from small urban enclosures of a few acres to reserves spanning thousands of acres.",
+      "The text says animals are often bred for conservation purposes.",
+      "The text says animal welfare organizations have expressed criticism of zoos and the conditions in which animals are kept."
+     ],
+     "explanation": "The passage defines zoos, describes their range in size and their popularity, and notes that welfare organizations have criticized the conditions in which animals are kept."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Given that animal welfare organizations have criticized the conditions in which zoo animals are kept, a zoo that replaces small enclosures with large natural-habitat reserves may ______",
+     "correct": "be trying to address those criticisms.",
+     "wrongs": [
+      "have stopped exhibiting animals to the public.",
+      "no longer need to breed animals for conservation.",
+      "have eliminated the need for zoological study."
+     ],
+     "why": [
+      "The text describes zoos as facilities where animals are kept for exhibition, and expanding enclosures does not imply ending exhibition.",
+      "Conservation breeding is described as common in zoos and is not tied to enclosure size.",
+      "The text does not suggest that enclosure size removes the study of animals."
+     ],
+     "explanation": "Criticism focuses on the conditions in which animals are kept. Moving animals into large natural-habitat reserves changes those conditions in the direction the criticism points."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines zoos and their history, describes their range and popularity, and notes criticism of them.",
+     "wrongs": [
+      "It argues that zoos should be banned entirely.",
+      "It compares ticket prices at zoos in different countries.",
+      "It explains the Greek origins of the word zoology and nothing more."
+     ],
+     "why": [
+      "The text reports criticism but does not call for a ban.",
+      "No ticket prices are mentioned.",
+      "The etymology is one detail in a broader description."
+     ],
+     "explanation": "The passage moves from definition and etymology to variation in size, attendance and criticism."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that zoos vary greatly in size?",
+     "correct": "Zoos vary greatly in size, ranging from small urban enclosures of a few acres to massive open-range and natural-habitat reserves spanning thousands of acres.",
+     "wrongs": [
+      "In the United States alone, zoos are visited by over 181 million people annually.",
+      "The first modern zoo was the Tierpark Hagenbeck by Carl Hagenbeck in Germany.",
+      "However, animal welfare organizations have expressed criticism of zoos and the conditions in which animals are kept."
+     ],
+     "why": [
+      "This sentence reports attendance, not size.",
+      "This sentence identifies an early modern zoo, not variation in size.",
+      "This sentence reports criticism, not size."
+     ],
+     "explanation": "The correct quotation explicitly contrasts enclosures of a few acres with reserves spanning thousands of acres."
+    }
+   ]
+  },
+  "Space exploration": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Space exploration grew from a Cold War competition into cooperative programs, and its rationales extend beyond science.",
+     "wrongs": [
+      "Space exploration has been conducted only by robots, never by humans.",
+      "Space exploration ended after the Apollo 11 Moon landing.",
+      "The only rationale for space exploration has been national prestige."
+     ],
+     "why": [
+      "The text describes human spaceflight, including Gagarin, Leonov and the Apollo Moon landing.",
+      "The text describes programs after Apollo, including the Space Shuttle and the International Space Station.",
+      "The text lists scientific research, national prestige, uniting countries, survival and military advantage among the rationales."
+     ],
+     "explanation": "The passage lists several rationales, recounts Space Race milestones, and describes the later shift toward cooperation exemplified by the International Space Station."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the 1970s brought a shift from one-off flights to renewable hardware and from competition to cooperation, the International Space Station can be seen as ______",
+     "correct": "an example of the cooperative approach that followed the Space Race.",
+     "wrongs": [
+      "the first human-made object to orbit Earth.",
+      "a Soviet achievement from the 1950s.",
+      "a one-off mission that was never reused."
+     ],
+     "why": [
+      "The text identifies Sputnik 1, launched in 1957, as the first human-made object to orbit Earth.",
+      "The station was built between 1998 and 2011, not in the 1950s.",
+      "The text presents the station as the foremost example of cooperation, and the shift away from one-off flights."
+     ],
+     "explanation": "The passage names the International Space Station as the foremost example of the shift from competition to cooperation, and it was assembled over more than a decade."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines space exploration, lists its rationales, and traces its shift from competition to cooperation.",
+     "wrongs": [
+      "It argues that space exploration should be discontinued.",
+      "It compares the cost of robotic probes with the cost of human spaceflight.",
+      "It describes only the Apollo 11 mission and its aftermath."
+     ],
+     "why": [
+      "The text describes programs and rationales without recommending that exploration end.",
+      "No cost comparison is offered.",
+      "Apollo 11 is one landmark in a much longer account."
+     ],
+     "explanation": "The text opens with a definition and rationales, recounts Space Race milestones, and closes with the shift toward cooperation and newer national programs."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Hard",
+     "prompt": "Which quotation from the text most directly supports the claim that space exploration became more cooperative after the 1970s?",
+     "correct": "In the 1970s, focus shifted from one-off flights to renewable hardware, such as the Space Shuttle program, and from competition to cooperation, the foremost example being the International Space Station (ISS), built between 1998 and 2011.",
+     "wrongs": [
+      "The early era of space exploration was driven by a \"Space Race\" in which the Soviet Union and the United States vied to demonstrate their technological superiority.",
+      "Common rationales for exploring space include advancing scientific research, national prestige, uniting different countries, ensuring the future survival of humanity, and developing military and strategic advantages against other countries.",
+      "The Soviet space program achieved many of the first milestones, including the first living being in orbit in 1957, the first human spaceflight (Yuri Gagarin aboard Vostok 1) in 1961, the first spacewalk (by Alexei Leonov) on 18 March 1965, the first automatic landing on another celestial body in 1966, and the launch of the first space station (Salyut 1) in 1971."
+     ],
+     "why": [
+      "This sentence describes the earlier competitive era, not the later cooperation.",
+      "This sentence lists rationales rather than describing cooperation.",
+      "This sentence lists Soviet firsts, which are competitive achievements."
+     ],
+     "explanation": "Only the correct quotation states that focus shifted from competition to cooperation and names the International Space Station as the foremost example."
+    }
+   ]
+  },
+  "Recycling": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Recycling turns waste into new materials and reduces resource use and pollution from disposal.",
+     "wrongs": [
+      "Recycling is the process of burning waste to generate electricity.",
+      "Recycling increases the consumption of fresh raw materials.",
+      "Recycling is the first step in the waste hierarchy."
+     ],
+     "why": [
+      "Burning waste describes incineration, which the text mentions as a source of air pollution.",
+      "The text says recycling reduces the consumption of fresh raw materials.",
+      "The text says recycling is the third step in the \"Reduce, Reuse, and Recycle\" hierarchy."
+     ],
+     "explanation": "The passage defines recycling, explains that it saves material and lowers greenhouse gas emissions, and notes reductions in energy use and pollution."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because recycling reduces energy use and the pollution associated with incineration and landfilling, communities that expand recycling programs may ______",
+     "correct": "lower some of the environmental costs of waste disposal.",
+     "wrongs": [
+      "eliminate the need for any waste disposal.",
+      "increase the amount of waste sent to landfills.",
+      "have to stop using recycled materials."
+     ],
+     "why": [
+      "The text describes recycling as an alternative that reduces pollution; it does not claim disposal becomes unnecessary.",
+      "The text says recycling reduces water pollution from landfilling, not that it increases landfill waste.",
+      "The text describes converting waste into new materials, which implies continued use of recycled materials."
+     ],
+     "explanation": "The stated reductions in energy use and pollution support the conclusion that expanded recycling can lower some environmental costs, without eliminating disposal altogether."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines recycling, lists its environmental benefits, and places it within the waste hierarchy.",
+     "wrongs": [
+      "It traces the history of ISO standards for plastics waste.",
+      "It argues that recycling is ineffective compared with landfilling.",
+      "It compares the manufacturing costs of recycled and new materials."
+     ],
+     "why": [
+      "ISO standards are mentioned only as examples at the end, not traced historically.",
+      "The text presents recycling as beneficial, not ineffective.",
+      "No manufacturing costs are compared."
+     ],
+     "explanation": "The passage defines recycling, details its benefits for materials, energy and pollution, and identifies its place as the third step in the waste hierarchy."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that recycling can reduce pollution from waste disposal?",
+     "correct": "It can also prevent the waste of potentially useful materials and reduce the consumption of fresh raw materials, reducing energy use, air pollution (from incineration) and water pollution (from landfilling).",
+     "wrongs": [
+      "Recycling is the process of converting waste materials into new materials and objects.",
+      "Recycling is a key component of modern waste reduction and represents the third step in the \"Reduce, Reuse, and Recycle\" waste hierarchy, contributing to environmental sustainability and resource conservation.",
+      "The recyclability of a material depends on its ability to reacquire the properties it had in its original state."
+     ],
+     "why": [
+      "This sentence defines recycling without mentioning pollution.",
+      "This sentence describes recycling's place in the waste hierarchy, not specific pollution reductions.",
+      "This sentence concerns a material's properties, not pollution."
+     ],
+     "explanation": "The correct quotation names air pollution from incineration and water pollution from landfilling as the specific harms recycling reduces."
+    }
+   ]
+  }
+ }
+}

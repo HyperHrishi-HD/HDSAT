@@ -1,0 +1,496 @@
+{
+ "pairs": [
+  {
+   "key": "nuclear",
+   "a": "Nuclear power",
+   "b": "Chernobyl disaster",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 traces the growth of nuclear power and notes that accidents affected its public standing, while Text 2 describes the human and financial scale of one such accident.",
+     "wrongs": [
+      "Text 2 argues that nuclear power should replace fossil fuels, while Text 1 describes the risks of doing so.",
+      "Both texts focus on the technical process by which nuclear reactors generate electricity.",
+      "Text 1 claims that accidents like Chernobyl were impossible to prevent, while Text 2 explains the safety measures that prevented them."
+     ],
+     "why": [
+      "Text 2 never advocates replacing fossil fuels; it recounts the costs of the Chernobyl accident.",
+      "Text 1 mentions fission only in passing, and neither text explains how a reactor operates.",
+      "Text 1 does not claim such accidents were impossible to prevent, and Text 2 says design flaws led to an uncontrollable power surge rather than describing measures that prevented one."
+     ],
+     "explanation": "Text 1 is a broad account of nuclear power's expansion that closes by linking two accidents to regulation and public opposition. Text 2 narrows to Chernobyl and measures its casualties, response effort and cost, illustrating the kind of event Text 1 gestures toward."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that accidents at nuclear plants have influenced how the public regards nuclear power?",
+     "correct": "By describing costs and casualties on a scale that would make public opposition to nuclear power understandable.",
+     "wrongs": [
+      "By disputing that the Chernobyl accident caused any direct deaths.",
+      "By arguing that increased regulation after accidents has made nuclear power unnecessary.",
+      "By claiming that public opinion about nuclear power is unrelated to plant safety."
+     ],
+     "why": [
+      "Text 2 states that the accident resulted in dozens of direct deaths, so it does not deny that people died.",
+      "Text 2 does not discuss whether regulation makes nuclear power unnecessary; that judgment is not in the passage.",
+      "Text 2 details deaths, contamination and enormous expense, which connects plant safety to public concern rather than separating them."
+     ],
+     "explanation": "Text 1 says Chernobyl resulted in increased regulation and public opposition. Text 2 supplies the substance behind that reaction: dozens of direct deaths, a major release of radioactive material, an exclusion zone, half a million responders and costs in the hundreds of billions."
+    }
+   ]
+  },
+  {
+   "key": "workplace",
+   "a": "Remote work",
+   "b": "Open plan",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 presents competing assessments of working away from an office, while Text 2 describes costs associated with a particular kind of office layout.",
+     "wrongs": [
+      "Text 2 offers evidence that remote work improves productivity, while Text 1 questions whether employees can work from home.",
+      "Both texts conclude that open-plan offices are the most efficient way to house employees.",
+      "Text 1 reports the results of a study that Text 2 then evaluates and rejects."
+     ],
+     "why": [
+      "Text 2 does not discuss remote work or its productivity; it concerns open-plan offices.",
+      "Neither text endorses open-plan offices, and Text 2 reports lower productivity in them.",
+      "Text 1 cites no study, and Text 2 does not evaluate one."
+     ],
+     "explanation": "Text 1 lays out what proponents and opponents say about remote work. Text 2 turns to a different arrangement, open-plan offices, and reports that their short-term savings come with lower productivity, fewer face-to-face interactions and more sick days."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that a distributed workforce reduces the costs of maintaining an office?",
+     "correct": "By noting that a lower-cost office arrangement can bring offsetting losses in productivity.",
+     "wrongs": [
+      "By denying that employers can save money by changing how they house employees.",
+      "By arguing that employees who work from home are more easily distracted.",
+      "By insisting that face-to-face interaction has no effect on how well employees work."
+     ],
+     "why": [
+      "Text 2 accepts that open-plan designs reduce short-term building costs, so it does not deny that savings are possible.",
+      "Distraction is attributed to remote work by the opponents in Text 1, not by the author of Text 2.",
+      "Text 2 reports that open-plan offices produce fewer face-to-face interactions, which implies such interaction matters rather than that it has no effect."
+     ],
+     "explanation": "Text 2's pattern is directly relevant: a cheaper layout reduces short-term building costs but results in persistently lower productivity. That supports the idea that a cost saving in office space can be offset by losses elsewhere."
+    }
+   ]
+  },
+  {
+   "key": "assessment",
+   "a": "Standardized test",
+   "b": "Educational assessment",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 defines a kind of test by how it is administered and scored, while Text 2 describes a broader process that can draw on tests without being limited to them.",
+     "wrongs": [
+      "Text 1 argues that standardized tests are always high-stakes, while Text 2 argues that assessment should never be graded.",
+      "Both texts treat assessment and testing as interchangeable terms.",
+      "Text 2 traces the history of standardized testing, while Text 1 describes how assessment data are used."
+     ],
+     "why": [
+      "Text 1 explicitly says standardized tests do not need to be high-stakes, and Text 2 does not say assessment should never be graded.",
+      "Text 2 says assessment is often used interchangeably with test but is not limited to tests, which distinguishes the terms rather than merging them.",
+      "Text 2 mentions the word assessment entering education after the Second World War, not the history of standardized testing, and Text 1 does not describe uses of assessment data."
+     ],
+     "explanation": "Text 1 is a definition of standardized testing as uniform administration and scoring, including forms that are not multiple-choice or academic. Text 2 defines assessment as a systematic process for gathering and using evidence to improve learning, a category wider than testing."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that standardized tests do not have to measure academic skills?",
+     "correct": "By agreeing, since assessment can document attitudes, aptitude and beliefs as well as knowledge.",
+     "wrongs": [
+      "By arguing that only academic skills can be measured systematically.",
+      "By claiming that standardized tests are always administered to large numbers of test takers.",
+      "By asserting that assessment is limited to formal tests."
+     ],
+     "why": [
+      "Text 2 lists knowledge, skill, attitudes, aptitude and beliefs as targets of assessment, so it does not restrict measurement to academic skills.",
+      "Text 1 says standardized tests need not be given to large numbers of test takers, and Text 2 does not claim otherwise.",
+      "Text 2 states that assessment is not limited to tests, which contradicts the claim that it is."
+     ],
+     "explanation": "Text 2's definition of assessment covers attitudes, aptitude and beliefs alongside knowledge, which is consistent with Text 1's point that standardized tests can evaluate subjects such as personality and professional ethics, not only academic skills."
+    }
+   ]
+  },
+  {
+   "key": "vehicle_fuel",
+   "a": "Electric vehicle",
+   "b": "Ethanol fuel",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Both texts describe alternatives to gasoline-powered vehicles, but Text 1 emphasizes battery technology while Text 2 emphasizes a crop-based fuel and its drawbacks.",
+     "wrongs": [
+      "Text 1 argues that electric vehicles have no environmental benefits, while Text 2 argues that ethanol has none.",
+      "Text 2 explains how electric vehicles are manufactured, while Text 1 compares their range with that of ethanol-powered cars.",
+      "Both texts conclude that internal combustion engines will soon disappear."
+     ],
+     "why": [
+      "Text 1 calls electric vehicles zero-emission options, and Text 2 calls ethanol renewable even as it notes concerns.",
+      "Text 2 does not discuss vehicle manufacturing, and Text 1 makes no comparison with ethanol.",
+      "Neither text predicts the disappearance of internal combustion engines."
+     ],
+     "explanation": "Text 1 covers electric vehicles and credits lithium batteries with reviving interest in them. Text 2 covers ethanol, describing how it is produced, its use as a gasoline alternative and the environmental and economic concerns its production raises."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that battery advances have made electric vehicles viable zero-emission options?",
+     "correct": "By noting that a fuel can be renewable and still raise environmental concerns during production.",
+     "wrongs": [
+      "By denying that lithium batteries improved the range of electric vehicles.",
+      "By arguing that ethanol produces no greenhouse gases when burned.",
+      "By claiming that internal combustion engines are quieter than electric motors."
+     ],
+     "why": [
+      "Text 2 does not discuss lithium batteries or the range of electric vehicles.",
+      "Text 2 says ethanol burns to produce carbon dioxide and water, so it does not claim the fuel produces no greenhouse gases.",
+      "Text 1 states that electric power was quieter than the alternatives, and Text 2 makes no noise comparison."
+     ],
+     "explanation": "Text 2 calls ethanol a renewable energy source while cautioning that its production raises environmental and economic concerns. That is a parallel caution: a fuel billed as environmentally preferable can still carry costs that the label does not capture."
+    }
+   ]
+  },
+  {
+   "key": "sprawl",
+   "a": "Urban sprawl",
+   "b": "New Urbanism",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 defines a development pattern and lists its costs, while Text 2 describes a movement that aims to address those costs.",
+     "wrongs": [
+      "Text 1 advocates the principles of New Urbanism, while Text 2 describes the disadvantages of sprawl.",
+      "Both texts argue that low-density housing is the best way to reduce traffic congestion.",
+      "Text 2 offers a history of urban sprawl that Text 1 uses to propose a solution."
+     ],
+     "why": [
+      "The roles are reversed: Text 1 defines sprawl and its costs, and Text 2 describes New Urbanism.",
+      "Both texts criticize sprawl rather than endorse low-density housing; Text 2 promotes walkable, mixed-use neighborhoods.",
+      "Text 1 proposes no solution, and Text 2 does not offer a history of sprawl."
+     ],
+     "explanation": "Text 1 characterizes sprawl as low-density, single-use, automobile-dependent expansion and lists its disadvantages. Text 2 presents New Urbanism as a design movement that addresses the ills of sprawl through walkable neighborhoods and transit-oriented development."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that sprawl increases travel time, transport costs and pollution?",
+     "correct": "By proposing walkable, transit-oriented neighborhoods as a way to reduce those burdens.",
+     "wrongs": [
+      "By denying that sprawl has any environmental consequences.",
+      "By arguing that single-use zoning is essential to walkable communities.",
+      "By claiming that private automobiles are the only practical form of transport."
+     ],
+     "why": [
+      "Text 2 describes New Urbanism as addressing the ills of sprawl, so it does not deny those consequences.",
+      "Text 2 promotes mixed housing and job types, not single-use zoning, which Text 1 associates with sprawl.",
+      "Text 2 says New Urbanists believe traffic congestion can be reduced by encouraging biking, walking and trains, so it does not treat cars as the only option."
+     ],
+     "explanation": "Text 2 states that New Urbanists believe their strategies can reduce traffic congestion by encouraging people to ride bikes, walk or take the train. Those strategies are offered as remedies for exactly the travel-related costs Text 1 attributes to sprawl."
+    }
+   ]
+  },
+  {
+   "key": "digital_access",
+   "a": "Social media",
+   "b": "Digital divide",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 describes what social media allow users to do, while Text 2 explains that unequal access to digital technology can keep some people from those benefits.",
+     "wrongs": [
+      "Text 1 argues that social media worsen inequality, while Text 2 argues that they reduce it.",
+      "Both texts focus on how social media platforms are designed and maintained.",
+      "Text 2 describes the history of social media, while Text 1 reports current broadband statistics."
+     ],
+     "why": [
+      "Text 1 does not discuss inequality, and Text 2 says the digital divide worsens inequality rather than claiming social media reduce it.",
+      "Platform design is one feature listed in Text 1; Text 2 concerns access to technology, not platform design.",
+      "Text 2 offers no history of social media, and the broadband statistic appears in Text 2, not Text 1."
+     ],
+     "explanation": "Text 1 explains that social media enable users to create, share and aggregate content and to build networks. Text 2 documents unequal access to digital technology and notes that people without reliable internet are less able to connect, find jobs, shop and learn."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that social media help people connect and build networks?",
+     "correct": "By observing that people without reliable internet access are less able to participate in those networks.",
+     "wrongs": [
+      "By arguing that social media platforms prevent users from forming communities.",
+      "By claiming that all Americans now have high-speed broadband.",
+      "By noting that a 2010 study found no racial divide in social media use."
+     ],
+     "why": [
+      "Text 2 does not say social media prevent community; it identifies barriers to access.",
+      "Text 2 reports that over 15.8 million Americans lack high-speed broadband, which contradicts universal access.",
+      "The 2010 study is a detail about racial differences in use, not a response to whether social media help people connect."
+     ],
+     "explanation": "Text 2 stresses that access is unequal: millions lack broadband, and low-income students often lack reliable internet and devices. That qualifies Text 1's claim by indicating that the networking benefits are available only to those who can get online."
+    }
+   ]
+  },
+  {
+   "key": "animals",
+   "a": "Zoo",
+   "b": "Animal welfare",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 describes zoos and notes criticism of them, while Text 2 explains a framework for evaluating the well-being of animals kept in settings such as zoos.",
+     "wrongs": [
+      "Text 1 argues that zoos should be abolished, while Text 2 defends their conservation work.",
+      "Both texts rely on the claim that animals cannot experience suffering.",
+      "Text 2 provides attendance figures that Text 1 uses to justify keeping animals in enclosures."
+     ],
+     "why": [
+      "Text 1 reports that welfare organizations have criticized zoos but does not call for abolishing them, and Text 2 does not defend conservation work.",
+      "Text 2 says respect for animal welfare is often based on the belief that animals are sentient, the opposite of the claim.",
+      "The attendance figure appears in Text 1, and Text 2 supplies no attendance data."
+     ],
+     "explanation": "Text 1 defines zoos, gives their scale and attendance, and mentions criticism of animal conditions. Text 2 defines animal welfare, lists the measures scientists use to assess it and identifies zoos as one setting where welfare concerns arise."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that zoos often breed animals for conservation purposes?",
+     "correct": "By raising the question of whether conservation breeding justifies the conditions in which zoo animals are kept.",
+     "wrongs": [
+      "By denying that zoos play any role in breeding animals.",
+      "By arguing that visitors, not enclosure conditions, determine animal welfare.",
+      "By claiming that animal welfare cannot be studied scientifically."
+     ],
+     "why": [
+      "Text 2 does not deny that zoos breed animals; it asks how animals in zoos and similar settings are kept.",
+      "Text 2 treats how animals are kept as a central welfare concern, not something visitors determine.",
+      "Text 2 describes scientific measures of welfare such as longevity, disease and behavior, though it notes debate about which measures are best."
+     ],
+     "explanation": "Text 2 identifies how animals are kept in zoos as a welfare concern and notes that some critics regard any human use of animals as unacceptable. That framework makes conservation breeding a justification to be weighed against the animals' conditions, not a settled answer."
+    }
+   ]
+  },
+  {
+   "key": "space",
+   "a": "Space exploration",
+   "b": "Space colonization",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 describes reasons for and milestones of exploring space, while Text 2 discusses proposals to settle space and the legal limits on such settlements.",
+     "wrongs": [
+      "Text 1 argues that space exploration has ended, while Text 2 describes its recent accomplishments.",
+      "Both texts treat the establishment of permanent space colonies as an accomplished fact.",
+      "Text 2 explains how rockets were developed, while Text 1 describes international space law."
+     ],
+     "why": [
+      "Text 1 describes continuing programs and cooperation, not an end to exploration.",
+      "Text 2 states that no permanent space settlement has been established and no government has plans for one.",
+      "Rocket development is described in Text 1, and international space law is discussed in Text 2."
+     ],
+     "explanation": "Text 1 covers the history and rationales of space exploration, from Sputnik and Apollo to the International Space Station. Text 2 covers the idea of colonizing space, noting that international law prohibits territorial claims and that no permanent settlement or government plan exists."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that ensuring humanity's future survival is a reason to explore space?",
+     "correct": "By noting that permanent settlements would face legal prohibitions and that no government currently plans one.",
+     "wrongs": [
+      "By disputing that any country has ever sent a probe into space.",
+      "By claiming that international law encourages territorial claims in space.",
+      "By arguing that space exploration has no scientific value."
+     ],
+     "why": [
+      "Text 1 lists numerous milestones, including Sputnik 1, and Text 2 does not dispute them.",
+      "Text 2 says international space law prohibits territorial claims and aims to prevent colonial claims.",
+      "Text 2 does not assess the scientific value of exploration; it focuses on settlement and law."
+     ],
+     "explanation": "Text 2 explains that claims to territory in space are prohibited and that no government currently plans a colony. Those are practical and legal obstacles that anyone pursuing survival-through-settlement would have to address."
+    }
+   ]
+  },
+  {
+   "key": "income",
+   "a": "Minimum wage",
+   "b": "Universal basic income",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 describes a wage floor and how employers respond to it, while Text 2 describes an unconditional payment that is not tied to employment.",
+     "wrongs": [
+      "Text 1 argues for replacing minimum wages with basic income, while Text 2 argues against the idea.",
+      "Both texts focus on the history of labor legislation in New Zealand.",
+      "Text 2 reports that every country has adopted a full basic income."
+     ],
+     "why": [
+      "Text 1 does not propose a basic income, and Text 2 neither advocates nor rejects one.",
+      "New Zealand is mentioned only in Text 1, and Text 2 offers no labor history.",
+      "Text 2 states that no country has implemented a full basic income."
+     ],
+     "explanation": "Text 1 explains the minimum wage as a legally enforced price floor and notes that employers try to avoid it through gig work, relocation or automation. Text 2 defines universal basic income as an unconditional transfer paid regardless of other income or work."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that employers often try to avoid minimum wage laws?",
+     "correct": "By suggesting that an unconditional payment to all people would not give employers the same incentive to circumvent it.",
+     "wrongs": [
+      "By arguing that a basic income is simply another name for a minimum wage.",
+      "By claiming that employers never adjust hiring in response to wage laws.",
+      "By noting that Mongolia and Iran pay a full basic income."
+     ],
+     "why": [
+      "Text 2 defines basic income as unconditional and not requiring work, which distinguishes it from a wage floor.",
+      "Text 1 states that companies often try to avoid minimum wage laws, and Text 2 does not dispute that behavior.",
+      "Text 2 describes the payments in Mongolia and Iran as partial, not full."
+     ],
+     "explanation": "The avoidance behavior in Text 1 arises because a minimum wage raises the cost of employing someone. Text 2's definition of basic income as an unconditional transfer to all people, independent of employment, implies that employers would have no wage floor to circumvent."
+    }
+   ]
+  },
+  {
+   "key": "machine_capability",
+   "a": "Artificial intelligence",
+   "b": "Automation",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 defines artificial intelligence as a capability and field of research, while Text 2 describes automation as a set of technologies that reduce human intervention.",
+     "wrongs": [
+      "Text 1 argues that automation has replaced artificial intelligence, while Text 2 argues the reverse.",
+      "Both texts claim that general intelligence has already been achieved by machines.",
+      "Text 2 lists applications of AI, while Text 1 explains closed-loop control."
+     ],
+     "why": [
+      "Neither text claims one field replaced the other; they define different concepts.",
+      "Text 1 says some companies aim to create artificial general intelligence, not that it exists, and Text 2 does not mention general intelligence.",
+      "The applications appear in Text 1, and closed-loop control appears in Text 2."
+     ],
+     "explanation": "Text 1 defines AI through tasks associated with human intelligence and lists its applications and research goals. Text 2 defines automation as technologies that predetermine decisions and actions in machines, illustrated by devices from thermostats to industrial control systems."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that some companies aim to build systems that can complete nearly any cognitive task as well as a human?",
+     "correct": "By noting that many automated systems reduce human intervention without possessing general intelligence.",
+     "wrongs": [
+      "By denying that any computational system can perform tasks associated with human intelligence.",
+      "By arguing that automation requires a system to match human cognition.",
+      "By claiming that thermostats are examples of artificial general intelligence."
+     ],
+     "why": [
+      "Text 2 does not deny that computers can perform intelligent tasks; it describes what automation accomplishes.",
+      "Text 2's examples, such as a thermostat controlling a boiler, show automation operating without human-like cognition.",
+      "Text 2 presents a thermostat as the simplest control loop, not as general intelligence."
+     ],
+     "explanation": "Text 2 characterizes automation as predetermining decision criteria and embodying them in machines, with examples ranging from a household thermostat to large control systems. None of those examples requires the general cognitive ability Text 1 describes as a goal."
+    }
+   ]
+  },
+  {
+   "key": "waste",
+   "a": "Recycling",
+   "b": "Incineration",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 presents recycling as an alternative to disposal methods and notes incineration's air pollution, while Text 2 explains how incineration converts waste into ash, gas and heat.",
+     "wrongs": [
+      "Text 1 argues that incineration is a form of recycling, while Text 2 argues that it is not.",
+      "Both texts recommend burying waste in landfills rather than burning it.",
+      "Text 2 describes the recycling process, while Text 1 describes the chemistry of combustion."
+     ],
+     "why": [
+      "Text 1 mentions energy recovery as part of recycling but does not claim incineration is recycling, and Text 2 does not address that question.",
+      "Neither text recommends landfilling; Text 1 notes water pollution from landfills.",
+      "The processes are reversed: Text 1 concerns recycling, and Text 2 concerns combustion."
+     ],
+     "explanation": "Text 1 defines recycling and credits it with reducing energy use and air pollution from incineration. Text 2 explains what incineration does: it burns waste, produces ash, flue gas and heat, and can generate electric power."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that recycling reduces air pollution from incineration?",
+     "correct": "By noting that incineration's flue gases can be cleaned of pollutants before they are released.",
+     "wrongs": [
+      "By denying that incineration produces any flue gas.",
+      "By arguing that recycling increases the amount of waste sent to landfills.",
+      "By claiming that incineration generates no usable heat."
+     ],
+     "why": [
+      "Text 2 states that incineration produces flue gas that must be cleaned.",
+      "Text 2 does not discuss recycling's effect on landfill volumes.",
+      "Text 2 says the heat generated by incineration can be used to generate electric power."
+     ],
+     "explanation": "Text 1 treats incineration as a source of air pollution that recycling can reduce. Text 2 acknowledges that incineration produces flue gas but adds that the gas must be cleaned of pollutants before release, which identifies a factor that can limit the pollution Text 1 attributes to the process."
+    }
+   ]
+  },
+  {
+   "key": "learning",
+   "a": "Homework",
+   "b": "Unschooling",
+   "items": [
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the relationship between the two texts?",
+     "correct": "Text 1 reviews evidence about tasks students are assigned to do at home, while Text 2 describes an approach in which children direct their own learning without a curriculum.",
+     "wrongs": [
+      "Text 1 argues that homework is essential for young children, while Text 2 defends assigned lessons.",
+      "Both texts report that homework improves academic performance at every age.",
+      "Text 2 provides a history of homework, while Text 1 describes the origins of unschooling."
+     ],
+     "why": [
+      "Text 1 reports that homework generally does not improve performance among young children, and Text 2 describes lesson-free learning rather than defending assignments.",
+      "Text 1 says homework may help older students, not every age, and Text 2 makes no claim about homework's effects.",
+      "The history of unschooling appears in Text 2, and Text 1 offers no history of homework."
+     ],
+     "explanation": "Text 1 summarizes research on homework's mixed effects and its costs in stress and time. Text 2 describes unschooling, a lesson-free and curriculum-free practice in which children's own interests drive learning."
+    },
+    {
+     "skill": "Cross-Text Connections",
+     "difficulty": "Hard",
+     "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the claim in Text 1 that homework reduces the time students can spend on other activities?",
+     "correct": "By arguing that learning initiated by children themselves is more meaningful than work assigned to them.",
+     "wrongs": [
+      "By claiming that unschooled children receive more homework than schooled children.",
+      "By denying that children can learn outside formal lessons.",
+      "By arguing that homework improves performance for students of every age."
+     ],
+     "why": [
+      "Text 2 describes a curriculum-free practice and does not claim unschooled children receive more homework.",
+      "Text 2 explicitly encourages exploration of activities initiated by children, which is learning outside formal lessons.",
+      "Text 1 says homework generally does not improve performance among young children, and Text 2 does not assess homework's effects at all."
+     ],
+     "explanation": "Text 2's central belief is that the more personal learning is, the more meaningful and useful it is to the child. That view treats time spent on self-chosen activity as valuable learning rather than as time lost to assignments."
+    }
+   ]
+  }
+ ]
+}

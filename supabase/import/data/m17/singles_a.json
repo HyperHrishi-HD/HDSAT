@@ -1,0 +1,300 @@
+{
+ "pages": {
+  "Nuclear power": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Nuclear power is generated mainly through fission today, while fusion remains an experimental technology.",
+     "wrongs": [
+      "Nuclear decay is the primary method that nuclear power plants use to generate electricity.",
+      "Fusion reactors have supplied commercial electricity since the late 1950s.",
+      "Nuclear power plants rely on fusion because fission produces too little energy."
+     ],
+     "why": [
+      "The text says the vast majority of nuclear electricity comes from fission, while decay serves only niche applications.",
+      "The text says fusion reactors have yet to generate net power and are not expected to be commercially available soon.",
+      "The text identifies fission as the dominant source, and it never suggests that fission produces too little energy."
+     ],
+     "explanation": "The passage defines nuclear power, states that fission of uranium and plutonium supplies the vast majority of nuclear electricity, and contrasts that with fusion, which has been operated since 1958 but has not yet generated net power."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because controlled fusion has not yet generated net power, it ______",
+     "correct": "cannot presently serve as a commercial source of electricity.",
+     "wrongs": [
+      "has replaced fission in most nuclear power plants.",
+      "is used mainly in space probes such as Voyager 2.",
+      "was abandoned after the 1950s."
+     ],
+     "why": [
+      "The text says fission supplies the vast majority of nuclear electricity, so fusion has not replaced it.",
+      "Space probes are described as using nuclear decay, not fusion.",
+      "The text says fusion reactors have been operated since 1958, not abandoned."
+     ],
+     "explanation": "If fusion has not produced net power and is not expected to be commercially available soon, then it cannot currently be a commercial electricity source. The passage's other details rule out the remaining choices."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines nuclear power, identifies fission as the dominant source, and notes that fusion remains experimental.",
+     "wrongs": [
+      "It traces the history of nuclear regulation from the 1950s to the present.",
+      "It compares the construction costs of fission and fusion power plants.",
+      "It argues that nuclear decay should replace fission in power plants."
+     ],
+     "why": [
+      "The text does not discuss regulation; it describes sources of nuclear electricity.",
+      "No costs of power plants are given.",
+      "The text describes decay as a niche application and does not advocate replacing fission."
+     ],
+     "explanation": "The text opens with a definition, narrows to the fission reactions that dominate electricity production, and closes by describing fusion's experimental status."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that nuclear fission is currently the main source of nuclear electricity?",
+     "correct": "Presently, the vast majority of electricity from nuclear power is produced by nuclear fission of uranium and plutonium in nuclear power plants.",
+     "wrongs": [
+      "Nuclear power can be obtained from nuclear fission, nuclear decay and nuclear fusion reactions.",
+      "Nuclear decay processes are used in niche applications such as radioisotope thermoelectric generators in some space probes such as Voyager 2.",
+      "Reactors producing controlled fusion power have been operated since 1958 but have yet to generate net power and are not expected to be commercially available in the near future."
+     ],
+     "why": [
+      "This sentence lists possible sources without indicating which one dominates.",
+      "This sentence describes a niche use of decay, not the main source of nuclear electricity.",
+      "This sentence concerns fusion's experimental status, not fission's share of production."
+     ],
+     "explanation": "The correct quotation states directly that the vast majority of nuclear electricity comes from fission in power plants, which is exactly the claim."
+    }
+   ]
+  },
+  "Remote work": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Remote work expanded as technology improved and surged during the COVID-19 pandemic, and its benefits and drawbacks remain debated.",
+     "wrongs": [
+      "Remote work began in the 1970s and has declined steadily since the 2000s.",
+      "Remote work is universally considered more productive than office work.",
+      "Remote work became possible only after the COVID-19 pandemic."
+     ],
+     "why": [
+      "The text says remote work became more common in the 1990s and 2000s and that the pandemic shift largely persisted.",
+      "The text presents both proponents and opponents, so it does not claim universal agreement.",
+      "The text describes remote work for large employers beginning in the 1970s, well before the pandemic."
+     ],
+     "explanation": "The passage traces remote work from early experiments through its growth with internet technology and its pandemic expansion, then sets out the arguments of proponents and opponents."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the shift to remote work largely persisted after pandemic restrictions were lifted, many white-collar employers ______",
+     "correct": "continued to operate with employees working outside the office.",
+     "wrongs": [
+      "abandoned remote work entirely.",
+      "found that remote technology fully replicated face-to-face interaction.",
+      "stopped hiring employees who lived far away."
+     ],
+     "why": [
+      "The text says the shift largely persisted, which rules out abandoning it.",
+      "The text attributes the opposite view to opponents, who say technology has not fully replicated face-to-face interaction.",
+      "Proponents argue that remote work lets employers reach a more geographically diverse pool of applicants, not a narrower one."
+     ],
+     "explanation": "Persistence of the shift means remote arrangements continued after restrictions ended. The passage supplies no support for the other outcomes."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines remote work, traces its growth, and presents arguments for and against it.",
+     "wrongs": [
+      "It traces the history of office architecture before describing remote work.",
+      "It reports the results of a controlled study comparing remote and office productivity.",
+      "It explains how managers should supervise employees who work from home."
+     ],
+     "why": [
+      "The text mentions offices only to define remote work as work done elsewhere.",
+      "No controlled study is reported; the text summarizes positions held by proponents and opponents.",
+      "The text offers no management guidance."
+     ],
+     "explanation": "The passage moves from a definition, through a short history and the pandemic acceleration, to the competing arguments of proponents and opponents."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Hard",
+     "prompt": "Which quotation from the text most directly supports the claim that remote work expanded as communications technology improved?",
+     "correct": "It became more common in the 1990s and 2000s, facilitated by internet technologies such as collaborative software on cloud computing and conference calling via videotelephony.",
+     "wrongs": [
+      "In 2020, workplace hazard controls during the COVID-19 pandemic catalyzed a rapid transition to remote work for white-collar workers around the world.",
+      "Proponents of a geographically distributed workforce argue that it reduces costs associated with maintaining an office, grants employees greater autonomy and flexibility—which improves their motivation and job satisfaction—eliminates environmental harms from commuting, allows employers to access a more geographically diverse pool of applicants, and enables employees to live where they prefer.",
+      "Opponents of remote work argue that remote telecommunications technology has been unable to fully replicate the advantages of face-to-face interaction, that employees may be more easily distracted, and that reduced social interaction may lead to feelings of isolation."
+     ],
+     "why": [
+      "This sentence credits the pandemic, not communications technology, with the rapid transition.",
+      "This sentence lists benefits of remote work rather than explaining its growth.",
+      "This sentence lists objections to remote work rather than explaining its growth."
+     ],
+     "explanation": "Only the correct quotation ties remote work's spread to internet technologies such as collaborative software and videotelephony."
+    }
+   ]
+  },
+  "Standardized test": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A standardized test is defined by uniform administration and scoring rather than by a particular format or purpose.",
+     "wrongs": [
+      "Standardized tests are always high-stakes, timed, multiple-choice academic exams.",
+      "Standardized tests are defined by the number of students who take them.",
+      "Standardized tests are any tests that are scored differently for different students."
+     ],
+     "why": [
+      "The text explicitly says standardized tests need not be high-stakes, time-limited, multiple-choice or academic.",
+      "The text says standardized tests need not be given to large numbers of test takers.",
+      "The text says any test graded in the same manner for everyone is standardized, the opposite of different scoring."
+     ],
+     "explanation": "The passage repeatedly returns to consistent administration and scoring as the defining feature, while denying that format, stakes or scale determine whether a test is standardized."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Easy",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a standardized test must be scored in the same manner for everyone, a test whose essays are graded by different standards for different students ______",
+     "correct": "would not qualify as standardized.",
+     "wrongs": [
+      "would still be standardized if it were given at the same time.",
+      "would be an example of standardized administration but standardized scoring.",
+      "would be standardized as long as its questions were multiple-choice."
+     ],
+     "why": [
+      "Uniform timing does not make up for scoring that differs across students.",
+      "The choice contradicts itself and ignores the differing standards.",
+      "The text says a test need not be multiple-choice to be standardized, so format cannot rescue inconsistent scoring."
+     ],
+     "explanation": "The passage defines the opposite of standardized testing as including the same test evaluated differently. Grading essays by different standards is exactly that case."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines standardized testing, clarifies what such tests need not be, and contrasts them with non-standardized testing.",
+     "wrongs": [
+      "It traces the history of standardized testing from its origins to the present.",
+      "It argues that standardized tests should be replaced by non-standardized assessments.",
+      "It compares the results of standardized tests in several countries."
+     ],
+     "why": [
+      "The text offers no historical account of standardized testing.",
+      "The text defines and describes standardized tests without recommending their replacement.",
+      "No countries or test results are compared."
+     ],
+     "explanation": "The text defines the term, elaborates on what it does and does not require, and ends by defining its opposite."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that a standardized test does not have to use a multiple-choice format?",
+     "correct": "Standardized tests do not need to be high-stakes tests, time-limited tests, multiple-choice tests, academic tests, or tests given to large numbers of test takers.",
+     "wrongs": [
+      "A standardized test is administered and scored uniformly for all test takers.",
+      "The standardized test may evaluate many subjects, including driving, creativity, athleticism, personality, professional ethics, as well as academic skills.",
+      "The opposite of standardized testing is non-standardized testing, in which either significantly different tests are given to different test takers, or the same test is assigned under significantly different conditions or evaluated differently."
+     ],
+     "why": [
+      "This sentence states the uniformity requirement but says nothing about question format.",
+      "This sentence concerns the subjects a test may evaluate, not its format.",
+      "This sentence defines non-standardized testing rather than describing standardized formats."
+     ],
+     "explanation": "The correct quotation explicitly names multiple-choice tests among the formats that standardization does not require."
+    }
+   ]
+  },
+  "Electric vehicle": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Electric vehicles date to the nineteenth century, but limited range kept them from mass adoption until recent battery advances renewed interest.",
+     "wrongs": [
+      "Electric vehicles were invented only after lithium batteries became available.",
+      "Electric vehicles have always been the dominant form of road transport.",
+      "Electric vehicles were abandoned in the twentieth century because they were too noisy."
+     ],
+     "why": [
+      "The text says electric vehicles originated in the late nineteenth century, before lithium batteries.",
+      "The text says internal combustion engines dominated cars and trucks for about 100 years.",
+      "The text says electric power was quieter than the alternatives, so noise was not the reason."
+     ],
+     "explanation": "The passage describes early electric vehicles and their advantages, explains that limited range prevented mass adoption, and credits lithium battery advances with reviving interest."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Easy",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because early electric vehicles had limited range, they ______",
+     "correct": "were not widely adopted even though they were quiet and easy to operate.",
+     "wrongs": [
+      "quickly displaced internal combustion engines.",
+      "were used mainly for long-distance travel.",
+      "were preferred over other vehicles for their high speed."
+     ],
+     "why": [
+      "The text says internal combustion engines dominated for about 100 years, so electric vehicles did not displace them.",
+      "A vehicle with limited range would not be suited to long-distance travel.",
+      "The text praises quietness and ease of operation, not speed."
+     ],
+     "explanation": "The passage presents limited range as the obstacle to mass adoption despite the quiet, comfortable operation that made electric power attractive."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes the origins and early appeal of electric vehicles, explains why they lost ground, and notes their recent revival.",
+     "wrongs": [
+      "It compares the purchase prices of electric and gasoline-powered vehicles.",
+      "It argues that electric vehicles are unsuitable for cities.",
+      "It traces the history of electric rail vehicles before turning to cars."
+     ],
+     "why": [
+      "The text gives no prices.",
+      "The text does not discuss cities or argue that electric vehicles are unsuitable.",
+      "Rail vehicles are mentioned only as one category within electric vehicles."
+     ],
+     "explanation": "The text moves from the late nineteenth-century origins, through the range problem and the century of combustion dominance, to the revival driven by lithium batteries."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that battery advances renewed interest in electric vehicles?",
+     "correct": "Since the late 20th century, technological advances in lithium batteries—which offer superior energy density and current output versus lead-acid batteries—have revived public interest as zero-emission vehicle options.",
+     "wrongs": [
+      "Electricity was among the preferred methods for powering early motor vehicles because it was quieter, provided comfort, and ease of operation.",
+      "However, its limited range hindered mass adoption throughout the 20th century.",
+      "Internal combustion engines were the dominant propulsion mechanisms for cars and trucks for about 100 years, although electricity-powered locomotion became commonplace in other vehicle types, such as overhead line-powered mass transit vehicles, as well as special purpose vehicles such as mobility scooters."
+     ],
+     "why": [
+      "This sentence explains the early appeal of electric power, not the later revival.",
+      "This sentence explains the obstacle to adoption, not the reason interest returned.",
+      "This sentence describes the dominance of combustion engines rather than a battery-driven revival."
+     ],
+     "explanation": "Only the correct quotation connects lithium battery advances directly to renewed public interest in electric vehicles."
+    }
+   ]
+  }
+ }
+}
