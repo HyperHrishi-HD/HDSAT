@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Photosynthesis": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Photosynthesis converts light into stored chemical energy and sustains atmospheric oxygen and most life on Earth.",
+     "wrongs": [
+      "Photosynthesis releases carbon dioxide and consumes oxygen.",
+      "Photosynthesis occurs only in animals and fungi.",
+      "Photosynthesis stores energy in the form of minerals."
+     ],
+     "why": [
+      "The text says oxygenic photosynthesis releases oxygen as a byproduct.",
+      "The text names plants, algae, and cyanobacteria.",
+      "The text says energy is stored in organic compounds such as carbohydrates."
+     ],
+     "explanation": "The passage defines photosynthesis, explains how energy is stored and used, and describes its importance to the atmosphere and living things."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because some bacteria perform anoxygenic photosynthesis using hydrogen sulfide instead of water, their form of photosynthesis ______",
+     "correct": "does not release oxygen.",
+     "wrongs": [
+      "produces more oxygen than plants do.",
+      "requires no source of energy.",
+      "stores energy in the form of sulfur dioxide."
+     ],
+     "why": [
+      "The text says anoxygenic photosynthesis does not produce oxygen.",
+      "The text contrasts it with oxygenic photosynthesis, which releases oxygen.",
+      "The text says it converts light energy."
+     ],
+     "explanation": "Anoxygenic photosynthesis is defined in the passage by the absence of oxygen production."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines photosynthesis, explains how organisms store and use its energy, and contrasts oxygenic with anoxygenic forms.",
+     "wrongs": [
+      "It traces the history of photosynthesis research from 1839 to the present.",
+      "It compares photosynthesis in plants with digestion in animals.",
+      "It argues that photosynthesis is unimportant for complex life."
+     ],
+     "why": [
+      "No research history is given.",
+      "Digestion is not discussed.",
+      "The text says photosynthesis supplies most of the energy necessary for complex life."
+     ],
+     "explanation": "The passage moves from definition to energy storage and use, then to a variant process."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that photosynthesis makes complex life possible?",
+     "correct": "Photosynthesis plays a critical role in producing and maintaining the oxygen content of the Earth's atmosphere, and it supplies most of the biological energy necessary for complex life on Earth.",
+     "wrongs": [
+      "Photosynthesis is a system of biological processes by which photopigment-bearing autotrophic organisms convert light energy into chemical energy.",
+      "Photosynthetic organisms store the converted chemical energy within the bonds of intracellular organic compounds.",
+      "Some bacteria use bacteriochlorophyll to split hydrogen sulfide as a reductant instead of water."
+     ],
+     "why": [
+      "This sentence defines the process.",
+      "This sentence describes energy storage.",
+      "This sentence describes anoxygenic bacteria."
+     ],
+     "explanation": "Only the correct quotation connects photosynthesis to oxygen and to the energy supply for complex life."
+    }
+   ]
+  },
+  "Gut microbiota": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The gut's microorganisms are diverse, vary along the digestive tract, and influence health in many ways.",
+     "wrongs": [
+      "The gut contains no microorganisms in healthy people.",
+      "The gut microbiota consists of a single bacterial species.",
+      "Gut microbes affect only digestion and nothing else."
+     ],
+     "why": [
+      "The text describes bacteria, archaea, fungi, and viruses living in the digestive tract.",
+      "The text says the colon alone represents 300 to 1000 species.",
+      "The text says the microbiota affects immune function and behavior through the gut-brain axis."
+     ],
+     "explanation": "The passage defines the gut microbiota, describes its composition, and surveys its effects on the body."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because 99% of gut bacteria come from about 30 or 40 species while the colon contains hundreds of species, the gut bacterial community is ______",
+     "correct": "numerically dominated by a small group of species.",
+     "wrongs": [
+      "made up of only 30 or 40 species in total.",
+      "identical in every person.",
+      "free of anaerobic bacteria."
+     ],
+     "why": [
+      "The text says most gut bacteria belong to a few dozen species.",
+      "The text says the colon represents between 300 and 1000 species.",
+      "The text reports variation across regions of the digestive tract."
+     ],
+     "explanation": "A small number of species supplying almost all bacteria means the community is dominated by those species."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the gut microbiota, describes its composition, and lists its effects and associated diseases.",
+     "wrongs": [
+      "It explains how to culture gut bacteria in a laboratory.",
+      "It compares human and plant microbiomes in detail.",
+      "It argues that antibiotics should never be used."
+     ],
+     "why": [
+      "Laboratory methods are not described.",
+      "Plant microbiomes are not discussed.",
+      "Antibiotics are not mentioned."
+     ],
+     "explanation": "The passage moves from definition to composition and then to health effects."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that gut microbes affect organs beyond the digestive tract?",
+     "correct": "The gut microbiota has broad impacts, including effects on colonization, resistance to pathogens, maintaining the intestinal epithelium, metabolizing dietary and pharmaceutical compounds, controlling immune function, and even behavior through the gut–brain axis.",
+     "wrongs": [
+      "Gut microbiota, gut microbiome, or gut flora are the microorganisms that live in the digestive tracts of animals.",
+      "The microbial composition of the gut microbiota varies across regions of the digestive tract.",
+      "About 55% of the dry mass of feces is bacteria."
+     ],
+     "why": [
+      "This sentence defines the microbiota.",
+      "This sentence describes variation within the tract.",
+      "This sentence gives a measure of bacterial mass."
+     ],
+     "explanation": "The correct quotation names immune function and behavior alongside digestive effects."
+    }
+   ]
+  },
+  "Insulin": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Insulin is a hormone that regulates metabolism by moving glucose into cells and responding to blood sugar levels.",
+     "wrongs": [
+      "Insulin is an enzyme that digests carbohydrates in the stomach.",
+      "Insulin raises blood sugar by releasing glucose from the liver.",
+      "Insulin is produced by the liver in response to low glucose."
+     ],
+     "why": [
+      "The text calls insulin a peptide hormone produced by beta cells.",
+      "The text says insulin reduces blood sugar.",
+      "The text says beta cells of the pancreatic islets produce insulin."
+     ],
+     "explanation": "The passage defines insulin, describes its metabolic actions, and explains how beta cells regulate its release."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because low insulin in the blood promotes widespread catabolism, a person with very low insulin levels would most likely ______",
+     "correct": "break down stored fat.",
+     "wrongs": [
+      "store more glucose as glycogen.",
+      "increase protein synthesis throughout the body.",
+      "absorb glucose into muscle cells more rapidly."
+     ],
+     "why": [
+      "The text says low insulin promotes catabolism, especially of reserve body fat.",
+      "The text says insulin promotes glycogen formation.",
+      "The text says insulin affects protein synthesis, and low insulin has the opposite effect."
+     ],
+     "explanation": "Catabolism of reserve fat is the stated effect of low insulin."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines insulin, explains its metabolic effects, and describes how beta cells regulate its secretion.",
+     "wrongs": [
+      "It narrates the discovery of insulin in the 1920s.",
+      "It compares insulin with vitamin D in detail.",
+      "It provides a diet plan for people with diabetes."
+     ],
+     "why": [
+      "No discovery narrative is given.",
+      "Vitamin D is not mentioned.",
+      "No dietary advice is offered."
+     ],
+     "explanation": "The passage moves from definition to function and then to regulation."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that insulin lowers blood sugar?",
+     "correct": "Insulin enhances glucose uptake and metabolism in the cells, thereby reducing blood sugar.",
+     "wrongs": [
+      "Insulin is a peptide hormone produced by beta cells of the pancreatic islets.",
+      "It regulates the metabolism of carbohydrates, fats, and protein by promoting the absorption of glucose from the blood into cells.",
+      "Beta cells are sensitive to blood sugar levels so that they secrete insulin into the blood in response to high level of glucose."
+     ],
+     "why": [
+      "This sentence identifies insulin's source.",
+      "This sentence describes glucose absorption but not the resulting blood level.",
+      "This sentence describes when beta cells secrete insulin."
+     ],
+     "explanation": "The correct quotation explicitly states that insulin reduces blood sugar."
+    }
+   ]
+  },
+  "Malaria": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Malaria is a mosquito-borne parasite infection whose symptoms follow the parasite's spread to red blood cells and whose severity varies by species.",
+     "wrongs": [
+      "Malaria is caused by a virus transmitted through drinking water.",
+      "Malaria symptoms appear immediately after a mosquito bite.",
+      "All species of Plasmodium cause equally severe disease."
+     ],
+     "why": [
+      "The text says malaria is caused by single-celled parasites of the genus Plasmodium.",
+      "The text says symptoms usually begin 10 to 15 days after the bite.",
+      "The text distinguishes severe species from those causing milder malaria."
+     ],
+     "explanation": "The passage describes transmission, symptom timing, the parasite's life cycle, and differences among species."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because partial resistance to malaria disappears over months to years without continuing exposure, a person who moves away from a malarial region most likely ______",
+     "correct": "becomes susceptible to reinfection again.",
+     "wrongs": [
+      "keeps lifelong immunity to every Plasmodium species.",
+      "can no longer be infected by mosquitoes.",
+      "develops immunity without ever being exposed."
+     ],
+     "why": [
+      "The text says the partial resistance disappears without continuing exposure.",
+      "The text says resistance fades, not that it lasts for life.",
+      "Nothing in the text says moving ends mosquito bites."
+     ],
+     "explanation": "Fading resistance after leaving a malarial area means the person can be reinfected."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes malaria's transmission and symptoms, then explains the parasite's life cycle and the species that cause it.",
+     "wrongs": [
+      "It compares malaria with yellow fever in detail.",
+      "It lists the drugs used to treat malaria.",
+      "It argues that malaria has been eradicated worldwide."
+     ],
+     "why": [
+      "Yellow fever is not mentioned.",
+      "No drugs are named.",
+      "The text describes an ongoing disease, not eradication."
+     ],
+     "explanation": "The passage moves from clinical description to the biology of the parasite."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that malaria symptoms begin only after parasites reach the bloodstream?",
+     "correct": "The parasites initially reproduce and mature in the liver without causing symptoms.",
+     "wrongs": [
+      "Malaria is a mosquito-borne infectious disease that is transmitted by the bite of Anopheles mosquitoes.",
+      "The symptoms of human malaria typically include fever, fatigue, vomiting and headaches.",
+      "Those who survive an infection may develop partial immunity."
+     ],
+     "why": [
+      "This sentence describes transmission.",
+      "This sentence lists symptoms.",
+      "This sentence describes immunity after infection."
+     ],
+     "explanation": "The correct quotation shows the parasite develops in the liver before symptoms appear."
+    }
+   ]
+  },
+  "Tuberculosis": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Tuberculosis is an airborne bacterial disease that is often latent, can affect many organs, and requires prolonged multi-drug treatment.",
+     "wrongs": [
+      "Tuberculosis is a viral disease spread by contaminated food.",
+      "Everyone infected with tuberculosis immediately becomes contagious.",
+      "Tuberculosis can be cured with a single dose of antibiotics."
+     ],
+     "why": [
+      "The text says it is usually caused by Mycobacterium tuberculosis bacteria and spread through the air.",
+      "The text says most infections show no symptoms and latent TB does not spread.",
+      "The text says treatment requires multiple antibiotics over a long period."
+     ],
+     "explanation": "The passage covers the disease's cause, transmission, latency, testing, prevention, and treatment."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because people with latent TB do not spread the disease but a small proportion of latent infections become active, identifying latent cases most likely ______",
+     "correct": "helps prevent future transmission.",
+     "wrongs": [
+      "has no effect on public health.",
+      "makes active TB more contagious.",
+      "eliminates the need for vaccination."
+     ],
+     "why": [
+      "Treating latent cases before they become active would prevent them from spreading later.",
+      "Preventing progression to active disease would reduce transmission.",
+      "Latent TB is not contagious, so identifying it cannot increase contagiousness."
+     ],
+     "explanation": "Finding latent infections allows treatment before they become active and infectious."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines tuberculosis and its symptoms, explains transmission and latency, and describes testing, prevention, and treatment.",
+     "wrongs": [
+      "It narrates the history of a tuberculosis sanatorium.",
+      "It compares tuberculosis with the common cold.",
+      "It argues that BCG vaccination is ineffective."
+     ],
+     "why": [
+      "No sanatorium history is given.",
+      "The common cold is not mentioned.",
+      "The text lists vaccination as part of prevention."
+     ],
+     "explanation": "The passage moves from disease description to transmission and then to medical response."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that tuberculosis can affect organs other than the lungs?",
+     "correct": "Tuberculosis initially infects the lungs, but it can also spread to other parts of the body.",
+     "wrongs": [
+      "Most infections show no symptoms, in which case tuberculosis is considered to be inactive or latent.",
+      "Tuberculosis is spread from one person to the next through the air.",
+      "People with latent TB do not spread the disease."
+     ],
+     "why": [
+      "This sentence describes latent infection.",
+      "This sentence describes airborne transmission.",
+      "This sentence says latent TB is not contagious."
+     ],
+     "explanation": "The correct quotation explicitly says TB can spread beyond the lungs."
+    }
+   ]
+  },
+  "CRISPR gene editing": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "CRISPR adapts a bacterial defense system to cut DNA precisely, enabling many applications while raising controversy over germline editing.",
+     "wrongs": [
+      "CRISPR is a naturally occurring human immune system.",
+      "CRISPR can only be used to study plants.",
+      "CRISPR was developed as a way to sequence genomes without cutting them."
+     ],
+     "why": [
+      "The text says it is based on a bacterial antiviral defense system.",
+      "The text lists medicine, agriculture, and genetically modified organisms among its uses.",
+      "The text says the cell's genome can be cut at a desired location."
+     ],
+     "explanation": "The passage explains CRISPR's bacterial origins, its mechanism, its applications, and the controversy around germline use."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because CRISPR is considered exceptionally precise, cost-effective, and efficient, it has most likely ______",
+     "correct": "become widely used in biotechnology and medicine.",
+     "wrongs": [
+      "remained confined to a single laboratory.",
+      "replaced all other genetic engineering methods.",
+      "made genome editing impossible in living organisms."
+     ],
+     "why": [
+      "The text describes it as highly significant in biotechnology and medicine.",
+      "The text says it earned a Nobel Prize and enables in vivo editing, indicating broad use.",
+      "The text presents it as one technique, not the only one."
+     ],
+     "explanation": "Precision, low cost, and efficiency would encourage adoption across biotechnology and medicine."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines CRISPR, explains its mechanism, surveys its uses, and notes the controversy and recognition it has received.",
+     "wrongs": [
+      "It narrates the personal biographies of Doudna and Charpentier.",
+      "It explains how to perform a CRISPR experiment step by step.",
+      "It argues that germline editing should be encouraged."
+     ],
+     "why": [
+      "The scientists are named only as prize recipients.",
+      "No experimental protocol is given.",
+      "The text describes germline editing as highly controversial without advocating it."
+     ],
+     "explanation": "The passage moves from definition and mechanism to applications and reception."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that CRISPR was adapted from bacteria?",
+     "correct": "It is based on a simplified version of the bacterial CRISPR-Cas9 antiviral defense system.",
+     "wrongs": [
+      "CRISPR gene editing is a genetic engineering technique in molecular biology by which the genomes of living organisms may be modified.",
+      "By delivering the Cas9 nuclease complexed with a synthetic guide RNA into a cell, the cell's genome can be cut at a desired location.",
+      "Its use in human germline genetic modification is highly controversial."
+     ],
+     "why": [
+      "This sentence defines the technique.",
+      "This sentence describes the editing mechanism.",
+      "This sentence describes a controversy."
+     ],
+     "explanation": "The correct quotation identifies the bacterial antiviral system as CRISPR's basis."
+    }
+   ]
+  },
+  "Hibernation": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Hibernation is a seasonal state of suppressed metabolism that conserves energy when food is scarce.",
+     "wrongs": [
+      "Hibernation is a period of high activity and elevated body temperature.",
+      "Hibernation occurs only in bears and only in summer.",
+      "Hibernation allows animals to avoid eating before winter."
+     ],
+     "why": [
+      "The text describes low body temperature, slow breathing, and low metabolic rate.",
+      "The text says the term now includes bears and is used to pass through winter.",
+      "The text says animals store energy before hibernation, often by eating heavily or caching food."
+     ],
+     "explanation": "The passage defines hibernation, explains its function, and describes how animals prepare for it."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because animals must store enough energy before hibernation to last the dormant period, a shortage of food in autumn would most likely ______",
+     "correct": "make surviving the winter harder.",
+     "wrongs": [
+      "increase the animals' body temperature.",
+      "shorten the winter season.",
+      "remove the need for fat reserves."
+     ],
+     "why": [
+      "Insufficient stored energy would threaten survival through the dormant period.",
+      "Hibernation lowers body temperature; food shortage would not raise it.",
+      "Animals cannot change the season."
+     ],
+     "explanation": "Hibernation depends on stored energy, so a poor autumn food supply would reduce the chances of surviving winter."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines hibernation, explains its energetic function, and describes how animals prepare for it.",
+     "wrongs": [
+      "It compares hibernation with migration in birds.",
+      "It lists the species that hibernate in alphabetical order.",
+      "It argues that hibernation is a form of sleep."
+     ],
+     "why": [
+      "Migration is not discussed.",
+      "No species list is given.",
+      "The text describes metabolic suppression rather than ordinary sleep."
+     ],
+     "explanation": "The passage moves from definition to function and preparation."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that hibernation saves energy?",
+     "correct": "Hibernation functions to conserve energy when sufficient food is not available.",
+     "wrongs": [
+      "Hibernation is a state of minimal activity and metabolic reduction entered by some animal species.",
+      "The equivalent during the summer months is aestivation.",
+      "Hibernation may last days, weeks, or months depending on the species."
+     ],
+     "why": [
+      "This sentence defines hibernation.",
+      "This sentence names the summer equivalent.",
+      "This sentence describes duration."
+     ],
+     "explanation": "The correct quotation explicitly states hibernation's energy-conserving function."
+    }
+   ]
+  },
+  "Pollinator decline": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Wild pollinator populations are declining across many regions, and domesticated honeybees may not keep up with crop demand.",
+     "wrongs": [
+      "Pollinator populations are increasing everywhere.",
+      "Only domesticated honeybees are declining.",
+      "Pollinators are unimportant for crop production."
+     ],
+     "why": [
+      "The text reports declines in Europe, North America, South America, China, and Japan.",
+      "The text says global managed honeybee stocks increased even as regional colonies declined.",
+      "The text says pollinators ensure cross-pollination, essential for some plants."
+     ],
+     "explanation": "The passage documents regional declines, discusses managed bees, and explains why pollinators matter."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because managed honeybee hives increased by 45% while demand for animal-pollinated crops tripled, relying on domesticated pollinators most likely ______",
+     "correct": "cannot keep pace with growing crop demand.",
+     "wrongs": [
+      "has fully solved the pollination problem.",
+      "has reduced the need for wild pollinators.",
+      "has made crop yields independent of pollination."
+     ],
+     "why": [
+      "The text says the mismatch highlights the danger of relying on domesticated populations.",
+      "The text presents the mismatch as a danger, not a solution.",
+      "The text emphasizes the role of wild pollinators in cross-pollination."
+     ],
+     "explanation": "Hive growth lagging far behind demand means domesticated bees alone cannot meet pollination needs."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes pollinator declines, presents evidence across regions, and explains why pollination matters.",
+     "wrongs": [
+      "It explains how to keep honeybees in a backyard.",
+      "It compares honeybees with hummingbirds in detail.",
+      "It argues that pollination is unrelated to food supplies."
+     ],
+     "why": [
+      "No beekeeping advice is given.",
+      "Hummingbirds are not discussed.",
+      "The text calls plants the primary food source for animals and notes pollination's importance."
+     ],
+     "explanation": "The passage moves from the phenomenon to evidence and then to its significance."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that pollinator declines are a global pattern?",
+     "correct": "Similar findings from studies in South America, China and Japan make it reasonable to suggest that declines are occurring around the globe.",
+     "wrongs": [
+      "Pollinator decline is the reduction in abundance of insect and other animal pollinators in many ecosystems worldwide.",
+      "The majority of studies focus on bees, particularly honeybee and bumblebee species.",
+      "Pollinators participate in the sexual reproduction of many plants by ensuring cross-pollination."
+     ],
+     "why": [
+      "This sentence defines pollinator decline.",
+      "This sentence describes which pollinators are studied.",
+      "This sentence explains pollination's role."
+     ],
+     "explanation": "The correct quotation cites findings on multiple continents as evidence of a global pattern."
+    }
+   ]
+  },
+  "Soil salinity": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Soil salinity can arise naturally or from irrigation, and managing drainage can prevent salts from accumulating.",
+     "wrongs": [
+      "Soil salinity is caused only by ocean flooding.",
+      "Salts in soil are always harmful and cannot be managed.",
+      "Irrigation always removes salts from soil."
+     ],
+     "why": [
+      "The text lists mineral weathering, ocean withdrawal, irrigation, and road salt as causes.",
+      "The text says proper irrigation management can prevent salt accumulation.",
+      "The text says irrigation water can add salts; drainage is what leaches them."
+     ],
+     "explanation": "The passage defines salinity, explains natural and human causes, and describes prevention through drainage."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because proper irrigation management requires adequate drainage to leach added salts, irrigating without drainage most likely ______",
+     "correct": "allows salts to accumulate in the soil.",
+     "wrongs": [
+      "removes salts from the soil.",
+      "increases rainfall in the region.",
+      "prevents evaporation from the surface."
+     ],
+     "why": [
+      "The text says disrupting drainage patterns can result in salt accumulations.",
+      "Leaching requires drainage water; without it, salts remain.",
+      "Irrigation does not change regional rainfall."
+     ],
+     "explanation": "Without drainage to carry salts away, irrigation water leaves salts behind as it evaporates."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines salinization, explains natural causes, and describes how human practices can increase or reduce salinity.",
+     "wrongs": [
+      "It compares saline soils in Australia with soils on Mars.",
+      "It lists crop species that tolerate salt.",
+      "It argues that irrigation should be banned."
+     ],
+     "why": [
+      "Mars is not mentioned.",
+      "No crop species are listed.",
+      "The text discusses irrigation management rather than banning irrigation."
+     ],
+     "explanation": "The passage moves from definition to natural processes and then to human management."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that irrigation can raise soil salinity?",
+     "correct": "Human practices can increase the salinity of soils by the addition of salts in irrigation water.",
+     "wrongs": [
+      "Soil salinity is the salt content in the soil.",
+      "Salts occur naturally within soils and water.",
+      "Salts may accumulate in dry regions, leading to naturally saline soils."
+     ],
+     "why": [
+      "This sentence defines soil salinity.",
+      "This sentence notes that salts occur naturally.",
+      "This sentence describes natural accumulation in dry regions."
+     ],
+     "explanation": "The correct quotation explicitly links irrigation water to increased soil salinity."
+    }
+   ]
+  },
+  "Mycorrhiza": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A mycorrhiza is a usually mutualistic root association in which fungi trade water and nutrients for plant sugars.",
+     "wrongs": [
+      "A mycorrhiza is a disease that destroys plant roots.",
+      "In a mycorrhiza, the plant supplies the fungus with minerals.",
+      "Mycorrhizae occur only in plants that lack roots."
+     ],
+     "why": [
+      "The text says the association is normally mutualistic, though sometimes parasitic.",
+      "The text says the fungus supplies the plant with water and mineral nutrients.",
+      "The text says mycorrhizas are located in the roots of vascular plants."
+     ],
+     "explanation": "The passage defines mycorrhizae, explains the exchange between fungus and plant, and notes exceptions."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because mycorrhizal fungi supply plants with mineral nutrients such as phosphorus and nitrogen taken from the soil, a plant partnered with them most likely ______",
+     "correct": "can obtain nutrients beyond what its roots absorb alone.",
+     "wrongs": [
+      "no longer needs sunlight for photosynthesis.",
+      "stops producing sugars for itself.",
+      "becomes unable to absorb water."
+     ],
+     "why": [
+      "The fungi extend the plant's access to soil nutrients.",
+      "The text says the plant makes organic molecules by photosynthesis.",
+      "The text says the plant supplies sugars or lipids to the fungus, so it still produces them."
+     ],
+     "explanation": "Fungal hyphae deliver soil nutrients to the plant, supplementing what roots take up directly."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines mycorrhiza, describes the exchange between plant and fungus, and notes where the association occurs.",
+     "wrongs": [
+      "It explains how to inoculate a garden with fungi.",
+      "It compares mycorrhizae with lichens in detail.",
+      "It argues that all fungi are parasites."
+     ],
+     "why": [
+      "No inoculation instructions are given.",
+      "Lichens are not mentioned.",
+      "The text says the association is normally mutualistic and only sometimes parasitic."
+     ],
+     "explanation": "The passage moves from definition to exchange and distribution."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that both partners benefit in a mycorrhiza?",
+     "correct": "The plant makes organic molecules by photosynthesis and supplies them to the fungus in the form of sugars or lipids, while the fungus supplies the plant with water and mineral nutrients, such as phosphorus, nitrogen, or zinc, taken from the soil.",
+     "wrongs": [
+      "A mycorrhiza is a symbiotic association between a fungus and a plant.",
+      "In particular species, or in particular circumstances, mycorrhizae may have a parasitic association with host plants.",
+      "Mycorrhizas are located in the roots of vascular plants."
+     ],
+     "why": [
+      "This sentence defines the association without describing the exchange.",
+      "This sentence describes an exception.",
+      "This sentence describes where mycorrhizas occur."
+     ],
+     "explanation": "The correct quotation describes the reciprocal exchange of sugars for water and minerals."
+    }
+   ]
+  }
+ }
+}

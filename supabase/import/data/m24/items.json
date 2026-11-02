@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Universal basic income": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Universal basic income is an unconditional payment to everyone, distinct from means-tested aid, and no country has fully adopted it.",
+     "wrongs": [
+      "Universal basic income is paid only to people who cannot work.",
+      "Every country has implemented a full universal basic income.",
+      "Universal basic income requires recipients to perform work."
+     ],
+     "why": [
+      "The text defines UBI as unconditional, without a means test or work requirement.",
+      "The text says no country has implemented a full UBI system.",
+      "The text says it is paid without the need to perform work."
+     ],
+     "explanation": "The passage defines UBI, contrasts it with related programs, and describes its limited implementation."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a UBI is paid without a means test and independently of any other income, a person who already earns a high salary would ______",
+     "correct": "still receive the payment.",
+     "wrongs": [
+      "lose eligibility for the payment.",
+      "receive a larger payment than others.",
+      "be required to work additional hours."
+     ],
+     "why": [
+      "The text says UBI is unconditional and independent of other income.",
+      "A means test would exclude high earners, but UBI has none.",
+      "The text describes a minimum income, not a payment scaled upward by salary."
+     ],
+     "explanation": "Universal, unconditional payments go to everyone regardless of earnings."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines UBI, distinguishes related programs, and describes how widely it has been implemented.",
+     "wrongs": [
+      "It narrates the history of a single pilot project.",
+      "It compares UBI with universal healthcare in detail.",
+      "It argues that UBI would eliminate poverty immediately."
+     ],
+     "why": [
+      "No individual pilot is described.",
+      "Healthcare is not discussed.",
+      "The text describes the idea and its pilots without claiming an immediate result."
+     ],
+     "explanation": "The passage moves from definition to distinctions and then to implementation status."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that UBI differs from a guaranteed minimum income?",
+     "correct": "In contrast, a guaranteed minimum income (GMI) is paid only to those who do not already receive an income that is enough to live on.",
+     "wrongs": [
+      "Universal basic income is a social welfare proposal in which all members of a given population regularly receive a minimum income.",
+      "A UBI would be received independently of any other income.",
+      "As of 2026, no country has implemented a full UBI system."
+     ],
+     "why": [
+      "This sentence defines UBI.",
+      "This sentence states UBI's independence from other income.",
+      "This sentence describes implementation."
+     ],
+     "explanation": "The correct quotation explains the means test that distinguishes GMI from universal payment."
+    }
+   ]
+  },
+  "Remittance": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Remittances are migrants' money transfers home, exceed foreign aid in scale, and improve health and education in receiving countries.",
+     "wrongs": [
+      "Remittances are government grants given to developing countries.",
+      "Remittances are smaller than total global foreign aid.",
+      "Remittances are commercial investments by multinational firms."
+     ],
+     "why": [
+      "The text defines remittance as a non-commercial transfer by a foreign worker or diaspora member.",
+      "The text says remittance is more than three times as large as foreign aid.",
+      "The text distinguishes remittances from commercial transfers."
+     ],
+     "explanation": "The passage defines remittances, describes their scale, and discusses motives and effects."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because remittances are more than three times as large as total global foreign aid, they most likely ______",
+     "correct": "are a major financial inflow for developing countries.",
+     "wrongs": [
+      "are too small to affect household incomes.",
+      "replace the need for any government services.",
+      "flow mainly from poorer to richer countries."
+     ],
+     "why": [
+      "The text calls remittances one of the largest financial inflows to developing countries.",
+      "Their scale relative to aid indicates substantial impact.",
+      "The text does not say remittances replace public services."
+     ],
+     "explanation": "A flow several times larger than foreign aid is necessarily a major inflow for recipient countries."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines remittances, compares their scale with aid, and discusses fees, motives, and effects.",
+     "wrongs": [
+      "It narrates one migrant worker's journey.",
+      "It compares remittances with stock market investing.",
+      "It argues that remittances should be taxed heavily."
+     ],
+     "why": [
+      "No individual is profiled.",
+      "Stock markets are not discussed.",
+      "Taxation is not recommended."
+     ],
+     "explanation": "The passage moves from definition to scale and then to costs and consequences."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that remittances exceed foreign aid?",
+     "correct": "Remittance is more than three times as large as the total global foreign aid.",
+     "wrongs": [
+      "A remittance is a non-commercial transfer of money by a foreign worker or a member of a diaspora community.",
+      "In 2021, $780 billion was sent to 800 million people.",
+      "Most remittance flows from high-income countries to lower-income countries."
+     ],
+     "why": [
+      "This sentence defines remittance.",
+      "This sentence gives the amount sent.",
+      "This sentence describes the direction of flows."
+     ],
+     "explanation": "The correct quotation directly compares remittances with global foreign aid."
+    }
+   ]
+  },
+  "Gentrification": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Gentrification changes neighborhoods through affluent newcomers and investment, raising value while potentially displacing residents.",
+     "wrongs": [
+      "Gentrification is the decline of a neighborhood after residents leave.",
+      "Gentrification has a single agreed definition and no controversy.",
+      "Gentrification lowers property values in every case."
+     ],
+     "why": [
+      "The text describes an influx of more affluent residents and investment.",
+      "The text says there is no agreed-upon definition and that the topic is controversial.",
+      "The text says gentrification often increases economic value."
+     ],
+     "explanation": "The passage defines gentrification, describes its causes, and weighs its benefits against displacement."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because gentrification is more likely when housing is undersupplied and values are rising, a city with a tight housing market would most likely ______",
+     "correct": "face pressure toward gentrification.",
+     "wrongs": [
+      "see housing values fall sharply.",
+      "attract fewer affluent residents.",
+      "eliminate displacement entirely."
+     ],
+     "why": [
+      "The text names undersupply and rising values as conditions that make gentrification more likely.",
+      "Rising values are already part of the stated condition.",
+      "Affluent attraction is described as part of the process."
+     ],
+     "explanation": "The conditions the passage associates with gentrification would be present in a tight market."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines gentrification, describes its causes and effects, and notes its history and etymology.",
+     "wrongs": [
+      "It profiles a single gentrifying neighborhood.",
+      "It compares gentrification with suburbanization.",
+      "It argues that gentrification should be banned."
+     ],
+     "why": [
+      "No single neighborhood is profiled.",
+      "Suburbanization is not discussed.",
+      "The text describes the debate without recommending a ban."
+     ],
+     "explanation": "The passage moves from definition to process and then to origins."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that gentrification can displace existing residents?",
+     "correct": "Gentrification often increases the economic value of a neighborhood, but at the cost of changing demographic composition and potential displacement of incumbent residents.",
+     "wrongs": [
+      "Gentrification is the process whereby the character of a neighborhood changes through the influx of more affluent residents and investment.",
+      "There is no agreed-upon definition of gentrification.",
+      "Gentrification is a common and controversial topic in urban politics and planning."
+     ],
+     "why": [
+      "This sentence defines the process.",
+      "This sentence notes definitional disagreement.",
+      "This sentence describes the topic's controversy."
+     ],
+     "explanation": "The correct quotation names potential displacement as a cost of rising value."
+    }
+   ]
+  },
+  "Food desert": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Food deserts are low-access areas where distance and other barriers make affordable fresh food hard to obtain and harm health.",
+     "wrongs": [
+      "Food deserts are areas with unusually many supermarkets.",
+      "Food deserts affect only rural residents.",
+      "Food deserts are defined solely by the price of food."
+     ],
+     "why": [
+      "The text defines food deserts by limited access to affordable, fresh, healthy food.",
+      "The text gives distance thresholds for both urban and rural areas.",
+      "The text says distance alone does not explain them; affordability and transportation also matter."
+     ],
+     "explanation": "The passage defines food deserts, describes their health effects, and explains their structural causes."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because food deserts tend to have low-income residents with inadequate transportation, large supermarket chains most likely ______",
+     "correct": "see such areas as unattractive markets.",
+     "wrongs": [
+      "compete to open stores there.",
+      "find transportation costs lower there.",
+      "serve these areas more than wealthy ones."
+     ],
+     "why": [
+      "The text says these conditions make the areas less attractive markets for large chains.",
+      "The text explains the opposite: chains find them less attractive.",
+      "Inadequate transportation raises access problems rather than lowering costs."
+     ],
+     "explanation": "The passage states directly that these conditions make areas less attractive to large supermarket chains."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines food deserts, contrasts them with related terms, and explains their health effects and causes.",
+     "wrongs": [
+      "It describes a single city's grocery store opening.",
+      "It compares food deserts in the US with those in Europe.",
+      "It argues that food deserts are caused only by distance."
+     ],
+     "why": [
+      "No city or store opening is described.",
+      "Europe is not mentioned.",
+      "The text explicitly says distance alone does not explain food deserts."
+     ],
+     "explanation": "The passage moves from definition to comparison, consequences, and structural barriers."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that distance alone does not explain food deserts?",
+     "correct": "However, food deserts are not just a complication that arises because of distance to grocery stores; other structural barriers, such as food accessibility, affordability, transportation struggles, and socio-economic constraints, also play a role in food insecurity.",
+     "wrongs": [
+      "A food desert is an area that has limited access to affordable, fresh, healthy, and nutritious food.",
+      "Food deserts are commonly paired with food swamps, which lack grocery stores and instead have convenience stores or fast food.",
+      "An area with greater access to grocers or farmers' markets with fresh foods may be called a food oasis."
+     ],
+     "why": [
+      "This sentence defines a food desert.",
+      "This sentence describes food swamps.",
+      "This sentence defines a food oasis."
+     ],
+     "explanation": "The correct quotation lists affordability, transportation, and socioeconomic barriers beyond distance."
+    }
+   ]
+  },
+  "Community land trust": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A community land trust owns land on behalf of a community and leases it to keep housing affordable and prevent speculation.",
+     "wrongs": [
+      "A community land trust sells land to developers for profit.",
+      "A community land trust owns buildings but never land.",
+      "A community land trust is a government housing agency."
+     ],
+     "why": [
+      "The text says CLTs are nonprofit corporations that own land in trust for community benefit.",
+      "The text says CLTs typically retain ownership of the land.",
+      "The text calls them nonprofit, community-based corporations."
+     ],
+     "explanation": "The passage defines CLTs, explains their land-leasing model, and describes their governance and goals."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a community land trust retains ownership of the land and leases it to homeowners, increases in land value most likely ______",
+     "correct": "are less likely to be passed on to leaseholders.",
+     "wrongs": [
+      "automatically double the price of the homes.",
+      "force the trust to sell the land.",
+      "eliminate the need for ground leases."
+     ],
+     "why": [
+      "The text says separating land from housing ownership protects affordability from speculative increases in land value.",
+      "The model aims to preserve affordability, not raise prices with land values.",
+      "The text says the trust retains the land rather than selling it."
+     ],
+     "explanation": "Keeping land in trust separates housing costs from speculative land appreciation."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines community land trusts, explains their lease model, and describes their purposes and board structure.",
+     "wrongs": [
+      "It narrates the founding of one land trust.",
+      "It compares land trusts with banks.",
+      "It argues that land should be privately owned."
+     ],
+     "why": [
+      "No founding story is told.",
+      "Banks are not discussed.",
+      "The text explains the model without arguing for private ownership."
+     ],
+     "explanation": "The passage moves from definition to mechanism and then to goals and governance."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that CLTs balance individual and community interests?",
+     "correct": "Many CLTs describe their purpose as balancing the interests of individual leaseholders, who seek secure tenure and limited equity, with the interests of the wider community, such as maintaining affordable housing, preventing displacement and promoting racial and economic inclusion.",
+     "wrongs": [
+      "A community land trust is a nonprofit, community-based corporation that owns land in trust for the benefit of a defined geographic area.",
+      "CLTs typically retain ownership of the land and convey long-term ground leases to individual homeowners.",
+      "A commonly cited structure for a classic CLT is a membership-based nonprofit with a tripartite board."
+     ],
+     "why": [
+      "This sentence defines a CLT.",
+      "This sentence describes the lease arrangement.",
+      "This sentence describes board structure."
+     ],
+     "explanation": "The correct quotation explicitly sets leaseholders' interests against the wider community's."
+    }
+   ]
+  },
+  "Participatory budgeting": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Participatory budgeting lets residents deliberate and vote on part of a public budget, often improving equity and civic engagement.",
+     "wrongs": [
+      "Participatory budgeting gives officials sole control over spending.",
+      "Participatory budgeting applies to the entire national budget.",
+      "Participatory budgeting excludes low-income residents by design."
+     ],
+     "why": [
+      "The text says ordinary people decide how to allocate part of a public budget.",
+      "The text says it concerns part of a municipal or public budget.",
+      "The text says it is designed to involve those left out of traditional engagement."
+     ],
+     "explanation": "The passage defines participatory budgeting, describes its process, and reports its outcomes."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because participatory budgeting is designed to involve people left out of traditional public engagement, it most likely ______",
+     "correct": "draws more low-income residents into budget decisions.",
+     "wrongs": [
+      "reduces participation by marginalized groups.",
+      "limits decisions to wealthy property owners.",
+      "removes voting from the process."
+     ],
+     "why": [
+      "The text says these processes often increase participation, especially by marginalized or poorer residents.",
+      "That would contradict the stated design goal.",
+      "The text says the process ends with voting on final decisions."
+     ],
+     "explanation": "A process designed for excluded groups would plausibly increase their participation, which the case study reports."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines participatory budgeting, describes its process, and summarizes evidence about its effects.",
+     "wrongs": [
+      "It provides a step-by-step guide to running a meeting.",
+      "It compares participatory budgeting with corporate budgeting.",
+      "It argues that citizens should not decide budgets."
+     ],
+     "why": [
+      "No meeting guide is given.",
+      "Corporate budgeting is not discussed.",
+      "The text presents participatory budgeting as a democratic innovation."
+     ],
+     "explanation": "The passage moves from definition to procedure and then to outcomes."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that residents make real spending decisions?",
+     "correct": "Participatory budgeting allows citizens or residents of a locality to identify, discuss, and prioritize public spending projects, and gives them the power to make real decisions about how money is spent.",
+     "wrongs": [
+      "Participatory budgeting is a type of citizen sourcing in which ordinary people decide how to allocate part of a municipal or public budget.",
+      "These processes typically begin with a series of neighborhood popular assemblies.",
+      "Participatory budgeting processes are typically designed to involve those left out of traditional methods of public engagement."
+     ],
+     "why": [
+      "This sentence gives a general definition.",
+      "This sentence describes how processes begin.",
+      "This sentence describes who the process aims to include."
+     ],
+     "explanation": "The correct quotation explicitly grants residents power to make real spending decisions."
+    }
+   ]
+  },
+  "Digital divide": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The digital divide is unequal access to and use of technology across four dimensions, and it deepens existing inequalities.",
+     "wrongs": [
+      "The digital divide refers only to the cost of smartphones.",
+      "The digital divide has been fully closed in the United States.",
+      "The digital divide affects only people living in cities."
+     ],
+     "why": [
+      "The text defines it through motivational, material, skills, and usage access.",
+      "The text says over 15.8 million Americans lack high-speed broadband.",
+      "The text says rural communities may have limited access while urban middle-class people have easy access."
+     ],
+     "explanation": "The passage defines the divide, describes its dimensions and consequences, and identifies affected groups."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the digital divide includes motivational, material, skills, and usage dimensions, supplying a device without training most likely ______",
+     "correct": "does not fully close the gap.",
+     "wrongs": [
+      "eliminates every dimension of the divide.",
+      "makes skills irrelevant to internet use.",
+      "guarantees high-speed broadband access."
+     ],
+     "why": [
+      "The divide involves more than equipment, including skills and usage.",
+      "A device addresses material access only.",
+      "The text lists skills as a separate dimension."
+     ],
+     "explanation": "Material access is one of four dimensions, so hardware alone cannot resolve the others."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the digital divide, describes its dimensions and consequences, and identifies groups with limited access.",
+     "wrongs": [
+      "It reviews the history of the internet from its invention.",
+      "It compares social media platforms in detail.",
+      "It argues that the digital divide is not a real problem."
+     ],
+     "why": [
+      "No history of the internet is given.",
+      "Platforms are mentioned only in passing.",
+      "The text documents persistent gaps and their effects."
+     ],
+     "explanation": "The passage moves from definition to consequences and affected populations."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the divide harms students' education?",
+     "correct": "Students from low-income households often face limited access to reliable internet and digital devices, which negatively affects their educational opportunities.",
+     "wrongs": [
+      "Digital divide is inequitable access to and use of digital technology, encompassing four interrelated dimensions.",
+      "The digital divide worsens inequality in access to information and resources.",
+      "According to 2026 data from the U.S. Census Bureau, over 15.8 million Americans lack access to high-speed broadband."
+     ],
+     "why": [
+      "This sentence defines the divide.",
+      "This sentence states a general consequence.",
+      "This sentence gives a national access figure."
+     ],
+     "explanation": "The correct quotation links limited access directly to reduced educational opportunities."
+    }
+   ]
+  },
+  "Gig economy": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The gig economy uses short-term, platform-mediated work with flexible schedules but little job security or benefits.",
+     "wrongs": [
+      "Gig workers receive regular salaries and health insurance.",
+      "The gig economy consists only of performing artists.",
+      "Gig work is a form of long-term traditional employment."
+     ],
+     "why": [
+      "The text says gig workers are typically independent contractors without benefits or job security.",
+      "The text says the term comes from performers but the sector now includes many kinds of tasks.",
+      "The text contrasts gig work with traditional long-term employment."
+     ],
+     "explanation": "The passage defines the gig economy, explains its origins, and describes its costs and benefits."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because gig workers are typically classified as independent contractors, companies using gig labor most likely ______",
+     "correct": "avoid paying for benefits such as health insurance.",
+     "wrongs": [
+      "provide paid sick leave to all workers.",
+      "guarantee long-term employment contracts.",
+      "pay regular salaries instead of per-task rates."
+     ],
+     "why": [
+      "The text says the model does not burden companies with costs such as sick leave and health insurance.",
+      "The text says gig workers lack the benefits of standard employment.",
+      "The text describes short-term commitments rather than long-term contracts."
+     ],
+     "explanation": "Independent-contractor status lets companies avoid the benefit costs of standard employees."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the gig economy, traces the term's origin, and describes the arrangement's advantages and drawbacks.",
+     "wrongs": [
+      "It profiles a single gig worker's daily routine.",
+      "It compares gig work with union organizing in detail.",
+      "It argues that gig work should be abolished."
+     ],
+     "why": [
+      "No individual worker is profiled.",
+      "Union organizing is not discussed.",
+      "The text presents both flexibility and lack of security without calling for abolition."
+     ],
+     "explanation": "The passage moves from definition and etymology to characteristics and tradeoffs."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that gig work can offer flexibility?",
+     "correct": "Workers often enjoy greater flexibility in terms of scheduling control and work-life balance.",
+     "wrongs": [
+      "The gig economy is the economic system by which a workforce of people engage in freelance or side-employment by corporate entities.",
+      "Gig workers are typically classified as independent contractors, without the benefits or job security associated with standard employment.",
+      "Instead of being paid a regular salary, gig workers are paid for individual gigs performed."
+     ],
+     "why": [
+      "This sentence defines the gig economy.",
+      "This sentence describes the lack of benefits and security.",
+      "This sentence describes per-gig pay."
+     ],
+     "explanation": "The correct quotation explicitly names scheduling control and work-life balance."
+    }
+   ]
+  },
+  "Urban planning": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Urban planning designs land use and infrastructure, and it has shifted from top-down master plans toward social and environmental goals.",
+     "wrongs": [
+      "Urban planning is concerned only with building heights.",
+      "Urban planning has always focused primarily on residents' experiences.",
+      "Urban planning applies only to rural areas."
+     ],
+     "why": [
+      "The text says planning covers land use, air, water, transportation, communications, and distribution networks.",
+      "The text says planning traditionally followed a top-down approach.",
+      "The text says planning guides development in urban, suburban, and rural areas."
+     ],
+     "explanation": "The passage defines urban planning, describes its traditional approach, and explains its changing priorities."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because urban planning has adopted a focus on social and environmental goals, planners most likely ______",
+     "correct": "weigh residents' well-being alongside physical layout.",
+     "wrongs": [
+      "ignore public health in their decisions.",
+      "abandon all consideration of infrastructure.",
+      "plan only for commercial development."
+     ],
+     "why": [
+      "The text says planning is used to improve health and well-being and maintain sustainability.",
+      "That would contradict the stated focus.",
+      "The text says planners remain responsible for transportation and distribution networks."
+     ],
+     "explanation": "A social and environmental focus means health, well-being, and sustainability inform planning decisions."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines urban planning, contrasts traditional and newer approaches, and describes planners' responsibilities.",
+     "wrongs": [
+      "It narrates the career of Jane Jacobs.",
+      "It compares zoning laws in two countries.",
+      "It argues that master planning should be restored."
+     ],
+     "why": [
+      "Jacobs is mentioned only as a critic who called for resident input.",
+      "No country comparison is made.",
+      "The text describes the shift without advocating a return."
+     ],
+     "explanation": "The passage moves from definition to historical change and then to scope."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that planning now emphasizes well-being and sustainability?",
+     "correct": "Over time, urban planning has adopted a focus on the social and environmental \"bottom lines\" that focus on using planning as a tool to improve the health and well-being of people and maintain sustainability standards.",
+     "wrongs": [
+      "Urban planning is the process of developing and designing plans for land use and the built environment.",
+      "Traditionally, urban planning followed a top-down approach in master planning the physical layout of human settlements.",
+      "In the mid-20th century, urban planning experts such as Jane Jacobs called on urban planners to take resident experiences and needs more into consideration."
+     ],
+     "why": [
+      "This sentence defines urban planning.",
+      "This sentence describes the traditional approach.",
+      "This sentence describes a call for greater resident input."
+     ],
+     "explanation": "The correct quotation names health, well-being, and sustainability as planning goals."
+    }
+   ]
+  },
+  "Public housing": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Public housing is subsidized affordable housing, usually government- or nonprofit-owned, allocated by need and varying widely across countries.",
+     "wrongs": [
+      "Public housing is market-rate housing sold to the highest bidder.",
+      "Public housing is available to anyone regardless of income.",
+      "Public housing makes up the same share of housing in every country."
+     ],
+     "why": [
+      "The text describes subsidized or affordable housing owned and managed by government or nonprofits.",
+      "The text says the right to rent is generally rationed through means-testing or measures of housing need.",
+      "The text reports a range from about 34% in the Netherlands to less than 1% in Colombia."
+     ],
+     "explanation": "The passage defines public housing, explains allocation, and describes international variation and related programs."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because access to public housing is generally rationed through means-testing, a high-income household most likely ______",
+     "correct": "would not qualify for a unit.",
+     "wrongs": [
+      "would receive priority over low-income applicants.",
+      "could rent a unit at market rate.",
+      "would be exempt from all housing costs."
+     ],
+     "why": [
+      "Means-testing targets households with limited means.",
+      "Priority is based on housing need, not high income.",
+      "The text describes subsidized rents, not market-rate rentals for high earners."
+     ],
+     "explanation": "A means test limits eligibility to households below an income threshold."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines public housing, explains how units are allocated, and describes variation and related subsidy programs.",
+     "wrongs": [
+      "It narrates the history of a single housing project.",
+      "It compares public housing with private universities.",
+      "It argues that public housing should be eliminated."
+     ],
+     "why": [
+      "No individual project's history is told.",
+      "Universities are not mentioned.",
+      "The text presents public housing as a potential remedy for housing inequality."
+     ],
+     "explanation": "The passage moves from definition and allocation to international comparison and alternatives."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that public housing's share varies widely among countries?",
+     "correct": "Within the OECD, social housing represents an average of 7% of national housing stock (2020), ranging from ~34% in the Netherlands to less than 1% in Colombia.",
+     "wrongs": [
+      "Public housing, also known as social housing, is subsidized or affordable housing provided in buildings that are usually owned and managed by local government.",
+      "One can regard social housing as a potential remedy for housing inequality.",
+      "Affordable housing goals can also be achieved through subsidies."
+     ],
+     "why": [
+      "This sentence defines public housing.",
+      "This sentence describes its potential role.",
+      "This sentence describes an alternative approach."
+     ],
+     "explanation": "The correct quotation gives the range from the Netherlands to Colombia that shows variation."
+    }
+   ]
+  }
+ }
+}

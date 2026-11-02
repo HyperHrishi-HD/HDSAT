@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Origami": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Origami is a paper-folding art with Japanese terminology but universal practice, and modern folders generally avoid cuts and glue.",
+     "wrongs": [
+      "Origami is a Japanese art that requires cutting and gluing paper.",
+      "Origami has a single documented place of origin.",
+      "Origami is practiced only in Japan and only for ceremonies."
+     ],
+     "why": [
+      "The text says modern practitioners generally discourage cuts, glue, and markings.",
+      "The text says the practice is universal and its origin remains unknown.",
+      "The text says haiku today are written worldwide and distinguishes ceremonial from recreational origami."
+     ],
+     "explanation": "The passage defines origami, notes its uncertain origins, and explains the conventions and classifications of the practice."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because modern origami practitioners generally discourage cuts and glue, a design that requires cutting the paper would most likely be classified as ______",
+     "correct": "kirigami rather than origami.",
+     "wrongs": [
+      "ceremonial origami rather than recreational origami.",
+      "a form of bookbinding.",
+      "a type of papermaking."
+     ],
+     "why": [
+      "The text says folders use the word kirigami for designs that use cuts.",
+      "The ceremonial and recreational distinction concerns the purpose of the folding, not the use of cuts.",
+      "Bookbinding is not mentioned in the text."
+     ],
+     "explanation": "The passage explicitly assigns cut designs to kirigami, and origami proper avoids cuts."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines origami, explains its techniques and rules, and distinguishes its ceremonial and recreational forms.",
+     "wrongs": [
+      "It traces the history of origami from ancient China to modern Europe.",
+      "It compares origami with sculpture in stone and metal.",
+      "It argues that origami should permit cutting and gluing."
+     ],
+     "why": [
+      "The text mentions no Chinese origin and calls the origin unknown.",
+      "Stone and metal appear only as materials the term has been extended to.",
+      "The text reports the convention against cuts without arguing for a change."
+     ],
+     "explanation": "The passage moves from definition to technique and then to classification."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that origami's name is Japanese but its beginnings are unclear?",
+     "correct": "Although the word origami has Japanese roots, the practice itself is universal and its origin remains unknown.",
+     "wrongs": [
+      "Origami is the art and technique of folding paper.",
+      "The small number of basic origami folds can be combined in a variety of ways to make intricate designs.",
+      "The best-known origami model is the Japanese paper crane."
+     ],
+     "why": [
+      "This sentence defines the practice.",
+      "This sentence describes how folds combine.",
+      "This sentence identifies a famous model."
+     ],
+     "explanation": "The correct quotation explicitly separates the Japanese word from the unknown origin of the practice."
+    }
+   ]
+  },
+  "Jazz": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Jazz arose in African American communities in New Orleans, drew on many traditions, and developed distinct styles over time.",
+     "wrongs": [
+      "Jazz originated in Europe and spread to the United States.",
+      "Jazz has remained unchanged since the 1920s.",
+      "Jazz is defined mainly by its use of written notation."
+     ],
+     "why": [
+      "The text says it originated in African American communities of New Orleans.",
+      "The text describes new styles such as swing, bebop, and cool jazz.",
+      "The text emphasizes improvisation, not notation."
+     ],
+     "explanation": "The passage describes jazz's origins, musical roots, defining features, and stylistic evolution."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because bebop shifted jazz from danceable popular music toward a more challenging \"musician's music\" played at faster tempos, bebop audiences most likely ______",
+     "correct": "listened more than they danced.",
+     "wrongs": [
+      "danced more than audiences of swing had.",
+      "rejected complex chord-based improvisation.",
+      "stopped attending jazz performances entirely."
+     ],
+     "why": [
+      "The text contrasts bebop with dance-oriented swing and describes it as musician's music.",
+      "The text says bebop moved away from danceable popular music.",
+      "The text says bebop used more chord-based improvisation, not that audiences rejected it."
+     ],
+     "explanation": "If bebop was less danceable and more oriented toward musicians, listening rather than dancing is the logical behavior."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes jazz's origins and traits, then surveys the styles that developed over the decades.",
+     "wrongs": [
+      "It profiles a single jazz musician and his career.",
+      "It compares jazz with classical European harmony in detail.",
+      "It argues that jazz should return to its New Orleans roots."
+     ],
+     "why": [
+      "No individual musician is named.",
+      "European harmony is listed as one root, not analyzed at length.",
+      "The text describes stylistic change without advocating a return."
+     ],
+     "explanation": "The passage opens with origins and characteristics, then moves chronologically through styles."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that jazz drew on many musical traditions?",
+     "correct": "Its roots are in blues, ragtime, European harmony, African rhythmic rituals, spirituals, hymns, marches, vaudeville song, and dance music.",
+     "wrongs": [
+      "Jazz is a music genre that originated in the African-American communities of New Orleans, Louisiana, in the late 19th and early 20th centuries.",
+      "Jazz is characterized by swing and blue notes, complex chords, call and response vocals, polyrhythms and improvisation.",
+      "In the 1930s, arranged dance-oriented swing big bands were among the prominent styles."
+     ],
+     "why": [
+      "This sentence gives the genre's origin.",
+      "This sentence lists defining characteristics.",
+      "This sentence describes a later style."
+     ],
+     "explanation": "Only the correct quotation lists the varied traditions that fed into jazz."
+    }
+   ]
+  },
+  "Haiku": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Haiku is a short Japanese poetic form with traditional rules that has been adapted widely and variably outside Japan.",
+     "wrongs": [
+      "Haiku is a long narrative poem that originated in China.",
+      "All haiku in every language follow the 5-7-5 pattern exactly.",
+      "Haiku was invented in the 20th century by Masaoka Shiki."
+     ],
+     "why": [
+      "The text calls it a type of short-form poetry that originated in Japan.",
+      "The text says non-Japanese haiku vary widely in how closely they follow traditional elements.",
+      "The text says Shiki gave the form its current name, not that he invented it."
+     ],
+     "explanation": "The passage defines haiku, explains its traditional elements, traces its history, and notes variation abroad."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because Japanese haiku are traditionally printed as a single line while English haiku often appear as three lines, the presentation of a haiku most likely ______",
+     "correct": "depends on the language and its conventions.",
+     "wrongs": [
+      "determines whether the poem is a haiku at all.",
+      "is identical in every language.",
+      "must always follow the 5-7-5 pattern."
+     ],
+     "why": [
+      "The text contrasts Japanese and English printing conventions.",
+      "The text explicitly says the conventions differ.",
+      "The text reports variation in line arrangement."
+     ],
+     "explanation": "The contrast between one-line Japanese printing and three-line English printing shows that presentation varies by language."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the form and its rules, explains its origin in renga, and describes its global adaptation.",
+     "wrongs": [
+      "It compares haiku with the sonnet and the epic.",
+      "It provides a close reading of one poem by Bashō.",
+      "It argues that English haiku should abandon seasonal references."
+     ],
+     "why": [
+      "The text names neither the sonnet nor the epic.",
+      "Bashō is mentioned only as a poet who deviated from the pattern.",
+      "The text describes variation without recommending a change."
+     ],
+     "explanation": "The passage moves from definition and rules to history and then to modern practice worldwide."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that haiku began as part of a longer poetic form?",
+     "correct": "Haiku originated as an opening part of a larger Japanese genre of poetry called renga.",
+     "wrongs": [
+      "Haiku is a type of short-form poetry that originated in Japan.",
+      "Traditional Japanese haiku consist of three phrases composed of 17 morae in a 5, 7, 5 pattern.",
+      "Haiku was given its current name by the Japanese writer Masaoka Shiki at the end of the 19th century."
+     ],
+     "why": [
+      "This sentence identifies the form's country of origin.",
+      "This sentence describes the traditional syllable pattern.",
+      "This sentence credits the naming of the form."
+     ],
+     "explanation": "The correct quotation states that haiku began as the opening of renga."
+    }
+   ]
+  },
+  "Bauhaus": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Bauhaus was an influential German art school that joined craft, fine art, and mass production before closing under Nazi pressure.",
+     "wrongs": [
+      "The Bauhaus was a German political party that opposed modern architecture.",
+      "The Bauhaus operated in a single city for its entire existence.",
+      "The Bauhaus rejected mass production in favor of handmade objects."
+     ],
+     "why": [
+      "The text calls it a German art school, not a political party.",
+      "The text says it existed in Weimar, Dessau, and Berlin.",
+      "The text says its approach tried to unify artistic vision with mass production."
+     ],
+     "explanation": "The passage describes the school's approach, its influence, its locations and directors, and its closure."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the Bauhaus was closed in 1933 under pressure from the Nazi regime, the school ______",
+     "correct": "did not continue operating in Germany after that year.",
+     "wrongs": [
+      "expanded to additional German cities after 1933.",
+      "was renamed and funded by the Nazi government.",
+      "abandoned its interest in design and returned to painting."
+     ],
+     "why": [
+      "The text says the school was closed in 1933.",
+      "The text lists only Weimar, Dessau, and Berlin, ending in 1933.",
+      "The text says it was painted as a centre of communist intellectualism, not supported by the regime."
+     ],
+     "explanation": "The closure date and pressure from the regime imply the school ceased operations in Germany."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It introduces the school and its design philosophy, then traces its locations, directors, and closure.",
+     "wrongs": [
+      "It compares Bauhaus architecture with Gothic cathedrals.",
+      "It lists the school's students and their later careers.",
+      "It explains the German economy in the 1920s."
+     ],
+     "why": [
+      "Gothic cathedrals are not mentioned.",
+      "Staff artists are named, but students and careers are not.",
+      "Economic conditions are not analyzed."
+     ],
+     "explanation": "The passage presents the school's identity and ideas before following its institutional history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the Bauhaus tried to unite art with manufacturing?",
+     "correct": "The school became famous for its approach to design, which attempted to unify individual artistic vision with the principles of mass production and emphasis on function.",
+     "wrongs": [
+      "The Bauhaus was founded by architect Walter Gropius in Weimar.",
+      "Staff at the Bauhaus included prominent artists such as Paul Klee, Wassily Kandinsky, Gunta Stölzl, and László Moholy-Nagy.",
+      "The school existed in three German cities - Weimar, from 1919 to 1925, Dessau, from 1925 to 1932, and Berlin, from 1932 to 1933."
+     ],
+     "why": [
+      "This sentence names the founder and city.",
+      "This sentence lists staff artists.",
+      "This sentence lists the school's locations and dates."
+     ],
+     "explanation": "Only the correct quotation pairs artistic vision with mass production and function."
+    }
+   ]
+  },
+  "Rosetta Stone": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Rosetta Stone records one decree in three scripts, which made it the key to deciphering Egyptian hieroglyphs.",
+     "wrongs": [
+      "The Rosetta Stone is a Greek monument that records three unrelated laws.",
+      "The stone was created in the 19th century to teach hieroglyphs.",
+      "The stone's three texts differ so much that comparison was impossible."
+     ],
+     "why": [
+      "The text says the texts are three versions of a single decree.",
+      "The text says the stone was carved in 196 BC.",
+      "The text says the decree has only minor differences across versions."
+     ],
+     "explanation": "The passage explains the stone's contents, its discovery, and why its parallel texts mattered."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the decree's three versions differ only slightly and one is in Ancient Greek, scholars could ______",
+     "correct": "use the known language to help decode the Egyptian scripts.",
+     "wrongs": [
+      "ignore the Greek text as irrelevant.",
+      "assume the Egyptian texts were unrelated to the Greek.",
+      "date the stone to the 19th century."
+     ],
+     "why": [
+      "The parallel content and known Greek make comparison useful for decipherment.",
+      "The text calls the stone key to deciphering the scripts, which required using the Greek.",
+      "The text says the versions are of the same decree with minor differences."
+     ],
+     "explanation": "A known Greek version of the same text provides a basis for interpreting the unknown scripts."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes the stone and its texts, then recounts its discovery, transfer, and display.",
+     "wrongs": [
+      "It compares the Rosetta Stone with the Bayeux Tapestry.",
+      "It explains how to read Demotic script step by step.",
+      "It argues that the stone should be returned to Egypt."
+     ],
+     "why": [
+      "The Bayeux Tapestry is not mentioned.",
+      "The text names the scripts but does not teach them.",
+      "The text reports the stone's location without arguing about repatriation."
+     ],
+     "explanation": "The passage opens with the object and its inscriptions, then follows its modern history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the stone's texts say essentially the same thing?",
+     "correct": "The decree has only minor differences across the three versions, making the Rosetta Stone key to deciphering the Egyptian scripts.",
+     "wrongs": [
+      "The top and middle texts are in Ancient Egyptian using hieroglyphic and Demotic scripts, respectively, while the bottom is in Ancient Greek.",
+      "It was found there in July 1799 by French army officer Pierre-François Bouchard during France's invasion of Egypt.",
+      "Since 1802, it has been on public display at the British Museum almost continuously."
+     ],
+     "why": [
+      "This sentence identifies the scripts.",
+      "This sentence describes the discovery.",
+      "This sentence describes the stone's display."
+     ],
+     "explanation": "The correct quotation states that the versions have only minor differences."
+    }
+   ]
+  },
+  "Oral tradition": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Oral tradition transmits knowledge and culture through speech and song across generations, with or without writing.",
+     "wrongs": [
+      "Oral tradition exists only in societies that have no writing system.",
+      "Oral tradition is limited to folktales and excludes law or history.",
+      "Oral tradition died out once writing was invented."
+     ],
+     "why": [
+      "The text says it operates without a writing system or in parallel to one.",
+      "The text says it transmits oral history, oral literature, oral law, and other knowledge.",
+      "The text says it often remains in use in the modern era."
+     ],
+     "explanation": "The passage defines oral tradition, describes its media and practitioners, and notes its continued use."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because oral repositories mentally record information and are sometimes called \"walking libraries,\" a society without writing could ______",
+     "correct": "preserve its history through trained storytellers.",
+     "wrongs": [
+      "preserve knowledge only by carving it in stone.",
+      "not pass on any cultural knowledge.",
+      "rely on printed books for its laws."
+     ],
+     "why": [
+      "The text describes oral repositories who preserve and transmit knowledge.",
+      "The text says oral tradition works without a writing system.",
+      "The text says oral tradition is the most widespread medium of human communication."
+     ],
+     "explanation": "Trained oral repositories allow knowledge to survive without a writing system."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines oral tradition, describes how it is transmitted, and gives examples of its uses.",
+     "wrongs": [
+      "It narrates the life of a single oral poet.",
+      "It compares oral tradition with digital communication.",
+      "It argues that oral tradition is less reliable than writing."
+     ],
+     "why": [
+      "No individual poet is named.",
+      "Digital communication is not discussed.",
+      "The text describes oral tradition's role without ranking its reliability."
+     ],
+     "explanation": "The passage moves from definition to transmission and then to religious and cultural examples."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that oral tradition can preserve knowledge without writing?",
+     "correct": "Oral tradition is a medium of communication for a society to transmit oral history, oral literature, oral law and other knowledge across generations without a writing system, or in parallel to a writing system.",
+     "wrongs": [
+      "The information is mentally recorded by oral repositories, sometimes termed \"walking libraries\", who are usually also performers.",
+      "Religions such as Buddhism, Hinduism, Catholicism, Yazidism and Jainism have used oral tradition, in parallel to writing, to transmit their canonical scriptures.",
+      "African societies have broadly been labelled oral civilisations, contrasted with literate civilisations."
+     ],
+     "why": [
+      "This sentence describes the people who memorize information.",
+      "This sentence gives religious examples.",
+      "This sentence describes a label applied to African societies."
+     ],
+     "explanation": "The correct quotation explicitly names transmission across generations without a writing system."
+    }
+   ]
+  },
+  "Bookbinding": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Bookbinding joins pages and adds a cover through varied methods that changed with industrialization.",
+     "wrongs": [
+      "Bookbinding is the process of writing and editing a manuscript.",
+      "All books are bound with thread and leather.",
+      "Mechanized binding ended the production of handmade books."
+     ],
+     "why": [
+      "The text defines binding as building a book from ordered pages.",
+      "The text lists adhesives, rings, posts, coils, and combs as alternatives.",
+      "The text says mechanized binding was introduced in the 19th century, not that handmade binding ended."
+     ],
+     "explanation": "The passage defines binding, surveys materials and methods, and notes the effect of mechanization."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because mechanised bookbinding was introduced in the 19th century alongside machine papermaking, book production most likely ______",
+     "correct": "became faster than it had been before.",
+     "wrongs": [
+      "became slower and more expensive.",
+      "ended the use of printed books.",
+      "required every book to be bound by hand."
+     ],
+     "why": [
+      "Mechanization of binding and papermaking would speed production.",
+      "The text presents mechanization as a change in manufacturing, not a slowdown.",
+      "The text says printed books are produced through letterpress and other techniques."
+     ],
+     "explanation": "Machine binding and machine papermaking would increase the speed of book production."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines bookbinding, describes methods and materials, and distinguishes types of binding work.",
+     "wrongs": [
+      "It narrates the history of a single printing press.",
+      "It compares European and Asian bookbinding techniques in detail.",
+      "It explains how to write a novel."
+     ],
+     "why": [
+      "No individual press is described.",
+      "The text notes variation by culture but does not compare regions in detail.",
+      "Writing a novel is not discussed."
+     ],
+     "explanation": "The passage moves from definition to technique and then to categories of binding."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that binding methods vary across cultures and eras?",
+     "correct": "The process of making books varies significantly by time period and geography/culture.",
+     "wrongs": [
+      "Bookbinding is the process of building a book, usually in codex format, from an ordered stack of paper sheets.",
+      "A cover to protect the contents, usually bearing publication information such as title and author, is generally attached.",
+      "Mechanised bookbinding was introduced in the 19th century with the industrial revolution."
+     ],
+     "why": [
+      "This sentence defines the process.",
+      "This sentence describes the cover.",
+      "This sentence dates mechanized binding."
+     ],
+     "explanation": "The correct quotation directly states that bookmaking varies by period and culture."
+    }
+   ]
+  },
+  "Color theory": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Color theory is a body of knowledge about color mixing and harmony that overlaps with objective color science and has practical uses.",
+     "wrongs": [
+      "Color theory is a branch of astronomy that studies stars.",
+      "Color theory is entirely subjective and has no practical applications.",
+      "Color theory was invented by Disney in the 20th century."
+     ],
+     "why": [
+      "The text mentions astronomy as an application of color science, not as color theory itself.",
+      "The text describes applications such as camouflage and heat-dispersing paints.",
+      "The text says color theory dates back at least to Aristotle and Bharata."
+     ],
+     "explanation": "The passage defines color theory, contrasts it with color science, and gives examples of its applications."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because color theory relies on objective standards and exact ratios to achieve consistent results, reproducing a specific color most likely requires ______",
+     "correct": "careful measurement rather than guesswork.",
+     "wrongs": [
+      "ignoring the ratios of the colors mixed.",
+      "using only primary colors.",
+      "avoiding any standard references."
+     ],
+     "why": [
+      "The text says consistency in mixing and presentation depends on objective standards.",
+      "The text says your ratios of colors must be consistent and often exact.",
+      "Primary colors are not the focus of the passage."
+     ],
+     "explanation": "Consistent, exact color mixing depends on measurement and standards, not improvisation."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines color theory, contrasts it with color science, and describes applications and historical roots.",
+     "wrongs": [
+      "It provides step-by-step instructions for painting a landscape.",
+      "It argues that color science has replaced color theory.",
+      "It profiles a single color theorist."
+     ],
+     "why": [
+      "No painting instructions are given.",
+      "The text says the two fields intertwine and aid each other.",
+      "No individual theorist is profiled."
+     ],
+     "explanation": "The passage moves from definition to comparison and then to uses and history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that color theory has practical applications?",
+     "correct": "As for functional applications, color theory, in tandem with color science, is what allows humans to achieve ideal camouflage, design paints that disperse more heat, and is often used by theme parks like Disney to achieve their ideal aesthetic.",
+     "wrongs": [
+      "Color theory, or more specifically traditional color theory, is a historical body of knowledge describing the behavior of colors.",
+      "Traditional color theory tends to be more subjective and have artistic applications, while color science tends to be more objective.",
+      "Color theory dates back at least as far as Aristotle's treatise On Colors and Bharata's Nāṭya Shāstra."
+     ],
+     "why": [
+      "This sentence defines color theory.",
+      "This sentence contrasts the two fields.",
+      "This sentence describes the field's history."
+     ],
+     "explanation": "Only the correct quotation lists concrete functional uses such as camouflage and heat-dispersing paints."
+    }
+   ]
+  },
+  "Storytelling": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Storytelling is a universal cultural activity that predates writing and serves entertainment, education, and preservation.",
+     "wrongs": [
+      "Storytelling began only after the invention of writing.",
+      "Storytelling is limited to oral performances without visual aids.",
+      "Storytelling is practiced only for religious purposes."
+     ],
+     "why": [
+      "The text says storytelling predates writing.",
+      "The text describes rock art and dance used alongside oral narrative.",
+      "The text lists entertainment, education, cultural preservation, and moral instruction."
+     ],
+     "explanation": "The passage defines storytelling, describes its elements and purposes, and traces its ancient forms."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because Aboriginal Australian people painted symbols on cave walls to help storytellers remember stories, the paintings most likely ______",
+     "correct": "served as memory aids for narratives.",
+     "wrongs": [
+      "replaced spoken storytelling entirely.",
+      "were unrelated to the stories told aloud.",
+      "were created after the stories were forgotten."
+     ],
+     "why": [
+      "The text says the symbols helped the storyteller remember the story.",
+      "The text says the story was told using oral narrative along with rock art.",
+      "The text links the symbols to the stories."
+     ],
+     "explanation": "The passage states that the painted symbols helped storytellers recall stories, making them memory aids."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines storytelling, identifies its elements, and describes its early oral and visual forms.",
+     "wrongs": [
+      "It summarizes the plot of a well-known novel.",
+      "It compares written literature with film.",
+      "It argues that storytelling has declined in modern societies."
+     ],
+     "why": [
+      "No novel is summarized.",
+      "Film is not discussed.",
+      "The text describes storytelling's enduring role without claiming decline."
+     ],
+     "explanation": "The passage moves from definition to elements and then to historical examples."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that stories transmit values?",
+     "correct": "Every culture has its own narratives, which are shared as a means of entertainment, education, cultural preservation, or instilling moral values (sometimes through morals).",
+     "wrongs": [
+      "Storytelling is the social and cultural activity of sharing stories, sometimes with improvisation, theatrics, or embellishment.",
+      "Crucial elements of stories and storytelling include plot, characters, and narrative point of view.",
+      "Storytelling, intertwined with the development of mythologies, predates writing."
+     ],
+     "why": [
+      "This sentence defines storytelling.",
+      "This sentence lists elements of stories.",
+      "This sentence describes storytelling's age."
+     ],
+     "explanation": "The correct quotation explicitly names instilling moral values as a purpose of stories."
+    }
+   ]
+  },
+  "Public library": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A public library is a tax-funded lending library open to everyone, with a mandate to serve the general public.",
+     "wrongs": [
+      "A public library is a private collection available only to researchers.",
+      "Public libraries charge fees for access to their collections.",
+      "Public libraries serve only students enrolled in schools."
+     ],
+     "why": [
+      "The text says public libraries are open to all and distinct from research libraries.",
+      "The text says they do not charge money for access to the collection.",
+      "The text distinguishes them from school libraries."
+     ],
+     "explanation": "The passage defines public libraries by funding, access, and mission, and lists the services they provide."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because public libraries are supported by taxes and do not charge for access to their collections, a resident who cannot afford to buy books most likely ______",
+     "correct": "can still borrow materials from a public library.",
+     "wrongs": [
+      "must pay a fee to enter the library.",
+      "is excluded from story times and book clubs.",
+      "can use the library only if enrolled in a school."
+     ],
+     "why": [
+      "The text says access to the collection is free and open to all.",
+      "The text says libraries do not charge money for access to the collection.",
+      "The text lists free services such as story times and book clubs."
+     ],
+     "explanation": "Free, tax-supported access means inability to buy books does not bar a resident from borrowing them."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines public libraries, distinguishes them from other libraries, and describes their services.",
+     "wrongs": [
+      "It traces the history of one library building.",
+      "It compares library funding in detail across countries.",
+      "It argues that libraries should charge for borrowing."
+     ],
+     "why": [
+      "No individual building is described.",
+      "The text says libraries exist in many countries but does not compare funding systems.",
+      "The text states that public libraries do not charge for access."
+     ],
+     "explanation": "The passage moves from definition and mandate to examples of services."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that public libraries serve the whole community rather than a specialized group?",
+     "correct": "Their mandate is to serve the general public's information needs rather than the needs of a particular school, institution, or research population.",
+     "wrongs": [
+      "A public library is a library, most often a lending library, that is accessible by the general public and is usually funded from public sources, such as taxes.",
+      "Public libraries also provide free services such as preschool story times to encourage early literacy among children.",
+      "Public libraries typically allow users to borrow books and other materials outside the library premises temporarily."
+     ],
+     "why": [
+      "This sentence describes access and funding.",
+      "This sentence describes a service for young children.",
+      "This sentence describes borrowing."
+     ],
+     "explanation": "The correct quotation explicitly contrasts the general public's needs with those of specialized institutions."
+    }
+   ]
+  }
+ }
+}

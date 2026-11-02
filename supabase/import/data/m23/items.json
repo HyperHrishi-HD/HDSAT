@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Solar panel": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Solar panels convert sunlight into electricity through photovoltaic cells, with environmental benefits and practical limits.",
+     "wrongs": [
+      "Solar panels convert electricity into sunlight.",
+      "Solar panels work equally well at night.",
+      "Solar panels produce no greenhouse gas reductions compared with fossil fuels."
+     ],
+     "why": [
+      "The text says panels convert sunlight into electricity.",
+      "The text says they depend on the availability and intensity of sunlight.",
+      "The text says they reduce greenhouse gas emissions compared to hydrocarbon-sourced energy."
+     ],
+     "explanation": "The passage defines solar panels, explains the photovoltaic process, and lists both advantages and drawbacks."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because solar panels produce direct current while many devices and grids use alternating current, a photovoltaic system most likely needs ______",
+     "correct": "an inverter to convert the current.",
+     "wrongs": [
+      "a battery to create sunlight.",
+      "a charge controller to reverse the current.",
+      "a solar tracker to change the voltage."
+     ],
+     "why": [
+      "The text says an inverter converts direct current to alternating current where necessary.",
+      "Batteries store electricity; they do not create sunlight.",
+      "A charge controller regulates charging, not current type."
+     ],
+     "explanation": "The passage identifies the inverter as the component that converts DC to AC."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines solar panels, explains how they produce electricity, and lists their benefits and limitations.",
+     "wrongs": [
+      "It traces the history of solar power from 1839 to today.",
+      "It compares solar panels with wind turbines in detail.",
+      "It argues that solar panels should replace all other energy sources."
+     ],
+     "why": [
+      "1839 appears only in the final sentence about early observations.",
+      "Wind turbines are not discussed.",
+      "The text describes benefits and drawbacks without advocating replacement."
+     ],
+     "explanation": "The passage moves from definition to mechanism and then to advantages and disadvantages."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that solar panels have drawbacks?",
+     "correct": "However, they depend on the availability and intensity of sunlight, require cleaning, and have high initial costs.",
+     "wrongs": [
+      "A solar panel is a device that converts sunlight into electricity by using multiple solar modules that consist of photovoltaic cells.",
+      "Solar panels use a renewable and clean source of energy.",
+      "Solar panels are usually arranged in groups called arrays or systems."
+     ],
+     "why": [
+      "This sentence defines the device.",
+      "This sentence describes an advantage.",
+      "This sentence describes how panels are arranged."
+     ],
+     "explanation": "The correct quotation lists the dependence on sunlight, cleaning needs, and high initial costs."
+    }
+   ]
+  },
+  "Wind turbine": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Wind turbines convert wind into electricity at large scale and come in many designs, though wind is an intermittent resource.",
+     "wrongs": [
+      "Wind turbines convert electricity into wind.",
+      "All wind turbines use vertical axes.",
+      "Wind power produces more greenhouse gases than coal."
+     ],
+     "why": [
+      "The text says turbines convert the kinetic energy of wind into electrical energy.",
+      "The text says horizontal-axis turbines are most common.",
+      "The text cites a study finding wind had the lowest relative greenhouse gas emissions."
+     ],
+     "explanation": "The passage describes the technology, its scale, its designs, and its environmental profile."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because wind turbines are an intermittent source of renewable energy, their output most likely ______",
+     "correct": "varies with wind conditions.",
+     "wrongs": [
+      "remains constant regardless of weather.",
+      "increases when winds stop.",
+      "is unaffected by the time of day or season."
+     ],
+     "why": [
+      "Intermittent means output depends on when wind is available.",
+      "Constant output would make the source firm, not intermittent.",
+      "Turbines need wind, so calmer conditions reduce output."
+     ],
+     "explanation": "Calling wind intermittent implies that generation depends on variable wind conditions."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines wind turbines, describes their scale and environmental advantages, and surveys their designs.",
+     "wrongs": [
+      "It explains how to site a wind farm step by step.",
+      "It compares wind power with nuclear power in detail.",
+      "It argues that wind turbines are too small to matter."
+     ],
+     "why": [
+      "No siting procedure is given.",
+      "Nuclear power is not discussed.",
+      "The text reports over 1,136 gigawatts of installed capacity."
+     ],
+     "explanation": "The passage moves from definition and scale to designs."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that wind power has grown to a large scale?",
+     "correct": "As of 2024, hundreds of thousands of large turbines, in installations known as wind farms, were generating over 1,136 gigawatts of power, with 117 GW added each year.",
+     "wrongs": [
+      "A wind turbine is a device that converts the kinetic energy of wind into electrical energy.",
+      "Wind turbines are an increasingly important source of intermittent renewable energy.",
+      "Blades are most commonly made of glass fiber composites."
+     ],
+     "why": [
+      "This sentence defines the device.",
+      "This sentence describes the resource's importance.",
+      "This sentence describes blade materials."
+     ],
+     "explanation": "The correct quotation gives the installed capacity and annual additions that demonstrate scale."
+    }
+   ]
+  },
+  "Lithium-ion battery": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Lithium-ion batteries store energy through reversible lithium intercalation and have improved sharply in density and cost.",
+     "wrongs": [
+      "Lithium-ion batteries are non-rechargeable and used once.",
+      "Lithium-ion batteries have become more expensive over time.",
+      "Lithium-ion batteries store energy by burning lithium metal."
+     ],
+     "why": [
+      "The text describes them as a type of rechargeable battery.",
+      "The text says their cost dropped tenfold over three decades.",
+      "The text says they use reversible intercalation of lithium ions."
+     ],
+     "explanation": "The passage defines the battery, describes its advantages, and traces its improvement and impact."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because lithium-ion batteries became three times more energy-dense and ten times cheaper over three decades, they most likely ______",
+     "correct": "became practical for more kinds of devices.",
+     "wrongs": [
+      "became too expensive for consumer electronics.",
+      "lost their rechargeable properties.",
+      "replaced all other battery types immediately."
+     ],
+     "why": [
+      "The text credits them with enabling laptops, phones, and electric cars.",
+      "The text says their cost dropped, not rose.",
+      "The text describes them as rechargeable throughout."
+     ],
+     "explanation": "Better energy density at lower cost would make the batteries suitable for a wider range of products."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines lithium-ion batteries, compares them with other types, and describes their improvement and uses.",
+     "wrongs": [
+      "It explains how to mine lithium in detail.",
+      "It compares lithium-ion batteries with lead-acid batteries in a table.",
+      "It argues that lithium-ion batteries are environmentally harmless."
+     ],
+     "why": [
+      "Mining is not discussed.",
+      "No table or detailed comparison with lead-acid batteries appears.",
+      "Environmental harm is not addressed."
+     ],
+     "explanation": "The passage moves from definition to advantages and then to improvement and applications."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that lithium-ion batteries improved dramatically over time?",
+     "correct": "In the three decades since Li-ion batteries were first sold in 1991, their volumetric energy density increased threefold while their cost dropped tenfold.",
+     "wrongs": [
+      "A lithium-ion battery is a type of rechargeable battery that uses the reversible intercalation of lithium ions to store energy.",
+      "Compared to other rechargeable battery types, they generally have higher specific energy and energy density.",
+      "They are used for grid-scale energy storage and in military and aerospace applications."
+     ],
+     "why": [
+      "This sentence defines the battery.",
+      "This sentence compares battery types.",
+      "This sentence lists applications."
+     ],
+     "explanation": "The correct quotation gives the threefold density gain and tenfold cost reduction."
+    }
+   ]
+  },
+  "Desalination": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Desalination turns salt water into fresh water and is increasingly important for water security despite its cost and energy use.",
+     "wrongs": [
+      "Desalination adds salt to fresh water for irrigation.",
+      "Desalination is cheaper than all other water sources.",
+      "Desalination depends entirely on rainfall."
+     ],
+     "why": [
+      "The text says desalination converts salt water to fresh water.",
+      "The text says it is generally more costly than surface water, groundwater, recycling, and conservation.",
+      "The text calls it one of the few water resources independent of rainfall."
+     ],
+     "explanation": "The passage defines desalination, describes its scale and cost, and explains its role in water supply."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because desalination is generally more costly than fresh water from surface or groundwater, it is most likely used where ______",
+     "correct": "those cheaper sources are unavailable or depleted.",
+     "wrongs": [
+      "rainfall is abundant year-round.",
+      "energy is free and unlimited.",
+      "fresh water is already plentiful."
+     ],
+     "why": [
+      "The text says the alternatives are not always available and depletion is a critical problem.",
+      "Abundant rainfall would reduce the need for desalination.",
+      "The text notes desalination's energy consumption as a cost."
+     ],
+     "explanation": "Desalination's higher cost makes it a fallback where cheaper freshwater sources cannot meet demand."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines desalination, describes the demand for it, and explains its costs and methods.",
+     "wrongs": [
+      "It narrates the construction of a single desalination plant.",
+      "It compares desalination with bottled water.",
+      "It argues that desalination should be abandoned."
+     ],
+     "why": [
+      "No individual plant is described.",
+      "Bottled water is not mentioned.",
+      "The text presents desalination as a key part of water security strategies."
+     ],
+     "explanation": "The passage moves from definition to need and then to cost and technology."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that desalination does not depend on rainfall?",
+     "correct": "Along with recycled wastewater, it is one of the few water resources independent of rainfall.",
+     "wrongs": [
+      "Desalination is the artificial process by which salt water is converted to fresh water.",
+      "It is possible to desalinate saltwater to produce water for human consumption or irrigation, producing brine as a by-product.",
+      "Desalination processes use either thermal methods or membrane-based methods."
+     ],
+     "why": [
+      "This sentence defines the process.",
+      "This sentence describes products and by-products.",
+      "This sentence describes the methods used."
+     ],
+     "explanation": "The correct quotation explicitly calls desalination independent of rainfall."
+    }
+   ]
+  },
+  "Geothermal energy": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Geothermal energy taps heat from the Earth's crust for heating and electricity, producing steady power but remaining a small share of capacity.",
+     "wrongs": [
+      "Geothermal energy is generated by burning underground fossil fuels.",
+      "Geothermal power output varies with weather conditions.",
+      "Geothermal energy has only been used since the 21st century."
+     ],
+     "why": [
+      "The text describes thermal energy extracted from the Earth's crust.",
+      "The text says geothermal plants produce power at a constant rate regardless of weather.",
+      "The text says geothermal heating has been used since Paleolithic and Roman times."
+     ],
+     "explanation": "The passage describes geothermal resources, their history, their reliability, and their current scale."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because geothermal power plants produce electricity at a constant rate regardless of weather, they most likely ______",
+     "correct": "provide steady output that variable renewables cannot.",
+     "wrongs": [
+      "stop producing power at night.",
+      "depend on sunlight to generate heat.",
+      "become less reliable during storms."
+     ],
+     "why": [
+      "The text contrasts constant geothermal output with weather-dependent sources.",
+      "The text says output is constant regardless of weather, which includes night.",
+      "Geothermal energy comes from the Earth's crust, not sunlight."
+     ],
+     "explanation": "Constant, weather-independent generation gives geothermal a reliability advantage over variable sources."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines geothermal energy, traces its uses, and describes its costs, scale, and applications.",
+     "wrongs": [
+      "It explains how to drill a geothermal well step by step.",
+      "It compares geothermal energy with nuclear fusion.",
+      "It argues that geothermal energy can supply all human needs immediately."
+     ],
+     "why": [
+      "No drilling procedure is given.",
+      "Nuclear fusion is not mentioned.",
+      "The text says resources are theoretically adequate but notes geothermal was less than 1% of renewable capacity."
+     ],
+     "explanation": "The passage moves from definition and history to economics and current use."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that people have used geothermal heat for a very long time?",
+     "correct": "Geothermal heating, using water from hot springs, for example, has been used for bathing since Paleolithic times and for space heating since Roman times.",
+     "wrongs": [
+      "Geothermal energy is thermal energy extracted from the Earth's crust.",
+      "Geothermal power plants produce power at a constant rate, regardless of weather conditions.",
+      "In 2021, the US Department of Energy estimated that power from a newly built plant costs about $0.05/kWh."
+     ],
+     "why": [
+      "This sentence defines geothermal energy.",
+      "This sentence describes reliability.",
+      "This sentence gives a cost estimate."
+     ],
+     "explanation": "The correct quotation dates geothermal heating to the Paleolithic and Roman periods."
+    }
+   ]
+  },
+  "Light-emitting diode": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "LEDs emit light when current passes through a semiconductor, with colors set by the material's band gap and uses expanding since 1962.",
+     "wrongs": [
+      "LEDs produce light by heating a metal filament.",
+      "LEDs can emit only infrared light.",
+      "LED colors are determined by the shape of the plastic casing."
+     ],
+     "why": [
+      "The text says LEDs use a semiconductor and recombining electrons and holes release photons.",
+      "The text says later LEDs became available in visible, ultraviolet, and infrared wavelengths.",
+      "The text says color is determined by the energy required for electrons to cross the band gap."
+     ],
+     "explanation": "The passage explains the LED mechanism, the basis of its color, and its development and applications."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the color of an LED's light is determined by the band gap of its semiconductor, producing a different color most likely requires ______",
+     "correct": "using a different semiconductor material.",
+     "wrongs": [
+      "increasing the current without limit.",
+      "changing the shape of the lens only.",
+      "cooling the diode to absolute zero."
+     ],
+     "why": [
+      "The text ties color to the band gap and says white light uses multiple semiconductors or a phosphor layer.",
+      "Current alone does not change the band gap.",
+      "The casing is not described as setting color."
+     ],
+     "explanation": "Since band gap determines photon energy, a different color requires a semiconductor with a different gap."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It explains how LEDs produce light and color, then traces their development and expanding uses.",
+     "wrongs": [
+      "It compares LEDs with candles in detail.",
+      "It explains how to manufacture a seven-segment display.",
+      "It argues that incandescent bulbs are more efficient."
+     ],
+     "why": [
+      "Candles are not mentioned.",
+      "No manufacturing process is described.",
+      "The text says early LEDs replaced small incandescent bulbs as indicators."
+     ],
+     "explanation": "The passage moves from mechanism to history and applications."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that early LEDs were not suitable for general lighting?",
+     "correct": "The first visible-light LEDs were of low intensity and limited to red.",
+     "wrongs": [
+      "A light-emitting diode is an electronic component that uses a semiconductor to emit light when current flows through it.",
+      "White light is obtained by using multiple semiconductors or a layer of light-emitting phosphor on the semiconductor device.",
+      "LEDs have also given rise to new types of displays and sensors."
+     ],
+     "why": [
+      "This sentence defines the LED.",
+      "This sentence describes how white light is produced.",
+      "This sentence describes newer applications."
+     ],
+     "explanation": "Low intensity and only red output show why early LEDs could not light rooms."
+    }
+   ]
+  },
+  "Radio telescope": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Radio telescopes detect faint radio waves from space using large antennas, often in arrays and away from interference.",
+     "wrongs": [
+      "Radio telescopes detect visible light from nearby planets.",
+      "Radio telescopes work only at night.",
+      "Radio telescopes are small devices used to amplify radio broadcasts."
+     ],
+     "why": [
+      "The text says they detect radio waves from astronomical sources.",
+      "The text says they can be used in the daytime as well as at night.",
+      "The text says they require very large antennas."
+     ],
+     "explanation": "The passage defines radio telescopes, explains why they are large and remotely located, and notes their history."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because radio waves from distant astronomical sources are extremely weak, radio telescopes require ______",
+     "correct": "very large antennas and sensitive receivers.",
+     "wrongs": [
+      "small portable antennas.",
+      "brighter sources of visible light.",
+      "locations near major cities."
+     ],
+     "why": [
+      "The text states that weak signals require very large antennas and extremely sensitive receiving equipment.",
+      "Small antennas would collect too little energy.",
+      "The weakness is in radio waves, not visible light."
+     ],
+     "explanation": "Weak signals demand large collecting area and sensitive electronics."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines radio telescopes, compares them with optical telescopes, and explains their design, siting, and history.",
+     "wrongs": [
+      "It explains how to build a radio receiver at home.",
+      "It compares radio astronomy with astrology.",
+      "It argues that optical telescopes are obsolete."
+     ],
+     "why": [
+      "No construction instructions are given.",
+      "Astrology is not mentioned.",
+      "The text presents optical and radio astronomy as complementary."
+     ],
+     "explanation": "The passage moves from definition to comparison and then to practical requirements and discovery."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that radio astronomy is not limited to nighttime?",
+     "correct": "Unlike optical telescopes, radio telescopes can be used in the daytime as well as at night.",
+     "wrongs": [
+      "A radio telescope is a specialized antenna and radio receiver used to detect radio waves from astronomical radio sources in the sky.",
+      "Radio telescopes are typically large parabolic antennas similar to those employed in tracking and communicating with satellites.",
+      "Radio waves from space were first detected by engineer Karl Guthe Jansky in 1932."
+     ],
+     "why": [
+      "This sentence defines the instrument.",
+      "This sentence describes antenna shape.",
+      "This sentence describes the first detection."
+     ],
+     "explanation": "The correct quotation explicitly says radio telescopes work in daylight and darkness."
+    }
+   ]
+  },
+  "Semiconductor": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Semiconductors have conductivity between conductors and insulators, can be tuned by doping, and underlie modern electronics.",
+     "wrongs": [
+      "Semiconductors are perfect insulators that cannot conduct electricity.",
+      "Semiconductors occur only in living organisms.",
+      "Doping makes a semiconductor useless for electronics."
+     ],
+     "why": [
+      "The text says their conductivity is between that of a conductor and an insulator.",
+      "The text lists silicon, germanium, and gallium arsenide.",
+      "The text says doping modifies conductivity and enables junctions."
+     ],
+     "explanation": "The passage defines semiconductors, explains doping and junctions, and describes their role in devices."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a semiconductor's conductivity can be modified by doping, engineers can ______",
+     "correct": "tailor its electrical behavior for specific devices.",
+     "wrongs": [
+      "make it conduct better than any metal.",
+      "eliminate the need for junctions.",
+      "turn it into a permanent insulator."
+     ],
+     "why": [
+      "Doping is used to create regions with different properties and form junctions.",
+      "The text places semiconductor conductivity below that of a conductor.",
+      "Junctions are formed by regions with different doping levels."
+     ],
+     "explanation": "Controlled doping lets engineers create the junctions that make diodes and transistors work."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines semiconductors, explains doping and junctions, and describes their role in electronics.",
+     "wrongs": [
+      "It narrates the invention of the first computer.",
+      "It compares silicon with carbon in a table.",
+      "It argues that semiconductors will soon be replaced."
+     ],
+     "why": [
+      "No computer history is given.",
+      "No table appears.",
+      "The text describes semiconductors as the basis of most modern electronics."
+     ],
+     "explanation": "The passage moves from definition to mechanism and then to applications."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that semiconductors make modern electronics possible?",
+     "correct": "The behavior of charge carriers, which include electrons, ions, and electron holes, at these junctions is the basis of diodes, transistors, and most modern electronics.",
+     "wrongs": [
+      "A semiconductor is a material with electrical conductivity between that of a conductor and an insulator.",
+      "Its conductivity can be modified by adding impurities to its crystal structure.",
+      "Some examples of semiconductors are silicon, germanium, gallium arsenide, and elements near the metalloid staircase."
+     ],
+     "why": [
+      "This sentence defines a semiconductor.",
+      "This sentence describes doping.",
+      "This sentence lists example materials."
+     ],
+     "explanation": "The correct quotation names diodes, transistors, and most modern electronics as resting on semiconductor junctions."
+    }
+   ]
+  },
+  "Grid energy storage": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Grid storage balances electricity supply and demand, with different technologies suited to short, medium, and long durations.",
+     "wrongs": [
+      "Grid storage increases demand for electricity.",
+      "Pumped-storage hydroelectricity is a minor form of grid storage.",
+      "All storage technologies are equally suited to every duration."
+     ],
+     "why": [
+      "The text says storage helps balance supply and demand.",
+      "The text says pumped storage is the largest form of grid storage as of 2023.",
+      "The text assigns lithium-ion to short duration and other technologies to medium and long duration."
+     ],
+     "explanation": "The passage defines grid storage, explains its services, and matches technologies to storage durations."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because lithium-ion batteries are best suited to short-duration storage, storing solar energy for several days most likely requires ______",
+     "correct": "a different storage technology.",
+     "wrongs": [
+      "a larger number of lithium-ion batteries only.",
+      "pumped-storage hydroelectricity alone.",
+      "no storage at all."
+     ],
+     "why": [
+      "The text describes other technologies for medium and long durations.",
+      "The text says lithium-ion is suited to under 8 hours and degrades at high states of charge.",
+      "The text names flow batteries, compressed air, hydrogen, and thermal storage for longer durations."
+     ],
+     "explanation": "Multi-day storage falls into the long-duration category the passage assigns to other technologies."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines grid storage and its services, then categorizes technologies by storage duration and notes alternatives.",
+     "wrongs": [
+      "It explains how to install a home battery.",
+      "It compares grid storage with gasoline storage.",
+      "It argues that storage makes grids less flexible."
+     ],
+     "why": [
+      "No installation instructions are given.",
+      "Gasoline storage is not mentioned.",
+      "The text says storage is one option for making grids more flexible."
+     ],
+     "explanation": "The passage moves from definition and purpose to technology categories and other flexibility options."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that storage helps integrate renewable energy?",
+     "correct": "These systems help balance supply and demand by storing excess electricity from variable renewables such as solar and inflexible sources like nuclear power, releasing it when needed.",
+     "wrongs": [
+      "Grid energy storage is a set of technologies connected to the electrical power grid that store energy for later use.",
+      "As of 2023, the largest form of grid storage is pumped-storage hydroelectricity.",
+      "The price of storage technologies typically goes down with experience."
+     ],
+     "why": [
+      "This sentence defines grid storage.",
+      "This sentence identifies the largest form.",
+      "This sentence describes cost trends."
+     ],
+     "explanation": "The correct quotation explains storing excess renewable electricity and releasing it when needed."
+    }
+   ]
+  },
+  "Carbon sequestration": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Carbon sequestration stores carbon in biological and geological pools, but biological stores may not be permanent.",
+     "wrongs": [
+      "Carbon sequestration releases stored carbon into the atmosphere.",
+      "Only geological sequestration occurs in nature.",
+      "Biological carbon stores are guaranteed to last forever."
+     ],
+     "why": [
+      "The text describes storing carbon to reduce atmospheric carbon dioxide.",
+      "The text says biologic sequestration is a naturally occurring process.",
+      "The text says long-term sequestration from biological stores cannot be guaranteed."
+     ],
+     "explanation": "The passage defines sequestration, distinguishes its types, and cautions about the durability of biological stores."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because wildfires, disease, and economic pressures can release carbon from forests, biological carbon storage most likely ______",
+     "correct": "cannot be relied on as permanent.",
+     "wrongs": [
+      "increases atmospheric carbon permanently.",
+      "is unaffected by human decisions.",
+      "is always preferable to geological storage."
+     ],
+     "why": [
+      "The text says biological stores may be temporary and long-term sequestration cannot be guaranteed.",
+      "Storage removes carbon from the atmosphere while it lasts.",
+      "The text names changing political priorities and economic pressures as risks."
+     ],
+     "explanation": "If disturbances can return stored carbon to the atmosphere, forests are not a guaranteed long-term sink."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines carbon sequestration, distinguishes biological from geological storage, and notes the limits of biological stores.",
+     "wrongs": [
+      "It explains how to build a direct air capture plant.",
+      "It compares carbon sequestration with nitrogen fixation.",
+      "It argues that climate change cannot be limited."
+     ],
+     "why": [
+      "No plant design is described.",
+      "Nitrogen fixation is not mentioned.",
+      "The text says sequestration plays a role in limiting climate change."
+     ],
+     "explanation": "The passage moves from definition to types and then to durability concerns."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that biological carbon storage may be temporary?",
+     "correct": "However, biological stores (such as forests and kelp beds) may be temporary carbon sinks, as long-term sequestration cannot be guaranteed.",
+     "wrongs": [
+      "Carbon sequestration is a natural process of storing carbon in a carbon pool.",
+      "There are two main types of carbon sequestration: biologic and geologic.",
+      "Plants absorb carbon dioxide from the air as they grow, and bind it into biomass."
+     ],
+     "why": [
+      "This sentence defines sequestration.",
+      "This sentence names the two types.",
+      "This sentence describes how plants take up carbon."
+     ],
+     "explanation": "The correct quotation explicitly calls biological stores potentially temporary."
+    }
+   ]
+  }
+ }
+}
