@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Placebo": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Placebos are inert treatments used to test real ones, and although they can affect some symptoms, improvement may have other causes.",
+     "wrongs": [
+      "Placebos are active medicines that produce effects similar to the treatments under study.",
+      "Placebo effects have been shown to cure most medical conditions.",
+      "Placebos are used in trials only when no real treatment exists."
+     ],
+     "why": [
+      "The text says placebos have no pharmaceutical effect.",
+      "The text says placebos can affect some outcomes such as pain and nausea but otherwise do not generally have important clinical effects.",
+      "The text says placebos are used in randomized clinical trials to test the efficacy of medical treatments."
+     ],
+     "explanation": "The passage defines placebos and their role in trials, explains blinding, and cautions that improvements after placebo may reflect limited effects or unrelated factors such as regression to the mean."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because improvements after a placebo can result from regression to the mean rather than the treatment itself, a patient who improves after receiving a placebo may ______",
+     "correct": "not have been helped by the placebo at all.",
+     "wrongs": [
+      "have been cured by the placebo's active ingredient.",
+      "have received the treatment under investigation.",
+      "show that placebos have important clinical effects for every condition."
+     ],
+     "why": [
+      "The text says placebos have no pharmaceutical effect and no active ingredient.",
+      "In a placebo-controlled trial, the placebo group does not receive the treatment under study.",
+      "The text says placebos generally lack important clinical effects beyond outcomes such as pain and nausea."
+     ],
+     "explanation": "Regression to the mean is a statistical effect in which an extreme measurement is followed by a less extreme one, so improvement need not be caused by the placebo."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines placebos and their role in trials, explains why trials are blinded, and qualifies the placebo effect.",
+     "wrongs": [
+      "It traces the history of placebo research from the 18th century to modern studies.",
+      "It argues that placebo-controlled trials should be abandoned.",
+      "It compares placebo effects with the effects of surgery."
+     ],
+     "why": [
+      "The text mentions 18th-century psychology in one sentence but does not trace a history.",
+      "The text describes placebo-controlled trials as the setting for testing treatments, not as a practice to abandon.",
+      "Surgery appears only in the list of placebo forms, such as sham surgery."
+     ],
+     "explanation": "The text builds from definition and use, to blinding and expectations, to the limited scope of placebo effects and alternative explanations."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that placebo effects are limited to particular outcomes?",
+     "correct": "Modern studies find that placebos can affect some outcomes such as pain and nausea, but otherwise do not generally have important clinical effects.",
+     "wrongs": [
+      "Common placebos include inert tablets (like sugar pills), inert injections (like saline), sham surgery, and other procedures.",
+      "Placebos are used in randomized clinical trials to test the efficacy of medical treatments.",
+      "The idea of a \"placebo effect\" was discussed in 18th century psychology, but became more prominent in the 20th century."
+     ],
+     "why": [
+      "This sentence lists examples of placebos.",
+      "This sentence describes how placebos are used in trials.",
+      "This sentence gives the history of the concept."
+     ],
+     "explanation": "The correct quotation names the specific outcomes placebos can affect and denies broad clinical effects."
+    }
+   ]
+  },
+  "Bilingual education": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Bilingual education uses two languages to teach content, differs from language study, and varies in how long each language is used.",
+     "wrongs": [
+      "Bilingual education teaches a second language only as a separate subject.",
+      "All bilingual education programs transition to one language after the first year.",
+      "Bilingual education is designed only for students who already speak both languages."
+     ],
+     "why": [
+      "The text says bilingual education is distinct from learning a second language as a subject.",
+      "The text says some models provide education in both languages throughout a student's entire education.",
+      "The text describes models for students generally, including sign language bilingual education for deaf and hard of hearing students."
+     ],
+     "explanation": "The passage defines bilingual education by its use of two languages for instruction, notes that time in each language varies by model, and describes the goal of fluency and literacy in both."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because maintenance bilingual education aims for students to keep learning in both languages for most of their education, a student in such a program should graduate able to ______",
+     "correct": "discuss any content area in either language.",
+     "wrongs": [
+      "speak one language only in casual conversation.",
+      "teach content subjects without further training.",
+      "translate legal documents professionally."
+     ],
+     "why": [
+      "The text says students in a maintenance program should graduate able to discuss any content area in either language.",
+      "The program is designed for continued learning in both languages, not limited conversational use of one.",
+      "The text describes graduation outcomes, not professional certification."
+     ],
+     "explanation": "The passage states the maintenance model's outcome directly: graduates should be able to discuss any content area in either language."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines bilingual education, explains how programs vary, and begins describing program models.",
+     "wrongs": [
+      "It compares bilingual education with monolingual education in several countries.",
+      "It argues that bilingual education should replace all second-language courses.",
+      "It lists the steps for becoming a bilingual teacher."
+     ],
+     "why": [
+      "No countries are compared.",
+      "The text does not advocate replacing language courses.",
+      "Teacher preparation is not discussed."
+     ],
+     "explanation": "The text defines the practice, distinguishes it from language study, explains variation in language use and goals, and then introduces program models."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that bilingual education is not the same as studying a language as a subject?",
+     "correct": "It is distinct from learning a second language as a subject because both languages are used for instruction in different content areas like math, science, and history.",
+     "wrongs": [
+      "In bilingual education, students are taught in two (or more) languages.",
+      "The time spent in each language depends on the model.",
+      "The ultimate goal of bilingual education is fluency and literacy in both languages through a variety of strategies such as translanguaging and recasting."
+     ],
+     "why": [
+      "This sentence states the languages used but not the contrast with language study.",
+      "This sentence describes variation among models.",
+      "This sentence states the goal rather than the distinction from language courses."
+     ],
+     "explanation": "The correct quotation explicitly distinguishes bilingual education from second-language study and explains that both languages are used to teach content."
+    }
+   ]
+  },
+  "Green roof": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Green roofs are layered vegetated roof systems that provide building and environmental benefits.",
+     "wrongs": [
+      "Green roofs are simply potted plants placed on rooftops.",
+      "Green roofs are used only on small garages and cannot be installed on large buildings.",
+      "Green roofs increase urban air temperatures and worsen the heat island effect."
+     ],
+     "why": [
+      "The text says container gardens with potted plants are not generally considered true green roofs.",
+      "The text says green roofs can be installed on small garages or larger industrial, commercial and municipal buildings.",
+      "The text says green roofs help lower urban air temperatures and mitigate the heat island effect."
+     ],
+     "explanation": "The passage defines green roofs and their layers, distinguishes them from container gardens, and lists purposes from rainwater absorption to cooling."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because green roofs absorb rainwater and help lower urban air temperatures, installing them on many buildings in a city may ______",
+     "correct": "reduce some effects of urban heat and stormwater runoff.",
+     "wrongs": [
+      "increase the heat island effect.",
+      "eliminate the need for drainage systems.",
+      "prevent all rainwater from reaching the ground."
+     ],
+     "why": [
+      "The text says green roofs help mitigate the heat island effect.",
+      "The text lists drainage as a layer within the roof system, not something made unnecessary.",
+      "Absorbing rainwater does not mean preventing all of it from reaching the ground."
+     ],
+     "explanation": "The stated benefits of absorbing rainwater and lowering urban temperatures support reductions in runoff and heat effects."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines green roofs and their layers, distinguishes them from container gardens, and lists their purposes and suitable buildings.",
+     "wrongs": [
+      "It traces the history of green roof construction in ancient cities.",
+      "It argues that green roofs are unsuitable for retrofitting.",
+      "It compares the costs of green roofs with solar panels."
+     ],
+     "why": [
+      "No historical account is given.",
+      "The text says green roofs are suitable for retrofit or redevelopment projects.",
+      "Solar panels are not mentioned."
+     ],
+     "explanation": "The text moves from definition and construction, to a clarification about container gardens, to functions and installation options."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that green roofs can mitigate the urban heat island effect?",
+     "correct": "Green roofs serve several purposes for a building, such as absorbing rainwater, providing insulation, creating a habitat for wildlife, and decreasing stress of the people around the roof by providing a more aesthetically pleasing landscape, and helping to lower urban air temperatures and mitigate the heat island effect.",
+     "wrongs": [
+      "A green roof or living roof is a roof of a building that is partially or completely covered with vegetation and a growing medium, planted over a waterproofing membrane.",
+      "It may also include additional layers such as a root barrier and drainage, and irrigation systems.",
+      "Green roofs are suitable for retrofit or redevelopment projects as well as new buildings and can be installed on small garages or larger industrial, commercial and municipal buildings."
+     ],
+     "why": [
+      "This sentence defines a green roof.",
+      "This sentence describes additional layers.",
+      "This sentence describes where green roofs can be installed."
+     ],
+     "explanation": "The correct quotation names lowering urban air temperatures and mitigating the heat island effect among the purposes green roofs serve."
+    }
+   ]
+  },
+  "Vertical farming": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Vertical farming grows crops in stacked indoor layers, producing high yields on small areas and protecting crops from weather.",
+     "wrongs": [
+      "Vertical farming grows crops in open fields using traditional soil methods.",
+      "Vertical farming was proposed in 1999 and has since been abandoned.",
+      "Vertical farming produces lower yields than traditional farming but requires less technology."
+     ],
+     "why": [
+      "The text says vertical farming grows crops in vertically and horizontally stacked layers, often with soilless techniques.",
+      "The text says the idea was proposed in 1999 and that current applications exist.",
+      "The text says current applications have resulted in over 10 times the crop yield of traditional methods."
+     ],
+     "explanation": "The passage defines vertical farming and its techniques, describes its origin, and lists advantages in yield, land use, crop variety and weather resilience."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because vertical farming grows crops indoors in stacked layers, it can ______",
+     "correct": "produce food using less land and with greater protection from weather.",
+     "wrongs": [
+      "free farmers from needing light or water.",
+      "replace all traditional farms immediately.",
+      "grow crops only in abandoned mine shafts."
+     ],
+     "why": [
+      "The text describes controlled-environment agriculture and specialized LED lights, which implies light and water are managed, not unnecessary.",
+      "The text describes current applications and advantages but not a complete replacement of traditional farms.",
+      "Mine shafts are one possible structure, not the only one."
+     ],
+     "explanation": "The passage ties indoor stacked growing to a smaller land requirement and resistance to weather disruptions."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines vertical farming and its techniques, describes its origin, and lists its advantages.",
+     "wrongs": [
+      "It compares vertical farming with hydroponics as competing methods.",
+      "It argues that vertical farming cannot feed large populations.",
+      "It explains how to build a shipping container farm step by step."
+     ],
+     "why": [
+      "Hydroponics is named as a soilless technique used within vertical farming, not as a competitor.",
+      "The text mentions a design that could feed 50,000 people but does not argue that vertical farming cannot feed populations.",
+      "No construction instructions are given."
+     ],
+     "explanation": "The text opens with definition and methods, notes Despommier's 1999 proposal, and closes with the benefits of current applications."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that vertical farming can produce more food per unit of land?",
+     "correct": "Current applications of vertical farming coupled with other state-of-the-art technologies, such as specialized LED lights, have resulted in over 10 times the crop yield as would be received through traditional farming methods.",
+     "wrongs": [
+      "The modern concept of vertical farming was proposed in 1999 by Dickson Despommier, professor of Public and Environmental Health at Columbia University.",
+      "Some common choices of structures to house vertical farming systems include buildings, shipping containers, underground tunnels, and abandoned mine shafts.",
+      "Additionally, crops are resistant to weather disruptions because of their placement indoors, meaning fewer crops lost to extreme or unexpected weather occurrences."
+     ],
+     "why": [
+      "This sentence gives the origin of the modern concept.",
+      "This sentence lists structures used for vertical farming.",
+      "This sentence describes weather resilience, not yield per unit of land."
+     ],
+     "explanation": "The correct quotation reports over ten times the crop yield of traditional farming methods."
+    }
+   ]
+  },
+  "Open access": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Open access removes price and permission barriers to research, especially journal articles, because readers often cannot substitute other sources.",
+     "wrongs": [
+      "Open access requires authors to pay readers for permission to publish.",
+      "Open access applies mainly to newspapers, magazines and fiction.",
+      "Open access eliminates copyright entirely for all publications."
+     ],
+     "why": [
+      "The text describes delivering publications free of access charges and reducing barriers with an open license; it does not describe paying readers.",
+      "The text says the main focus has been peer-reviewed research literature, especially academic journals.",
+      "The text says open access uses an open license to regulate post-publication uses, not that copyright is eliminated."
+     ],
+     "explanation": "The passage defines open access and libre open access, explains why journals are the focus, and contrasts research articles with substitutable creative works."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the authors of research papers are not paid for their articles, moving from a paywalled journal to open access publishing is unlikely to ______",
+     "correct": "cost those authors royalties they would otherwise earn.",
+     "wrongs": [
+      "change who can read their work.",
+      "require them to choose a license.",
+      "affect the journal's access charges."
+     ],
+     "why": [
+      "The text's whole point is that open access changes who can read the work by removing access charges.",
+      "The text says libre open access applies an open license, so licensing is part of the move.",
+      "The move is defined by removing access charges."
+     ],
+     "explanation": "The passage states that unpaid authors suffer no monetary losses when they switch to open access, which supports the inference about royalties."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines open access, explains why journals are its focus, and contrasts research articles with substitutable works.",
+     "wrongs": [
+      "It traces the history of the serials crisis from its origins.",
+      "It argues that all books should be published without copyright.",
+      "It compares diamond open access with traditional subscriptions in detail."
+     ],
+     "why": [
+      "The serials crisis is mentioned as a reason journals are the focus, not traced historically.",
+      "The text discusses research literature and does not call for eliminating copyright for books.",
+      "Diamond open access is mentioned only as an example of publishing without author fees."
+     ],
+     "explanation": "The text defines the concept, identifies academic journals as the main focus, and uses the substitution argument to explain why access matters there."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Hard",
+     "prompt": "Which quotation from the text most directly supports the claim that some readers cannot substitute an older free article for current research?",
+     "correct": "whereas an English literature curriculum can substitute Harry Potter and the Philosopher's Stone with a public domain alternative, such as A Voyage to Lilliput, an emergency room physician treating a patient for a life-threatening urushiol poisoning cannot substitute the most recent, but paywalled review article on this topic with a 90-year-old copyright-expired article that was published before the invention of prednisone in 1954.",
+     "wrongs": [
+      "Open access (OA) is a set of principles and a range of practices through which nominally copyrightable publications are delivered to readers free of access charges or other barriers.",
+      "The main focus of the open access movement has been on peer reviewed research literature, and more specifically on academic journals.",
+      "the authors of research papers are not paid in any way, so they do not suffer any monetary losses, when they switch from behind paywall to open access publishing, especially, if they use diamond open access media."
+     ],
+     "why": [
+      "This sentence defines open access.",
+      "This sentence identifies the movement's focus.",
+      "This sentence concerns authors' pay, not readers' ability to substitute sources."
+     ],
+     "explanation": "The correct quotation contrasts a substitutable literature curriculum with a physician who needs current research that an old article cannot replace."
+    }
+   ]
+  },
+  "Citizen science": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Citizen science involves the public in research in varied ways, from collecting data to initiating community projects, expanding what researchers can study.",
+     "wrongs": [
+      "Citizen science is limited to professional scientists working in laboratories.",
+      "Citizen science replaces designed experiments entirely.",
+      "Citizen science is used only in astronomy."
+     ],
+     "why": [
+      "The text says citizen science is research conducted with the participation of the general public, amateur or nonprofessional researchers.",
+      "The text says observations can be integrated with findings from designed experiments, not replace them.",
+      "The text lists ecology, biology, conservation, health, astronomy, media and information science."
+     ],
+     "explanation": "The passage defines citizen science, notes that its definition varies, lists fields, and describes roles ranging from data collection to community-initiated research."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because citizen science observations can extend data collection beyond what individual researchers could manage, such projects may ______",
+     "correct": "reveal trends across broad spatial and temporal scales.",
+     "wrongs": [
+      "make designed experiments unnecessary.",
+      "restrict observations to a single habitat.",
+      "replace the need for classification of data."
+     ],
+     "why": [
+      "The text says observations can be integrated with designed experiments, not that experiments become unnecessary.",
+      "The text says observations uncover trends in native habitats across broad spatial and temporal scales, the opposite of a single habitat.",
+      "The text says volunteers help in data collection and classification, so classification remains part of the work."
+     ],
+     "explanation": "The passage states that citizen observations extend collection beyond individual researchers and can uncover broad-scale trends."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines citizen science and its varied scope, lists fields of study, and describes different levels of public involvement.",
+     "wrongs": [
+      "It argues that amateur researchers produce unreliable data.",
+      "It traces the history of citizen science from the 19th century.",
+      "It compares citizen science with laboratory experiments in detail."
+     ],
+     "why": [
+      "The text presents citizen science as improving research capacity, not as unreliable.",
+      "No historical timeline is given.",
+      "Designed experiments are mentioned once as something observations can complement, with no detailed comparison."
+     ],
+     "explanation": "The text moves from definition and scope, to fields, to the roles volunteers play in research."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that citizen science can expand the scale of data collection?",
+     "correct": "Citizen science observations can be used to uncover general trends in native habitats across broad spatial and temporal scales, extending data collection beyond the capacity of individual researchers.",
+     "wrongs": [
+      "The exact definition of \"citizen science\" varies, with different individuals and organizations having their own specific interpretations of its scope.",
+      "Citizen science is employed in a wide range of areas of study, including ecology, biology, conservation, health and medical research, astronomy, media and communications, and information science.",
+      "Citizen science can also involve more direct involvement from the public, with communities initiating projects researching environment and health hazards within their own communities."
+     ],
+     "why": [
+      "This sentence notes that definitions vary.",
+      "This sentence lists fields of study.",
+      "This sentence describes community-initiated projects rather than the scale of data collection."
+     ],
+     "explanation": "The correct quotation explicitly says observations extend data collection beyond the capacity of individual researchers across broad scales."
+    }
+   ]
+  },
+  "Noise pollution": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Noise pollution comes mainly from machines, transport and poor planning, and it falls disproportionately on low-income and minority neighborhoods.",
+     "wrongs": [
+      "Noise pollution is caused mainly by natural sounds such as wind and thunder.",
+      "Noise pollution affects wealthy neighborhoods more than low-income ones.",
+      "Noise pollution has no documented effects on human health."
+     ],
+     "why": [
+      "The text names machines, transportation and propagation systems as the main outdoor sources.",
+      "The text says noise pollution in the United States is highest in low-income and racial minority neighborhoods.",
+      "The text calls noise pollution sound with potentially harmful effects on humans and animals."
+     ],
+     "explanation": "The passage defines noise pollution and its sources, notes that complaints date back to ancient Rome, and reports research on disparities in exposure."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a national study found higher traffic and aviation noise in census tracts with more Black, Hispanic and Asian residents and higher poverty, noise exposure appears to be ______",
+     "correct": "unevenly distributed across communities.",
+     "wrongs": [
+      "unrelated to residential segregation.",
+      "highest in wealthy and mostly White areas.",
+      "caused entirely by household generators."
+     ],
+     "why": [
+      "The text says residential segregation and urban land use practices correlate with high noise levels in communities of color and low-income neighborhoods.",
+      "The text reports the opposite pattern from the study.",
+      "Household generators are described as an emerging source in developing nations, not the sole cause of the U.S. pattern."
+     ],
+     "explanation": "The study's finding of higher noise levels in specific communities supports the conclusion that exposure is unevenly distributed."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines noise pollution and its sources, notes its long history, and reports disparities in exposure.",
+     "wrongs": [
+      "It compares noise regulations in ancient Rome and modern cities.",
+      "It argues that wind turbines are the main source of noise pollution.",
+      "It explains how to soundproof a residential building."
+     ],
+     "why": [
+      "Ancient Rome is mentioned only to show that complaints are old; no regulations are compared.",
+      "Wind turbines are one item in a list of sources, not the main source.",
+      "No soundproofing methods are described."
+     ],
+     "explanation": "The text moves from definition and sources, to historical complaints, to research on which communities bear the highest noise levels."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that noise pollution is worse in marginalized neighborhoods?",
+     "correct": "Research suggests that noise pollution in the United States is the highest in low-income and racial minority neighborhoods, and noise pollution associated with household electricity generators is an emerging environmental degradation in many developing nations.",
+     "wrongs": [
+      "The main sources of outdoor noise worldwide are machines, transportation, and propagation systems.",
+      "Documented problems associated with noise in urban environments go back as far as ancient Rome.",
+      "Some of the main sources of noise in residential areas include loud music, transportation (traffic, rail, airplanes, etc.), lawn care maintenance, construction, electrical generators, wind turbines, explosions, and other human activity."
+     ],
+     "why": [
+      "This sentence identifies sources.",
+      "This sentence gives a historical detail.",
+      "This sentence lists residential sources."
+     ],
+     "explanation": "The correct quotation states that noise pollution is highest in low-income and racial minority neighborhoods."
+    }
+   ]
+  },
+  "Light pollution": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Light pollution is unnecessary artificial light that harms health and ecosystems, is increasing globally, and can be reduced through fixtures and policy.",
+     "wrongs": [
+      "Light pollution affects only the aesthetic appearance of the night sky.",
+      "Light pollution has declined globally since 1992.",
+      "Light pollution is caused mainly by natural variations in daylight."
+     ],
+     "why": [
+      "The text says light pollution is blamed for compromising health, disrupting ecosystems, and spoiling aesthetic environments.",
+      "The text says it increased by at least 49% from 1992 to 2017.",
+      "The text attributes it to unnecessary and inefficient use of artificial lighting."
+     ],
+     "explanation": "The passage defines light pollution and its categories, describes its extent and growth, lists its effects, and notes solutions."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because France reduced its light pollution by 33 percent between 2014 and 2022 through policy while global light pollution rose 16 percent, the comparison suggests that ______",
+     "correct": "policy can limit light pollution even as it increases elsewhere.",
+     "wrongs": [
+      "light pollution cannot be measured reliably.",
+      "urbanization has no effect on light pollution.",
+      "France has eliminated light pollution entirely."
+     ],
+     "why": [
+      "The text reports specific percentage changes, which implies measurement is possible.",
+      "The text calls light pollution a major side effect of urbanization.",
+      "A 33 percent reduction is not elimination."
+     ],
+     "explanation": "The contrast between France's policy-driven reduction and the global increase supports the conclusion that policy can make a difference."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines light pollution and its categories, describes its extent and growth, lists its effects, and notes solutions.",
+     "wrongs": [
+      "It traces the invention of the light bulb and its spread.",
+      "It argues that cities should ban all outdoor lighting.",
+      "It compares light pollution in France and the United States in detail."
+     ],
+     "why": [
+      "No history of the light bulb is given.",
+      "The text proposes adjusting fixtures and bulbs, not banning all outdoor lighting.",
+      "France is one example within a global statistic, not a detailed comparison."
+     ],
+     "explanation": "The text moves from definition and categories, to prevalence and growth, to consequences, and finally to remedies."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+      "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that light pollution has increased rapidly?",
+     "correct": "Globally, it has increased by at least 49% from 1992 to 2017, and between 2014 and 2022 by 16%, with uneven development, e.g. France reducing through policy its light pollution by 33% in that time period.",
+     "wrongs": [
+      "Light pollution is the alteration of the natural patterns of light and dark in ecosystems, resulting from the unnecessary and inefficient use of artificial lighting.",
+      "A single offending light source often falls into more than one of these categories.",
+      "It has been estimated that 83% of the world's people live under light-polluted skies and that 23% of the world's land area is affected by skyglow."
+     ],
+     "why": [
+      "This sentence defines light pollution.",
+      "This sentence describes how categories overlap.",
+      "This sentence gives the share of people and land affected, not the rate of increase."
+     ],
+     "explanation": "The correct quotation gives the measured percentage increases over two periods."
+    }
+   ]
+  },
+  "Food loss and waste": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Food loss and waste occurs throughout the food system, most of it after purchase, and avoiding landfill disposal matters because of methane.",
+     "wrongs": [
+      "Most food waste occurs during production on farms.",
+      "Food waste is a minor source of greenhouse gas emissions.",
+      "Food waste affects only high-income countries."
+     ],
+     "why": [
+      "The text says most food waste is created after consumers buy the food.",
+      "The text calls discarding food in landfills a major source of methane and cites 3.3 billion tons of CO2 equivalent annually.",
+      "The text discusses global figures and food insecurity in parts of the world without limiting the problem to high-income countries."
+     ],
+     "explanation": "The passage defines food loss and waste, traces it across the food system, gives global and sector figures, and explains environmental and food-security consequences."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because discarding food in landfills is a major source of methane, reducing food waste may ______",
+     "correct": "lower greenhouse gas emissions from waste.",
+     "wrongs": [
+      "increase the amount of food sent to landfills.",
+      "eliminate food insecurity worldwide.",
+      "raise the total resources used in agriculture."
+     ],
+     "why": [
+      "Reducing waste means less food is discarded, not more.",
+      "The text says food waste conflicts with food insecurity but does not claim that reducing waste alone eliminates it.",
+      "The text says reducing waste reduces the water, land and other resources used."
+     ],
+     "explanation": "Since landfill food waste produces methane, keeping food out of landfills reduces those emissions."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines food loss and waste, gives global figures by sector, and explains why reducing it matters.",
+     "wrongs": [
+      "It compares food waste policies in three countries.",
+      "It explains how to compost food at home.",
+      "It argues that food waste is not an environmental problem."
+     ],
+     "why": [
+      "No national policies are compared.",
+      "Composting is not described.",
+      "The text details environmental harm, including methane and resource use."
+     ],
+     "explanation": "The text moves from definition and location in the food system, to quantities and sector shares, to environmental and social consequences."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that most food waste happens after consumers buy food?",
+     "correct": "This occurs throughout all the processes involved in the food system, during production, processing, distribution, retail, and consumption, but most food waste is created after consumers buy the food.",
+     "wrongs": [
+      "Overall, about one-third of the world's food is thrown away, and a huge amount of resources used in food production are wasted.",
+      "Global food waste amounts to 931 million tonnes annually (about 121 kg per person) across three sectors: 61 percent from households, 26 percent from food service and 13 percent from retail.",
+      "Discarding food in landfills is to be avoided because it is a major source of the greenhouse gas methane."
+     ],
+     "why": [
+      "This sentence gives the overall share thrown away, not when it happens.",
+      "This sentence gives quantities and sector shares.",
+      "This sentence concerns landfill emissions."
+     ],
+     "explanation": "The correct quotation states directly that most food waste is created after consumers buy food."
+    }
+   ]
+  },
+  "Antimicrobial resistance": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Antimicrobial resistance occurs when microbes evolve defenses against drugs, is driven largely by misuse, and poses a major global health threat.",
+     "wrongs": [
+      "Antimicrobial resistance affects only bacteria and no other microbes.",
+      "Antimicrobial resistance is caused entirely by genetic mutations and not by human behavior.",
+      "Antimicrobial resistance has been eliminated through better hygiene."
+     ],
+     "why": [
+      "The text says any microbe can develop resistance, including bacteria, viruses, parasites and fungi.",
+      "The text says misuse and improper management are primary drivers, though resistance can also occur naturally.",
+      "The text describes preventive measures but says AMR remains one of the top global health threats."
+     ],
+     "explanation": "The passage defines AMR across microbe types, explains mutation and selection, and presents WHO estimates of its death toll."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because resistance arises partly from selective pressure created by antibiotic overuse in medicine and agriculture, reducing unnecessary antibiotic use may ______",
+     "correct": "slow the development of resistance.",
+     "wrongs": [
+      "eliminate all resistant microbes immediately.",
+      "increase the spread of resistant genes.",
+      "make narrow-spectrum antibiotics ineffective."
+     ],
+     "why": [
+      "The text describes resistance as already present and evolving; reducing overuse lowers pressure but does not instantly eliminate resistant microbes.",
+      "The text presents overuse as accelerating resistance, so reducing it works in the opposite direction.",
+      "Narrow-spectrum antibiotics are listed as a preventive measure, not something harmed by reducing overuse."
+     ],
+     "explanation": "If overuse increases selective pressure and accelerates resistance, cutting unnecessary use should reduce that pressure."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines antimicrobial resistance and its scope, explains how resistance arises, and notes preventive measures and global estimates.",
+     "wrongs": [
+      "It traces the discovery of antibiotics and their subsequent abandonment.",
+      "It compares resistance in humans with resistance in plants in detail.",
+      "It argues that antimicrobial resistance is no longer a public health concern."
+     ],
+     "why": [
+      "No history of antibiotic discovery is given.",
+      "Plants are mentioned as one setting for antimicrobial use, without a detailed comparison.",
+      "The text quotes WHO calling AMR one of the top global public health threats."
+     ],
+     "explanation": "The text defines AMR, explains mutation and selection, lists prevention, and closes with WHO mortality estimates."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that antimicrobial resistance is a leading global health threat?",
+     "correct": "The World Health Organization (WHO) claims that AMR is one of the top global public health and development threats, estimating that bacterial AMR was directly responsible for 1.27 million global deaths in 2019 and contributed to over 4 million deaths in 2021.",
+     "wrongs": [
+      "Antimicrobial resistance (AMR or AR) occurs when microbes evolve mechanisms that protect them from antimicrobials, which are drugs used to treat infections in humans, animals, and plants.",
+      "Microbes resistant to multiple drugs are termed multidrug-resistant (MDR) and are sometimes called superbugs.",
+      "Resistance arises through spontaneous mutation, horizontal gene transfer, and increased selective pressure from antibiotic overuse, both in medicine and agriculture, which accelerates resistance development."
+     ],
+     "why": [
+      "This sentence defines AMR.",
+      "This sentence defines multidrug resistance.",
+      "This sentence explains mechanisms of resistance."
+     ],
+     "explanation": "The correct quotation calls AMR a top global threat and gives death estimates that support the claim."
+    }
+   ]
+  }
+ }
+}

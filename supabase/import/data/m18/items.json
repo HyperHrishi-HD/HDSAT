@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Sleep deprivation": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Sleep deprivation harms alertness, performance and long-term health, and it affects a large share of the population.",
+     "wrongs": [
+      "Sleep deprivation is a rare condition that mainly affects older adults.",
+      "Adults need less sleep than children, so sleep deprivation is most common among the elderly.",
+      "Sleep loss has no measurable effect on brain performance or emotional regulation."
+     ],
+     "why": [
+      "The text says sleep deprivation affects about one-third of the population and can occur at any age.",
+      "The text says children and teenagers require more sleep than adults, not that adults need less than the elderly.",
+      "The text says inadequate sleep produces consequences ranging from attentional lapses to long-term neurodegenerative changes."
+     ],
+     "explanation": "The passage defines sleep deprivation, stresses sleep's role in health and brain performance, lists consequences of insufficient sleep, and notes that about one-third of people are affected."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because persistent sleep insufficiency can produce cognitive decline and biological wear similar to accelerated aging, researchers studying long-term health may ______",
+     "correct": "treat chronic short sleep as a risk factor rather than a temporary inconvenience.",
+     "wrongs": [
+      "conclude that sleep duration has no bearing on aging.",
+      "recommend that adults sleep fewer than seven hours per night.",
+      "focus on acute sleep loss while ignoring chronic patterns."
+     ],
+     "why": [
+      "The text links persistent insufficiency to biological wear resembling accelerated aging, which contradicts the idea that duration is irrelevant.",
+      "The National Sleep Foundation recommends adults aim for seven hours, not fewer.",
+      "The text emphasizes persistent insufficiency and chronic consequences, so ignoring chronic patterns would be the opposite of its implication."
+     ],
+     "explanation": "The passage presents chronic sleep loss as producing lasting cognitive and biological harm, which supports treating it as a long-term health risk."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines sleep deprivation, explains why sleep matters, describes its consequences and prevalence, and gives recommended durations.",
+     "wrongs": [
+      "It traces the history of sleep research from ancient times to the present.",
+      "It compares two competing theories of why animals sleep.",
+      "It argues that sleep deprivation is not a serious public health concern."
+     ],
+     "why": [
+      "The text makes no historical claims about sleep research.",
+      "The text asserts that all known animals sleep but does not compare theories.",
+      "The text describes serious consequences and widespread prevalence rather than dismissing the concern."
+     ],
+     "explanation": "The text moves from definition to the importance of sleep, then to consequences, prevalence and recommended sleep durations."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that sleep deprivation is widespread?",
+     "correct": "Sleep deprivation is common, affecting about one-third of the population.",
+     "wrongs": [
+      "It can be either chronic or acute and may vary widely in severity.",
+      "All known animals sleep or exhibit some form of sleep behavior.",
+      "The US National Sleep Foundation recommends that adults aim for 7 hours of sleep per night."
+     ],
+     "why": [
+      "This sentence describes the course and severity of sleep deprivation, not how common it is.",
+      "This sentence concerns animals generally, not the share of people affected.",
+      "This sentence gives a recommendation rather than a prevalence figure."
+     ],
+     "explanation": "Only the correct quotation states a proportion of the population affected by sleep deprivation."
+    }
+   ]
+  },
+  "Circadian rhythm": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Circadian rhythms are internal roughly 24-hour cycles found across many forms of life that are adjusted by external cues.",
+     "wrongs": [
+      "Circadian rhythms are daily patterns caused entirely by changes in sunlight.",
+      "Circadian rhythms occur only in humans and other mammals.",
+      "Circadian rhythms are learned behaviors that animals acquire from their environments."
+     ],
+     "why": [
+      "The text says circadian rhythms are endogenous and should not be called circadian unless confirmed as internal.",
+      "The text says they have been observed in animals, plants, fungi and cyanobacteria.",
+      "The text describes them as natural oscillations originating within organisms, not learned behaviors."
+     ],
+     "explanation": "The passage defines circadian rhythms as internal ~24-hour oscillations regulated by a circadian clock, notes their wide distribution and independent evolution, and explains how zeitgebers adjust them."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a 24-hour cycle must be shown to originate within an organism before it is called circadian, a daily pattern caused entirely by changing light levels is ______",
+     "correct": "a diurnal rhythm but not a circadian rhythm.",
+     "wrongs": [
+      "a circadian rhythm that has lost its clock.",
+      "an example of a zeitgeber.",
+      "evidence that the organism lacks a circadian clock."
+     ],
+     "why": [
+      "The text distinguishes circadian from diurnal precisely on the question of internal origin, and a purely light-driven pattern has no internal clock.",
+      "A zeitgeber is the external cue itself, such as light, not the daily pattern it produces.",
+      "A light-driven pattern says nothing about whether the organism possesses a clock; it only says the pattern is not endogenous."
+     ],
+     "explanation": "The text says diurnal rhythms should not be called circadian unless confirmed as endogenous, so a pattern driven only by light is diurnal, not circadian."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines circadian rhythms, explains their regulation and distribution, traces the term's origin, and distinguishes them from diurnal rhythms.",
+     "wrongs": [
+      "It argues that circadian rhythms are entirely environmental rather than internal.",
+      "It compares sleep patterns in humans with those of cyanobacteria.",
+      "It presents a treatment for circadian rhythm sleep disorder."
+     ],
+     "why": [
+      "The text says the rhythms are endogenous and only adjusted by the environment.",
+      "Cyanobacteria are mentioned only as one group in which circadian rhythms have been observed.",
+      "The disorder is named at the end but no treatment is described."
+     ],
+     "explanation": "The text builds from definition to mechanism, distribution, etymology, the diurnal distinction and environmental adjustment."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that circadian rhythms are widespread across living things?",
+     "correct": "Circadian rhythms have been widely observed in animals, plants, fungi and cyanobacteria and there is evidence that they evolved independently in each of these kingdoms of life.",
+     "wrongs": [
+      "The term circadian comes from the Latin circa, meaning \"around\", and dies, meaning \"day\".",
+      "In clinical settings, an abnormal circadian rhythm in humans is known as a circadian rhythm sleep disorder.",
+      "A circadian rhythm (), or circadian cycle, is a natural oscillation that repeats roughly every 24 hours."
+     ],
+     "why": [
+      "This sentence concerns the word's etymology.",
+      "This sentence names a human disorder rather than the range of organisms affected.",
+      "This sentence gives a definition but does not show how widely the rhythms occur."
+     ],
+     "explanation": "The correct quotation lists four broad groups of organisms and states that the rhythms evolved independently in each."
+    }
+   ]
+  },
+  "Vaccination": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Vaccination trains the immune system to prevent disease and has saved millions of lives, though low vaccination rates allow some diseases to resurge.",
+     "wrongs": [
+      "Vaccination works by injecting fully active pathogens that cause the disease.",
+      "Vaccination has eliminated smallpox, polio and tetanus worldwide.",
+      "Vaccination is effective only when every member of a population is immunized."
+     ],
+     "why": [
+      "The text says vaccines contain weakened, live or killed organisms or their proteins or toxins.",
+      "The text says smallpox was eradicated worldwide, while polio and tetanus were eliminated from much of the world, not everywhere.",
+      "The text describes herd immunity as protection when a sufficiently large percentage is vaccinated, not all."
+     ],
+     "explanation": "The passage explains how vaccines stimulate adaptive immunity, presents evidence of their effectiveness and impact, and notes that rising cases can follow low vaccination rates."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because herd immunity protects people who cannot be vaccinated, a community with very low vaccination rates may ______",
+     "correct": "leave immunocompromised members more vulnerable to infection.",
+     "wrongs": [
+      "achieve herd immunity more quickly.",
+      "have no need for any vaccine.",
+      "protect newborns better than a highly vaccinated community would."
+     ],
+     "why": [
+      "Herd immunity requires a sufficiently large percentage of immune people, so low rates work against it.",
+      "The text presents vaccination as the main route to the immunity that produces herd protection.",
+      "Newborns are described as too young to receive many vaccines, so they depend on the protection of others."
+     ],
+     "explanation": "The passage says herd immunity shields those who cannot be vaccinated. Without high vaccination coverage, that indirect protection weakens."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines vaccination and its mechanism, presents evidence of its effectiveness, and notes the problem of low vaccination rates.",
+     "wrongs": [
+      "It recounts the history of variolation before describing modern vaccines.",
+      "It compares vaccination with antibiotics as treatments for infectious disease.",
+      "It argues that vaccine hesitancy has no effect on disease outbreaks."
+     ],
+     "why": [
+      "The history of variolation appears only in the final sentence as a minor detail.",
+      "Antibiotics are not mentioned.",
+      "The text says rising cases are partly attributable to vaccine hesitancy."
+     ],
+     "explanation": "The text opens with a definition and mechanism, reviews evidence of effectiveness and lives saved, and closes with the consequences of low vaccination rates."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that vaccination has prevented millions of deaths?",
+     "correct": "According to the World Health Organization (WHO), vaccination prevents 3.5–5 million deaths per year.",
+     "wrongs": [
+      "Vaccines contain a microorganism or virus in a weakened, live or killed state, or proteins or toxins from the organism.",
+      "Vaccination is the most effective method of preventing infectious diseases.",
+      "The first disease people tried to prevent by inoculation was most likely smallpox."
+     ],
+     "why": [
+      "This sentence describes what vaccines contain, not their effect on mortality.",
+      "This sentence asserts effectiveness in general terms without giving a death figure.",
+      "This sentence concerns the history of inoculation, not deaths prevented."
+     ],
+     "explanation": "The correct quotation gives an explicit annual figure for deaths prevented by vaccination."
+    }
+   ]
+  },
+  "Herd immunity": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Herd immunity is indirect protection that arises when enough people are immune, and it shields those who cannot be vaccinated.",
+     "wrongs": [
+      "Herd immunity applies to all diseases, including noncontagious ones.",
+      "Herd immunity requires that every person in a population be immune.",
+      "Herd immunity is achieved only through previous infection, never through vaccination."
+     ],
+     "why": [
+      "The text says herd immunity applies only to contagious diseases.",
+      "The text says a sufficient percentage must be immune, not everyone.",
+      "The text says immunity can come through previous infections or vaccination."
+     ],
+     "explanation": "The passage defines herd immunity as indirect protection for contagious diseases, explains the threshold effect, and details who depends on it."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because some people cannot develop immunity after vaccination or cannot be vaccinated for medical reasons, their protection depends on ______",
+     "correct": "immunity in the surrounding population.",
+     "wrongs": [
+      "the severity of their own symptoms.",
+      "the number of vaccine doses they receive.",
+      "the elimination of all contagious diseases worldwide."
+     ],
+     "why": [
+      "Their own symptoms cannot protect them from infection in the first place.",
+      "The text says vaccines may be of no use to some immunodeficient people or may be unsafe for them.",
+      "Waiting for worldwide elimination would leave them unprotected in the meantime."
+     ],
+     "explanation": "The passage explains that herd immunity protects those who lack immunity themselves, which means their safety depends on others being immune."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines herd immunity and its effect, then explains how it protects people who lack immunity.",
+     "wrongs": [
+      "It traces the history of vaccination from the 16th century to the present.",
+      "It compares herd immunity with the mechanism of a vaccine.",
+      "It argues that herd immunity cannot reduce disease incidence."
+     ],
+     "why": [
+      "The text gives no historical account.",
+      "The text mentions vaccination as one route to immunity but does not compare mechanisms.",
+      "The text says herd immunity reduces the likelihood of infection and can make disease disappear."
+     ],
+     "explanation": "The text first defines herd immunity and its population-level effect, then turns to the individuals it protects."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that some people cannot be vaccinated for medical reasons?",
+     "correct": "Some individuals either cannot develop immunity after vaccination or for medical reasons cannot be vaccinated.",
+     "wrongs": [
+      "Herd immunity (also called herd effect, community immunity, population immunity, or mass immunity) is a form of indirect protection that applies only to contagious diseases.",
+      "Once the herd immunity has been reached, disease gradually disappears from a population.",
+      "Herd immunity created via vaccination has contributed to the reduction of many diseases."
+     ],
+     "why": [
+      "This sentence defines herd immunity and its scope.",
+      "This sentence describes the population-level result of reaching the threshold.",
+      "This sentence credits vaccination with reducing many diseases."
+     ],
+     "explanation": "Only the correct quotation states that medical reasons can prevent some individuals from being vaccinated."
+    }
+   ]
+  },
+  "Coral reef": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Coral reefs are diverse ecosystems built by coral colonies that cover little ocean area yet support a large share of marine species.",
+     "wrongs": [
+      "Coral reefs are built by sea anemones and jellyfish rather than by corals.",
+      "Coral reefs occupy about half of the world's ocean area.",
+      "Coral reefs grow best in cold, deep and nutrient-rich water."
+     ],
+     "why": [
+      "The text says corals differ from sea anemones and that reefs are built by stony corals.",
+      "The text says they occupy less than 0.1% of ocean area, about half the area of France.",
+      "The text says most reefs grow best in warm, shallow, clear, sunny and agitated water."
+     ],
+     "explanation": "The passage defines coral reefs, describes their formation and habitat, and emphasizes the contrast between their small area and their outsized share of marine species."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because shallow tropical coral reefs have declined by 50 percent since 1950 and are sensitive to water conditions, protecting them is likely to require ______",
+     "correct": "maintaining the water conditions on which they depend.",
+     "wrongs": [
+      "moving reefs into deeper, colder water.",
+      "increasing the nutrients dissolved in tropical waters.",
+      "replacing stony corals with sea anemones."
+     ],
+     "why": [
+      "The text notes that deep and cold water reefs exist only on smaller scales, and relocation is not proposed.",
+      "The text says coral reefs flourish in waters that provide few nutrients.",
+      "Sea anemones are described as relatives of corals, not as a substitute that would preserve reef ecosystems."
+     ],
+     "explanation": "The passage ties reef decline partly to sensitivity to water conditions, which implies that protection depends on keeping those conditions suitable."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines coral reefs and their builders, describes where they grow and how diverse they are, and notes their recent decline.",
+     "wrongs": [
+      "It compares the age of coral reefs with the age of the Cambrian sponge reefs.",
+      "It explains how to construct an artificial coral reef.",
+      "It argues that coral reefs are less diverse than other marine ecosystems."
+     ],
+     "why": [
+      "The text mentions that reefs displaced Cambrian sponge reefs but does not compare ages in detail.",
+      "No construction method is described.",
+      "The text calls shallow coral reefs some of Earth's most diverse ecosystems."
+     ],
+     "explanation": "The text begins with definition and formation, moves to habitat and biodiversity, and closes with the 50 percent decline since 1950."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Hard",
+     "prompt": "Which quotation from the text most directly supports the claim that coral reefs support far more species than their area would suggest?",
+     "correct": "They occupy less than 0.1% of the world's ocean area, about half the area of France. Yet, they provide a home for at least 25% of all marine species, including fish, mollusks, worms, crustaceans, echinoderms, sponges, tunicates and other cnidarians.",
+     "wrongs": [
+      "Most reefs grow best in warm, shallow, clear, sunny, and agitated water.",
+      "Coral reefs first appeared 485 million years ago, at the dawn of the Early Ordovician, displacing the microbial and sponge reefs of the Cambrian.",
+      "Coral reefs flourish in ocean waters that provide few nutrients."
+     ],
+     "why": [
+      "This sentence describes preferred conditions, not biodiversity.",
+      "This sentence gives the geological age of reefs.",
+      "This sentence describes nutrient levels rather than species counts."
+     ],
+     "explanation": "The correct quotation sets a tiny share of ocean area against at least 25 percent of marine species, which is exactly the contrast the claim describes."
+    }
+   ]
+  },
+  "Ocean acidification": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Ocean acidification is a measurable drop in seawater pH caused mainly by absorbed carbon dioxide, and it threatens organisms that build shells and skeletons.",
+     "wrongs": [
+      "Ocean acidification has made seawater acidic, with a pH below 7.",
+      "Ocean acidification is caused mainly by natural volcanic activity.",
+      "Ocean acidification affects only deep, cold water and leaves surface waters unchanged."
+     ],
+     "why": [
+      "The text says seawater is still alkaline, with a pH higher than 8.",
+      "The text names carbon dioxide emissions from human activities as the primary cause.",
+      "The text reports a measured fall in average surface pH and says colder, higher-latitude waters absorb more CO2, not that surface waters are unaffected."
+     ],
+     "explanation": "The passage defines ocean acidification by the falling pH, traces the chemistry of CO2 absorption, and identifies calcifying organisms as especially vulnerable."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the pH scale is logarithmic, the reported drop in average surface pH from about 8.15 to 8.05 represents ______",
+     "correct": "a substantial increase in hydrogen ion concentration.",
+     "wrongs": [
+      "a change too small to affect marine organisms.",
+      "a shift from alkaline to acidic seawater.",
+      "a decrease in the ocean's absorption of carbon dioxide."
+     ],
+     "why": [
+      "The text says a change of 0.1 in pH is a 26 percent increase in hydrogen ion concentration and calls calcifying organisms especially vulnerable.",
+      "The text says seawater remains alkaline with a pH higher than 8.",
+      "The drop results from absorbed CO2, so absorption has been increasing rather than decreasing."
+     ],
+     "explanation": "The logarithmic scale means a 0.1 drop is a 26 percent rise in hydrogen ions, which is substantial despite the small-looking number."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes the pH decline, explains its chemical cause, identifies vulnerable organisms, and notes regional variation.",
+     "wrongs": [
+      "It argues that ocean acidification has been overstated by scientists.",
+      "It compares ocean acidification with freshwater acidification in lakes.",
+      "It lists proposed laws for limiting carbon dioxide emissions."
+     ],
+     "why": [
+      "The text presents the decline and its effects as established findings.",
+      "Freshwater systems are not discussed.",
+      "No legislation is proposed."
+     ],
+     "explanation": "The text moves from the observed trend, to the chemistry, to biological consequences, to variation by depth and latitude."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that ocean acidification endangers organisms that build shells and skeletons?",
+     "correct": "Marine calcifying organisms, such as mollusks and corals, are especially vulnerable because they rely on calcium carbonate to build shells and skeletons.",
+     "wrongs": [
+      "Between 1950 and 2026, the average pH of the ocean surface fell from approximately 8.15 to 8.05.",
+      "CO2 from the atmosphere is absorbed by the oceans.",
+      "Colder and higher latitude waters are capable of absorbing more CO2."
+     ],
+     "why": [
+      "This sentence reports the pH trend but does not name organisms affected.",
+      "This sentence describes the transfer of CO2 into the ocean.",
+      "This sentence describes regional absorption differences."
+     ],
+     "explanation": "Only the correct quotation links the chemistry to calcifying organisms and explains their reliance on calcium carbonate."
+    }
+   ]
+  },
+  "Public transport": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Public transport is shared, fixed-route service with standardized fares, and it includes many modes even though air travel is usually excluded.",
+     "wrongs": [
+      "Public transport is any form of transport available to the public, including private cars and air travel.",
+      "Public transport operates without schedules or fixed routes.",
+      "Public transport fares are always set high enough to cover all operating costs without public funding."
+     ],
+     "why": [
+      "The text says air travel is often excluded and describes fixed routes and schedules.",
+      "The text says systems typically operate on fixed routes and schedules.",
+      "The text says fares are often supplemented by public funding where required."
+     ],
+     "explanation": "The passage defines public transport, discusses which modes count, and describes the fixed routes, schedules and fares that characterize it."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because many public transport trips begin with walking or a feeder bus before a rail journey, transit planning must ______",
+     "correct": "coordinate different modes and connections.",
+     "wrongs": [
+      "eliminate feeder bus services.",
+      "focus on a single mode at the expense of others.",
+      "raise fares for passengers who transfer."
+     ],
+     "why": [
+      "The text presents feeder buses as part of multimodal trips, not as a problem to remove.",
+      "The text stresses network coordination, which single-mode planning would undermine.",
+      "Transfer fares are not discussed, and raising them would not address coordination."
+     ],
+     "explanation": "The passage describes multimodal trips and the importance of network coordination, which implies planning must connect modes."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines public transport, discusses which modes are included, and describes how services are operated and connected.",
+     "wrongs": [
+      "It compares the environmental effects of buses and airlines.",
+      "It argues that public transport should be free of charge.",
+      "It traces the history of the first urban tram systems."
+     ],
+     "why": [
+      "Environmental effects are not discussed.",
+      "Fares and funding are described, but free service is not proposed.",
+      "No historical development of trams is given."
+     ],
+     "explanation": "The text moves from a definition and the question of scope to operational features and multimodal connections."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that air travel is often excluded from definitions of public transport?",
+     "correct": "While systems such as buses and railways are commonly cited, air travel is often excluded from general discussions of public transport due to its market-driven structure and competitive pricing.",
+     "wrongs": [
+      "Public transport systems typically operate on fixed routes and schedules and charge a standardized fare intended to cover operating costs, often supplemented by public funding where required.",
+      "Common examples include city buses, trolleybuses, trams (or light rail), rapid transit systems, passenger trains, and ferries.",
+      "High-frequency services often prioritize regular headways over exact departure times."
+     ],
+     "why": [
+      "This sentence describes fares and funding, not which modes count.",
+      "This sentence lists examples but says nothing about air travel's exclusion.",
+      "This sentence concerns scheduling frequency."
+     ],
+     "explanation": "The correct quotation states that air travel is often excluded and gives the market-driven reasons."
+    }
+   ]
+  },
+  "Congestion pricing": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Congestion pricing charges users of congested goods to shift demand and reduce congestion without expanding supply.",
+     "wrongs": [
+      "Congestion pricing raises revenue by increasing the supply of roads and transit.",
+      "Congestion pricing was first introduced in London in 1975.",
+      "Congestion pricing applies only to road traffic and never to airports or canals."
+     ],
+     "why": [
+      "The text says the strategy manages congestion without increasing supply.",
+      "The text says Singapore was the first country to introduce it on urban roads in 1975.",
+      "The text says airlines and shipping companies may be charged higher fees for slots at airports and through canals."
+     ],
+     "explanation": "The passage defines congestion pricing, explains the economic rationale of charging for negative externalities, and lists cities that have adopted it."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because congestion pricing raises the cost of driving during peak demand, it is intended to ______",
+     "correct": "encourage drivers to travel at other times or by other routes.",
+     "wrongs": [
+      "increase the total number of peak-hour trips.",
+      "remove the need for public transport.",
+      "eliminate all negative externalities from driving."
+     ],
+     "why": [
+      "The text says the policy encourages redistribution of demand in space or time, which means fewer peak trips, not more.",
+      "The text presents pricing as a complement to managing demand, not a replacement for transit.",
+      "The text says the price covers the social cost of an activity; it does not claim all externalities disappear."
+     ],
+     "explanation": "The passage states that pricing encourages demand to shift in space or time, which corresponds to changing travel times or routes."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines congestion pricing, explains its economic rationale, and gives its history and examples.",
+     "wrongs": [
+      "It argues that congestion pricing has failed everywhere it has been tried.",
+      "It compares the design of Singapore's system with London's in detail.",
+      "It explains how to calculate the social cost of a subway ride."
+     ],
+     "why": [
+      "The text describes adoption in many cities without evaluating failure.",
+      "The cities are listed as examples, not compared in detail.",
+      "No calculation method is given."
+     ],
+     "explanation": "The text defines the policy, explains the theory, and then lists Singapore, London and other adopters."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Easy",
+     "prompt": "Which quotation from the text most directly supports the claim that congestion pricing manages demand without adding capacity?",
+     "correct": "This pricing strategy regulates demand, making it possible to manage congestion without increasing supply.",
+     "wrongs": [
+      "Singapore was the first country to introduce congestion pricing on its urban roads in 1975, and was refined in 1998.",
+      "In the United States, it was also considered in Washington, D.C., San Francisco, and Boston prior to the COVID-19 pandemic.",
+      "According to the economic theory behind congestion pricing, the objective of this policy is to use the price mechanism to cover the social cost of an activity where users otherwise do not pay for the negative externalities they create."
+     ],
+     "why": [
+      "This sentence gives a historical first, not the demand-supply relationship.",
+      "This sentence lists cities that considered the policy.",
+      "This sentence explains the theoretical objective but does not mention supply."
+     ],
+     "explanation": "The correct quotation states directly that demand is regulated so congestion can be managed without increasing supply."
+    }
+   ]
+  },
+  "Microfinance": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Microfinance provides financial services to low-income people, has expanded beyond microcredit, and has effects that remain debated.",
+     "wrongs": [
+      "Microfinance consists only of small loans to entrepreneurs.",
+      "Microfinance was invented in Europe in the 1970s by Muhammad Yunus.",
+      "Microfinance has been proven to eliminate poverty wherever it is available."
+     ],
+     "why": [
+      "The text says it encompasses microcredit, savings, checking, microinsurance and payment systems.",
+      "The text says modern microfinance developed in the 1970s through Yunus and the Grameen Bank in Bangladesh, though earlier roots were in Europe.",
+      "The text says its effectiveness and social impact remain subjects of debate."
+     ],
+     "explanation": "The passage defines microfinance broadly, traces its modern development, and notes the continuing debate over its impact."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because microfinance now includes savings accounts, insurance and payment systems as well as loans, the term is best understood as ______",
+     "correct": "a broad set of financial services rather than only microcredit.",
+     "wrongs": [
+      "a synonym for microcredit.",
+      "a program that serves only wealthy entrepreneurs.",
+      "a temporary experiment that ended in the 1970s."
+     ],
+     "why": [
+      "The text says microfinance originally referred to small loans but later expanded to a broader range of services.",
+      "The text says it targets individuals and small businesses with low incomes and limited access to conventional banking.",
+      "The text describes it as an evolving approach to financial inclusion, not an ended experiment."
+     ],
+     "explanation": "The passage explicitly distinguishes today's broad array of services from the original association with small loans."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines microfinance, traces its modern development, and describes its expansion and contested impact.",
+     "wrongs": [
+      "It compares interest rates charged by banks in Europe and Bangladesh.",
+      "It argues that microcredit should be abolished.",
+      "It explains how to apply for a microloan step by step."
+     ],
+     "why": [
+      "Interest rates are mentioned only as a subject of debate, with no comparison.",
+      "The text reports debate without advocating abolition.",
+      "No application process is described."
+     ],
+     "explanation": "The text moves from definition to origins, then to the broadening of services and the debate over results."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that microfinance has expanded beyond small loans?",
+     "correct": "It encompasses services such as microcredit, savings, checking accounts, microinsurance, and payment systems.",
+     "wrongs": [
+      "Modern microfinance developed in the 1970s, particularly through the work of Muhammad Yunus and the Grameen Bank in Bangladesh.",
+      "Microfinance has been promoted as a means of reducing poverty, supporting economic development, fostering entrepreneurship, and improving households' ability to manage financial risks.",
+      "Its effectiveness and social impact remain subjects of debate."
+     ],
+     "why": [
+      "This sentence gives the modern origin of microfinance.",
+      "This sentence lists goals attributed to microfinance, not the range of services.",
+      "This sentence describes the debate over results."
+     ],
+     "explanation": "Only the correct quotation lists the varied services that go beyond microcredit."
+    }
+   ]
+  },
+  "Urban heat island": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Urban heat islands are warmer urban areas caused mainly by altered land surfaces, with effects on seasons, air quality and water.",
+     "wrongs": [
+      "Urban heat islands are caused mainly by waste heat from energy use.",
+      "The urban heat island effect is strongest during the day and in strong winds.",
+      "Every city has a distinct urban heat island regardless of its climate."
+     ],
+     "why": [
+      "The text calls land-surface modification the main cause and waste heat a secondary contributor.",
+      "The text says the difference is usually larger at night and most apparent when winds are weak.",
+      "The text says not all cities have a distinct urban heat island and that characteristics depend on background climate."
+     ],
+     "explanation": "The passage defines the urban heat island effect, identifies its main cause, and lists consequences for growing seasons, air and water quality."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the urban heat island effect is usually larger at night and when winds are weak, a city's temperature difference from its surroundings should be measured ______",
+     "correct": "under calm nighttime conditions as well as during the day.",
+     "wrongs": [
+      "only at midday during strong winds.",
+      "only in winter, when the effect disappears.",
+      "without regard to the background climate."
+     ],
+     "why": [
+      "The text says the effect is most apparent when winds are weak and larger at night, so midday with strong winds would understate it.",
+      "The text says the difference is noticeable during summer and winter, and it does not say the effect disappears in winter.",
+      "The text says heat island characteristics depend strongly on background climate."
+     ],
+     "explanation": "The stated conditions under which the effect is strongest imply that measurement should include calm nights rather than only daytime or windy periods."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Easy",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the urban heat island effect, explains its causes, describes its consequences, and notes variation among cities.",
+     "wrongs": [
+      "It traces the history of urban climatology from ancient Rome to the present.",
+      "It argues that cities should be abandoned because of rising temperatures.",
+      "It compares rainfall patterns in coastal and inland cities."
+     ],
+     "why": [
+      "No history of the field is given.",
+      "The text describes effects without recommending abandonment.",
+      "Rainfall is mentioned once as an effect downwind of cities, with no comparison."
+     ],
+     "explanation": "The text moves from definition and timing, to causes and scale, to consequences, and finally to variation by local environment."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that urban heat islands can worsen air quality?",
+     "correct": "Increases in heat within urban centers increase the length of growing seasons, decrease air quality by increasing the production of pollutants such as ozone, and decrease water quality as warmer waters flow into area streams and put stress on their ecosystems.",
+     "wrongs": [
+      "The main cause of the UHI effect is from the modification of land surfaces, while waste heat generated by energy usage is a secondary contributor.",
+      "Urban areas occupy about 0.5% of the Earth's land surface but host more than half of the world's population.",
+      "Not all cities have a distinct urban heat island, and the heat island characteristics depend strongly on the background climate of the area where the city is located."
+     ],
+     "why": [
+      "This sentence identifies causes of the effect, not its consequences.",
+      "This sentence gives area and population figures.",
+      "This sentence notes that the effect varies among cities."
+     ],
+     "explanation": "The correct quotation states directly that heat decreases air quality by increasing pollutants such as ozone."
+    }
+   ]
+  }
+ }
+}
