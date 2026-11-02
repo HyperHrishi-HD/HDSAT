@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Plate tectonics": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Plate tectonics explains Earth's moving lithospheric plates and the earthquakes, volcanoes, and mountains at their boundaries.",
+     "wrongs": [
+      "Plate tectonics claims Earth's crust is a single unmoving shell.",
+      "Plate tectonics was accepted before continental drift was proposed.",
+      "Plate boundaries produce no geological activity."
+     ],
+     "why": [
+      "The text describes the lithosphere as fractured into moving plates.",
+      "The text says the model builds on continental drift and was accepted after seafloor spreading was validated.",
+      "The text says faults are geologically active with earthquakes and volcanism."
+     ],
+     "explanation": "The passage defines the theory, traces its acceptance, and describes plate boundaries and their effects."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because subduction carries the edge of one plate down under another and into the mantle, the process most likely ______",
+     "correct": "reduces Earth's total crustal surface area.",
+     "wrongs": [
+      "creates new crust at the same rate.",
+      "stops all plate motion.",
+      "raises the total surface area."
+     ],
+     "why": [
+      "The text states that subduction reduces the total surface area of Earth's crust.",
+      "Subduction consumes crust rather than balancing it.",
+      "Subduction is part of continued plate motion."
+     ],
+     "explanation": "The passage explicitly says subduction reduces total crustal surface area."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines plate tectonics, traces its development, and describes plate types, boundaries, and effects.",
+     "wrongs": [
+      "It narrates a single earthquake caused by a fault.",
+      "It compares Earth's plates with those of Mars.",
+      "It argues that continental drift was correct in every detail."
+     ],
+     "why": [
+      "No individual earthquake is narrated.",
+      "Mars is not mentioned.",
+      "The text says the model builds on continental drift, not that every detail was right."
+     ],
+     "explanation": "The passage moves from definition and history to mechanics and consequences."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the plates move slowly?",
+     "correct": "The relative movement of the plates typically ranges from zero to 10 cm annually.",
+     "wrongs": [
+      "Earth's lithosphere is fractured into seven or eight major plates and many minor plates.",
+      "Where the plates meet, their relative motion determines the type of plate boundary.",
+      "Along convergent plate boundaries, the process of subduction carries the edge of one plate down under the other plate."
+     ],
+     "why": [
+      "This sentence describes the number of plates.",
+      "This sentence describes boundary types.",
+      "This sentence describes subduction."
+     ],
+     "explanation": "The correct quotation gives the annual movement rate."
+    }
+   ]
+  },
+  "Volcano": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Volcanoes are vents that release lava, ash, and gas, mostly at plate boundaries and mostly underwater, with eruption style tied to boundary type.",
+     "wrongs": [
+      "Volcanoes occur only on land and only at transform boundaries.",
+      "All volcanic eruptions are violent and explosive.",
+      "Volcanoes are unrelated to tectonic plate movement."
+     ],
+     "why": [
+      "The text says most volcanoes are underwater and usually not created at transform boundaries.",
+      "The text says divergent-boundary volcanoes are usually nonexplosive.",
+      "The text explains volcanoes through diverging and converging plates."
+     ],
+     "explanation": "The passage defines volcanoes, describes where they occur, and contrasts eruption styles."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because most of Earth's plate boundaries are underwater, most volcanoes most likely ______",
+     "correct": "form beneath the oceans.",
+     "wrongs": [
+      "occur on continental mountaintops.",
+      "form only at transform boundaries.",
+      "erupt without producing lava."
+     ],
+     "why": [
+      "The text states that because most boundaries are underwater, most volcanoes are found underwater.",
+      "Continental settings are the minority.",
+      "The text says volcanoes are usually not created at transform boundaries."
+     ],
+     "explanation": "The passage directly connects underwater boundaries to underwater volcanoes."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines volcanoes, explains their distribution at plate boundaries, and describes hotspot and intraplate volcanism.",
+     "wrongs": [
+      "It narrates a single historic eruption.",
+      "It compares Earth's volcanoes with those on the Moon.",
+      "It argues that volcanoes cannot be studied."
+     ],
+     "why": [
+      "No single eruption is narrated.",
+      "The Moon is not discussed.",
+      "The text explains volcanic mechanisms in detail."
+     ],
+     "explanation": "The passage moves from definition to distribution, eruption style, and hotspots."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that convergent boundaries produce violent eruptions?",
+     "correct": "Volcanoes resulting from divergent tectonic activity are usually nonexplosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+     "wrongs": [
+      "A volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape.",
+      "Most volcanoes are found underwater because most of Earth's plate boundaries are underwater.",
+      "Volcanoes are usually not created at transform tectonic boundaries."
+     ],
+     "why": [
+      "This sentence defines a volcano.",
+      "This sentence explains underwater volcanism.",
+      "This sentence describes transform boundaries."
+     ],
+     "explanation": "The correct quotation contrasts nonexplosive divergent volcanoes with violent convergent ones."
+    }
+   ]
+  },
+  "Glacier": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A glacier is a persistent, moving body of land ice formed where snowfall exceeds melting, and it shapes the landscape as it flows.",
+     "wrongs": [
+      "A glacier is a stationary block of ice that never moves.",
+      "Glaciers form where melting exceeds snowfall.",
+      "Glaciers are the same as sea ice."
+     ],
+     "why": [
+      "The text says a glacier is constantly moving under its own weight.",
+      "The text says it forms where accumulation of snow exceeds ablation.",
+      "The text distinguishes glaciers from sea ice and lake ice."
+     ],
+     "explanation": "The passage defines glaciers, explains formation and movement, and describes their distribution and landforms."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a glacier forms where snow accumulation exceeds ablation over many years, it most likely ______",
+     "correct": "requires a climate that sustains ice.",
+     "wrongs": [
+      "forms in a single heavy snowfall.",
+      "appears only in tropical regions.",
+      "melts faster than it grows."
+     ],
+     "why": [
+      "Sustained excess accumulation over years implies conditions that preserve ice.",
+      "The text says formation occurs over many years, often centuries.",
+      "Glaciers occur on every continent except the Australian mainland, including high mountains near the tropics."
+     ],
+     "explanation": "Long-term accumulation exceeding loss implies a climate cold enough to retain snow and ice."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines glaciers, explains their formation and movement, and describes their landforms and distribution.",
+     "wrongs": [
+      "It narrates a glacier's retreat over one summer.",
+      "It compares glaciers with icebergs in detail.",
+      "It argues that glaciers cover most of Earth's land."
+     ],
+     "why": [
+      "No single glacier's retreat is narrated.",
+      "Icebergs are not discussed.",
+      "The text says glaciers cover about 10% of Earth's land surface."
+     ],
+     "explanation": "The passage moves from definition to mechanism and then to distribution."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that glaciers flow?",
+     "correct": "It slowly flows and deforms under stresses induced by gravity, undergoing both ductile and brittle deformation, and acquiring distinguishing surface features, such as crevasses and seracs.",
+     "wrongs": [
+      "A glacier is a persistent body of natural ice, a form of rock, that is constantly moving under its own weight.",
+      "A glacier forms where the accumulation of snow exceeds its ablation over many years.",
+      "Glaciers cover about 10% of Earth's land surface."
+     ],
+     "why": [
+      "This sentence defines a glacier as moving.",
+      "This sentence describes formation conditions.",
+      "This sentence describes land coverage."
+     ],
+     "explanation": "The correct quotation details flow, deformation, and resulting surface features."
+    }
+   ]
+  },
+  "Water cycle": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The water cycle continuously moves a fixed mass of water among reservoirs through processes driven by heat exchange.",
+     "wrongs": [
+      "The water cycle creates new water each year.",
+      "Water on Earth exists only in liquid form.",
+      "The water cycle is driven by gravity alone."
+     ],
+     "why": [
+      "The text says the mass of water on Earth remains fairly constant.",
+      "The text says water goes through liquid, solid, and vapor phases.",
+      "The text says the cycle is driven by energy exchanges in the form of heat transfers."
+     ],
+     "explanation": "The passage defines the water cycle, lists its processes, and explains the role of heat and the ocean."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because evaporation absorbs heat while condensation releases it, phase changes most likely ______",
+     "correct": "move heat between Earth's surface and the atmosphere.",
+     "wrongs": [
+      "destroy energy in the atmosphere.",
+      "occur without any energy exchange.",
+      "prevent water from changing form."
+     ],
+     "why": [
+      "The text says heat is absorbed during evaporation and released during condensation.",
+      "Energy is transferred, not destroyed.",
+      "The text says the cycle is driven by heat transfers."
+     ],
+     "explanation": "Absorbing heat in one place and releasing it in another transfers energy through the cycle."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the cycle and its reservoirs, lists the processes that move water, and explains the heat exchanges involved.",
+     "wrongs": [
+      "It narrates a single rainstorm.",
+      "It compares the water cycle with the carbon cycle.",
+      "It argues that water is destroyed over time."
+     ],
+     "why": [
+      "No individual storm is described.",
+      "The carbon cycle is not mentioned.",
+      "The text says the mass of water remains fairly constant."
+     ],
+     "explanation": "The passage moves from definition and reservoirs to processes and energy."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the ocean drives most evaporation?",
+     "correct": "The ocean plays a key role in the water cycle as it is the source of 86% of global evaporation.",
+     "wrongs": [
+      "The water cycle is a biogeochemical cycle that involves the continuous change in form of water on, above and below the surface of the Earth.",
+      "The mass of water on Earth remains fairly constant over time.",
+      "The processes that drive these movements include evaporation, transpiration, condensation, precipitation, and infiltration."
+     ],
+     "why": [
+      "This sentence defines the water cycle.",
+      "This sentence describes the constancy of water mass.",
+      "This sentence lists the cycle's processes."
+     ],
+     "explanation": "The correct quotation gives the ocean's 86% share of global evaporation."
+    }
+   ]
+  },
+  "El Niño–Southern Oscillation": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "ENSO is an irregular Pacific climate pattern of alternating warm and cool phases that affects weather far beyond the tropics.",
+     "wrongs": [
+      "ENSO is a predictable annual cycle with identical phases.",
+      "El Niño is the cooling phase of the Pacific.",
+      "ENSO affects only the tropical Pacific and no other region."
+     ],
+     "why": [
+      "The text says the pattern is irregular and not easily predictable.",
+      "The text says El Niño is the warming phase and La Niña the cooling phase.",
+      "The text says ENSO has teleconnections to higher-latitude regions."
+     ],
+     "explanation": "The passage defines ENSO, describes its phases and timing, and explains its global links."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the occurrence of ENSO is not easily predictable, seasonal climate forecasts most likely ______",
+     "correct": "face significant uncertainty.",
+     "wrongs": [
+      "are completely reliable years in advance.",
+      "ignore Pacific sea temperatures.",
+      "depend only on the calendar."
+     ],
+     "why": [
+      "An unpredictable onset limits forecast confidence.",
+      "The text says the pattern is irregular and not easily predictable.",
+      "The phenomenon is defined by Pacific winds and sea temperatures."
+     ],
+     "explanation": "If ENSO's timing is hard to predict, forecasts that depend on it inherit that uncertainty."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines ENSO, contrasts its warm and cool phases, describes their timing, and explains a key feedback.",
+     "wrongs": [
+      "It narrates a single El Niño event.",
+      "It compares ENSO with the water cycle.",
+      "It argues that ENSO can be predicted perfectly."
+     ],
+     "why": [
+      "No single event is narrated.",
+      "The water cycle is not mentioned.",
+      "The text says ENSO's occurrence is not easily predictable."
+     ],
+     "explanation": "The passage moves from definition to phases, timing, and mechanism."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that ENSO affects regions far from the tropics?",
+     "correct": "It affects the climate of much of the tropics and subtropics, and has links (teleconnections) to higher-latitude regions of the world.",
+     "wrongs": [
+      "El Niño–Southern Oscillation is a global climate phenomenon that emerges from variation in winds and sea surface temperatures over the tropical Pacific Ocean.",
+      "The warming phase of the sea surface temperature is known as El Niño and the cooling phase as La Niña.",
+      "The two phenomena typically last approximately one year each and typically occur every two to seven years."
+     ],
+     "why": [
+      "This sentence defines ENSO.",
+      "This sentence names the phases.",
+      "This sentence describes timing."
+     ],
+     "explanation": "The correct quotation explicitly mentions teleconnections to higher latitudes."
+    }
+   ]
+  },
+  "Desertification": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Desertification is the degradation of fertile land into desert, driven by natural and human factors and harming dryland populations.",
+     "wrongs": [
+      "Desertification is the natural expansion of forests.",
+      "Desertification is caused only by volcanic eruptions.",
+      "Desertification affects only wealthy countries."
+     ],
+     "why": [
+      "The text defines it as gradual land degradation into arid desert.",
+      "The text lists drought, tillage, overgrazing, and deforestation.",
+      "The text says at least 90% of dryland inhabitants live in developing countries."
+     ],
+     "explanation": "The passage defines desertification, explains its causes, and describes its human and environmental effects."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because erosion and runoff decrease exponentially with increased vegetation cover, removing vegetation most likely ______",
+     "correct": "accelerates land degradation.",
+     "wrongs": [
+      "protects the soil from erosion.",
+      "increases soil fertility.",
+      "stops desertification."
+     ],
+     "why": [
+      "Less vegetation means more erosion and runoff, which degrade land.",
+      "Vegetation cover reduces erosion; removing it does the opposite.",
+      "The text says vegetation loss is the immediate cause of desertification."
+     ],
+     "explanation": "If vegetation reduces erosion exponentially, its removal would sharply increase erosion and degradation."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines desertification, explains its causes, identifies affected regions, and lists its effects.",
+     "wrongs": [
+      "It profiles a single dryland farmer.",
+      "It compares desertification with deforestation in a table.",
+      "It argues that desertification is irreversible."
+     ],
+     "why": [
+      "No individual is profiled.",
+      "No table appears.",
+      "The text describes degradation without declaring it irreversible."
+     ],
+     "explanation": "The passage moves from definition to causes, geography, and consequences."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that human land use contributes to desertification?",
+     "correct": "This is driven by a number of factors, alone or in combination, such as drought, climatic shifts, acid rain, tillage for agriculture, overgrazing and deforestation for fuel or construction of materials.",
+     "wrongs": [
+      "Desertification is a type of gradual land degradation of fertile land into arid desert.",
+      "The immediate cause of desertification is the loss of most vegetation.",
+      "Drylands occupy approximately 40–41% of Earth's land area and are home to more than 2 billion people."
+     ],
+     "why": [
+      "This sentence defines desertification.",
+      "This sentence identifies the immediate cause.",
+      "This sentence describes dryland extent and population."
+     ],
+     "explanation": "The correct quotation lists tillage, overgrazing, and deforestation as drivers."
+    }
+   ]
+  },
+  "Peatland": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Peatlands are waterlogged wetlands of partly decomposed plants that store more carbon than any other land ecosystem.",
+     "wrongs": [
+      "Peatlands are dry grasslands with little organic matter.",
+      "Peatlands store less carbon than forests.",
+      "Peatlands form only from volcanic activity."
+     ],
+     "why": [
+      "The text describes soils of decaying plants forming peat layers.",
+      "The text says peat soils store more carbon than all other vegetation types, including forests.",
+      "The text says peatlands derive mostly from biological rather than physical processes."
+     ],
+     "explanation": "The passage defines peatlands, explains their formation, and describes their carbon storage and services."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because peat forms where waterlogging creates anoxic conditions, organic matter most likely ______",
+     "correct": "decomposes incompletely and accumulates.",
+     "wrongs": [
+      "breaks down faster than in dry soil.",
+      "is completely consumed by microbes.",
+      "turns into mineral rock quickly."
+     ],
+     "why": [
+      "The text says peatlands arise from incomplete decomposition due to water-logging and anoxia.",
+      "Anoxic conditions slow decomposition.",
+      "Peat is partly decomposed plant matter, not fully consumed."
+     ],
+     "explanation": "Without oxygen, decomposition stalls and plant matter builds up as peat."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines peatlands, explains their formation and controls, and describes their carbon storage and ecosystem services.",
+     "wrongs": [
+      "It narrates the harvest of peat for fuel.",
+      "It compares peatlands with tropical rainforests in detail.",
+      "It argues that peatlands should be drained."
+     ],
+     "why": [
+      "Peat harvesting is not described.",
+      "Rainforests are mentioned only in a carbon comparison.",
+      "Drainage is not recommended."
+     ],
+     "explanation": "The passage moves from definition and formation to carbon and services."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that peatlands are a massive carbon store?",
+     "correct": "Peat soils store over 600 Gt of carbon, more than the carbon stored in all other vegetation types, including forests.",
+     "wrongs": [
+      "A peatland is a type of wetland whose soils consist of organic matter from decaying plants, forming layers of peat.",
+      "Peatlands arise because of incomplete decomposition of organic matter due to water-logging and subsequent anoxia.",
+      "Covering around 3 million km2 globally, they sequester 0.37 gigatons of carbon dioxide a year."
+     ],
+     "why": [
+      "This sentence defines a peatland.",
+      "This sentence explains formation.",
+      "This sentence describes annual sequestration."
+     ],
+     "explanation": "The correct quotation gives the 600 Gt figure and compares it with all other vegetation."
+    }
+   ]
+  },
+  "Ozone depletion": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Ozone depletion is a decline in stratospheric ozone caused mainly by manufactured halocarbons, raising concerns about UV radiation.",
+     "wrongs": [
+      "Ozone depletion is caused by excess oxygen in the atmosphere.",
+      "The ozone hole occurs only over the north pole.",
+      "Ozone depletion increases protection from ultraviolet light."
+     ],
+     "why": [
+      "The text names manufactured chemicals, especially halocarbons, as the main cause.",
+      "The text says the ozone hole is over the south pole.",
+      "The text says the ozone layer prevents harmful UVB from passing through."
+     ],
+     "explanation": "The passage defines ozone depletion, identifies its causes and mechanism, and describes its effects."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because ozone-depleting substances release halogens that catalyze the breakdown of ozone, reducing their emissions most likely ______",
+     "correct": "slows the depletion of the ozone layer.",
+     "wrongs": [
+      "increases the production of ozone-depleting substances.",
+      "has no effect on stratospheric ozone.",
+      "makes the ozone hole larger."
+     ],
+     "why": [
+      "Fewer halogen-releasing compounds would mean less catalytic destruction of ozone.",
+      "Reducing emissions lowers, not raises, the supply of these substances.",
+      "The text links ozone depletion to emissions of halocarbons."
+     ],
+     "explanation": "If halocarbons drive ozone breakdown, cutting emissions would reduce the breakdown."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines ozone depletion, identifies its chemical causes, explains the mechanism, and describes the concerns it raises.",
+     "wrongs": [
+      "It narrates the discovery of the ozone hole by a single scientist.",
+      "It compares stratospheric and tropospheric ozone in a table.",
+      "It argues that ozone depletion is harmless."
+     ],
+     "why": [
+      "No single discoverer is named for the hole.",
+      "No table appears.",
+      "The text describes concern over cancer risks and other effects."
+     ],
+     "explanation": "The passage moves from definition to causes, mechanism, and consequences."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that manufactured chemicals cause ozone depletion?",
+     "correct": "The main causes of ozone depletion and the ozone hole are manufactured chemicals, especially manufactured halocarbon refrigerants, solvents, propellants, and foam-blowing agents (chlorofluorocarbons (CFCs), HCFCs, halons), referred to as ozone-depleting substances (ODS).",
+     "wrongs": [
+      "Ozone depletion in the stratosphere consists of two related phenomena observed since the late 1970s.",
+      "The ozone layer prevents harmful wavelengths of ultraviolet (UVB) light from passing through the Earth's atmosphere.",
+      "Ozone depletion and the ozone hole have generated worldwide concern over increased cancer risks."
+     ],
+     "why": [
+      "This sentence dates the phenomena.",
+      "This sentence describes the ozone layer's protective role.",
+      "This sentence describes public concern."
+     ],
+     "explanation": "The correct quotation names halocarbon refrigerants, solvents, propellants, and foam-blowing agents as the main causes."
+    }
+   ]
+  },
+  "Monsoon": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A monsoon is a seasonal reversal of winds and precipitation, with major systems in Africa, Asia, and the Americas.",
+     "wrongs": [
+      "A monsoon is a single violent thunderstorm.",
+      "Monsoons occur only in South America.",
+      "A monsoon has no dry phase."
+     ],
+     "why": [
+      "The text defines it as a seasonal reversing wind with precipitation changes.",
+      "The text names West African, South Asian–Australian, North American, and South American systems.",
+      "The text says technically there is a dry phase."
+     ],
+     "explanation": "The passage defines monsoons, lists major systems, and gives the term's etymology and history."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a monsoon is a seasonal reversal of wind and precipitation, its rainy phase most likely ______",
+     "correct": "alternates with a dry phase.",
+     "wrongs": [
+      "lasts all year without change.",
+      "occurs only once in history.",
+      "brings no precipitation."
+     ],
+     "why": [
+      "The text says the rainy phase is part of a seasonally changing pattern with a dry phase.",
+      "A seasonal reversal implies alternating phases.",
+      "The pattern recurs annually."
+     ],
+     "explanation": "The seasonal reversal means wet and dry phases alternate."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines monsoons, lists major systems, and explains the term's origin and the Asian monsoon's history.",
+     "wrongs": [
+      "It narrates a farmer's year in India.",
+      "It compares monsoons with hurricanes.",
+      "It argues that monsoons are unpredictable."
+     ],
+     "why": [
+      "No farmer's year is narrated.",
+      "Hurricanes are not mentioned.",
+      "Predictability is not the passage's argument."
+     ],
+     "explanation": "The passage moves from definition to systems, etymology, and geological history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that a monsoon involves seasonal wind reversal?",
+     "correct": "A monsoon is traditionally a seasonal reversing wind accompanied by corresponding changes in precipitation, but now used to describe seasonal changes in atmospheric circulation and precipitation associated with annual latitudinal oscillation of the Intertropical Convergence Zone.",
+     "wrongs": [
+      "Usually, the term monsoon is used to refer to the rainy phase of a seasonally changing pattern.",
+      "The major monsoon systems of the world consist of the West African, South Asian–Australian, North American, and South American monsoons.",
+      "The English monsoon came from Portuguese monção, ultimately from Arabic موسم (mawsim, season)."
+     ],
+     "why": [
+      "This sentence describes common usage.",
+      "This sentence lists major systems.",
+      "This sentence traces the word's etymology."
+     ],
+     "explanation": "The correct quotation defines the monsoon as a seasonal reversing wind."
+    }
+   ]
+  },
+  "Earthquake": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "An earthquake is ground shaking from sudden energy release in the lithosphere, caused mainly by faults and sometimes by human activity.",
+     "wrongs": [
+      "Earthquakes are caused only by volcanic eruptions.",
+      "Earthquakes cannot be caused by human activity.",
+      "The epicenter is the point of rupture underground."
+     ],
+     "why": [
+      "The text says earthquakes are primarily caused by geological faults, but also by volcanism and landslides.",
+      "The text says mining, fracking, and nuclear testing can induce earthquakes.",
+      "The text says the hypocenter is the rupture point; the epicenter is directly above it."
+     ],
+     "explanation": "The passage defines earthquakes, explains causes and terminology, and gives historical examples."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the epicenter is the ground level directly above the hypocenter, the epicenter most likely ______",
+     "correct": "marks the surface location above the rupture.",
+     "wrongs": [
+      "lies deep inside the mantle.",
+      "is unrelated to the earthquake's origin.",
+      "is always underwater."
+     ],
+     "why": [
+      "The text defines the epicenter as the ground level directly above the focus.",
+      "The epicenter is at the surface, not in the mantle.",
+      "The definition ties it directly to the hypocenter."
+     ],
+     "explanation": "The epicenter is by definition the surface point above the rupture."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines earthquakes, explains their causes and terminology, and gives examples of significant events.",
+     "wrongs": [
+      "It narrates the 1976 Tangshan earthquake in detail.",
+      "It explains how to predict earthquakes.",
+      "It compares earthquakes with volcanic eruptions."
+     ],
+     "why": [
+      "Tangshan is mentioned only as an example with fatalities.",
+      "Prediction methods are not described.",
+      "Volcanism is listed as a cause, not compared in detail."
+     ],
+     "explanation": "The passage moves from definition to causes and examples."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that earthquakes can be human-induced?",
+     "correct": "Earthquakes can occur naturally or be induced by human activities, such as mining, fracking, and nuclear weapons testing.",
+     "wrongs": [
+      "An earthquake is the shaking of the Earth's surface resulting from a sudden release of energy in the lithosphere.",
+      "The initial point of rupture is called the hypocenter or focus.",
+      "The 1960 Valdivia earthquake in Chile was the largest ever recorded at 9.5 magnitude."
+     ],
+     "why": [
+      "This sentence defines an earthquake.",
+      "This sentence defines the hypocenter.",
+      "This sentence describes a record earthquake."
+     ],
+     "explanation": "The correct quotation names mining, fracking, and nuclear testing as human causes."
+    }
+   ]
+  }
+ }
+}

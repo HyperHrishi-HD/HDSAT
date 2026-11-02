@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Artificial intelligence": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "AI is the capability of computational systems to perform tasks associated with human intelligence and a research field developing methods to do so.",
+     "wrongs": [
+      "AI is a single software program invented in 2020.",
+      "AI research ignores mathematics and engineering.",
+      "AI can only play board games."
+     ],
+     "why": [
+      "The text defines AI as a capability and a field of research.",
+      "The text says the field was founded as an academic discipline in 1956.",
+      "The text says the field spans computer science, engineering, and mathematics."
+     ],
+     "explanation": "The passage defines AI, describes its research goals and techniques, and lists applications."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because artificial general intelligence is defined as AI that can complete nearly any cognitive task at least as well as a human, AGI most likely ______",
+     "correct": "would be more general than task-specific systems.",
+     "wrongs": [
+      "would excel at only one game.",
+      "would require no computation.",
+      "would be limited to image generation."
+     ],
+     "why": [
+      "Nearly any cognitive task implies broad capability beyond a single domain.",
+      "A single game is a narrow task.",
+      "AGI is still computational."
+     ],
+     "explanation": "The definition's breadth contrasts with narrow, task-specific AI."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines AI, describes its research goals and techniques, and lists applications, companies, and its founding.",
+     "wrongs": [
+      "It explains how to train a neural network step by step.",
+      "It compares AI with human biology in detail.",
+      "It argues that AGI already exists."
+     ],
+     "why": [
+      "No training procedure is given.",
+      "Biology is mentioned only as an influence.",
+      "The text says some companies aim to create AGI, not that it exists."
+     ],
+     "explanation": "The passage moves from definition and research to applications and history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that AI performs cognitive tasks?",
+     "correct": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making.",
+     "wrongs": [
+      "It is also a field of research spanning computer science, engineering, and mathematics.",
+      "Prominent applications of AI include advanced web search engines, chatbots, virtual assistants, and autonomous vehicles.",
+      "Artificial intelligence was founded as an academic discipline in 1956."
+     ],
+     "why": [
+      "This sentence describes the research field.",
+      "This sentence lists applications.",
+      "This sentence dates the discipline's founding."
+     ],
+     "explanation": "The correct quotation names learning, reasoning, problem-solving, perception, and decision-making."
+    }
+   ]
+  },
+  "Machine learning": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Machine learning develops statistical algorithms that learn from data and generalize to unseen data without explicit programming.",
+     "wrongs": [
+      "Machine learning requires every rule to be programmed by hand.",
+      "Machine learning is unrelated to statistics.",
+      "Machine learning and artificial intelligence are exactly synonymous."
+     ],
+     "why": [
+      "The text defines ML as algorithms that learn from data and generalize.",
+      "The text says they perform tasks without being explicitly programmed.",
+      "The text says statistics and mathematical optimisation compose its foundations."
+     ],
+     "explanation": "The passage defines machine learning, describes its foundations, and explains its relationship to AI."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because machine learning algorithms generalize to unseen data, they most likely ______",
+     "correct": "can handle new examples beyond their training data.",
+     "wrongs": [
+      "memorize only their training examples.",
+      "cannot make predictions.",
+      "require no data at all."
+     ],
+     "why": [
+      "Generalization means applying learned patterns to new data.",
+      "Memorization would not generalize.",
+      "The text says ML performs tasks such as prediction."
+     ],
+     "explanation": "Generalization is the ability to perform well on data not seen during training."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines machine learning, describes its foundations and theory, and explains its rise and naming.",
+     "wrongs": [
+      "It explains how to label a dataset.",
+      "It compares ML with data mining in a table.",
+      "It argues that deep learning has failed."
+     ],
+     "why": [
+      "No labeling procedure is given.",
+      "No table appears.",
+      "The text says deep learning surpassed many previous approaches."
+     ],
+     "explanation": "The passage moves from definition to foundations and history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that machine learning works without explicit programming?",
+     "correct": "Machine learning (ML) is a field of study in artificial intelligence concerned with the development and study of statistical algorithms that can learn from data and generalize to unseen data, and thus perform tasks without being explicitly programmed.",
+     "wrongs": [
+      "Statistics and mathematical optimisation methods compose the foundations of machine learning.",
+      "The term machine learning was coined in 1959 by Arthur Samuel.",
+      "The resulting dominance of machine learning within the field of AI from the late 2000s and early 2010s onwards was such that the terms are now often used interchangeably."
+     ],
+     "why": [
+      "This sentence describes ML's foundations.",
+      "This sentence dates the term's coinage.",
+      "This sentence describes ML's dominance in AI."
+     ],
+     "explanation": "The correct quotation explicitly says tasks are performed without being explicitly programmed."
+    }
+   ]
+  },
+  "Cryptography": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Cryptography constructs and analyzes secure communication techniques that keep messages private and protect data integrity and authenticity.",
+     "wrongs": [
+      "Cryptography is the study of making messages readable to everyone.",
+      "Cryptography concerns only military communications.",
+      "Cryptography has no connection to mathematics."
+     ],
+     "why": [
+      "The text describes techniques for secure communication against adversaries.",
+      "The text says it prevents third parties from reading private messages.",
+      "The text lists e-commerce, payment cards, and passwords among applications."
+     ],
+     "explanation": "The passage defines cryptography, describes its core concepts and applications, and contrasts modern with pre-modern practice."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the sender shares the decryption technique only with intended recipients, an eavesdropper most likely ______",
+     "correct": "cannot read the message.",
+     "wrongs": [
+      "receives the decryption key automatically.",
+      "can read the plaintext easily.",
+      "is one of the intended recipients."
+     ],
+     "why": [
+      "Sharing the technique only with recipients excludes the eavesdropper.",
+      "The text says access is precluded from adversaries.",
+      "The ciphertext is unintelligible without decryption."
+     ],
+     "explanation": "Excluding adversaries from the decryption method keeps the message unreadable to them."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines cryptography, lists core security concepts and applications, and contrasts historical encryption with modern practice.",
+     "wrongs": [
+      "It explains how to crack a specific cipher.",
+      "It profiles Alice, Bob, and Eve.",
+      "It argues that cryptography is obsolete."
+     ],
+     "why": [
+      "No cipher-breaking method is given.",
+      "Alice, Bob, and Eve are conventional labels, not profiles.",
+      "The text describes widespread modern applications."
+     ],
+     "explanation": "The passage moves from definition to concepts, uses, and historical context."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that cryptography protects private messages?",
+     "correct": "More generally, cryptography is about constructing and analyzing protocols that prevent third parties or the public from reading private messages.",
+     "wrongs": [
+      "Cryptography is the practice and study of techniques for secure communication in the presence of adversarial behavior.",
+      "Core concepts related to information security are also central to cryptography.",
+      "Practical applications of cryptography include electronic commerce, chip-based payment cards, digital currencies, computer passwords and military communications."
+     ],
+     "why": [
+      "This sentence defines cryptography.",
+      "This sentence lists core concepts.",
+      "This sentence lists applications."
+     ],
+     "explanation": "The correct quotation says cryptography prevents third parties from reading private messages."
+    }
+   ]
+  },
+  "Internet": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Internet is a global network of interconnected networks using TCP/IP that carries many services and has transformed media and commerce.",
+     "wrongs": [
+      "The Internet is a single computer owned by one company.",
+      "The Internet does not use shared protocols.",
+      "The Internet is limited to academic use."
+     ],
+     "why": [
+      "The text describes a global system of interconnected computer networks.",
+      "The text says it uses the Internet protocol suite (TCP/IP).",
+      "The text lists private, public, academic, business, and government networks."
+     ],
+     "explanation": "The passage defines the Internet, describes its scope and services, and explains its effects."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the Internet is a network of networks, it most likely ______",
+     "correct": "links many separate networks rather than one central system.",
+     "wrongs": [
+      "consists of a single server.",
+      "operates without any protocols.",
+      "serves only government agencies."
+     ],
+     "why": [
+      "A network of networks connects multiple distinct networks.",
+      "The text describes many networks of local to global scope.",
+      "The text says it uses TCP/IP."
+     ],
+     "explanation": "The phrase \"network of networks\" means interconnection among many separate networks."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the Internet, describes the networks and services it comprises, and explains its effects on media and commerce.",
+     "wrongs": [
+      "It narrates the invention of the telephone.",
+      "It compares the Internet with radio in a table.",
+      "It argues that the Internet has changed nothing."
+     ],
+     "why": [
+      "The telephone is mentioned as transformed media, not narrated.",
+      "No table appears.",
+      "The text says traditional media have been transformed."
+     ],
+     "explanation": "The passage moves from definition and scope to services and consequences."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the Internet links diverse networks?",
+     "correct": "It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope, linked by electronic, wireless, and optical networking technologies.",
+     "wrongs": [
+      "The Internet is the global system of interconnected computer networks that uses the Internet protocol suite (TCP/IP).",
+      "The Internet carries a vast range of information services and resources.",
+      "Online shopping has grown to occupy a significant market across industries."
+     ],
+     "why": [
+      "This sentence defines the Internet.",
+      "This sentence describes its services.",
+      "This sentence describes online shopping."
+     ],
+     "explanation": "The correct quotation lists the varied networks that make up the Internet."
+    }
+   ]
+  },
+  "Cloud computing": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Cloud computing provides on-demand network access to a scalable, elastic pool of shared computing resources.",
+     "wrongs": [
+      "Cloud computing requires users to manage physical servers.",
+      "Cloud resources cannot be scaled.",
+      "Cloud computing is limited to a single consumer."
+     ],
+     "why": [
+      "The text defines it as network access to a scalable and elastic pool with self-service provisioning.",
+      "The text says consumers provision capabilities without human interaction with the provider.",
+      "The text says capabilities can be elastically provisioned and released."
+     ],
+     "explanation": "The passage defines cloud computing and describes the NIST essential characteristics."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because cloud capabilities can be elastically provisioned and released, capacity most likely ______",
+     "correct": "adjusts to demand.",
+     "wrongs": [
+      "remains fixed regardless of demand.",
+      "can only shrink, never grow.",
+      "requires manual hardware installation."
+     ],
+     "why": [
+      "Elastic provisioning scales outward and inward with demand.",
+      "Fixed capacity would contradict elasticity.",
+      "The text says capabilities can scale rapidly outward and inward."
+     ],
+     "explanation": "Elasticity means capacity expands and contracts as demand changes."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It gives the ISO definition of cloud computing and then lists essential characteristics defined by NIST.",
+     "wrongs": [
+      "It narrates the history of one cloud provider.",
+      "It compares cloud computing with mainframes.",
+      "It argues that cloud computing is insecure."
+     ],
+     "why": [
+      "No provider history is given.",
+      "Mainframes are not mentioned.",
+      "Security is not the passage's focus."
+     ],
+     "explanation": "The passage moves from definition to enumerated characteristics."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that cloud users can provision resources themselves?",
+     "correct": "On-demand self-service: \"A consumer can unilaterally provision computing capabilities, such as server time and network storage, as needed automatically without requiring human interaction with each service provider.\"",
+     "wrongs": [
+      "Cloud computing is defined by ISO as a paradigm for enabling network access to a scalable and elastic pool of shareable physical or virtual resources.",
+      "In 2011, the National Institute of Standards and Technology identified five essential characteristics for cloud systems.",
+      "Resource pooling: the provider's computing resources are pooled to serve multiple consumers using a multi-tenant model."
+     ],
+     "why": [
+      "This sentence gives the ISO definition.",
+      "This sentence describes NIST's five characteristics.",
+      "This sentence describes resource pooling."
+     ],
+     "explanation": "The correct quotation defines on-demand self-service without provider interaction."
+    }
+   ]
+  },
+  "Open-source software": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Open-source software is licensed for use, study, modification, and distribution, offers benefits and risks, and underpins much digital infrastructure.",
+     "wrongs": [
+      "Open-source software cannot be modified.",
+      "Open-source software is always less secure than proprietary software.",
+      "Open-source software makes up a tiny share of modern code."
+     ],
+     "why": [
+      "The text says the license allows users to use, study, modify, and distribute it.",
+      "The text lists cybersecurity concerns but does not claim it is always less secure.",
+      "The text estimates 80 to 96 percent of code is of open-source origin."
+     ],
+     "explanation": "The passage defines open-source software, describes its benefits and risks, and notes its prevalence."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because between 80 and 96 percent of code in software on the market is of open-source origin, proprietary products most likely ______",
+     "correct": "depend on open-source components.",
+     "wrongs": [
+      "contain no open-source code.",
+      "are unaffected by open-source licenses.",
+      "replace all open-source software."
+     ],
+     "why": [
+      "The figure includes code within proprietary software.",
+      "That contradicts the estimate.",
+      "License obligations can apply to incorporated components."
+     ],
+     "explanation": "If most code in marketed software is open-source in origin, proprietary products rely on it too."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines open-source software, describes its collaboration model and tradeoffs, and notes its role in infrastructure.",
+     "wrongs": [
+      "It explains how to write an open-source license.",
+      "It compares two specific software projects.",
+      "It argues that all software should be proprietary."
+     ],
+     "why": [
+      "No license drafting guidance is given.",
+      "No specific projects are compared.",
+      "The text describes open-source benefits without arguing for universal adoption."
+     ],
+     "explanation": "The passage moves from definition to benefits and risks, then prevalence."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that open-source licenses permit modification and redistribution?",
+     "correct": "Open-source software (OSS) is computer software released under a license allowing users to use, study, modify, and distribute it to anyone for any purpose – in contrast to proprietary (closed-source) software.",
+     "wrongs": [
+      "The development of open-source software can be based on open collaboration, a decentralized model of production.",
+      "Open-source software offers a range of benefits, but also presents specific risks and challenges.",
+      "A 2022 estimate suggests that between 80 and 96 percent of the code making up software on the market today is of open-source origin."
+     ],
+     "why": [
+      "This sentence describes the collaboration model.",
+      "This sentence describes benefits and risks.",
+      "This sentence gives a prevalence estimate."
+     ],
+     "explanation": "The correct quotation lists use, study, modification, and distribution rights."
+    }
+   ]
+  },
+  "Computer network": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A computer network is a group of hosts that communicate through protocols and hardware, identified by addresses and arranged in topologies.",
+     "wrongs": [
+      "A computer network consists of a single host.",
+      "Networks do not use addresses or protocols.",
+      "The first computer network was created in 2020."
+     ],
+     "why": [
+      "The text defines a network as a group of communicating computers and peripherals.",
+      "The text says hosts communicate via protocols and are identified by network addresses.",
+      "The text says the first computer network was created in 1940."
+     ],
+     "explanation": "The passage defines networks, describes addressing and hardware, and traces their history and uses."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because hosts are identified by network addresses, networking hardware most likely ______",
+     "correct": "uses addresses to locate and identify hosts.",
+     "wrongs": [
+      "ignores addresses entirely.",
+      "assigns names instead of addresses.",
+      "connects only one host per network."
+     ],
+     "why": [
+      "The text says addresses allow networking hardware to locate and identify hosts.",
+      "That contradicts the stated function.",
+      "Hostnames can map to addresses, but hardware uses addresses."
+     ],
+     "explanation": "Addresses exist so hardware can find and identify hosts on the network."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines computer networks, describes their components and addressing, and notes their history and applications.",
+     "wrongs": [
+      "It explains how to configure a home router.",
+      "It compares wired and wireless speeds in a table.",
+      "It argues that networks are unnecessary."
+     ],
+     "why": [
+      "No configuration steps are given.",
+      "No speed table appears.",
+      "The text says many applications have limited functionality without networks."
+     ],
+     "explanation": "The passage moves from definition to architecture and then to history and uses."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that hosts are identified by network addresses?",
+     "correct": "Within a computer network, hosts are identified by network addresses, which allow networking hardware to locate and identify hosts.",
+     "wrongs": [
+      "A network is a group of communicating computers and peripherals called hosts.",
+      "The physical medium that supports information exchange includes wired media like copper cables, optical fibers, and wireless radio-frequency media.",
+      "The first computer network was created in 1940 when George Stibitz connected a terminal at Dartmouth to his Complex Number Calculator."
+     ],
+     "why": [
+      "This sentence defines a network.",
+      "This sentence describes physical media.",
+      "This sentence describes the first network."
+     ],
+     "explanation": "The correct quotation states that network addresses identify hosts."
+    }
+   ]
+  },
+  "Algorithm": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "An algorithm is a finite sequence of rigorous instructions for solving a problem, distinct from a heuristic that may not guarantee correct results.",
+     "wrongs": [
+      "An algorithm is any vague approach to a problem.",
+      "An algorithm must run forever.",
+      "Heuristics always guarantee optimal results."
+     ],
+     "why": [
+      "The text defines an algorithm as a finite sequence of mathematically rigorous instructions.",
+      "The text says it is a finite sequence.",
+      "The text says a heuristic may not guarantee correct or optimal results."
+     ],
+     "explanation": "The passage defines algorithms, describes conditionals and automation, and contrasts them with heuristics."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a heuristic may not guarantee correct or optimal results, it most likely ______",
+     "correct": "differs from a rigorous algorithm.",
+     "wrongs": [
+      "is always a finite algorithm.",
+      "guarantees the best answer.",
+      "cannot be used in problem-solving."
+     ],
+     "why": [
+      "The text contrasts heuristics with algorithms that specify rigorous instructions.",
+      "The text describes heuristics as possibly not fully specified.",
+      "The text says they may not guarantee optimal results."
+     ],
+     "explanation": "Lack of guaranteed correctness separates heuristics from rigorous algorithms."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines algorithms and their features, then contrasts them with heuristics using an example.",
+     "wrongs": [
+      "It narrates the life of Alan Turing.",
+      "It explains how to sort a list step by step.",
+      "It argues that algorithms cannot be expressed formally."
+     ],
+     "why": [
+      "Turing is mentioned only for metaphorical terms.",
+      "No sorting procedure is given.",
+      "The text says an algorithm can be expressed in a well-defined formal language."
+     ],
+     "explanation": "The passage moves from definition to features and a contrast with heuristics."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that an algorithm is a finite instruction sequence?",
+     "correct": "In mathematics and computer science, an algorithm is a finite sequence of mathematically rigorous instructions, typically used to solve a class of specific problems or to perform a computation.",
+     "wrongs": [
+      "More advanced algorithms can use conditionals to divert the code execution through various routes.",
+      "In contrast, a heuristic is an approach to problem-solving that may not be fully specified or may not guarantee correct or optimal results.",
+      "As an effective method, an algorithm can be expressed within a finite amount of space and time."
+     ],
+     "why": [
+      "This sentence describes conditionals.",
+      "This sentence defines a heuristic.",
+      "This sentence describes formal expression."
+     ],
+     "explanation": "The correct quotation defines an algorithm as a finite sequence of rigorous instructions."
+    }
+   ]
+  },
+  "Data center": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A data center is a facility for storing, managing, and disseminating digital information, organized under several deployment models.",
+     "wrongs": [
+      "A data center is a single desktop computer.",
+      "All data centers are owned by the same company.",
+      "Data centers first appeared in the 21st century."
+     ],
+     "why": [
+      "The text defines a data center as a facility for digital information and IT infrastructure.",
+      "The text lists enterprise, cloud, managed service, colocation, and edge models.",
+      "The text says data centers date back to the 1940s."
+     ],
+     "explanation": "The passage defines data centers, describes their models, and traces their history."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because edge data centers are located closer to end users and devices, they most likely ______",
+     "correct": "reduce the distance between users and computing resources.",
+     "wrongs": [
+      "serve only cloud providers.",
+      "are larger than hyperscale centers.",
+      "replace all enterprise data centers."
+     ],
+     "why": [
+      "Being closer to users shortens the path to computing resources.",
+      "The text describes edge centers as smaller and decentralized.",
+      "The text says edge centers are smaller."
+     ],
+     "explanation": "Proximity to users is the defining feature of edge data centers."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines data centers, describes their deployment models, and notes their history and scale.",
+     "wrongs": [
+      "It explains how to build a server rack.",
+      "It compares two cloud providers in detail.",
+      "It argues that data centers are unnecessary."
+     ],
+     "why": [
+      "No construction instructions are given.",
+      "Providers are listed as examples, not compared in detail.",
+      "The text describes data centers as central to digital information."
+     ],
+     "explanation": "The passage moves from definition to models and history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that data centers follow different models?",
+     "correct": "Data centers have different models depending on their workloads.",
+     "wrongs": [
+      "A data center is a facility for storing, managing, and disseminating digital information.",
+      "According to IBM, data centers date back to the 1940s.",
+      "They frequently contain thousands of servers and many miles of high-speed data connection equipment."
+     ],
+     "why": [
+      "This sentence defines a data center.",
+      "This sentence dates their origin.",
+      "This sentence describes their scale."
+     ],
+     "explanation": "The correct quotation states that models vary with workload."
+    }
+   ]
+  },
+  "Human–computer interaction": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "HCI studies how people interact with computers and designs interfaces across visual, auditory, and tactile channels.",
+     "wrongs": [
+      "HCI is the study of computer hardware only.",
+      "HCI ignores user behavior.",
+      "HCI concerns only smartphone design."
+     ],
+     "why": [
+      "The text says HCI covers the design and use of computer technology focusing on interfaces.",
+      "The text says researchers observe how people interact with computers.",
+      "The text gives smartphones as one example among traditional and mobile contexts."
+     ],
+     "explanation": "The passage defines HCI, describes its feedback channels, and traces its interdisciplinary history."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because HCI research informs touchscreen design, interface elements are most likely ______",
+     "correct": "sized for easy human use.",
+     "wrongs": [
+      "made as small as possible.",
+      "designed without testing users.",
+      "limited to keyboard input."
+     ],
+     "why": [
+      "The text says icons are made large enough to be tapped easily.",
+      "That contradicts the design principle described.",
+      "HCI research observes how people interact."
+     ],
+     "explanation": "HCI principles shape interfaces to match human physical abilities."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines HCI, describes interaction channels and an example, and explains the field's interdisciplinary scope and history.",
+     "wrongs": [
+      "It explains how to program a mobile app.",
+      "It compares HCI with artificial intelligence.",
+      "It argues that interfaces should be harder to use."
+     ],
+     "why": [
+      "No programming instructions are given.",
+      "AI is not discussed.",
+      "The text describes designing technologies for interaction."
+     ],
+     "explanation": "The passage moves from definition and examples to scope and terminology."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that HCI focuses on interfaces between people and computers?",
+     "correct": "Research in HCI covers the design and the use of computer technology, which focuses on the interfaces between people (users) and computers.",
+     "wrongs": [
+      "Human–computer interaction is the process through which people operate and engage with computer systems.",
+      "These include visual, auditory, and tactile (haptic) feedback systems.",
+      "The term was popularized by Stuart Card, Allen Newell, and Thomas P. Moran in their seminal 1983 book."
+     ],
+     "why": [
+      "This sentence defines HCI as a process.",
+      "This sentence lists feedback channels.",
+      "This sentence describes the term's popularization."
+     ],
+     "explanation": "The correct quotation states that HCI focuses on the interfaces between users and computers."
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Supply and demand": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Supply and demand models price settling at equilibrium, though market power and macro-level limits complicate the simple model.",
+     "wrongs": [
+      "Supply and demand claims prices never change in competitive markets.",
+      "The model applies only to markets with a single seller.",
+      "Aggregate demand always behaves like an individual's demand."
+     ],
+     "why": [
+      "The text says price varies until it settles at the market-clearing price.",
+      "The text says market power requires a more complicated model.",
+      "The text says aggregate demand functions do not necessarily inherit individual rationality."
+     ],
+     "explanation": "The passage defines the model, states the equilibrium condition, and describes its limits."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a firm with market power can influence the market price, the simple supply-and-demand model most likely ______",
+     "correct": "does not fully describe that market.",
+     "wrongs": [
+      "applies more precisely than before.",
+      "predicts that price cannot change.",
+      "requires no model of competition."
+     ],
+     "why": [
+      "The text says market power violates perfect competition and requires a more complicated model.",
+      "Market power makes the simple model less accurate.",
+      "A firm that influences price shows that price can change."
+     ],
+     "explanation": "The passage explicitly says market power calls for a more complicated model."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the model and equilibrium, notes cases requiring other models, and discusses macro-level limits.",
+     "wrongs": [
+      "It narrates the history of a single market.",
+      "It compares supply and demand with Marxism.",
+      "It argues that equilibrium is impossible."
+     ],
+     "why": [
+      "No historical market is described.",
+      "Marxism is not mentioned.",
+      "The text describes equilibrium as the model's prediction, with limits at the macro level."
+     ],
+     "explanation": "The passage moves from definition to exceptions and then to aggregate theory."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that equilibrium occurs where demand equals supply?",
+     "correct": "It postulates that, holding all else equal, the unit price for a particular good or other traded item in a perfectly competitive market, will vary until it settles at the market-clearing price, where the quantity demanded equals the quantity supplied such that an economic equilibrium is achieved for price and quantity transacted.",
+     "wrongs": [
+      "In microeconomics, supply and demand is an economic model of price determination in a market.",
+      "The concept of supply and demand forms the theoretical basis of modern economics.",
+      "In situations where a firm has market power, its decision on how much output to bring to market influences the market price."
+     ],
+     "why": [
+      "This sentence defines the model.",
+      "This sentence describes the model's importance.",
+      "This sentence describes market power."
+     ],
+     "explanation": "The correct quotation explicitly equates the market-clearing price with equal quantities demanded and supplied."
+    }
+   ]
+  },
+  "Inflation": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Inflation is a rise in the average price level that reduces money's purchasing power and is measured by a price index.",
+     "wrongs": [
+      "Inflation is a fall in the general price level.",
+      "Inflation increases the purchasing power of money.",
+      "Inflation cannot be measured."
+     ],
+     "why": [
+      "The text defines inflation as an increase in the average price of goods and services.",
+      "The text says each unit of currency buys fewer goods and services.",
+      "The text says inflation is measured using a price index, typically the CPI."
+     ],
+     "explanation": "The passage defines inflation, explains its effect on purchasing power, and describes its measurement and causes."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because inflation raises the general price level, each unit of currency most likely ______",
+     "correct": "buys fewer goods and services.",
+     "wrongs": [
+      "gains value over time.",
+      "can purchase more than before.",
+      "becomes unrelated to prices."
+     ],
+     "why": [
+      "The text states that each unit of currency buys fewer goods and services when prices rise.",
+      "That is the opposite of inflation's effect.",
+      "Rising prices reduce, not increase, purchasing power."
+     ],
+     "explanation": "Inflation is defined by reduced purchasing power per unit of currency."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines inflation, explains purchasing power and measurement, and lists its causes.",
+     "wrongs": [
+      "It narrates a historical episode of hyperinflation.",
+      "It compares inflation with unemployment.",
+      "It argues that inflation has no costs."
+     ],
+     "why": [
+      "No historical episode is described.",
+      "Unemployment is not mentioned.",
+      "The text says moderate inflation affects economies in both positive and negative ways."
+     ],
+     "explanation": "The passage moves from definition to measurement and causes."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that inflation reduces purchasing power?",
+     "correct": "When the general price level rises, each unit of currency buys fewer goods and services; consequently, inflation corresponds to a reduction in the purchasing power of money.",
+     "wrongs": [
+      "Inflation is an increase in the average price of goods and services in terms of money.",
+      "This increase is measured using a price index, typically a consumer price index (CPI).",
+      "The opposite of inflation is deflation."
+     ],
+     "why": [
+      "This sentence defines inflation.",
+      "This sentence describes measurement.",
+      "This sentence defines the opposite phenomenon."
+     ],
+     "explanation": "The correct quotation explicitly links rising prices to reduced purchasing power."
+    }
+   ]
+  },
+  "Comparative advantage": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Comparative advantage explains why parties gain from trade by specializing where their opportunity cost is lowest, even if one is more productive overall.",
+     "wrongs": [
+      "Comparative advantage means being more productive at every good.",
+      "Trade benefits only the more productive country.",
+      "Comparative advantage applies only to individuals, not countries."
+     ],
+     "why": [
+      "The text contrasts comparative advantage with absolute advantage.",
+      "The text says both parties can benefit from trade.",
+      "The text says the principle applies to people, firms, and countries."
+     ],
+     "explanation": "The passage defines comparative advantage, distinguishes it from related concepts, and traces its development."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because comparative advantage predicts gains from trade even when one country is more productive at producing every good, the less productive country most likely ______",
+     "correct": "can still benefit by specializing.",
+     "wrongs": [
+      "has nothing to gain from trade.",
+      "must produce every good itself.",
+      "should avoid all exports."
+     ],
+     "why": [
+      "The text says countries can benefit even when one party is more productive at every good.",
+      "That contradicts the principle's central claim.",
+      "Specialization and trade are the recommended path."
+     ],
+     "explanation": "The principle holds that both parties gain when each specializes where its opportunity cost is lowest."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines comparative advantage, distinguishes it from related terms, and traces its early formulation and theory.",
+     "wrongs": [
+      "It profiles David Ricardo's life.",
+      "It compares modern trade with ancient trade.",
+      "It argues that trade always harms workers."
+     ],
+     "why": [
+      "Ricardo is named as the theory's developer, not profiled.",
+      "No ancient trade comparison is made.",
+      "The text presents trade as mutually beneficial under the principle."
+     ],
+     "explanation": "The passage moves from definition to conceptual contrast and historical development."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that both parties can gain from trade?",
+     "correct": "Comparative advantage is an economic principle that explains why people, firms, and countries can often benefit from trade even when one party is more productive at producing every good or service.",
+     "wrongs": [
+      "The principle states that greater gains from trade arise when each participant devotes a larger share of its labor and other productive resources to the activities with the lowest opportunity cost.",
+      "Comparative advantage differs from absolute advantage, which concerns being more productive overall.",
+      "David Ricardo developed the classical theory of comparative advantage in 1817."
+     ],
+     "why": [
+      "This sentence describes how gains arise through specialization.",
+      "This sentence distinguishes comparative from absolute advantage.",
+      "This sentence dates Ricardo's theory."
+     ],
+     "explanation": "The correct quotation says trade can benefit both parties even when one is more productive at everything."
+    }
+   ]
+  },
+  "Monopoly": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A monopoly is a market with one supplier, no close substitutes, and the power to set high prices, regardless of company size.",
+     "wrongs": [
+      "A monopoly requires a company to be large.",
+      "A monopoly is a market with many competing suppliers.",
+      "A monopoly is the same thing as a cartel."
+     ],
+     "why": [
+      "The text says size is not a characteristic of a monopoly.",
+      "The text says a monopoly has a lack of economic competition.",
+      "The text distinguishes a monopoly from a cartel of several providers."
+     ],
+     "explanation": "The passage defines monopoly, explains its market power, and distinguishes related terms."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a small business may still have the power to raise prices in a small industry, a monopoly most likely ______",
+     "correct": "does not have to be a large company.",
+     "wrongs": [
+      "must control the global market.",
+      "cannot exist in a small market.",
+      "always has many competitors."
+     ],
+     "why": [
+      "The text explicitly says a small business may have monopoly power in a small industry.",
+      "The text says size is not a characteristic of monopoly.",
+      "The text says a monopoly can exist in a small industry."
+     ],
+     "explanation": "The passage explicitly separates monopoly power from company size."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines monopoly and its effects, then distinguishes it from monopsony and cartel.",
+     "wrongs": [
+      "It narrates the breakup of a specific monopoly.",
+      "It compares monopoly with perfect competition in a table.",
+      "It argues that monopolies should be legalized."
+     ],
+     "why": [
+      "No specific company is discussed.",
+      "No table appears.",
+      "The text describes legal concerns about unfair prices without recommending legalization."
+     ],
+     "explanation": "The passage moves from definition to market effects and related market structures."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that monopolies can charge prices above marginal cost?",
+     "correct": "A monopoly is characterized by a lack of economic competition to produce a particular thing, a lack of viable substitute goods, and the possibility of a high monopoly price well above the seller's marginal cost that leads to a high monopoly profit.",
+     "wrongs": [
+      "A monopoly is a market in which one person or company is the only supplier of a particular good or service.",
+      "Although monopolies may be big businesses, size is not a characteristic of a monopoly.",
+      "A monopsony is a market situation in which there is only one buyer."
+     ],
+     "why": [
+      "This sentence defines a monopoly.",
+      "This sentence separates monopoly from size.",
+      "This sentence defines monopsony."
+     ],
+     "explanation": "The correct quotation names prices well above marginal cost and the resulting profit."
+    }
+   ]
+  },
+  "Central bank": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A central bank manages monetary policy, controls the monetary base, and often supervises banks, with independence debated.",
+     "wrongs": [
+      "A central bank is a commercial bank that serves individual customers.",
+      "A central bank has no role in monetary policy.",
+      "Central banks are always directly controlled by legislatures."
+     ],
+     "why": [
+      "The text says it manages monetary policy and is distinct from a commercial bank.",
+      "The text defines it as the institution that manages monetary policy.",
+      "The text says most developed nations set them up to be institutionally independent."
+     ],
+     "explanation": "The passage defines central banks, describes their powers, and discusses independence."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a central bank possesses a monopoly on increasing the monetary base, commercial banks most likely ______",
+     "correct": "cannot expand the monetary base themselves.",
+     "wrongs": [
+      "control monetary policy independently.",
+      "issue the monetary base without limit.",
+      "have no need for regulation."
+     ],
+     "why": [
+      "A monopoly on increasing the base excludes other banks from doing so.",
+      "The text assigns monetary policy to the central bank.",
+      "The monopoly belongs to the central bank, not commercial banks."
+     ],
+     "explanation": "An exclusive central-bank monopoly means commercial banks cannot create base money."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines central banks, lists their powers, and discusses their independence and the debate around it.",
+     "wrongs": [
+      "It narrates the founding of one central bank.",
+      "It explains how to open a savings account.",
+      "It argues that central banks should be abolished."
+     ],
+     "why": [
+      "No single bank's founding is narrated.",
+      "Consumer banking is not described.",
+      "The text reports criticism without advocating abolition."
+     ],
+     "explanation": "The passage moves from definition to functions and then to governance debates."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that central banks regulate commercial banks?",
+     "correct": "Many central banks also have supervisory or regulatory powers to ensure the stability of commercial banks in their jurisdiction, to prevent bank runs, and, in some cases, to enforce policies on financial consumer protection, and against bank fraud, money laundering, or terrorism financing.",
+     "wrongs": [
+      "A central bank is a financial institution that manages the monetary policy of a country or monetary union.",
+      "In contrast to a commercial bank, a central bank possesses a monopoly on increasing the monetary base.",
+      "Central banks play a crucial role in macroeconomic forecasting."
+     ],
+     "why": [
+      "This sentence defines a central bank.",
+      "This sentence contrasts central and commercial banks.",
+      "This sentence describes forecasting."
+     ],
+     "explanation": "The correct quotation lists supervisory and regulatory powers over commercial banks."
+    }
+   ]
+  },
+  "Stock market": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A stock market is where buyers and sellers trade ownership shares, and it has grown into a vast global system of exchanges.",
+     "wrongs": [
+      "A stock market sells only government bonds.",
+      "Stock markets have shrunk since 1980.",
+      "Shares represent loans rather than ownership."
+     ],
+     "why": [
+      "The text says stocks are ownership claims on businesses.",
+      "The text says global market capitalization rose from $2.5 trillion to $111 trillion.",
+      "The text defines stocks as ownership claims."
+     ],
+     "explanation": "The passage defines the stock market, describes its growth, and explains the role of exchanges."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because listing on a stock exchange makes a stock more liquid, investors most likely ______",
+     "correct": "find it easier to buy and sell shares.",
+     "wrongs": [
+      "are unable to sell their shares.",
+      "must hold shares forever.",
+      "avoid trading on exchanges."
+     ],
+     "why": [
+      "Liquidity means shares can be traded more easily.",
+      "Liquidity is the opposite of being unable to sell.",
+      "The text says liquidity makes stocks more attractive to investors."
+     ],
+     "explanation": "Greater liquidity means investors can trade shares more readily."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the stock market, describes its global size, and explains what a stock exchange does.",
+     "wrongs": [
+      "It profiles a single investor.",
+      "It explains how to calculate a company's profit.",
+      "It argues that stock markets are unimportant."
+     ],
+     "why": [
+      "No investor is profiled.",
+      "Profit calculation is not described.",
+      "The text reports enormous market capitalization and exchange activity."
+     ],
+     "explanation": "The passage moves from definition to scale and then to exchange functions."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the stock market has grown enormously?",
+     "correct": "The total market capitalization of all publicly traded stocks worldwide rose from US$2.5 trillion in 1980 to US$111 trillion by the end of 2023.",
+     "wrongs": [
+      "A stock market is the aggregation of buyers and sellers of stocks, which represent ownership claims on businesses.",
+      "As of 2016, there are 60 stock exchanges in the world.",
+      "A stock exchange is an exchange where stockbrokers and traders can buy and sell shares."
+     ],
+     "why": [
+      "This sentence defines the stock market.",
+      "This sentence gives the number of exchanges.",
+      "This sentence defines a stock exchange."
+     ],
+     "explanation": "The correct quotation gives the rise in global market capitalization."
+    }
+   ]
+  },
+  "Insurance": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Insurance transfers the risk of uncertain loss from a policyholder to an insurer in exchange for a premium.",
+     "wrongs": [
+      "Insurance guarantees that no loss will occur.",
+      "Insurance is a form of gambling with no contract.",
+      "Policyholders pay nothing for coverage."
+     ],
+     "why": [
+      "The text describes compensation in exchange for a fee.",
+      "The text says insurance protects against risk, not that it prevents loss.",
+      "The text says the insured receives a contract called a policy."
+     ],
+     "explanation": "The passage defines insurance, identifies the parties, and explains the premium-for-coverage exchange."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a policyholder pays a small premium in exchange for compensation after a covered loss, insurance most likely ______",
+     "correct": "transfers financial risk to the insurer.",
+     "wrongs": [
+      "increases the policyholder's risk.",
+      "eliminates the possibility of loss.",
+      "requires no contract."
+     ],
+     "why": [
+      "The arrangement exchanges a known small payment for protection against a large uncertain loss.",
+      "The transfer reduces the policyholder's financial exposure.",
+      "Insurance compensates after loss; it does not prevent the event."
+     ],
+     "explanation": "Paying a premium for coverage shifts the financial consequences of a loss to the insurer."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines insurance, identifies the parties, and explains the premium, policy, and compensation arrangement.",
+     "wrongs": [
+      "It narrates the history of a single insurance company.",
+      "It compares life and car insurance in detail.",
+      "It argues that insurance is unnecessary."
+     ],
+     "why": [
+      "No company history is given.",
+      "No types of insurance are compared in detail.",
+      "The text presents insurance as a form of risk management."
+     ],
+     "explanation": "The passage moves from definition to parties and then to the transaction."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that insurance is a form of risk management?",
+     "correct": "It is a form of risk management, primarily used to protect against the risk of a contingent or uncertain loss.",
+     "wrongs": [
+      "Insurance is a means of protection from financial loss in which, in exchange for a fee, a party agrees to compensate another party.",
+      "A person or entity who buys insurance is known as a policyholder.",
+      "The insured receives a contract, called the insurance policy."
+     ],
+     "why": [
+      "This sentence defines insurance and the exchange.",
+      "This sentence names the buyer.",
+      "This sentence describes the contract."
+     ],
+     "explanation": "The correct quotation explicitly calls insurance risk management."
+    }
+   ]
+  },
+  "Minimum wage": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A minimum wage is a legal price floor on labor that raises labor costs and remains debated.",
+     "wrongs": [
+      "A minimum wage is a maximum price employers may pay.",
+      "Minimum wage laws do not affect labor costs.",
+      "Minimum wages are identical everywhere."
+     ],
+     "why": [
+      "The text calls it the price floor below which employees may not sell their labor.",
+      "The text says minimum wages increase the cost of labor.",
+      "The text says rates vary between countries and within them."
+     ],
+     "explanation": "The passage defines minimum wage, explains its effects, and describes its history and debate."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because minimum wages raise the cost of labor, companies most likely ______",
+     "correct": "look for ways to avoid paying them.",
+     "wrongs": [
+      "hire more workers at higher pay.",
+      "ignore labor costs entirely.",
+      "support raising the minimum wage."
+     ],
+     "why": [
+      "The text says companies often try to avoid minimum wage laws by using gig workers, relocating, or automating.",
+      "Higher labor costs discourage additional hiring at that rate.",
+      "The text says companies respond to the cost."
+     ],
+     "explanation": "The passage lists several strategies employers use to avoid minimum wage costs."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines minimum wage, explains employer responses and variation, and traces its history and debate.",
+     "wrongs": [
+      "It profiles a single minimum-wage worker.",
+      "It compares minimum wages in every country.",
+      "It argues that minimum wages should be abolished."
+     ],
+     "why": [
+      "No worker is profiled.",
+      "Countries are mentioned generally, not compared exhaustively.",
+      "The text reports differences of opinion without recommending abolition."
+     ],
+     "explanation": "The passage moves from definition to effects and then to history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that a minimum wage is a price floor?",
+     "correct": "A minimum wage is the lowest remuneration that employers can legally pay their employees—the price floor below which employees may not sell their labor.",
+     "wrongs": [
+      "Most countries had introduced minimum wage legislation by the end of the 20th century.",
+      "Minimum wage policies can vary significantly between countries.",
+      "The movement for minimum wages was initially motivated by a desire to stop the exploitation of workers."
+     ],
+     "why": [
+      "This sentence describes the spread of legislation.",
+      "This sentence describes variation.",
+      "This sentence describes the movement's motivation."
+     ],
+     "explanation": "The correct quotation explicitly defines the minimum wage as a price floor."
+    }
+   ]
+  },
+  "Trade union": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A trade union is a worker organization that bargains collectively to improve wages, benefits, and conditions.",
+     "wrongs": [
+      "A trade union is an employer association that sets prices.",
+      "Trade unions avoid negotiating with employers.",
+      "Unions are funded entirely by governments."
+     ],
+     "why": [
+      "The text defines unions as organizations of workers seeking better wages and conditions.",
+      "The text says unions bargain with employers on behalf of members.",
+      "The text says unions fund their offices through fees called union dues."
+     ],
+     "explanation": "The passage defines trade unions, explains their funding and representation, and describes types and agreements."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because collective bargaining agreements are binding on the rank and file and the employer, the union most likely ______",
+     "correct": "can enforce the terms it negotiates.",
+     "wrongs": [
+      "cannot influence working conditions.",
+      "represents only management.",
+      "avoids written contracts."
+     ],
+     "why": [
+      "Binding agreements create enforceable obligations on both sides.",
+      "The text says unions aim to improve conditions.",
+      "The text says unions bargain on behalf of members."
+     ],
+     "explanation": "A binding agreement means the negotiated terms govern the parties."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines trade unions, explains their funding and bargaining role, and describes types and agreements.",
+     "wrongs": [
+      "It narrates a single strike.",
+      "It compares British and American labor law in detail.",
+      "It argues that unions reduce wages."
+     ],
+     "why": [
+      "No strike is narrated.",
+      "The text notes British and North American terms but does not compare laws.",
+      "The text says unions seek better wages."
+     ],
+     "explanation": "The passage moves from definition to internal organization and bargaining."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that unions negotiate on behalf of workers?",
+     "correct": "The trade union, through an elected leadership and bargaining committee, bargains with the employer on behalf of its members, known as the rank and file, and negotiates labour contracts (collective bargaining agreements) with employers.",
+     "wrongs": [
+      "A trade union is an organization of workers whose purpose is to maintain or improve the conditions of their employment.",
+      "Trade unions typically fund their head office and legal team functions through regularly imposed fees called union dues.",
+      "Unions may organize a particular section of skilled or unskilled workers."
+     ],
+     "why": [
+      "This sentence defines a union's purpose.",
+      "This sentence describes union dues.",
+      "This sentence describes types of union organization."
+     ],
+     "explanation": "The correct quotation describes bargaining and negotiating contracts for members."
+    }
+   ]
+  },
+  "Behavioral economics": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Behavioral economics studies how psychological factors make decisions depart from traditional rational-actor models.",
+     "wrongs": [
+      "Behavioral economics assumes people are perfectly rational.",
+      "Behavioral economics ignores psychology.",
+      "Behavioral economics began in the 18th century as a formal field."
+     ],
+     "why": [
+      "The text says it studies deviations from decisions implied by traditional economic theory.",
+      "The text integrates psychology, neuroscience, and microeconomic theory.",
+      "The text says it began as a distinct field in the 1970s and 1980s."
+     ],
+     "explanation": "The passage defines behavioral economics, describes its scope, and traces its history."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because behavioral economics studies how decisions deviate from traditional economic theory, it most likely ______",
+     "correct": "questions the assumption of fully rational agents.",
+     "wrongs": [
+      "confirms that people always maximize utility.",
+      "rejects all psychological evidence.",
+      "applies only to institutions, not individuals."
+     ],
+     "why": [
+      "The text says the field concerns the bounds of rationality of economic agents.",
+      "Its focus is deviation from rational predictions, not confirmation of them.",
+      "The text says it integrates insights from psychology and neuroscience."
+     ],
+     "explanation": "Studying deviations from rational predictions implies questioning perfect rationality."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines behavioral economics, describes its scope, and traces its development and early roots.",
+     "wrongs": [
+      "It profiles a single behavioral economist.",
+      "It compares behavioral and Marxist economics.",
+      "It argues that psychology has no place in economics."
+     ],
+     "why": [
+      "Several thinkers are named, but none is profiled.",
+      "Marxist economics is not mentioned.",
+      "The text presents psychology as central to the field."
+     ],
+     "explanation": "The passage moves from definition to scope and then to history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that behavioral economics focuses on the limits of rationality?",
+     "correct": "Behavioral economics is primarily concerned with the bounds of rationality of economic agents.",
+     "wrongs": [
+      "Behavioral economics is the study of the psychological factors involved in the decisions of individuals or institutions.",
+      "Behavioral models typically integrate insights from psychology, neuroscience and microeconomic theory.",
+      "Behavioral economics began as a distinct field of study in the 1970s and 1980s."
+     ],
+     "why": [
+      "This sentence defines the field's subject.",
+      "This sentence describes its methods.",
+      "This sentence dates its emergence."
+     ],
+     "explanation": "The correct quotation states the field's concern with the bounds of rationality."
+    }
+   ]
+  }
+ }
+}

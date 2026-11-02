@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Louisiana Purchase": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The 1803 Louisiana Purchase transferred a vast territory from France to the United States, though France controlled little of it.",
+     "wrongs": [
+      "The Louisiana Purchase was a military conquest of French Canada.",
+      "France sold Louisiana to Spain in 1803.",
+      "The purchase gave the United States full control of settled Native lands."
+     ],
+     "why": [
+      "The text describes an acquisition of territory from the French First Republic in 1803.",
+      "The text says France had ceded Louisiana to Spain in 1762, then regained it in 1800.",
+      "The text says the United States bought the preemptive right to obtain Indian lands by treaty or conquest."
+     ],
+     "explanation": "The passage describes the purchase's size, price, limited French control, and background."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because France controlled only a small fraction of the territory and most of it was inhabited by Native Americans, the United States effectively ______",
+     "correct": "acquired a claim to lands it did not yet control.",
+     "wrongs": [
+      "immediately governed every community in the territory.",
+      "purchased only the city of New Orleans.",
+      "gave up its claims west of the Mississippi."
+     ],
+     "why": [
+      "The text says the United States bought the preemptive right to obtain Indian lands by treaty or conquest.",
+      "French control was limited, and Native peoples inhabited most of the area.",
+      "The purchase covered 828,000 square miles."
+     ],
+     "explanation": "The United States bought a legal claim, not effective control, over most of the territory."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes the purchase and its terms, explains the limited French control, and recounts how France acquired and sold the territory.",
+     "wrongs": [
+      "It narrates the Lewis and Clark expedition.",
+      "It compares the Louisiana Purchase with the Alaska Purchase.",
+      "It argues that the purchase was unconstitutional."
+     ],
+     "why": [
+      "The expedition is not mentioned.",
+      "The Alaska Purchase is not mentioned.",
+      "Constitutionality is not discussed."
+     ],
+     "explanation": "The passage moves from the deal's terms to its real meaning and background."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the United States bought claims rather than settled control?",
+     "correct": "However, France only controlled a small fraction of this area, most of which was inhabited by Native Americans; effectively, for the majority of the area, the United States bought the preemptive right to obtain Indian lands by treaty or by conquest, to the exclusion of other colonial powers.",
+     "wrongs": [
+      "The Louisiana Purchase was the acquisition of the territory of Louisiana by the United States from the French First Republic in 1803.",
+      "In return for $15 million the United States nominally acquired a total of 828,000 sq mi of land.",
+      "The Kingdom of France had controlled the Louisiana territory from 1682 until it was ceded to Spain in 1762."
+     ],
+     "why": [
+      "This sentence defines the purchase.",
+      "This sentence gives the price and area.",
+      "This sentence describes earlier French control."
+     ],
+     "explanation": "The correct quotation explains that the United States acquired preemptive rights over Native lands."
+    }
+   ]
+  },
+  "War of 1812": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The War of 1812 grew out of maritime disputes with Britain, divided American opinion, and ended with the Treaty of Ghent.",
+     "wrongs": [
+      "The War of 1812 was fought between the United States and France.",
+      "The war ended immediately after the Declaration of War in 1812.",
+      "Americans unanimously supported the war."
+     ],
+     "why": [
+      "The text says the conflict was against the United Kingdom and its allies.",
+      "The text says the war lasted until 1815.",
+      "The text says opinion was split, with Federalists opposed."
+     ],
+     "explanation": "The passage describes the war's causes, declaration, political division, and conclusion."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because news of British concessions did not reach the United States until late July 1812, the war most likely ______",
+     "correct": "began before Americans learned of the concessions.",
+     "wrongs": [
+      "was avoided entirely.",
+      "ended in June 1812.",
+      "was declared by Britain first."
+     ],
+     "why": [
+      "The text says the conflict was already underway by the time the news arrived.",
+      "The text says the war continued until 1815.",
+      "The text says the United States declared war on 18 June 1812."
+     ],
+     "explanation": "Slow communication meant the war started before the concessions could affect the decision."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It introduces the conflict, explains American grievances and divided opinion, and notes the delayed news and the treaty.",
+     "wrongs": [
+      "It narrates a single naval battle in detail.",
+      "It compares the war with the American Revolution.",
+      "It profiles James Madison."
+     ],
+     "why": [
+      "No battle is narrated.",
+      "The Revolution is not discussed.",
+      "Madison is not mentioned."
+     ],
+     "explanation": "The passage moves from the war's origins to politics and diplomacy."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that American grievances were about maritime rights?",
+     "correct": "The United States objected to British restrictions on American trade with Napoleonic France and to the Royal Navy's impressment of seamen from American vessels, including men the United States considered American citizens.",
+     "wrongs": [
+      "The War of 1812 was a conflict initiated by the United States against the United Kingdom and its allies.",
+      "Although peace terms were agreed upon in the December 1814 Treaty of Ghent, the war did not officially end until 1815.",
+      "Opinion in the US was split on how to respond."
+     ],
+     "why": [
+      "This sentence introduces the conflict.",
+      "This sentence describes the treaty and timeline.",
+      "This sentence describes divided opinion."
+     ],
+     "explanation": "The correct quotation names trade restrictions and impressment of seamen."
+    }
+   ]
+  },
+  "Trail of Tears": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Trail of Tears was the forced removal of tens of thousands of Native Americans to Indian Territory, causing widespread death.",
+     "wrongs": [
+      "The Trail of Tears was a voluntary migration west by Native nations.",
+      "The Trail of Tears affected only the Cherokee nation.",
+      "The Trail of Tears took place before the Indian Removal Act."
+     ],
+     "why": [
+      "The text describes forced displacement and ethnic cleansing.",
+      "The text names the Cherokee, Muscogee, Seminole, Chickasaw, and Choctaw.",
+      "The text says removal followed the 1830 Indian Removal Act."
+     ],
+     "explanation": "The passage defines the removal, identifies the nations involved, and describes its causes and toll."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the Cherokee removal in 1838 was brought on by the discovery of gold in Georgia, the removal most likely ______",
+     "correct": "was driven partly by demand for gold-rich land.",
+     "wrongs": [
+      "had no economic motives.",
+      "was requested by the Cherokee government.",
+      "ended the Georgia Gold Rush."
+     ],
+     "why": [
+      "The text links the removal to the gold discovery and the resulting rush.",
+      "Gold is an economic motive.",
+      "The text describes forced removal by the United States government."
+     ],
+     "explanation": "The gold discovery gave settlers and officials a strong economic interest in Cherokee land."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the removal, identifies the nations and destination, and describes the Cherokee case and its suffering.",
+     "wrongs": [
+      "It profiles a single Cherokee family.",
+      "It compares the Trail of Tears with the Underground Railroad.",
+      "It argues that the removal was legal and just."
+     ],
+     "why": [
+      "No family is profiled.",
+      "The Underground Railroad is not mentioned.",
+      "The text describes forced displacement and ethnic cleansing."
+     ],
+     "explanation": "The passage moves from definition and policy to the Cherokee removal and its consequences."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that removal caused severe suffering?",
+     "correct": "The relocated peoples suffered from exposure, disease, and starvation while en route to their newly designated Indian reserve.",
+     "wrongs": [
+      "The Trail of Tears was the forced displacement and ethnic cleansing of about 60,000 Native Americans.",
+      "The Cherokee removal in 1838 was the last forced removal east of the Mississippi.",
+      "A variety of scholars have classified the Trail of Tears as an example of the genocide of Native Americans."
+     ],
+     "why": [
+      "This sentence defines the event and its scale.",
+      "This sentence identifies the last removal.",
+      "This sentence describes scholarly classification."
+     ],
+     "explanation": "The correct quotation names exposure, disease, and starvation during the journey."
+    }
+   ]
+  },
+  "California gold rush": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The California gold rush drew 300,000 people, boosted the economy and statehood, and devastated Native Californians.",
+     "wrongs": [
+      "The gold rush was a small event that attracted few migrants.",
+      "The gold rush delayed California's statehood.",
+      "The gold rush benefited Native Californians."
+     ],
+     "why": [
+      "The text says about 300,000 people came to California.",
+      "The text says the population increase allowed California to grow rapidly into statehood.",
+      "The text says the gold rush accelerated the Native American population's decline."
+     ],
+     "explanation": "The passage describes the discovery, the influx of migrants, and the economic and human consequences."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the gold rush caused a sudden population increase, California most likely ______",
+     "correct": "qualified for statehood sooner.",
+     "wrongs": [
+      "remained a sparsely populated territory.",
+      "lost its access to the Pacific.",
+      "returned the territory to Mexico."
+     ],
+     "why": [
+      "The text says the population increase allowed California to grow rapidly into statehood.",
+      "The text describes 300,000 arrivals.",
+      "Nothing in the text concerns Pacific access."
+     ],
+     "explanation": "A rapid population increase supported the transition to statehood in 1850."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes the discovery and migration, then explains the economic and demographic effects.",
+     "wrongs": [
+      "It narrates one miner's journey overland.",
+      "It compares the California and Klondike gold rushes.",
+      "It explains mining technology in detail."
+     ],
+     "why": [
+      "No individual miner is profiled.",
+      "The Klondike is not mentioned.",
+      "Mining technology is not described."
+     ],
+     "explanation": "The passage moves from the discovery to migration and consequences."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the gold rush harmed Native Californians?",
+     "correct": "The gold rush had severe effects on Native Californians and accelerated the Native American population's decline from factors including disease, starvation, and according to certain sources, acts of unprovoked aggression.",
+     "wrongs": [
+      "The California gold rush was a gold rush in California, which began on January 24, 1848.",
+      "The news of gold brought approximately 300,000 people to California.",
+      "The sudden influx of gold into the money supply reinvigorated the American economy."
+     ],
+     "why": [
+      "This sentence dates the discovery.",
+      "This sentence describes migration.",
+      "This sentence describes economic effects."
+     ],
+     "explanation": "The correct quotation names disease, starvation, and aggression as causes of Native decline."
+    }
+   ]
+  },
+  "American Civil War": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Civil War was fought between the Union and a Confederacy formed to preserve slavery, and it ended with Union victory and abolition.",
+     "wrongs": [
+      "The Civil War was fought between the United States and Britain.",
+      "The Confederacy was formed to abolish slavery.",
+      "The war ended without freeing any enslaved people."
+     ],
+     "why": [
+      "The text names the Union and the Confederacy.",
+      "The text says Southern states seceded to preserve slavery.",
+      "The text says the war ended with national abolition of slavery, freeing four million African Americans."
+     ],
+     "explanation": "The passage describes the war's cause, outbreak, scale, and outcome."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the Confederacy contained about a third of the US population, its armies most likely ______",
+     "correct": "faced a larger pool of Union soldiers.",
+     "wrongs": [
+      "outnumbered Union forces.",
+      "had no need for recruitment.",
+      "controlled the entire US population."
+     ],
+     "why": [
+      "A third of the population implies the Union held about two-thirds.",
+      "The Union's larger population would support more troops.",
+      "The text says military recruitment soared in both sections."
+     ],
+     "explanation": "With roughly twice the population, the Union could draw on more manpower."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the war and its cause, describes the secession and outbreak, and summarizes the conflict and outcome.",
+     "wrongs": [
+      "It narrates a single battle in detail.",
+      "It profiles Jefferson Davis.",
+      "It compares the Civil War with the Napoleonic Wars."
+     ],
+     "why": [
+      "Fort Sumter is mentioned as the start, not narrated.",
+      "Davis is named as president but not profiled.",
+      "The Napoleonic Wars are not discussed."
+     ],
+     "explanation": "The passage moves from causes to secession and then to the war's course and result."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that slavery was central to secession?",
+     "correct": "The South saw slavery as threatened because of the election of Abraham Lincoln as president in 1860 and the growing abolitionist movement in the North.",
+     "wrongs": [
+      "The American Civil War was a civil war in the United States between the Union and the Confederacy.",
+      "The war began on April 12, 1861, when the Confederate States bombarded Fort Sumter in South Carolina.",
+      "Four more Southern states seceded after the war began."
+     ],
+     "why": [
+      "This sentence defines the conflict.",
+      "This sentence describes the war's first battle.",
+      "This sentence describes additional secessions."
+     ],
+     "explanation": "The correct quotation ties secession to fears that slavery was threatened."
+    }
+   ]
+  },
+  "Reconstruction era": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Reconstruction addressed abolition and readmission through constitutional amendments, but Southern states undermined freed people's rights.",
+     "wrongs": [
+      "Reconstruction was a period of peace with no conflict over rights.",
+      "Reconstruction abolished the Constitution.",
+      "Reconstruction ended before the Civil War."
+     ],
+     "why": [
+      "The text describes legal, social, and political challenges and resistance.",
+      "The text says three amendments were added to the Constitution.",
+      "The text says the period followed the American Civil War."
+     ],
+     "explanation": "The passage describes Reconstruction's aims, amendments, federal efforts, and Southern resistance."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because former Confederate states imposed poll taxes and literacy tests, those measures most likely ______",
+     "correct": "prevented many Black citizens from voting.",
+     "wrongs": [
+      "expanded Black voting rights.",
+      "replaced the need for amendments.",
+      "applied only to former Union soldiers."
+     ],
+     "why": [
+      "The text says the measures were meant to circumvent the amendments and prevent Black people from voting.",
+      "Poll taxes and literacy tests restrict access rather than expand it.",
+      "The text presents them as workarounds to the amendments, not replacements."
+     ],
+     "explanation": "The stated purpose of the measures was to discourage or prevent Black voting."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines Reconstruction, describes the amendments and resistance to them, and explains federal and congressional action.",
+     "wrongs": [
+      "It profiles a single freedman's life.",
+      "It compares Reconstruction with the New Deal.",
+      "It argues that Reconstruction succeeded completely."
+     ],
+     "why": [
+      "No individual is profiled.",
+      "The New Deal is not mentioned.",
+      "The text describes how Southern states circumvented the amendments."
+     ],
+     "explanation": "The passage moves from definition to constitutional change, resistance, and federal measures."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that Southern states undermined new constitutional rights?",
+     "correct": "To circumvent these, former Confederate states imposed poll taxes and literacy tests and sought to intimidate and control the Black population and discourage or prevent them from voting.",
+     "wrongs": [
+      "Three amendments were added to the United States Constitution to grant citizenship and equal civil rights to the newly freed slaves.",
+      "The United States Army played a vital role in establishing a free labor economy in the South.",
+      "Congress established a Freedmen's Bureau to provide much-needed food and shelter to the newly freed slaves."
+     ],
+     "why": [
+      "This sentence describes the amendments.",
+      "This sentence describes the Army's role.",
+      "This sentence describes the Freedmen's Bureau."
+     ],
+     "explanation": "The correct quotation names the poll taxes, literacy tests, and intimidation used to block voting."
+    }
+   ]
+  },
+  "Transcontinental railroad": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Transcontinental railroads cross a continent to link distant coasts and have opened interior regions and carried freight and passengers.",
+     "wrongs": [
+      "Transcontinental railroads operate only within a single city.",
+      "Transcontinental railroads are defined by crossing a single ocean.",
+      "No transcontinental railroad remains in use today."
+     ],
+     "why": [
+      "The text says they cross a continental land mass with terminals at different oceans or borders.",
+      "The definition concerns continental crossings, not ocean crossings.",
+      "The text says many continue to play an important role in freight transportation."
+     ],
+     "explanation": "The passage defines transcontinental railroads, describes their effects, and gives examples."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because transcontinental railroads helped open interior regions to exploration and settlement, they most likely ______",
+     "correct": "encouraged people to move inland.",
+     "wrongs": [
+      "discouraged settlement away from coasts.",
+      "eliminated all freight transportation.",
+      "reduced contact between regions."
+     ],
+     "why": [
+      "Opening interior regions to settlement implies population movement inland.",
+      "That contradicts the stated effect.",
+      "The text says they formed backbones of freight networks."
+     ],
+     "explanation": "Rail access to interior regions would make inland settlement more feasible."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines transcontinental railroads, describes their effects, and gives examples from different regions.",
+     "wrongs": [
+      "It narrates the construction of the Trans-Siberian Railway.",
+      "It compares rail and air travel.",
+      "It argues that transcontinental railroads are obsolete."
+     ],
+     "why": [
+      "The Trans-Siberian is mentioned only as an example.",
+      "Air travel is not discussed.",
+      "The text says many remain important for freight."
+     ],
+     "explanation": "The passage moves from definition to consequences and examples."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that transcontinental railroads enabled settlement?",
+     "correct": "Transcontinental railroads helped open up interior regions of continents not previously colonized to exploration and settlement that would not otherwise have been feasible.",
+     "wrongs": [
+      "A transcontinental railroad is contiguous railroad trackage that crosses a continental land mass.",
+      "Although Europe is crisscrossed by railways, the railroads within Europe are usually not considered transcontinental.",
+      "Many of them continue to have an important role in freight transportation."
+     ],
+     "why": [
+      "This sentence defines the term.",
+      "This sentence discusses Europe's railways.",
+      "This sentence describes freight's continuing importance."
+     ],
+     "explanation": "The correct quotation explicitly links the railroads to exploration and settlement."
+    }
+   ]
+  },
+  "Homestead Acts": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Homestead Acts gave away vast public lands to settlers, reflecting Free Soil ideals and drawing millions of claimants.",
+     "wrongs": [
+      "The Homestead Acts sold land only to wealthy slaveholders.",
+      "The Homestead Acts applied only east of the Mississippi.",
+      "The Homestead Acts required applicants to have served in the military."
+     ],
+     "why": [
+      "The text says land was given free to 1.6 million homesteaders.",
+      "The text says most homesteads were west of the Mississippi.",
+      "The text says any adult who had not taken up arms against the federal government could apply."
+     ],
+     "explanation": "The passage describes the acts' scale, purpose, eligibility, and legacy."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because women and immigrants who had applied for citizenship were eligible, the Homestead Acts most likely ______",
+     "correct": "allowed many people beyond male citizens to claim land.",
+     "wrongs": [
+      "excluded all immigrants from ownership.",
+      "required applicants to be born in the United States.",
+      "applied only to former Confederate soldiers."
+     ],
+     "why": [
+      "The text names women and citizenship applicants as eligible.",
+      "That contradicts the stated eligibility.",
+      "The text does not require native birth."
+     ],
+     "explanation": "Eligibility for women and citizenship applicants widened access beyond male citizens."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes the acts' scale, explains their Free Soil purpose, and details eligibility and legacy.",
+     "wrongs": [
+      "It profiles one homesteader's family.",
+      "It compares the Homestead Acts with the Chinese Exclusion Act.",
+      "It argues that homesteading failed."
+     ],
+     "why": [
+      "No individual family is profiled.",
+      "The Chinese Exclusion Act is not mentioned.",
+      "The text reports 1.6 million homesteaders and 93 million descendants."
+     ],
+     "explanation": "The passage moves from scale to rationale, eligibility, and descendants."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the acts transferred an enormous amount of land?",
+     "correct": "In all, more than 160 million acres of public land, or nearly 10 percent of the total area of the United States, were given away free to 1.6 million homesteaders; most of the homesteads were west of the Mississippi River.",
+     "wrongs": [
+      "The Homestead Acts were several laws in the United States by which an applicant could acquire ownership of government land.",
+      "For a number of years individual Congressmen put forward bills providing for homesteading.",
+      "As of 2017, around 93 million Americans were descendants of people who received land through the Homestead Acts."
+     ],
+     "why": [
+      "This sentence defines the acts.",
+      "This sentence describes earlier legislative efforts.",
+      "This sentence describes descendants."
+     ],
+     "explanation": "The correct quotation gives the acreage, share of national territory, and number of recipients."
+    }
+   ]
+  },
+  "Chinese Exclusion Act": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The 1882 Chinese Exclusion Act barred Chinese laborers, was the first major national-origin exclusion, and was later made permanent.",
+     "wrongs": [
+      "The act encouraged Chinese immigration to the United States.",
+      "The act was overturned immediately after it passed.",
+      "The act applied only to Chinese diplomats."
+     ],
+     "why": [
+      "The text says it prohibited all immigration of Chinese laborers for 10 years.",
+      "The text says it was renewed in 1892 and made permanent in 1902.",
+      "The text says the law made exceptions for travelers and diplomats."
+     ],
+     "explanation": "The passage describes the law's provisions, context, renewal, and evasion."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the laws were widely evaded, for example through the use of paper sons, enforcement most likely ______",
+     "correct": "was difficult and incomplete.",
+     "wrongs": [
+      "was completely successful.",
+      "ended all Chinese immigration immediately.",
+      "applied only to diplomats."
+     ],
+     "why": [
+      "Widespread evasion implies enforcement gaps.",
+      "Evasion contradicts complete success.",
+      "The text says the laws were widely evaded."
+     ],
+     "explanation": "If people commonly evaded the restrictions, enforcement could not have been fully effective."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes the law's provisions, explains the sentiment behind it, and traces its renewal and evasion.",
+     "wrongs": [
+      "It profiles a Chinese immigrant family.",
+      "It compares US and Canadian immigration law.",
+      "It argues that the act was never enforced."
+     ],
+     "why": [
+      "No family is profiled.",
+      "Canada is not mentioned.",
+      "The text says the laws were widely evaded, implying enforcement attempts."
+     ],
+     "explanation": "The passage moves from the law itself to context and later history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the act singled out one nationality?",
+     "correct": "It was the first major US law implemented to prevent all members of a specific national group from immigrating to the United States, and therefore significantly shaped twentieth-century immigration policy.",
+     "wrongs": [
+      "The Chinese Exclusion Act of 1882 was a United States federal law signed by President Chester A. Arthur on May 6, 1882.",
+      "The law made exceptions for travelers and diplomats.",
+      "The act was initially intended to last for 10 years."
+     ],
+     "why": [
+      "This sentence gives the law's date and signer.",
+      "This sentence describes exceptions.",
+      "This sentence gives the initial duration."
+     ],
+     "explanation": "The correct quotation says the law targeted a specific national group."
+    }
+   ]
+  },
+  "Spanish–American War": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Spanish-American War ended Spanish power in several regions and left the United States with overseas possessions and a debate over expansionism.",
+     "wrongs": [
+      "The war ended with Spain acquiring the Philippines.",
+      "The war was fought between the United States and France.",
+      "The war had no effect on US territory."
+     ],
+     "why": [
+      "The text says the US acquired Puerto Rico, Guam, and the Philippines and established a protectorate over Cuba.",
+      "The text says the conflict was between the United States and Spain.",
+      "The text says the US gained several island possessions."
+     ],
+     "explanation": "The passage describes the war's origins, outcome, and the debate it provoked."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because yellow journalism exaggerated Spanish atrocities in Cuba, it most likely ______",
+     "correct": "built public support for the Cuban rebels.",
+     "wrongs": [
+      "reduced newspaper sales.",
+      "persuaded the public to oppose intervention.",
+      "ended the Cuban revolt."
+     ],
+     "why": [
+      "The text says the coverage swayed American public opinion in support of the Cuban rebels.",
+      "The text says the practice was used to sell more newspapers.",
+      "The effect described is support for intervention, not opposition."
+     ],
+     "explanation": "Exaggerated coverage that swayed opinion toward the rebels would encourage support for intervention."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes the war and its territorial outcome, then explains its background and the role of yellow journalism.",
+     "wrongs": [
+      "It narrates the sinking of the USS Maine in detail.",
+      "It compares Spanish and American colonies.",
+      "It argues that the war was unavoidable."
+     ],
+     "why": [
+      "The Maine is mentioned only as the war's trigger.",
+      "No colonial comparison is made.",
+      "The text describes the debate over expansionism without claiming inevitability."
+     ],
+     "explanation": "The passage moves from outcome to causes and public opinion."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the war expanded US territory?",
+     "correct": "It began with the sinking of the USS Maine in Havana Harbor in Cuba, and eventually resulted in the U.S. acquiring Puerto Rico, Guam, the Philippines, and establishing a protectorate over Cuba.",
+     "wrongs": [
+      "The Spanish–American War was an armed conflict fought between the United States and Spain in 1898.",
+      "The Spanish–American War brought an end to almost four centuries of Spanish presence in the Americas, Asia, and the Pacific.",
+      "In 1895, Cuban nationalists began a revolt against Spanish colonial rule."
+     ],
+     "why": [
+      "This sentence names the belligerents and year.",
+      "This sentence describes the end of Spanish presence.",
+      "This sentence describes the Cuban revolt."
+     ],
+     "explanation": "The correct quotation lists the territories the United States acquired."
+    }
+   ]
+  }
+ }
+}

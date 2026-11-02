@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Solar System": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Solar System is a single-star system of eight planets that formed from a collapsing molecular cloud about 4.6 billion years ago.",
+     "wrongs": [
+      "The Solar System contains thousands of stars.",
+      "The Solar System formed less than a million years ago.",
+      "Jupiter contains most of the Solar System's mass."
+     ],
+     "why": [
+      "The text calls it an isolated single-star planetary system.",
+      "The text says it formed about 4.6 billion years ago.",
+      "The text says the Sun accounts for 99.86% of the total mass."
+     ],
+     "explanation": "The passage describes the system's formation, mass distribution, and planetary arrangement."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the Sun accounts for 99.86% of the Solar System's total mass, its gravity most likely ______",
+     "correct": "dominates the motion of the planets.",
+     "wrongs": [
+      "has no effect on the planets.",
+      "is weaker than Jupiter's.",
+      "comes from the planets themselves."
+     ],
+     "why": [
+      "A body with nearly all the mass would exert the dominant gravitational pull.",
+      "The system is defined as gravitationally bound to the Sun.",
+      "Jupiter and Saturn together hold under 90% of the non-stellar mass."
+     ],
+     "explanation": "With almost all the system's mass, the Sun's gravity governs the orbits."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the Solar System, explains its formation and mass distribution, and orders its planets.",
+     "wrongs": [
+      "It profiles each planet's atmosphere in turn.",
+      "It compares the Solar System with other star systems.",
+      "It argues that Pluto should be a planet."
+     ],
+     "why": [
+      "Planetary atmospheres are not described.",
+      "Other star systems are not compared.",
+      "Pluto is not mentioned."
+     ],
+     "explanation": "The passage moves from definition and formation to structure and planetary order."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the Sun holds nearly all the system's mass?",
+     "correct": "The Sun accounts for 99.86% of the Solar System's total mass.",
+     "wrongs": [
+      "The Solar System is the gravitationally bound system of the Sun and the masses that orbit it.",
+      "The system formed about 4.6 billion years ago when a dense region of a molecular cloud collapsed.",
+      "Jupiter and Saturn possess nearly 90% of the non-stellar mass of the Solar System."
+     ],
+     "why": [
+      "This sentence defines the system.",
+      "This sentence describes formation.",
+      "This sentence describes the giants' share of non-stellar mass."
+     ],
+     "explanation": "The correct quotation gives the Sun's 99.86% share."
+    }
+   ]
+  },
+  "Black hole": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A black hole is a compact object whose gravity traps light, bounded by an event horizon and predicted by general relativity.",
+     "wrongs": [
+      "A black hole is a star that emits unusually bright light.",
+      "Black holes are not predicted by general relativity.",
+      "The event horizon is the center of a black hole."
+     ],
+     "why": [
+      "The text says its gravity prevents anything, including light, from escaping.",
+      "The text says general relativity predicts compact masses form black holes.",
+      "The text distinguishes the event horizon from the central singularity."
+     ],
+     "explanation": "The passage defines black holes, explains their theoretical basis, and describes their formation and history."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because crossing a black hole's event horizon produces no locally detectable change, a person falling through it most likely ______",
+     "correct": "would not notice the moment of crossing.",
+     "wrongs": [
+      "would be crushed immediately at the boundary.",
+      "would see the entire universe end.",
+      "would be reflected back outward."
+     ],
+     "why": [
+      "No locally detectable change at the horizon means no local signal of crossing.",
+      "The text says the object is trapped but nothing local changes at the boundary.",
+      "The text does not describe such an observation."
+     ],
+     "explanation": "Without a local change at the horizon, a falling observer would notice nothing special there."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines black holes and their horizons, traces the theory's history, and explains their formation.",
+     "wrongs": [
+      "It narrates a spacecraft's journey into a black hole.",
+      "It compares black holes with neutron stars in detail.",
+      "It argues that black holes do not exist."
+     ],
+     "why": [
+      "No spacecraft journey is narrated.",
+      "Neutron stars are not discussed.",
+      "The text describes Cygnus X-1 as the first widely accepted black hole."
+     ],
+     "explanation": "The passage moves from definition and theory to history and formation."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that nothing can escape a black hole?",
+     "correct": "A black hole is an astronomical body so compact that its gravity prevents anything, including light, from escaping.",
+     "wrongs": [
+      "The boundary of no escape is called the event horizon.",
+      "General relativity also predicts that every black hole should have a central singularity.",
+      "Black holes typically form as part of a supernova event when massive stars collapse."
+     ],
+     "why": [
+      "This sentence names the boundary.",
+      "This sentence describes the singularity.",
+      "This sentence describes formation."
+     ],
+     "explanation": "The correct quotation states that gravity prevents even light from escaping."
+    }
+   ]
+  },
+  "Exoplanet": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Exoplanets are planets outside the Solar System, and thousands have been confirmed, though detection methods favor large, close planets.",
+     "wrongs": [
+      "Exoplanets are planets within the Solar System.",
+      "Only one exoplanet has ever been confirmed.",
+      "Detection methods favor small, distant planets."
+     ],
+     "why": [
+      "The text defines an exoplanet as a planet outside the Solar System.",
+      "The text reports 6,445 confirmed exoplanets.",
+      "The text says methods suffer a bias favoring large planets close to the star."
+     ],
+     "explanation": "The passage defines exoplanets, describes detections, and explains observational bias."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because transit photometry and Doppler spectroscopy favor large planets close to their stars, the known exoplanet population most likely ______",
+     "correct": "underrepresents smaller, distant planets.",
+     "wrongs": [
+      "includes every planet in the galaxy.",
+      "is biased toward small, cold planets.",
+      "contains no large planets."
+     ],
+     "why": [
+      "A detection bias toward large, close planets means others are less likely to be found.",
+      "The text gives a confirmed count far below the estimated total.",
+      "The stated bias favors large, close planets."
+     ],
+     "explanation": "Observational bias means the catalog overrepresents what is easiest to detect."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines exoplanets, recounts early detections, and describes methods, statistics, and extremes.",
+     "wrongs": [
+      "It profiles a single exoplanet mission.",
+      "It compares exoplanets with moons.",
+      "It argues that no exoplanets exist."
+     ],
+     "why": [
+      "No mission is profiled.",
+      "Moons are not discussed.",
+      "The text reports thousands of confirmed exoplanets."
+     ],
+     "explanation": "The passage moves from definition and history to detection and record holders."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that detection methods are biased?",
+     "correct": "Transit photometry and Doppler spectroscopy have found the most, but these methods suffer from a clear observational bias favoring the detection of large planets close to the star.",
+     "wrongs": [
+      "An exoplanet or extrasolar planet is a planet outside the Solar System.",
+      "The first confirmed detection of an exoplanet was in 1992 around a pulsar.",
+      "As of 8 October 2026, there are 6,445 confirmed exoplanets."
+     ],
+     "why": [
+      "This sentence defines an exoplanet.",
+      "This sentence describes the first detection.",
+      "This sentence gives the confirmed count."
+     ],
+     "explanation": "The correct quotation explicitly names the observational bias."
+    }
+   ]
+  },
+  "Nebula": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Nebulae are vast, extremely low-density clouds of gas and dust where stars often form.",
+     "wrongs": [
+      "Nebulae are dense solid objects like planets.",
+      "Nebulae never contain dust or gas.",
+      "Nebulae are smaller than Earth."
+     ],
+     "why": [
+      "The text describes them as luminescent parts of the interstellar medium.",
+      "The text says they consist of ionized, neutral, or molecular hydrogen and cosmic dust.",
+      "The text says some are hundreds of light-years in diameter."
+     ],
+     "explanation": "The passage defines nebulae, describes star formation, and explains their enormous size and low density."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because most nebulae are far less dense than any vacuum created on Earth, a nebula the size of Earth would most likely ______",
+     "correct": "contain only a few kilograms of matter.",
+     "wrongs": [
+      "weigh more than Earth.",
+      "be completely solid.",
+      "contain no particles at all."
+     ],
+     "why": [
+      "The text says an Earth-sized nebular cloud would have a total mass of only a few kilograms.",
+      "That would require much higher density.",
+      "Nebulae are gas and dust, not solid."
+     ],
+     "explanation": "The passage directly states the mass of an Earth-sized nebular cloud."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines nebulae, explains star formation within them, and describes their size and density.",
+     "wrongs": [
+      "It narrates the birth of a single star.",
+      "It compares nebulae with black holes.",
+      "It argues that nebulae cannot be observed."
+     ],
+     "why": [
+      "No individual star's birth is narrated.",
+      "Black holes are not mentioned.",
+      "The text notes the Orion Nebula is visible to the naked eye."
+     ],
+     "explanation": "The passage moves from definition to formation and then to physical properties."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that nebulae are star-forming regions?",
+     "correct": "Nebulae are often star-forming regions, such as the Pillars of Creation in the Eagle Nebula.",
+     "wrongs": [
+      "Nebula is a distinct luminescent part of interstellar medium.",
+      "Most nebulae are of vast size; some are hundreds of light-years in diameter.",
+      "The Orion Nebula can be viewed with the naked eye but was missed by early astronomers."
+     ],
+     "why": [
+      "This sentence defines a nebula.",
+      "This sentence describes size.",
+      "This sentence describes visibility."
+     ],
+     "explanation": "The correct quotation calls nebulae star-forming regions and names an example."
+    }
+   ]
+  },
+  "Milky Way": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Milky Way is a barred spiral galaxy containing the Solar System, one of many galaxies in the universe.",
+     "wrongs": [
+      "The Milky Way contains all the stars in the universe.",
+      "The Milky Way is a single star.",
+      "The Milky Way has no center."
+     ],
+     "why": [
+      "The text says Hubble showed it was just one of many galaxies.",
+      "The text says the galaxy contains 100 to 400 billion stars.",
+      "The text identifies Sagittarius A* at its center."
+     ],
+     "explanation": "The passage describes the galaxy's appearance, discovery history, structure, and contents."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because Edwin Hubble's observations in 1923 showed that the Milky Way was just one of many galaxies, earlier astronomers most likely ______",
+     "correct": "had underestimated the size of the universe.",
+     "wrongs": [
+      "had mapped every galaxy.",
+      "knew the universe contained many galaxies.",
+      "had measured the Milky Way's black hole."
+     ],
+     "why": [
+      "Thinking one galaxy held all stars implies a much smaller universe.",
+      "Mapping every galaxy would require knowing other galaxies exist.",
+      "That contradicts the pre-1920s view described."
+     ],
+     "explanation": "Before other galaxies were recognized, the universe was assumed to be smaller."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes the Milky Way's appearance, explains how its nature was discovered, and details its structure and contents.",
+     "wrongs": [
+      "It narrates a spacecraft's trip to the galactic center.",
+      "It compares the Milky Way with the Andromeda Galaxy in detail.",
+      "It argues that the Milky Way is the only galaxy."
+     ],
+     "why": [
+      "No spacecraft trip is described.",
+      "Andromeda is not mentioned.",
+      "The text says the Milky Way is one of many galaxies."
+     ],
+     "explanation": "The passage moves from appearance to history and then to physical structure."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the Milky Way is one of many galaxies?",
+     "correct": "observations by Edwin Hubble in 1923 showed that the Milky Way was just one of many galaxies.",
+     "wrongs": [
+      "The Milky Way is the galaxy that includes the Solar System.",
+      "Galileo Galilei first resolved the band of light into individual stars with his telescope in 1610.",
+      "The galaxy is estimated to contain 100–400 billion stars."
+     ],
+     "why": [
+      "This sentence identifies the galaxy.",
+      "This sentence describes Galileo's observation.",
+      "This sentence gives the star count."
+     ],
+     "explanation": "The correct quotation states that the Milky Way is one of many galaxies."
+    }
+   ]
+  },
+  "Telescope": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Telescopes observe distant objects across the electromagnetic spectrum, developing from early optical instruments to many modern types.",
+     "wrongs": [
+      "Telescopes can detect only visible light.",
+      "The first telescopes were invented in the 20th century.",
+      "Telescopes are used only for terrestrial viewing."
+     ],
+     "why": [
+      "The text says the word now covers instruments detecting different regions of the spectrum.",
+      "The text dates the first practical telescopes to the early 17th century.",
+      "The text says early telescopes were used for both terrestrial applications and astronomy."
+     ],
+     "explanation": "The passage defines telescopes, traces their invention, and describes later types and the word's origin."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the word telescope was coined in 1611, the instrument most likely ______",
+     "correct": "was a recent invention at that time.",
+     "wrongs": [
+      "had existed for thousands of years.",
+      "was invented in the 20th century.",
+      "was already obsolete in 1611."
+     ],
+     "why": [
+      "A new name coined for a device suggests it was recently developed.",
+      "The text dates the first practical telescopes to the early 17th century.",
+      "The text places radio and infrared telescopes in the 20th century, not the first optical ones."
+     ],
+     "explanation": "The coinage date aligns with the early 17th-century invention of practical telescopes."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines telescopes, traces the development of optical and other types, and explains the word's etymology.",
+     "wrongs": [
+      "It explains how to grind a lens.",
+      "It compares telescopes with microscopes.",
+      "It argues that radio telescopes are useless."
+     ],
+     "why": [
+      "No lens-making instructions are given.",
+      "Microscopes are not mentioned.",
+      "The text presents radio telescopes as a major 20th-century development."
+     ],
+     "explanation": "The passage moves from definition to history and etymology."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that telescopes now cover many wavelengths?",
+     "correct": "Nowadays, the word \"telescope\" is defined as a wide range of instruments capable of detecting different regions of the electromagnetic spectrum, and in some cases other types of detectors.",
+     "wrongs": [
+      "A telescope is a device used to observe distant objects by their emission, absorption, or reflection of electromagnetic radiation.",
+      "The first known practical telescopes were refracting telescopes with glass lenses.",
+      "The reflecting telescope was invented within a few decades of the first refracting telescope."
+     ],
+     "why": [
+      "This sentence defines a telescope generally.",
+      "This sentence describes the first practical telescopes.",
+      "This sentence describes the reflecting telescope."
+     ],
+     "explanation": "The correct quotation describes instruments detecting different spectral regions."
+    }
+   ]
+  },
+  "Mars rover": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Mars rovers are remote-controlled vehicles that explore more terrain than landers and have searched for signs of habitability.",
+     "wrongs": [
+      "Mars rovers are stationary landers.",
+      "Only one Mars rover has ever operated successfully.",
+      "Mars rovers search only for minerals, not life."
+     ],
+     "why": [
+      "The text says rovers can examine more territory and be directed to features.",
+      "The text says six successful rovers had operated as of May 2021.",
+      "The text says they search for evidence of ancient life and habitability."
+     ],
+     "explanation": "The passage defines rovers, lists their advantages, and describes missions and scientific goals."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because rovers can be directed to interesting features, they most likely ______",
+     "correct": "study more varied terrain than stationary landers.",
+     "wrongs": [
+      "remain fixed at their landing sites.",
+      "cannot carry scientific instruments.",
+      "avoid areas with signs of water."
+     ],
+     "why": [
+      "Mobility lets rovers move toward features of interest.",
+      "The text contrasts rovers with stationary landers.",
+      "The text describes rovers examining territory and placing themselves in sunny positions."
+     ],
+     "explanation": "The ability to drive toward targets lets rovers sample more varied locations."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines Mars rovers, lists advantages over landers, and describes missions and research goals.",
+     "wrongs": [
+      "It narrates one rover's discovery of fossils.",
+      "It compares rovers with the Mars helicopter in detail.",
+      "It argues that rovers should be replaced by orbiters."
+     ],
+     "why": [
+      "No fossil discovery is narrated.",
+      "The helicopter is mentioned only in passing.",
+      "The text presents rovers and orbiters as serving different purposes."
+     ],
+     "explanation": "The passage moves from definition to advantages and then to missions and objectives."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that rovers cover more ground than landers?",
+     "correct": "Rovers have several advantages over stationary landers: they examine more territory, they can be directed to interesting features, they can place themselves in sunny positions to weather winter months, and they can advance the knowledge of how to perform very remote robotic vehicle control.",
+     "wrongs": [
+      "A Mars rover is a remote-controlled motor vehicle designed to travel on the surface of Mars.",
+      "As of May 2021, there have been six successful robotically operated Mars rovers.",
+      "The search for evidence of habitability has become a primary NASA objective."
+     ],
+     "why": [
+      "This sentence defines a rover.",
+      "This sentence gives the number of successful rovers.",
+      "This sentence describes a research goal."
+     ],
+     "explanation": "The correct quotation lists examining more territory among rovers' advantages."
+    }
+   ]
+  },
+  "International Space Station": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The ISS is the largest internationally built spacecraft, a laboratory in low Earth orbit with continuous human presence since 2000.",
+     "wrongs": [
+      "The ISS orbits the Moon.",
+      "The ISS was built by a single country.",
+      "The ISS has never hosted humans."
+     ],
+     "why": [
+      "The text says it is in low Earth orbit at about 400 kilometres.",
+      "The text says it is operated by five partner space agencies.",
+      "The text says it has hosted the longest continuous human presence in space since 2000."
+     ],
+     "explanation": "The passage describes the station's orbit, partnership, size, and research role."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the station orbits below the Van Allen radiation belts, it most likely ______",
+     "correct": "lies beneath the belts' main radiation zones.",
+     "wrongs": [
+      "passes through the belts every orbit.",
+      "orbits above the belts.",
+      "is outside Earth's magnetic field."
+     ],
+     "why": [
+      "Below the belts means the orbit is at a lower altitude than the belts.",
+      "Passing through them would require orbiting within them.",
+      "The text says below, not above."
+     ],
+     "explanation": "The stated altitude places the station below the radiation belts."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the ISS, describes its partnership and orbit, and details its size and modules.",
+     "wrongs": [
+      "It narrates a single spacewalk.",
+      "It compares the ISS with China's Tiangong in detail.",
+      "It argues that the ISS should be deorbited."
+     ],
+     "why": [
+      "No spacewalk is narrated.",
+      "Tiangong is mentioned only as the other operational station.",
+      "Deorbiting is not discussed."
+     ],
+     "explanation": "The passage moves from definition and operation to orbit and physical structure."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the ISS is an international project?",
+     "correct": "It is the first space station built, maintained and crewed through international cooperation and the largest human spacecraft ever constructed.",
+     "wrongs": [
+      "The International Space Station is a space station in low Earth orbit.",
+      "Since 2 November 2000, it has hosted the longest continuous human presence in space.",
+      "Its orbit takes it at 7.67 km/s roughly every 93 minutes around Earth."
+     ],
+     "why": [
+      "This sentence identifies the station's orbit.",
+      "This sentence describes continuous human presence.",
+      "This sentence describes orbital speed and period."
+     ],
+     "explanation": "The correct quotation states that the station was built through international cooperation."
+    }
+   ]
+  },
+  "Cosmic microwave background": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The cosmic microwave background is faint, nearly uniform microwave radiation filling space and serving as key evidence for the Big Bang.",
+     "wrongs": [
+      "The CMB is a bright star at the center of the galaxy.",
+      "The CMB was discovered in the 19th century.",
+      "The CMB is unrelated to the early universe."
+     ],
+     "why": [
+      "The text describes a faint background glow filling space.",
+      "The text says it was discovered in 1964.",
+      "The text calls it the key experimental evidence of the Big Bang theory."
+     ],
+     "explanation": "The passage defines the CMB, describes its discovery, and explains its cosmological significance."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the CMB is almost uniform and not associated with any star or galaxy, it most likely ______",
+     "correct": "dates from the early universe.",
+     "wrongs": [
+      "comes from a single nearby star.",
+      "was produced by modern human activity.",
+      "is brighter than all stars combined."
+     ],
+     "why": [
+      "A uniform glow filling all space fits a relic of the early universe.",
+      "The text says it is not associated with any star.",
+      "The text ties it to the Big Bang, not human activity."
+     ],
+     "explanation": "A uniform cosmic glow not tied to any object is consistent with relic radiation from the early universe."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It describes the CMB, recounts its discovery, and explains its origin in the early universe.",
+     "wrongs": [
+      "It profiles Penzias and Wilson's careers.",
+      "It compares the CMB with radio broadcasts.",
+      "It argues that the Big Bang never happened."
+     ],
+     "why": [
+      "The discoverers are named, not profiled.",
+      "Radio broadcasts are not discussed.",
+      "The text presents the CMB as evidence for the Big Bang."
+     ],
+     "explanation": "The passage moves from description to discovery and then to cosmological explanation."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the CMB is evidence for the Big Bang?",
+     "correct": "The CMB is the key experimental evidence of the Big Bang theory for the origin of the universe.",
+     "wrongs": [
+      "The cosmic microwave background is microwave radiation that fills all space in the observable universe.",
+      "The accidental discovery of the CMB in 1964 was the culmination of work initiated in the 1940s.",
+      "Its energy density exceeds that of all the photons emitted by all the stars in the history of the universe."
+     ],
+     "why": [
+      "This sentence defines the CMB.",
+      "This sentence describes its discovery.",
+      "This sentence compares its energy density."
+     ],
+     "explanation": "The correct quotation explicitly calls the CMB key evidence for the Big Bang."
+    }
+   ]
+  },
+  "Asteroid": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Asteroids are rocky, metallic, or icy minor planets, most orbiting between Mars and Jupiter, with total mass far below the Moon's.",
+     "wrongs": [
+      "Asteroids are large planets with atmospheres.",
+      "Most asteroids orbit beyond Neptune.",
+      "The asteroids' total mass exceeds Earth's."
+     ],
+     "why": [
+      "The text says asteroids have no atmosphere and are rocky, metallic, or icy.",
+      "The text says the greatest number are in the main belt between Mars and Jupiter.",
+      "The text says their combined mass is 3% of the Moon's."
+     ],
+     "explanation": "The passage defines asteroids, classifies them, and describes their location, mass, and orbits."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a body is classified as a comet rather than an asteroid if it shows a coma when warmed by solar radiation, an object that develops a tail most likely ______",
+     "correct": "would be classified as a comet.",
+     "wrongs": [
+      "would be classified as a planet.",
+      "would be too small to observe.",
+      "would have no ice content."
+     ],
+     "why": [
+      "The text states that a body showing a coma when warmed is classified as a comet.",
+      "Planets are defined separately from minor bodies.",
+      "Visibility is not the criterion described."
+     ],
+     "explanation": "The passage explicitly uses a coma as the distinction between comet and asteroid."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines asteroids, describes their types and sizes, and explains their location, mass, and orbits.",
+     "wrongs": [
+      "It narrates a spacecraft landing on an asteroid.",
+      "It compares asteroids with comets in a table.",
+      "It argues that asteroids threaten Earth."
+     ],
+     "why": [
+      "No landing is narrated.",
+      "No table appears.",
+      "Impact risk is not discussed."
+     ],
+     "explanation": "The passage moves from definition and classification to distribution and physical properties."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that most asteroids are in the main belt?",
+     "correct": "Of the roughly one million known asteroids, the greatest number are located between the orbits of Mars and Jupiter, approximately 2 to 4 astronomical units (AU) from the Sun, in a region known as the main asteroid belt.",
+     "wrongs": [
+      "An asteroid is a minor planet that orbits within the inner Solar System or is co-orbital with Jupiter.",
+      "The total mass of all the asteroids combined is only 3% that of Earth's Moon.",
+      "The majority of main belt asteroids follow slightly elliptical, stable orbits."
+     ],
+     "why": [
+      "This sentence defines an asteroid.",
+      "This sentence gives their combined mass.",
+      "This sentence describes their orbits."
+     ],
+     "explanation": "The correct quotation states that the greatest number lie between Mars and Jupiter."
+    }
+   ]
+  }
+ }
+}

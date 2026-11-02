@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Epidemiology": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Epidemiology studies the distribution and causes of disease in populations and uses that knowledge to guide prevention and policy.",
+     "wrongs": [
+      "Epidemiology studies individual patients in hospitals only.",
+      "Epidemiology is unrelated to public health policy.",
+      "Epidemiology focuses only on infectious diseases."
+     ],
+     "why": [
+      "The text defines it as the study of health conditions in a defined population.",
+      "The text says it shapes policy decisions and evidence-based practice.",
+      "The text lists environmental, occupational, and forensic epidemiology among its areas."
+     ],
+     "explanation": "The passage defines epidemiology, describes its methods, and explains its role in public health."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because epidemiology identifies risk factors for disease and targets for preventive healthcare, it most likely ______",
+     "correct": "shapes public health policy.",
+     "wrongs": [
+      "replaces clinical treatment entirely.",
+      "studies only genetic causes.",
+      "avoids statistical analysis."
+     ],
+     "why": [
+      "The text says the field shapes policy decisions by identifying risk factors and prevention targets.",
+      "The text says epidemiology has helped develop clinical research methods, not replace treatment.",
+      "The text lists many areas beyond genetics."
+     ],
+     "explanation": "Identifying risks and prevention targets is exactly what informs policy and practice."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines epidemiology, explains its role and methods, and lists its major areas and relied-upon disciplines.",
+     "wrongs": [
+      "It narrates the investigation of one outbreak.",
+      "It compares epidemiology with clinical medicine.",
+      "It argues that epidemiology cannot prevent disease."
+     ],
+     "why": [
+      "No single outbreak is narrated.",
+      "Clinical medicine is mentioned only in passing.",
+      "The text says the field applies knowledge to prevent diseases."
+     ],
+     "explanation": "The passage moves from definition and purpose to areas and methods."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that epidemiology studies populations?",
+     "correct": "Epidemiology is the study and analysis of the distribution (who, when, and where), patterns and determinants of health and disease conditions in a defined population, and application of this knowledge to prevent diseases.",
+     "wrongs": [
+      "It is a cornerstone of public health, and shapes policy decisions and evidence-based practice.",
+      "Major areas of epidemiological study include disease causation, transmission, outbreak investigation, and disease surveillance.",
+      "Epidemiologists rely on other scientific disciplines like biology and statistics."
+     ],
+     "why": [
+      "This sentence describes the field's role in public health.",
+      "This sentence lists areas of study.",
+      "This sentence describes relied-upon disciplines."
+     ],
+     "explanation": "The correct quotation defines the field's focus on a defined population."
+    }
+   ]
+  },
+  "Sanitation": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Sanitation protects health by managing excreta, sewage, and clean water to block disease transmission, especially fecal-oral routes.",
+     "wrongs": [
+      "Sanitation is concerned only with industrial waste.",
+      "Sanitation has no effect on disease transmission.",
+      "Sanitation systems avoid treating wastewater."
+     ],
+     "why": [
+      "The text defines sanitation through clean drinking water and treatment of excreta and sewage.",
+      "The text says systems aim to stop disease transmission.",
+      "The text says a system includes treatment and disposal or reuse."
+     ],
+     "explanation": "The passage defines sanitation, explains its purpose, and describes technologies and the value chain."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because sanitation aims to stop fecal–oral transmission, improved sanitation systems most likely ______",
+     "correct": "reduce diarrheal disease.",
+     "wrongs": [
+      "increase contact with feces.",
+      "have no effect on child health.",
+      "eliminate the need for clean water."
+     ],
+     "why": [
+      "The text says diarrhea can be reduced through adequate sanitation.",
+      "Sanitation prevents human contact with feces.",
+      "The text links diarrhea to malnutrition and stunted growth in children."
+     ],
+     "explanation": "Blocking fecal-oral transmission reduces diseases spread that way, including diarrhea."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines sanitation, explains its health purpose, and describes technologies and the sanitation value chain.",
+     "wrongs": [
+      "It profiles a single sanitation worker.",
+      "It compares urban and rural sanitation in a table.",
+      "It argues that sanitation is unnecessary."
+     ],
+     "why": [
+      "No worker is profiled.",
+      "No table appears.",
+      "The text presents sanitation as protecting human health."
+     ],
+     "explanation": "The passage moves from definition and purpose to systems and reuse."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that sanitation blocks disease transmission?",
+     "correct": "Sanitation systems aim to protect human health by providing a clean environment that will stop the transmission of disease, especially through the fecal–oral route.",
+     "wrongs": [
+      "Sanitation refers to public health conditions related to clean drinking water and treatment and disposal of human excreta and sewage.",
+      "Preventing human contact with feces is part of sanitation, as is hand washing with soap.",
+      "A range of sanitation technologies and approaches exists."
+     ],
+     "why": [
+      "This sentence defines sanitation.",
+      "This sentence describes preventive practices.",
+      "This sentence notes varied technologies."
+     ],
+     "explanation": "The correct quotation explicitly says sanitation stops disease transmission."
+    }
+   ]
+  },
+  "Antibiotic": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Antibiotics are substances active against bacteria that kill or inhibit them and are ineffective against viruses and fungi.",
+     "wrongs": [
+      "Antibiotics are effective against all viruses.",
+      "Antibiotics are synthetic chemicals only.",
+      "Antibiotics have never been used in livestock."
+     ],
+     "why": [
+      "The text says antibiotics are not effective against viruses or fungi.",
+      "The text says antibiotics such as penicillin are produced naturally, while some antibacterials are synthetic.",
+      "The text says antibiotics are used in medicine and sometimes in livestock feed."
+     ],
+     "explanation": "The passage defines antibiotics, explains their action, and distinguishes them from other antibacterials."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because antibiotics are not effective against viruses, a person with a viral infection most likely ______",
+     "correct": "would not benefit from an antibiotic.",
+     "wrongs": [
+      "would be cured by penicillin.",
+      "should take antibiotics preventively.",
+      "would develop a fungal infection."
+     ],
+     "why": [
+      "The text explicitly says antibiotics are not effective against viruses.",
+      "Penicillin is an antibiotic, so it would not treat a virus.",
+      "The text does not recommend antibiotics for viral illness."
+     ],
+     "explanation": "Ineffectiveness against viruses means antibiotics would not help a viral infection."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines antibiotics and their action, distinguishes natural from synthetic antibacterials, and notes early historical use.",
+     "wrongs": [
+      "It explains how to prescribe antibiotics.",
+      "It compares antibiotics with vaccines.",
+      "It argues that antibiotics are always harmful."
+     ],
+     "why": [
+      "No prescribing guidance is given.",
+      "Vaccines are not mentioned.",
+      "The text describes antibiotics as important for fighting bacterial infections."
+     ],
+     "explanation": "The passage moves from definition to classification and history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that antibiotics target bacteria?",
+     "correct": "An antibiotic is a type of antimicrobial substance which is active against bacteria.",
+     "wrongs": [
+      "Antibiotic medications are widely used in the treatment and prevention of such infections.",
+      "A limited number of antibiotics also possess antiprotozoal activity.",
+      "Antibiotics are not effective against viruses or fungi."
+     ],
+     "why": [
+      "This sentence describes medical use.",
+      "This sentence notes a limited additional activity.",
+      "This sentence states what antibiotics do not affect."
+     ],
+     "explanation": "The correct quotation defines antibiotics as active against bacteria."
+    }
+   ]
+  },
+  "Maternal health": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Maternal health concerns women's health during pregnancy, birth, and postpartum, and requires investment to reduce preventable deaths.",
+     "wrongs": [
+      "Maternal health concerns only childbirth itself.",
+      "Maternal mortality affects only wealthy countries.",
+      "Maternal health requires no family planning."
+     ],
+     "why": [
+      "The text covers pregnancy, childbirth, and the postpartum period.",
+      "The text says it particularly affects women in low and lower-middle income countries.",
+      "The text includes family planning and preconception care."
+     ],
+     "explanation": "The passage defines maternal health, describes its scope, and discusses mortality and interventions."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the causes of maternal death have highly effective interventions, expanding access to care most likely ______",
+     "correct": "would reduce maternal mortality.",
+     "wrongs": [
+      "would increase maternal deaths.",
+      "has no effect on outcomes.",
+      "would eliminate the need for prenatal care."
+     ],
+     "why": [
+      "Effective interventions for the causes mean treatment can prevent deaths.",
+      "The text presents interventions as effective.",
+      "The text calls for investment precisely because care can improve outcomes."
+     ],
+     "explanation": "If the causes are treatable, better access to treatment would lower deaths."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines maternal health, describes its components and disparities, and discusses mortality and interventions.",
+     "wrongs": [
+      "It profiles a single mother's pregnancy.",
+      "It compares maternal health in two hospitals.",
+      "It argues that maternal health needs no investment."
+     ],
+     "why": [
+      "No individual case is profiled.",
+      "No hospital comparison is made.",
+      "The text says there is a need to invest in women's health."
+     ],
+     "explanation": "The passage moves from definition and scope to burden and solutions."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that maternal deaths are preventable?",
+     "correct": "The causes of these maternal deaths range from severe bleeding to obstructed labour, all of which have highly effective interventions.",
+     "wrongs": [
+      "Maternal health is the health of women during pregnancy, childbirth, and the postpartum period.",
+      "WHO estimates that about 295,000 maternal deaths occurred in 2017.",
+      "Maternal morbidity and mortality particularly affects women of color and women living in low and lower-middle income countries."
+     ],
+     "why": [
+      "This sentence defines maternal health.",
+      "This sentence gives a mortality estimate.",
+      "This sentence describes disparities."
+     ],
+     "explanation": "The correct quotation says the causes have highly effective interventions."
+    }
+   ]
+  },
+  "Nutrition": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Nutrition is how organisms obtain and use nutrients, and imbalances in essential nutrients cause malnutrition.",
+     "wrongs": [
+      "Nutrition applies only to animals.",
+      "Nutrients are needed only for energy.",
+      "Too much of a nutrient is always harmless."
+     ],
+     "why": [
+      "The text discusses plants, fungi, and animals obtaining nutrients.",
+      "The text says nutrients are metabolized to create energy and chemical structures.",
+      "The text says too much or too little of an essential nutrient can cause malnutrition."
+     ],
+     "explanation": "The passage defines nutrition, explains nutrient acquisition across organisms, and describes malnutrition."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because too much or too little of an essential nutrient can cause malnutrition, healthful nutrition most likely ______",
+     "correct": "requires balance rather than excess.",
+     "wrongs": [
+      "requires consuming as much as possible.",
+      "depends on avoiding all nutrients.",
+      "is unrelated to nutrient amounts."
+     ],
+     "why": [
+      "Both deficiency and excess cause harm, so balance matters.",
+      "Excess can cause malnutrition.",
+      "Nutrients are required for energy and structure."
+     ],
+     "explanation": "The passage states that both too much and too little cause malnutrition, implying balance."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines nutrition, explains how different organisms obtain nutrients, and notes the history of nutritional science.",
+     "wrongs": [
+      "It lists calorie counts for common foods.",
+      "It compares human and plant digestion in detail.",
+      "It argues that cooking is harmful."
+     ],
+     "why": [
+      "No calorie table appears.",
+      "Plant and fungal acquisition are described briefly, not compared in detail.",
+      "The text says humans developed cooking to advance nutrition."
+     ],
+     "explanation": "The passage moves from definition and nutrient types to acquisition and history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that nutrition supports life processes?",
+     "correct": "Nutrition is the biochemical and physiological process by which an organism uses food and water to support its life.",
+     "wrongs": [
+      "The intake of these substances provides organisms with nutrients which can be metabolized to create energy and chemical structures.",
+      "The type of organism determines what nutrients it needs and how it obtains them.",
+      "All forms of life require carbon, energy, and water as well as various other molecules."
+     ],
+     "why": [
+      "This sentence describes nutrient metabolism.",
+      "This sentence describes variation among organisms.",
+      "This sentence lists requirements shared by life."
+     ],
+     "explanation": "The correct quotation defines nutrition as the process of using food and water to support life."
+    }
+   ]
+  },
+  "Smoking cessation": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Quitting smoking is difficult because of nicotine addiction but sharply reduces the risk of smoking-related disease.",
+     "wrongs": [
+      "Quitting smoking has no health benefits.",
+      "Smoking is a minor cause of preventable death.",
+      "Nicotine withdrawal makes quitting easier."
+     ],
+     "why": [
+      "The text says cessation significantly reduces the risk of dying from smoking-related diseases.",
+      "The text calls smoking the leading cause of preventable death.",
+      "The text says withdrawal often makes quitting difficult."
+     ],
+     "explanation": "The passage defines cessation, describes smoking's harms and addiction, and explains benefits and strategies."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the risk of heart attack decreases by 50% after one year of cessation, quitting most likely ______",
+     "correct": "quickly lowers cardiovascular risk.",
+     "wrongs": [
+      "has no effect until ten years pass.",
+      "increases the risk of heart attack.",
+      "only helps people who never smoked."
+     ],
+     "why": [
+      "A halved risk after one year shows rapid cardiovascular benefit.",
+      "The text describes a benefit within one year.",
+      "The text says the risk decreases, not increases."
+     ],
+     "explanation": "The one-year halving of heart attack risk demonstrates a relatively rapid benefit."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines cessation, explains nicotine addiction and smoking's harms, and describes benefits and strategies.",
+     "wrongs": [
+      "It profiles a single former smoker.",
+      "It compares smoking with alcohol use.",
+      "It argues that cessation programs are ineffective."
+     ],
+     "why": [
+      "No individual is profiled.",
+      "Alcohol is not discussed.",
+      "The text lists multiple effective strategies and benefits."
+     ],
+     "explanation": "The passage moves from definition and addiction to health effects and quitting methods."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that quitting reduces disease risk?",
+     "correct": "Smoking cessation significantly reduces the risk of dying from smoking-related diseases.",
+     "wrongs": [
+      "Smoking cessation is the process of discontinuing tobacco smoking.",
+      "Tobacco smoke contains nicotine, which is addictive and can cause dependence.",
+      "Smoking is the leading cause of preventable death and a global public health concern."
+     ],
+     "why": [
+      "This sentence defines cessation.",
+      "This sentence describes nicotine addiction.",
+      "This sentence describes smoking's overall harm."
+     ],
+     "explanation": "The correct quotation states that cessation reduces mortality risk from smoking-related diseases."
+    }
+   ]
+  },
+  "Health equity": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Health equity means fair health outcomes achieved through need-based allocation of resources, not merely equal access.",
+     "wrongs": [
+      "Health equity means providing identical services to everyone.",
+      "Health equity is unrelated to social determinants.",
+      "Health equity concerns only genetic factors."
+     ],
+     "why": [
+      "The text says resources must be allocated on a need-based principle.",
+      "The text distinguishes health equity from formal equal opportunity.",
+      "The text ties disparities to wealth, power, and prestige."
+     ],
+     "explanation": "The passage defines health equity, explains its determinants, and distinguishes it from equal access."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because health equity requires need-based allocation rather than merely equal access, providing everyone the same services most likely ______",
+     "correct": "may not eliminate health disparities.",
+     "wrongs": [
+      "guarantees health equity.",
+      "increases disparities by definition.",
+      "removes the need for resources."
+     ],
+     "why": [
+      "Equal services do not account for differing needs and disadvantages.",
+      "The text says health equity is distinct from simply equal access.",
+      "The text calls for need-based allocation, not that equality worsens disparities."
+     ],
+     "explanation": "Uniform services ignore unequal needs, so they may leave disparities intact."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines health equity, explains its social determinants, and distinguishes it from equal access.",
+     "wrongs": [
+      "It profiles a single health clinic.",
+      "It compares health systems in two countries.",
+      "It argues that health is not a human right."
+     ],
+     "why": [
+      "No clinic is profiled.",
+      "No country comparison is made.",
+      "The text calls health a basic human right."
+     ],
+     "explanation": "The passage moves from definition to determinants and a key distinction."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that health equity differs from equal access?",
+     "correct": "Health equity is distinct from formal equal opportunity, such as simply providing every individual with equal access to health care.",
+     "wrongs": [
+      "Health equity is social equity in health.",
+      "Disparities in health outcomes can be related to differences in access to social determinants of health.",
+      "In order to achieve health equity, resources must be allocated based on an individual need-based principle."
+     ],
+     "why": [
+      "This sentence defines health equity.",
+      "This sentence describes determinants.",
+      "This sentence describes need-based allocation."
+     ],
+     "explanation": "The correct quotation explicitly separates health equity from equal access."
+    }
+   ]
+  },
+  "Disease outbreak": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "An outbreak is a rise in disease cases above normal expectancy, ranging from local clusters to pandemics.",
+     "wrongs": [
+      "An outbreak is any single case of a disease.",
+      "Outbreaks affect only one continent.",
+      "Pandemics are smaller than local outbreaks."
+     ],
+     "why": [
+      "The text defines an outbreak as cases in excess of normal expectancy.",
+      "The text says it may affect a small group or thousands across a continent.",
+      "The text describes pandemics as near-global outbreaks."
+     ],
+     "explanation": "The passage defines outbreaks, describes their scale, and distinguishes related terms."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because an outbreak is defined as cases exceeding normal expectancy for a location or season, the same number of cases most likely ______",
+     "correct": "could be an outbreak in one setting but not another.",
+     "wrongs": [
+      "always constitutes a pandemic.",
+      "is unrelated to location or season.",
+      "cannot be investigated by epidemiologists."
+     ],
+     "why": [
+      "Expectancy depends on place and season, so the threshold varies.",
+      "A pandemic requires near-global spread.",
+      "The definition explicitly refers to location and season."
+     ],
+     "explanation": "Since the baseline differs by place and season, the same count may exceed one baseline and not another."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines an outbreak, describes its possible scale, and distinguishes outbreaks, epidemics, and pandemics.",
+     "wrongs": [
+      "It narrates the investigation of a single outbreak.",
+      "It compares infectious and chronic diseases.",
+      "It argues that outbreaks cannot be defined."
+     ],
+     "why": [
+      "Investigation steps are mentioned but not narrated.",
+      "Chronic diseases are not discussed.",
+      "The text provides a clear definition of an outbreak."
+     ],
+     "explanation": "The passage moves from definition to scale and terminology."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that outbreaks vary greatly in scale?",
+     "correct": "It may affect a small and localized group or impact upon thousands of people across an entire continent.",
+     "wrongs": [
+      "In epidemiology, an outbreak is a sudden increase in occurrences of a disease when cases are in excess of normal expectancy.",
+      "Outbreaks include many epidemics, which is a term normally only used for infectious diseases.",
+      "Pandemics are near-global disease outbreaks when multiple and various countries around the Earth are soon infected."
+     ],
+     "why": [
+      "This sentence defines an outbreak.",
+      "This sentence discusses epidemics.",
+      "This sentence defines a pandemic."
+     ],
+     "explanation": "The correct quotation contrasts a small local group with thousands across a continent."
+    }
+   ]
+  },
+  "Water purification": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Water purification removes contaminants using physical, biological, chemical, and radiation methods to make water fit for specific uses.",
+     "wrongs": [
+      "Water purification adds contaminants to water.",
+      "Purification uses only chemical methods.",
+      "Drinking water standards are never set by governments."
+     ],
+     "why": [
+      "The text defines purification as removing undesirable substances.",
+      "The text lists filtration, sedimentation, distillation, biological filters, flocculation, chlorination, and UV light.",
+      "The text says standards are typically set by governments or international standards."
+     ],
+     "explanation": "The passage defines purification, surveys its methods, and explains drinking water standards."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a visual inspection cannot determine whether water is of appropriate quality, assessing drinking water most likely ______",
+     "correct": "requires testing against standards.",
+     "wrongs": [
+      "can be done by color alone.",
+      "requires no measurement.",
+      "depends only on the water's source."
+     ],
+     "why": [
+      "Quality standards set concentration limits that must be measured.",
+      "The text says visual inspection is insufficient.",
+      "Assessment requires checking contaminant concentrations."
+     ],
+     "explanation": "If appearance cannot establish quality, testing against standards is needed."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines purification, describes its purposes and methods, and explains water quality standards.",
+     "wrongs": [
+      "It narrates the construction of a treatment plant.",
+      "It compares bottled and tap water.",
+      "It argues that purification is unnecessary."
+     ],
+     "why": [
+      "No plant construction is narrated.",
+      "Bottled water is not discussed.",
+      "The text describes purification's importance for human consumption."
+     ],
+     "explanation": "The passage moves from definition and uses to methods and standards."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that purification removes contaminants?",
+     "correct": "Water purification is the process of removing undesirable chemicals, biological contaminants, suspended solids, and gases from water.",
+     "wrongs": [
+      "The goal is to produce water that is fit for specific purposes.",
+      "Most water is purified and disinfected for human consumption.",
+      "The methods used include physical processes such as filtration, sedimentation, and distillation."
+     ],
+     "why": [
+      "This sentence describes the goal.",
+      "This sentence describes the main use.",
+      "This sentence lists methods."
+     ],
+     "explanation": "The correct quotation lists the categories of contaminants removed."
+    }
+   ]
+  },
+  "Mental health": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Mental health is a broad state of emotional, psychological, and social well-being, not merely the absence of mental illness.",
+     "wrongs": [
+      "Mental health is simply the absence of mental illness.",
+      "Mental health concerns only emotional well-being.",
+      "Mental health has the same definition in every culture."
+     ],
+     "why": [
+      "The text says mental health is not merely the absence of mental illness.",
+      "The text includes emotional, psychological, and social well-being.",
+      "The text says cultural differences affect how mental health is defined."
+     ],
+     "explanation": "The passage defines mental health, describes its components, and notes cultural variation."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because mental health is not merely the absence of mental illness, a person without a diagnosis most likely ______",
+     "correct": "may still vary in mental well-being.",
+     "wrongs": [
+      "is guaranteed to be mentally healthy.",
+      "cannot experience stress.",
+      "has no emotional life."
+     ],
+     "why": [
+      "Well-being is broader than the absence of disorder.",
+      "The text explicitly says mental health is not merely the absence of illness.",
+      "The text says mental health determines how one handles stress."
+     ],
+     "explanation": "A person can lack a diagnosis yet still differ in overall well-being."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines mental health, lists its components, and explains how definitions vary across cultures and theories.",
+     "wrongs": [
+      "It profiles a single patient.",
+      "It compares mental and physical health in a table.",
+      "It argues that mental health cannot be defined."
+     ],
+     "why": [
+      "No patient is profiled.",
+      "No table appears.",
+      "The text offers a WHO definition and describes varying perspectives."
+     ],
+     "explanation": "The passage moves from definition and components to cultural and theoretical variation."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that mental health is broader than the absence of illness?",
+     "correct": "From the perspectives of positive psychology or holism, mental health is thus not merely the absence of mental illness.",
+     "wrongs": [
+      "Mental health encompasses emotional, psychological, and social well-being, influencing cognition, perception, and behavior.",
+      "Mental health plays a crucial role in an individual's daily life when managing stress.",
+      "Cultural differences, personal philosophy, subjective assessments, and competing professional theories all affect how one defines mental health."
+     ],
+     "why": [
+      "This sentence defines mental health's scope.",
+      "This sentence describes its role in daily life.",
+      "This sentence describes definitional variation."
+     ],
+     "explanation": "The correct quotation explicitly says mental health is not merely the absence of illness."
+    }
+   ]
+  }
+ }
+}

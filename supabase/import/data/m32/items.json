@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Linguistics": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Linguistics is the scientific study of language, divided into subfields such as syntax, semantics, and phonology, with theoretical and applied branches.",
+     "wrongs": [
+      "Linguistics is the study of literature and poetry.",
+      "Linguistics has only one subfield.",
+      "Linguistics is unrelated to practical language teaching."
+     ],
+     "why": [
+      "The text calls linguistics the scientific study of language.",
+      "The text lists syntax, semantics, morphology, phonetics, phonology, and pragmatics.",
+      "The text says applied linguistics seeks to improve language education and literacy."
+     ],
+     "explanation": "The passage defines linguistics, surveys its subfields, and distinguishes theoretical from applied work."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because applied linguistics uses findings from the scientific study of language for practical purposes, it most likely ______",
+     "correct": "helps improve language teaching.",
+     "wrongs": [
+      "rejects all theoretical frameworks.",
+      "studies only ancient languages.",
+      "avoids questions of literacy."
+     ],
+     "why": [
+      "The text names language education and literacy as applied goals.",
+      "Applied linguistics draws on the findings rather than rejecting them.",
+      "No restriction to ancient languages is stated."
+     ],
+     "explanation": "The passage states that applied linguistics aims at practical goals such as language education and literacy."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines linguistics, lists its subfields, and distinguishes theoretical, applied, mathematical, and computational approaches.",
+     "wrongs": [
+      "It profiles a single linguist.",
+      "It compares human language with animal communication.",
+      "It argues that language cannot be studied scientifically."
+     ],
+     "why": [
+      "No individual linguist is named.",
+      "Animal communication is not discussed.",
+      "The text calls linguistics a scientific study."
+     ],
+     "explanation": "The passage moves from definition to subfields and then to approaches."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that linguistics covers many areas of language?",
+     "correct": "Specific areas of linguistic description and analysis are syntax (rules governing the structure of sentences), semantics (meaning), morphology (structure of words), phonetics (speech sounds and equivalent manual gestures in sign languages), phonology (the abstract sound system of a particular language, and analogous systems of sign languages), and pragmatics (how the context of use contributes to meaning).",
+     "wrongs": [
+      "Linguistics is the scientific study of language.",
+      "Theoretical linguistics is concerned with explaining the universal and fundamental nature of language.",
+      "Computational linguistics is an interdisciplinary field concerned with the computational modelling of natural language."
+     ],
+     "why": [
+      "This sentence defines linguistics.",
+      "This sentence describes theoretical linguistics.",
+      "This sentence describes computational linguistics."
+     ],
+     "explanation": "The correct quotation lists six distinct areas of linguistic analysis."
+    }
+   ]
+  },
+  "Language acquisition": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Language acquisition is how humans gain the ability to understand and produce language, building from sounds to syntax and vocabulary.",
+     "wrongs": [
+      "Language acquisition is the study of ancient manuscripts.",
+      "Humans acquire language without learning any structures.",
+      "Language acquisition applies only to signed languages."
+     ],
+     "why": [
+      "The text defines it as gaining the capacity to perceive, comprehend, and produce language.",
+      "The text says it involves structures, rules, and representation.",
+      "The text says language can be vocalized as speech or manual as sign."
+     ],
+     "explanation": "The passage defines language acquisition, lists its components, and explains recursion and developmental principles."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because human language capacity is finite yet allows an effectively infinite number of sentences, speakers most likely ______",
+     "correct": "rely on recursive rules.",
+     "wrongs": [
+      "memorize every possible sentence.",
+      "use a fixed list of phrases.",
+      "cannot produce new sentences."
+     ],
+     "why": [
+      "The text attributes the infinite range of sentences to recursion.",
+      "Memorizing infinitely many sentences is impossible with finite capacity.",
+      "A fixed list would not allow infinite sentences."
+     ],
+     "explanation": "Recursion lets finite rules generate indefinitely many sentences."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines language acquisition, lists required components, and explains recursion and guiding principles.",
+     "wrongs": [
+      "It narrates a child's first words.",
+      "It compares human and bird communication.",
+      "It argues that language cannot be acquired."
+     ],
+     "why": [
+      "No individual child is described.",
+      "Bird communication is not discussed.",
+      "The text explains how acquisition occurs."
+     ],
+     "explanation": "The passage moves from definition to components, recursion, and developmental principles."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that recursion enables infinite sentences?",
+     "correct": "Even though human language capacity is finite, one can say and understand an effectively infinite number of sentences, which is based on a syntactic principle called recursion.",
+     "wrongs": [
+      "Language acquisition is the process by which humans acquire the capacity to perceive and comprehend language.",
+      "The capacity to successfully use language requires human beings to acquire a range of tools, including phonology, morphology, syntax, semantics, and an extensive vocabulary.",
+      "There are two main guiding principles in first-language acquisition: speech perception always precedes speech production."
+     ],
+     "why": [
+      "This sentence defines language acquisition.",
+      "This sentence lists the tools language users need.",
+      "This sentence states a developmental principle."
+     ],
+     "explanation": "The correct quotation links finite capacity and infinite sentences to recursion."
+    }
+   ]
+  },
+  "Sign language": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Sign languages are full natural languages with their own grammar and lexicon, used mainly by deaf communities and varying around the world.",
+     "wrongs": [
+      "Sign languages are universal and mutually intelligible.",
+      "Sign languages are a form of body language.",
+      "Sign languages lack grammar."
+     ],
+     "why": [
+      "The text says they are not universal and usually not mutually intelligible.",
+      "The text says sign languages are distinct from body language.",
+      "The text says they are full-fledged natural languages with their own grammar."
+     ],
+     "explanation": "The passage defines sign languages, describes their users and variation, and distinguishes them from related systems."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because sign languages are not universal and are usually not mutually intelligible, a Deaf signer traveling abroad most likely ______",
+     "correct": "cannot automatically understand the local sign language.",
+     "wrongs": [
+      "understands every sign language immediately.",
+      "finds that all countries share one sign language.",
+      "can rely on spoken language instead."
+     ],
+     "why": [
+      "Lack of mutual intelligibility means a different sign language must be learned.",
+      "That contradicts the text's statement.",
+      "The text says each country generally has its own native sign language."
+     ],
+     "explanation": "Distinct, mutually unintelligible sign languages require learning the local one."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines sign languages, describes their users, distinguishes them from related systems, and notes how many exist.",
+     "wrongs": [
+      "It profiles a single Deaf community.",
+      "It compares sign languages with written languages in a table.",
+      "It argues that sign languages should be standardized."
+     ],
+     "why": [
+      "No community is profiled.",
+      "No table appears.",
+      "Standardization is not recommended."
+     ],
+     "explanation": "The passage moves from definition and users to distinctions and documentation."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that sign languages are full languages?",
+     "correct": "They are expressed through manual articulation in combination with non-manual markers, and are full-fledged natural languages with their own grammar and lexicon.",
+     "wrongs": [
+      "Sign languages are languages that use the visual-manual modality to convey meaning rather than spoken words.",
+      "Sign languages are not universal and are usually not mutually intelligible.",
+      "Wherever communities of deaf and hard of hearing people exist, sign languages have developed as a means of communication."
+     ],
+     "why": [
+      "This sentence defines the modality.",
+      "This sentence describes variation.",
+      "This sentence describes their development in Deaf communities."
+     ],
+     "explanation": "The correct quotation calls them full-fledged natural languages with grammar and lexicon."
+    }
+   ]
+  },
+  "Etymology": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Etymology studies the origin and evolution of words, using historical texts and comparative linguistics to trace their development.",
+     "wrongs": [
+      "Etymology studies the grammar of sentences.",
+      "Etymology ignores the history of word meanings.",
+      "Etymology is limited to modern English."
+     ],
+     "why": [
+      "The text defines etymology as the study of word origins and evolution.",
+      "The text says it constructs a catalogue of meanings a word has carried.",
+      "The text discusses tracing roots back to Indo-European."
+     ],
+     "explanation": "The passage defines etymology, describes its methods, and gives an example of tracing roots."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because etymologists apply the comparative method to related languages, they most likely ______",
+     "correct": "can reconstruct features of a shared parent language.",
+     "wrongs": [
+      "can date every word to the exact year.",
+      "must ignore written records.",
+      "study only one language at a time."
+     ],
+     "why": [
+      "The text says the comparative method lets linguists infer shared parent languages and vocabulary.",
+      "The text does not claim exact dating for every word.",
+      "The text says etymologists use texts for languages with long written histories."
+     ],
+     "explanation": "Comparing related languages allows reconstruction of an unattested parent language."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines etymology, describes its methods and related fields, and explains how roots are traced.",
+     "wrongs": [
+      "It lists the etymologies of ten English words.",
+      "It compares etymology with grammar.",
+      "It argues that word origins cannot be studied."
+     ],
+     "why": [
+      "No list of ten words appears.",
+      "Grammar is not compared.",
+      "The text describes etymology as an increasingly rigorous field."
+     ],
+     "explanation": "The passage moves from definition to methods and an example."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that etymology studies word origins?",
+     "correct": "Etymology is the study of the origin and evolution of words—including their constituent units of sound and meaning—across time.",
+     "wrongs": [
+      "In the 21st century, etymology has become an increasingly rigorous scientific field of study.",
+      "Etymologists also apply the methods of comparative linguistics to reconstruct information about forms that are too old for any direct information to be available.",
+      "By analyzing related languages with a technique known as the comparative method, linguists can make inferences about their shared parent language."
+     ],
+     "why": [
+      "This sentence describes the field's development.",
+      "This sentence describes reconstruction methods.",
+      "This sentence describes the comparative method."
+     ],
+     "explanation": "The correct quotation defines etymology as the study of word origin and evolution."
+    }
+   ]
+  },
+  "Phonetics": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Phonetics studies the articulation, acoustics, and perception of speech sounds, including equivalent aspects of sign languages.",
+     "wrongs": [
+      "Phonetics studies the history of word meanings.",
+      "Phonetics is limited to written language.",
+      "Phonetics has no sub-disciplines."
+     ],
+     "why": [
+      "The text names articulation, sound wave properties, and perception as its concerns.",
+      "The text says phonetics addresses equivalent aspects of sign languages.",
+      "The text divides the field into three sub-disciplines."
+     ],
+     "explanation": "The passage defines phonetics, lists its branches, and distinguishes phones from phonemes."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Hard",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because phonemes are abstract, language-specific categories, the same physical sound most likely ______",
+     "correct": "can belong to different phonemes in different languages.",
+     "wrongs": [
+      "has one universal meaning.",
+      "cannot be produced by speakers.",
+      "is always written with the same letter."
+     ],
+     "why": [
+      "Language-specific categories mean each language classifies sounds its own way.",
+      "Phonemes concern sound categories, not meaning universally.",
+      "Phones are individual speech sounds that speakers produce."
+     ],
+     "explanation": "If categories are language-specific, one physical sound can be categorized differently across languages."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines phonetics, lists its three sub-disciplines, and distinguishes phones from phonemes.",
+     "wrongs": [
+      "It narrates a single experiment in speech perception.",
+      "It compares English and French pronunciation in detail.",
+      "It argues that sign languages have no phonetics."
+     ],
+     "why": [
+      "No experiment is narrated.",
+      "No detailed language comparison is made.",
+      "The text says phonetics includes equivalent aspects of sign languages."
+     ],
+     "explanation": "The passage moves from definition to branches and a key distinction."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that phonetics has three branches?",
+     "correct": "The field of phonetics is traditionally divided into three sub-disciplines: articulatory phonetics, acoustic phonetics, and auditory phonetics.",
+     "wrongs": [
+      "Phonetics is a branch of linguistics that mainly concerns the articulation, sound wave properties, and perception of speech sounds.",
+      "Traditionally, the minimal linguistic unit of phonetics is the phone, an individual speech sound.",
+      "Phonemes are abstract, language-specific categorizations of phones."
+     ],
+     "why": [
+      "This sentence defines phonetics.",
+      "This sentence defines the phone.",
+      "This sentence defines the phoneme."
+     ],
+     "explanation": "The correct quotation names articulatory, acoustic, and auditory phonetics."
+    }
+   ]
+  },
+  "Grammar": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Grammar is the system of rules structuring a language, studied through traditional and theoretical approaches and largely acquired by exposure.",
+     "wrongs": [
+      "Grammar is a set of rules that only written language follows.",
+      "Grammar is learned only through formal instruction.",
+      "Grammar concerns only pronunciation."
+     ],
+     "why": [
+      "The text says grammar governs how a natural language is structured and used.",
+      "The text says many rules are acquired by observing other speakers.",
+      "The text says much internalization occurs during early childhood."
+     ],
+     "explanation": "The passage defines grammar, describes approaches to studying it, and explains how it is acquired."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because much grammar is acquired by observing other speakers rather than through instruction, a child learning a first language most likely ______",
+     "correct": "learns rules through exposure.",
+     "wrongs": [
+      "needs formal grammar lessons first.",
+      "cannot learn without a textbook.",
+      "acquires vocabulary before any sounds."
+     ],
+     "why": [
+      "The text says many rules are acquired by observing other speakers.",
+      "The text contrasts observation with intentional study or instruction.",
+      "Textbooks are a form of instruction, which the text says is less central early on."
+     ],
+     "explanation": "Exposure to speakers, not formal instruction, drives much early grammar learning."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines grammar, describes traditional and theoretical approaches, and explains how speakers acquire rules.",
+     "wrongs": [
+      "It lists every rule of English grammar.",
+      "It profiles a single grammarian.",
+      "It argues that grammar should not be taught."
+     ],
+     "why": [
+      "No exhaustive rule list appears.",
+      "No grammarian is named.",
+      "The text says later learning usually involves more direct instruction."
+     ],
+     "explanation": "The passage moves from definition to approaches and acquisition."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that grammar is largely learned through exposure?",
+     "correct": "Fluency in a particular language variety involves a speaker internalizing these rules, many or most of which are acquired by observing other speakers, as opposed to intentional study or instruction.",
+     "wrongs": [
+      "In linguistics, grammar is the system of rules that governs how a natural language is structured and used.",
+      "There are in effect two different ways to study grammar: traditional grammar and theoretical grammar.",
+      "The term grammar can also describe the linguistic behaviour of groups of speakers and writers rather than individuals."
+     ],
+     "why": [
+      "This sentence defines grammar.",
+      "This sentence names two approaches.",
+      "This sentence describes grammar at the group level."
+     ],
+     "explanation": "The correct quotation says most rules are acquired by observing other speakers."
+    }
+   ]
+  },
+  "Translation": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Translation conveys meaning from a source language into a target language, risking spillovers but sometimes enriching the target language.",
+     "wrongs": [
+      "Translation is the study of ancient scripts.",
+      "Translation never introduces source-language features.",
+      "Translation applies only to spoken language."
+     ],
+     "why": [
+      "The text defines translation as communicating meaning through an equivalent target-language text.",
+      "The text says a translator always risks introducing source-language words, grammar, or syntax.",
+      "The text distinguishes translating written texts from interpreting oral or signed communication."
+     ],
+     "explanation": "The passage defines translation, describes its risks and benefits, and traces its history and etymology."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because spillovers have sometimes imported useful calques and loanwords, translation most likely ______",
+     "correct": "can enrich the target language.",
+     "wrongs": [
+      "always damages the target language.",
+      "prevents any borrowing of words.",
+      "eliminates the need for interpreters."
+     ],
+     "why": [
+      "The text says spillovers have enriched target languages.",
+      "The text describes enrichment, not damage.",
+      "The text says calques and loanwords have been imported."
+     ],
+     "explanation": "The passage states that borrowed forms from translation have enriched target languages."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines translation, explains its risks and benefits, describes automation efforts, and traces the word's etymology.",
+     "wrongs": [
+      "It narrates a translator's career.",
+      "It compares translation with editing.",
+      "It argues that machine translation is perfect."
+     ],
+     "why": [
+      "No individual translator is profiled.",
+      "Editing is not discussed.",
+      "The text says automation efforts met with varying degrees of success."
+     ],
+     "explanation": "The passage moves from definition to consequences, technology, and etymology."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that translation can carry source-language features into the target?",
+     "correct": "A translator always risks inadvertently introducing source-language words, grammar, or syntax into the target-language rendering.",
+     "wrongs": [
+      "Translation is the communication of the meaning of a source-language text by means of an equivalent target-language text.",
+      "Since the 1940s, efforts have been made to automate translation or to mechanically aid the human translator.",
+      "The word for the concept of translation stems from the Latin noun translatio."
+     ],
+     "why": [
+      "This sentence defines translation.",
+      "This sentence describes automation efforts.",
+      "This sentence traces the word's origin."
+     ],
+     "explanation": "The correct quotation names words, grammar, and syntax as possible spillovers."
+    }
+   ]
+  },
+  "Writing system": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Writing systems use conventional symbols to represent language and are classified by how graphemes relate to sounds or meaning.",
+     "wrongs": [
+      "Writing systems represent language without any conventional symbols.",
+      "All writing systems use alphabets.",
+      "Writing systems first appeared in the 19th century."
+     ],
+     "why": [
+      "The text defines a writing system as conventional symbols and rules.",
+      "The text describes alphabets, syllabaries, and logographic systems.",
+      "The text says the earliest appeared during the late 4th millennium BC."
+     ],
+     "explanation": "The passage defines writing systems, traces their origins, and explains their classification."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because proto-writing lacked the ability to fully encode language, it most likely ______",
+     "correct": "could not express a broad range of ideas.",
+     "wrongs": [
+      "represented every spoken sound.",
+      "was used only for literature.",
+      "replaced all later writing systems."
+     ],
+     "why": [
+      "The text says proto-writing was incapable of fully encoding language and thus lacked the ability to express a broad range of ideas.",
+      "Proto-writing used a small number of ideographs, not sound symbols.",
+      "The text describes it as a precursor, not a literary medium."
+     ],
+     "explanation": "Limited encoding means limited expressive range, as the passage states."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines writing systems, describes their origins, and classifies them by how symbols relate to language.",
+     "wrongs": [
+      "It narrates the decipherment of one script.",
+      "It compares writing with speech in detail.",
+      "It argues that logographic systems are superior."
+     ],
+     "why": [
+      "No decipherment story is told.",
+      "Speech is mentioned only as the corresponding spoken language.",
+      "The text describes types without ranking them."
+     ],
+     "explanation": "The passage moves from definition and origins to classification."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that writing systems are classified by symbol function?",
+     "correct": "Writing systems are generally classified according to how their symbols, called graphemes, relate to units of language.",
+     "wrongs": [
+      "A writing system is any conventional system for representing a particular language using a set of symbols.",
+      "The earliest of conventional writing systems appeared during the late 4th millennium BC.",
+      "Phonetic writing systems – which include alphabets and syllabaries – use graphemes that correspond to sounds."
+     ],
+     "why": [
+      "This sentence defines a writing system.",
+      "This sentence dates the earliest systems.",
+      "This sentence describes phonetic systems."
+     ],
+     "explanation": "The correct quotation states the basis for classifying writing systems."
+    }
+   ]
+  },
+  "Dialect": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A dialect is a language variety used by a group, distinguished by features such as phonology, vocabulary, and syntax.",
+     "wrongs": [
+      "A dialect is a separate language with no relation to others.",
+      "Dialects differ only in pronunciation.",
+      "Only nonstandard varieties count as dialects."
+     ],
+     "why": [
+      "The text defines a dialect as a variety spoken by a particular group.",
+      "The text lists phonology, morphology, syntax, and vocabulary.",
+      "The text includes dominant and standardized varieties as well as vernacular ones."
+     ],
+     "explanation": "The passage defines dialects, describes types, and discusses standard and nonstandard varieties."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because an idiolect is the unique variety used by a particular individual, every speaker most likely ______",
+     "correct": "has a distinct idiolect.",
+     "wrongs": [
+      "shares an identical idiolect with everyone.",
+      "speaks without any dialect features.",
+      "uses only a standard dialect."
+     ],
+     "why": [
+      "A variety unique to an individual applies to each speaker.",
+      "Identical idiolects would contradict uniqueness.",
+      "Every speaker uses some variety of language."
+     ],
+     "explanation": "If an idiolect is individually unique, each speaker has one."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines dialect, describes regional and social varieties, and distinguishes standard from nonstandard forms.",
+     "wrongs": [
+      "It narrates the history of one regional dialect.",
+      "It compares dialects with sign languages.",
+      "It argues that standard dialects are the only correct forms."
+     ],
+     "why": [
+      "No single dialect's history is narrated.",
+      "Sign languages are not discussed.",
+      "The text describes standard and nonstandard varieties without declaring one correct."
+     ],
+     "explanation": "The passage moves from definition to types and standardization."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that dialects differ in several linguistic features?",
+     "correct": "The dialects of the same language are mainly distinguished from each other by differences in linguistic features such as phonology, morphology, syntax and vocabulary.",
+     "wrongs": [
+      "A dialect is a variety of language spoken by a particular group of people.",
+      "The term \"dialect\" is most often used to refer to regional dialects.",
+      "An idiolect is the unique variety of language used by a particular individual."
+     ],
+     "why": [
+      "This sentence defines a dialect.",
+      "This sentence describes regional dialects.",
+      "This sentence defines an idiolect."
+     ],
+     "explanation": "The correct quotation lists phonology, morphology, syntax, and vocabulary as distinguishing features."
+    }
+   ]
+  },
+  "Code-switching": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Code-switching is shifting between languages or dialects according to social context, distinct from simply knowing multiple languages.",
+     "wrongs": [
+      "Code-switching is the ability to speak only one language.",
+      "Code-switching means translating written texts.",
+      "Code-switching is unrelated to social context."
+     ],
+     "why": [
+      "The text defines it as shifting from one linguistic code to another depending on context.",
+      "The text says plurilingualism is the ability to use multiple languages.",
+      "The text distinguishes translation from code-switching."
+     ],
+     "explanation": "The passage defines code-switching, distinguishes it from plurilingualism, and describes where it occurs."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because code-switching is generally intended to influence the relationship between speakers, it most likely ______",
+     "correct": "signals shared identity or social context.",
+     "wrongs": [
+      "has no social function.",
+      "prevents speakers from understanding each other.",
+      "occurs only in written texts."
+     ],
+     "why": [
+      "The text says alternations suggest speakers may share identities based on linguistic histories.",
+      "The text describes a social purpose.",
+      "Code-switching is described as ordinary multilingual conversation."
+     ],
+     "explanation": "Using another code can signal common identity or fit a social setting."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines code-switching, distinguishes it from plurilingualism, and describes where and why it occurs.",
+     "wrongs": [
+      "It profiles a single multilingual speaker.",
+      "It compares code-switching with translation.",
+      "It argues that code-switching is a grammatical error."
+     ],
+     "why": [
+      "No individual speaker is profiled.",
+      "Translation is not mentioned.",
+      "The text says code-switching is consistent with the syntax and phonology of each variety."
+     ],
+     "explanation": "The passage moves from definition to distinction and contexts."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that code-switching depends on social setting?",
+     "correct": "In linguistics, code-switching or language alternation is the process of shifting from one linguistic code (a language or dialect) to another, depending on the social context or conversational setting.",
+     "wrongs": [
+      "Code-switching is different from plurilingualism in that plurilingualism refers to the ability of an individual to use multiple languages.",
+      "Code-switching may happen between sentences, sentence fragments, words, or individual morphemes.",
+      "Multilinguals sometimes use elements of multiple languages when conversing with each other."
+     ],
+     "why": [
+      "This sentence distinguishes code-switching from plurilingualism.",
+      "This sentence describes where switches can occur.",
+      "This sentence describes multilingual conversation."
+     ],
+     "explanation": "The correct quotation ties code-switching to social context or conversational setting."
+    }
+   ]
+  }
+ }
+}

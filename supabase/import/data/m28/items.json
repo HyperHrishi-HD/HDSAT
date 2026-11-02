@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Cognitive bias": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Cognitive biases are systematic judgment deviations that can distort thinking but are sometimes adaptive.",
+     "wrongs": [
+      "Cognitive biases are random errors with no pattern.",
+      "All cognitive biases are harmful.",
+      "Cognitive biases occur only in laboratory settings."
+     ],
+     "why": [
+      "The text calls them a systematic pattern of deviation from rationality.",
+      "The text says some biases are adaptive and enable faster decisions.",
+      "The text describes them as part of human judgment generally."
+     ],
+     "explanation": "The passage defines cognitive bias, describes its effects, and explains adaptive and processing-limit origins."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because some cognitive biases enable faster decisions, they most likely ______",
+     "correct": "can be useful in some situations.",
+     "wrongs": [
+      "always produce inaccurate judgments.",
+      "occur only when accuracy matters most.",
+      "prevent all decision-making."
+     ],
+     "why": [
+      "The text says faster decisions can be desirable when timeliness matters more than accuracy.",
+      "The text says some biases are adaptive.",
+      "The text says speed matters when timeliness is more valuable than accuracy."
+     ],
+     "explanation": "If speed is valuable, a bias that speeds judgment can be advantageous."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines cognitive bias, describes its effects, and explains both adaptive and processing-limit origins.",
+     "wrongs": [
+      "It lists every known cognitive bias.",
+      "It profiles a single researcher.",
+      "It argues that biases should be eliminated entirely."
+     ],
+     "why": [
+      "The text mentions an evolving list without naming all biases.",
+      "No researcher is named.",
+      "The text describes some biases as adaptive."
+     ],
+     "explanation": "The passage moves from definition to consequences and explanations."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that biases are not always harmful?",
+     "correct": "While cognitive biases may initially appear to be negative, some are adaptive.",
+     "wrongs": [
+      "A cognitive bias is a systematic pattern of deviation from the norm or rationality in judgment.",
+      "An individual's construction of reality, not the objective input, may dictate their behavior in the world.",
+      "Cognitive biases can make individuals more inclined to endorsing pseudoscientific beliefs."
+     ],
+     "why": [
+      "This sentence defines cognitive bias.",
+      "This sentence describes subjective reality.",
+      "This sentence describes a harmful effect."
+     ],
+     "explanation": "The correct quotation explicitly calls some biases adaptive."
+    }
+   ]
+  },
+  "Classical conditioning": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Classical conditioning pairs a neutral stimulus with a potent one to produce an automatic conditioned response.",
+     "wrongs": [
+      "Classical conditioning modifies voluntary behavior through punishment.",
+      "Classical conditioning was discovered by B. F. Skinner.",
+      "Classical conditioning involves no pairing of stimuli."
+     ],
+     "why": [
+      "The text describes pairing a biologically potent stimulus with a neutral one.",
+      "The text says operant conditioning modifies voluntary behavior.",
+      "The text credits Ivan Pavlov with the experiments."
+     ],
+     "explanation": "The passage defines classical conditioning, describes Pavlov's work, and contrasts it with operant conditioning."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because classically conditioned stimuli can reinforce operant responses, the two forms of learning most likely ______",
+     "correct": "can interact with each other.",
+     "wrongs": [
+      "are completely unrelated.",
+      "cannot occur in the same animal.",
+      "always cancel each other out."
+     ],
+     "why": [
+      "The text says classical conditioning can affect operant conditioning.",
+      "That contradicts the stated interaction.",
+      "The text describes both as forms of learning in the same organisms."
+     ],
+     "explanation": "A conditioned stimulus reinforcing an operant response shows the two processes can work together."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines classical conditioning, describes Pavlov's experiments, and contrasts it with operant conditioning.",
+     "wrongs": [
+      "It explains how to train a pet step by step.",
+      "It compares Pavlov with Freud.",
+      "It argues that conditioning does not affect behavior."
+     ],
+     "why": [
+      "No training guide is given.",
+      "Freud is not mentioned.",
+      "The text describes conditioning as a basic behavioral mechanism."
+     ],
+     "explanation": "The passage moves from definition to evidence and conceptual contrast."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that classical conditioning produces automatic responses?",
+     "correct": "The term classical conditioning refers to the process of an automatic, conditioned response that is paired with a specific stimulus.",
+     "wrongs": [
+      "Classical conditioning is a behavioral procedure in which a biologically potent stimulus is paired with a neutral stimulus.",
+      "Ivan Pavlov studied classical conditioning with detailed experiments with dogs.",
+      "Pavlovian conditioning is distinct from operant conditioning."
+     ],
+     "why": [
+      "This sentence describes the procedure.",
+      "This sentence describes Pavlov's experiments.",
+      "This sentence distinguishes the two forms of conditioning."
+     ],
+     "explanation": "The correct quotation explicitly calls the conditioned response automatic."
+    }
+   ]
+  },
+  "Working memory": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Working memory is a limited-capacity system that holds information temporarily and supports reasoning and decisions.",
+     "wrongs": [
+      "Working memory has unlimited capacity.",
+      "Working memory stores information permanently.",
+      "Working memory is unrelated to decision-making."
+     ],
+     "why": [
+      "The text calls it a cognitive system with a limited capacity.",
+      "The text says it holds information temporarily.",
+      "The text says it is important for reasoning and guiding decisions."
+     ],
+     "explanation": "The passage defines working memory, describes its functions, and traces the term's history."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because working memory has a limited capacity, trying to hold many items at once most likely ______",
+     "correct": "impairs performance.",
+     "wrongs": [
+      "expands the capacity indefinitely.",
+      "has no effect on reasoning.",
+      "makes information permanent."
+     ],
+     "why": [
+      "A limited system cannot hold unlimited items, so performance suffers.",
+      "The text says capacity is limited.",
+      "The text says working memory is important for reasoning."
+     ],
+     "explanation": "Exceeding a limited capacity would reduce the ability to hold and manipulate information."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines working memory, distinguishes it from short-term memory, and traces the term's history.",
+     "wrongs": [
+      "It describes a memory experiment in detail.",
+      "It compares human and computer memory.",
+      "It argues that working memory does not exist."
+     ],
+     "why": [
+      "No experiment is described.",
+      "Computers are mentioned only as an analogy for theories.",
+      "The text presents working memory as a central theoretical concept."
+     ],
+     "explanation": "The passage moves from definition to distinction and history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that working memory manipulates information?",
+     "correct": "some theorists consider the two forms of memory distinct, assuming that working memory allows for the manipulation of stored information, whereas short-term memory only refers to the short-term storage of information.",
+     "wrongs": [
+      "Working memory is a cognitive system with a limited capacity that can hold information temporarily.",
+      "The term working memory became dominant in the field after Baddeley and Hitch showed in 1974 that a single module could not account for all kinds of temporary memory.",
+      "Short-term memory is the ability to remember information over a brief period."
+     ],
+     "why": [
+      "This sentence defines working memory's capacity and duration.",
+      "This sentence describes the term's rise.",
+      "This sentence defines short-term memory."
+     ],
+     "explanation": "The correct quotation explicitly contrasts manipulation with mere storage."
+    }
+   ]
+  },
+  "Confirmation bias": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Confirmation bias is the tendency to seek, interpret, and recall information in ways that support existing beliefs.",
+     "wrongs": [
+      "Confirmation bias is the tendency to seek information that contradicts one's beliefs.",
+      "Confirmation bias affects only memory, not interpretation.",
+      "Confirmation bias disappears when evidence is ambiguous."
+     ],
+     "why": [
+      "The text says people favor information that confirms prior beliefs.",
+      "The text says people ignore contrary information.",
+      "The text names biased search, interpretation, and recall."
+     ],
+     "explanation": "The passage defines confirmation bias, describes its mechanisms, and lists related effects."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because people tend to test ideas in a one-sided way, they most likely ______",
+     "correct": "overlook evidence that contradicts their views.",
+     "wrongs": [
+      "seek out opposing evidence first.",
+      "change their beliefs easily.",
+      "avoid forming any beliefs."
+     ],
+     "why": [
+      "The text says people mainly search for evidence that supports what they already assume.",
+      "One-sided testing means not prioritizing contrary evidence.",
+      "The text describes beliefs as resistant to contrary information."
+     ],
+     "explanation": "Searching mainly for supporting evidence means contrary evidence is less likely to be found."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines confirmation bias, describes how it operates, and lists four effects it helps explain.",
+     "wrongs": [
+      "It narrates a single experiment.",
+      "It compares confirmation bias with cognitive dissonance.",
+      "It argues that confirmation bias is always conscious."
+     ],
+     "why": [
+      "No single experiment is described.",
+      "Cognitive dissonance is not mentioned.",
+      "The text says the bias often comes from automatic mental habits."
+     ],
+     "explanation": "The passage moves from definition to mechanisms and named effects."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that confirmation bias shapes interpretation?",
+     "correct": "People display this bias when they select information that supports their views, ignoring contrary information or when they interpret ambiguous evidence as supporting their existing attitudes.",
+     "wrongs": [
+      "Confirmation bias is the tendency to search for, interpret, favor and recall information in a way that confirms or supports one's prior beliefs.",
+      "The effect is strongest for desired outcomes, emotionally charged issues and deeply entrenched beliefs.",
+      "Biased search for information, biased interpretation of this information and biased memory recall have been invoked to explain four specific effects."
+     ],
+     "why": [
+      "This sentence defines the bias.",
+      "This sentence describes when the effect is strongest.",
+      "This sentence introduces the four effects."
+     ],
+     "explanation": "The correct quotation explicitly describes interpreting ambiguous evidence as supporting existing attitudes."
+    }
+   ]
+  },
+  "Bystander effect": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The bystander effect holds that people are less likely to help when others are present, though recent research questions its robustness.",
+     "wrongs": [
+      "People are more likely to help when a crowd is present.",
+      "The bystander effect applies only to workplace settings.",
+      "The effect was first proposed in the 21st century."
+     ],
+     "why": [
+      "The text says individuals are less likely to offer help in the presence of other people.",
+      "That reverses the theory.",
+      "The text says the effect can generalize to workplaces but did not originate there."
+     ],
+     "explanation": "The passage defines the bystander effect, describes its origins and mechanisms, and notes challenges to it."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because responsibility diffuses among members of a group, each individual most likely ______",
+     "correct": "feels less obligation to act.",
+     "wrongs": [
+      "feels more personally responsible.",
+      "becomes more likely to help.",
+      "takes charge of the group."
+     ],
+     "why": [
+      "The text says group members have a weak sense of responsibility.",
+      "Diffusion spreads responsibility rather than concentrating it.",
+      "The theory predicts less helping with more bystanders."
+     ],
+     "explanation": "Diffusion of responsibility weakens each person's sense of duty to intervene."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the effect, recounts its origin, explains diffusion of responsibility, and notes newer challenges.",
+     "wrongs": [
+      "It profiles Kitty Genovese in detail.",
+      "It compares the effect with the placebo effect.",
+      "It argues that bystanders always intervene."
+     ],
+     "why": [
+      "Genovese's murder is mentioned as the origin, not profiled.",
+      "The placebo effect is not mentioned.",
+      "The text describes people as less likely to help."
+     ],
+     "explanation": "The passage moves from definition and origin to mechanisms and recent research."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the presence of others reduces helping?",
+     "correct": "The bystander effect is a social psychological theory that states that individuals are less likely to offer help to a victim in the presence of other people.",
+     "wrongs": [
+      "The theory was first proposed in 1964 after the murder of Kitty Genovese.",
+      "Recent research has focused on real-world events captured on security cameras.",
+      "More recent studies also show that this effect can generalize to workplace settings."
+     ],
+     "why": [
+      "This sentence describes the theory's origin.",
+      "This sentence describes recent research methods.",
+      "This sentence describes generalization to workplaces."
+     ],
+     "explanation": "The correct quotation states the core prediction about help in the presence of others."
+    }
+   ]
+  },
+  "Mindset": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "A mindset is an established set of attitudes that can shape behavior and resist change.",
+     "wrongs": [
+      "A mindset is a temporary emotion lasting only seconds.",
+      "Mindset research is confined to a single discipline.",
+      "A mindset has no effect on decisions."
+     ],
+     "why": [
+      "The text defines mindset as an established set of attitudes.",
+      "The text says the study of mindset is fragmented among disciplines.",
+      "The text says a mindset can create an incentive to adopt previous behaviors."
+     ],
+     "explanation": "The passage defines mindset, describes cognitive inertia and groupthink, and notes fragmented research."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a limiting mindset can be difficult to counteract, a group may most likely ______",
+     "correct": "resist changing its approach.",
+     "wrongs": [
+      "abandon its assumptions easily.",
+      "seek out every opposing view.",
+      "forget its shared values."
+     ],
+     "why": [
+      "The text says a limiting mindset may be difficult to counteract.",
+      "That contradicts the difficulty described.",
+      "The text describes cognitive inertia, not open-minded searching."
+     ],
+     "explanation": "A mindset resistant to change would incline a group to keep its existing approach."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines mindset, describes its effects, and notes the fragmented state of research.",
+     "wrongs": [
+      "It narrates the life of a psychologist.",
+      "It compares mindset with intelligence testing.",
+      "It argues that mindsets cannot be studied."
+     ],
+     "why": [
+      "No psychologist is profiled.",
+      "Intelligence testing is not discussed.",
+      "The text describes an interdisciplinary field of inquiry."
+     ],
+     "explanation": "The passage moves from definition to consequences and research context."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that mindsets can perpetuate existing behavior?",
+     "correct": "A mindset could create an incentive to adopt (or accept) previous behaviors, choices, or tools, sometimes known as cognitive inertia or groupthink.",
+     "wrongs": [
+      "A mindset refers to an established set of attitudes of a person or group concerning culture, values, philosophy, frame of reference, outlook, or disposition.",
+      "In cognitive psychology, mindset is the cognitive process activated in a task.",
+      "The study of mindset is evident in the social sciences and other fields."
+     ],
+     "why": [
+      "This sentence defines mindset.",
+      "This sentence describes mindset in cognitive psychology.",
+      "This sentence describes the field's scope."
+     ],
+     "explanation": "The correct quotation links mindset to cognitive inertia and groupthink."
+    }
+   ]
+  },
+  "Neuroplasticity": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Neuroplasticity is the brain's ability to reorganize its connections in response to experience, injury, and learning, including in adulthood.",
+     "wrongs": [
+      "Neuroplasticity occurs only during childhood.",
+      "Neuroplasticity means the brain never changes.",
+      "Neuroplasticity is limited to a single brain region."
+     ],
+     "why": [
+      "The text says research showed many aspects of the brain exhibit plasticity through adulthood.",
+      "That is the opposite of the definition.",
+      "The text describes changes ranging from individual pathways to cortical remapping."
+     ],
+     "explanation": "The passage defines neuroplasticity, lists triggers and forms, and traces the history of its acceptance."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because research showed that many aspects of the brain exhibit plasticity through adulthood, adults most likely ______",
+     "correct": "can form new neural connections.",
+     "wrongs": [
+      "lose all ability to learn.",
+      "have brains that never reorganize.",
+      "retain only childhood connections."
+     ],
+     "why": [
+      "Adult plasticity implies continued reorganization and new connections.",
+      "That contradicts the research described.",
+      "The text says the brain can rewire its connections."
+     ],
+     "explanation": "Plasticity in adulthood means the adult brain can still reorganize with experience."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines neuroplasticity, describes its forms and triggers, and explains how scientific views of it changed.",
+     "wrongs": [
+      "It narrates a single patient's recovery.",
+      "It compares human and bird brains.",
+      "It argues that plasticity is harmful."
+     ],
+     "why": [
+      "No patient is described.",
+      "Bird brains are not mentioned.",
+      "The text presents plasticity as adaptability without calling it harmful."
+     ],
+     "explanation": "The passage moves from definition to mechanisms and then to scientific history."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that learning changes the brain?",
+     "correct": "This process can occur in response to learning new skills, experiencing environmental changes, recovering from injuries, or adapting to sensory or cognitive deficits.",
+     "wrongs": [
+      "Neuroplasticity is the tendency of neural networks in the brain to change through growth and reorganization.",
+      "These changes range from individual neuron pathways making new connections to systematic adjustments like cortical remapping.",
+      "The developing brain exhibits a higher degree of plasticity than the adult brain."
+     ],
+     "why": [
+      "This sentence defines neuroplasticity.",
+      "This sentence describes the scale of changes.",
+      "This sentence compares developing and adult brains."
+     ],
+     "explanation": "The correct quotation names learning new skills as a trigger for plastic change."
+    }
+   ]
+  },
+  "Attachment theory": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Attachment theory holds that early caregiver bonds shape survival, emotional functioning, and later relationships.",
+     "wrongs": [
+      "Attachment theory claims infants need no caregivers.",
+      "Attachment theory applies only to adulthood.",
+      "Attachment patterns have no effect on future relationships."
+     ],
+     "why": [
+      "The text says infants need a close relationship with at least one primary caregiver.",
+      "The text focuses on early bonds between infants and caregivers.",
+      "The text says internal working models influence future relationships."
+     ],
+     "explanation": "The passage defines attachment theory, describes secure attachment and separation responses, and links early bonds to later relationships."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because secure attachments form when caregivers are sensitive and consistently responsive, a child with such a caregiver most likely ______",
+     "correct": "develops a secure attachment.",
+     "wrongs": [
+      "avoids the caregiver entirely.",
+      "shows no preference for any adult.",
+      "develops an insecure attachment by definition."
+     ],
+     "why": [
+      "The text directly states that secure attachments form under these conditions.",
+      "Proximity seeking is described as typical of attached infants.",
+      "Attachment involves a primary caregiver relationship."
+     ],
+     "explanation": "The passage states the conditions under which secure attachments form."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines attachment theory, explains secure attachment and its effects, and describes separation responses.",
+     "wrongs": [
+      "It profiles John Bowlby's childhood.",
+      "It compares attachment theory with behaviorism.",
+      "It argues that early bonds do not matter."
+     ],
+     "why": [
+      "Bowlby is named as the developer, not profiled.",
+      "Behaviorism is not mentioned.",
+      "The text says early bonds are important for healthy functioning."
+     ],
+     "explanation": "The passage moves from definition and origin to patterns and consequences."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that early attachment shapes later relationships?",
+     "correct": "The interactions with caregivers form patterns of attachment, which in turn create internal working models that influence future relationships.",
+     "wrongs": [
+      "Attachment theory is a psychological and evolutionary framework concerning the relationships between humans.",
+      "Infants seek proximity to attachment figures, especially during stressful situations.",
+      "Separation anxiety or grief following the loss of an attachment figure is considered to be a normal and adaptive response."
+     ],
+     "why": [
+      "This sentence defines the theory's scope.",
+      "This sentence describes proximity seeking.",
+      "This sentence describes separation responses."
+     ],
+     "explanation": "The correct quotation explicitly links early patterns to future relationships."
+    }
+   ]
+  },
+  "Attention": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Attention is the selective concentration of awareness, comprising several processes supported by distributed brain networks.",
+     "wrongs": [
+      "Attention is a single, simple process.",
+      "Attention involves no selection of information.",
+      "Attention is unrelated to working memory."
+     ],
+     "why": [
+      "The text says attention is not a unitary phenomenon.",
+      "The text says attention excludes other information while focusing on some.",
+      "The text says attention is closely linked to working memory."
+     ],
+     "explanation": "The passage defines attention, describes its component processes, and notes cultural variation and history."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because attention involves allocating limited cognitive processing resources, dividing attention across tasks most likely ______",
+     "correct": "reduces performance on each task.",
+     "wrongs": [
+      "increases available processing resources.",
+      "eliminates the need for focus.",
+      "makes every task automatic."
+     ],
+     "why": [
+      "Limited resources shared across tasks leave less for each.",
+      "Division does not create more capacity.",
+      "Divided attention is itself a process, not the absence of focus."
+     ],
+     "explanation": "Splitting a limited resource between tasks reduces the resources available to each."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines attention, distinguishes its component processes, and describes their neural and cultural context.",
+     "wrongs": [
+      "It narrates a single attention experiment.",
+      "It compares human and insect attention.",
+      "It argues that attention cannot be studied."
+     ],
+     "why": [
+      "No experiment is narrated.",
+      "Insects are not mentioned.",
+      "The text describes attention as studied across disciplines."
+     ],
+     "explanation": "The passage moves from definition to component processes and supporting context."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that attention consists of multiple processes?",
+     "correct": "Attention is not a unitary phenomenon but an umbrella term for multiple related processes, including selective attention (prioritizing some stimuli over others), sustained attention (maintaining focus), divided attention (sharing resources across tasks), and orienting (shifting focus in space or time).",
+     "wrongs": [
+      "Attention is the concentration of awareness directed at some task or phenomenon while mostly excluding others.",
+      "In cognitive psychology, attention is often described as the allocation of limited cognitive processing resources.",
+      "Patterns of attention also vary across cultures."
+     ],
+     "why": [
+      "This sentence defines attention generally.",
+      "This sentence describes attention in cognitive psychology.",
+      "This sentence describes cultural variation."
+     ],
+     "explanation": "The correct quotation lists selective, sustained, divided attention, and orienting as distinct processes."
+    }
+   ]
+  },
+  "Dream": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Dreams are involuntary experiences during sleep whose content, origin, and function remain scientifically unsettled.",
+     "wrongs": [
+      "Dreams occur only during waking hours.",
+      "The function of dreaming is fully understood.",
+      "Dreams last less than a second each."
+     ],
+     "why": [
+      "The text says dreams occur during certain stages of sleep.",
+      "The text says it is not known what the purpose of dreaming is.",
+      "The text says each dream lasts around 5 to 20 minutes."
+     ],
+     "explanation": "The passage defines dreams, gives their frequency and duration, and describes the state of dream research."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because it is not known where in the brain dreams originate or what purpose they serve, the scientific study of dreams most likely ______",
+     "correct": "remains an open area of research.",
+     "wrongs": [
+      "has concluded that dreams are meaningless.",
+      "has mapped a single dream center.",
+      "no longer attracts scientific interest."
+     ],
+     "why": [
+      "Unresolved questions imply continued inquiry.",
+      "The text does not state that dreams are meaningless.",
+      "The text says it is unknown whether a single origin exists."
+     ],
+     "explanation": "Open questions about origin and function mean dream science is still unresolved."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines dreams and their duration, describes historical interest, and explains the limits of current science.",
+     "wrongs": [
+      "It interprets a single recurring dream.",
+      "It compares dreaming with daydreaming.",
+      "It argues that dreams predict the future."
+     ],
+     "why": [
+      "No individual dream is interpreted.",
+      "Daydreaming is not discussed.",
+      "The text describes dream interpretation historically without endorsing prediction."
+     ],
+     "explanation": "The passage moves from definition to history and then to scientific uncertainty."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that dreams occur during sleep?",
+     "correct": "A dream is a succession of images, dynamic scenes and situations, ideas, emotions, and sensations that usually occur involuntarily in the mind during certain stages of sleep.",
+     "wrongs": [
+      "Humans generally spend more than two hours dreaming per night.",
+      "The scientific study of dreams is called oneirology.",
+      "Dream interpretation was practiced by the Babylonians in the third millennium BCE."
+     ],
+     "why": [
+      "This sentence describes time spent dreaming.",
+      "This sentence names the field of study.",
+      "This sentence describes ancient interpretation."
+     ],
+     "explanation": "The correct quotation places dreaming during stages of sleep."
+    }
+   ]
+  }
+ }
+}

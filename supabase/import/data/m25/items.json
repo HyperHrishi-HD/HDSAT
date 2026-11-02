@@ -1,0 +1,744 @@
+{
+ "pages": {
+  "Ancient Egypt": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Ancient Egypt developed along the Nile, alternated stable kingdoms with unstable periods, peaked in the New Kingdom, and was eventually conquered.",
+     "wrongs": [
+      "Ancient Egypt began as a single kingdom that never experienced instability.",
+      "Ancient Egypt reached its greatest power during the Old Kingdom and then expanded.",
+      "Ancient Egypt was never ruled by foreign civilizations."
+     ],
+     "why": [
+      "The text describes stable kingdoms interspersed with Intermediate Periods of instability.",
+      "The text says the pinnacle was the New Kingdom.",
+      "The text lists Hyksos, Kushites, Assyrians, Persians, Greeks, and Romans among conquerors."
+     ],
+     "explanation": "The passage describes Egypt's setting, its cyclical political history, its peak, and its conquest."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the New Kingdom marked the pinnacle of ancient Egyptian power and was followed by an era of slow decline, later Egyptian history most likely ______",
+     "correct": "included periods of foreign rule.",
+     "wrongs": [
+      "expanded Egypt's territory further than before.",
+      "ended all trade with the Mediterranean.",
+      "restored Egypt to its earlier peak."
+     ],
+     "why": [
+      "The text says Egypt was invaded or conquered by several foreign civilizations after its peak.",
+      "The text describes decline, not further expansion.",
+      "Trade is not identified as ending."
+     ],
+     "explanation": "Decline after the New Kingdom, followed by a list of conquerors, implies later foreign rule."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It introduces Egypt's setting and unification, traces its kingdoms and decline, and notes foreign conquests.",
+     "wrongs": [
+      "It profiles the pharaohs of the New Kingdom one by one.",
+      "It compares Egyptian and Mesopotamian agriculture in detail.",
+      "It argues that Egypt's chronology cannot be studied."
+     ],
+     "why": [
+      "Only Menes and Narmer are named.",
+      "Mesopotamia is not mentioned.",
+      "The text presents a conventional chronology without rejecting it."
+     ],
+     "explanation": "The passage moves from geography and unification to political periods and conquest."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that Egypt's history alternated between stability and instability?",
+     "correct": "The history of ancient Egypt unfolded as a series of stable kingdoms interspersed by the \"Intermediate Periods\" of relative instability.",
+     "wrongs": [
+      "Ancient Egypt was a cradle of civilization concentrated along the lower reaches of the Nile River.",
+      "The pinnacle of ancient Egyptian power was achieved during the New Kingdom.",
+      "In AD 642, the Arab conquest of Egypt brought an end to the region's millennium-long Greco-Roman period."
+     ],
+     "why": [
+      "This sentence describes Egypt's location.",
+      "This sentence identifies the peak period.",
+      "This sentence describes a later conquest."
+     ],
+     "explanation": "The correct quotation explicitly describes stable kingdoms interspersed with instability."
+    }
+   ]
+  },
+  "Mesopotamia": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Mesopotamia, in the Tigris-Euphrates region, was a cradle of early civilization and major innovations.",
+     "wrongs": [
+      "Mesopotamia was a mountainous region with no agriculture.",
+      "Mesopotamia was uninhabited until the rise of Babylon.",
+      "Mesopotamia's innovations were limited to military technology."
+     ],
+     "why": [
+      "The text places it in the Tigris-Euphrates river system and cites farming, script, and mathematics.",
+      "The text says it is the site of the earliest Neolithic developments.",
+      "The text lists the wheel, cereal crops, script, mathematics, astronomy, and agriculture."
+     ],
+     "explanation": "The passage locates Mesopotamia, describes its early innovations, and summarizes its political history."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because Mesopotamia is the site of the earliest developments of the Neolithic Revolution, it most likely ______",
+     "correct": "was among the first places where farming took hold.",
+     "wrongs": [
+      "had no cities until the Common Era.",
+      "depended on imported cereal crops.",
+      "avoided river-based settlement."
+     ],
+     "why": [
+      "The Neolithic Revolution involved the planting of the first cereal crops.",
+      "The text describes Sumerians and Akkadians dominating from about 3100 BC.",
+      "The text says the first cereal crops were planted there."
+     ],
+     "explanation": "Early Neolithic development, including the first cereal crops, implies early farming."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It locates Mesopotamia, lists its early innovations, and traces its succession of kingdoms and empires.",
+     "wrongs": [
+      "It describes daily life in a single Sumerian household.",
+      "It compares Mesopotamia with ancient Egypt in detail.",
+      "It argues that Mesopotamian history began with Babylon."
+     ],
+     "why": [
+      "No household is described.",
+      "Egypt is mentioned only in a list of contemporary centres.",
+      "The text places Babylon's fall in 539 BC, late in the sequence."
+     ],
+     "explanation": "The passage moves from geography and achievements to political chronology."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that Mesopotamia produced major innovations?",
+     "correct": "It has been identified as having \"inspired some of the most important developments in human history, including the invention of the wheel, the planting of the first cereal crops, the development of cursive script, mathematics, astronomy, and agriculture.\"",
+     "wrongs": [
+      "Mesopotamia is a historical region of West Asia situated within the Tigris–Euphrates river system.",
+      "It corresponds roughly to the territory of modern Iraq.",
+      "The Sumerians and Akkadians dominated Mesopotamia from the beginning of recorded history."
+     ],
+     "why": [
+      "This sentence describes the region's location.",
+      "This sentence compares it with a modern country.",
+      "This sentence names early dominant peoples."
+     ],
+     "explanation": "The correct quotation lists the wheel, crops, script, mathematics, astronomy, and agriculture."
+    }
+   ]
+  },
+  "Indus Valley Civilisation": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Indus Valley Civilisation was a vast Bronze Age South Asian civilization known through its Harappan sites.",
+     "wrongs": [
+      "The Indus Valley Civilisation was smaller than ancient Egypt.",
+      "The Indus Valley Civilisation existed only after 1300 BCE.",
+      "The civilisation is known mainly through written records."
+     ],
+     "why": [
+      "The text says it was geographically larger than Egypt and Mesopotamia combined.",
+      "The text dates it from 3300 to 1300 BCE.",
+      "The text describes its discovery through excavation, not written records."
+     ],
+     "explanation": "The passage describes the civilization's dates, extent, setting, and archaeological discovery."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the term Harappan comes from the type site Harappa, the name most likely ______",
+     "correct": "refers to the civilization as a whole.",
+     "wrongs": [
+      "applies only to a single building.",
+      "describes a language spoken in Mesopotamia.",
+      "dates the civilization to the 20th century."
+     ],
+     "why": [
+      "The text says the term Harappan is also applied to the Indus Civilisation.",
+      "The text uses it for the civilization, not one structure.",
+      "Harappa is in Punjab, not Mesopotamia."
+     ],
+     "explanation": "A type site lends its name to the wider culture it represents."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the civilization, describes its dates and extent, and explains how it was discovered and named.",
+     "wrongs": [
+      "It narrates the life of a single Harappan ruler.",
+      "It compares the Indus script with Egyptian hieroglyphs.",
+      "It argues that the civilization never existed."
+     ],
+     "why": [
+      "No ruler is named.",
+      "Writing systems are not compared.",
+      "The text presents the civilization as established fact."
+     ],
+     "explanation": "The passage moves from definition and geography to archaeology and terminology."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the civilization covered an enormous area?",
+     "correct": "Together with ancient Egypt, Mesopotamia, and China, it was one of the four centres of the ancient world; it was geographically larger than ancient Egypt and Mesopotamia combined.",
+     "wrongs": [
+      "The Indus Valley Civilisation was a Bronze Age civilisation in the northwestern regions of South Asia.",
+      "The term Harappan is also applied to the Indus Civilisation, after its type site Harappa.",
+      "The discovery of Harappa and soon afterwards Mohenjo-daro was the culmination of work that had begun after the founding of the Archaeological Survey of India."
+     ],
+     "why": [
+      "This sentence identifies the civilization's region and era.",
+      "This sentence explains the Harappan name.",
+      "This sentence describes archaeological work."
+     ],
+     "explanation": "The correct quotation compares its area with Egypt and Mesopotamia combined."
+    }
+   ]
+  },
+  "Minoan civilization": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Minoans built a trading Bronze Age culture on Crete, influenced the Aegean, and left undeciphered scripts.",
+     "wrongs": [
+      "The Minoans were a mainland Greek people who conquered Crete.",
+      "The Minoan civilization was rediscovered in ancient times.",
+      "The Minoan language is known to be Indo-European."
+     ],
+     "why": [
+      "The text describes a Bronze Age culture centered on Crete.",
+      "The text says the civilization was rediscovered in the early twentieth century.",
+      "The text says the language is regarded as unlikely to belong to Indo-European or Afroasiatic families."
+     ],
+     "explanation": "The passage describes Minoan Crete, its trade and influence, its scripts, and its rediscovery."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because neither Cretan hieroglyphs nor Linear A has been fully deciphered, the Minoan language ______",
+     "correct": "cannot be identified with certainty.",
+     "wrongs": [
+      "is known to be a form of Greek.",
+      "has been reconstructed from Linear B.",
+      "was never written down."
+     ],
+     "why": [
+      "The text says the identity of the Minoan language is unknown because the scripts are undeciphered.",
+      "The text says the language is unlikely to belong to known families, not that it is Greek.",
+      "Linear B is the Mycenaean script, not the Minoan one."
+     ],
+     "explanation": "Without a decipherment, the language behind the scripts cannot be identified."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It introduces Minoan Crete, describes its trade and influence, and traces its decline, rediscovery, and scripts.",
+     "wrongs": [
+      "It narrates a single excavation at Knossos.",
+      "It compares Minoan and Egyptian religion.",
+      "It argues that the Minoans were not a civilization."
+     ],
+     "why": [
+      "Knossos is mentioned as a palace site, not narrated.",
+      "Religion is not discussed.",
+      "The text calls it the first civilization in Europe."
+     ],
+     "explanation": "The passage moves from culture and economy to history and archaeology."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the Minoans were active traders?",
+     "correct": "They traded extensively, exporting agricultural products and luxury crafts in exchange for raw metals which were difficult to obtain on Crete.",
+     "wrongs": [
+      "The Minoan civilization was a Bronze Age culture centered on the island of Crete.",
+      "The Minoan civilization developed from the local Neolithic culture around 3100 BC.",
+      "Largely forgotten after the Late Bronze Age collapse, the Minoan civilization was rediscovered in the early twentieth century."
+     ],
+     "why": [
+      "This sentence identifies the culture's location.",
+      "This sentence describes its development.",
+      "This sentence describes its rediscovery."
+     ],
+     "explanation": "The correct quotation describes exports and imports of raw metals."
+    }
+   ]
+  },
+  "Mycenaean Greece": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Mycenaean Greece was the first advanced Greek civilization, with palatial states, trade, and the Linear B script.",
+     "wrongs": [
+      "Mycenaean Greece was a Neolithic culture without writing.",
+      "Mycenaean Greece was centered on Crete and had no mainland sites.",
+      "Mycenaean Greece produced no art or architecture."
+     ],
+     "why": [
+      "The text calls it the first advanced and distinctively Greek civilization, with a writing system.",
+      "The text says it was based in mainland Greece and influenced by Crete.",
+      "The text mentions works of art and engineering innovations."
+     ],
+     "explanation": "The passage describes the civilization's dates, mainland centers, external influence, and achievements."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because Linear B offers the first written records of the Greek language, the Mycenaeans most likely ______",
+     "correct": "spoke an early form of Greek.",
+     "wrongs": [
+      "spoke a language unrelated to Greek.",
+      "borrowed their script from Egypt.",
+      "had no spoken language at all."
+     ],
+     "why": [
+      "Records of Greek written by Mycenaeans indicate they used the language.",
+      "That contradicts the text's description of Linear B.",
+      "The text does not say the script came from Egypt."
+     ],
+     "explanation": "Linear B's Greek records imply the Mycenaeans spoke Greek."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines Mycenaean Greece, explains its development and centers, and describes its innovations and reach.",
+     "wrongs": [
+      "It profiles a single Mycenaean king.",
+      "It compares Mycenaean and Roman law.",
+      "It narrates the Trojan War."
+     ],
+     "why": [
+      "No king is named.",
+      "Roman law is not discussed.",
+      "The Trojan War is not mentioned."
+     ],
+     "explanation": "The passage moves from definition and origins to geography and cultural features."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that contact with Crete shaped Mycenaean culture?",
+     "correct": "The Mycenaeans were mainland Greek peoples who were likely stimulated by their contact with insular Minoan Crete and other Mediterranean cultures to develop a more sophisticated sociopolitical culture of their own.",
+     "wrongs": [
+      "Mycenaean Greece was the last phase of the Bronze Age in ancient Greece.",
+      "The most prominent site was Mycenae, after which the culture of this era is named.",
+      "Their syllabic script, Linear B, offers the first written records of the Greek language."
+     ],
+     "why": [
+      "This sentence dates the civilization.",
+      "This sentence explains the culture's name.",
+      "This sentence describes the script."
+     ],
+     "explanation": "The correct quotation credits contact with Minoan Crete as a stimulus."
+    }
+   ]
+  },
+  "Roman Republic": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Roman Republic expanded to Mediterranean dominance under an elective oligarchy rather than a true democracy.",
+     "wrongs": [
+      "The Roman Republic was a direct democracy modeled on Athens.",
+      "The Roman Republic never fought wars during its existence.",
+      "The Roman Republic began with the establishment of the Roman Empire."
+     ],
+     "why": [
+      "The text says it was an elective oligarchy, not a true democracy.",
+      "The text says republican Rome was in a state of near-perpetual war.",
+      "The text says the Republic ended in 27 BC with the establishment of the Empire."
+     ],
+     "explanation": "The passage defines the Republic's dates, cultural mix, political system, and expansion."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because a number of powerful families largely monopolised the senior magistracies, the Republic most likely ______",
+     "correct": "gave ordinary citizens limited real power.",
+     "wrongs": [
+      "held no elections at all.",
+      "granted equal authority to every citizen.",
+      "abolished the senate."
+     ],
+     "why": [
+      "Monopoly of offices by a few families would limit broader influence.",
+      "The text says there were annual elections.",
+      "That contradicts the oligarchic description."
+     ],
+     "explanation": "Family control of high offices implies that elections did not produce broad popular power."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the Republic's dates, describes its society and political system, and notes institutional changes.",
+     "wrongs": [
+      "It narrates the War of Actium in detail.",
+      "It compares Roman and Greek religion.",
+      "It profiles a single Roman family."
+     ],
+     "why": [
+      "The war is mentioned only as the endpoint.",
+      "Greek elements are noted but not compared in detail.",
+      "No family is profiled."
+     ],
+     "explanation": "The passage moves from chronology to society, politics, and adaptation."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the Republic was not a full democracy?",
+     "correct": "There were annual elections, but the republican system was an elective oligarchy, not a true democracy, with a number of powerful families largely monopolising the senior magistracies.",
+     "wrongs": [
+      "The Roman Republic was the era of classical Roman civilisation beginning with the overthrow of the Roman Kingdom.",
+      "Roman society at the time was primarily a cultural mix of Latin and Etruscan societies.",
+      "Roman institutions underwent considerable changes throughout the Republic."
+     ],
+     "why": [
+      "This sentence dates the Republic's beginning.",
+      "This sentence describes Roman society.",
+      "This sentence describes institutional change."
+     ],
+     "explanation": "The correct quotation explicitly calls the system an elective oligarchy, not a democracy."
+    }
+   ]
+  },
+  "Han dynasty": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Han dynasty was a Chinese golden age that shaped later identity and sponsored Confucianism.",
+     "wrongs": [
+      "The Han dynasty lasted less than a decade.",
+      "The Han dynasty rejected Confucianism in favor of legalism.",
+      "The Han dynasty was founded by Wang Mang."
+     ],
+     "why": [
+      "The text dates it from 202 BC to 220 AD across two periods.",
+      "The text says the court officially sponsored Confucianism from Emperor Wu onward.",
+      "The text says Liu Bang founded it and Wang Mang usurped the throne briefly."
+     ],
+     "explanation": "The passage describes the dynasty's dates, political structure, cultural influence, and ideology."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because the majority ethnic group of modern China calls itself Han, the dynasty most likely ______",
+     "correct": "left a lasting mark on Chinese identity.",
+     "wrongs": [
+      "lasted into the modern era.",
+      "had no influence on language.",
+      "ruled only a small village."
+     ],
+     "why": [
+      "A modern group naming itself after the dynasty indicates enduring cultural influence.",
+      "The text says the dynasty ended in 220 AD.",
+      "The text says spoken and written Chinese are called Han language and Han characters."
+     ],
+     "explanation": "The adoption of \"Han\" as an ethnic and linguistic label reflects the dynasty's lasting legacy."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It gives the dynasty's dates and periods, describes its significance, and explains its government and ideology.",
+     "wrongs": [
+      "It narrates the life of Liu Bang in detail.",
+      "It compares Han and Roman law.",
+      "It argues that the Qin dynasty was more important."
+     ],
+     "why": [
+      "Liu Bang is named only as founder.",
+      "Roman law is not discussed.",
+      "The Qin is mentioned only as the preceding dynasty."
+     ],
+     "explanation": "The passage moves from chronology to legacy and then to political structure."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that the Han dynasty shaped later Chinese identity?",
+     "correct": "The Han dynasty is considered a golden age in Chinese history, impacting Chinese identity in later periods.",
+     "wrongs": [
+      "The Han dynasty was an imperial dynasty of China established by Liu Bang.",
+      "The Han emperor was at the pinnacle of Han society and culture.",
+      "The Han Empire was divided into commanderies directly controlled by the central government."
+     ],
+     "why": [
+      "This sentence names the founder.",
+      "This sentence describes the emperor's position.",
+      "This sentence describes imperial administration."
+     ],
+     "explanation": "The correct quotation explicitly names the dynasty's impact on later Chinese identity."
+    }
+   ]
+  },
+  "Maurya Empire": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "The Maurya Empire was a vast Iron Age South Asian power whose reach beyond its core depended on commanders' loyalty.",
+     "wrongs": [
+      "The Maurya Empire was a small kingdom confined to Magadha.",
+      "The Maurya Empire was founded by Ashoka.",
+      "The Maurya Empire left complete written archives."
+     ],
+     "why": [
+      "The text says it extended as far as Afghanistan and the northern Deccan.",
+      "The text says Chandragupta Maurya founded it.",
+      "The text says the written records are partial, including Megasthenes' lost history and Ashoka's edicts."
+     ],
+     "explanation": "The passage describes the empire's founding, sources, expansion, and administrative limits."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because technology and infrastructure limited how deeply Mauryan rule could penetrate society beyond Magadha, the empire most likely ______",
+     "correct": "relied on local commanders to hold distant regions.",
+     "wrongs": [
+      "governed every village directly from the capital.",
+      "abandoned its conquests immediately.",
+      "had no military forces."
+     ],
+     "why": [
+      "The text says outside the core regions the empire depended on the loyalty of military commanders.",
+      "The text says rule could not penetrate deeply beyond the core.",
+      "The text describes military conquests and treaties."
+     ],
+     "explanation": "Limited reach meant distant control depended on commanders rather than direct administration."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It defines the empire, identifies its sources, and describes its expansion and administrative structure.",
+     "wrongs": [
+      "It narrates the life of Ashoka from birth to death.",
+      "It compares Mauryan and Roman law.",
+      "It argues that the empire never existed."
+     ],
+     "why": [
+      "Ashoka's reign is summarized in one sentence.",
+      "Roman law is not discussed.",
+      "The text treats the empire as historical fact."
+     ],
+     "explanation": "The passage moves from definition and sources to conquest and governance."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that Ashoka controlled most of the subcontinent?",
+     "correct": "During the rule of Chandragupta's grandson, Ashoka (c. 268–232 BCE), the empire briefly controlled the major urban hubs and arteries of the subcontinent excepting the deep south.",
+     "wrongs": [
+      "The Maurya Empire was a geographically extensive Iron Age historical power in South Asia with its power base in Magadha.",
+      "Founded by Chandragupta Maurya around c. 320 BCE, it existed in loose-knit fashion until 185 BCE.",
+      "The Mauryan capital (what is today Patna) was located in Magadha."
+     ],
+     "why": [
+      "This sentence defines the empire.",
+      "This sentence gives the empire's dates.",
+      "This sentence locates the capital."
+     ],
+     "explanation": "The correct quotation describes Ashoka's control of major hubs and arteries across the subcontinent."
+    }
+   ]
+  },
+  "Kingdom of Aksum": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Aksum was a major Horn of Africa trading kingdom that adopted Christianity and minted its own coins.",
+     "wrongs": [
+      "Aksum was a small inland kingdom with no trade.",
+      "Aksum was founded in the 19th century.",
+      "Aksum adopted Islam as its state religion."
+     ],
+     "why": [
+      "The text places it on the Rome-India trade route with an Indian Ocean monopoly.",
+      "The text says it was founded in the 1st century.",
+      "The text says it adopted Christianity under Ezana in the mid 4th century."
+     ],
+     "explanation": "The passage describes Aksum's location, rise, trade dominance, coinage, and conversion."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because Aksum gained a monopoly of Indian Ocean trade, it most likely ______",
+     "correct": "became wealthy and influential.",
+     "wrongs": [
+      "lost contact with the Mediterranean world.",
+      "stopped minting coins.",
+      "declined into a small village."
+     ],
+     "why": [
+      "Control of trade is described alongside its status as a major power and its coinage.",
+      "The text says it entered the Greco-Roman cultural sphere.",
+      "The text says it began minting coins during Endybis's reign."
+     ],
+     "explanation": "A trade monopoly would generate the wealth reflected in Aksum's coins and regional influence."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It locates Aksum, describes its expansion and trade, and explains its coinage and conversion.",
+     "wrongs": [
+      "It profiles a single Aksumite king in detail.",
+      "It compares Aksum with the Roman Republic.",
+      "It argues that Aksum was never a kingdom."
+     ],
+     "why": [
+      "Several kings are named briefly, but none is profiled in depth.",
+      "Rome is mentioned only as a contemporary power and trade partner.",
+      "The text describes a kingdom with a capital and rulers."
+     ],
+     "explanation": "The passage moves from geography and founding to expansion, commerce, and religion."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that Aksum was counted among the great powers of its era?",
+     "correct": "The Kingdom of Aksum was considered one of the four great powers of the 3rd century by Mani, the founder of Manichaeism, alongside Persia, Rome, and China.",
+     "wrongs": [
+      "The Kingdom of Aksum was a kingdom in the Horn of Africa and South Arabia from classical antiquity to the Middle Ages.",
+      "The city of Axum served as the kingdom's capital.",
+      "Aksum adopted Christianity as its state religion in the mid 4th century under Ezana."
+     ],
+     "why": [
+      "This sentence defines the kingdom's location and era.",
+      "This sentence identifies the capital.",
+      "This sentence describes the conversion to Christianity."
+     ],
+     "explanation": "The correct quotation ranks Aksum with Persia, Rome, and China."
+    }
+   ]
+  },
+  "Teotihuacan": {
+   "excerpt": null,
+   "items": [
+    {
+     "skill": "Central Ideas and Details",
+     "difficulty": "Medium",
+     "prompt": "Which choice best states the main idea of the text?",
+     "correct": "Teotihuacan was a huge pre-Aztec Mesoamerican city with major pyramids and wide regional influence.",
+     "wrongs": [
+      "Teotihuacan was the capital of the Aztec Empire.",
+      "Teotihuacan was a small village of about 1,000 people.",
+      "Teotihuacan was built after the Spanish conquest."
+     ],
+     "why": [
+      "The text says it was not a Mexica (Aztec) city and predates the Aztec Empire.",
+      "The text estimates its population at 100,000 during its height.",
+      "The text describes a pre-Columbian city."
+     ],
+     "explanation": "The passage describes the city's location, monuments, population, and exports."
+    },
+    {
+     "skill": "Inferences",
+     "difficulty": "Medium",
+     "prompt": "Which choice most logically completes the text?",
+     "append": "Because 80 to 90 percent of the valley's population resided in Teotihuacan, the city most likely ______",
+     "correct": "dominated its surrounding region.",
+     "wrongs": [
+      "had little influence beyond its walls.",
+      "was one of many equally sized towns.",
+      "lacked any monumental architecture."
+     ],
+     "why": [
+      "Concentrating most of the valley's people in one city implies regional dominance.",
+      "That contradicts the demographic concentration.",
+      "The figures show one dominant city, not many equal towns."
+     ],
+     "explanation": "Housing nearly the whole valley population indicates the city was the region's center."
+    },
+    {
+     "skill": "Text Structure and Purpose",
+     "difficulty": "Medium",
+     "prompt": "Which choice best describes the overall structure of the text?",
+     "correct": "It locates Teotihuacan, describes its monuments and population, and notes its cultural and economic significance.",
+     "wrongs": [
+      "It narrates the Spanish conquest of Mexico.",
+      "It compares Teotihuacan with ancient Rome.",
+      "It explains how the pyramids were restored."
+     ],
+     "why": [
+      "The Spanish conquest is not discussed.",
+      "Rome is not mentioned.",
+      "Restoration is not described."
+     ],
+     "explanation": "The passage moves from geography to scale and then to archaeology and trade."
+    },
+    {
+     "skill": "Command of Evidence (Textual)",
+     "difficulty": "Medium",
+     "prompt": "Which quotation from the text most directly supports the claim that Teotihuacan was exceptionally large?",
+     "correct": "Its population has been estimated to be at least 25,000, but likely sat around 100,000 during its height, potentially making it the sixth-largest city in the world during its epoch.",
+     "wrongs": [
+      "Teotihuacan is an ancient Mesoamerican city located in a sub-valley of the Valley of Mexico.",
+      "Although close to Mexico City, Teotihuacan was not a Mexica (i.e. Aztec) city.",
+      "Teotihuacan exported fine obsidian tools found throughout Mesoamerica."
+     ],
+     "why": [
+      "This sentence locates the city.",
+      "This sentence distinguishes it from Aztec cities.",
+      "This sentence describes its exports."
+     ],
+     "explanation": "The correct quotation gives the population estimate and world ranking."
+    }
+   ]
+  }
+ }
+}
