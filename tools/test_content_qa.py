@@ -54,7 +54,7 @@ def item(question_id: str = "T-001", **overrides):
         "is_released_practice_set": False,
         "correct_answer": "A",
         "acceptable_answers": ["A"],
-        "explanation": "Three notebooks at n dollars plus two pens at p dollars gives 3n + 2p = 19, so choice A is the model.",
+        "explanation": "Three notebooks at n dollars plus two pens at p dollars gives 3n + 2p = 19, so the keyed expression is the model.",
         "distractor_rationales": {
             "B": "This swaps the quantities of notebooks and pens.",
             "C": "Subtracting the pen cost is not what the receipt describes.",
@@ -334,6 +334,26 @@ class MetadataTests(unittest.TestCase):
         report = qa.check_bank(bank(partial))
         self.assertIn("rationale.missing", categories(report, "warn"))
         self.assertEqual(report.errors, 0)
+
+    def test_repeated_wrong_choice_note_is_warned(self):
+        repeated = item(
+            "R-2",
+            distractor_rationales={
+                "B": "The same note for every wrong choice.",
+                "C": "The same note for every wrong choice.",
+                "D": "A different note.",
+            },
+        )
+        report = qa.check_bank(bank(repeated))
+        self.assertIn("rationale.repeated_note", categories(report, "warn"))
+
+    def test_choice_letter_reference_is_warned(self):
+        referenced = item(
+            "R-3",
+            explanation="Choice A is correct because three notebooks and two pens cost 19 dollars.",
+        )
+        report = qa.check_bank(bank(referenced))
+        self.assertIn("rationale.choice_reference", categories(report, "warn"))
 
 
 class ReportTests(unittest.TestCase):

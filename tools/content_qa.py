@@ -49,6 +49,7 @@ GEOMETRY_SHAPES = {"right_triangle", "triangle", "rectangle", "circle"}
 # otherwise identical stem still score above 0.9, while two passages on
 # different topics score far below it.
 NEAR_DUPLICATE_THRESHOLD = 0.9
+CHOICE_REFERENCE = re.compile(r"\b(?:Choice|Choices|Option|Options)\s+[A-D]\b", re.IGNORECASE)
 # Blocking: sort each section+skill group by the stem (and by its tail) and only
 # compare neighbours. Near-duplicates necessarily sort close together, so this
 # keeps the scan linear instead of 6193-squared.
@@ -333,6 +334,8 @@ def check_bank(
     explanation_soft: list[str] = []
     rationale_missing: list[str] = []
     rationale_orphan: list[str] = []
+    rationale_repeated: list[str] = []
+    rationale_choice_refs: list[str] = []
     figure_problems: dict[str, list[str]] = defaultdict(list)
     figure_messages: dict[str, str] = defaultdict(str)
 
@@ -413,6 +416,7 @@ def check_bank(
         # --- Answer key ------------------------------------------------------
         key = str(question.get("correct_answer") or "").strip()
         acceptable = question.get("acceptable_answers") or []
+        rationale_texts: list[str] = []
         if fmt == "multiple_choice":
             choices = question.get("choices") or []
             if not isinstance(choices, list) or not choices:
@@ -468,6 +472,14 @@ def check_bank(
                         rationale_missing.append(label)
                     if any(str(cid) not in choice_ids for cid in rationales):
                         rationale_orphan.append(label)
+                    rationale_texts = [str(value) for value in rationales.values()]
+                    wrong_notes = [
+                        str(rationales[cid]).strip()
+                        for cid in choice_ids
+                        if cid and cid != key and cid in rationales
+                    ]
+                    if len(wrong_notes) >= 2 and len(set(wrong_notes)) < len(wrong_notes):
+                        rationale_repeated.append(label)
         else:
             if not key:
                 key_problems["answer_key.missing"].append(label)
@@ -490,6 +502,8 @@ def check_bank(
             explanation_hard.append(label)
         elif len(explanation) < EXPLANATION_WARN_MIN:
             explanation_soft.append(label)
+        if any(CHOICE_REFERENCE.search(text) for text in [explanation, *rationale_texts]):
+            rationale_choice_refs.append(label)
 
         # --- Figures ---------------------------------------------------------
         problem = _figure_problem(question.get("figure_metadata"))
@@ -581,6 +595,22 @@ def check_bank(
             "rationale keyed to a choice id that does not exist",
             rationale_orphan,
             count=len(rationale_orphan),
+        )
+    if rationale_repeated:
+        report.add(
+            "rationale.repeated_note",
+            "warn",
+            "wrong choices share the same rationale text",
+            rationale_repeated,
+            count=len(rationale_repeated),
+        )
+    if rationale_choice_refs:
+        report.add(
+            "rationale.choice_reference",
+            "warn",
+            "explanation or rationale names a choice letter instead of its text",
+            rationale_choice_refs,
+            count=len(rationale_choice_refs),
         )
 
     for category, ids in metadata_problems.items():
