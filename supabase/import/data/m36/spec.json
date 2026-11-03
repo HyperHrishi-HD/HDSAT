@@ -1,0 +1,246 @@
+{
+ "batch": "M36",
+ "source_id": "wikipedia-cc-by-sa-4",
+ "items": [
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Electric vehicle",
+   "first": "Electricity was among the preferred methods for powering early motor vehicles because it was quieter, provided comfort, and ease of operation.",
+   "second": "However, its limited range hindered mass adoption throughout the 20th century.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "The second sentence limits the advantage described in the first: electric power was preferred, yet its range held it back. 'However' signals that contrast, while the other transitions would claim a cause, an example, or a similarity the sentence does not supply.",
+   "why": ["Range limits do not follow as a consequence of quiet operation.", "The sentence is a drawback, not an example of an advantage.", "The two sentences contrast rather than resemble each other."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Easy", "source_title": "Zoo",
+   "first": "In the United States alone, zoos are visited by over 181 million people annually.",
+   "second": "However, animal welfare organizations have expressed criticism of zoos and the conditions in which animals are kept.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "Popularity and criticism pull in opposite directions, so the second sentence contrasts with the first. 'However' marks that turn; 'Therefore' would make the criticism a result of attendance, and the other two choices would imply agreement or illustration.",
+   "why": ["Criticism does not follow from high attendance.", "The criticism is not an example of popularity.", "The sentences oppose each other rather than align."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Space colonization",
+   "first": "Currently there are also no plans for building a space colony by any government.",
+   "second": "However, many proposals, speculations, and designs, particularly for extraterrestrial settlements have been made through the years, and a considerable number of space colonization advocates and groups are active.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "The absence of government plans is set against the many private proposals and advocacy groups, a clear contrast. 'However' captures that opposition; the other choices would present the proposals as a consequence, an example, or a parallel of the missing plans.",
+   "why": ["The proposals do not result from the lack of plans.", "The proposals are not an example of government planning.", "The two facts contrast rather than resemble each other."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Universal basic income",
+   "first": "Universal basic income (UBI) is a social welfare proposal in which all members of a given population regularly receive a minimum income in the form of an unconditional transfer payment, i.e., without a means test or need to perform work.",
+   "second": "In contrast, a guaranteed minimum income (GMI) is paid only to those who do not already receive an income that is enough to live on.",
+   "transition": "In contrast,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "In contrast,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "UBI pays everyone unconditionally, while GMI targets only those below a threshold, so the second sentence draws a direct contrast. 'In contrast' names that difference; the other transitions would wrongly suggest causation, exemplification, or similarity.",
+   "why": ["The targeted payment is not a result of the universal one.", "GMI is a different design, not an example of UBI.", "The two programs differ in who receives payment."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Easy", "source_title": "Homework",
+   "first": "Homework may improve academic skills among older students, especially lower-achieving students.",
+   "second": "However, homework also creates stress for students and parents, and reduces the amount of time that students can spend in other activities.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "The first sentence states a benefit and the second states costs, so the relationship is contrast. 'However' marks the drawback; 'Therefore' would treat stress as a consequence of the benefit, and the remaining choices would misstate the relation.",
+   "why": ["Stress does not follow from improved skills.", "The drawbacks are not an example of the benefit.", "Costs and benefits contrast rather than match."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Vaccination",
+   "first": "A WHO-funded study by The Lancet estimates that, during the 50-year period starting in 1974, vaccination prevented 154 million deaths, including 146 million among children under age 5.",
+   "second": "However, some diseases have seen rising cases due to relatively low vaccination rates attributable partly to vaccine hesitancy.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "A large success is followed by a warning about resurgent disease, so the second sentence qualifies the first rather than extending it. 'However' signals that qualification; the other choices would imply that the resurgence resulted from the success or resembled it.",
+   "why": ["Rising cases do not follow from prevented deaths.", "The resurgence is a setback, not an example of success.", "The sentences point in opposite directions."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Public transport",
+   "first": "High-frequency services often prioritize regular headways over exact departure times.",
+   "second": "However, many trips involve multimodal travel, such as walking or feeder bus services to access rail stations, highlighting the importance of network coordination and cost-effective planning.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "Regular headways are one priority, but the need to coordinate multiple modes complicates that picture, so the second sentence adds a contrasting consideration. The other transitions would wrongly present coordination as a result, an example, or a parallel of headway policy.",
+   "why": ["Multimodal trips are not caused by regular headways.", "Coordination is a separate concern, not an example of headways.", "The sentences contrast priorities rather than match them."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Easy", "source_title": "Bilingual education",
+   "first": "The time spent in each language depends on the model.",
+   "second": "For example, some models focus on providing education in both languages throughout a student's entire education while others gradually transition to education in only one language.",
+   "transition": "For example,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "For example,", "wrongs": ["However,", "Therefore,", "Similarly,"],
+   "explanation": "The second sentence supplies specific models that illustrate the general claim about varying time in each language. 'For example' introduces that illustration; 'However' would wrongly frame it as a contrast, and 'Therefore' would present it as a consequence.",
+   "why": ["The models illustrate the claim rather than oppose it.", "The models are examples, not effects of the claim.", "The second sentence is an illustration, not a parallel."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Jazz",
+   "first": "New Orleans jazz began in the early 1910s, combining earlier brass band marches, French quadrilles, biguine, ragtime and blues with collective polyphonic improvisation.",
+   "second": "However, jazz did not begin as a single musical tradition in New Orleans or elsewhere.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "The second sentence corrects the impression that New Orleans was the single origin of jazz, so it contrasts with the first. 'However' marks that correction; the other choices would treat the correction as a consequence, an example, or a similarity.",
+   "why": ["The correction does not follow from the origin story.", "It is not an example of a single tradition.", "The sentences oppose a single-origin view."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Haiku",
+   "first": "Traditional Japanese haiku consist of three phrases composed of 17 morae (called on in Japanese) in a 5, 7, 5 pattern that include a kireji or \"cutting word\" and a kigo or seasonal reference.",
+   "second": "However, haiku by classical Japanese poets, such as Matsuo Bashō, also deviate from the 17-on pattern and sometimes do not contain a kireji.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "The second sentence notes that celebrated haiku break the rules just described, which qualifies the definition. 'However' signals that qualification; the other transitions would wrongly imply that the exceptions follow from the rule or illustrate it.",
+   "why": ["The exceptions do not result from the definition.", "The poets are exceptions, not examples of the rule.", "The sentence qualifies rather than parallels the definition."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Color theory",
+   "first": "Traditional color theory tends to be more subjective and have artistic applications, while color science tends to be more objective and have functional applications, such as in chemistry, astronomy or color reproduction.",
+   "second": "However, there is much intertwining between the two throughout history, and they tend to aid each other in their own evolutions.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "The first sentence separates artistic color theory from objective color science, and the second says the two have in fact intertwined. 'However' captures that qualification; the other choices would present the intertwining as a result, an example, or a similarity of the split.",
+   "why": ["The intertwining does not follow from the separation.", "It is not an example of the separation.", "The sentence complicates the contrast rather than matching it."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Hard", "source_title": "CRISPR gene editing",
+   "first": "It also offers potential in the treatment of inherited genetic diseases as well as diseases arising from somatic mutations, such as cancer.",
+   "second": "However, its use in human germline genetic modification is highly controversial.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "The therapeutic promise is set against the controversy over germline modification, a sharp contrast in use. 'However' marks it; 'Therefore' would make the controversy a consequence of the promise, and the other choices would misstate the relationship.",
+   "why": ["Controversy does not follow from therapeutic potential.", "Germline use is a different application, not an example of treatment.", "The sentences contrast promise with objection."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Solar panel",
+   "first": "Solar panels use a renewable and clean source of energy, and reduce greenhouse gas emissions compared to hydrocarbon-sourced energy.",
+   "second": "However, they depend on the availability and intensity of sunlight, require cleaning, and have high initial costs.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "The first sentence lists environmental benefits and the second lists practical drawbacks, so the relation is contrast. 'However' introduces the drawbacks; 'Therefore' would derive them from the benefits, and the remaining choices would misdescribe the turn.",
+   "why": ["The drawbacks do not follow from the benefits.", "They are not examples of environmental benefit.", "Benefits and drawbacks contrast."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Hard", "source_title": "Desalination",
+   "first": "Due to its energy consumption, desalinating sea water is generally more costly than fresh water from surface water or groundwater, water recycling and water conservation.",
+   "second": "However, these alternatives are not always available and depletion of reserves is a critical problem worldwide.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "Desalination is described as costly, but the second sentence explains why its cheaper alternatives cannot always replace it. 'However' signals that qualification; the other choices would make the point a consequence, an example, or a parallel of the cost comparison.",
+   "why": ["The limits on alternatives do not follow from desalination's cost.", "The point is a qualification, not an example of cost.", "The sentence contrasts cost with availability."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Food desert",
+   "first": "Food deserts are commonly paired with food swamps, which lack grocery stores and instead have convenience stores or fast food.",
+   "second": "In contrast, an area with greater access to grocers or farmers' markets with fresh foods may be called a food oasis.",
+   "transition": "In contrast,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "In contrast,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "A food swamp lacks fresh-food access, while a food oasis has it, so the second sentence presents the opposite case. 'In contrast' marks the opposition; the other choices would imply causation, exemplification, or similarity.",
+   "why": ["The oasis is not a result of the swamp.", "It is the opposite case, not an example.", "The two areas differ in fresh-food access."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Cognitive bias",
+   "first": "An individual's construction of reality, not the objective input, may dictate their behavior in the world.",
+   "second": "Thus, cognitive biases may sometimes lead to perceptual distortion, inaccurate judgment, illogical interpretation, and irrationality.",
+   "transition": "Thus,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "Thus,", "wrongs": ["However,", "Similarly,", "For example,"],
+   "explanation": "The second sentence draws a consequence from the claim that subjective construction can drive behavior. 'Thus' marks that inference; 'However' would contradict it, and 'Similarly' or 'For example' would misdescribe the relation as comparison or illustration.",
+   "why": ["The consequence does not oppose the premise.", "It is an inference, not a parallel claim.", "The sentence states a result, not an example."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Easy", "source_title": "Volcano",
+   "first": "On Earth, volcanoes are most often found where tectonic plates are diverging or converging, and because most of Earth's plate boundaries are underwater, most volcanoes are found underwater.",
+   "second": "For example, a mid-ocean ridge, such as the Mid-Atlantic Ridge, has volcanoes caused by divergent tectonic plates whereas the Pacific Ring of Fire has volcanoes caused by convergent tectonic plates.",
+   "transition": "For example,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "For example,", "wrongs": ["However,", "Therefore,", "Similarly,"],
+   "explanation": "The second sentence names a mid-ocean ridge and the Ring of Fire as specific cases of the boundary types just described. 'For example' introduces those cases; the other choices would wrongly signal contrast, causation, or similarity.",
+   "why": ["The cases illustrate the claim rather than oppose it.", "They are examples, not effects of the claim.", "The sentence illustrates rather than parallels."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Exoplanet",
+   "first": "The most massive exoplanet listed on the NASA Exoplanet Archive is HR 2562 b, about 30 times the mass of Jupiter.",
+   "second": "However, according to some definitions of a planet (based on the nuclear fusion of deuterium), it is too massive to be a planet and might be a brown dwarf.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "The object is listed as an exoplanet, but its mass may put it outside some definitions of a planet. 'However' marks that qualification; the other choices would present the doubt as a consequence, an example, or a similarity of the listing.",
+   "why": ["The classification doubt does not follow from the listing.", "It is not an example of being an exoplanet.", "The sentence qualifies the listing rather than matching it."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Cosmic microwave background",
+   "first": "With a standard optical telescope, the background space between stars and galaxies is almost completely dark.",
+   "second": "However, a sufficiently sensitive radio telescope detects a faint background glow that is almost uniform and is not associated with any star, galaxy, or other object.",
+   "transition": "However,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "However,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "What looks dark optically is not empty when observed at radio wavelengths, so the second sentence contrasts with the first. 'However' signals that contrast; the other choices would wrongly present the glow as a result, an example, or a similar observation.",
+   "why": ["The radio glow does not follow from optical darkness.", "It is not an example of darkness.", "The sentence contrasts two observations."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Writing system",
+   "first": "Syllabaries use graphemes called syllabograms that represent entire syllables or moras.",
+   "second": "By contrast, logographic (or morphographic) writing systems use graphemes that represent the units of meaning in a language, such as its words or morphemes.",
+   "transition": "By contrast,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "By contrast,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "Syllabaries encode sound units and logographic systems encode meaning units, so the second sentence presents the opposing design. 'By contrast' names that difference; the other choices would imply causation, exemplification, or similarity.",
+   "why": ["Logographic systems are not a result of syllabaries.", "They are a different type, not an example.", "The two systems encode different units."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Smoking cessation",
+   "first": "Tobacco smoke contains nicotine, which is addictive and can cause dependence.",
+   "second": "As a result, nicotine withdrawal often makes the process of quitting difficult.",
+   "transition": "As a result,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "As a result,", "wrongs": ["However,", "For example,", "Similarly,"],
+   "explanation": "The difficulty of quitting follows from nicotine's addictive action, so the second sentence states a consequence. 'As a result' marks that causal link; 'However' would oppose it, and the other choices would misstate the relation.",
+   "why": ["Withdrawal difficulty does not contrast with addiction.", "It is a consequence, not an example.", "The sentence states an effect rather than a parallel."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Easy", "source_title": "Smoking cessation",
+   "first": "The risk of heart attack in a smoker decreases by 50% after one year of cessation.",
+   "second": "Similarly, the risk of lung cancer decreases by 50% in 10 years of cessation.",
+   "transition": "Similarly,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "Similarly,", "wrongs": ["However,", "Therefore,", "For example,"],
+   "explanation": "Both sentences report a risk falling by half after quitting, so the second parallels the first. 'Similarly' marks that parallel; 'However' would wrongly oppose the facts, and 'Therefore' or 'For example' would misdescribe the relation.",
+   "why": ["The two findings agree rather than conflict.", "The second is a parallel finding, not a result.", "It is a comparable fact, not an illustration."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Hard", "source_title": "Health equity",
+   "first": "Health is a basic human right and human need, and all human rights are interconnected.",
+   "second": "Thus, health must be discussed along with all other basic human rights.",
+   "transition": "Thus,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "Thus,", "wrongs": ["However,", "For example,", "Similarly,"],
+   "explanation": "The conclusion that health must be discussed with other rights follows from the premises that health is a right and rights are interconnected. 'Thus' marks that inference; the other choices would misstate it as contrast, illustration, or mere similarity.",
+   "why": ["The conclusion does not oppose the premises.", "It is an inference, not an example.", "The sentence draws a conclusion rather than a parallel."]
+  },
+  {
+   "skill": "Transitions", "difficulty": "Medium", "source_title": "Algorithm",
+   "first": "Using human characteristics as descriptors of machines in metaphorical ways was already practiced by Alan Turing with terms such as \"memory\", \"search\" and \"stimulus\".",
+   "second": "In contrast, a heuristic is an approach to problem-solving that may not be fully specified or may not guarantee correct or optimal results, especially in problem domains where there is no well-defined correct or optimal result.",
+   "transition": "In contrast,",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "correct": "In contrast,", "wrongs": ["Therefore,", "For example,", "Similarly,"],
+   "explanation": "The second sentence defines a heuristic as something looser than a rigorously specified procedure, so it contrasts with the first. 'In contrast' marks the difference; the other choices would imply causation, exemplification, or similarity.",
+   "why": ["The heuristic definition is not a result of Turing's usage.", "It is a different concept, not an example.", "The sentence contrasts two approaches."]
+  }
+ ]
+}

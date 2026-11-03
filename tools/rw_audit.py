@@ -45,21 +45,35 @@ PROMPT_RULES: list[tuple[str, str]] = [
     (r"most logical transition|which transition", "Transitions"),
     (r"student wants|student is writing|bullet", "Rhetorical Synthesis"),
     (r"relationship between (?:the two texts|text 1 and text 2)|"
-     r"how would .{0,60}most likely respond", "Cross-Text Connections"),
+     r"how would .{0,60}most likely respond|on what point do|"
+     r"what implication follows|both texts|the two authors",
+     "Cross-Text Connections"),
     (r"finding from the (?:data|table|graph|figure)|"
-     r"data in the (?:table|graph|chart)|"
+     r"data in the (?:table|graph|chart|figure)|"
      r"statement about the data|according to the (?:graph|table|chart)|"
      r"described in the (?:table|graph)|"
      r"uses data from the (?:table|graph|chart)|"
-     r"data in the (?:table|graph|chart)", "Command of Evidence (Quantitative)"),
+     r"supported by the (?:data|table|graph|chart)|"
+     r"shown in the (?:graph|chart)|graphed change|"
+     r"trend shown in the (?:graph|chart)|pattern in the graph|"
+     r"highest and lowest values|values in the table",
+     "Command of Evidence (Quantitative)"),
     (r"which (?:quotation|finding|empirical observation|piece of evidence)|"
      r"would most directly (?:illustrate|support)|strongest (?:direct )?evidence",
      "Command of Evidence (Textual)"),
     (r"main idea|central finding|central idea|detail that supports|"
-     r"best summarizes (?:the|a) (?:text|passage|finding)", "Central Ideas and Details"),
-    (r"most logically completes", "Inferences"),
+     r"best summarizes (?:the|a) (?:text|passage|finding)|"
+     r"according to the (?:text|passage)|text most directly suggest|"
+     r"which detail from the text", "Central Ideas and Details"),
+    (r"most logically completes|most reasonably be inferred|"
+     r"can be inferred from|passage most strongly suggest|"
+     r"what would most likely happen if", "Inferences"),
     (r"overall structure|describes the structure|main purpose|describes the purpose|"
-     r"primary purpose|structure of the text", "Text Structure and Purpose"),
+     r"primary purpose|structure of the text|purpose of the text|"
+     r"trend shown in|rhetorical strategy|"
+     r"function of the (?:final|last) sentence|"
+     r"purpose of the passage's last sentence",
+     "Text Structure and Purpose"),
 ]
 
 # Boundaries and Form, Structure, and Sense share the same prompt on purpose:
@@ -100,7 +114,7 @@ VERB_FORM = re.compile(
     r"\b(?:is|are|was|were|has|have|had|do|does|did|intrigue\w*|require\w*|"
     r"appear\w*|suggest\w*|remain\w*|seem\w*|offer\w*|allow\w*|make\w*)\b",
     re.IGNORECASE)
-PUNCT_ONLY = re.compile(r"^[\s,;:.!?—–'\"()\-\w]*$")
+PUNCT_ONLY = re.compile(r"^[\s,;:.!?—–]+$")
 
 
 def norm_choice(text: str) -> str:
@@ -277,7 +291,12 @@ def audit_item(item: dict) -> list[dict]:
                 add("error", "answer.data_not_in_figure",
                     f"key cites {missing[:3]} but the figure cannot produce it")
 
+    # The rationale a student reads is the explanation *plus* the per-choice
+    # notes. Measuring only the first paragraph flagged thousands of items whose
+    # full rationale was already well over the threshold.
     answer = str(item.get("explanation", "") or "")
+    for note in (item.get("distractor_rationales") or {}).values():
+        answer += " " + str(note or "")
     if len(answer.split()) < 25:
         add("warn", "answer.short_rationale", f"{len(answer.split())} words")
 

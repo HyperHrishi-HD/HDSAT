@@ -1,6 +1,6 @@
 {
- "bank_version": "2026.11.02-open-core-27",
- "generated_at": "2026-11-02T22:44:38.332802+00:00",
+ "bank_version": "2026.11.03-open-core-31",
+ "generated_at": "2026-11-03T00:34:57.830023+00:00",
  "licensing_note": "Open Core bank: HDSAT practice items incorporating public datasets of SAT-style practice content. Not official College Board material. Answer keys are shipped to the client only so that guest/offline mode can grade attempts; server-side grading via the submit_question_attempt RPC remains authoritative in cloud mode.",
  "sources": [
   {
@@ -31,7 +31,7 @@
    "provenance_summary": "Verbatim introductory extracts from English Wikipedia articles, retrieved 2026-11-02 through the MediaWiki API. Every item names its article and URL in its attribution. Question stems, choices and rationales are original to HDSAT.",
    "is_released_practice_set": false,
    "is_official_college_board": false,
-   "record_count": 784
+   "record_count": 868
   }
  ],
  "questions": [
@@ -31765,7 +31765,7 @@
    ],
    "section": "Reading and Writing",
    "domain": "Information and Ideas",
-   "skill": "Central Ideas and Details",
+   "skill": "Inferences",
    "difficulty": "Medium",
    "format": "multiple_choice",
    "stimulus": "Specialists studying Roman concrete harbor piers have long noted the presence of volcanic ash and lime. Detailed physical analyses now confirm that these features operate by seawater dissolves the ash to grow interlocking aluminum-tobermorite crystals that reinforce micro-cracks over centuries. Consequently, exposure to seawater triggers crystal growth that strengthens Roman harbor concrete over time.",
@@ -32025,7 +32025,7 @@
    ],
    "section": "Reading and Writing",
    "domain": "Information and Ideas",
-   "skill": "Central Ideas and Details",
+   "skill": "Inferences",
    "difficulty": "Medium",
    "format": "multiple_choice",
    "stimulus": "Specialists studying high-Andean Polylepis forests have long noted the presence of gnarled bark layers. Detailed physical analyses now confirm that these features operate by trapping nocturnal cloud moisture and insulating trunk tissue against nightly sub-zero freezes above 4,000 meters. Consequently, specialized bark structure enables Polylepis trees to retain moisture and survive extreme high-altitude cold.",
@@ -32285,7 +32285,7 @@
    ],
    "section": "Reading and Writing",
    "domain": "Information and Ideas",
-   "skill": "Central Ideas and Details",
+   "skill": "Inferences",
    "difficulty": "Medium",
    "format": "multiple_choice",
    "stimulus": "Specialists studying nineteenth-century lighthouse Fresnel lenses have long noted the presence of concentric stepped glass prisms. Detailed physical analyses now confirm that these features operate by bending oblique light rays into a single horizontal beam visible more than twenty nautical miles offshore. Consequently, stepped prism rings allowed Fresnel lenses to concentrate light into a far-reaching beam without excessive weight.",
@@ -32545,7 +32545,7 @@
    ],
    "section": "Reading and Writing",
    "domain": "Information and Ideas",
-   "skill": "Central Ideas and Details",
+   "skill": "Inferences",
    "difficulty": "Medium",
    "format": "multiple_choice",
    "stimulus": "Specialists studying subterranean termite ventilation mounds have long noted the presence of solar-heated outer chimneys. Detailed physical analyses now confirm that these features operate by driving convective air currents that flush carbon dioxide from deep brood chambers without mechanical fans. Consequently, temperature differences across mound walls power passive air circulation for the underground colony.",
@@ -32805,7 +32805,7 @@
    ],
    "section": "Reading and Writing",
    "domain": "Information and Ideas",
-   "skill": "Central Ideas and Details",
+   "skill": "Inferences",
    "difficulty": "Medium",
    "format": "multiple_choice",
    "stimulus": "Specialists studying Early Modern Dutch fluyt cargo ships have long noted the presence of pear-shaped hull cross-sections. Detailed physical analyses now confirm that these features operate by maximizing hold volume below deck while minimizing the upper-deck width used by port authorities to assess toll duties. Consequently, the fluyt's narrow upper deck and wide hold increased cargo capacity while reducing tax assessments.",
@@ -33065,7 +33065,7 @@
    ],
    "section": "Reading and Writing",
    "domain": "Information and Ideas",
-   "skill": "Central Ideas and Details",
+   "skill": "Inferences",
    "difficulty": "Medium",
    "format": "multiple_choice",
    "stimulus": "Specialists studying desert fog-basking beetles have long noted the presence of alternating hydrophilic and waxy wing bumps. Detailed physical analyses now confirm that these features operate by condensing wind-blown coastal mist into droplets that roll directly toward the insect's mouthparts. Consequently, microscopic surface patterns on the beetle's back harvest drinking water from airborne fog.",
@@ -33325,7 +33325,7 @@
    ],
    "section": "Reading and Writing",
    "domain": "Information and Ideas",
-   "skill": "Central Ideas and Details",
+   "skill": "Inferences",
    "difficulty": "Medium",
    "format": "multiple_choice",
    "stimulus": "Specialists studying Renaissance Venetian glassmakers on Murano have long noted the presence of manganese dioxide additives. Detailed physical analyses now confirm that these features operate by neutralizing the greenish tint caused by iron impurities in river sand to yield crystal-clear cristallo vessels. Consequently, chemical decolorizers allowed Murano artisans to produce transparent glass from iron-bearing sand.",
@@ -33585,7 +33585,7 @@
    ],
    "section": "Reading and Writing",
    "domain": "Information and Ideas",
-   "skill": "Central Ideas and Details",
+   "skill": "Inferences",
    "difficulty": "Medium",
    "format": "multiple_choice",
    "stimulus": "Specialists studying boreal beaver meadow complexes have long noted the presence of abandoned multi-tiered timber dams. Detailed physical analyses now confirm that these features operate by slowing snowmelt runoff and trapping organic silt that sustains wetland sedges decades after the colony departs. Consequently, beaver-engineered dam remnants continue to regulate water and build fertile meadow soils long after abandonment.",
@@ -33845,7 +33845,7 @@
    ],
    "section": "Reading and Writing",
    "domain": "Information and Ideas",
-   "skill": "Central Ideas and Details",
+   "skill": "Inferences",
    "difficulty": "Medium",
    "format": "multiple_choice",
    "stimulus": "Specialists studying transatlantic submarine telegraph cables have long noted the presence of gutta-percha latex insulation. Detailed physical analyses now confirm that these features operate by maintaining electrical resistance under cold, high-pressure abyssal seawater where natural rubber rapidly degraded. Consequently, gutta-percha provided the durable underwater insulation needed for nineteenth-century ocean telegraphy.",
@@ -34105,7 +34105,7 @@
    ],
    "section": "Reading and Writing",
    "domain": "Information and Ideas",
-   "skill": "Central Ideas and Details",
+   "skill": "Inferences",
    "difficulty": "Medium",
    "format": "multiple_choice",
    "stimulus": "Specialists studying ancient Persian qanat water channels have long noted the presence of gently sloped underground galleries. Detailed physical analyses now confirm that these features operate by tapping upland alluvial aquifers and conveying water kilometers across arid plains with minimal evaporative loss. Consequently, subsurface gravity channels enabled arid settlements to transport groundwater without surface evaporation.",
@@ -377689,6 +377689,4374 @@
     "A": "This sentence describes the term's popularization."
    },
    "choice_order_seed": "hdsat-choice-order:RW-M34-CE010"
+  },
+  {
+   "id": "RW-M35-B001",
+   "external_id": "HDSAT-RW-M35-B001",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "As of June 2025_______ the Seed Vault conserves 1,355,591 accessions, representing more than 13,000 years of agricultural history.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ": "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": " and "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Svalbard Global Seed Vault\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Svalbard_Global_Seed_Vault",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The time phrase 'As of June 2025' is an introductory element, so a comma separates it from the main clause that follows. A semicolon or colon would need a complete clause before it, and 'and' would fuse the date into the subject.",
+   "distractor_rationales": {
+    "B": "A semicolon cannot follow a time phrase that has no verb.",
+    "A": "A colon must follow an independent clause.",
+    "D": "'and' would join the date to the subject ungrammatically."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B001"
+  },
+  {
+   "id": "RW-M35-B002",
+   "external_id": "HDSAT-RW-M35-B002",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In one study_______ Simard watched as a Douglas fir that had been injured by insects appeared to send chemical warning signals to a ponderosa pine growing nearby.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ": "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Mycorrhizal network\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Mycorrhizal_network",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The prepositional phrase 'In one study' introduces the sentence but is not a clause, so only a comma can set it off from the main clause. The other marks either require an independent clause or break the phrase's connection to the subject.",
+   "distractor_rationales": {
+    "B": "A semicolon needs an independent clause before it.",
+    "A": "A colon cannot introduce the subject of its own sentence.",
+    "C": "'and' would make the phrase part of the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B002"
+  },
+  {
+   "id": "RW-M35-B003",
+   "external_id": "HDSAT-RW-M35-B003",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Although neither Voyager spacecraft is heading toward any particular star_______ Voyager 1 will pass within 1.6 light-years' distance of the star Gliese 445, currently in the constellation Camelopardalis, in about 40,000 years.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": " and "
+    },
+    {
+     "id": "B",
+     "text": ", "
+    },
+    {
+     "id": "C",
+     "text": ": "
+    },
+    {
+     "id": "D",
+     "text": "; "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Voyager Golden Record\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Voyager_Golden_Record",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The 'Although' clause is subordinate, so it is attached to the main clause by a comma. A semicolon or colon would wrongly treat the dependent clause as an independent one, and 'and' would remove the concession the sentence depends on.",
+   "distractor_rationales": {
+    "D": "A semicolon must join two independent clauses.",
+    "C": "A colon would falsely present the concession as complete.",
+    "A": "'and' would turn the concession into an addition."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B003"
+  },
+  {
+   "id": "RW-M35-B004",
+   "external_id": "HDSAT-RW-M35-B004",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "On 26 April 1986_______ reactor 4 of the Chernobyl Nuclear Power Plant, located near Pripyat in the Ukrainian SSR of the Soviet Union, exploded.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Chernobyl disaster\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Chernobyl_disaster",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "A date phrase at the start of a sentence is introductory and takes a comma before the main clause. A semicolon or colon requires a clause on its left, and 'and' would attach the date to the subject instead of setting it off.",
+   "distractor_rationales": {
+    "B": "A semicolon cannot follow a bare date phrase.",
+    "D": "A colon needs a complete clause before it.",
+    "C": "'and' would make the date part of the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B004"
+  },
+  {
+   "id": "RW-M35-B005",
+   "external_id": "HDSAT-RW-M35-B005",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In residential design_______ open plan or open concept (the term used mainly in Canada) describes the elimination of barriers such as walls and doors that traditionally separated distinct functional areas, such as combining the kitchen, living room, and dining room into a single great room.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": "; "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Open plan\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Open_plan",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The opening prepositional phrase names the field being discussed, and a comma marks its boundary with the subject 'open plan or open concept'. The semicolon, colon and 'and' all misrepresent the phrase as a clause or as part of the subject.",
+   "distractor_rationales": {
+    "C": "The phrase has no verb, so a semicolon is impossible.",
+    "D": "A colon must follow an independent clause.",
+    "B": "'and' would merge the field with the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B005"
+  },
+  {
+   "id": "RW-M35-B006",
+   "external_id": "HDSAT-RW-M35-B006",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Since the late 20th century_______ technological advances in lithium batteries—which offer superior energy density and current output versus lead-acid batteries—have revived public interest as zero-emission vehicle options.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": ": "
+    },
+    {
+     "id": "D",
+     "text": " and "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Electric vehicle\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Electric_vehicle",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The 'Since' phrase is a time expression, not a clause, so a comma separates it from the main clause 'technological advances ... have revived'. The other choices either require an independent clause or fuse the time phrase into the subject.",
+   "distractor_rationales": {
+    "B": "A semicolon must follow an independent clause.",
+    "C": "A colon needs a clause before it.",
+    "D": "'and' would join the time phrase to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B006"
+  },
+  {
+   "id": "RW-M35-B007",
+   "external_id": "HDSAT-RW-M35-B007",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In the Information Age_______ people without access to the Internet and other technology are at a disadvantage, for they are less able to connect with others, find and apply for jobs, shop, and learn.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": " and "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": "; "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Digital divide\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Digital_divide",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The introductory phrase 'In the Information Age' sets the time period and must be closed with a comma before the main clause. A semicolon or colon would need a full clause on the left, and 'and' would attach the phrase to the subject.",
+   "distractor_rationales": {
+    "D": "The phrase is not an independent clause.",
+    "B": "A colon cannot precede the subject this way.",
+    "A": "'and' would change the phrase into part of the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B007"
+  },
+  {
+   "id": "RW-M35-B008",
+   "external_id": "HDSAT-RW-M35-B008",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "While the observation of objects in space, known as astronomy, predates reliable recorded history_______ it was the development of large and relatively efficient rockets during the mid-twentieth century that allowed physical space exploration to become a reality.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ": "
+    },
+    {
+     "id": "B",
+     "text": ", "
+    },
+    {
+     "id": "C",
+     "text": "; "
+    },
+    {
+     "id": "D",
+     "text": " and "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Space exploration\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Space_exploration",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The 'While' clause is dependent, even though it is long and contains an appositive, so a comma joins it to the main clause. A semicolon would wrongly make it independent, a colon would announce an explanation, and 'and' would distort the contrast.",
+   "distractor_rationales": {
+    "C": "A semicolon requires two independent clauses.",
+    "A": "A colon would misread the clause as complete.",
+    "D": "'and' would erase the contrast the sentence sets up."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B008"
+  },
+  {
+   "id": "RW-M35-B009",
+   "external_id": "HDSAT-RW-M35-B009",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "In the 1970s_______ focus shifted from one-off flights to renewable hardware, such as the Space Shuttle program, and from competition to cooperation, the foremost example being the International Space Station (ISS), built between 1998 and 2011.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": "; "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Space exploration\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Space_exploration",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The decade phrase is introductory, so it is followed by a comma before 'focus shifted'. Only a comma can separate a non-clausal time phrase from the main clause; the other marks either need a clause or would merge the phrase with the subject.",
+   "distractor_rationales": {
+    "D": "A semicolon cannot follow a decade phrase alone.",
+    "B": "A colon must be preceded by an independent clause.",
+    "C": "'and' would make the decade part of the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B009"
+  },
+  {
+   "id": "RW-M35-B010",
+   "external_id": "HDSAT-RW-M35-B010",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Because minimum wages increase the cost of labor_______ companies often try to avoid minimum wage laws by using gig workers, by moving labor to locations with lower or nonexistent minimum wages, or by automating job functions.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "; "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Minimum wage\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Minimum_wage",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The 'Because' clause gives the reason for the main clause and is subordinate, so a comma marks the boundary. A semicolon would treat the reason as an independent sentence, a colon would present it as an explanation of itself, and 'and' would remove the causal link.",
+   "distractor_rationales": {
+    "A": "A semicolon must join independent clauses.",
+    "B": "A colon cannot follow a dependent clause.",
+    "C": "'and' would replace the causal relation with addition."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B010"
+  },
+  {
+   "id": "RW-M35-B011",
+   "external_id": "HDSAT-RW-M35-B011",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "As of 2026_______ no country has implemented a full UBI system, but two countries—Mongolia and Iran—have or had a partial UBI, Mongolia from 2010 to 2012, and Iran still to this day.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "; "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": ": "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Universal basic income\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Universal_basic_income",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The date phrase introduces the claim that follows, so a comma separates it from the main clause. The semicolon and colon both demand a complete clause before them, and 'and' would attach the date to the subject.",
+   "distractor_rationales": {
+    "A": "A semicolon needs an independent clause on its left.",
+    "C": "A colon cannot follow a bare date phrase.",
+    "B": "'and' would fuse the date into the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B011"
+  },
+  {
+   "id": "RW-M35-B012",
+   "external_id": "HDSAT-RW-M35-B012",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "While systems such as buses and railways are commonly cited_______ air travel is often excluded from general discussions of public transport due to its market-driven structure and competitive pricing.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ": "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": "; "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Public transport\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Public_transport",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The 'While' clause is a dependent concession, so it is joined to the main clause by a comma. A semicolon or colon would treat the concession as a complete sentence, and 'and' would turn the contrast into a simple addition.",
+   "distractor_rationales": {
+    "D": "A semicolon must separate independent clauses.",
+    "A": "A colon would falsely present the concession as complete.",
+    "B": "'and' would remove the contrast."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B012"
+  },
+  {
+   "id": "RW-M35-B013",
+   "external_id": "HDSAT-RW-M35-B013",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "By setting a price on an over-consumed product_______ congestion pricing encourages the redistribution of the demand in space or in time, leading to more efficient outcomes.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": " and "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": "; "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Congestion pricing\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Congestion_pricing",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The 'By' phrase describes the means by which congestion pricing works, and a comma sets it off from the main clause. A semicolon or colon requires an independent clause before it, and 'and' would make the means part of the subject.",
+   "distractor_rationales": {
+    "D": "The 'By' phrase is not a clause.",
+    "B": "A colon cannot follow this participial phrase.",
+    "A": "'and' would join the means to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B013"
+  },
+  {
+   "id": "RW-M35-B014",
+   "external_id": "HDSAT-RW-M35-B014",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "In a placebo-controlled trial_______ any change in the control group is known as the placebo response, and the difference between this and the result of no treatment is the placebo effect.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ": "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": "; "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Placebo\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Placebo",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The opening phrase names the setting of the trial and is followed by a comma before the main clause. A semicolon or colon would need a clause on its left, and 'and' would make the setting part of the subject.",
+   "distractor_rationales": {
+    "D": "The setting phrase has no verb.",
+    "A": "A colon must follow an independent clause.",
+    "B": "'and' would attach the setting to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B014"
+  },
+  {
+   "id": "RW-M35-B015",
+   "external_id": "HDSAT-RW-M35-B015",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "By the middle of the 20th century_______ women's suffrage had been established as a norm of democratic governance.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "; "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Women's suffrage\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Women%27s_suffrage",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The time phrase is introductory and must be separated from the main clause by a comma. The semicolon and colon require a complete clause before them, and 'and' would make the time phrase part of the subject.",
+   "distractor_rationales": {
+    "A": "A semicolon cannot follow a bare time phrase.",
+    "D": "A colon needs an independent clause before it.",
+    "B": "'and' would fuse the time phrase into the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B015"
+  },
+  {
+   "id": "RW-M35-B016",
+   "external_id": "HDSAT-RW-M35-B016",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "During the multinational occupation of post–World War II Germany_______ the Soviet Union blocked the Western Allies' railway, road, and canal access to the sectors of Berlin under Western control.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ": "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Berlin Blockade\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Berlin_Blockade",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The 'During' phrase is an introductory modifier, so a comma separates it from the main clause about the Soviet Union. A semicolon or colon would require a clause before it, and 'and' would make the occupation part of the subject.",
+   "distractor_rationales": {
+    "B": "The 'During' phrase is not a clause.",
+    "A": "A colon must follow a complete clause.",
+    "C": "'and' would join the modifier to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B016"
+  },
+  {
+   "id": "RW-M35-B017",
+   "external_id": "HDSAT-RW-M35-B017",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "After John's death_______ the regency government of his young son, Henry III, reissued the document in 1216, stripped of some of its more radical content, in an unsuccessful bid to build political support for their cause.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "; "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Magna Carta\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Magna_Carta",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The phrase 'After John's death' is a time expression, not a clause, and a comma sets it off from the main clause. The semicolon and colon both need an independent clause before them, while 'and' would attach the time phrase to the subject.",
+   "distractor_rationales": {
+    "A": "A semicolon cannot follow a prepositional phrase.",
+    "B": "A colon needs a clause on its left.",
+    "C": "'and' would make the time phrase part of the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B017"
+  },
+  {
+   "id": "RW-M35-B018",
+   "external_id": "HDSAT-RW-M35-B018",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In the detailed Japanese classification_______ origami is divided into stylized ceremonial origami (儀礼折り紙, girei origami) and recreational origami (遊戯折り紙, yūgi origami), and only recreational origami is generally recognized as origami.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ": "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": "; "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Origami\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Origami",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The introductory phrase locates the classification being described, so a comma marks its boundary with the main clause. A semicolon or colon would require a full clause before the mark, and 'and' would merge the phrase into the subject.",
+   "distractor_rationales": {
+    "C": "The phrase is not an independent clause.",
+    "A": "A colon cannot follow this prepositional phrase.",
+    "B": "'and' would attach the phrase to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B018"
+  },
+  {
+   "id": "RW-M35-B019",
+   "external_id": "HDSAT-RW-M35-B019",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "As jazz spread around the world_______ it drew on national, regional, and local musical cultures, which gave rise to different styles.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": " and "
+    },
+    {
+     "id": "B",
+     "text": ", "
+    },
+    {
+     "id": "C",
+     "text": ": "
+    },
+    {
+     "id": "D",
+     "text": "; "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Jazz\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Jazz",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The 'As' clause describes the circumstances in which jazz changed and is subordinate, so a comma joins it to the main clause. A semicolon would make it independent, a colon would present it as an announcement, and 'and' would remove the connection.",
+   "distractor_rationales": {
+    "D": "A semicolon must join two independent clauses.",
+    "C": "A colon cannot follow a dependent clause.",
+    "A": "'and' would turn the circumstance into an addition."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B019"
+  },
+  {
+   "id": "RW-M35-B020",
+   "external_id": "HDSAT-RW-M35-B020",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "In the 1930s_______ arranged dance-oriented swing big bands, Kansas City jazz (a hard-swinging, bluesy, improvisational style), and gypsy jazz (a style that emphasized musette waltzes) were the prominent styles.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "; "
+    },
+    {
+     "id": "B",
+     "text": ", "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Jazz\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Jazz",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The decade phrase introduces the list of styles that follows and takes a comma before the subject. The semicolon and colon require a complete clause on their left, and 'and' would attach the decade to the subject.",
+   "distractor_rationales": {
+    "A": "A semicolon cannot follow a decade phrase.",
+    "D": "A colon needs a clause before it.",
+    "C": "'and' would make the decade part of the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B020"
+  },
+  {
+   "id": "RW-M35-B021",
+   "external_id": "HDSAT-RW-M35-B021",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In Japanese_______ haiku are traditionally printed as a single line, while haiku in English often appear as three lines, although variations exist.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": " and "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": ": "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Haiku\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Haiku",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The language phrase 'In Japanese' is introductory, so a comma separates it from the main clause. The semicolon and colon would need an independent clause before them, and 'and' would incorrectly join the language to the subject.",
+   "distractor_rationales": {
+    "B": "The language phrase has no verb.",
+    "C": "A colon must follow a complete clause.",
+    "A": "'and' would fuse the phrase into the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B021"
+  },
+  {
+   "id": "RW-M35-B022",
+   "external_id": "HDSAT-RW-M35-B022",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "When the British defeated the French_______ they took the stone to London under the terms of the Capitulation of Alexandria in 1801.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ": "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": "; "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Rosetta Stone\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Rosetta_Stone",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The 'When' clause is a dependent time clause, so a comma separates it from the main clause. A semicolon would incorrectly make it independent, a colon would announce an explanation, and 'and' would make the two events merely additive.",
+   "distractor_rationales": {
+    "C": "A semicolon requires an independent clause before it.",
+    "A": "A colon cannot follow this dependent clause.",
+    "B": "'and' would remove the time relation."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B022"
+  },
+  {
+   "id": "RW-M35-B023",
+   "external_id": "HDSAT-RW-M35-B023",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Before entering hibernation_______ animals need to store enough energy to last through the duration of their dormant period, possibly as long as an entire winter.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": ": "
+    },
+    {
+     "id": "D",
+     "text": " and "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Hibernation\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Hibernation",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The 'Before' phrase is an introductory time expression and is followed by a comma before the main clause. A semicolon or colon would need a clause on the left, and 'and' would attach the time phrase to the subject.",
+   "distractor_rationales": {
+    "B": "The 'Before' phrase is not a clause.",
+    "C": "A colon needs a complete clause before it.",
+    "D": "'and' would make the phrase part of the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B023"
+  },
+  {
+   "id": "RW-M35-B024",
+   "external_id": "HDSAT-RW-M35-B024",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In a mycorrhizal association_______ the fungus colonizes the host plant's root tissues, either intracellularly as in arbuscular mycorrhizal fungi, or extracellularly as in ectomycorrhizal fungi.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "; "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": " and "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Mycorrhiza\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Mycorrhiza",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The opening phrase names the relationship being described, and a comma sets it off from the main clause. A semicolon or colon would require a complete clause before it, and 'and' would attach the phrase to the subject.",
+   "distractor_rationales": {
+    "A": "The phrase has no finite verb.",
+    "B": "A colon must follow an independent clause.",
+    "D": "'and' would merge the phrase into the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B024"
+  },
+  {
+   "id": "RW-M35-B025",
+   "external_id": "HDSAT-RW-M35-B025",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "As of 2024_______ hundreds of thousands of large turbines, in installations known as wind farms, were generating over 1,136 gigawatts of power, with 117 GW added each year.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": "; "
+    },
+    {
+     "id": "D",
+     "text": " and "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Wind turbine\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Wind_turbine",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The date phrase is introductory and takes a comma before the main clause. The semicolon and colon both need an independent clause on their left, and 'and' would make the date part of the subject.",
+   "distractor_rationales": {
+    "C": "A semicolon cannot follow a bare date phrase.",
+    "B": "A colon needs a clause before it.",
+    "D": "'and' would fuse the date into the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B025"
+  },
+  {
+   "id": "RW-M35-B026",
+   "external_id": "HDSAT-RW-M35-B026",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "In the three decades since Li-ion batteries were first sold in 1991_______ their volumetric energy density increased threefold while their cost dropped tenfold.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "; "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Lithium-ion battery\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Lithium-ion_battery",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The long time phrase introduces the period being measured and is closed with a comma before the main clause. A semicolon or colon would need a full clause before it, and 'and' would make the period part of the subject.",
+   "distractor_rationales": {
+    "A": "The time phrase is not an independent clause.",
+    "D": "A colon cannot follow this phrase.",
+    "B": "'and' would join the period to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B026"
+  },
+  {
+   "id": "RW-M35-B027",
+   "external_id": "HDSAT-RW-M35-B027",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "In late 2024_______ global demand passed 1 terawatt-hour per year, while production capacity was more than twice that.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": " and "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": "; "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Lithium-ion battery\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Lithium-ion_battery",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The opening date phrase is introductory and must be followed by a comma before the main clause. A semicolon or colon requires an independent clause before it, and 'and' would attach the date to the subject.",
+   "distractor_rationales": {
+    "C": "A semicolon cannot follow a date phrase alone.",
+    "B": "A colon must be preceded by a clause.",
+    "A": "'and' would make the date part of the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B027"
+  },
+  {
+   "id": "RW-M35-B028",
+   "external_id": "HDSAT-RW-M35-B028",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "As stress on the need for freshwater intensifies globally_______ desalination has become a key part of strategies for global water security.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": " and "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": "; "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Desalination\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Desalination",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The 'As' clause sets the condition for the main clause and is dependent, so a comma joins the two. A semicolon would make the condition independent, a colon would announce it as an explanation, and 'and' would weaken the causal connection.",
+   "distractor_rationales": {
+    "C": "A semicolon must join independent clauses.",
+    "B": "A colon cannot follow a dependent clause.",
+    "A": "'and' would turn the condition into a simple addition."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B028"
+  },
+  {
+   "id": "RW-M35-B029",
+   "external_id": "HDSAT-RW-M35-B029",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "As of 2023_______ the largest form of grid storage is pumped-storage hydroelectricity, with utility-scale batteries and behind-the-meter batteries coming second and third.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": "; "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Grid energy storage\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Grid_energy_storage",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The date phrase introduces the ranking that follows, so a comma separates it from the main clause. A semicolon or colon would need a clause before the mark, and 'and' would fuse the date into the subject.",
+   "distractor_rationales": {
+    "D": "A semicolon needs an independent clause before it.",
+    "B": "A colon cannot follow a bare date phrase.",
+    "C": "'and' would attach the date to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B029"
+  },
+  {
+   "id": "RW-M35-B030",
+   "external_id": "HDSAT-RW-M35-B030",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "While the definition varies_______ the gig economy is mainly defined as a labor market with short-term, flexible work arrangements, primarily through digital platforms that connect service providers with customers for different types of tasks or jobs, rather than traditional long-term employment.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": " and "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Gig economy\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Gig_economy",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The 'While' clause concedes that definitions differ and is dependent, so a comma joins it to the main clause. A semicolon would make it independent, a colon would present it as an explanation, and 'and' would remove the concession.",
+   "distractor_rationales": {
+    "B": "A semicolon must separate independent clauses.",
+    "D": "A colon cannot follow a dependent clause.",
+    "A": "'and' would erase the concession."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B030"
+  },
+  {
+   "id": "RW-M35-B031",
+   "external_id": "HDSAT-RW-M35-B031",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "In the mid-20th century_______ urban planning experts such as Jane Jacobs called on urban planners to take resident experiences and needs more into consideration.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": " and "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Urban planning\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Urban_planning",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The time phrase is introductory and takes a comma before the main clause. The semicolon and colon require a complete clause before them, and 'and' would make the time phrase part of the subject.",
+   "distractor_rationales": {
+    "B": "A semicolon cannot follow a bare time phrase.",
+    "D": "A colon needs a clause on its left.",
+    "A": "'and' would attach the date to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B031"
+  },
+  {
+   "id": "RW-M35-B032",
+   "external_id": "HDSAT-RW-M35-B032",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "During this period_______ Rome's control expanded from the city's immediate surroundings to hegemony over the entire Mediterranean world.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "; "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Roman Republic\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Roman_Republic",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The prepositional phrase 'During this period' is introductory and is set off by a comma before the main clause. A semicolon or colon would require an independent clause before it, and 'and' would merge the phrase into the subject.",
+   "distractor_rationales": {
+    "A": "The phrase is not an independent clause.",
+    "D": "A colon must follow a complete clause.",
+    "B": "'and' would make the phrase part of the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B032"
+  },
+  {
+   "id": "RW-M35-B033",
+   "external_id": "HDSAT-RW-M35-B033",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "At its zenith, perhaps in the first half of the first millennium (1 CE to 500 CE)_______ Teotihuacan was the largest city in the Americas.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": "; "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Teotihuacan\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Teotihuacan",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The opening phrase locates the city at its height and includes a parenthetical date range, but it remains introductory, so a comma precedes the main clause. The other marks either require a clause or would fuse the phrase into the subject.",
+   "distractor_rationales": {
+    "C": "The phrase is not a clause, despite its length.",
+    "D": "A colon cannot follow this modifier.",
+    "B": "'and' would attach the phrase to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B033"
+  },
+  {
+   "id": "RW-M35-B034",
+   "external_id": "HDSAT-RW-M35-B034",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In return for $15 million_______ or approximately $18 per square mile ($7/km2), the United States nominally acquired a total of 828,000 sq mi (2,140,000 km2; 530,000,000 acres) of land now in the Central United States.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Louisiana Purchase\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Louisiana_Purchase",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The 'In return for' phrase states the price and is introductory, so it is separated from the main clause by a comma. A semicolon or colon would need a clause before it, and 'and' would make the price part of the subject.",
+   "distractor_rationales": {
+    "B": "The price phrase is not a clause.",
+    "D": "A colon needs an independent clause before it.",
+    "C": "'and' would attach the price to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B034"
+  },
+  {
+   "id": "RW-M35-B035",
+   "external_id": "HDSAT-RW-M35-B035",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Although peace terms were agreed upon in the December 1814 Treaty of Ghent_______ the war did not officially end until the peace treaty was ratified by the United States Senate on 17 February 1815.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": ": "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"War of 1812\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/War_of_1812",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The 'Although' clause is a dependent concession, so it is attached to the main clause with a comma. A semicolon would treat it as independent, a colon would present it as a complete explanation, and 'and' would remove the contrast.",
+   "distractor_rationales": {
+    "B": "A semicolon must join two independent clauses.",
+    "D": "A colon cannot follow a dependent clause.",
+    "C": "'and' would replace the concession with addition."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B035"
+  },
+  {
+   "id": "RW-M35-B036",
+   "external_id": "HDSAT-RW-M35-B036",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Despite its reluctance to interfere with slavery_______ Congress passed the Confiscation Acts to seize Confederates' slaves, providing a precedent for President Abraham Lincoln to issue the Emancipation Proclamation.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "; "
+    },
+    {
+     "id": "B",
+     "text": " and "
+    },
+    {
+     "id": "C",
+     "text": ": "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Reconstruction era\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Reconstruction_era",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The 'Despite' phrase is a prepositional concession, not a clause, so a comma separates it from the main clause. A semicolon or colon would require an independent clause before it, and 'and' would make the concession part of the subject.",
+   "distractor_rationales": {
+    "A": "The 'Despite' phrase has no finite verb.",
+    "C": "A colon must follow an independent clause.",
+    "B": "'and' would fuse the concession into the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B036"
+  },
+  {
+   "id": "RW-M35-B037",
+   "external_id": "HDSAT-RW-M35-B037",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "As of 2017_______ around 93 million Americans were descendants of people who received land through the Homestead Acts.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": " and "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": "; "
+    },
+    {
+     "id": "D",
+     "text": ", "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Homestead Acts\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Homestead_Acts",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The date phrase is introductory and takes a comma before the main clause. A semicolon or colon would need a clause on its left, and 'and' would make the date part of the subject.",
+   "distractor_rationales": {
+    "C": "A semicolon cannot follow a date phrase alone.",
+    "B": "A colon needs an independent clause before it.",
+    "A": "'and' would attach the date to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B037"
+  },
+  {
+   "id": "RW-M35-B038",
+   "external_id": "HDSAT-RW-M35-B038",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In situations where a firm has market power_______ its decision on how much output to bring to market influences the market price, in violation of perfect competition.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": ": "
+    },
+    {
+     "id": "D",
+     "text": " and "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Supply and demand\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Supply_and_demand",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The 'In situations where' phrase sets the condition for the main clause and is followed by a comma. A semicolon or colon would require a complete clause before it, and 'and' would attach the condition to the subject.",
+   "distractor_rationales": {
+    "B": "The phrase is not an independent clause.",
+    "C": "A colon cannot follow this modifier.",
+    "D": "'and' would fuse the condition into the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B038"
+  },
+  {
+   "id": "RW-M35-B039",
+   "external_id": "HDSAT-RW-M35-B039",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "In macroeconomics, as well_______ the aggregate demand-aggregate supply model has been used to depict how the quantity of total output and the aggregate price level may be determined in equilibrium.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ", "
+    },
+    {
+     "id": "B",
+     "text": ": "
+    },
+    {
+     "id": "C",
+     "text": " and "
+    },
+    {
+     "id": "D",
+     "text": "; "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Supply and demand\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Supply_and_demand",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The two introductory elements are closed together by a comma before the main clause. A semicolon or colon would need an independent clause before the mark, and 'and' would attach the introductory material to the subject.",
+   "distractor_rationales": {
+    "D": "The introductory elements are not a clause.",
+    "B": "A colon must follow a complete clause.",
+    "C": "'and' would make the introduction part of the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B039"
+  },
+  {
+   "id": "RW-M35-B040",
+   "external_id": "HDSAT-RW-M35-B040",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Standard English Conventions",
+   "skill": "Boundaries",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "In economics_______ inflation is an increase in the average price of goods and services in terms of money, though it originally referred to the increase of the money supply (monetary inflation) that can cause such a universal shift.",
+   "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+   "choices": [
+    {
+     "id": "A",
+     "text": ": "
+    },
+    {
+     "id": "B",
+     "text": "; "
+    },
+    {
+     "id": "C",
+     "text": ", "
+    },
+    {
+     "id": "D",
+     "text": " and "
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Inflation\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Inflation",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The field phrase 'In economics' is introductory, so a comma separates it from the definition that follows. A semicolon or colon would require an independent clause before it, and 'and' would fuse the field into the subject.",
+   "distractor_rationales": {
+    "B": "The field phrase is not a clause.",
+    "A": "A colon cannot precede the subject this way.",
+    "D": "'and' would attach the field to the subject."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M35-B040"
+  },
+  {
+   "id": "RW-M37-X001",
+   "external_id": "HDSAT-RW-M37-X001",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nPlate tectonics (from Latin tectonicus, from Ancient Greek τεκτονικός (tektonikós) 'pertaining to building') is the scientific theory that Earth's lithosphere comprises a number of large tectonic plates, which have been slowly moving since 3–4 billion years ago. The model builds on the concept of continental drift, an idea developed during the first decades of the 20th century.\n\nText 2\nA volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface. On Earth, volcanoes are most often found where tectonic plates are diverging or converging, and because most of Earth's plate boundaries are underwater, most volcanoes are found underwater.",
+   "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "By claiming that volcanoes occur only on dry land."
+    },
+    {
+     "id": "B",
+     "text": "By rejecting plate tectonics in favor of the older idea of continental drift."
+    },
+    {
+     "id": "C",
+     "text": "By arguing that Earth's plates stopped moving billions of years ago."
+    },
+    {
+     "id": "D",
+     "text": "By noting that volcanic activity is concentrated where the moving plates described in Text 1 diverge or converge."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Plate tectonics\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Plate_tectonics; Wikipedia, \"Volcano\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Volcano",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "Text 1 explains that Earth's lithosphere is divided into slowly moving plates, and Text 2 states that volcanoes are most often found where those plates diverge or converge. The second author would therefore connect volcanism to the plate boundaries Text 1 describes.",
+   "distractor_rationales": {
+    "B": "Text 2 relies on plate boundaries, not on replacing the theory.",
+    "A": "Text 2 says most volcanoes are underwater.",
+    "C": "Text 1 says the plates have moved for billions of years."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X001"
+  },
+  {
+   "id": "RW-M37-X002",
+   "external_id": "HDSAT-RW-M37-X002",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nPlate tectonics (from Latin tectonicus, from Ancient Greek τεκτονικός (tektonikós) 'pertaining to building') is the scientific theory that Earth's lithosphere comprises a number of large tectonic plates, which have been slowly moving since 3–4 billion years ago. The model builds on the concept of continental drift, an idea developed during the first decades of the 20th century.\n\nText 2\nA volcano is a vent or fissure in the crust of a planetary-mass object that allows hot lava, volcanic ash, and gases to escape from a magma chamber below the surface. On Earth, volcanoes are most often found where tectonic plates are diverging or converging, and because most of Earth's plate boundaries are underwater, most volcanoes are found underwater.",
+   "prompt": "Which choice best describes the relationship between the two texts?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Text 2 traces the history of the theory presented in Text 1."
+    },
+    {
+     "id": "B",
+     "text": "Text 2 describes a surface phenomenon that occurs at the plate boundaries introduced in Text 1."
+    },
+    {
+     "id": "C",
+     "text": "Text 2 refutes the theory presented in Text 1."
+    },
+    {
+     "id": "D",
+     "text": "Text 2 argues that volcanoes are unrelated to geology."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Plate tectonics\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Plate_tectonics; Wikipedia, \"Volcano\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Volcano",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Text 1 introduces the theory of moving tectonic plates. Text 2 then explains where volcanoes occur, locating most of them at the diverging or converging boundaries of those plates, so it describes a phenomenon produced at the boundaries Text 1 identifies.",
+   "distractor_rationales": {
+    "C": "Text 2 accepts and uses plate boundaries.",
+    "A": "Text 2 describes volcanoes, not the theory's history.",
+    "D": "Text 2 explains volcanoes through plate movement."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X002"
+  },
+  {
+   "id": "RW-M37-X003",
+   "external_id": "HDSAT-RW-M37-X003",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nThe Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one. The Solar System is an isolated single-star planetary system (not part of a larger star system) within the Milky Way Galaxy.\n\nText 2\nAn exoplanet or extrasolar planet is a planet outside the Solar System. The first confirmed detection of an exoplanet was in 1992 around a pulsar, and the first detection around a main-sequence star was in 1995.",
+   "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "By arguing that the Sun is not part of the Solar System."
+    },
+    {
+     "id": "B",
+     "text": "By extending the discussion beyond the single-star system described in Text 1 to planets that orbit other stars."
+    },
+    {
+     "id": "C",
+     "text": "By denying that the Solar System contains eight planets."
+    },
+    {
+     "id": "D",
+     "text": "By claiming that no planets exist outside the Solar System."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Solar System\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Solar_System; Wikipedia, \"Exoplanet\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Exoplanet",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Text 1 defines the Solar System as an isolated single-star system containing eight planets. Text 2 defines exoplanets as planets outside that system and reports their detection, so its author would extend the discussion to planets orbiting other stars.",
+   "distractor_rationales": {
+    "C": "Text 2 does not dispute the Solar System's contents.",
+    "D": "Text 2's subject is planets outside the Solar System.",
+    "A": "Text 1 places the Sun at the center of the system."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X003"
+  },
+  {
+   "id": "RW-M37-X004",
+   "external_id": "HDSAT-RW-M37-X004",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nThe Solar System is the gravitationally bound system of the Sun and the masses that orbit it, most prominently its eight planets, of which Earth is one. The Solar System is an isolated single-star planetary system (not part of a larger star system) within the Milky Way Galaxy.\n\nText 2\nAn exoplanet or extrasolar planet is a planet outside the Solar System. The first confirmed detection of an exoplanet was in 1992 around a pulsar, and the first detection around a main-sequence star was in 1995.",
+   "prompt": "Which choice best describes the relationship between the two texts?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Text 2 disproves the existence of the Solar System."
+    },
+    {
+     "id": "B",
+     "text": "Text 2 argues that exoplanets orbit the Sun."
+    },
+    {
+     "id": "C",
+     "text": "Text 2 describes the Sun's formation in detail."
+    },
+    {
+     "id": "D",
+     "text": "Text 2 broadens the category of planetary systems beyond the single example described in Text 1."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Solar System\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Solar_System; Wikipedia, \"Exoplanet\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Exoplanet",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "Text 1 describes one planetary system, the Solar System, and calls it an isolated single-star system. Text 2 defines planets outside that system and notes their discovery, thereby broadening the discussion from one system to planets around other stars.",
+   "distractor_rationales": {
+    "A": "Text 2 treats the Solar System as the reference point.",
+    "C": "Text 2 discusses exoplanet detections, not solar formation.",
+    "B": "Exoplanets are defined as outside the Solar System."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X004"
+  },
+  {
+   "id": "RW-M37-X005",
+   "external_id": "HDSAT-RW-M37-X005",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nArtificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making. It is also a field of research spanning computer science, engineering, and mathematics that develops and studies methods and software enabling machines to perceive their environment and use learning and intelligence to take actions that maximise their chances of achieving defined goals.\n\nText 2\nMachine learning (ML) is a field of study in artificial intelligence concerned with the development and study of statistical algorithms that can learn from data and generalize to unseen data, and thus perform tasks without being explicitly programmed. Statistics and mathematical optimisation methods compose the foundations of machine learning.",
+   "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "By claiming that AI and machine learning are unrelated fields."
+    },
+    {
+     "id": "B",
+     "text": "By clarifying that machine learning is a subfield of AI that develops statistical algorithms able to learn from data."
+    },
+    {
+     "id": "C",
+     "text": "By arguing that machine learning has no connection to statistics."
+    },
+    {
+     "id": "D",
+     "text": "By denying that AI involves learning or reasoning."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Artificial intelligence\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Artificial_intelligence; Wikipedia, \"Machine learning\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Machine_learning",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Text 1 describes AI broadly as a capability and a field of research. Text 2 identifies machine learning as a field of study within AI, built on statistical algorithms that learn from data, so its author would clarify that narrower relationship.",
+   "distractor_rationales": {
+    "D": "Text 1 explicitly lists learning and reasoning as AI tasks.",
+    "C": "Text 2 says statistics compose machine learning's foundations.",
+    "A": "Text 2 defines ML as a field in AI."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X005"
+  },
+  {
+   "id": "RW-M37-X006",
+   "external_id": "HDSAT-RW-M37-X006",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nArtificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, such as learning, reasoning, problem-solving, perception, and decision-making. It is also a field of research spanning computer science, engineering, and mathematics that develops and studies methods and software enabling machines to perceive their environment and use learning and intelligence to take actions that maximise their chances of achieving defined goals.\n\nText 2\nMachine learning (ML) is a field of study in artificial intelligence concerned with the development and study of statistical algorithms that can learn from data and generalize to unseen data, and thus perform tasks without being explicitly programmed. Statistics and mathematical optimisation methods compose the foundations of machine learning.",
+   "prompt": "Which choice best describes the relationship between the two texts?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Text 2 narrows the broad field described in Text 1 to one of its approaches."
+    },
+    {
+     "id": "B",
+     "text": "Text 2 argues that AI cannot perform cognitive tasks."
+    },
+    {
+     "id": "C",
+     "text": "Text 2 rejects the definition offered in Text 1."
+    },
+    {
+     "id": "D",
+     "text": "Text 2 describes the history of AI's founding."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Artificial intelligence\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Artificial_intelligence; Wikipedia, \"Machine learning\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Machine_learning",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Text 1 defines AI as a broad capability and research field. Text 2 then describes machine learning as a field within AI, focused on statistical algorithms, so it narrows the earlier discussion to a particular approach.",
+   "distractor_rationales": {
+    "C": "Text 2 begins by placing itself inside AI.",
+    "D": "Text 2 describes methods, not AI's founding.",
+    "B": "Text 2 assumes AI systems learn and generalize."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X006"
+  },
+  {
+   "id": "RW-M37-X007",
+   "external_id": "HDSAT-RW-M37-X007",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nThe American Civil War (April 12, 1861 – May 26, 1865; also known by other names) was a civil war in the United States between the Union (\"the North\") and the Confederacy (\"the South\"), which was formed in 1861 by Southern states that had seceded from the Union to preserve slavery in the United States. The South saw slavery as threatened because of the election of Abraham Lincoln as president in 1860 and the growing abolitionist movement in the North.\n\nText 2\nThe Reconstruction era, often simply called Reconstruction, was a period in United States history that followed the American Civil War (1861–1865) and was dominated by the legal, social, and political challenges of the abolition of slavery and federal control over, and reintegration of, the former Confederate States into the United States. Three amendments were added to the United States Constitution to grant citizenship and equal civil rights to the newly freed slaves.",
+   "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "By denying that the Civil War took place."
+    },
+    {
+     "id": "B",
+     "text": "By noting that the period after the war focused on abolishing slavery and reintegrating the former Confederate states."
+    },
+    {
+     "id": "C",
+     "text": "By claiming that Reconstruction came before the Civil War."
+    },
+    {
+     "id": "D",
+     "text": "By arguing that no constitutional amendments were adopted."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"American Civil War\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/American_Civil_War; Wikipedia, \"Reconstruction era\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Reconstruction_era",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Text 1 explains that the war was fought between the Union and the Confederacy over slavery. Text 2 describes the period that followed the war, when slavery was abolished and the former Confederate states were reintegrated, so its author would add that aftermath.",
+   "distractor_rationales": {
+    "A": "Text 2 dates itself after the Civil War.",
+    "C": "Text 2 explicitly follows the war.",
+    "D": "Text 2 says three amendments were added."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X007"
+  },
+  {
+   "id": "RW-M37-X008",
+   "external_id": "HDSAT-RW-M37-X008",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nThe American Civil War (April 12, 1861 – May 26, 1865; also known by other names) was a civil war in the United States between the Union (\"the North\") and the Confederacy (\"the South\"), which was formed in 1861 by Southern states that had seceded from the Union to preserve slavery in the United States. The South saw slavery as threatened because of the election of Abraham Lincoln as president in 1860 and the growing abolitionist movement in the North.\n\nText 2\nThe Reconstruction era, often simply called Reconstruction, was a period in United States history that followed the American Civil War (1861–1865) and was dominated by the legal, social, and political challenges of the abolition of slavery and federal control over, and reintegration of, the former Confederate States into the United States. Three amendments were added to the United States Constitution to grant citizenship and equal civil rights to the newly freed slaves.",
+   "prompt": "Which choice best describes the relationship between the two texts?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Text 2 describes the political aftermath of the conflict described in Text 1."
+    },
+    {
+     "id": "B",
+     "text": "Text 2 compares the war with a later conflict."
+    },
+    {
+     "id": "C",
+     "text": "Text 2 offers a cause of the war described in Text 1."
+    },
+    {
+     "id": "D",
+     "text": "Text 2 disputes the outcome of the war."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"American Civil War\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/American_Civil_War; Wikipedia, \"Reconstruction era\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Reconstruction_era",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Text 1 narrates the Civil War and its origins in the conflict over slavery. Text 2 begins after the war and describes Reconstruction's legal and political tasks, so it supplies the aftermath of the conflict Text 1 describes.",
+   "distractor_rationales": {
+    "C": "Text 2 is set after the war, not before it.",
+    "D": "Text 2 accepts the war's outcome and addresses its consequences.",
+    "B": "Text 2 discusses Reconstruction, not another war."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X008"
+  },
+  {
+   "id": "RW-M37-X009",
+   "external_id": "HDSAT-RW-M37-X009",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nIn microeconomics, supply and demand is an economic model of price determination in a market. It postulates that, holding all else equal, the unit price for a particular good or other traded item in a perfectly competitive market, will vary until it settles at the market-clearing price, where the quantity demanded equals the quantity supplied such that an economic equilibrium is achieved for price and quantity transacted.\n\nText 2\nIn economics, inflation is an increase in the average price of goods and services in terms of money, though it originally referred to the increase of the money supply (monetary inflation) that can cause such a universal shift. This increase is measured using a price index, typically a consumer price index (CPI).",
+   "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "By claiming that inflation has nothing to do with prices."
+    },
+    {
+     "id": "B",
+     "text": "By shifting from the price of a single good in one market to the economy-wide average price level."
+    },
+    {
+     "id": "C",
+     "text": "By arguing that market equilibrium is impossible."
+    },
+    {
+     "id": "D",
+     "text": "By denying that prices are determined by supply and demand."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Supply and demand\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Supply_and_demand; Wikipedia, \"Inflation\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Inflation",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Text 1 models how supply and demand set the price of a particular good in a competitive market. Text 2 discusses inflation as a rise in the average price of goods and services, measured by a price index, so its author would move from one market to the economy-wide price level.",
+   "distractor_rationales": {
+    "D": "Text 2 does not reject price determination.",
+    "A": "Inflation is defined as a rise in average prices.",
+    "C": "Text 2 does not dispute equilibrium."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X009"
+  },
+  {
+   "id": "RW-M37-X010",
+   "external_id": "HDSAT-RW-M37-X010",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nIn microeconomics, supply and demand is an economic model of price determination in a market. It postulates that, holding all else equal, the unit price for a particular good or other traded item in a perfectly competitive market, will vary until it settles at the market-clearing price, where the quantity demanded equals the quantity supplied such that an economic equilibrium is achieved for price and quantity transacted.\n\nText 2\nIn economics, inflation is an increase in the average price of goods and services in terms of money, though it originally referred to the increase of the money supply (monetary inflation) that can cause such a universal shift. This increase is measured using a price index, typically a consumer price index (CPI).",
+   "prompt": "Which choice best describes the relationship between the two texts?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Text 2 rejects the idea of market-clearing prices."
+    },
+    {
+     "id": "B",
+     "text": "Text 2 moves from a single-market model to a measure of prices across the economy."
+    },
+    {
+     "id": "C",
+     "text": "Text 2 applies the model in Text 1 to a single firm."
+    },
+    {
+     "id": "D",
+     "text": "Text 2 describes the history of money rather than prices."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Supply and demand\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Supply_and_demand; Wikipedia, \"Inflation\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Inflation",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Text 1 presents a microeconomic model of price in one competitive market. Text 2 defines inflation in terms of the average price of goods and services and a price index, so it shifts the scale from a single market to the whole economy.",
+   "distractor_rationales": {
+    "C": "Text 2 discusses average prices, not one firm.",
+    "A": "Text 2 does not address market clearing.",
+    "D": "Text 2 is about price levels and measurement."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X010"
+  },
+  {
+   "id": "RW-M37-X011",
+   "external_id": "HDSAT-RW-M37-X011",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nLanguage acquisition is the process by which humans acquire the capacity to perceive and comprehend language. In other words, it is how human beings gain the ability to be aware of language, to understand it, and to produce and use words and sentences to communicate.\n\nText 2\nSign languages (also known as signed languages) are languages that use the visual-manual modality to convey meaning rather than spoken words. They are expressed through manual articulation in combination with non-manual markers, and are full-fledged natural languages with their own grammar and lexicon.",
+   "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "By arguing that sign languages are not languages."
+    },
+    {
+     "id": "B",
+     "text": "By claiming that only spoken languages can be acquired."
+    },
+    {
+     "id": "C",
+     "text": "By noting that sign languages are full natural languages with their own grammar, which the capacity described in Text 1 can acquire."
+    },
+    {
+     "id": "D",
+     "text": "By denying that sign languages have grammar."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Language acquisition\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Language_acquisition; Wikipedia, \"Sign language\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Sign_language",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "Text 1 describes language acquisition as the human capacity to perceive, understand, and produce language. Text 2 establishes that sign languages are full natural languages with their own grammar and lexicon, so its author would include them among the languages that capacity acquires.",
+   "distractor_rationales": {
+    "D": "Text 2 says sign languages have their own grammar.",
+    "B": "Text 2 calls them full-fledged natural languages.",
+    "A": "Text 2 explicitly calls them languages."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X011"
+  },
+  {
+   "id": "RW-M37-X012",
+   "external_id": "HDSAT-RW-M37-X012",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nLanguage acquisition is the process by which humans acquire the capacity to perceive and comprehend language. In other words, it is how human beings gain the ability to be aware of language, to understand it, and to produce and use words and sentences to communicate.\n\nText 2\nSign languages (also known as signed languages) are languages that use the visual-manual modality to convey meaning rather than spoken words. They are expressed through manual articulation in combination with non-manual markers, and are full-fledged natural languages with their own grammar and lexicon.",
+   "prompt": "Which choice best describes the relationship between the two texts?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Text 2 claims that sign languages lack a lexicon."
+    },
+    {
+     "id": "B",
+     "text": "Text 2 describes how children acquire spoken words."
+    },
+    {
+     "id": "C",
+     "text": "Text 2 describes a visual-manual kind of language that the general capacity in Text 1 would include."
+    },
+    {
+     "id": "D",
+     "text": "Text 2 argues that language acquisition is impossible."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Language acquisition\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Language_acquisition; Wikipedia, \"Sign language\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Sign_language",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "Text 1 describes the general human capacity to acquire language. Text 2 characterizes sign languages as full natural languages conveyed through a visual-manual modality, so it presents a kind of language that the capacity in Text 1 would encompass.",
+   "distractor_rationales": {
+    "D": "Text 2 treats sign languages as learnable natural languages.",
+    "B": "Text 2 is about signed, not spoken, language.",
+    "A": "Text 2 says sign languages have their own lexicon."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X012"
+  },
+  {
+   "id": "RW-M37-X013",
+   "external_id": "HDSAT-RW-M37-X013",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nA glacier forms where the accumulation of snow exceeds its ablation over many years, often centuries.\n\nText 2\nThe water cycle (or hydrologic cycle or hydrological cycle) is a biogeochemical cycle that involves the continuous change in form of water on, above and below the surface of the Earth across different reservoirs. The mass of water on Earth remains fairly constant over time.",
+   "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "By denying that glaciers are made of water."
+    },
+    {
+     "id": "B",
+     "text": "By arguing that glaciers are not part of the water cycle."
+    },
+    {
+     "id": "C",
+     "text": "By claiming that water never changes form."
+    },
+    {
+     "id": "D",
+     "text": "By placing the ice body described in Text 1 within a global cycle of water moving among reservoirs."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Glacier\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Glacier; Wikipedia, \"Water cycle\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Water_cycle",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "Text 1 explains that a glacier forms where snow accumulation exceeds ablation. Text 2 describes water continuously changing form across reservoirs, so its author would place glaciers within that global cycle.",
+   "distractor_rationales": {
+    "A": "Text 2 is about water in all its forms.",
+    "C": "Text 2 says water continuously changes form.",
+    "B": "Glaciers are one of the reservoirs Text 2 implies."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X013"
+  },
+  {
+   "id": "RW-M37-X014",
+   "external_id": "HDSAT-RW-M37-X014",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nA glacier forms where the accumulation of snow exceeds its ablation over many years, often centuries.\n\nText 2\nThe water cycle (or hydrologic cycle or hydrological cycle) is a biogeochemical cycle that involves the continuous change in form of water on, above and below the surface of the Earth across different reservoirs. The mass of water on Earth remains fairly constant over time.",
+   "prompt": "Which choice best describes the relationship between the two texts?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Text 2 explains how glaciers carve landforms."
+    },
+    {
+     "id": "B",
+     "text": "Text 2 argues that glaciers are not ice."
+    },
+    {
+     "id": "C",
+     "text": "Text 2 traces the history of a particular glacier."
+    },
+    {
+     "id": "D",
+     "text": "Text 2 describes the larger system in which the ice formation in Text 1 is one reservoir."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Glacier\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Glacier; Wikipedia, \"Water cycle\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Water_cycle",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "Text 1 defines how a glacier forms from accumulated snow. Text 2 describes the water cycle as water changing form across reservoirs while the total mass stays constant, a larger system that includes glacial ice.",
+   "distractor_rationales": {
+    "A": "Landform carving is not mentioned in Text 2.",
+    "B": "Text 2 treats ice as one form of water.",
+    "C": "Text 2 is general, not a single glacier's history."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X014"
+  },
+  {
+   "id": "RW-M37-X015",
+   "external_id": "HDSAT-RW-M37-X015",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nA cognitive bias is a systematic pattern of deviation from the norm or rationality in judgment. Individuals create their own \"subjective reality\" from their perception of the input.\n\nText 2\nConfirmation bias (also confirmatory bias, myside bias, or congeniality bias) is the tendency to search for, interpret, favor and recall information in a way that confirms or supports one's prior beliefs, values, or decisions. People display this bias when they select information that supports their views, ignoring contrary information or when they interpret ambiguous evidence as supporting their existing attitudes.",
+   "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "By denying that people have subjective perceptions."
+    },
+    {
+     "id": "B",
+     "text": "By arguing that judgment is always rational."
+    },
+    {
+     "id": "C",
+     "text": "By giving a specific example of the systematic deviation from rationality described in Text 1."
+    },
+    {
+     "id": "D",
+     "text": "By claiming that confirmation bias is not a bias."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Cognitive bias\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Cognitive_bias; Wikipedia, \"Confirmation bias\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Confirmation_bias",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "Text 1 defines cognitive bias broadly as a systematic deviation from rational judgment. Text 2 describes confirmation bias as a specific tendency to favor information that supports prior beliefs, so its author would offer that tendency as an instance of the general pattern.",
+   "distractor_rationales": {
+    "A": "Text 2 describes how people select supporting information.",
+    "D": "Text 2 names confirmation bias as a bias.",
+    "B": "Text 2 documents departures from rational judgment."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X015"
+  },
+  {
+   "id": "RW-M37-X016",
+   "external_id": "HDSAT-RW-M37-X016",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nA cognitive bias is a systematic pattern of deviation from the norm or rationality in judgment. Individuals create their own \"subjective reality\" from their perception of the input.\n\nText 2\nConfirmation bias (also confirmatory bias, myside bias, or congeniality bias) is the tendency to search for, interpret, favor and recall information in a way that confirms or supports one's prior beliefs, values, or decisions. People display this bias when they select information that supports their views, ignoring contrary information or when they interpret ambiguous evidence as supporting their existing attitudes.",
+   "prompt": "Which choice best describes the relationship between the two texts?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Text 2 argues that biases cannot be studied."
+    },
+    {
+     "id": "B",
+     "text": "Text 2 describes a bias unrelated to judgment."
+    },
+    {
+     "id": "C",
+     "text": "Text 2 rejects the definition in Text 1."
+    },
+    {
+     "id": "D",
+     "text": "Text 2 identifies one specific form of the general pattern defined in Text 1."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Cognitive bias\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Cognitive_bias; Wikipedia, \"Confirmation bias\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Confirmation_bias",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "Text 1 offers a general definition of cognitive bias. Text 2 describes confirmation bias as a particular tendency in how people search for and interpret information, which makes it one specific form of the pattern Text 1 defines.",
+   "distractor_rationales": {
+    "C": "Text 2 works within the concept of bias.",
+    "B": "Confirmation bias concerns judgment and belief.",
+    "A": "Text 2 describes observable tendencies."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X016"
+  },
+  {
+   "id": "RW-M37-X017",
+   "external_id": "HDSAT-RW-M37-X017",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nAn antibiotic is a type of antimicrobial substance which is active against bacteria. It is the most important type of antibacterial agent for fighting bacterial infections, and antibiotic medications are widely used in the treatment and prevention of such infections.\n\nText 2\nEpidemiology is the study and analysis of the distribution (who, when, and where), patterns and determinants of health and disease conditions in a defined population, and application of this knowledge to prevent diseases. It is a cornerstone of public health, and shapes policy decisions and evidence-based practice by identifying risk factors for disease and targets for preventive healthcare.",
+   "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "By noting that population-level study identifies risk factors and prevention targets that complement antibiotic treatment."
+    },
+    {
+     "id": "B",
+     "text": "By arguing that prevention is unrelated to public health."
+    },
+    {
+     "id": "C",
+     "text": "By claiming that epidemiology studies individual cells only."
+    },
+    {
+     "id": "D",
+     "text": "By denying that antibiotics treat bacterial infections."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Antibiotic\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Antibiotic; Wikipedia, \"Epidemiology\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Epidemiology",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Text 1 describes antibiotics as agents used to treat and prevent bacterial infections. Text 2 describes epidemiology as studying disease in populations and identifying risk factors and prevention targets, so its author would present that population approach as complementary.",
+   "distractor_rationales": {
+    "D": "Text 2 does not address antibiotics directly.",
+    "C": "Epidemiology studies populations, not cells only.",
+    "B": "Text 2 calls prevention central to public health."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X017"
+  },
+  {
+   "id": "RW-M37-X018",
+   "external_id": "HDSAT-RW-M37-X018",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nAn antibiotic is a type of antimicrobial substance which is active against bacteria. It is the most important type of antibacterial agent for fighting bacterial infections, and antibiotic medications are widely used in the treatment and prevention of such infections.\n\nText 2\nEpidemiology is the study and analysis of the distribution (who, when, and where), patterns and determinants of health and disease conditions in a defined population, and application of this knowledge to prevent diseases. It is a cornerstone of public health, and shapes policy decisions and evidence-based practice by identifying risk factors for disease and targets for preventive healthcare.",
+   "prompt": "Which choice best describes the relationship between the two texts?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Text 2 focuses on the chemical structure of drugs."
+    },
+    {
+     "id": "B",
+     "text": "Text 2 argues that antibiotics are ineffective."
+    },
+    {
+     "id": "C",
+     "text": "Text 1 describes a treatment, while Text 2 describes a population-level approach to preventing disease."
+    },
+    {
+     "id": "D",
+     "text": "Both texts describe the same laboratory technique."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Antibiotic\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Antibiotic; Wikipedia, \"Epidemiology\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Epidemiology",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "Text 1 centers on antibiotics as medicines for bacterial infections. Text 2 centers on epidemiology, the population-level study of disease distribution and determinants used to prevent disease, so the texts describe complementary clinical and public-health approaches.",
+   "distractor_rationales": {
+    "D": "One text is about medication, the other about populations.",
+    "B": "Text 2 does not evaluate antibiotics.",
+    "A": "Text 2 does not analyze drug chemistry."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X018"
+  },
+  {
+   "id": "RW-M37-X019",
+   "external_id": "HDSAT-RW-M37-X019",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nCryptography, or cryptology, is the practice and study of techniques for secure communication in the presence of adversarial behavior. More generally, cryptography is about constructing and analyzing protocols that prevent third parties or the public from reading private messages.\n\nText 2\nThe Internet (or internet) is the global system of interconnected computer networks that uses the Internet protocol suite (TCP/IP) to communicate between networks and devices. It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope, linked by electronic, wireless, and optical networking technologies.",
+   "prompt": "Based on the texts, how would the author of Text 2 most likely respond to the argument in Text 1?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "By noting that the global network described in Text 2 carries the communications that cryptographic protocols are designed to protect."
+    },
+    {
+     "id": "B",
+     "text": "By denying that the Internet connects networks."
+    },
+    {
+     "id": "C",
+     "text": "By arguing that the Internet does not use protocols."
+    },
+    {
+     "id": "D",
+     "text": "By claiming that cryptography only protects paper mail."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Cryptography\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Cryptography; Wikipedia, \"Internet\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Internet",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Text 1 describes cryptography as techniques and protocols that keep third parties from reading private messages. Text 2 describes the Internet as a global network of networks that communicates data, so its author would identify that network as a setting where such protection is needed.",
+   "distractor_rationales": {
+    "B": "Text 2 defines the Internet as interconnected networks.",
+    "D": "Text 1 is about digital secure communication.",
+    "C": "Text 2 says the Internet uses TCP/IP."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X019"
+  },
+  {
+   "id": "RW-M37-X020",
+   "external_id": "HDSAT-RW-M37-X020",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Craft and Structure",
+   "skill": "Cross-Text Connections",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Text 1\nCryptography, or cryptology, is the practice and study of techniques for secure communication in the presence of adversarial behavior. More generally, cryptography is about constructing and analyzing protocols that prevent third parties or the public from reading private messages.\n\nText 2\nThe Internet (or internet) is the global system of interconnected computer networks that uses the Internet protocol suite (TCP/IP) to communicate between networks and devices. It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope, linked by electronic, wireless, and optical networking technologies.",
+   "prompt": "Which choice best describes the relationship between the two texts?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Text 2 argues that cryptography is obsolete."
+    },
+    {
+     "id": "B",
+     "text": "Text 2 describes the history of encryption only."
+    },
+    {
+     "id": "C",
+     "text": "Text 1 describes how the Internet was built."
+    },
+    {
+     "id": "D",
+     "text": "Text 1 describes techniques for securing communication, and Text 2 describes the network infrastructure those techniques can protect."
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Cryptography\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Cryptography; Wikipedia, \"Internet\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Internet",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "Text 1 defines cryptography as the construction of protocols that keep messages private. Text 2 describes the Internet as a global system of interconnected networks carrying communications, which is the kind of infrastructure cryptography secures.",
+   "distractor_rationales": {
+    "A": "Text 2 does not mention cryptography at all.",
+    "B": "Text 2 describes network structure, not encryption history.",
+    "C": "Text 1 is about cryptography, not Internet history."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M37-X020"
+  },
+  {
+   "id": "RW-M36-T001",
+   "external_id": "HDSAT-RW-M36-T001",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Electricity was among the preferred methods for powering early motor vehicles because it was quieter, provided comfort, and ease of operation.\n\n_______ its limited range hindered mass adoption throughout the 20th century.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "However,"
+    },
+    {
+     "id": "B",
+     "text": "Similarly,"
+    },
+    {
+     "id": "C",
+     "text": "For example,"
+    },
+    {
+     "id": "D",
+     "text": "Therefore,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Electric vehicle\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Electric_vehicle",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The second sentence limits the advantage described in the first: electric power was preferred, yet its range held it back. 'However' signals that contrast, while the other transitions would claim a cause, an example, or a similarity the sentence does not supply.",
+   "distractor_rationales": {
+    "D": "Range limits do not follow as a consequence of quiet operation.",
+    "C": "The sentence is a drawback, not an example of an advantage.",
+    "B": "The two sentences contrast rather than resemble each other."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T001"
+  },
+  {
+   "id": "RW-M36-T002",
+   "external_id": "HDSAT-RW-M36-T002",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "In the United States alone, zoos are visited by over 181 million people annually.\n\n_______ animal welfare organizations have expressed criticism of zoos and the conditions in which animals are kept.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "For example,"
+    },
+    {
+     "id": "B",
+     "text": "However,"
+    },
+    {
+     "id": "C",
+     "text": "Therefore,"
+    },
+    {
+     "id": "D",
+     "text": "Similarly,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Zoo\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Zoo",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Popularity and criticism pull in opposite directions, so the second sentence contrasts with the first. 'However' marks that turn; 'Therefore' would make the criticism a result of attendance, and the other two choices would imply agreement or illustration.",
+   "distractor_rationales": {
+    "C": "Criticism does not follow from high attendance.",
+    "A": "The criticism is not an example of popularity.",
+    "D": "The sentences oppose each other rather than align."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T002"
+  },
+  {
+   "id": "RW-M36-T003",
+   "external_id": "HDSAT-RW-M36-T003",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Currently there are also no plans for building a space colony by any government.\n\n_______ many proposals, speculations, and designs, particularly for extraterrestrial settlements have been made through the years, and a considerable number of space colonization advocates and groups are active.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "However,"
+    },
+    {
+     "id": "B",
+     "text": "Therefore,"
+    },
+    {
+     "id": "C",
+     "text": "For example,"
+    },
+    {
+     "id": "D",
+     "text": "Similarly,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Space colonization\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Space_colonization",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The absence of government plans is set against the many private proposals and advocacy groups, a clear contrast. 'However' captures that opposition; the other choices would present the proposals as a consequence, an example, or a parallel of the missing plans.",
+   "distractor_rationales": {
+    "B": "The proposals do not result from the lack of plans.",
+    "C": "The proposals are not an example of government planning.",
+    "D": "The two facts contrast rather than resemble each other."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T003"
+  },
+  {
+   "id": "RW-M36-T004",
+   "external_id": "HDSAT-RW-M36-T004",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Universal basic income (UBI) is a social welfare proposal in which all members of a given population regularly receive a minimum income in the form of an unconditional transfer payment, i.e., without a means test or need to perform work.\n\n_______ a guaranteed minimum income (GMI) is paid only to those who do not already receive an income that is enough to live on.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "For example,"
+    },
+    {
+     "id": "B",
+     "text": "Therefore,"
+    },
+    {
+     "id": "C",
+     "text": "Similarly,"
+    },
+    {
+     "id": "D",
+     "text": "In contrast,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Universal basic income\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Universal_basic_income",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "UBI pays everyone unconditionally, while GMI targets only those below a threshold, so the second sentence draws a direct contrast. 'In contrast' names that difference; the other transitions would wrongly suggest causation, exemplification, or similarity.",
+   "distractor_rationales": {
+    "B": "The targeted payment is not a result of the universal one.",
+    "A": "GMI is a different design, not an example of UBI.",
+    "C": "The two programs differ in who receives payment."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T004"
+  },
+  {
+   "id": "RW-M36-T005",
+   "external_id": "HDSAT-RW-M36-T005",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "Homework may improve academic skills among older students, especially lower-achieving students.\n\n_______ homework also creates stress for students and parents, and reduces the amount of time that students can spend in other activities.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Similarly,"
+    },
+    {
+     "id": "B",
+     "text": "For example,"
+    },
+    {
+     "id": "C",
+     "text": "Therefore,"
+    },
+    {
+     "id": "D",
+     "text": "However,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Homework\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Homework",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The first sentence states a benefit and the second states costs, so the relationship is contrast. 'However' marks the drawback; 'Therefore' would treat stress as a consequence of the benefit, and the remaining choices would misstate the relation.",
+   "distractor_rationales": {
+    "C": "Stress does not follow from improved skills.",
+    "B": "The drawbacks are not an example of the benefit.",
+    "A": "Costs and benefits contrast rather than match."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T005"
+  },
+  {
+   "id": "RW-M36-T006",
+   "external_id": "HDSAT-RW-M36-T006",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "A WHO-funded study by The Lancet estimates that, during the 50-year period starting in 1974, vaccination prevented 154 million deaths, including 146 million among children under age 5.\n\n_______ some diseases have seen rising cases due to relatively low vaccination rates attributable partly to vaccine hesitancy.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Similarly,"
+    },
+    {
+     "id": "B",
+     "text": "For example,"
+    },
+    {
+     "id": "C",
+     "text": "However,"
+    },
+    {
+     "id": "D",
+     "text": "Therefore,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Vaccination\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Vaccination",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "A large success is followed by a warning about resurgent disease, so the second sentence qualifies the first rather than extending it. 'However' signals that qualification; the other choices would imply that the resurgence resulted from the success or resembled it.",
+   "distractor_rationales": {
+    "D": "Rising cases do not follow from prevented deaths.",
+    "B": "The resurgence is a setback, not an example of success.",
+    "A": "The sentences point in opposite directions."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T006"
+  },
+  {
+   "id": "RW-M36-T007",
+   "external_id": "HDSAT-RW-M36-T007",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "High-frequency services often prioritize regular headways over exact departure times.\n\n_______ many trips involve multimodal travel, such as walking or feeder bus services to access rail stations, highlighting the importance of network coordination and cost-effective planning.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Therefore,"
+    },
+    {
+     "id": "B",
+     "text": "However,"
+    },
+    {
+     "id": "C",
+     "text": "Similarly,"
+    },
+    {
+     "id": "D",
+     "text": "For example,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Public transport\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Public_transport",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "Regular headways are one priority, but the need to coordinate multiple modes complicates that picture, so the second sentence adds a contrasting consideration. The other transitions would wrongly present coordination as a result, an example, or a parallel of headway policy.",
+   "distractor_rationales": {
+    "A": "Multimodal trips are not caused by regular headways.",
+    "D": "Coordination is a separate concern, not an example of headways.",
+    "C": "The sentences contrast priorities rather than match them."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T007"
+  },
+  {
+   "id": "RW-M36-T008",
+   "external_id": "HDSAT-RW-M36-T008",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "The time spent in each language depends on the model.\n\n_______ some models focus on providing education in both languages throughout a student's entire education while others gradually transition to education in only one language.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Therefore,"
+    },
+    {
+     "id": "B",
+     "text": "For example,"
+    },
+    {
+     "id": "C",
+     "text": "Similarly,"
+    },
+    {
+     "id": "D",
+     "text": "However,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Bilingual education\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Bilingual_education",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The second sentence supplies specific models that illustrate the general claim about varying time in each language. 'For example' introduces that illustration; 'However' would wrongly frame it as a contrast, and 'Therefore' would present it as a consequence.",
+   "distractor_rationales": {
+    "D": "The models illustrate the claim rather than oppose it.",
+    "A": "The models are examples, not effects of the claim.",
+    "C": "The second sentence is an illustration, not a parallel."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T008"
+  },
+  {
+   "id": "RW-M36-T009",
+   "external_id": "HDSAT-RW-M36-T009",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "New Orleans jazz began in the early 1910s, combining earlier brass band marches, French quadrilles, biguine, ragtime and blues with collective polyphonic improvisation.\n\n_______ jazz did not begin as a single musical tradition in New Orleans or elsewhere.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "For example,"
+    },
+    {
+     "id": "B",
+     "text": "Therefore,"
+    },
+    {
+     "id": "C",
+     "text": "However,"
+    },
+    {
+     "id": "D",
+     "text": "Similarly,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Jazz\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Jazz",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The second sentence corrects the impression that New Orleans was the single origin of jazz, so it contrasts with the first. 'However' marks that correction; the other choices would treat the correction as a consequence, an example, or a similarity.",
+   "distractor_rationales": {
+    "B": "The correction does not follow from the origin story.",
+    "A": "It is not an example of a single tradition.",
+    "D": "The sentences oppose a single-origin view."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T009"
+  },
+  {
+   "id": "RW-M36-T010",
+   "external_id": "HDSAT-RW-M36-T010",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Traditional Japanese haiku consist of three phrases composed of 17 morae (called on in Japanese) in a 5, 7, 5 pattern that include a kireji or \"cutting word\" and a kigo or seasonal reference.\n\n_______ haiku by classical Japanese poets, such as Matsuo Bashō, also deviate from the 17-on pattern and sometimes do not contain a kireji.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Similarly,"
+    },
+    {
+     "id": "B",
+     "text": "For example,"
+    },
+    {
+     "id": "C",
+     "text": "Therefore,"
+    },
+    {
+     "id": "D",
+     "text": "However,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Haiku\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Haiku",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The second sentence notes that celebrated haiku break the rules just described, which qualifies the definition. 'However' signals that qualification; the other transitions would wrongly imply that the exceptions follow from the rule or illustrate it.",
+   "distractor_rationales": {
+    "C": "The exceptions do not result from the definition.",
+    "B": "The poets are exceptions, not examples of the rule.",
+    "A": "The sentence qualifies rather than parallels the definition."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T010"
+  },
+  {
+   "id": "RW-M36-T011",
+   "external_id": "HDSAT-RW-M36-T011",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Traditional color theory tends to be more subjective and have artistic applications, while color science tends to be more objective and have functional applications, such as in chemistry, astronomy or color reproduction.\n\n_______ there is much intertwining between the two throughout history, and they tend to aid each other in their own evolutions.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "For example,"
+    },
+    {
+     "id": "B",
+     "text": "Therefore,"
+    },
+    {
+     "id": "C",
+     "text": "Similarly,"
+    },
+    {
+     "id": "D",
+     "text": "However,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Color theory\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Color_theory",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "The first sentence separates artistic color theory from objective color science, and the second says the two have in fact intertwined. 'However' captures that qualification; the other choices would present the intertwining as a result, an example, or a similarity of the split.",
+   "distractor_rationales": {
+    "B": "The intertwining does not follow from the separation.",
+    "A": "It is not an example of the separation.",
+    "C": "The sentence complicates the contrast rather than matching it."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T011"
+  },
+  {
+   "id": "RW-M36-T012",
+   "external_id": "HDSAT-RW-M36-T012",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "It also offers potential in the treatment of inherited genetic diseases as well as diseases arising from somatic mutations, such as cancer.\n\n_______ its use in human germline genetic modification is highly controversial.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "For example,"
+    },
+    {
+     "id": "B",
+     "text": "However,"
+    },
+    {
+     "id": "C",
+     "text": "Similarly,"
+    },
+    {
+     "id": "D",
+     "text": "Therefore,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"CRISPR gene editing\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/CRISPR_gene_editing",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The therapeutic promise is set against the controversy over germline modification, a sharp contrast in use. 'However' marks it; 'Therefore' would make the controversy a consequence of the promise, and the other choices would misstate the relationship.",
+   "distractor_rationales": {
+    "D": "Controversy does not follow from therapeutic potential.",
+    "A": "Germline use is a different application, not an example of treatment.",
+    "C": "The sentences contrast promise with objection."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T012"
+  },
+  {
+   "id": "RW-M36-T013",
+   "external_id": "HDSAT-RW-M36-T013",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Solar panels use a renewable and clean source of energy, and reduce greenhouse gas emissions compared to hydrocarbon-sourced energy.\n\n_______ they depend on the availability and intensity of sunlight, require cleaning, and have high initial costs.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Therefore,"
+    },
+    {
+     "id": "B",
+     "text": "However,"
+    },
+    {
+     "id": "C",
+     "text": "For example,"
+    },
+    {
+     "id": "D",
+     "text": "Similarly,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Solar panel\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Solar_panel",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The first sentence lists environmental benefits and the second lists practical drawbacks, so the relation is contrast. 'However' introduces the drawbacks; 'Therefore' would derive them from the benefits, and the remaining choices would misdescribe the turn.",
+   "distractor_rationales": {
+    "A": "The drawbacks do not follow from the benefits.",
+    "C": "They are not examples of environmental benefit.",
+    "D": "Benefits and drawbacks contrast."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T013"
+  },
+  {
+   "id": "RW-M36-T014",
+   "external_id": "HDSAT-RW-M36-T014",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Due to its energy consumption, desalinating sea water is generally more costly than fresh water from surface water or groundwater, water recycling and water conservation.\n\n_______ these alternatives are not always available and depletion of reserves is a critical problem worldwide.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Therefore,"
+    },
+    {
+     "id": "B",
+     "text": "Similarly,"
+    },
+    {
+     "id": "C",
+     "text": "For example,"
+    },
+    {
+     "id": "D",
+     "text": "However,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Desalination\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Desalination",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "Desalination is described as costly, but the second sentence explains why its cheaper alternatives cannot always replace it. 'However' signals that qualification; the other choices would make the point a consequence, an example, or a parallel of the cost comparison.",
+   "distractor_rationales": {
+    "A": "The limits on alternatives do not follow from desalination's cost.",
+    "C": "The point is a qualification, not an example of cost.",
+    "B": "The sentence contrasts cost with availability."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T014"
+  },
+  {
+   "id": "RW-M36-T015",
+   "external_id": "HDSAT-RW-M36-T015",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Food deserts are commonly paired with food swamps, which lack grocery stores and instead have convenience stores or fast food.\n\n_______ an area with greater access to grocers or farmers' markets with fresh foods may be called a food oasis.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Similarly,"
+    },
+    {
+     "id": "B",
+     "text": "Therefore,"
+    },
+    {
+     "id": "C",
+     "text": "For example,"
+    },
+    {
+     "id": "D",
+     "text": "In contrast,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Food desert\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Food_desert",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "A food swamp lacks fresh-food access, while a food oasis has it, so the second sentence presents the opposite case. 'In contrast' marks the opposition; the other choices would imply causation, exemplification, or similarity.",
+   "distractor_rationales": {
+    "B": "The oasis is not a result of the swamp.",
+    "C": "It is the opposite case, not an example.",
+    "A": "The two areas differ in fresh-food access."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T015"
+  },
+  {
+   "id": "RW-M36-T016",
+   "external_id": "HDSAT-RW-M36-T016",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "An individual's construction of reality, not the objective input, may dictate their behavior in the world.\n\n_______ cognitive biases may sometimes lead to perceptual distortion, inaccurate judgment, illogical interpretation, and irrationality.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "For example,"
+    },
+    {
+     "id": "B",
+     "text": "Thus,"
+    },
+    {
+     "id": "C",
+     "text": "Similarly,"
+    },
+    {
+     "id": "D",
+     "text": "However,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Cognitive bias\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Cognitive_bias",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The second sentence draws a consequence from the claim that subjective construction can drive behavior. 'Thus' marks that inference; 'However' would contradict it, and 'Similarly' or 'For example' would misdescribe the relation as comparison or illustration.",
+   "distractor_rationales": {
+    "D": "The consequence does not oppose the premise.",
+    "C": "It is an inference, not a parallel claim.",
+    "A": "The sentence states a result, not an example."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T016"
+  },
+  {
+   "id": "RW-M36-T017",
+   "external_id": "HDSAT-RW-M36-T017",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "On Earth, volcanoes are most often found where tectonic plates are diverging or converging, and because most of Earth's plate boundaries are underwater, most volcanoes are found underwater.\n\n_______ a mid-ocean ridge, such as the Mid-Atlantic Ridge, has volcanoes caused by divergent tectonic plates whereas the Pacific Ring of Fire has volcanoes caused by convergent tectonic plates.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Therefore,"
+    },
+    {
+     "id": "B",
+     "text": "For example,"
+    },
+    {
+     "id": "C",
+     "text": "However,"
+    },
+    {
+     "id": "D",
+     "text": "Similarly,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Volcano\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Volcano",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The second sentence names a mid-ocean ridge and the Ring of Fire as specific cases of the boundary types just described. 'For example' introduces those cases; the other choices would wrongly signal contrast, causation, or similarity.",
+   "distractor_rationales": {
+    "C": "The cases illustrate the claim rather than oppose it.",
+    "A": "They are examples, not effects of the claim.",
+    "D": "The sentence illustrates rather than parallels."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T017"
+  },
+  {
+   "id": "RW-M36-T018",
+   "external_id": "HDSAT-RW-M36-T018",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "The most massive exoplanet listed on the NASA Exoplanet Archive is HR 2562 b, about 30 times the mass of Jupiter.\n\n_______ according to some definitions of a planet (based on the nuclear fusion of deuterium), it is too massive to be a planet and might be a brown dwarf.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Similarly,"
+    },
+    {
+     "id": "B",
+     "text": "For example,"
+    },
+    {
+     "id": "C",
+     "text": "However,"
+    },
+    {
+     "id": "D",
+     "text": "Therefore,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Exoplanet\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Exoplanet",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The object is listed as an exoplanet, but its mass may put it outside some definitions of a planet. 'However' marks that qualification; the other choices would present the doubt as a consequence, an example, or a similarity of the listing.",
+   "distractor_rationales": {
+    "D": "The classification doubt does not follow from the listing.",
+    "B": "It is not an example of being an exoplanet.",
+    "A": "The sentence qualifies the listing rather than matching it."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T018"
+  },
+  {
+   "id": "RW-M36-T019",
+   "external_id": "HDSAT-RW-M36-T019",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "With a standard optical telescope, the background space between stars and galaxies is almost completely dark.\n\n_______ a sufficiently sensitive radio telescope detects a faint background glow that is almost uniform and is not associated with any star, galaxy, or other object.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "However,"
+    },
+    {
+     "id": "B",
+     "text": "For example,"
+    },
+    {
+     "id": "C",
+     "text": "Similarly,"
+    },
+    {
+     "id": "D",
+     "text": "Therefore,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Cosmic microwave background\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Cosmic_microwave_background",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "What looks dark optically is not empty when observed at radio wavelengths, so the second sentence contrasts with the first. 'However' signals that contrast; the other choices would wrongly present the glow as a result, an example, or a similar observation.",
+   "distractor_rationales": {
+    "D": "The radio glow does not follow from optical darkness.",
+    "B": "It is not an example of darkness.",
+    "C": "The sentence contrasts two observations."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T019"
+  },
+  {
+   "id": "RW-M36-T020",
+   "external_id": "HDSAT-RW-M36-T020",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Syllabaries use graphemes called syllabograms that represent entire syllables or moras.\n\n_______ logographic (or morphographic) writing systems use graphemes that represent the units of meaning in a language, such as its words or morphemes.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Therefore,"
+    },
+    {
+     "id": "B",
+     "text": "Similarly,"
+    },
+    {
+     "id": "C",
+     "text": "For example,"
+    },
+    {
+     "id": "D",
+     "text": "By contrast,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Writing system\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Writing_system",
+   "is_released_practice_set": false,
+   "correct_answer": "D",
+   "acceptable_answers": [
+    "D"
+   ],
+   "explanation": "Syllabaries encode sound units and logographic systems encode meaning units, so the second sentence presents the opposing design. 'By contrast' names that difference; the other choices would imply causation, exemplification, or similarity.",
+   "distractor_rationales": {
+    "A": "Logographic systems are not a result of syllabaries.",
+    "C": "They are a different type, not an example.",
+    "B": "The two systems encode different units."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T020"
+  },
+  {
+   "id": "RW-M36-T021",
+   "external_id": "HDSAT-RW-M36-T021",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Tobacco smoke contains nicotine, which is addictive and can cause dependence.\n\n_______ nicotine withdrawal often makes the process of quitting difficult.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "For example,"
+    },
+    {
+     "id": "B",
+     "text": "However,"
+    },
+    {
+     "id": "C",
+     "text": "As a result,"
+    },
+    {
+     "id": "D",
+     "text": "Similarly,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Smoking cessation\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Smoking_cessation",
+   "is_released_practice_set": false,
+   "correct_answer": "C",
+   "acceptable_answers": [
+    "C"
+   ],
+   "explanation": "The difficulty of quitting follows from nicotine's addictive action, so the second sentence states a consequence. 'As a result' marks that causal link; 'However' would oppose it, and the other choices would misstate the relation.",
+   "distractor_rationales": {
+    "B": "Withdrawal difficulty does not contrast with addiction.",
+    "A": "It is a consequence, not an example.",
+    "D": "The sentence states an effect rather than a parallel."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T021"
+  },
+  {
+   "id": "RW-M36-T022",
+   "external_id": "HDSAT-RW-M36-T022",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Easy",
+   "format": "multiple_choice",
+   "stimulus": "The risk of heart attack in a smoker decreases by 50% after one year of cessation.\n\n_______ the risk of lung cancer decreases by 50% in 10 years of cessation.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "Similarly,"
+    },
+    {
+     "id": "B",
+     "text": "However,"
+    },
+    {
+     "id": "C",
+     "text": "For example,"
+    },
+    {
+     "id": "D",
+     "text": "Therefore,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Smoking cessation\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Smoking_cessation",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "Both sentences report a risk falling by half after quitting, so the second parallels the first. 'Similarly' marks that parallel; 'However' would wrongly oppose the facts, and 'Therefore' or 'For example' would misdescribe the relation.",
+   "distractor_rationales": {
+    "B": "The two findings agree rather than conflict.",
+    "D": "The second is a parallel finding, not a result.",
+    "C": "It is a comparable fact, not an illustration."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T022"
+  },
+  {
+   "id": "RW-M36-T023",
+   "external_id": "HDSAT-RW-M36-T023",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Hard",
+   "format": "multiple_choice",
+   "stimulus": "Health is a basic human right and human need, and all human rights are interconnected.\n\n_______ health must be discussed along with all other basic human rights.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "For example,"
+    },
+    {
+     "id": "B",
+     "text": "Thus,"
+    },
+    {
+     "id": "C",
+     "text": "Similarly,"
+    },
+    {
+     "id": "D",
+     "text": "However,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Health equity\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Health_equity",
+   "is_released_practice_set": false,
+   "correct_answer": "B",
+   "acceptable_answers": [
+    "B"
+   ],
+   "explanation": "The conclusion that health must be discussed with other rights follows from the premises that health is a right and rights are interconnected. 'Thus' marks that inference; the other choices would misstate it as contrast, illustration, or mere similarity.",
+   "distractor_rationales": {
+    "D": "The conclusion does not oppose the premises.",
+    "A": "It is an inference, not an example.",
+    "C": "The sentence draws a conclusion rather than a parallel."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T023"
+  },
+  {
+   "id": "RW-M36-T024",
+   "external_id": "HDSAT-RW-M36-T024",
+   "assessments": [
+    "SAT",
+    "PSAT/NMSQT",
+    "PSAT 10",
+    "PSAT 8/9"
+   ],
+   "section": "Reading and Writing",
+   "domain": "Expression of Ideas",
+   "skill": "Transitions",
+   "difficulty": "Medium",
+   "format": "multiple_choice",
+   "stimulus": "Using human characteristics as descriptors of machines in metaphorical ways was already practiced by Alan Turing with terms such as \"memory\", \"search\" and \"stimulus\".\n\n_______ a heuristic is an approach to problem-solving that may not be fully specified or may not guarantee correct or optimal results, especially in problem domains where there is no well-defined correct or optimal result.",
+   "prompt": "Which choice completes the text with the most logical transition?",
+   "choices": [
+    {
+     "id": "A",
+     "text": "In contrast,"
+    },
+    {
+     "id": "B",
+     "text": "Therefore,"
+    },
+    {
+     "id": "C",
+     "text": "For example,"
+    },
+    {
+     "id": "D",
+     "text": "Similarly,"
+    }
+   ],
+   "figure_metadata": null,
+   "source_id": "wikipedia-cc-by-sa-4",
+   "source_name": "Wikipedia (CC BY-SA 4.0)",
+   "license": "CC BY-SA 4.0",
+   "attribution": "Wikipedia, \"Algorithm\", CC BY-SA 4.0, retrieved 2026-11-02. https://en.wikipedia.org/wiki/Algorithm",
+   "is_released_practice_set": false,
+   "correct_answer": "A",
+   "acceptable_answers": [
+    "A"
+   ],
+   "explanation": "The second sentence defines a heuristic as something looser than a rigorously specified procedure, so it contrasts with the first. 'In contrast' marks the difference; the other choices would imply causation, exemplification, or similarity.",
+   "distractor_rationales": {
+    "B": "The heuristic definition is not a result of Turing's usage.",
+    "C": "It is a different concept, not an example.",
+    "D": "The sentence contrasts two approaches."
+   },
+   "choice_order_seed": "hdsat-choice-order:RW-M36-T024"
   }
  ]
 }

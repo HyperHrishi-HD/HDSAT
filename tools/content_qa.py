@@ -90,7 +90,10 @@ def choice_key(text: object) -> str:
     """
     raw = ascii_text(text or "").lower()
     raw = raw.replace("\\(", " ").replace("\\)", " ").replace("$", " ")
-    raw = re.sub(r"[^a-z0-9+\-*/=<>^.,;:!?\u2014\u2013]", " ", raw)
+    # Apostrophes are kept: "committee's" and "committees'" are different
+    # possessives, and stripping the mark made every possessive set look like
+    # four copies of the same choice.
+    raw = re.sub(r"[^a-z0-9+\-*/=<>^.,;:!?'\u2014\u2013]", " ", raw)
     return re.sub(r"\s+", " ", raw).strip()
 
 
