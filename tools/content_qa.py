@@ -76,7 +76,9 @@ def normalise(text: object) -> str:
     """Lowercase, strip markup punctuation and collapse whitespace."""
     raw = ascii_text(text or "").lower()
     raw = raw.replace("\\(", " ").replace("\\)", " ").replace("$", " ")
-    raw = re.sub(r"[^a-z0-9]+", " ", raw)
+    # Keep math operators: without them, equations that differ only by sign
+    # (x - 5 versus x + 5) collapse into the same stem.
+    raw = re.sub(r"[^a-z0-9+\-*/=<>^]+", " ", raw)
     return re.sub(r"\s+", " ", raw).strip()
 
 

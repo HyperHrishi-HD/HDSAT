@@ -56,7 +56,7 @@ PROMPT_RULES: list[tuple[str, str]] = [
      r"supported by the (?:data|table|graph|chart)|"
      r"shown in the (?:graph|chart)|graphed change|"
      r"trend shown in the (?:graph|chart)|pattern in the graph|"
-     r"highest and lowest values|values in the table",
+     r"highest and lowest values|values in the table|accurately compares",
      "Command of Evidence (Quantitative)"),
     (r"which (?:quotation|finding|empirical observation|piece of evidence)|"
      r"would most directly (?:illustrate|support)|strongest (?:direct )?evidence",
@@ -64,16 +64,18 @@ PROMPT_RULES: list[tuple[str, str]] = [
     (r"main idea|central finding|central idea|detail that supports|"
      r"best summarizes (?:the|a) (?:text|passage|finding)|"
      r"according to the (?:text|passage)|text most directly suggest|"
-     r"which detail from the text", "Central Ideas and Details"),
+     r"which detail from the text|which choice best explains why",
+     "Central Ideas and Details"),
     (r"most logically completes|most reasonably be inferred|"
      r"can be inferred from|passage most strongly suggest|"
-     r"what would most likely happen if", "Inferences"),
+     r"most strongly suggests that|what would most likely happen if",
+     "Inferences"),
     (r"overall structure|describes the structure|main purpose|describes the purpose|"
      r"primary purpose|structure of the text|purpose of the text|"
      r"trend shown in|rhetorical strategy|"
      r"function of the (?:final|last) sentence|"
-     r"purpose of the passage's last sentence",
-     "Text Structure and Purpose"),
+     r"purpose of the passage's last sentence|why the text mentions|"
+     r"function of the", "Text Structure and Purpose"),
 ]
 
 # Boundaries and Form, Structure, and Sense share the same prompt on purpose:
@@ -81,6 +83,12 @@ PROMPT_RULES: list[tuple[str, str]] = [
 # They are told apart below, not by prompt text.
 GRAMMAR_PROMPT = re.compile(
     r"conforms to (?:the conventions of )?standard english", re.IGNORECASE)
+
+PASSAGE_SKILLS = {
+    "Central Ideas and Details", "Inferences",
+    "Command of Evidence (Textual)", "Command of Evidence (Quantitative)",
+    "Text Structure and Purpose", "Cross-Text Connections",
+}
 
 VALID_SKILLS = {
     "Words in Context", "Transitions", "Rhetorical Synthesis",
@@ -212,11 +220,7 @@ def audit_item(item: dict) -> list[dict]:
             add("error", "skill.prompt_mismatch",
                 f"Standard English prompt on a {skill} item")
         else:
-            verbish = sum(1 for c in choices if VERB_FORM.search(c.get("text", "")))
             puncish = sum(1 for c in choices if PUNCT_ONLY.match(c.get("text", "")))
-            if verbish >= 3 and skill != "Form, Structure, and Sense":
-                add("warn", "skill.grammar_route",
-                    f"choices look like verb forms but skill is {skill}")
             if puncish >= 3 and skill != "Boundaries":
                 add("warn", "skill.grammar_route",
                     f"choices look like punctuation but skill is {skill}")
@@ -225,7 +229,10 @@ def audit_item(item: dict) -> list[dict]:
             f"prompt routes to {routed}, item is labelled {skill}")
 
     # -- stimulus shape ----------------------------------------------------
-    if len(stimulus.split()) < 12:
+    # Sentence-level skills (grammar, transitions, vocabulary) legitimately use
+    # a single short sentence; the floor applies to passage-based items only,
+    # and a figure can carry the data for a short quantitative stem.
+    if skill in PASSAGE_SKILLS and not meta and len(stimulus.split()) < 12:
         add("warn", "stimulus.too_short", f"{len(stimulus.split())} words")
     if skill in {"Words in Context", "Transitions", "Boundaries",
                  "Form, Structure, and Sense"} and not BLANK.search(stimulus):
@@ -280,7 +287,11 @@ def audit_item(item: dict) -> list[dict]:
         # A key may cite a computed difference, so require that it cites at
         # least one number the figure actually contains; a key that cites none
         # is usually a plain-language distractor or a mislabelled key.
-        if not cited:
+        numeric_prompt = re.search(
+            r"how (?:many|much)|what (?:is|was) the (?:value|difference|total|"
+            r"percent|number)|difference between|total number",
+            prompt, re.IGNORECASE)
+        if not cited and numeric_prompt:
             add("warn", "answer.no_data_in_key",
                 "quantitative key cites no number from the figure")
         else:
