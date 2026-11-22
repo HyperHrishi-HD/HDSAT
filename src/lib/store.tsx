@@ -1,12 +1,15 @@
 import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import bankJson from '../data/questionBank.json';
 import flashcardsJson from '../data/flashcards.json';
 import resourcesJson from '../data/resources.json';
 import { achievementById, itemById } from './catalog';
 import * as cloud from './cloud';
 import { getSupabase, isCloudConfigured } from './supabaseClient';
 import * as local from './storage';
+import * as emailAllowance from './emailAllowance';
 import * as emailQueue from './emailQueue';
+import * as outbox from './outbox';
+import * as arcadeCoinQueue from './arcadeCoinQueue';
+import { clampArcadeCoins } from './arcadeCoins';
 import { timingSamplesFromAttempts, type TimingSample } from './timing';
 import type {
   DailyActivity,
@@ -24,12 +27,29 @@ import type {
   UserSettings,
 } from './types';
 
-const bank = bankJson as unknown as {
+interface BankData {
   bank_version: string;
   licensing_note: string;
   sources: DatasetSource[];
   questions: Question[];
-};
+}
+
+let bankPromise: Promise<BankData> | null = null;
+
+/**
+ * The bank is a separate chunk, not part of the startup script. It is the one
+ * large asset in the app, and keeping it out of the entry bundle means a repeat
+ * visit can reuse the cached bank while a code change only invalidates the much
+ * smaller shell.
+ */
+function loadBank(): Promise<BankData> {
+  if (!bankPromise) {
+    bankPromise = import('../data/questionBank.json').then(
+      (module) => (module.default ?? module) as unknown as BankData
+    );
+  }
+  return bankPromise;
+}
 const deck = flashcardsJson as unknown as { cards: Flashcard[] };
 const library = resourcesJson as unknown as { resources: StudyResource[] };
 
@@ -44,6 +64,9 @@ export interface SubmitResult {
 
 export interface AppValue {
   ready: boolean;
+  /** The route-level bank gate asks for this before rendering question screens. */
+  bankReady: boolean;
+  bankError: string | null;
   mode: Mode;
   cloudConfigured: boolean;
   user: { id: string; email: string; displayName: string } | null;
@@ -88,8 +111,12 @@ export interface AppValue {
   timingSamples: TimingSample[];
   /** Recent device attempts, with per-item timing (guest and cloud alike). */
   attempts: LocalAttempt[];
+  /** Exact arcade coins waiting for the cloud function / connection. */
+  arcadeCoinsPending: number;
   syncing: boolean;
   syncMessage: string | null;
+  /** Answers written offline and still waiting to reach the account. */
+  outboxPending: number;
   error: string | null;
   notice: string | null;
   authModalOpen: boolean;
@@ -124,6 +151,8 @@ export interface AppValue {
       correct: number;
       timeSpentSeconds: number;
     }) => Promise<void>;
+    /** Credits exact coins picked up in a game. `sessionId` is the idempotency key. */
+    awardCoins: (amount: number, sessionId: string) => Promise<void>;
     recordTest: (attempt: TestAttempt, clientSessionId: string) => Promise<void>;
     /** Removes a saved simulation; a finished run leaves its score in the log. */
     deleteTest: (attemptId: string) => Promise<void>;
@@ -149,6 +178,8 @@ export interface AppValue {
     updateDisplayName: (name: string) => Promise<void>;
     dismissMessages: () => void;
     resetGuestProgress: () => void;
+    /** Load the large bank chunk on demand, once a route needs it. */
+    ensureBank: () => void;
   };
 }
 
@@ -168,14 +199,28 @@ function emptyActivitySeries(source: Record<string, DailyActivity>, days = 14): 
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<LocalProfile>(() => local.loadProfile());
+  const [bank, setBank] = useState<BankData | null>(null);
   const [snapshot, setSnapshot] = useState<cloud.CloudSnapshot | null>(null);
+  // The last snapshot before the current one. Cloud achievements are announced
+  // from this diff, not from the local profile: the local bonus is invisible in
+  // cloud mode, and promising coins that were never added is worse than silence.
+  const snapshotRef = useRef<cloud.CloudSnapshot | null>(null);
   const [user, setUser] = useState<AppValue['user']>(null);
   const [pendingAccount, setPendingAccount] = useState<local.PendingAccount | null>(() =>
     local.loadPendingAccount()
   );
   const [ready, setReady] = useState(false);
+  const bankLoadingRef = useRef(false);
+  const [bankError, setBankError] = useState<string | null>(null);
   const [syncing, setSyncing] = useState(false);
   const [syncMessage, setSyncMessage] = useState<string | null>(null);
+  const [outboxPending, setOutboxPending] = useState(() => outbox.queuedCount());
+  const [arcadeCoinsPending, setArcadeCoinsPending] = useState(() =>
+    arcadeCoinQueue.pendingArcadeCoinTotal()
+  );
+  const [arcadeSessionsPending, setArcadeSessionsPending] = useState(() =>
+    arcadeCoinQueue.pendingArcadeSessions().length
+  );
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
@@ -197,9 +242,47 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     local.saveProfile(next);
   }, []);
 
+  const ensureBank = useCallback(() => {
+    if (bank || bankLoadingRef.current) return;
+    bankLoadingRef.current = true;
+    setBankError(null);
+    loadBank()
+      .then((data) => {
+        setBank(data);
+        setBankError(null);
+      })
+      .catch((err: Error) => {
+        const message = `The question bank could not be loaded: ${err.message}`;
+        setBankError(message);
+        setError(message);
+      })
+      .finally(() => {
+        bankLoadingRef.current = false;
+      });
+  }, [bank]);
+
   const refreshSnapshot = useCallback(async () => {
     const data = await cloud.fetchSnapshot();
+    const previous = snapshotRef.current;
+    snapshotRef.current = data;
     setSnapshot(data);
+    // A new badge in the snapshot is the server's own record that it was
+    // granted, and the grant pays its reward in the same transaction. This is
+    // the only place a cloud student is told about coins.
+    if (previous) {
+      const before = new Set(previous.achievements);
+      const fresh = data.achievements.filter((id) => !before.has(id));
+      if (fresh.length > 0) {
+        const labels = fresh.slice(0, 3).map((id) => {
+          const ach = achievementById(id);
+          return ach ? `${ach.name} (+${ach.rewardCoins} HDCoins)` : id;
+        });
+        const rest = fresh.length - labels.length;
+        setNotice(
+          `Achievement unlocked: ${labels.join(', ')}${rest > 0 ? ` and ${rest} more` : ''}`
+        );
+      }
+    }
     // Adopt the cloud's test goal only when this device has none, so a local
     // choice is never silently replaced by an older server copy.
     const current = profileRef.current;
@@ -219,6 +302,21 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       return;
     }
     let active = true;
+    const confirmProviderEmail = async (sessionUser: {
+      app_metadata?: { provider?: string };
+    }) => {
+      const provider = sessionUser.app_metadata?.provider;
+      // 'email' and 'phone' prove nothing on their own: those accounts keep the
+      // in-app 6-digit confirmation flow.
+      if (!provider || provider === 'email' || provider === 'phone') return;
+      if (snapshotRef.current?.emailVerifiedAt) return;
+      try {
+        await cloud.markEmailVerified();
+        await refreshSnapshot();
+      } catch {
+        /* the banner still offers the coded path if the write fails */
+      }
+    };
     supabase.auth.getSession().then(async ({ data }) => {
       if (!active) return;
       const sessionUser = data.session?.user;
@@ -230,6 +328,11 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         });
         try {
           await refreshSnapshot();
+          // Google and the other OAuth providers hand back an address they have
+          // already verified. Without this the profile row kept
+          // email_verified_at empty and a Google student was shown the light
+          // account limits and a "Confirm your email" banner they never needed.
+          await confirmProviderEmail(sessionUser);
         } catch (err) {
           setError(`Signed in, but loading your cloud progress failed: ${(err as Error).message}`);
         }
@@ -240,6 +343,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     const { data: subscription } = supabase.auth.onAuthStateChange((_event, session) => {
       if (!session?.user) {
         setUser(null);
+        snapshotRef.current = null;
         setSnapshot(null);
         return;
       }
@@ -348,7 +452,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         sessionId: meta.sessionId ?? null,
       });
       persist(outcome.profile);
-      if (outcome.unlocked.length > 0) {
+      if (mode === 'guest' && outcome.unlocked.length > 0) {
         const labels = outcome.unlocked.map((id) => {
           const ach = achievementById(id);
           return ach ? `${ach.name} (+${ach.rewardCoins} HDCoins)` : id;
@@ -378,8 +482,23 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
             // item. Keep the answer local and quiet: it still counts here.
             return { isCorrect: outcome.isCorrect, coinsAwarded: outcome.coinsAwarded, duplicate: false };
           }
-          setError(
-            `Your answer was saved locally, but writing it to your HDSAT account failed: ${(err as Error).message}`
+          // Nothing is lost and nothing needs shouting about: keep the answer
+          // in the outbox and say so once, quietly.
+          const last = outcome.profile.attempts[outcome.profile.attempts.length - 1];
+          const remaining = outbox.queueAttempt({
+            eventId: last.eventId,
+            questionId: question.id,
+            response,
+            mode: meta.mode,
+            timeSpentSeconds: meta.timeSpentSeconds ?? 0,
+            sessionId: meta.sessionId ?? null,
+            queuedAt: new Date().toISOString(),
+          });
+          setOutboxPending(remaining);
+          setNotice(
+            remaining === 1
+              ? 'Offline: this answer is saved here and will sync when the connection returns.'
+              : `Offline: ${remaining} answers are saved here and will sync when the connection returns.`
           );
           return { isCorrect: outcome.isCorrect, coinsAwarded: outcome.coinsAwarded, duplicate: false, error: (err as Error).message };
         }
@@ -388,6 +507,46 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     },
     [mode, persist, refreshSnapshot]
   );
+
+  // Queued answers go out on the next open, when the tab becomes visible again,
+  // and as soon as the browser reports a connection. Replays are idempotent on
+  // the client event id, so running this repeatedly is harmless.
+  useEffect(() => {
+    if (mode !== 'cloud') return;
+    let disposed = false;
+    const flush = async () => {
+      if (outbox.queuedCount() === 0) return;
+      const result = await outbox.flushOutbox(
+        async (entry) => {
+          await cloud.submitAttemptCloud({
+            questionId: entry.questionId,
+            response: entry.response,
+            mode: entry.mode,
+            timeSpentSeconds: entry.timeSpentSeconds,
+            clientEventId: entry.eventId,
+            sessionId: entry.sessionId,
+          });
+        },
+        cloud.isUnknownQuestionError
+      );
+      if (disposed) return;
+      setOutboxPending(result.remaining);
+      if (result.sent > 0) {
+        setNotice(
+          `${result.sent} queued answer${result.sent === 1 ? '' : 's'} synced to your account.`
+        );
+        await refreshSnapshot();
+      }
+    };
+    void flush();
+    window.addEventListener('online', flush);
+    document.addEventListener('visibilitychange', flush);
+    return () => {
+      disposed = true;
+      window.removeEventListener('online', flush);
+      document.removeEventListener('visibilitychange', flush);
+    };
+  }, [mode, refreshSnapshot]);
 
   const reviewFlashcard = useCallback(
     async (cardId: string, quality: number) => {
@@ -460,12 +619,32 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     async (args) => {
       if (mode === 'cloud') {
         try {
+          // The old server function paid a random 5–100 coin bonus for a
+          // mini-game. Until the exact-arcade migration is live, queue the
+          // completed game instead of double-paying and preserve it for the
+          // retry. The queue drains automatically once the RPC exists.
+          if (args.activityType === 'mini_game') {
+            const ready = await cloud.arcadeCoinRpcAvailable().catch(() => false);
+            if (!ready) {
+              arcadeCoinQueue.queueArcadeSession({
+                id: args.sessionId,
+                questions: args.questions,
+                correct: args.correct,
+                timeSpentSeconds: args.timeSpentSeconds,
+              });
+              setArcadeSessionsPending(arcadeCoinQueue.pendingArcadeSessions().length);
+              setNotice('Game saved on this device. It will sync with your streak when arcade coin sync is available.');
+              return;
+            }
+          }
           const result = await cloud.completeActivityCloud(args);
-          await refreshSnapshot();
           const coins = Number(result?.coins_awarded ?? 0);
           if (coins > 0) {
             setNotice(`Session reward: +${coins} HDCoins added to your balance.`);
           }
+          // Refresh last: if the session also unlocked a badge, its banner is
+          // the more specific message and the balance already includes both.
+          await refreshSnapshot();
         } catch (err) {
           setError(`Session result was not recorded in your account: ${(err as Error).message}`);
         }
@@ -474,13 +653,121 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       // Guest mode mirrors the cloud's per-category daily reward caps locally so
       // the Arcade pays the same on both paths.
       const outcome = local.awardSessionCoins(profileRef.current, args);
-      if (outcome.coinsAwarded > 0) {
+      // Persist even when the session pays zero. A mini-game's exact coins are
+      // credited per event, but its completed session is what qualifies the
+      // day for the streak and appears on the activity chart.
+      if (outcome.profile !== profileRef.current) {
         persist(outcome.profile);
+      }
+      if (outcome.coinsAwarded > 0) {
         setNotice(`Session reward: +${outcome.coinsAwarded} HDCoins (saved on this device).`);
       }
     },
     [mode, persist, refreshSnapshot]
   );
+
+  const awardCoins = useCallback<AppValue['actions']['awardCoins']>(
+    async (amount, sessionId) => {
+      const safeAmount = clampArcadeCoins(amount);
+      if (safeAmount <= 0) return;
+      if (mode === 'cloud') {
+        try {
+          await cloud.awardArcadeCoins(safeAmount, sessionId);
+          arcadeCoinQueue.removeArcadeCoins(sessionId);
+          setArcadeCoinsPending(arcadeCoinQueue.pendingArcadeCoinTotal());
+          await refreshSnapshot();
+        } catch (err) {
+          // A deploy can land before the SQL function is installed, and a phone
+          // can lose the network mid-run. Neither should eat the coins or show
+          // a red failure after every pickup. The idempotency key makes the
+          // retry safe when the function is available.
+          arcadeCoinQueue.queueArcadeCoins(sessionId, safeAmount);
+          setArcadeCoinsPending(arcadeCoinQueue.pendingArcadeCoinTotal());
+          if (cloud.isMissingArcadeCoinRpc(err)) {
+            setNotice(
+              `${safeAmount} HDCoin${safeAmount === 1 ? '' : 's'} saved on this device. Cloud sync is waiting for the arcade coin function.`
+            );
+          } else {
+            setNotice(
+              `${safeAmount} HDCoin${safeAmount === 1 ? '' : 's'} saved on this device and will sync when the connection returns.`
+            );
+          }
+        }
+        return;
+      }
+      const outcome = local.awardArcadeEventCoins(profileRef.current, safeAmount, sessionId);
+      if (outcome.profile !== profileRef.current) persist(outcome.profile);
+    },
+    [mode, persist, refreshSnapshot]
+  );
+
+  // Drain exact arcade coins when the account and the function are available.
+  // Entries are removed only after the RPC confirms them; a missing function
+  // leaves the queue untouched and silent.
+  useEffect(() => {
+    if (mode !== 'cloud' || (arcadeCoinsPending <= 0 && arcadeSessionsPending <= 0)) return;
+    let disposed = false;
+    let running = false;
+    const flush = async () => {
+      if (disposed || running) return;
+      running = true;
+      let credited = 0;
+      let sessionsSynced = 0;
+      try {
+        const ready = await cloud.arcadeCoinRpcAvailable().catch(() => false);
+        if (!ready) return;
+        for (const session of arcadeCoinQueue.pendingArcadeSessions()) {
+          if (disposed) break;
+          try {
+            await cloud.completeActivityCloud({
+              activityType: 'mini_game',
+              sessionId: session.id,
+              questions: session.questions,
+              correct: session.correct,
+              timeSpentSeconds: session.timeSpentSeconds,
+            });
+            arcadeCoinQueue.removeArcadeSession(session.id);
+            sessionsSynced += 1;
+          } catch {
+            break;
+          }
+        }
+        for (const entry of arcadeCoinQueue.pendingArcadeCoins()) {
+          if (disposed) break;
+          try {
+            await cloud.awardArcadeCoins(entry.amount, entry.id);
+            arcadeCoinQueue.removeArcadeCoins(entry.id);
+            credited += entry.amount;
+          } catch (err) {
+            if (cloud.isMissingArcadeCoinRpc(err)) break;
+            // Network failures leave the rest of the queue for the next wake.
+            break;
+          }
+        }
+      } finally {
+        running = false;
+      }
+      if (disposed) return;
+      const remaining = arcadeCoinQueue.pendingArcadeCoinTotal();
+      setArcadeCoinsPending(remaining);
+      setArcadeSessionsPending(arcadeCoinQueue.pendingArcadeSessions().length);
+      if (credited > 0) {
+        setNotice(`${credited} queued HDCoin${credited === 1 ? '' : 's'} synced to your balance.`);
+        await refreshSnapshot().catch(() => undefined);
+      } else if (sessionsSynced > 0) {
+        setNotice(`${sessionsSynced} queued game${sessionsSynced === 1 ? '' : 's'} synced to your streak.`);
+        await refreshSnapshot().catch(() => undefined);
+      }
+    };
+    void flush();
+    window.addEventListener('online', flush);
+    document.addEventListener('visibilitychange', flush);
+    return () => {
+      disposed = true;
+      window.removeEventListener('online', flush);
+      document.removeEventListener('visibilitychange', flush);
+    };
+  }, [arcadeCoinsPending, arcadeSessionsPending, mode, refreshSnapshot]);
 
   const recordTest = useCallback(
     async (attempt: TestAttempt, clientSessionId: string) => {
@@ -691,6 +978,15 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       const address = email.trim();
       if (!address) return { sent: false, message: 'Enter your email address first.' };
 
+      // One message per address per day, shared with the recovery link. A slow
+      // inbox must not become three sends: the answer is here, instantly, before
+      // the provider is asked for anything.
+      const allowance = emailAllowance.emailAllowanceRemaining(address);
+      if (allowance > 0) {
+        setPendingAccount(local.loadPendingAccount());
+        return { sent: false, message: emailAllowance.oneEmailPerDayMessage(address, allowance) };
+      }
+
       // Brevo gives 300 sends a day. Stop asking at 280 so the provider never
       // answers with an error, and keep the last 20 for recovery links — the
       // account keeps working either way.
@@ -712,40 +1008,44 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         };
       }
 
+      // The last guard is the same one the recovery link uses: one message per
+      // address per UTC day, wherever it is asked from. Mail can arrive ten
+      // minutes late, and a student who presses again during that wait used to
+      // cost three sends and three copies; now the second press is answered
+      // here instead of by the provider.
+      //
+      // The device ledger cannot see another browser, so ask the server first.
+      // The database record is written by whichever request wins; a second
+      // device therefore stops here instead of paying for a second copy. A
+      // failed lookup (offline, cloud off) falls through to the local guard.
+      const serverWait = await cloud.emailRequestWait(address, 'confirm').catch(() => 0);
+      if (serverWait > 0) {
+        const hours = Math.max(1, Math.ceil(serverWait / 3600));
+        return {
+          sent: false,
+          message: `One email per day goes to ${address}, and today's has already been sent. It can take a few minutes to arrive — check the inbox and the spam folder. Another can be sent in about ${hours} hour${hours === 1 ? '' : 's'}.`,
+        };
+      }
       const guard = local.canSendVerificationEmail(address);
       if (!guard.allowed) {
         setPendingAccount(guard.existing);
+        const wait = local.formatRemainingHours(guard.remainingMs);
         return {
           sent: false,
-          message: `A code was already sent to ${address} (${local.formatRemainingHours(
-            guard.remainingMs
-          )} left).`,
-        };
-      }
-      let serverWait = 0;
-      try {
-        serverWait = await cloud.emailRequestWait(address, 'confirm');
-      } catch {
-        /* offline: the local guard above still applies */
-      }
-      if (serverWait > 0) {
-        return {
-          sent: false,
-          message: `A code was already sent to ${address} (${local.formatRemainingHours(
-            serverWait * 1000
-          )} left).`,
+          message: `Today's code for ${address} has already gone out. It can take a few minutes to arrive — check the inbox and the spam folder. The same code stays valid for 12 hours, and a new one can be sent in ${wait}.`,
         };
       }
       await cloud.resendConfirmation(address);
       await cloud.recordEmailRequest(address, 'confirm').catch(() => {});
+      emailAllowance.recordEmailSent(address);
       // A send for this address makes any parked copy redundant.
       emailQueue.removeQueuedEmail(address, 'confirm');
-      const saved = local.savePendingAccount({
-        email: address,
-        displayName: guard.existing?.displayName ?? user?.displayName ?? 'Student',
-      });
+      const saved = local.recordVerificationSend(
+        address,
+        guard.existing?.displayName ?? user?.displayName ?? 'Student'
+      );
       setPendingAccount(saved);
-      return { sent: true, message: `Code sent to ${address}. It works for 24 hours.` };
+      return { sent: true, message: `Code sent to ${address}. It works for 12 hours.` };
     },
     [user]
   );
@@ -780,6 +1080,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     for (const entry of due) {
       if (sent >= room) break;
       if (!emailQueue.budgetAllows(entry.kind, budget)) continue;
+      if (emailAllowance.emailAllowanceRemaining(entry.email) > 0) continue;
       emailQueue.markQueuedAttempt(entry.email, entry.kind);
       try {
         if (entry.kind === 'reset') {
@@ -789,6 +1090,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
           await cloud.resendConfirmation(entry.email);
           await cloud.recordEmailRequest(entry.email, 'confirm').catch(() => {});
         }
+        emailAllowance.recordEmailSent(entry.email);
         emailQueue.removeQueuedEmail(entry.email, entry.kind);
         sent += 1;
       } catch {
@@ -818,62 +1120,36 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setPendingAccount(guard.existing);
         setAuthModalView('verify');
         return {
-          message: `A confirmation email was already sent to ${email.trim()} (${local.formatRemainingHours(
+          message: `A code just went to ${email.trim()}. Give it ${local.formatRemainingHours(
             guard.remainingMs
-          )} remaining in its 24-hour window). Enter the 6-digit code from that email below.`,
-          verificationRequired: true,
-        };
-      }
-      let serverWait = 0;
-      try {
-        serverWait = await cloud.emailRequestWait(email, 'confirm');
-      } catch {
-        /* offline: the local guard above still applies */
-      }
-      if (serverWait > 0) {
-        const record = local.savePendingAccount({
-          email: email.trim(),
-          displayName: displayName || 'Student',
-        });
-        setPendingAccount(record);
-        setAuthModalView('verify');
-        return {
-          message: `A confirmation email was already sent to ${email.trim()} (${local.formatRemainingHours(
-            serverWait * 1000
-          )} left). Enter the 6-digit code from that email below.`,
+          )} to arrive, or enter it below if it already has.`,
           verificationRequired: true,
         };
       }
       const data = await cloud.signUp(email, password, displayName, consent);
-      if (!data.session) {
-        // The signup email counts against the same one-per-day budget.
-        await cloud.recordEmailRequest(email, 'confirm').catch(() => {});
-      }
-      if (data.session) {
-        local.clearPendingAccount();
-        setPendingAccount(null);
-        await refreshSnapshot();
-        if (data.user?.id) await importLocalHistoryOnce(data.user.id);
-        // The account is usable now. The code only lifts the light-account cap,
-        // so a mail failure must never read as a failed signup.
-        const send = await sendVerificationCode(email.trim()).catch((err: Error) => ({
-          sent: false,
-          message: err.message,
-        }));
-        return {
-          message: send.sent
-            ? `Account created. We emailed a 6-digit code to ${email.trim()} — enter it to confirm your address.`
-            : `Account created and signed in. ${send.message}`,
-          verificationRequired: true,
-        };
-      }
+      // Supabase sends the confirmation message as part of the signup call.
+      // Asking for another one here is what put two copies in a student's inbox:
+      // the signup email already counted, then `sendVerificationCode` sent a
+      // resend on top of it. Record the send instead of repeating it.
+      await cloud.recordEmailRequest(email, 'confirm').catch(() => {});
+      emailAllowance.recordEmailSent(email.trim());
       const record = local.savePendingAccount({
         email: email.trim(),
         displayName: displayName || 'Student',
       });
       setPendingAccount(record);
+      if (data.session) {
+        await refreshSnapshot();
+        if (data.user?.id) await importLocalHistoryOnce(data.user.id);
+        // The account is usable now. The code only lifts the light-account cap,
+        // so a mail failure must never read as a failed signup.
+        return {
+          message: `Account created. We emailed a 6-digit code to ${email.trim()} — it stays valid for 12 hours.`,
+          verificationRequired: true,
+        };
+      }
       return {
-        message: `Account created for ${email}. We emailed a confirmation link and a 6-digit code that stays valid for 24 hours.`,
+        message: `Account created for ${email}. We emailed a confirmation link and a 6-digit code that stays valid for 12 hours.`,
         verificationRequired: true,
       };
     },
@@ -899,6 +1175,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const signOut = useCallback(async () => {
     await cloud.signOutCloud();
     setUser(null);
+    snapshotRef.current = null;
     setSnapshot(null);
   }, []);
 
@@ -966,16 +1243,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   const value: AppValue = {
     ready,
+    bankReady: bank !== null,
+    bankError,
     mode,
     cloudConfigured: isCloudConfigured,
     user,
     accountStatus,
     emailVerified,
     pendingAccount,
-    bankVersion: bank.bank_version,
-    licensingNote: bank.licensing_note,
-    sources: bank.sources,
-    questions: bank.questions,
+    bankVersion: bank?.bank_version ?? '',
+    licensingNote: bank?.licensing_note ?? '',
+    sources: bank?.sources ?? [],
+    questions: bank?.questions ?? [],
     flashcards: deck.cards,
     resources: library.resources,
     hdCoins: mode === 'cloud' && snapshot ? snapshot.stats.hdCoins : profile.hdCoins,
@@ -996,8 +1275,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     settings: profile.settings,
     timingSamples,
     attempts: profile.attempts.slice(-600),
+    arcadeCoinsPending,
     syncing,
     syncMessage,
+    outboxPending,
     error,
     notice,
     authModalOpen,
@@ -1023,6 +1304,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       purchase,
       recordRushScore,
       completeSession,
+      awardCoins,
       recordTest,
       deleteTest,
       autosaveTest,
@@ -1044,6 +1326,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         setProfile(cleared);
         setNotice('Local guest progress cleared.');
       },
+      ensureBank,
     },
   };
 
