@@ -5506,9 +5506,9 @@ button, .btn, .nav-link, .mobile-link, .rush-option, .seg-btn, summary {
   padding: 1px;
   background: linear-gradient(
     145deg,
-    color-mix(in srgb, var(--auth-glow-bright) 78%, transparent),
-    rgba(255, 255, 255, 0.12) 46%,
-    color-mix(in srgb, var(--auth-glow-bright) 58%, transparent)
+    color-mix(in srgb, var(--auth-glow-bright) 88%, transparent),
+    rgba(255, 255, 255, 0.2) 46%,
+    color-mix(in srgb, var(--auth-glow-bright) 66%, transparent)
   );
   box-shadow:
     0 32px 80px rgba(2, 6, 14, 0.56),
@@ -5528,6 +5528,7 @@ button, .btn, .nav-link, .mobile-link, .rush-option, .seg-btn, summary {
     color-mix(in srgb, var(--auth-glow-bright) 70%, #ffffff) 104deg,
     transparent 146deg 360deg
   );
+  opacity: 0.68;
   animation: auth-sheen 6.5s linear infinite;
   pointer-events: none;
 }
@@ -6155,7 +6156,7 @@ button, .btn, .nav-link, .mobile-link, .rush-option, .seg-btn, summary {
   .auth-spinner {
     animation: none !important;
   }
-  .auth-glass::before { opacity: 0.4; }
+  .auth-glass::before { opacity: 0.34; }
   .auth-submit,
   .auth-google,
   .auth-secondary,
