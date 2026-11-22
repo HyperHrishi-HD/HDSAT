@@ -6,6 +6,7 @@ import {
   type PasswordCooldown,
   type PasswordPath,
 } from './password';
+import { clampArcadeCoins } from './arcadeCoins';
 import { getSupabase } from './supabaseClient';
 import type {
   AttemptMode,
@@ -222,6 +223,24 @@ export async function signIn(email: string, password: string) {
   const { data, error } = await supabase.auth.signInWithPassword({ email, password });
   if (error) throw error;
   return data;
+}
+
+/**
+ * Starts the Google OAuth flow. Google verifies the address, so the returned
+ * Supabase account is already email-confirmed; main.tsx consumes the PKCE code
+ * on the round trip and lands on Account. The provider and this origin must be
+ * enabled in Supabase Auth > Providers > Google and the Redirect URLs list.
+ */
+export async function signInWithGoogle(): Promise<void> {
+  const supabase = client();
+  const { error } = await supabase.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: authRedirectUrl(),
+      queryParams: { prompt: 'select_account' },
+    },
+  });
+  if (error) throw error;
 }
 
 export async function signOutCloud() {
@@ -515,6 +534,44 @@ export async function submitFlashcardCloud(cardId: string, quality: number, clie
   });
   if (error) throw error;
   return data as { coins_awarded: number; next_due_at: string; interval_days: number; stage: string };
+}
+
+export function isMissingArcadeCoinRpc(error: unknown): boolean {
+  const message = (error as Error | undefined)?.message ?? String(error ?? '');
+  return (
+    /PGRST202/i.test(message) ||
+    /could not find the function/i.test(message) ||
+    /schema cache/i.test(message)
+  );
+}
+
+/**
+ * Credits exact arcade coins. The function caps the per-call amount and uses
+ * the session id as an idempotency key, so retrying a queued entry is safe.
+ */
+export async function awardArcadeCoins(
+  amount: number,
+  sessionId: string
+): Promise<{ coins_awarded: number; hd_coins: number }> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('award_arcade_coins', {
+    p_amount: clampArcadeCoins(amount),
+    p_session_id: sessionId,
+    p_local_date: toLocalDate(),
+  });
+  if (error) throw error;
+  return data as { coins_awarded: number; hd_coins: number };
+}
+
+/** True once the arcade SQL function is installed in this project. */
+export async function arcadeCoinRpcAvailable(): Promise<boolean> {
+  try {
+    await awardArcadeCoins(0, 'arcade:probe');
+    return true;
+  } catch (error) {
+    if (isMissingArcadeCoinRpc(error)) return false;
+    throw error;
+  }
 }
 
 export async function completeActivityCloud(args: {
@@ -1406,17 +1463,55 @@ export async function markMyNotificationsSeen(): Promise<number> {
   return Number(data ?? 0);
 }
 
-export async function fetchMyReports(): Promise<
-  { id: string; question_id: string; reason: string; details: string | null; created_at: string }[]
-> {
+export interface MyReport {
+  id: string;
+  question_id: string;
+  reason: string;
+  details: string | null;
+  status: string;
+  created_at: string;
+  /** The operator's written reply, if one was sent for this report. */
+  reply: { title: string; body: string; created_at: string } | null;
+}
+
+export async function fetchMyReports(): Promise<MyReport[]> {
   const supabase = client();
   const userId = await getUserId();
   if (!userId) return [];
   const { data, error } = await supabase
     .from('question_reports')
-    .select('id, question_id, reason, details, created_at')
+    .select('id, question_id, reason, details, status, created_at')
     .order('created_at', { ascending: false })
     .limit(25);
   if (error) throw error;
-  return (data ?? []) as { id: string; question_id: string; reason: string; details: string | null; created_at: string }[];
+  const reports = (data ?? []) as Omit<MyReport, 'reply'>[];
+  if (reports.length === 0) return [];
+
+  // A reply is one user_notifications row whose reference is the report id
+  // (admin_reply_to_report). A missing table or an older deployment means no
+  // replies, never a failure to load the reports themselves.
+  const replies = new Map<string, MyReport['reply']>();
+  const { data: notes, error: notesError } = await supabase
+    .from('user_notifications')
+    .select('title, body, reference, created_at')
+    .in('reference', reports.map((report) => report.id))
+    .order('created_at', { ascending: false });
+  if (!notesError && Array.isArray(notes)) {
+    for (const note of notes as {
+      title: string;
+      body: string;
+      reference: string | null;
+      created_at: string;
+    }[]) {
+      if (note.reference && !replies.has(note.reference)) {
+        replies.set(note.reference, {
+          title: note.title,
+          body: note.body,
+          created_at: note.created_at,
+        });
+      }
+    }
+  }
+
+  return reports.map((report) => ({ ...report, reply: replies.get(report.id) ?? null }));
 }

@@ -84,7 +84,7 @@ export function VerifyEmailBanner() {
     setBusy(true);
     try {
       await app.actions.resendVerification(app.user?.email ?? '');
-      setMessage('Code sent. It works for 24 hours.');
+      setMessage('Code sent. It works for 12 hours.');
     } catch (err) {
       setMessage((err as Error).message);
     } finally {

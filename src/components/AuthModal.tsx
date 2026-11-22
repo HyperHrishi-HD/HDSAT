@@ -47,6 +47,13 @@ export function AuthModal() {
   const [showPassword, setShowPassword] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
+  // Sign-in and account creation are two screens of the same window: the
+  // second one appears only when the email turns out to be new.
+  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  const [prefAssessment, setPrefAssessment] = useState(app.settings?.assessment ?? 'SAT');
+  const [prefReserve, setPrefReserve] = useState(
+    Boolean(app.settings?.excludeReleasedPracticeSet)
+  );
 
   useEffect(() => {
     if (app.pendingAccount?.email && !email) {
@@ -72,6 +79,18 @@ export function AuthModal() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [app.authModalOpen, app.actions]);
 
+  // Every open starts on the sign-in screen, whatever the last visit ended on.
+  useEffect(() => {
+    if (!app.authModalOpen) return;
+    setMode('signin');
+    setFormError(null);
+    setStatusMessage(null);
+    // Start from what this browser already studies, so the optional box is a
+    // confirmation rather than a form to fill in.
+    setPrefAssessment(app.settings?.assessment ?? 'SAT');
+    setPrefReserve(Boolean(app.settings?.excludeReleasedPracticeSet));
+  }, [app.authModalOpen]);
+
   // Pressing outside closes the card; dragging a selection out of it does not.
   // Declared before the early return so the hook order never changes.
   const backdrop = useBackdropDismiss(app.actions.closeAuthModal);
@@ -83,12 +102,14 @@ export function AuthModal() {
     ? Math.max(0, pendingCodeEndsAt(app.pendingAccount) - Date.now())
     : 0;
   const isVerify = app.authModalView === 'verify';
+  const isSignup = !isVerify && mode === 'signup';
 
   const openVerify = (address: string, message: string) => {
     if (address) setEmail(address);
     setPassword('');
     setFormError(null);
     setStatusMessage(message);
+    setMode('signin');
     app.actions.openAuthModal('verify');
   };
 
@@ -196,37 +217,72 @@ export function AuthModal() {
         return;
       }
 
-      const consent = validateConsent({ ageBand, guardianConsent, acceptedTerms });
-      if (!consent.ok) {
-        // The only way to know whether this address is already registered is to
-        // ask for a signup, which needs consent. Say that plainly instead of
-        // showing a bare "new account" validation error.
-        setFormError(
-          'That email and password did not sign in. New here? Complete the age and policy section below, then press Continue again — or use Forgot password.'
+      // No account answered to that password: creating one is its own screen,
+      // with the age/policy consent and the optional study preferences.
+      setStatusMessage(
+        'That email is not registered yet. Finish this step to create it — or go back and check your password.'
+      );
+      setBusy(false);
+      setMode('signup');
+    } catch (err) {
+      setFormError((err as Error).message);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  /**
+   * The new-account screen. It is the same window as sign-in, expanded once: the
+   * details a new account needs, plus the two preferences that shape the first
+   * session, so nothing has to be set up again in Account afterwards.
+   */
+  const handleCreate = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError(null);
+    setStatusMessage(null);
+    if (!email.trim() || !password) {
+      setFormError('Please enter both your email address and password.');
+      return;
+    }
+    const consent = validateConsent({ ageBand, guardianConsent, acceptedTerms });
+    if (!consent.ok) {
+      setFormError(
+        ageBand
+          ? `Accept the Terms of Service and Privacy Policy (v${LEGAL_VERSION}) to create an account.`
+          : 'Choose your age group and accept the Terms to create an account.'
+      );
+      return;
+    }
+    setBusy(true);
+    try {
+      const result = await app.actions.signUp(
+        email.trim(),
+        password,
+        displayName.trim() || 'Student',
+        consent.metadata
+      );
+      app.actions.updateSettings({
+        assessment: prefAssessment,
+        excludeReleasedPracticeSet: prefReserve,
+      });
+      // The cloud profile keeps its own copy of the goal; the local write above
+      // cannot reach it while the modal still holds the guest render.
+      if (prefAssessment !== app.settings?.assessment) {
+        await cloud
+          .setTestGoalCloud(prefAssessment, app.settings?.testDate ?? null)
+          .catch(() => {});
+      }
+      setPassword('');
+      setStatusMessage(result.message);
+      if (result.verificationRequired) app.actions.openAuthModal('verify');
+    } catch (err) {
+      if (err instanceof cloud.AccountExistsError) {
+        openVerify(
+          email.trim(),
+          'That email already has an account. Enter its 6-digit code, use Continue with Google if you signed up that way, or request a recovery link below.'
         );
         return;
       }
-      try {
-        const result = await app.actions.signUp(
-          email.trim(),
-          password,
-          displayName.trim() || 'Student',
-          consent.metadata
-        );
-        setPassword('');
-        setStatusMessage(result.message);
-        if (result.verificationRequired) app.actions.openAuthModal('verify');
-      } catch (err) {
-        if (err instanceof cloud.AccountExistsError) {
-          openVerify(
-            email.trim(),
-            `That email already has an account. Enter its 6-digit code, or request a recovery link below.`
-          );
-          return;
-        }
-        throw err;
-      }
-    } catch (err) {
       setFormError((err as Error).message);
     } finally {
       setBusy(false);
@@ -318,11 +374,17 @@ export function AuthModal() {
                 <span className="auth-brand-name">HDSAT</span>
               </div>
               <h2 id="auth-modal-title">
-                {isVerify ? 'Check your email' : 'Welcome back'}
+                {isVerify
+                  ? 'Check your email'
+                  : isSignup
+                  ? 'Create your account'
+                  : 'Welcome back'}
               </h2>
               <p className="auth-subtitle">
                 {isVerify
                   ? 'Enter the 6-digit code we sent to finish signing in.'
+                  : isSignup
+                  ? 'One step, then your practice is saved to the cloud.'
                   : 'Sign in to sync your practice, coins and test history.'}
               </p>
             </header>
@@ -449,8 +511,177 @@ export function AuthModal() {
                   </button>
                 </p>
               </form>
+            ) : isSignup ? (
+              /*
+               * First-time account screen. It only ever appears after a sign-in
+               * that matched no account, so an existing student never sees it.
+               * Same panel, expanded: identity, consent, then the two study
+               * preferences that shape the first session.
+               */
+              <form onSubmit={handleCreate} className="auth-form">
+                <label className="auth-field">
+                  <span className="auth-label">
+                    Display name <span className="auth-optional">optional</span>
+                  </span>
+                  <span className="auth-input-wrap">
+                    <UserRound className="auth-input-icon" size={16} aria-hidden="true" />
+                    <input
+                      type="text"
+                      value={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
+                      placeholder="e.g. Hrishi"
+                      autoComplete="nickname"
+                    />
+                  </span>
+                </label>
+
+                <label className="auth-field">
+                  <span className="auth-label">Email address</span>
+                  <span className="auth-input-wrap">
+                    <Mail className="auth-input-icon" size={16} aria-hidden="true" />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      required
+                      autoComplete="email"
+                    />
+                  </span>
+                </label>
+
+                <label className="auth-field">
+                  <span className="auth-label">Password</span>
+                  <span className="auth-input-wrap">
+                    <Lock className="auth-input-icon" size={16} aria-hidden="true" />
+                    <input
+                      className="auth-password-input"
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="At least 6 characters"
+                      required
+                      autoComplete="new-password"
+                    />
+                    <button
+                      type="button"
+                      className="auth-eye"
+                      onClick={() => setShowPassword((value) => !value)}
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      aria-pressed={showPassword}
+                    >
+                      {showPassword ? (
+                        <EyeOff size={16} aria-hidden="true" />
+                      ) : (
+                        <Eye size={16} aria-hidden="true" />
+                      )}
+                    </button>
+                  </span>
+                </label>
+
+                <Select
+                  label="Your age group"
+                  value={ageBand}
+                  onChange={setAgeBand}
+                  mode="dropdown"
+                  options={[{ value: '', label: 'Select your age group…' }, ...AGE_BANDS]}
+                />
+                {ageBand.length > 0 && ageBand !== '18+' ? (
+                  <div className="auth-consent-box">
+                    <p>Students aged {MIN_AGE}–17 require parent or guardian consent.</p>
+                    <Toggle
+                      checked={guardianConsent}
+                      onChange={setGuardianConsent}
+                      label="My parent or guardian agrees to the Terms and Privacy Policy"
+                    />
+                  </div>
+                ) : null}
+                <Toggle
+                  checked={acceptedTerms}
+                  onChange={setAcceptedTerms}
+                  label={`I accept the Terms of Service & Privacy Policy (v${LEGAL_VERSION})`}
+                />
+                <p className="auth-consent-links">
+                  <Link to={TERMS_PATH} onClick={app.actions.closeAuthModal}>
+                    Terms
+                  </Link>
+                  {' · '}
+                  <Link to={PRIVACY_PATH} onClick={app.actions.closeAuthModal}>
+                    Privacy
+                  </Link>
+                  {' · '}
+                  <Link to={COPYRIGHT_PATH} onClick={app.actions.closeAuthModal}>
+                    Copyright
+                  </Link>
+                </p>
+
+                <fieldset className="auth-prefs">
+                  <legend>
+                    How you study <span className="auth-optional">optional</span>
+                  </legend>
+                  <Select
+                    label="Default assessment"
+                    value={prefAssessment}
+                    onChange={(v) => setPrefAssessment(v as typeof prefAssessment)}
+                    options={[
+                      { value: 'SAT', label: 'Digital SAT' },
+                      { value: 'PSAT/NMSQT', label: 'PSAT/NMSQT' },
+                      { value: 'PSAT 10', label: 'PSAT 10' },
+                      { value: 'PSAT 8/9', label: 'PSAT 8/9' },
+                    ]}
+                  />
+                  <Toggle
+                    checked={prefReserve}
+                    onChange={setPrefReserve}
+                    label="Reserve Benchmark Simulation Set items for a full test"
+                  />
+                </fieldset>
+
+                <button className="auth-submit" type="submit" disabled={busy}>
+                  {busy ? (
+                    <span className="auth-spinner" aria-label="Creating your account" />
+                  ) : (
+                    <>
+                      <span>Create account</span>
+                      <ArrowRight size={15} aria-hidden="true" />
+                    </>
+                  )}
+                </button>
+
+                <p className="auth-switch auth-switch-left">
+                  <button
+                    type="button"
+                    className="auth-text-button"
+                    onClick={() => {
+                      setMode('signin');
+                      setFormError(null);
+                      setStatusMessage(null);
+                    }}
+                  >
+                    Already have an account? Sign in
+                  </button>
+                </p>
+              </form>
             ) : (
               <form onSubmit={handleSubmit} className="auth-form">
+                {/* The name comes first so the two identity fields read as one
+                    block; it is only a label, never an identifier. */}
+                <label className="auth-field">
+                  <span className="auth-label">
+                    Display name <span className="auth-optional">optional</span>
+                  </span>
+                  <span className="auth-input-wrap">
+                    <UserRound className="auth-input-icon" size={16} aria-hidden="true" />
+                    <input
+                      type="text"
+                      value={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
+                      placeholder="e.g. Hrishi"
+                      autoComplete="nickname"
+                    />
+                  </span>
+                </label>
+
                 <label className="auth-field">
                   <span className="auth-label">Email address</span>
                   <span className="auth-input-wrap">
@@ -548,66 +779,10 @@ export function AuthModal() {
                   <span>{googleBusy ? 'Opening Google…' : 'Continue with Google'}</span>
                 </button>
                 <p className="auth-provider-note">
-                  Google verifies your email automatically. Use Google only if you are 13 or older
-                  and accept the Terms and Privacy Policy.
+                  Google verifies your email automatically. Use Google only if you are {MIN_AGE} or
+                  older and accept the Terms and Privacy Policy. Keep that Google account — it is how
+                  you sign back in to your saved progress.
                 </p>
-
-                <label className="auth-field">
-                  <span className="auth-label">
-                    Display name <span className="auth-optional">optional</span>
-                  </span>
-                  <span className="auth-input-wrap">
-                    <UserRound className="auth-input-icon" size={16} aria-hidden="true" />
-                    <input
-                      type="text"
-                      value={displayName}
-                      onChange={(e) => setDisplayName(e.target.value)}
-                      placeholder="e.g. Hrishi"
-                      autoComplete="nickname"
-                    />
-                  </span>
-                </label>
-
-                <details className="auth-details">
-                  <summary>New account? Age &amp; policy consent</summary>
-                  <Select
-                    label="Your age group"
-                    value={ageBand}
-                    onChange={setAgeBand}
-                    mode="dropdown"
-                    options={[{ value: '', label: 'Select your age group…' }, ...AGE_BANDS]}
-                  />
-                  {ageBand.length > 0 && ageBand !== '18+' ? (
-                    <div className="auth-consent-box">
-                      <p>
-                        Students aged {MIN_AGE}–17 require parent or guardian consent.
-                      </p>
-                      <Toggle
-                        checked={guardianConsent}
-                        onChange={setGuardianConsent}
-                        label="My parent or guardian agrees to the Terms and Privacy Policy"
-                      />
-                    </div>
-                  ) : null}
-                  <Toggle
-                    checked={acceptedTerms}
-                    onChange={setAcceptedTerms}
-                    label={`I accept the Terms of Service & Privacy Policy (v${LEGAL_VERSION})`}
-                  />
-                  <p className="auth-consent-links">
-                    <Link to={TERMS_PATH} onClick={app.actions.closeAuthModal}>
-                      Terms
-                    </Link>
-                    {' · '}
-                    <Link to={PRIVACY_PATH} onClick={app.actions.closeAuthModal}>
-                      Privacy
-                    </Link>
-                    {' · '}
-                    <Link to={COPYRIGHT_PATH} onClick={app.actions.closeAuthModal}>
-                      Copyright
-                    </Link>
-                  </p>
-                </details>
 
                 <p className="auth-switch auth-switch-left">
                   <button

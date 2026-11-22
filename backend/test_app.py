@@ -19,6 +19,8 @@ def local_environment(monkeypatch):
     monkeypatch.setenv("HDSAT_ENV", "development")
     monkeypatch.delenv("HDSAT_RATE_LIMIT", raising=False)
     monkeypatch.delenv("HDSAT_RATE_WINDOW", raising=False)
+    monkeypatch.delenv("HDSAT_STATIC_LIMIT", raising=False)
+    monkeypatch.delenv("HDSAT_STATIC_WINDOW", raising=False)
     reset_rate_limits()
     yield
     reset_rate_limits()
@@ -46,7 +48,7 @@ def test_catalog_summary_endpoint():
     assert data["total_questions"] >= 36
     assert data["by_section"]["Reading and Writing"] >= 18
     assert data["by_section"]["Math"] >= 18
-    assert len(data["sources"]) == 2
+    assert len(data["sources"]) == 3
 
 
 def test_spa_root_and_client_route_fallback():
@@ -203,6 +205,28 @@ def test_rate_limit_is_tracked_per_client(monkeypatch):
     assert client.get("/api/legal", headers={"X-Forwarded-For": "198.51.100.4"}).status_code == 200
 
 
+def test_spoofed_forwarded_for_cannot_reset_the_bucket(monkeypatch):
+    """Only the hop the proxy observed counts, not the one the client typed."""
+    monkeypatch.setenv("HDSAT_RATE_LIMIT", "1")
+    client = create_app().test_client()
+    first = client.get("/api/legal", headers={"X-Forwarded-For": "1.1.1.1, 203.0.113.9"})
+    assert first.status_code == 200
+    # A fresh made-up first hop must not buy a fresh allowance.
+    second = client.get("/api/legal", headers={"X-Forwarded-For": "9.9.9.9, 203.0.113.9"})
+    assert second.status_code == 429
+
+
+def test_static_flood_is_rate_limited(monkeypatch):
+    monkeypatch.setenv("HDSAT_STATIC_LIMIT", "2")
+    monkeypatch.setenv("HDSAT_STATIC_WINDOW", "60")
+    client = create_app().test_client()
+    assert client.get("/").status_code == 200
+    assert client.get("/").status_code == 200
+    blocked = client.get("/")
+    assert blocked.status_code == 429
+    assert int(blocked.headers["Retry-After"]) >= 1
+
+
 def test_api_responses_publish_remaining_quota(monkeypatch):
     monkeypatch.setenv("HDSAT_RATE_LIMIT", "10")
     client = create_app().test_client()
@@ -213,7 +237,7 @@ def test_api_responses_publish_remaining_quota(monkeypatch):
     assert int(second.headers["X-RateLimit-Remaining"]) == 8
 
 
-def test_static_requests_are_not_rate_limited(monkeypatch):
+def test_static_requests_use_their_own_bucket(monkeypatch):
     monkeypatch.setenv("HDSAT_RATE_LIMIT", "1")
     client = create_app().test_client()
     assert client.get("/api/legal").status_code == 200
@@ -226,6 +250,31 @@ def test_static_requests_are_not_rate_limited(monkeypatch):
 # ---------------------------------------------------------------------------
 # Crawler policy
 # ---------------------------------------------------------------------------
+
+
+def test_email_templates_share_the_twelve_hour_window():
+    """The copy, the templates and the Auth config must not drift apart."""
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    confirmation = (root / "supabase/email-templates/confirmation.html").read_text(
+        encoding="utf-8"
+    )
+    recovery = (root / "supabase/email-templates/recovery.html").read_text(encoding="utf-8")
+    script = (root / "supabase/email-templates/apply_auth_config.py").read_text(
+        encoding="utf-8"
+    )
+    assert '"mailer_otp_exp": 43200' in script
+    assert "12 hours" in confirmation
+    assert "12 hours" in recovery
+    # Both emails enter through the link. The confirmation email also carries
+    # the 6-digit code the app can verify; the recovery flow has no code field,
+    # so mailing one would be a dead end.
+    assert "{{ .ConfirmationURL }}" in confirmation
+    assert "{{ .Token }}" in confirmation
+    assert "{{ .ConfirmationURL }}" in recovery
+    assert "{{ .Token }}" not in recovery
+    assert "mailer_subjects_recovery" in script
 
 
 def test_robots_txt_disallows_the_operator_console():

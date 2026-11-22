@@ -9,65 +9,86 @@ import { RuneVault } from '../components/RuneVault';
 import { DailyQuests } from '../components/DailyQuests';
 import { PracticeRush } from '../components/PracticeRush';
 import { QuestionOfTheDay } from '../components/QuestionOfTheDay';
-import { Badge, Button, Card, Icon, InfoTip, Stat } from '../components/ui';
+import { Badge, Button, Card, Icon, InfoTip, Stat, type IconName } from '../components/ui';
 import { seededShuffle } from '../lib/examEngine';
+import { ARCADE_COINS } from '../lib/arcadeCoins';
+import { diversifyArcadePool } from '../lib/arcadeGames';
+import { arcadeLevel, markArcadeQuestion, noteArcadeRun, takeArcadeQuestions } from '../lib/arcadeProgress';
+import { SKILL_GAME_MODES, matchesSkillGame, skillGameById, type SkillGameId } from '../lib/arcadeModes';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
 
 /* ---------------------------------------------------------------------------
- Arcade: three rooms, one reward economy.
+ Arcade: three rooms, one exact coin economy.
 
    1. Interactive Arena — the Coordinate Interceptor 2D game, plus the daily
       Hard Question of the Day and the three daily quests.
-   2. Skill Mini-Games   — an options menu (Desmos Lab, Equation Sprint,
-      Transition Match, Vocab Precision) that is configured before it starts,
-      the same way Custom Practice is.
+   2. Skill Mini-Games   — a core menu plus eight quick drills, all sharing the
+      same question loop and persistent tier progression.
    3. Practice Rush      — the timed high-score sprint, moved here from Practice
       because it is a game with a personal best, not a drill.
 --------------------------------------------------------------------------- */
 
 type TabId = 'arena' | 'minigames' | 'rush';
-type GameId = 'sprint' | 'transitions' | 'vocab';
+type GameId = 'sprint' | 'transitions' | 'vocab' | SkillGameId;
 type MiniGameId = GameId | 'lab';
 type ArenaGameId = 'interceptor' | 'talk' | 'vault';
 
 interface GameQuestion {
   key: string;
+  questionId?: string;
+  difficulty?: 'Easy' | 'Medium' | 'Hard';
   prompt: string;
   stimulus?: string;
   options: string[];
   correct: string;
 }
 
-interface BestScores {
-  sprint: number;
-  transitions: number;
-  vocab: number;
-}
+type BestScores = Record<GameId, number>;
 
 const BEST_KEY = 'hdsat.arcade.best.v1';
+const EMPTY_BEST: BestScores = {
+  sprint: 0,
+  transitions: 0,
+  vocab: 0,
+  slope: 0,
+  data: 0,
+  grammar: 0,
+  evidence: 0,
+  boundaries: 0,
+  words: 0,
+  algebra: 0,
+  boss: 0,
+};
 const GAME_SECONDS = 75;
 const MAX_COMBO = 5;
 
 function loadBest(): BestScores {
   try {
     const raw = localStorage.getItem(BEST_KEY);
-    if (raw) return { sprint: 0, transitions: 0, vocab: 0, ...JSON.parse(raw) };
+    if (raw) return { ...EMPTY_BEST, ...JSON.parse(raw) };
   } catch {
     /* storage unavailable - bests simply do not persist */
   }
-  return { sprint: 0, transitions: 0, vocab: 0 };
+  return { ...EMPTY_BEST };
 }
 
-function buildSprintPool(questions: ReturnType<typeof useApp>['questions'], seed: string): GameQuestion[] {
+export function buildSprintPool(
+  questions: ReturnType<typeof useApp>['questions'],
+  seed: string
+): GameQuestion[] {
   const pool = questions.filter(
     (q) =>
+      // Equation Sprint is a math drill. It used to draw from the whole bank,
+      // so a Reading & Writing comprehension item could appear mid-sprint.
+      q.section === 'Math' &&
       q.format === 'multiple_choice' &&
       q.choices &&
       q.choices.length === 4 &&
       !q.figure_metadata
   );
-  return seededShuffle(pool, seed)
+  const draw = takeArcadeQuestions('sprint', pool, Math.min(pool.length, 600), seed);
+  return diversifyArcadePool(draw)
     .slice(0, 60)
     .map((q) => {
       const opts = seededShuffle(q.choices as { id: string; text: string }[], seed + q.id);
@@ -76,6 +97,8 @@ function buildSprintPool(questions: ReturnType<typeof useApp>['questions'], seed
       )?.text;
       return {
         key: `sprint-${q.id}-${seed}`,
+        questionId: q.id,
+        difficulty: q.difficulty,
         prompt: q.prompt,
         stimulus: q.stimulus ?? undefined,
         options: opts.map((o) => o.text),
@@ -92,7 +115,8 @@ function buildTransitionsPool(questions: ReturnType<typeof useApp>['questions'],
       q.choices &&
       (q.choices as unknown[]).length >= 3
   );
-  return seededShuffle(pool, seed)
+  const draw = takeArcadeQuestions('transitions', pool, Math.min(pool.length, 600), seed);
+  return diversifyArcadePool(draw)
     .slice(0, 40)
     .map((q) => {
       const choices = q.choices as { id: string; text: string }[];
@@ -100,6 +124,8 @@ function buildTransitionsPool(questions: ReturnType<typeof useApp>['questions'],
       const options = seededShuffle(choices, seed + q.id).map((c) => c.text);
       return {
         key: `tr-${q.id}-${seed}`,
+        questionId: q.id,
+        difficulty: q.difficulty,
         prompt: 'Which transition completes the text as written?',
         stimulus: q.stimulus ?? undefined,
         options,
@@ -124,10 +150,41 @@ function buildVocabPool(cards: ReturnType<typeof useApp>['flashcards'], seed: st
     }
     return {
       key: `vb-${card.id}-${seed}`,
+      questionId: card.id,
+      difficulty: 'Medium',
       prompt: `What does “${card.front}” mean?`,
       stimulus: undefined,
       options: seededShuffle([card.back, ...distractors], seed + card.id),
       correct: card.back,
+    };
+  });
+}
+
+function buildSkillPool(
+  questions: ReturnType<typeof useApp>['questions'],
+  id: SkillGameId,
+  seed: string
+): GameQuestion[] {
+  const mode = skillGameById(id);
+  const eligible = questions.filter(
+    (q) =>
+      matchesSkillGame(q, mode) &&
+      q.format === 'multiple_choice' &&
+      Array.isArray(q.choices) &&
+      q.choices.length >= 3
+  );
+  const draw = takeArcadeQuestions(id, eligible, Math.min(eligible.length, 600), seed);
+  return diversifyArcadePool(draw).slice(0, 60).map((q) => {
+    const choices = q.choices as { id: string; text: string }[];
+    const correct = choices.find((choice) => choice.id === q.correct_answer)?.text ?? choices[0].text;
+    return {
+      key: `${id}-${q.id}-${seed}`,
+      questionId: q.id,
+      difficulty: q.difficulty,
+      prompt: q.prompt,
+      stimulus: q.stimulus ?? undefined,
+      options: seededShuffle(choices, seed + q.id).map((choice) => choice.text),
+      correct,
     };
   });
 }
@@ -188,7 +245,7 @@ const MINI_GAMES: {
   id: MiniGameId;
   name: string;
   blurb: string;
-  icon: 'calculator' | 'bolt' | 'spark' | 'flashcards';
+  icon: IconName;
   best?: keyof BestScores;
 }[] = [
   {
@@ -200,7 +257,7 @@ const MINI_GAMES: {
   {
     id: 'sprint',
     name: 'Equation Sprint',
-    blurb: 'Speed-solve bank items in 75 seconds.',
+    blurb: 'Speed-solve Math items in 75 seconds.',
     icon: 'bolt',
     best: 'sprint',
   },
@@ -218,7 +275,19 @@ const MINI_GAMES: {
     icon: 'flashcards',
     best: 'vocab',
   },
+  ...SKILL_GAME_MODES.map((mode) => ({
+    id: mode.id as MiniGameId,
+    name: mode.name,
+    blurb: mode.blurb,
+    icon: mode.icon,
+    best: mode.id as keyof BestScores,
+  })),
 ];
+
+function secondsForGame(game: MiniGameId | null): number {
+  if (!game || game === 'lab') return GAME_SECONDS;
+  return SKILL_GAME_MODES.find((mode) => mode.id === game)?.seconds ?? GAME_SECONDS;
+}
 
 export function ArcadePage() {
   const app = useApp();
@@ -247,6 +316,7 @@ export function ArcadePage() {
   const [gameDone, setGameDone] = useState(false);
   const [lastFeedback, setLastFeedback] = useState<string | null>(null);
   const [best, setBest] = useState<BestScores>(() => loadBest());
+  const [questionLevel, setQuestionLevel] = useState(1);
 
   const startRef = useRef<number>(0);
   const scoreRef = useRef(0);
@@ -258,6 +328,7 @@ export function ArcadePage() {
     if (game === 'sprint') return buildSprintPool(app.questions, runSeed);
     if (game === 'transitions') return buildTransitionsPool(app.questions, runSeed);
     if (game === 'vocab') return buildVocabPool(app.flashcards, runSeed);
+    if (game && game !== 'lab') return buildSkillPool(app.questions, game, runSeed);
     return [];
   }, [game, app.questions, app.flashcards, runSeed]);
 
@@ -322,7 +393,13 @@ export function ArcadePage() {
     answeredRef.current = 0;
     setCorrectCount(0);
     correctRef.current = 0;
-    setSecondsLeft(GAME_SECONDS);
+    setSecondsLeft(secondsForGame(next));
+    if (next !== 'lab') {
+      noteArcadeRun(next);
+      setQuestionLevel(arcadeLevel(next));
+    } else {
+      setQuestionLevel(1);
+    }
     setLastFeedback(null);
     setGameDone(false);
     sessionRef.current = newEventId();
@@ -376,6 +453,16 @@ export function ArcadePage() {
     );
 
     const isLast = gameIndex + 1 >= items.length;
+    if (game && game !== 'lab' && items[gameIndex].questionId) {
+      const progress = markArcadeQuestion(game, items[gameIndex].questionId, isCorrect);
+      setQuestionLevel(progress.level);
+      if (isCorrect) {
+        void app.actions.awardCoins(
+          ARCADE_COINS.tableCorrect,
+          `${sessionRef.current}:${game}:${items[gameIndex].questionId}`
+        );
+      }
+    }
     setGameIndex((i) => i + 1);
     if (isLast) {
       await endRun(nextScore, nextAnswered, nextCorrect);
@@ -387,13 +474,35 @@ export function ArcadePage() {
   const isRecord = gameDone && gameScore > 0 && game && game !== 'lab' && gameScore >= best[game];
 
   const gameLabel =
-    game === 'sprint'
-      ? 'Equation Sprint'
-      : game === 'transitions'
-        ? 'Transition Match'
-        : game === 'vocab'
-          ? 'Vocab Precision'
-          : 'Desmos Lab';
+    MINI_GAMES.find((entry) => entry.id === game)?.name ?? 'Desmos Lab';
+  const activeSeconds = secondsForGame(game);
+  const miniGameCard = (entry: (typeof MINI_GAMES)[number]) => (
+    <div key={entry.id} className="muted-block arcade-menu-card">
+      <div className="row-between">
+        <strong>
+          <Icon name={entry.icon} size={14} /> {entry.name}
+        </strong>
+        {entry.best ? (
+          <Badge tone="neutral">Best {best[entry.best].toLocaleString()}</Badge>
+        ) : (
+          <Badge tone="neutral">3 lessons</Badge>
+        )}
+      </div>
+      <p className="muted" style={{ margin: '6px 0 10px' }}>
+        {entry.blurb}
+      </p>
+      <div className="row-between">
+        <Button size="sm" onClick={() => startGame(entry.id)}>
+          {entry.id === 'lab' ? 'Open lab' : 'Play'}
+        </Button>
+        {entry.id !== 'lab' ? (
+          <span className="muted" style={{ fontSize: '0.76rem' }}>
+            {secondsForGame(entry.id)}s
+          </span>
+        ) : null}
+      </div>
+    </div>
+  );
 
   return (
     <div>
@@ -403,7 +512,8 @@ export function ArcadePage() {
             <h1>Arcade</h1>
             <InfoTip label="How the Arcade works">
               <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55 }}>
-                <li>Answers earn HDCoins; a finished run adds one session reward per category each day.</li>
+                <li>Arcade coins are exact: pickups, targets and first-try correct answers pay.</li>
+                <li>A wrong first try pays 0 for that item. A finished game counts toward your study streak.</li>
                 <li>Three quests per day, capped at 30 questions, then the games as long as you like.</li>
                 <li>Daily Quests open the arena; the Hard Question of the Day closes it.</li>
               </ul>
@@ -506,30 +616,14 @@ export function ArcadePage() {
         <Card>
           <div className="row-between" style={{ marginBottom: 10 }}>
             <h2 style={{ margin: 0 }}>Choose a mini-game</h2>
-            <Badge tone="info">{GAME_SECONDS}s runs</Badge>
+            <Badge tone="info">Exact coins · 45–90s runs</Badge>
           </div>
-          <div className="card-grid">
-            {MINI_GAMES.map((entry) => (
-              <div key={entry.id} className="muted-block">
-                <div className="row-between">
-                  <strong>
-                    <Icon name={entry.icon} size={14} /> {entry.name}
-                  </strong>
-                  {entry.best ? (
-                    <Badge tone="neutral">Best {best[entry.best].toLocaleString()}</Badge>
-                  ) : (
-                    <Badge tone="neutral">3 lessons</Badge>
-                  )}
-                </div>
-                <p className="muted" style={{ margin: '6px 0 10px' }}>
-                  {entry.blurb}
-                </p>
-                <Button size="sm" onClick={() => startGame(entry.id)}>
-                  {entry.id === 'lab' ? 'Open lab' : 'Set up & play'}
-                </Button>
-              </div>
-            ))}
-          </div>
+          <h3 className="arcade-menu-title">Core modes</h3>
+          <div className="card-grid">{MINI_GAMES.slice(0, 4).map(miniGameCard)}</div>
+          <h3 className="arcade-menu-title" style={{ marginTop: 18 }}>
+            Quick drills <Badge tone="info">8 new</Badge>
+          </h3>
+          <div className="card-grid">{MINI_GAMES.slice(4).map(miniGameCard)}</div>
         </Card>
       ) : null}
 
@@ -539,6 +633,7 @@ export function ArcadePage() {
             <h2 style={{ margin: 0 }}>{gameLabel}</h2>
             <div className="row">
               {showRun && !gameDone ? <Badge tone="info">{secondsLeft}s</Badge> : null}
+              {showRun && !gameDone ? <Badge tone="neutral">Tier {questionLevel}</Badge> : null}
               <Button size="sm" variant="outline" onClick={openMenu}>
                 Change game
               </Button>
@@ -613,12 +708,12 @@ export function ArcadePage() {
             <Card>
               <h2>Ready to play?</h2>
               <div className="row" style={{ marginTop: 12 }}>
-                <Button onClick={() => startGame(game)}>Start {GAME_SECONDS}-second run</Button>
+                <Button onClick={() => startGame(game)}>Start {activeSeconds}-second run</Button>
               </div>
               <div className="card-grid" style={{ marginTop: 14 }}>
-                <Stat label="Equation Sprint best" value={best.sprint.toLocaleString()} />
-                <Stat label="Transition Match best" value={best.transitions.toLocaleString()} />
-                <Stat label="Vocab Precision best" value={best.vocab.toLocaleString()} />
+                <Stat label={`${gameLabel} best`} value={best[game as GameId].toLocaleString()} />
+                <Stat label="Question tier" value={`${questionLevel}/10`} />
+                <Stat label="Clock" value={`${activeSeconds}s`} />
               </div>
             </Card>
           ) : null}

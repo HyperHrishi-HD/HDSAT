@@ -2,13 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import 'katex/dist/katex.min.css';
 import './styles/global.css';
+import './styles/dark.css';
+import './styles/skeleton.css';
+import 'skullet/styles.css';
 import { App } from './App';
 import { AppProvider } from './lib/store';
+import { SkulletRoot } from './components/SkulletRoot';
 import {
   PASSWORD_RECOVERY_FLAG,
   PASSWORD_RESET_REQUESTED_KEY,
 } from './lib/password';
 import { getSupabase } from './lib/supabaseClient';
+import { initThemeMode } from './lib/themeMode';
 import './lib/pwa';
 
 const AUTH_CALLBACK_PATH = '/account';
@@ -125,20 +130,39 @@ function registerServiceWorker(): void {
   if (!import.meta.env.PROD) return;
   if (typeof navigator === 'undefined' || !('serviceWorker' in navigator)) return;
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').catch(() => {
-      /* private mode, or a browser without workers: the app works anyway */
-    });
+    navigator.serviceWorker
+      .register('/sw.js', { updateViaCache: 'none' })
+      .catch(() => {
+        /* private mode, or a browser without workers: the app works anyway */
+      });
+  });
+  // A tab that was left open across a deploy can otherwise keep the previous
+  // shell for days. Check for a new worker when the tab comes back, so the next
+  // navigation lands on the current bundle instead of an old cached one.
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) return;
+    navigator.serviceWorker
+      .getRegistration()
+      .then((registration) => registration?.update())
+      .catch(() => {
+        /* offline: the cached shell is still a working app */
+      });
   });
 }
 
 normaliseAdminEntry();
+// index.html already set the attribute before paint; this attaches the system
+// preference listener and re-applies the stored choice for the React tree.
+initThemeMode();
 registerServiceWorker();
 
 void consumeAuthRedirect().finally(() => {
   ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <React.StrictMode>
       <AppProvider>
-        <App />
+        <SkulletRoot>
+          <App />
+        </SkulletRoot>
       </AppProvider>
     </React.StrictMode>
   );

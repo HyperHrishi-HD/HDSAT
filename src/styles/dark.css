@@ -1,0 +1,466 @@
+/* ==========================================================================
+ * HDSAT dark mode
+ * ==========================================================================
+ * `data-mode` is set on <html> before the first paint (index.html) and kept in
+ * sync by src/lib/themeMode.ts. This file loads after global.css, so it can
+ * override both the tokens and the handful of rules that were written with
+ * literal colours.
+ *
+ * The accent gets lighter rather than darker: on a dark surface the light-mode
+ * blues (#1f5fd0) fall below a readable contrast ratio, and text that uses the
+ * accent as its colour is common in this app.
+ */
+
+:root[data-mode='dark'] {
+  color-scheme: dark;
+  --bg: #0f1216;
+  --surface: #171b21;
+  --surface-2: #1f242c;
+  --ink: #e9eef6;
+  --ink-2: #bcc6d4;
+  --muted: #8f9baa;
+  --line: #2b323c;
+  --accent: #6ea2f7;
+  --accent-soft: #182539;
+  --accent-border: #2f4a72;
+  --accent-ink: #08111f;
+  --good: #5fd39a;
+  --good-bg: #12261c;
+  --bad: #ff9a90;
+  --bad-bg: #2b1615;
+  --warn: #e6b567;
+  --warn-bg: #2a2114;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 8px 24px rgba(0, 0, 0, 0.4);
+  /* A printed figure is still paper at night: the chart and reference-sheet
+     images keep a light backing so their dark ink stays readable. */
+  --paper: #ffffff;
+  --paper-ink: #14181f;
+  /* No `scrollbar-color` here on purpose: the moment it is set, Chrome ignores
+     the `::-webkit-scrollbar` rules and paints the default rail again. The
+     themed glass scrollbar in global.css reads its colour from --accent. */
+}
+
+/* Store themes keep their hue in the dark; only the lightness changes. */
+:root[data-mode='dark'][data-theme='oxford-navy'] {
+  --bg: #0e1219;
+  --surface-2: #1b2330;
+  --line: #2b3546;
+  --accent: #8db3e6;
+  --accent-ink: #0a1322;
+  --accent-soft: #172235;
+  --accent-border: #33496b;
+}
+
+:root[data-mode='dark'][data-theme='forest-sage'] {
+  --bg: #0e1512;
+  --surface-2: #1a2620;
+  --line: #293a32;
+  --accent: #6fccaa;
+  --accent-ink: #05150f;
+  --accent-soft: #14241d;
+  --accent-border: #2f5346;
+}
+
+:root[data-mode='dark'][data-theme='warm-amber'] {
+  --bg: #16120d;
+  --surface-2: #262019;
+  --line: #3a3027;
+  --accent: #e8a45c;
+  --accent-ink: #1c1206;
+  --accent-soft: #2a2117;
+  --accent-border: #5a422a;
+}
+
+:root[data-mode='dark'][data-theme='plum-ink'] {
+  --bg: #14101a;
+  --surface-2: #211a28;
+  --line: #33283d;
+  --accent: #c08ae6;
+  --accent-ink: #150921;
+  --accent-soft: #251a30;
+  --accent-border: #4c3560;
+}
+
+:root[data-mode='dark'][data-theme='slate-mono'] {
+  --bg: #101318;
+  --surface-2: #1c2129;
+  --line: #2d333d;
+  --accent: #a9b8cd;
+  --accent-ink: #0b0e13;
+  --accent-soft: #1d232c;
+  --accent-border: #3d4652;
+}
+
+:root[data-mode='dark'][data-theme='teal-current'] {
+  --bg: #0c1516;
+  --surface-2: #172527;
+  --line: #273a3c;
+  --accent: #4fd6c9;
+  --accent-ink: #041615;
+  --accent-soft: #122223;
+  --accent-border: #2b524f;
+}
+
+:root[data-mode='dark'][data-theme='rose-quartz'] {
+  --bg: #171014;
+  --surface-2: #241a1f;
+  --line: #3a2a31;
+  --accent: #f2859f;
+  --accent-ink: #1c0810;
+  --accent-soft: #2a1a21;
+  --accent-border: #5c3340;
+}
+
+:root[data-mode='dark'][data-theme='royal-obsidian'] {
+  --bg: #111018;
+  --surface-2: #1d1c28;
+  --line: #2f2d3f;
+  --accent: #a9a4f0;
+  --accent-ink: #0d0b20;
+  --accent-soft: #1e1c30;
+  --accent-border: #474370;
+}
+
+/* ---------- shared app surfaces ---------- */
+
+:root[data-mode='dark'] .badge-info { background: var(--accent-soft); }
+:root[data-mode='dark'] .choice.is-selected .choice-main { background: var(--accent-soft); }
+:root[data-mode='dark'] .nav-dot.is-answered {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+}
+:root[data-mode='dark'] .pill-tag,
+:root[data-mode='dark'] .pill-tag .ui-icon { color: var(--ink-2); }
+:root[data-mode='dark'] .pill-tag { background: var(--surface-2); }
+:root[data-mode='dark'] .attempt-row,
+:root[data-mode='dark'] .app-modal,
+:root[data-mode='dark'] .auth-details,
+:root[data-mode='dark'] .pane-tool-body { background: var(--surface); }
+:root[data-mode='dark'] .attempt-delete { color: var(--bad); }
+:root[data-mode='dark'] .attempt-delete:focus-visible { outline-color: var(--bad); }
+:root[data-mode='dark'] .app-modal-close:hover { background: var(--surface-2); color: var(--ink); }
+
+/* Guest progress nudge: the amber banner reads as amber, just at night values. */
+:root[data-mode='dark'] .sync-nudge {
+  border-color: #4a3a1c;
+  background: #2a2113;
+  color: #f0dcb4;
+}
+:root[data-mode='dark'] .sync-nudge-text .ui-icon { color: #e6b567; }
+:root[data-mode='dark'] .sync-nudge-close { color: #c9ad72; }
+:root[data-mode='dark'] .sync-nudge-close:hover { background: #3a2d18; color: #f7e9cd; }
+:root[data-mode='dark'] .sync-nudge-close:focus-visible { outline-color: #e6b567; }
+
+/* The math reference is a photographed sheet: container dark, paper light. */
+:root[data-mode='dark'] .math-reference { background: var(--surface); color: var(--ink); }
+:root[data-mode='dark'] .math-reference-img {
+  background: var(--paper);
+  border-radius: 8px;
+}
+:root[data-mode='dark'] .math-reference-suite-note {
+  border-top-color: var(--line);
+  color: var(--muted);
+}
+
+/* ---------- Bluebook-style test runner ---------- */
+
+:root[data-mode='dark'] .bb-fullscreen {
+  background: var(--surface);
+  color: var(--ink);
+}
+:root[data-mode='dark'] .bb-header,
+:root[data-mode='dark'] .bb-workspace,
+:root[data-mode='dark'] .bb-footer { background: var(--surface); }
+:root[data-mode='dark'] .bb-section-title,
+:root[data-mode='dark'] .bb-directions-btn,
+:root[data-mode='dark'] .bb-clock,
+:root[data-mode='dark'] .bb-hide-pill,
+:root[data-mode='dark'] .bb-mark-review,
+:root[data-mode='dark'] .bb-abc-btn,
+:root[data-mode='dark'] .bb-choice-box,
+:root[data-mode='dark'] .bb-choice-letter,
+:root[data-mode='dark'] .bb-stimulus-text,
+:root[data-mode='dark'] .bb-stimulus-text p,
+:root[data-mode='dark'] .bb-math-stimulus,
+:root[data-mode='dark'] .bb-prompt-text,
+:root[data-mode='dark'] .bb-prompt-text p,
+:root[data-mode='dark'] .bb-spr-preview,
+:root[data-mode='dark'] .bb-footer-left,
+:root[data-mode='dark'] .bb-nav-cell,
+:root[data-mode='dark'] .bb-directions-body p,
+:root[data-mode='dark'] .bb-modal,
+:root[data-mode='dark'] .bb-modal p { color: var(--ink); }
+:root[data-mode='dark'] .bb-modal p { color: var(--ink-2); }
+:root[data-mode='dark'] .bb-module-line,
+:root[data-mode='dark'] .bb-tier-badge,
+:root[data-mode='dark'] .bb-copyright-micro,
+:root[data-mode='dark'] .bb-key-hint,
+:root[data-mode='dark'] .bb-clock-hidden { color: var(--muted); }
+:root[data-mode='dark'] .bb-clock.is-low,
+:root[data-mode='dark'] .bb-mark-review.is-flagged,
+:root[data-mode='dark'] .bb-bookmark-icon,
+:root[data-mode='dark'] .bb-cell-flag { color: var(--bad); }
+:root[data-mode='dark'] .bb-frame-rule { background: var(--line); }
+:root[data-mode='dark'] .bb-frame-rule.is-dashed {
+  height: 0;
+  background: none;
+  border-top: 2px dashed #4a5464;
+}
+:root[data-mode='dark'] .bb-tier-badge { border-color: var(--line); }
+:root[data-mode='dark'] .bb-tool-btn { color: var(--ink-2); }
+:root[data-mode='dark'] .bb-tool-btn.is-active { background: var(--surface-2); }
+:root[data-mode='dark'] .bb-hide-pill {
+  background: var(--surface);
+  border-color: var(--ink-2);
+}
+:root[data-mode='dark'] .bb-hide-pill:hover { background: var(--surface-2); }
+:root[data-mode='dark'] .bb-workspace,
+:root[data-mode='dark'] .figure-box { border-color: var(--line); }
+:root[data-mode='dark'] .bb-divider { background: var(--line); }
+:root[data-mode='dark'] .figure-box { background: var(--surface); }
+:root[data-mode='dark'] .figure-caption {
+  background: var(--surface-2);
+  border-bottom-color: var(--line);
+  color: var(--ink);
+}
+:root[data-mode='dark'] .figure-table td { border-bottom-color: var(--line); }
+:root[data-mode='dark'] .figure-table th {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+:root[data-mode='dark'] .figure-chart-wrap {
+  background: var(--paper);
+  color: var(--paper-ink);
+}
+:root[data-mode='dark'] .stimulus-text-heading { color: var(--ink); }
+:root[data-mode='dark'] .bb-q-banner-top { background: var(--surface-2); }
+:root[data-mode='dark'] .bb-q-number {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+:root[data-mode='dark'] .bb-abc-btn {
+  background: var(--surface);
+  border-color: var(--ink-2);
+}
+:root[data-mode='dark'] .bb-abc-btn.is-active {
+  background: var(--ink);
+  color: var(--surface);
+}
+:root[data-mode='dark'] .bb-choice-box {
+  background: var(--surface);
+  border-color: var(--ink-2);
+}
+:root[data-mode='dark'] .bb-choice-box:hover { border-color: var(--accent); }
+:root[data-mode='dark'] .bb-choice-box.is-selected { border-color: var(--accent); }
+:root[data-mode='dark'] .bb-choice-letter {
+  background: var(--surface);
+  border-color: var(--ink-2);
+}
+:root[data-mode='dark'] .bb-choice-letter.is-selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+:root[data-mode='dark'] .bb-choice-strike-btn {
+  background: var(--surface-2);
+  border-color: var(--line);
+}
+:root[data-mode='dark'] .bb-spr-input-shell {
+  background: var(--surface);
+  border-color: var(--ink-2);
+}
+:root[data-mode='dark'] .bb-spr-input-shell input {
+  background: transparent;
+  color: var(--ink);
+  border-bottom-color: var(--ink-2);
+}
+:root[data-mode='dark'] .bb-spr-input-shell input:focus { border-bottom-color: var(--accent); }
+:root[data-mode='dark'] .bb-spr-input-shell input:focus-visible { outline-color: var(--accent); }
+:root[data-mode='dark'] .bb-notes-box textarea {
+  background: #241f11;
+  color: #f4e6c2;
+  border-color: #5a4a20;
+}
+:root[data-mode='dark'] .bb-calc-window { background: var(--surface); }
+:root[data-mode='dark'] .bb-calc-iframe-wrap { background: var(--paper); }
+:root[data-mode='dark'] .bb-question-pill {
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  color: var(--ink);
+}
+:root[data-mode='dark'] .bb-question-pill:hover { background: var(--accent-soft); color: var(--accent); }
+:root[data-mode='dark'] .bb-pill-btn-primary {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+:root[data-mode='dark'] .bb-pill-btn-primary:hover:not(:disabled) { filter: brightness(1.08); }
+:root[data-mode='dark'] .bb-pill-btn-outline {
+  background: transparent;
+  border-color: var(--accent);
+  color: var(--accent);
+}
+:root[data-mode='dark'] .bb-directions-popover,
+:root[data-mode='dark'] .bb-floating-modal,
+:root[data-mode='dark'] .bb-nav-popover,
+:root[data-mode='dark'] .bb-review-card,
+:root[data-mode='dark'] .hl-note-editor {
+  background: var(--surface);
+  border-color: var(--line);
+}
+:root[data-mode='dark'] .bb-nav-popover-head,
+:root[data-mode='dark'] .bb-nav-popover-legend,
+:root[data-mode='dark'] .bb-nav-popover-foot,
+:root[data-mode='dark'] .bb-review-head,
+:root[data-mode='dark'] .hl-note-editor textarea { border-color: var(--line); }
+:root[data-mode='dark'] .bb-nav-cell {
+  background: var(--surface);
+  border-color: var(--ink-2);
+}
+:root[data-mode='dark'] .bb-nav-cell.is-answered {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+:root[data-mode='dark'] .bb-nav-cell.is-current { outline-color: var(--ink); }
+:root[data-mode='dark'] .bb-cell-flag { background: var(--surface); }
+:root[data-mode='dark'] .bb-review-page { background: var(--bg); }
+:root[data-mode='dark'] .bb-modal { background: var(--surface); }
+:root[data-mode='dark'] .bb-modal p.bb-modal-meta {
+  border-top-color: var(--line);
+  color: var(--muted);
+}
+:root[data-mode='dark'] .bb-legend-answered { color: var(--accent); }
+:root[data-mode='dark'] .bb-workbench { background: var(--surface); }
+:root[data-mode='dark'] .bb-workbench .split-divider::before { background: var(--line); }
+:root[data-mode='dark'] .bb-side-switch { color: var(--accent); }
+
+/* Highlights keep their marker colours; the text on top has to turn dark. */
+:root[data-mode='dark'] mark.bb-hl { color: #1a1f26; }
+:root[data-mode='dark'] mark.bb-hl[data-has-note='true']::after { color: #3d4756; }
+
+/* Inline note editor chrome around those highlights. */
+:root[data-mode='dark'] .hl-note-editor textarea {
+  background: var(--surface-2);
+  color: var(--ink);
+}
+:root[data-mode='dark'] .hl-note-head button { color: var(--ink-2); }
+:root[data-mode='dark'] .hl-editor-colors-label { color: var(--muted); }
+:root[data-mode='dark'] .hl-editor-colors .hl-swatch { border-color: var(--ink-2); }
+:root[data-mode='dark'] .hl-note-delete {
+  background: var(--bad-bg);
+  color: var(--bad);
+  border-color: #5a2a26;
+}
+:root[data-mode='dark'] .hl-note-save {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+/* ---------- operator console ---------- */
+
+:root[data-mode='dark'] .adm-shell { background: var(--bg); }
+:root[data-mode='dark'] .adm-rail,
+:root[data-mode='dark'] .adm-metric,
+:root[data-mode='dark'] .adm-card,
+:root[data-mode='dark'] .adm-gate,
+:root[data-mode='dark'] .adm-queue,
+:root[data-mode='dark'] .adm-filter,
+:root[data-mode='dark'] .adm-row-action,
+:root[data-mode='dark'] .adm-pager button,
+:root[data-mode='dark'] .adm-btn-ghost,
+:root[data-mode='dark'] .adm-human-box { background: var(--surface); }
+:root[data-mode='dark'] .adm-nav em { background: var(--surface-2); color: var(--ink-2); }
+:root[data-mode='dark'] .adm-nav:hover { background: var(--surface-2); }
+:root[data-mode='dark'] .adm-nav.is-active {
+  background: var(--accent-soft);
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+:root[data-mode='dark'] .adm-nav.is-active .ui-icon { color: var(--accent); }
+:root[data-mode='dark'] .adm-nav.is-active em {
+  background: var(--accent-border);
+  color: var(--accent-ink);
+}
+:root[data-mode='dark'] .adm-nav .ui-icon { color: var(--muted); }
+:root[data-mode='dark'] .adm-table th { background: var(--surface-2); }
+:root[data-mode='dark'] .adm-table tbody tr:hover { background: var(--surface-2); }
+:root[data-mode='dark'] .adm-card-foot,
+:root[data-mode='dark'] .adm-human { background: var(--surface-2); }
+:root[data-mode='dark'] .adm-human:hover:not(:disabled) {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+:root[data-mode='dark'] .adm-composer-lines span {
+  background: var(--surface-2);
+  border-color: var(--line);
+}
+:root[data-mode='dark'] .adm-chip {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: var(--accent-border);
+}
+:root[data-mode='dark'] .adm-batch {
+  border-color: var(--accent-border);
+  background: var(--accent-soft);
+}
+:root[data-mode='dark'] .adm-confirm {
+  border-color: #5a422a;
+  background: var(--warn-bg);
+  color: var(--warn);
+}
+:root[data-mode='dark'] .adm-human-box { border-color: var(--ink-2); }
+:root[data-mode='dark'] .adm-metric-value.is-warn { color: var(--warn); }
+:root[data-mode='dark'] .adm-metric-value.is-bad { color: var(--bad); }
+:root[data-mode='dark'] .adm-btn { border-color: var(--accent); }
+:root[data-mode='dark'] .adm-human.is-checked .adm-human-box {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: #ffffff;
+}
+
+/* ---------- elements whose own colour is the surface ---------- */
+/*
+ * These are the inverse case: a rule paints the text white because the light
+ * theme's background is a dark ink. In dark mode the ink is light, so the pair
+ * has to flip together or the label disappears.
+ */
+:root[data-mode='dark'] .btn-danger { color: #2b1615; }
+:root[data-mode='dark'] .info-tip-q { color: var(--accent-ink); }
+:root[data-mode='dark'] .brand-mark { background: var(--accent); color: var(--accent-ink); }
+:root[data-mode='dark'] .welcome-brand .brand-mark,
+:root[data-mode='dark'] .welcome-brand .brand-mark svg { color: var(--accent-ink); }
+:root[data-mode='dark'] .welcome-emblem {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+:root[data-mode='dark'] .welcome-emblem svg { color: var(--accent-ink); }
+
+:root[data-mode='dark'] .nav-link.is-active {
+  background: var(--accent-soft);
+  color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent-border);
+}
+:root[data-mode='dark'] .nav-link.is-active .ui-icon { color: var(--accent); }
+
+:root[data-mode='dark'] .choice-eliminate.is-on {
+  background: var(--ink-2);
+  border-color: var(--ink-2);
+  color: var(--bg);
+}
+
+/* The session strip stays a dark bar in both themes; only its edge changes. */
+:root[data-mode='dark'] .test-bar {
+  background: #0b0f14;
+  color: #f2f6fb;
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+:root[data-mode='dark'] .test-bar .muted { color: rgba(242, 246, 251, 0.68); }
+:root[data-mode='dark'] .test-bar .timer.is-low { color: #ffb4a8; }
+
+/* Game dialogue: bubbles carry their own semantic background. */
+:root[data-mode='dark'] .talk-bubble.is-you { color: var(--accent-ink); }
+:root[data-mode='dark'] .talk-bubble.is-good,
+:root[data-mode='dark'] .talk-option.is-correct { color: var(--good); }
+:root[data-mode='dark'] .talk-bubble.is-bad,
+:root[data-mode='dark'] .talk-option.is-wrong { color: var(--bad); }

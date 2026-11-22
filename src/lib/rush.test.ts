@@ -9,6 +9,7 @@ import {
   chooseRushQuestion,
   describeRushKey,
   describeRushMix,
+  emptyRushHistory,
   emptyRushServed,
   parseRushDuration,
   pickRushDifficulty,
@@ -17,6 +18,7 @@ import {
   RUSH_BASE_POINTS,
   rushSetupKey,
 } from './rush';
+import { questionFamilyKeys } from './examEngine';
 import { emptyProfile, loadProfile, recordRushScore, saveProfile, STORAGE_KEY } from './storage';
 import type { Difficulty, Question } from './types';
 
@@ -120,6 +122,42 @@ describe('rush scoring', () => {
 });
 
 describe('question selection', () => {
+  it('avoids the same skill and family back to back when the pool allows it', () => {
+    const pool = questions.slice(0, 160);
+    const used = new Set<string>();
+    const history = emptyRushHistory();
+    const first = chooseRushQuestion(pool, 'Mixed', 0, emptyRushServed(), used, () => 0, history)!;
+    used.add(first.id);
+    const second = chooseRushQuestion(pool, 'Mixed', 0, emptyRushServed(), used, () => 0, history)!;
+    used.add(second.id);
+
+    expect(second.skill).not.toBe(first.skill);
+    expect(questionFamilyKeys(second).some((key) => questionFamilyKeys(first).includes(key))).toBe(
+      false
+    );
+  });
+
+  it('keeps a whole rush varied across thirty draws', () => {
+    const pool = questions.slice(0, 600);
+    const used = new Set<string>();
+    const history = emptyRushHistory();
+    const drawn = [];
+    for (let i = 0; i < 30; i += 1) {
+      const q = chooseRushQuestion(pool, 'Mixed', i * 10, emptyRushServed(), used, () => 0.37, history);
+      expect(q).not.toBeNull();
+      used.add(q!.id);
+      drawn.push(q!);
+    }
+    for (let i = 1; i < drawn.length; i += 1) {
+      expect(drawn[i].skill, `draw ${i} repeats the skill`).not.toBe(drawn[i - 1].skill);
+      const previous = questionFamilyKeys(drawn[i - 1]);
+      expect(
+        questionFamilyKeys(drawn[i]).some((key) => previous.includes(key)),
+        `draw ${i} repeats the family`
+      ).toBe(false);
+    }
+  });
+
   it('honours a fixed difficulty band', () => {
     const pool = [...diff('Easy').slice(0, 3), ...diff('Medium').slice(0, 3)];
     const used = new Set<string>();

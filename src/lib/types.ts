@@ -261,7 +261,23 @@ export type EmblemIcon =
   | 'award'
   | 'flame'
   | 'layers'
-  | 'coins';
+  | 'coins'
+  | 'trophy'
+  | 'bolt'
+  | 'spark'
+  | 'shield'
+  | 'bookmark'
+  | 'test'
+  | 'sun'
+  | 'gem'
+  | 'key'
+  | 'medal'
+  | 'mountain'
+  | 'rocket'
+  | 'sprout'
+  | 'cairn'
+  | 'orbit'
+  | 'vault';
 
 export interface StoreItem {
   id: string;

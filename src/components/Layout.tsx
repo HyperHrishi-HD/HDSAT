@@ -1,9 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
-import { Link, NavLink, Outlet } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { emblemFor } from '../lib/catalog';
+import { beginThemeTransition } from '../lib/themeMode';
 import { useApp } from '../lib/store';
 import { AuthModal } from './AuthModal';
 import { BrandMark } from './BrandMark';
+import { Skeleton } from 'skullet/react';
+import { PageSkeleton, skeletonVariantForPath } from './Skeleton';
 import { VerifyEmailBanner } from './VerifyEmailBanner';
 import {
   COPYRIGHT_PATH,
@@ -13,7 +16,9 @@ import {
   TERMS_PATH,
 } from '../lib/legal';
 import { Alert, Badge, Icon } from './ui';
-import { MOBILE_NAV, SECTIONS as NAV } from '../lib/sections';
+import { SECTIONS as NAV } from '../lib/sections';
+
+const SIDEBAR_HIDDEN_KEY = 'hdsat.sidebar.hidden.v1';
 
 /**
  * A name that scrolls back and forth inside its pill once it is too long to
@@ -28,7 +33,8 @@ function ScrollName({ text }: { text: string }) {
     const wrap = wrapRef.current;
     const inner = innerRef.current;
     if (!wrap || !inner) return;
-    const measure = () => {
+    let frame = 0;
+    const update = () => {
       const overflow = inner.scrollWidth - wrap.clientWidth;
       if (overflow > 2) {
         wrap.style.setProperty('--scroll-x', `-${Math.ceil(overflow)}px`);
@@ -38,12 +44,20 @@ function ScrollName({ text }: { text: string }) {
         wrap.style.removeProperty('--scroll-x');
       }
     };
-    measure();
+    const measure = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        update();
+      });
+    };
+    update();
     const observer =
       typeof ResizeObserver !== 'undefined' ? new ResizeObserver(measure) : null;
     observer?.observe(wrap);
     window.addEventListener('resize', measure);
     return () => {
+      if (frame) window.cancelAnimationFrame(frame);
       observer?.disconnect();
       window.removeEventListener('resize', measure);
     };
@@ -58,21 +72,69 @@ function ScrollName({ text }: { text: string }) {
 
 export function Layout() {
   const app = useApp();
+  const location = useLocation();
   const topbarRef = useRef<HTMLDivElement | null>(null);
   const statsRef = useRef<HTMLDivElement | null>(null);
   const brandRef = useRef<HTMLAnchorElement | null>(null);
   const accountRef = useRef<HTMLElement | null>(null);
-  const mobileNavRef = useRef<HTMLElement | null>(null);
+  const sidebarToggleRef = useRef<HTMLButtonElement | null>(null);
+  const menuToggleRef = useRef<HTMLButtonElement | null>(null);
   const [compact, setCompact] = useState(false);
-  const [navSize, setNavSize] = useState<'full' | 'compact' | 'icons'>('full');
+  // The phone layout opens the whole section list in a drawer instead of
+  // squeezing a few tabs into a bottom bar.
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [sidebarHidden, setSidebarHidden] = useState(() => {
+    if (typeof localStorage === 'undefined') return false;
+    try {
+      return localStorage.getItem(SIDEBAR_HIDDEN_KEY) === '1';
+    } catch {
+      return false;
+    }
+  });
+
+  // This is a desk-layout preference, not study progress. Keep it on this
+  // device so opening a new tab does not make the menu jump back into place.
+  useEffect(() => {
+    try {
+      if (sidebarHidden) localStorage.setItem(SIDEBAR_HIDDEN_KEY, '1');
+      else localStorage.removeItem(SIDEBAR_HIDDEN_KEY);
+    } catch {
+      /* storage disabled: the choice still works for this session */
+    }
+  }, [sidebarHidden]);
 
   const activeTheme = app.settings?.activeTheme ?? null;
+  const appliedThemeRef = useRef<string | null | undefined>(undefined);
   const activeEmblem = emblemFor(app.settings?.activeFlair);
   const displayName = app.user?.displayName || app.user?.email || 'Student';
   const pending = app.accountStatus === 'pending';
+  const toggleSidebar = () => {
+    setSidebarHidden((hidden) => !hidden);
+  };
 
-  useEffect(() => {
+  // Routes that do not read the catalogue can paint immediately. The study
+  // screens wait behind the lazy bank chunk and get a silhouette of themselves
+  // instead of a centred logo or a page full of zeroes.
+  const needsBank = ![
+    '/account',
+    '/resources',
+    '/rewards',
+    '/terms',
+    '/privacy',
+    '/copyright',
+    '/credits',
+  ].includes(location.pathname);
+  const showBankSkeleton = needsBank && app.bankReady === false && !app.bankError;
+
+  // Theme tokens live on <html>, so a store theme change and a light/dark
+  // change repaint through the same coordinated fade. useLayoutEffect keeps the
+  // attribute change before the browser paints the next frame.
+  useLayoutEffect(() => {
     if (typeof document === 'undefined') return;
+    if (appliedThemeRef.current !== undefined && appliedThemeRef.current !== activeTheme) {
+      beginThemeTransition();
+    }
+    appliedThemeRef.current = activeTheme;
     if (activeTheme) {
       document.documentElement.setAttribute('data-theme', activeTheme);
     } else {
@@ -80,42 +142,88 @@ export function Layout() {
     }
   }, [activeTheme]);
 
+  // The question bank is still a lazy chunk. The old shell had no bank gate, so
+  // start the load once here for every app route; the pre-Phase-1 pages assume
+  // the catalog is available.
+  useEffect(() => {
+    app.actions.ensureBank();
+  }, [app.actions.ensureBank]);
+
   /**
    * Decide whether the status pills need their labels. A hidden clone of the
-   * stats row (full labels, never compacted) is measured against the space the
-   * top bar actually has, so the switch happens exactly when the row would wrap
-   * — not at an arbitrary breakpoint. Because the clone never inherits the
-   * compact class, this cannot oscillate.
+   * header (full labels, never compacted) is measured against the space the
+   * full header would have. Measuring the live controls instead feeds the
+   * compact class back into the decision: hiding the labels frees space, full
+   * mode then looks like it fits, restoring the labels makes it overflow, and
+   * the two states flip every frame. The off-screen clone breaks that loop.
    */
   useEffect(() => {
     if (typeof document === 'undefined') return;
 
-    const measure = () => {
-      const bar = topbarRef.current;
-      const stats = statsRef.current;
-      if (!bar || !stats) return;
-      const clone = stats.cloneNode(true) as HTMLDivElement;
+    const runMeasure = () => {
+      const inner = topbarRef.current;
+      if (!inner) return;
+
+      const clone = inner.cloneNode(true) as HTMLDivElement;
+      clone.setAttribute('aria-hidden', 'true');
       Object.assign(clone.style, {
         position: 'fixed',
         top: '-2000px',
         left: '0',
-        display: 'flex',
-        flexWrap: 'nowrap',
-        width: 'max-content',
+        width: `${inner.clientWidth}px`,
         maxWidth: 'none',
         visibility: 'hidden',
         pointerEvents: 'none',
         zIndex: '-1',
       });
       document.body.appendChild(clone);
-      const needed = clone.getBoundingClientRect().width;
+
+      const fullStats = clone.querySelector<HTMLElement>('.topbar-stats');
+      if (fullStats) {
+        Object.assign(fullStats.style, {
+          display: 'flex',
+          flex: '0 0 auto',
+          flexWrap: 'nowrap',
+          width: 'max-content',
+          maxWidth: 'none',
+          overflow: 'visible',
+        });
+      }
+      const needed = Math.max(
+        fullStats?.getBoundingClientRect().width ?? 0,
+        fullStats?.scrollWidth ?? 0
+      );
+      const widthOf = (selector: string) =>
+        clone.querySelector<HTMLElement>(selector)?.getBoundingClientRect().width ?? 0;
+      const brandWidth = widthOf('.topbar-brand');
+      const accountWidth = widthOf('.topbar-account');
+      const toggleWidth = widthOf('.sidebar-toggle');
+      const style = getComputedStyle(clone);
+      const padding =
+        parseFloat(style.paddingLeft) + parseFloat(style.paddingRight);
+      const gap = parseFloat(style.columnGap) || 0;
+      const visibleItems = [...clone.children].filter((child) => {
+        const el = child as HTMLElement;
+        return (
+          getComputedStyle(el).display !== 'none' &&
+          el.getBoundingClientRect().width > 0
+        );
+      }).length;
+      const gaps = gap * Math.max(0, visibleItems - 1);
+      const available =
+        clone.clientWidth - padding - gaps - brandWidth - accountWidth - toggleWidth;
       clone.remove();
 
-      const brandWidth = brandRef.current?.offsetWidth ?? 0;
-      const accountWidth = accountRef.current?.offsetWidth ?? 0;
-      const padding = 56;
-      const available = bar.clientWidth - brandWidth - accountWidth - padding;
       if (available > 0) setCompact(needed > available);
+    };
+
+    let frame = 0;
+    const measure = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        runMeasure();
+      });
     };
 
     measure();
@@ -126,6 +234,7 @@ export function Layout() {
         : null;
     if (observer && topbarRef.current) observer.observe(topbarRef.current);
     return () => {
+      if (frame) window.cancelAnimationFrame(frame);
       window.removeEventListener('resize', measure);
       observer?.disconnect();
     };
@@ -140,39 +249,43 @@ export function Layout() {
   ]);
 
   /**
-   * Five bottom tabs are ~76px wide on a 390px phone, which fits "Question
-   * bank" on two lines. The step-down stays anyway: a very narrow phone, or a
-   * system font scaled up, must not push the row past the edge.
+   * The drawer belongs to the page that opened it: any route change closes it.
+   * While it is open the page behind must not scroll, and Escape closes it —
+   * the same two rules the sign-in window follows.
    */
   useEffect(() => {
-    const nav = mobileNavRef.current;
-    if (!nav) return;
-    const check = () => {
-      const count = nav.querySelectorAll('.mobile-link').length || MOBILE_NAV.length;
-      const per = nav.clientWidth > 0 ? nav.clientWidth / count : 0;
-      // Five tabs give ~75px each on a 390px phone, which is enough for
-      // "Question bank" on two lines; the step-downs only catch a 320px phone
-      // or a system font scaled up past the default.
-      setNavSize(per >= 68 ? 'full' : per >= 40 ? 'compact' : 'icons');
+    setMenuOpen(false);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setMenuOpen(false);
     };
-    check();
-    // The bar is display:none on a wide layout, so the first measurement can be
-    // 0 and every tab would come out icon-only. One frame later the box exists.
-    const frame = requestAnimationFrame(check);
-    window.addEventListener('resize', check);
-    const observer =
-      typeof ResizeObserver !== 'undefined' ? new ResizeObserver(check) : null;
-    if (observer) observer.observe(nav);
+    window.addEventListener('keydown', onKeyDown);
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener('resize', check);
-      observer?.disconnect();
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', onKeyDown);
     };
-  }, []);
+  }, [menuOpen]);
+
+  // Growing the window back to the desk layout must not leave an invisible
+  // drawer holding the page scroll lock.
+  useEffect(() => {
+    if (!menuOpen || typeof window.matchMedia !== 'function') return;
+    const wide = window.matchMedia('(min-width: 901px)');
+    const onChange = () => {
+      if (wide.matches) setMenuOpen(false);
+    };
+    wide.addEventListener('change', onChange);
+    return () => wide.removeEventListener('change', onChange);
+  }, [menuOpen]);
 
   return (
-    <div className="app-shell" data-theme={activeTheme ?? undefined}>
-      <aside className="sidebar">
+    <div className={`app-shell${sidebarHidden ? ' is-sidebar-hidden' : ''}`}>
+      <aside className="sidebar" id="app-sidebar">
         <NavLink to="/" className="brand">
           <BrandMark />
           <span>
@@ -180,7 +293,7 @@ export function Layout() {
             <em>Digital SAT prep</em>
           </span>
         </NavLink>
-        <nav className="nav">
+        <nav className="nav" aria-label="Sections">
           {NAV.map((item) => (
             <NavLink
               key={item.to}
@@ -198,6 +311,32 @@ export function Layout() {
       <div className="main">
         <header className={`topbar${compact ? ' is-compact' : ''}`}>
           <div className="topbar-inner" ref={topbarRef}>
+            <button
+              type="button"
+              className="btn btn-outline btn-sm mobile-menu-toggle"
+              aria-controls="app-drawer"
+              aria-expanded={menuOpen}
+              aria-label="Open navigation menu"
+              title="Open navigation menu"
+              ref={menuToggleRef}
+              onClick={() => setMenuOpen(true)}
+            >
+              <Icon name="menu" size={16} />
+            </button>
+
+            <button
+              type="button"
+              className="btn btn-outline btn-sm sidebar-toggle"
+              aria-controls="app-sidebar"
+              aria-expanded={!sidebarHidden}
+              aria-label={sidebarHidden ? 'Show navigation menu' : 'Hide navigation menu'}
+              title={sidebarHidden ? 'Show navigation menu' : 'Hide navigation menu'}
+              ref={sidebarToggleRef}
+              onClick={toggleSidebar}
+            >
+              <Icon name="menu" size={15} />
+            </button>
+
             <Link to="/" className="topbar-brand" aria-label="HDSAT home" ref={brandRef}>
               <BrandMark />
             </Link>
@@ -312,7 +451,19 @@ export function Layout() {
         ) : null}
 
         <main className="content">
-          <Outlet />
+          {/* Skullet owns the loading transition and its hold/reveal timing. The
+              route silhouette is the measured, responsive shape already used
+              by the shell; the real outlet is not mounted until the bank is
+              ready, so no page runs against an empty catalogue. */}
+          <Skeleton
+            loading={showBankSkeleton}
+            skeleton={
+              <PageSkeleton variant={skeletonVariantForPath(location.pathname)} />
+            }
+            label="Loading page"
+          >
+            <Outlet />
+          </Skeleton>
         </main>
 
         <footer className="legal-foot">
@@ -326,26 +477,59 @@ export function Layout() {
         </footer>
       </div>
 
-      <nav
-        className={`mobile-nav${
-          navSize === 'icons' ? ' is-icon-only' : navSize === 'compact' ? ' is-compact' : ''
-        }`}
-        ref={mobileNavRef}
-        aria-label="Sections"
-      >
-        {MOBILE_NAV.map((item) => (
-          <NavLink
-            key={item.to}
-            to={item.to}
-            end={item.end}
-            aria-label={item.label}
-            className={({ isActive }) => `mobile-link${isActive ? ' is-active' : ''}`}
-          >
-            <Icon name={item.icon} size={navSize === 'icons' ? 19 : navSize === 'compact' ? 16 : 17} />
-            <span>{item.label}</span>
-          </NavLink>
-        ))}
-      </nav>
+      {/* Phone navigation: the same nine sections as the desk sidebar, in a
+          glass panel that slides over the page. It stays mounted so the exit
+          animation can finish; `visibility` keeps its links out of the tab
+          order while it is closed. */}
+      <div className={`drawer-layer${menuOpen ? ' is-open' : ''}`}>
+        <button
+          type="button"
+          className="drawer-scrim"
+          aria-hidden="true"
+          tabIndex={-1}
+          onClick={() => setMenuOpen(false)}
+        />
+        <aside
+          className="drawer"
+          id="app-drawer"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Sections"
+          aria-hidden={!menuOpen}
+        >
+          <div className="drawer-head">
+            <NavLink to="/" className="brand drawer-brand" onClick={() => setMenuOpen(false)}>
+              <BrandMark />
+              <span>
+                <strong>HDSAT</strong>
+                <em>Digital SAT prep</em>
+              </span>
+            </NavLink>
+            <button
+              type="button"
+              className="drawer-close"
+              aria-label="Close navigation menu"
+              onClick={() => setMenuOpen(false)}
+            >
+              <Icon name="close" size={16} />
+            </button>
+          </div>
+          <nav className="drawer-nav" aria-label="Sections">
+            {NAV.map((item) => (
+              <NavLink
+                key={item.to}
+                to={item.to}
+                end={item.end}
+                className={({ isActive }) => `nav-link${isActive ? ' is-active' : ''}`}
+                onClick={() => setMenuOpen(false)}
+              >
+                <Icon name={item.icon} size={17} />
+                <span>{item.label}</span>
+              </NavLink>
+            ))}
+          </nav>
+        </aside>
+      </div>
       <AuthModal />
     </div>
   );

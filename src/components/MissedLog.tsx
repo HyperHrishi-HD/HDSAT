@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Badge, Button } from './ui';
+import { todayKey } from '../lib/storage';
 import { useApp } from '../lib/store';
+import { useBackdropDismiss } from '../lib/useBackdropDismiss';
 
 /**
  * A miss clears itself from the retry list as soon as the item is answered
@@ -12,6 +14,8 @@ import { useApp } from '../lib/store';
 export function MissedLog() {
   const app = useApp();
   const [open, setOpen] = useState(false);
+  // Pressing outside closes the log; dragging a selection out of it does not.
+  const backdrop = useBackdropDismiss(() => setOpen(false));
 
   const byId = useMemo(() => {
     const map = new Map(app.questions.map((q) => [q.id, q]));
@@ -35,9 +39,7 @@ export function MissedLog() {
           role="dialog"
           aria-modal="true"
           aria-label="Missed question log"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setOpen(false);
-          }}
+          {...backdrop}
         >
           <div className="modal-card missed-log">
             <div className="row-between" style={{ marginBottom: 10 }}>
@@ -69,7 +71,7 @@ export function MissedLog() {
                               {question?.section === 'Math' ? 'Math' : 'R&W'}
                             </Badge>
                             <span className="muted">
-                              {attempt.createdAt.slice(0, 10)}
+                              {todayKey(new Date(attempt.createdAt))}
                               {question?.domain ? ` · ${question.domain}` : ''}
                             </span>
                           </div>

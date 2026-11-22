@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { FigureView, StimulusView } from '../components/FigureView';
 import { HighlightableStimulus, type HighlightRecord } from '../components/HighlightableStimulus';
 import { MathText } from '../components/MathText';
@@ -8,7 +8,18 @@ import { QuestionView } from '../components/QuestionView';
 import { ReferenceWindow } from '../components/ReferenceWindow';
 import { PaneSwitch, SplitWorkbench, useSplitPane } from '../components/SplitWorkbench';
 import { ReportQuestion } from '../components/ReportQuestion';
-import { Alert, Badge, Button, Card, InfoTip, Select, Stat, Toggle } from '../components/ui';
+import {
+  Alert,
+  Badge,
+  Button,
+  Card,
+  EmptyState,
+  Icon,
+  InfoTip,
+  Select,
+  Stat,
+  Toggle,
+} from '../components/ui';
 import {
   BLENDED_PSAT,
   SECTION_BREAK_MINUTES,
@@ -22,6 +33,8 @@ import {
   type TestPlan,
 } from '../lib/examEngine';
 import { checkAnswer } from '../lib/grading';
+import { explainMistake } from '../lib/mistakeCauses';
+import { scoreBand } from '../lib/scoreBand';
 import { downloadScoreReport } from '../lib/scoreReportPdf';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
@@ -77,7 +90,7 @@ function DesmosCollegeBoardWindow({ onClose }: { onClose: () => void }) {
           onClick={onClose}
           aria-label="Close calculator"
         >
-          ✕
+          <Icon name="close" size={16} />
         </button>
       </div>
       <div className="bb-calc-iframe-wrap">
@@ -815,7 +828,9 @@ export function FullTestPage() {
               aria-expanded={showDirections}
             >
               <span>Directions</span>
-              <span className="bb-caret">{showDirections ? '▴' : '▾'}</span>
+              <span className="bb-caret">
+                <Icon name={showDirections ? 'chevron-up' : 'chevron-down'} size={14} />
+              </span>
             </button>
           </div>
 
@@ -826,7 +841,7 @@ export function FullTestPage() {
               </div>
             ) : (
               <div className="bb-clock-hidden" aria-label="Timer hidden">
-                ⏱
+                <Icon name="clock" size={15} />
               </div>
             )}
             <button
@@ -844,7 +859,9 @@ export function FullTestPage() {
               className="bb-tool-btn"
               onClick={() => setShowReportModal((v) => !v)}
             >
-              <span className="bb-tool-icon">⚠</span>
+              <span className="bb-tool-icon">
+                <Icon name="warning" size={15} />
+              </span>
               <span className="bb-tool-label">Report</span>
             </button>
 
@@ -855,7 +872,9 @@ export function FullTestPage() {
                   className={`bb-tool-btn${showCalc ? ' is-active' : ''}`}
                   onClick={() => setShowCalc((v) => !v)}
                 >
-                  <span className="bb-tool-icon">🖩</span>
+                  <span className="bb-tool-icon">
+                    <Icon name="calculator" size={15} />
+                  </span>
                   <span className="bb-tool-label">Calculator</span>
                 </button>
                 <PaneSwitch
@@ -869,7 +888,9 @@ export function FullTestPage() {
                   onClick={() => setShowRef((v) => !v)}
                   title="Open the math reference sheet"
                 >
-                  <span className="bb-tool-icon">𝑥²</span>
+                  <span className="bb-tool-icon">
+                    <Icon name="reference" size={15} />
+                  </span>
                   <span className="bb-tool-label">Reference</span>
                 </button>
               </>
@@ -880,7 +901,9 @@ export function FullTestPage() {
               onClick={() => setExitConfirmOpen(true)}
               title="Save and exit practice test"
             >
-              <span className="bb-tool-icon">↪</span>
+              <span className="bb-tool-icon">
+                <Icon name="exit" size={15} />
+              </span>
               <span className="bb-tool-label">Exit</span>
             </button>
           </div>
@@ -937,11 +960,11 @@ export function FullTestPage() {
             <div className="bb-floating-head">
               <strong>Report Question · {currentQuestion.id}</strong>
               <button type="button" onClick={() => setShowReportModal(false)}>
-                ✕
+                <Icon name="close" size={16} />
               </button>
             </div>
             <div className="bb-floating-body">
-              <ReportQuestion questionId={currentQuestion.id} />
+              <ReportQuestion key={currentQuestion.id} questionId={currentQuestion.id} />
             </div>
           </div>
         ) : null}
@@ -962,9 +985,15 @@ export function FullTestPage() {
                   {activeStage.stageNumber}
                 </strong>
                 <div className="bb-review-legend">
-                  <span>▢ Unanswered</span>
-                  <span className="bb-legend-answered">■ Answered</span>
-                  <span style={{ color: '#b3261e' }}>⚑ For Review</span>
+                  <span>
+                    <span className="bb-legend-mark is-unanswered" aria-hidden="true" /> Unanswered
+                  </span>
+                  <span>
+                    <span className="bb-legend-mark is-answered" aria-hidden="true" /> Answered
+                  </span>
+                  <span className="is-review">
+                    <Icon name="flag" size={11} /> For Review
+                  </span>
                 </div>
               </div>
               <div className="bb-review-grid">
@@ -983,7 +1012,11 @@ export function FullTestPage() {
                         setShowReviewScreen(false);
                       }}
                     >
-                      {rev ? <span className="bb-cell-flag">⚑</span> : null}
+                      {rev ? (
+                        <span className="bb-cell-flag">
+                          <Icon name="flag" size={10} />
+                        </span>
+                      ) : null}
                       {idx + 1}
                     </button>
                   );
@@ -1047,7 +1080,9 @@ export function FullTestPage() {
                         }
                         aria-pressed={isFlagged}
                       >
-                        <span className="bb-bookmark-icon">{isFlagged ? '⚑' : '⚐'}</span>
+                        <span className="bb-bookmark-icon">
+                          <Icon name={isFlagged ? 'flag' : 'bookmark'} size={14} />
+                        </span>
                         <span>Mark for Review</span>
                       </button>
                     </div>
@@ -1194,13 +1229,19 @@ export function FullTestPage() {
                 className="bb-nav-popover-close"
                 onClick={() => setShowNavPopover(false)}
               >
-                ✕
+                <Icon name="close" size={16} />
               </button>
             </div>
             <div className="bb-nav-popover-legend">
-              <span>📍 Current</span>
-              <span>▢ Unanswered</span>
-              <span style={{ color: '#b3261e' }}>⚑ For Review</span>
+              <span>
+                <span className="bb-legend-mark is-current" aria-hidden="true" /> Current
+              </span>
+              <span>
+                <span className="bb-legend-mark is-unanswered" aria-hidden="true" /> Unanswered
+              </span>
+              <span className="is-review">
+                <Icon name="flag" size={11} /> For Review
+              </span>
             </div>
             <div className="bb-nav-popover-grid">
               {activeStage.plan.questions.map((q, idx) => {
@@ -1220,7 +1261,11 @@ export function FullTestPage() {
                       setShowNavPopover(false);
                     }}
                   >
-                    {rev ? <span className="bb-cell-flag">⚑</span> : null}
+                    {rev ? (
+                      <span className="bb-cell-flag">
+                        <Icon name="flag" size={10} />
+                      </span>
+                    ) : null}
                     {idx + 1}
                   </button>
                 );
@@ -1262,7 +1307,7 @@ export function FullTestPage() {
                   ? 'Check Your Work'
                   : `Question ${currentIndex + 1} of ${activeStage.plan.questions.length}`}
               </span>
-              <span>▴</span>
+              <Icon name="chevron-up" size={13} />
             </button>
           </div>
 
@@ -1413,10 +1458,7 @@ export function FullTestPage() {
           <div className="row-between">
             <div>
               <h1>Shared Practice Result</h1>
-              <p className="muted">
-                A read-only practice summary shared from HDSAT. It contains no name, email,
-                question ids or answers — only the score card below.
-              </p>
+              <p className="muted">Read-only practice summary. No name, email or answers.</p>
             </div>
             <Badge tone="info">{sharedSummary.assessment}</Badge>
           </div>
@@ -1504,10 +1546,6 @@ export function FullTestPage() {
             </div>
             <Badge tone="info">98 Qs · 134 min</Badge>
           </div>
-          <p className="muted">
-            Full-screen Bluebook simulation for {assessment}. Modules are scored on submission.
-          </p>
-
           <div style={{ marginTop: 14 }}>
             <Select
               label="Assessment"
@@ -1537,6 +1575,23 @@ export function FullTestPage() {
               </Alert>
             </div>
           ) : null}
+
+          {(() => {
+            const band = scoreBand(app.testAttempts, assessment);
+            return (
+              <div className="score-band" aria-live="polite">
+                <div className="score-band-main">
+                  <span className="score-band-label">Projected range</span>
+                  <strong>{band ? `${band.low}–${band.high}` : '—'}</strong>
+                </div>
+                <span className="score-band-note">
+                  {band
+                    ? `${band.samples} simulation${band.samples === 1 ? '' : 's'} · latest ${band.latest}`
+                    : 'Finish one full test to start your range'}
+                </span>
+              </div>
+            );
+          })()}
 
           <div className="row-between" style={{ marginTop: 16 }}>
             <span className="muted">
@@ -1570,9 +1625,15 @@ export function FullTestPage() {
               </div>
 
               {app.testAttempts.length === 0 ? (
-                <p className="muted" style={{ marginTop: 8 }}>
-                  No saved simulations. Ones you delete keep their score in the score log.
-                </p>
+                <EmptyState
+                  title="No saved simulations yet"
+                  body="Completed and in-progress runs appear here. Deleting one keeps its score in the log."
+                  action={
+                    <Button variant="outline" size="sm" icon="play" onClick={startFullSimulation}>
+                      Launch a simulation
+                    </Button>
+                  }
+                />
               ) : (
                 <ul className="attempt-list">
                   {app.testAttempts
@@ -1660,12 +1721,11 @@ export function FullTestPage() {
                   onClick={() => setScoreLogOpen(false)}
                   aria-label="Close score log"
                 >
-                  ✕
+                  <Icon name="close" size={16} />
                 </button>
               </div>
               <p className="muted" style={{ margin: '4px 0 10px' }}>
-                Every simulation keeps one row here after you delete it. Scores only — no answers
-                or module detail.
+                Scores only — no answers or module detail.
               </p>
               <div className="app-modal-scroll">
                 <table>
@@ -1762,8 +1822,8 @@ export function FullTestPage() {
                   <Badge tone="warn">Incomplete · saved when you exited</Badge>
                 ) : null}
                 <p className="muted">
-                  Estimated practice score range based on raw module accuracy and adaptive Stage-2
-                  tier routing. Not an official College Board scaled score.
+                  Practice estimate from module accuracy and adaptive routing. Not an official
+                  College Board score.
                 </p>
               </div>
               <div className="row">
@@ -1857,6 +1917,17 @@ export function FullTestPage() {
                       </button>
                     ))}
                   </div>
+                  <div className="report-cross-links" aria-label={`Keep working on ${m.section}`}>
+                    <Link to={`/practice?section=${encodeURIComponent(m.section)}&count=10`}>
+                      Drill {m.section}
+                    </Link>
+                    <Link to={`/bank?section=${encodeURIComponent(m.section)}`}>
+                      Review this section in the Bank
+                    </Link>
+                    <Link to={`/flashcards?section=${encodeURIComponent(m.section)}`}>
+                      {m.section === 'Math' ? 'Math formula deck' : 'Vocabulary deck'}
+                    </Link>
+                  </div>
                 </div>
               ))}
             </div>
@@ -1890,6 +1961,28 @@ export function FullTestPage() {
                       distractorRationales: q.distractor_rationales,
                     }}
                   />
+                  {!isCorrect
+                    ? (() => {
+                        const cause = explainMistake(q, given);
+                        if (!cause) return null;
+                        return (
+                          <div className="mistake-cause" role="note">
+                            <div className="row" style={{ gap: 8 }}>
+                              <Badge tone={cause.confidence >= 0.7 ? 'warn' : 'neutral'}>
+                                {cause.confidence >= 0.7 ? 'Likely cause' : 'Worth a second look'}
+                              </Badge>
+                              <strong>{cause.label}</strong>
+                            </div>
+                            <p style={{ margin: '6px 0 0' }}>{cause.hint}</p>
+                            {cause.evidence ? (
+                              <p className="muted" style={{ margin: '6px 0 0' }}>
+                                {cause.evidence}
+                              </p>
+                            ) : null}
+                          </div>
+                        );
+                      })()
+                    : null}
                 </Card>
               );
             })()

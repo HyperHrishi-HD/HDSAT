@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Badge, Card, EmptyState, Field, Select } from '../components/ui';
+import { Badge, Button, Card, EmptyState, Field, Select } from '../components/ui';
 import { useApp } from '../lib/store';
 
 export function ResourcesPage() {
@@ -76,8 +76,20 @@ export function ResourcesPage() {
       {filtered.length === 0 ? (
         <Card>
           <EmptyState
-            title="No resources match your search"
-            body="Try clearing the search term or selecting 'All Types'."
+            title="No resources match those filters"
+            body="Try a broader search or clear the filters."
+            action={
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setSearch('');
+                  setTypeFilter('all');
+                  setTagFilter('all');
+                }}
+              >
+                Clear filters
+              </Button>
+            }
           />
         </Card>
       ) : (
@@ -100,7 +112,7 @@ export function ResourcesPage() {
                   ))}
                 </div>
                 <a href={res.url} target="_blank" rel="noreferrer" className="btn btn-outline btn-sm">
-                  Open resource ↗
+                  Open resource
                 </a>
               </div>
             </Card>

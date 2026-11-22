@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react';
 import { applyWindowResize, RESIZE_DIRS, type Rect, type ResizeDir } from '../lib/windowResize';
+import { Icon } from './ui';
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value));
 
@@ -258,7 +259,7 @@ export function FloatingToolWindow({
       >
         <span>{title}</span>
         <button type="button" onClick={onClose} aria-label={`Close ${title.toLowerCase()}`}>
-          ✕
+          <Icon name="close" size={15} />
         </button>
       </div>
       <div className={`bb-floating-body bb-ref-body${bodyClassName ? ` ${bodyClassName}` : ''}`}>

@@ -1,150 +1,145 @@
-# NEXT — deferred work, planned but not started
+# NEXT — saved, not started
 
-Owner asked (2026-10-25) to save these four items here instead of starting them.
-Each one has a plan precise enough to execute without re-deciding the shape.
+Owner asked on 2026-10-28 to write these down and **not** begin them yet.
+The audit and polish pass for today is tracked separately (see `AUDIT.md`).
 
----
-
-## 4. Question bank growth with English parity (target 10k)
-
-**Where we are.** 7,132 questions, 1,804 flashcards, 18 resources. The bank is
-heavier on Math: the Math side is a drill bank built from 248 templates.
-
-**Goal.** 10,000 licensed items with Reading & Writing at roughly 50% of the
-total, and no template family that can fill a whole practice run.
-
-**How, without generating content:**
-
-1. Pull only public, redistributable sets — OpenStax, Project Gutenberg
-   (public-domain passages), Wikipedia/Wikisource (CC BY-SA, attributed), MIT
-   OpenCourseWare and other CC-licensed course material, and the publicly
-   released College Board *sample* items that carry an explicit reuse licence.
-   This is what the existing `supabase/import/data/m*` pipeline already expects:
-   a JSON file per batch, `source_id` + `license` + `license_url` per item.
-2. Every new item goes through `python tools/content_qa.py` and
-   `python supabase/import/import_questions.py --check` before it is merged.
-   Both already fail on missing licence, missing attribution, duplicate stems
-   and family collisions.
-3. Diversity budget per batch: no more than 6% of new items from one skill, and
-   at least 40% R&W. The family cooldown (`FAMILY_COOLDOWN_DAYS = 21`) already
-   stops near-duplicates from recurring inside three weeks.
-4. Is 10k enough for a heavy user for a year? A heavy student answers ~6,000
-   items a year (100/week). With family-unique pools and a 21-day cooldown, 10k
-   is about 18 months of unseen material, and the cooldown makes repeats rare
-   rather than impossible. 10k is the right stopping point; more is a cost, not
-   a need.
-5. **Compact cloud-save format** (the other half of this item): drop per-attempt
-   `response` text for everyone, roll `daily_activity` into monthly buckets after
-   a year, and purge `test_responses` older than 12 months. Needs an export that
-   stays whole — do not start it without that migration plan.
+Status of the four items: **not started**. Nothing here is in the live build,
+and none of it goes into the public GitHub export.
 
 ---
 
-## 5. Google OAuth
+## 1. Question bank growth with English parity, then the compact cloud-save format
 
-**Why it matters.** It removes the confirmation email from the signup path
-entirely, which is the real fix for the 300/day Brevo ceiling.
+**Where we are.** 7,132 questions (2,626 R&W / 4,506 Math), 1,804 flashcards,
+105 resources. Math is a drill bank built from templates; R&W is the side that
+needs real material.
 
-**The "unsafe app" screen.** Google shows it when an app is unverified and asks
-for sensitive scopes. The app only needs `openid email profile` — none of those
-are sensitive, so the warning is the generic "unverified app" one, not a scope
-warning. It disappears after Google's verification (brand verification for the
-domain in `emailRedirectTo`). Until then it is one "Advanced → continue" click.
+**Goal.** 10,000 items with Reading & Writing near 50% of the total, real
+public-domain or openly licensed sources only, **strictly no generated
+passages**, each item with an honest difficulty label.
 
-**What I need to do it as the owner (browser work):**
+**Source rules.**
+- Public-domain or redistributable only: OpenStax, Project Gutenberg,
+  Wikisource/Wikipedia (CC BY-SA, attributed), MIT OpenCourseWare, and College
+  Board items only where reuse is explicitly permitted.
+- Every item carries `source_id`, `license`, `license_url`, attribution.
+- No synthetic stems, no template churn disguised as new items.
+
+**Pipeline.**
+1. One JSON batch per source under `supabase/import/data/m*`, same shape the
+   importer already expects.
+2. `python tools/content_qa.py` and
+   `python supabase/import/import_questions.py --check` must pass before merge.
+3. Diversity budget per batch: at most 6% from one skill, at least 40% R&W, no
+   family collision with the existing bank.
+4. Difficulty relabelled per item against the same rubric used now (one-step
+   Math is never Hard); `bank-integrity.test.ts` already enforces the floor.
+5. Re-sync `questions` + `question_keys` with `tools/sync_live_bank.py --apply`
+   and verify zero differences.
+
+**Is 10k enough for a heavy user for a year?** A heavy student answers roughly
+6,000 items a year (100–120 a week). With family-unique pools and the 21-day
+family cooldown, 10k gives about 18 months of unseen material before repeats
+become routine; that is the right stopping point. Going past 10k adds hosting
+and review cost, not value.
+
+**Second half — compact cloud saves.** Drop per-attempt `response` text for
+everyone, roll `daily_activity` into monthly buckets after a year, purge
+`test_responses` older than 12 months. Needs its own migration **and** an
+export that stays whole before any data is dropped. Do this only after the
+bank growth ships.
+
+---
+
+## 2. Google OAuth — after the polish passes
+
+**Why.** It removes the confirmation email from the signup path entirely,
+which is the real fix for the 300/day Brevo ceiling.
+
+**The "unsafe app" screen.** Google shows it when an app is unverified; the
+scopes needed are only `openid email profile`, none of which are sensitive, so
+the warning is the generic unverified-app one and disappears after Google's
+brand verification of the domain. Until then it is one "Advanced → continue"
+click.
+
+**Owner asked me to do it in the Freebuff browser with their logged-in Google
+and Supabase sessions. I can do that when the browser is available; the steps
+below are what I will execute as them.**
 
 1. Google Cloud Console → new project → **OAuth consent screen**: External,
    app name HDSAT, support email, developer email; scopes `openid`, `email`,
    `profile`; publish.
 2. Credentials → **OAuth client ID** → Web application. Authorised redirect URI
-   is exactly `https://qijfmwjcaminecxmbtcf.supabase.co/auth/v1/callback`
-   (plus the same for any preview origin).
+   exactly `https://qijfmwjcaminecxmbtcf.supabase.co/auth/v1/callback`, plus
+   the preview origin if one is used.
 3. Supabase → Authentication → Providers → Google: paste client ID + secret,
    enable.
 4. Supabase → Authentication → URL configuration: add the site origin and
    `/#/account` to the redirect allow-list.
-5. Add a "Continue with Google" button to `AuthModal` calling
+5. App: add "Continue with Google" to `AuthModal` calling
    `supabase.auth.signInWithOAuth({ provider: 'google', options: { redirectTo } })`.
-   The existing `consumeAuthRedirect()` in `main.tsx` already handles the PKCE
-   return, so no new callback page is needed.
-6. Test: new Google account → lands signed in and **verified** (Google asserts
-   the address), a returning account, and a cancelled consent screen.
+   `consumeAuthRedirect()` in `main.tsx` already handles the PKCE return, so no
+   new callback page is needed.
+6. Test: new Google account lands signed in and verified; returning account;
+   cancelled consent screen.
+
+Needs from the owner: the browser session on Google Cloud Console and the
+Supabase project, plus a brand/support email if Google asks during verification.
 
 ---
 
-## 6. A second database for non-user data
+## 3. A second database for the catalogue, keeping Supabase for users
 
-**Shape the owner asked for:** Supabase holds users only; a larger, separate
-database holds the question bank and the public catalogues.
+**Owner's direction (2026-10-28):** reverse the earlier split. Supabase holds
+**only accounts and student history**. A second, larger and more locked-down
+database holds `questions`, `question_keys`, `flashcards`, `dataset_sources`
+and `resources`. It has to sync flawlessly and be tested before it is trusted.
 
-**Constraint that decides the design:** the timed runner and the arcade read
+**Constraint that decides the design.** The timed runner and the arcade read
 questions on every question change, and RLS-protected answer keys must never be
-in the same database as a client-readable table unless the keys stay behind
-definer functions. Two databases means the grading RPC can no longer join
+client-readable. Two databases means the grading RPC can no longer join
 `questions` + `question_keys` in one transaction.
 
-**Safe plan (do it in this order):**
-
-1. Keep `question_keys` (and grading) in Supabase. It is the trust boundary; do
-   not split it from the user data it protects.
-2. Move only the **read-only** catalogue — `questions`, `flashcards`,
-   `dataset_sources`, `resources` — to the second database, behind a build-time
-   export: the app already bundles a `questionBank.json` snapshot, so the
-   second database can be the *source* of that snapshot rather than a live
-   dependency of the browser.
-3. Add `tools/export_catalogue.py` that dumps the second database to
+**Safe plan (in this order).**
+1. Keep grading in Supabase for now. It is the trust boundary.
+2. Add `tools/export_catalogue.py`: dump the catalogue to
    `src/data/questionBank.json` + `flashcards.json` + `resources.json` with a
-   content hash. The app ships the hash; `buildTestPlan` refuses a plan whose
-   hash is missing from the bundle.
-4. Keep a nightly verification job (GitHub Actions, already present for the PA
-   refresh) that compares row counts and hashes between the two databases and
-   fails loudly on drift.
-5. Only after that is stable for a full release cycle, consider making the
-   second database the live read path with a signed, cached HTTP API.
+   content hash, and ship that hash with the app.
+3. Make the second database the **source** of that export, not a live
+   dependency of the browser: build-time snapshot, same bundle path students
+   already use.
+4. Nightly verification for a full release cycle comparing row counts and
+   hashes between the export and both databases; fail loudly on drift.
+5. Only after a release cycle: make the second database the live read path
+   behind a signed, cached HTTP API. Never point the browser at two databases
+   directly — two session models, two CORS surfaces, two places for a key to
+   leak.
 
-**Do not** point the browser at two databases directly: two session models, two
-CORS surfaces and two places for an answer key to leak.
+**Non-negotiables.** Answer grading stays server-side, the student never
+receives a key it was not entitled to, and a database failure degrades to the
+bundled snapshot rather than a blank practice screen.
 
 ---
 
-## 0–3 status (done and re-verified 2026-10-25)
+## 4. Public repository export (one commit) — deliberately limited
 
-- **PWA + mobile/desktop hardening** — done: manifest, service worker, icon
-  set, safe-area insets, iOS input zoom, touch targets, the 900px Arcade door
-  fix. Verified live: SW registers and precaches the shell + hashed assets
-  (`hdsat-v1-shell`, `hdsat-v1-assets`), manifest served as
-  `application/manifest+json`, every route clean at 357px and 390px with no
-  horizontal overflow. Fixes this round: portrait full screen is no longer a
-  dead end ("Play in portrait"), the Table Talk card stops being pushed off a
-  landscape phone's screen, credit URLs wrap instead of widening the page, and
-  small buttons get a 36px tap height on coarse pointers.
-- **Email ceiling** — done: a refused send is parked in `emailQueue` and sent on
-  the next open after the UTC reset (confirmation and recovery both); the queue
-  is TTL'd, capped at 5 addresses, one attempt per address per UTC day, and at
-  most two flushes per app open. Now covered by a test that the reminder strip
-  triggers the flush on mount.
-- **Security pass** — done: `tools/security_audit.py` (36 checks, green against
-  the live project) plus `20261103000100_security_hardening.sql` applied: whole-row
-  UPDATE revoked from `profiles` and `user_question_progress`, and
-  `complete_activity_session` now clamps a claimed score to the attempts the
-  server actually graded.
-- **The stripped repository** — done, private: `HyperHrishi-HD/HDSAT-standalone`
-  is a fresh history with exactly one branch (`main`) and one commit. 126 files,
-  1,000 stratified questions, 300 cards; no `.pa`, no `supabase`, no `backend`,
-  no admin console, no deployment notes, `isCloudConfigured` stubbed to false and
-  the Account copy rewritten so it never names a provider. `tools/export_open_source.py
-  --verify` typechecks and builds that tree before it is pushed, and the leak
-  scan (project ref, host, provider keys, service role, `VITE_SUPABASE_*`) is
-  clean. The existing `HDSAT` repo keeps the full history and hosting.
+The public repo (`HyperHrishi-HD/HDSAT-standalone`) is finished and purged. It
+stays at the 1,000-question sample: **no 10k bank, no OAuth, no second
+database, no admin console, no deployment notes** go into it.
 
-## What is left before launch
+**What goes in.** Only small, self-contained features that make the sample feel
+like the real product (visual/theme polish, the arcade rooms that do not depend
+on the private data, account copy that never names a provider). No files from
+`.pa`, `supabase`, `backend`, `tools` deployment helpers, or this audit.
 
-1. Finish the player-side review of the three arcade rooms on a real phone
-   (owner). Everything on the code side is green.
-2. Item 4 in halves: bank growth to 10k first, compact cloud-save second. The
-   save-format change needs its own migration and an export that stays whole.
-3. Item 5 (Google OAuth) needs the owner's browser session in Google Cloud
-   Console and Supabase; the code side is a button plus one redirect entry.
-4. Item 3 execution: `git init` on the exported tree, single commit, push to the
-   new public repo, then rewrite history here. Only when the site is final.
-5. Item 6 last: catalogue export first, live second database later.
+**Steps when the owner says go.**
+1. Run `tools/export_open_source.py`, then `--verify` (typecheck + build of the
+   exported tree) and the leak scan (project ref, host, service key, env vars).
+2. Inspect the resulting tree by hand; diff against the previous public commit
+   to confirm the question count is still 1,000.
+3. `git init` in the exported tree, one commit, push to the public repo.
+4. Only then rewrite history here if the owner still wants that. Nothing is
+   pushed from this repository.
+
+**Hard rule.** Everything built in items 1–3 and today's audit stays out of
+GitHub until the owner explicitly changes this plan.

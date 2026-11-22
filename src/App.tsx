@@ -1,5 +1,6 @@
 import { HashRouter, Navigate, Route, Routes, useLocation } from 'react-router-dom';
 import { Layout } from './components/Layout';
+import { AppSkeleton, skeletonVariantForPath } from './components/Skeleton';
 import { hasStoredProfile } from './lib/storage';
 import { useApp } from './lib/store';
 import { AccountPage } from './pages/Account';
@@ -30,21 +31,32 @@ function HomeRoute() {
   return needsWelcome() ? <Navigate to="/welcome" replace /> : <DashboardPage />;
 }
 
+/**
+ * The starting page is deliberately readable while signed in, including when
+ * it is opened from Credits. A visitor who signs in *while* it is open is
+ * still taken into the app by WelcomePage's one-time transition.
+ */
 function WelcomeRoute() {
-  useLocation();
-  return needsWelcome() ? <WelcomePage /> : <Navigate to="/" replace />;
+  return <WelcomePage />;
 }
 
 export function App() {
   const app = useApp();
 
   if (!app.ready) {
-    return (
-      <div className="boot">
-        <div className="boot-mark">HDSAT</div>
-        <p>Loading your practice environment...</p>
-      </div>
+    const pathVariant = skeletonVariantForPath(
+      typeof window === 'undefined' ? '/' : window.location.hash
     );
+    // A blank browser has no profile yet, so the home route becomes Welcome as
+    // soon as the store is ready. Start on the Welcome silhouette instead of
+    // drawing a Dashboard and then swapping it.
+    const bootVariant =
+      pathVariant === 'welcome'
+        ? 'welcome'
+        : !app.user && !hasStoredProfile() && pathVariant === 'dashboard'
+        ? 'welcome'
+        : pathVariant;
+    return <AppSkeleton variant={bootVariant} />;
   }
 
   return (

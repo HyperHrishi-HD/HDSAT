@@ -402,20 +402,29 @@ def gen_math():
     for r1, r2, r3 in [(2, 3, 5), (1, 4, 6), (3, 5, 7), (2, 6, 9)]:
         zeros = sorted({r1, r2, r3})
         answer = zeros[1]
-        wrongs = [z for z in zeros if z != answer][:2]
-        wrongs += [answer + 1]
+        # Never use another root as a distractor: every root is also a zero, so
+        # the item would have more than one correct answer.
+        wrongs = []
+        for candidate in (
+            answer + 1, answer - 1, answer + 2, answer - 2,
+            zeros[2] + 1, zeros[0] - 1,
+        ):
+            if candidate == answer or candidate in zeros or candidate in wrongs:
+                continue
+            wrongs.append(candidate)
+            if len(wrongs) == 3:
+                break
         items.append(mc(
             f"M-ALE-{n+101:03d}", "Math", "Advanced Math", "Polynomial functions and zeros",
-            "Hard",
+            "Medium",
             f"$$h(x) = (x - {r1})(x - {r2})(x - {r3})$$",
             "Which value of $x$ is a zero of $h$?",
-            f"${answer}$" if all(z != 0 for z in zeros) else f"${r1}$",
-            [f"${w}$" for w in dict.fromkeys(wrongs)][:3],
-            f"A zero of a factored polynomial is any root of one of its linear factors: $x = {answer}$ makes the factor $(x - {answer})$ equal to zero, so $h({answer}) = 0$. The other listed values are the remaining roots.",
+            f"${answer}$",
+            [f"${w}$" for w in wrongs],
+            f"A zero of a factored polynomial is any root of one of its linear factors: $x = {answer}$ makes the factor $(x - {answer})$ equal to zero, so $h({answer}) = 0$.",
             [
-                f"Substituting $x = {wrongs[0]}$ into $(x - {r1})(x - {r2})(x - {r3})$ yields a product of three nonzero factors, so it is not a zero.",
-                "Use the zero-product property: a value must zero one of the literal factors to be a zero of $h$.",
-                "Re-check each listed value against all three factors before accepting it as a zero.",
+                f"Substituting $x = {w}$ into $(x - {r1})(x - {r2})(x - {r3})$ leaves every factor nonzero, so it is not a zero."
+                for w in wrongs
             ],
         ))
         n += 1
@@ -476,13 +485,13 @@ def gen_math():
             ))
         elif prompt.startswith("What is the length of the hypotenuse?"):
             items.append(spr(
-                f"M-GEO-{n+101:03d}", "Math", "Geometry and Trigonometry", "Right triangles and trigonometric ratios", "Hard",
+                f"M-GEO-{n+101:03d}", "Math", "Geometry and Trigonometry", "Right triangles and trigonometric ratios", "Medium",
                 stim, prompt, "7sqrt(2)",
                 "In a 45-45-90 triangle the hypotenuse is $\\sqrt2$ times a leg: $7\\sqrt2$.",
             ))
         else:
             items.append(spr(
-                f"M-GEO-{n+101:03d}", "Math", "Geometry and Trigonometry", "Right triangles and trigonometric ratios", "Hard",
+                f"M-GEO-{n+101:03d}", "Math", "Geometry and Trigonometry", "Right triangles and trigonometric ratios", "Medium",
                 stim, prompt, "3/4",
                 "$\\tan A = \\dfrac{\\sin A}{\\cos A} = \\dfrac{3/5}{4/5} = \\dfrac{3}{4}$.",
             ))
@@ -540,57 +549,45 @@ def load_vocab_corpus():
 WIC_SENTENCES = 14
 
 
-def gen_wic(vocab):
-    """Words-in-context items; correct word and distractors all come from the CC0
-    list so distractors are real words with wrong meanings."""
-    from random import Random
-    rng = Random("hdsat-wic-frames")
-    bank1 = [v for v in vocab if v["band"] <= 2]
-    bank2 = [v for v in vocab if v["band"] in (3, 4)]
-    bank3 = [v for v in vocab if v["band"] >= 5]
+def gen_wic(_vocab=None):
+    """Words-in-context items with an answer deliberately matched to its frame.
 
+    The earlier version paired each authored sentence with whatever vocabulary
+    entry happened to sit at an index, so correct words could be unrelated to
+    the clue (for example, "avaricious" in a sentence about barely readable
+    letters). Keep each frame's answer and distractors explicit.
+    """
     frames = [
-        ("The committee's report was unusually ______: every recommendation came with a cost estimate and a fallback plan.", "detailed scrutiny of costs"),
-        ("Critics called the director's second film derivative, but the ______ pacing of the finale won over most reviewers.", "brisk, controlled rhythm"),
-        ("The Faraday-era archive contains hundreds of letters, many barely ______.", "barely readable"),
-        ("The mayor's budget address was deliberately ______, avoiding any commitment before the audit closed.", "noncommittal"),
-        ("Because the malware was dormant, the breach went ______ for months.", "undetected for a long time"),
-        ("Her enthusiasm was undeniable; the delivery, however, was ______, jumping between unrelated topics.", "scattered"),
-        ("The treaty's language was ______: signatories could interpret 'prompt withdrawal' in very different ways.", "ambiguous wording"),
-        ("After the scandal, the senator's support was ______, evaporating within a single news cycle.", "quickly fading"),
-        ("The professor's lectures were dense but never ______; every technical term was defined on first use.", "leaving terms undefined"),
-        ("Fuel prices fell, yet the shipping backlog remained ______ through most of the quarter.", "firmly stuck"),
-        ("The rebuttal was so ______ that even the plaintiff's counsel nodded in agreement.", "compelling"),
-        ("Early aviation instruments were crude, so pilots relied heavily on ______ landmarks.", "visible landmarks"),
-        ("The novel's opening chapter is all ______: nothing decisive actually happens for two hundred pages.", "empty setup"),
-        ("Unlike her early______ sketches, the finished murals showed meticulous detail.", "loose, rough"),
+        # (sentence, context clue, answer, answer meaning, distractors)
+        ("The committee's report was unusually ______: every recommendation included a cost estimate, a timeline, and a fallback plan.", "detailed scrutiny of costs", "thorough", "complete and careful", ["terse", "tentative", "tardy"]),
+        ("Critics called the director's second film derivative, but the ______ pacing of the finale won over most reviewers.", "brisk, controlled rhythm", "brisk", "quick and energetic", ["brittle", "bland", "bloated"]),
+        ("The Faraday-era archive contains hundreds of letters, many barely ______.", "barely readable", "legible", "readable", ["lucrative", "lenient", "lethal"]),
+        ("The mayor's budget address was deliberately ______, avoiding any commitment before the audit closed.", "noncommittal", "evasive", "avoiding a direct answer", ["earnest", "eloquent", "drab"]),
+        ("Because the malware was dormant, the breach went ______ for months.", "undetected for a long time", "undetected", "not discovered", ["unscathed", "unwarranted", "unresolved"]),
+        ("Her enthusiasm was undeniable; the delivery, however, was ______, jumping between unrelated topics.", "scattered", "desultory", "lacking a plan or purpose", ["diligent", "deliberate", "defiant"]),
+        ("The treaty's language was ______: signatories could interpret 'prompt withdrawal' in very different ways.", "ambiguous wording", "ambiguous", "open to more than one interpretation", ["amiable", "adamant", "adjacent"]),
+        ("After the scandal, the senator's support was ______, evaporating within a single news cycle.", "quickly fading", "ephemeral", "lasting a very short time", ["emphatic", "equitable", "eternal"]),
+        ("The professor's lectures were dense but never ______; every technical term was defined on first use.", "leaving terms undefined", "opaque", "difficult to understand", ["ornate", "erratic", "ostentatious"]),
+        ("Fuel prices fell, yet the shipping backlog remained ______ through most of the quarter.", "firmly stuck", "persistent", "continuing despite obstacles", ["sporadic", "slender", "soothing"]),
+        ("The rebuttal was so ______ that even the plaintiff's counsel nodded in agreement.", "compelling", "cogent", "clear and convincing", ["caustic", "cursory", "cryptic"]),
+        ("Early aviation instruments were crude, so pilots relied heavily on ______ landmarks.", "visible landmarks", "visible", "able to be seen", ["volatile", "vestigial", "vague"]),
+        ("The novel's opening chapter is all ______: nothing decisive actually happens for two hundred pages.", "empty setup", "exposition", "background information that sets up a story", ["exultation", "exhaustion", "excision"]),
+        ("Unlike her early ______ sketches, the finished murals showed meticulous detail.", "loose, rough", "rough", "unfinished or preliminary", ["rigid", "radiant", "robust"]),
     ]
     items = []
-    for i, (sentence, gloss) in enumerate(frames):
-        pool = bank1 if i % 3 == 0 else (bank2 if i % 3 == 1 else bank3)
-        correct = pool[(i * 7) % len(pool)]
-        distract = []
-        seen_words = {correct["word"]}
-        j = (i * 11 + 5) % len(pool)
-        while len(distract) < 3:
-            cand = pool[j]
-            j = (j + 3) % len(pool)
-            if cand["word"] in seen_words:
-                continue
-            seen_words.add(cand["word"])
-            distract.append(cand)
+    for i, (sentence, gloss, correct, meaning, distract) in enumerate(frames):
         items.append(mc(
             f"RW-CRF-{100 + i:03d}", "Reading and Writing", "Craft and Structure", "Words in Context",
             ["Easy", "Medium", "Hard"][i % 3],
             sentence,
             "Which choice completes the text with the most logical and precise word?",
-            correct["word"],
-            [d["word"] for d in distract],
-            f"\u201c{correct['word']}\u201d means \u201c{correct['definition']}\u201d, which matches the context: {gloss}.",
+            correct,
+            distract,
+            f"\u201c{correct}\u201d means \u201c{meaning}\u201d, which matches the context: {gloss}.",
             [
-                f"\u201c{distract[0]['word']}\u201d means \u201c{distract[0]['definition']}\u201d, which does not fit the context of {gloss}.",
-                f"\u201c{distract[1]['word']}\u201d means \u201c{distract[1]['definition']}\u201d; the sentence requires the sense \u201c{gloss}\u201d.",
-                f"\u201c{distract[2]['word']}\u201d means \u201c{distract[2]['definition']}\u201d, which clashes with the surrounding description.",
+                f"\u201c{distract[0]}\u201d does not fit the context of {gloss}.",
+                f"\u201c{distract[1]}\u201d clashes with the required sense of {gloss}.",
+                f"\u201c{distract[2]}\u201d is not supported by the surrounding description.",
             ],
         ))
     return items
@@ -1246,14 +1243,10 @@ def main():
     math_items = uniquify(math_items)
     extra_rw = uniquify(extra_rw)
     questions = extra_rw + math_items
-    # Balance the generated Math difficulty spread so adaptive 'upper' modules use
-    # genuinely demanding skills: trig, circle algebra, systems and composition are
-    # tagged Hard.
-    for q in questions:
-        if q["section"] != "Math" or q["difficulty"] != "Medium":
-            continue
-        if q["id"].startswith(("M-SYS-", "M-GEO-", "M-ALE-")) and q["difficulty"] == "Medium":
-            q["difficulty"] = "Hard"
+    # Difficulty comes from the item itself (tools/fix_bank.py). The generator
+    # used to promote every M-SYS/M-GEO/M-ALE item in a block to Hard to fill
+    # the adaptive upper modules, which put 32(1.5)^1 and a 5-12-13 hypotenuse
+    # in the Hard pool.
     with open(os.path.join(EXP_DIR, "extra_questions.json"), "w", encoding="utf-8") as fh:
         json.dump({"questions": questions}, fh, ensure_ascii=False, indent=1)
 

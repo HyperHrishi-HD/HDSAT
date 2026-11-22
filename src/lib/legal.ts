@@ -18,11 +18,11 @@ function clean(value: string | undefined): string {
 }
 
 /** Bump this whenever the policies below change materially. */
-export const LEGAL_VERSION = '1.3';
+export const LEGAL_VERSION = '1.4';
 /** Founding date. Never changes. */
 export const LEGAL_STARTED_DATE = 'October 17, 2026';
 /** The day of the most recent material change. Update with every policy edit. */
-export const LEGAL_LAST_UPDATED = 'October 26, 2026';
+export const LEGAL_LAST_UPDATED = 'November 22, 2026';
 export const SITE_NAME = 'HDSAT';
 export const TERMS_PATH = '/terms';
 export const PRIVACY_PATH = '/privacy';
@@ -31,7 +31,6 @@ export const CREDITS_PATH = '/credits';
 export const CREATOR_NAME = 'HyperHrishi HD';
 export const CREATOR_HANDLE = 'HyperHrishi-HD';
 export const CREATOR_YOUTUBE_URL = 'https://www.youtube.com/@HyperHrishiHD';
-export const CREATOR_GITHUB_URL = 'https://github.com/HyperHrishi-HD/HDSAT';
 
 export const OPERATOR_NAME = clean(env.VITE_OPERATOR_NAME) || `the ${SITE_NAME} operator`;
 export const SUPPORT_EMAIL = clean(env.VITE_SUPPORT_EMAIL);

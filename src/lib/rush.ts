@@ -1,3 +1,4 @@
+import { questionFamilyKeys } from './examEngine';
 import type { Difficulty, Question, Section } from './types';
 
 /**
@@ -116,6 +117,23 @@ export function rushDifficultyMix(elapsedSeconds: number): RushDifficultyMix {
 
 export type RushServed = Record<Difficulty, number>;
 
+/** What has already been served in this run, for variety within the clock. */
+export interface RushDrawHistory {
+  families: Set<string>;
+  skills: Map<string, number>;
+  lastSkill: string | null;
+}
+
+export function emptyRushHistory(): RushDrawHistory {
+  return { families: new Set<string>(), skills: new Map<string, number>(), lastSkill: null };
+}
+
+function noteRushQuestion(history: RushDrawHistory, q: Question): void {
+  for (const key of questionFamilyKeys(q)) history.families.add(key);
+  history.skills.set(q.skill, (history.skills.get(q.skill) ?? 0) + 1);
+  history.lastSkill = q.skill;
+}
+
 export function emptyRushServed(): RushServed {
   return { Easy: 0, Medium: 0, Hard: 0 };
 }
@@ -151,7 +169,8 @@ export function chooseRushQuestion(
   elapsedSeconds: number,
   served: RushServed,
   usedIds: Set<string>,
-  rand: () => number = Math.random
+  rand: () => number = Math.random,
+  history?: RushDrawHistory
 ): Question | null {
   if (pool.length === 0) return null;
   const target: Difficulty | null =
@@ -161,8 +180,27 @@ export function chooseRushQuestion(
   const candidates = fresh.length > 0 ? fresh : pool.filter(matchesTarget);
   const fallback = candidates.length > 0 ? candidates : pool.filter((q) => !usedIds.has(q.id));
   const finalPool = fallback.length > 0 ? fallback : pool;
-  const index = Math.min(finalPool.length - 1, Math.floor(rand() * finalPool.length));
-  return finalPool[index] ?? null;
+  const draw = (items: Question[]) =>
+    items[Math.min(items.length - 1, Math.floor(rand() * items.length))] ?? null;
+
+  if (history) {
+    const familyUsed = (q: Question) =>
+      questionFamilyKeys(q).some((key) => history.families.has(key));
+    // The first list is the ideal: a fresh family and a different skill. Each
+    // fallback gives up one constraint, so a run only repeats when the entire
+    // eligible slice is exhausted.
+    const tiers = [
+      finalPool.filter((q) => !familyUsed(q) && q.skill !== history.lastSkill),
+      finalPool.filter((q) => !familyUsed(q)),
+      finalPool.filter((q) => q.skill !== history.lastSkill),
+      finalPool,
+    ];
+    const chosen = tiers.map(draw).find((q): q is Question => q !== null) ?? null;
+    if (chosen) noteRushQuestion(history, chosen);
+    return chosen;
+  }
+
+  return draw(finalPool);
 }
 
 /** Base points for one correct answer, before the streak multiplier. */

@@ -3,8 +3,15 @@ import { GameShell } from './GameShell';
 import { RuneQuestionCard } from './RuneQuestionCard';
 import { Badge, Button, Card, Icon, Stat } from './ui';
 import {
+  arcadeLevel,
+  arcadeLevelLabel,
+  markArcadeQuestion,
+  noteArcadeRun,
+  takeArcadeQuestions,
+} from '../lib/arcadeProgress';
+import { ARCADE_COINS } from '../lib/arcadeCoins';
+import {
   buildRunePool,
-  describeRoom,
   doorSolid,
   generateRoom,
   makeRng,
@@ -16,9 +23,11 @@ import {
   type Room,
   type RuneItem,
   type Snake,
+  type VaultCoin,
   type Wall,
 } from '../lib/arcadeGames';
 import { useCanvasFit } from '../lib/canvasFit';
+import { useLeaveSave } from '../lib/leaveSave';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
 import {
@@ -49,6 +58,43 @@ import {
 const VIEW_W = 900;
 const VIEW_H = 460;
 const BEST_KEY = 'hdsat.vault.best.v1';
+const SEEN_KEY = 'hdsat.vault.seen.v1';
+const VAULT_COINS_KEY = 'hdsat.vault.coins.v1';
+
+function loadVaultSeen(): string[] {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(SEEN_KEY) ?? '[]') as unknown;
+    return Array.isArray(parsed) ? parsed.filter((id): id is string => typeof id === 'string').slice(-600) : [];
+  } catch {
+    return [];
+  }
+}
+
+function markVaultSeen(questionId: string): void {
+  try {
+    const seen = loadVaultSeen();
+    if (seen.includes(questionId)) return;
+    localStorage.setItem(SEEN_KEY, JSON.stringify([...seen, questionId].slice(-600)));
+  } catch {
+    /* storage unavailable: duplicate protection simply lasts for this run */
+  }
+}
+
+function loadVaultCoins(): number {
+  try {
+    return Math.max(0, Number(localStorage.getItem(VAULT_COINS_KEY) ?? '0') || 0);
+  } catch {
+    return 0;
+  }
+}
+
+function saveVaultCoins(value: number): void {
+  try {
+    localStorage.setItem(VAULT_COINS_KEY, String(Math.max(0, Math.floor(value))));
+  } catch {
+    /* storage unavailable: the actual HDCoins balance is still updated */
+  }
+}
 
 interface Keys {
   left: boolean;
@@ -307,6 +353,30 @@ function drawCrate(ctx: CanvasRenderingContext2D, crate: Crate, cam: number) {
   ctx.stroke();
 }
 
+function drawCoin(ctx: CanvasRenderingContext2D, coin: VaultCoin, cam: number, time: number) {
+  const x = coin.x - cam + coin.w / 2;
+  const y = coin.y + coin.h / 2 + Math.sin(time * 2.4 + coin.x * 0.04) * 4;
+  if (x < -40 || x > VIEW_W + 40) return;
+  const glow = ctx.createRadialGradient(x, y, 2, x, y, 24);
+  glow.addColorStop(0, 'rgba(255,226,122,0.35)');
+  glow.addColorStop(1, 'rgba(255,190,65,0)');
+  ctx.fillStyle = glow;
+  ctx.beginPath();
+  ctx.arc(x, y, 24, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = '#f2c14e';
+  ctx.beginPath();
+  ctx.ellipse(x, y, 8.4, 10, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.strokeStyle = '#8f5d13';
+  ctx.lineWidth = 1.4;
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(255,247,188,0.9)';
+  ctx.beginPath();
+  ctx.arc(x - 2.4, y - 3.4, 2.1, 0, Math.PI * 2);
+  ctx.fill();
+}
+
 function drawLever(ctx: CanvasRenderingContext2D, lever: Lever, cam: number, pulled: boolean, time: number) {
   const x = lever.x - cam;
   if (x > VIEW_W + 90 || x < -90) return;
@@ -424,52 +494,101 @@ function drawHazard(ctx: CanvasRenderingContext2D, hazard: Hazard, cam: number, 
   const x = hazard.x - cam;
   if (x > VIEW_W + 90 || x + hazard.w < -90) return;
   if (hazard.kind === 'spikes') {
+    // Iron teeth on a dark bed. The old red wash read as a hitbox painted over
+    // the level, so the danger is carried by the silhouette, not a glow.
     const teeth = 8;
     const step = hazard.w / teeth;
+    ctx.fillStyle = '#303640';
+    ctx.fillRect(x - 2, hazard.y + hazard.h - 5, hazard.w + 4, 5);
     ctx.fillStyle = '#9aa6b8';
     for (let i = 0; i < teeth; i += 1) {
       const sx = x + i * step;
       ctx.beginPath();
-      ctx.moveTo(sx, hazard.y + hazard.h);
+      ctx.moveTo(sx, hazard.y + hazard.h - 3);
       ctx.lineTo(sx + step / 2, hazard.y - 4);
-      ctx.lineTo(sx + step, hazard.y + hazard.h);
+      ctx.lineTo(sx + step, hazard.y + hazard.h - 3);
       ctx.closePath();
       ctx.fill();
     }
-    ctx.strokeStyle = 'rgba(255,120,120,0.55)';
+    ctx.strokeStyle = '#5f6875';
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(x, hazard.y + hazard.h);
-    ctx.lineTo(x + hazard.w, hazard.y + hazard.h);
+    for (let i = 0; i < teeth; i += 1) {
+      const sx = x + i * step;
+      ctx.moveTo(sx + step / 2, hazard.y - 4);
+      ctx.lineTo(sx + step * 0.68, hazard.y + hazard.h - 3);
+    }
     ctx.stroke();
-    const pulse = 0.16 + Math.sin(time * 4) * 0.05;
-    ctx.fillStyle = `rgba(255,90,90,${pulse})`;
-    ctx.fillRect(x - 6, hazard.y - 10, hazard.w + 12, 24);
     return;
   }
 
-  // Bear trap: two jaws, teeth inward, one jaw trembling on its spring.
+  // Bear trap: the old head-on jaw silhouette, kept low and wide. A single
+  // forged arch beds into a base plate with a hinge at each end; six teeth rise
+  // from the plate with their tips following the arch, and the middle pair
+  // trembles on the spring. No offset rings and no red wash.
   const tremble = Math.sin(time * 8 + hazard.x) * 0.6;
   const cx = x + hazard.w / 2;
-  ctx.strokeStyle = '#8e8175';
+  const baseY = hazard.y + hazard.h - 2;
+  const radius = hazard.w / 2 - 1;
+
+  // A soft contact shadow beds the ironwork into the floor.
+  ctx.fillStyle = 'rgba(20,14,10,0.35)';
+  ctx.beginPath();
+  ctx.ellipse(cx, baseY + 2, radius + 3, 3, 0, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Base plate first, so the arch and teeth sit on top of it.
+  ctx.fillStyle = '#6b5d50';
+  ctx.fillRect(x + 1, baseY - 3, hazard.w - 2, 4);
+
+  // Hinge caps at both ends of the jaw.
+  for (const hingeX of [x + 1.5, x + hazard.w - 1.5]) {
+    ctx.fillStyle = '#4c433b';
+    ctx.beginPath();
+    ctx.arc(hingeX, baseY + 1, 2, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = '#a4977f';
+    ctx.lineWidth = 0.6;
+    ctx.beginPath();
+    ctx.arc(hingeX, baseY + 1, 1, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // The jaw arch: one dark rim and a thin lit inner edge.
+  ctx.strokeStyle = '#7d7468';
   ctx.lineWidth = 2;
   ctx.beginPath();
-  ctx.arc(cx, hazard.y + hazard.h + 2, hazard.w / 2, Math.PI, Math.PI * 2);
+  ctx.arc(cx, baseY, radius, Math.PI, Math.PI * 2);
   ctx.stroke();
-  ctx.fillStyle = '#a9b3c0';
+  ctx.strokeStyle = '#b3a894';
+  ctx.lineWidth = 0.6;
+  ctx.beginPath();
+  ctx.arc(cx, baseY, radius - 1.25, Math.PI, Math.PI * 2);
+  ctx.stroke();
+
+  // Six teeth: short and wide, tips following the arch, middle pair trembling.
+  const toothW = 4.4;
+  const toothGap = (hazard.w - toothW - 3) / 5;
   for (let i = 0; i < 6; i += 1) {
-    const sx = x + 2 + (i * (hazard.w - 4)) / 5;
+    const sx = x + 1.5 + i * toothGap;
+    const arch = Math.sin(((i + 0.5) / 6) * Math.PI);
+    const wobble = i === 2 || i === 3 ? tremble : 0;
+    const tipY = hazard.y + 1 - arch * 5 + wobble;
+    ctx.fillStyle = '#a9b3c0';
     ctx.beginPath();
-    ctx.moveTo(sx, hazard.y + hazard.h);
-    ctx.lineTo(sx + 2.5, hazard.y - 6 + tremble);
-    ctx.lineTo(sx + 5, hazard.y + hazard.h);
+    ctx.moveTo(sx, baseY);
+    ctx.lineTo(sx + toothW / 2, tipY);
+    ctx.lineTo(sx + toothW, baseY);
     ctx.closePath();
     ctx.fill();
+    // One lit edge gives each tooth some section without a glow.
+    ctx.strokeStyle = '#6d7988';
+    ctx.lineWidth = 0.5;
+    ctx.beginPath();
+    ctx.moveTo(sx + 0.9, baseY - 1);
+    ctx.lineTo(sx + toothW / 2, tipY);
+    ctx.stroke();
   }
-  ctx.fillStyle = '#6b5d50';
-  ctx.fillRect(x + 1, hazard.y + hazard.h - 3, hazard.w - 2, 4);
-  ctx.fillStyle = 'rgba(255,120,120,0.5)';
-  ctx.fillRect(cx - 5, hazard.y + hazard.h + 4, 10, 2);
 }
 
 function drawSnake(ctx: CanvasRenderingContext2D, snake: Snake, cam: number, time: number) {
@@ -678,7 +797,8 @@ export function drawScene(
   embers: Ember[],
   crates: Crate[],
   pulled: Set<string>,
-  snakes: Snake[]
+  snakes: Snake[],
+  coins: VaultCoin[] = []
 ) {
   ctx.clearRect(0, 0, VIEW_W, VIEW_H);
   drawBackdrop(ctx, cam, time);
@@ -702,6 +822,7 @@ export function drawScene(
   }
 
   for (const crate of crates) drawCrate(ctx, crate, cam);
+  for (const coin of coins) drawCoin(ctx, coin, cam, time);
 
   for (const [i, torch] of room.torches.entries()) {
     const x = torch.x - cam;
@@ -743,6 +864,205 @@ export function drawScene(
  Component
 -------------------------------------------------------------------------- */
 
+/**
+ * The on-screen controls, for more than one finger at a time.
+ *
+ * A phone player needs to hold right and jump together, and slide a thumb from
+ * one key to another without either one sticking. The pad counts pointers per
+ * action, so two fingers on the same key never cancel each other. The CSS on
+ * `.vault-controls` and `.vault-key` sets `touch-action: none` so the browser
+ * does not turn a press into a scroll and cancel the pointer stream.
+ */
+type PadAction = keyof Keys;
+
+const PAD_KEYS: { action: PadAction; label: string; hint: string; className?: string }[] = [
+  { action: 'left', label: '◀', hint: 'Move left' },
+  { action: 'right', label: '▶', hint: 'Move right' },
+  { action: 'jump', label: 'Jump', hint: 'Jump or climb', className: 'is-jump' },
+  { action: 'down', label: '▼', hint: 'Climb down' },
+];
+
+function padActionAt(target: EventTarget | null): PadAction | null {
+  const element = target instanceof Element ? target : null;
+  const node = element?.closest('[data-vault-action]') as HTMLElement | null;
+  const action = node?.dataset.vaultAction;
+  return action === 'left' || action === 'right' || action === 'jump' || action === 'down'
+    ? action
+    : null;
+}
+
+/**
+ * The whole d-pad is one surface, and on a phone it listens to real touch
+ * events.
+ *
+ * Pointer capture was the wrong tool here. On iOS and on several Android
+ * browsers a second finger either cancelled the first pointer or arrived
+ * without its own move stream, so holding right and jumping at the same time
+ * failed, and a thumb that slid from one key to the next kept the old key held.
+ * Touch events carry every finger in `changedTouches` with a stable identifier
+ * and need no capture. A mouse or a pen still uses the pointer handlers, and a
+ * browser without touch support falls back to them too.
+ *
+ * A held key reports `down` once and stays down until that finger lifts, which
+ * is what makes a held jump hop again on landing and keep climbing a rope.
+ */
+export function VaultPad({ onChange }: { onChange: (action: PadAction, down: boolean) => void }) {
+  const padRef = useRef<HTMLDivElement | null>(null);
+  /** Every held finger or pointer, keyed by `t<identifier>` or `p<id>`. */
+  const active = useRef<Map<string, PadAction>>(new Map());
+  const counts = useRef<Record<PadAction, number>>({ left: 0, right: 0, jump: 0, down: 0 });
+  const changeRef = useRef(onChange);
+  changeRef.current = onChange;
+  const touchFirst = useRef(
+    typeof window !== 'undefined' &&
+      ('ontouchstart' in window ||
+        (typeof navigator !== 'undefined' && (navigator.maxTouchPoints ?? 0) > 0))
+  );
+
+  const apply = useCallback((action: PadAction, delta: number) => {
+    const next = Math.max(0, counts.current[action] + delta);
+    if (next === counts.current[action]) return;
+    counts.current[action] = next;
+    changeRef.current(action, next > 0);
+  }, []);
+
+  const release = useCallback(
+    (id: string) => {
+      const action = active.current.get(id);
+      if (!action) return;
+      active.current.delete(id);
+      apply(action, -1);
+    },
+    [apply]
+  );
+
+  const releaseAll = useCallback(() => {
+    for (const [id, action] of active.current) {
+      active.current.delete(id);
+      apply(action, -1);
+    }
+  }, [apply]);
+
+  const keyAt = useCallback((x: number, y: number, fallback: EventTarget | null) => {
+    let element: Element | null = null;
+    try {
+      element = document.elementFromPoint(x, y);
+    } catch {
+      element = null;
+    }
+    return padActionAt(element) ?? padActionAt(fallback);
+  }, []);
+
+  // Touch listeners are attached by hand so they can be non-passive: a passive
+  // touchstart cannot call preventDefault, and without that the browser turns
+  // a press into a scroll or a long-press and cancels the stream mid-run.
+  useEffect(() => {
+    const pad = padRef.current;
+    if (!pad) return;
+
+    const start = (event: TouchEvent) => {
+      event.preventDefault();
+      for (const touch of Array.from(event.changedTouches)) {
+        const id = `t${touch.identifier}`;
+        if (active.current.has(id)) continue;
+        const action = keyAt(touch.clientX, touch.clientY, touch.target);
+        if (!action) continue;
+        active.current.set(id, action);
+        apply(action, 1);
+      }
+    };
+
+    const move = (event: TouchEvent) => {
+      if (active.current.size === 0) return;
+      event.preventDefault();
+      for (const touch of Array.from(event.changedTouches)) {
+        const id = `t${touch.identifier}`;
+        const previous = active.current.get(id);
+        if (!previous) continue;
+        const next = keyAt(touch.clientX, touch.clientY, null);
+        // Off the pad keeps the last key held, so a thumb can overshoot the
+        // edge without dropping a run; sliding onto another key switches.
+        if (!next || next === previous) continue;
+        apply(previous, -1);
+        active.current.set(id, next);
+        apply(next, 1);
+      }
+    };
+
+    const end = (event: TouchEvent) => {
+      for (const touch of Array.from(event.changedTouches)) release(`t${touch.identifier}`);
+    };
+
+    // `end` also covers a finger that lifts after the browser has cancelled the
+    // stream. Blur and a hidden tab release everything so no key stays held and
+    // steals the next gesture.
+    pad.addEventListener('touchstart', start, { passive: false });
+    pad.addEventListener('touchmove', move, { passive: false });
+    pad.addEventListener('touchend', end);
+    pad.addEventListener('touchcancel', end);
+    window.addEventListener('blur', releaseAll);
+    document.addEventListener('visibilitychange', releaseAll);
+    return () => {
+      pad.removeEventListener('touchstart', start);
+      pad.removeEventListener('touchmove', move);
+      pad.removeEventListener('touchend', end);
+      pad.removeEventListener('touchcancel', end);
+      window.removeEventListener('blur', releaseAll);
+      document.removeEventListener('visibilitychange', releaseAll);
+    };
+  }, [apply, keyAt, release, releaseAll]);
+
+  return (
+    <div
+      ref={padRef}
+      className="vault-dpad"
+      role="group"
+      aria-label="Vault controls"
+      onPointerDown={(event) => {
+        // The touch listener above owns fingers; handling a touch pointer twice
+        // made one thumb press look like two and left the other one stuck.
+        if (event.pointerType === 'touch' && touchFirst.current) return;
+        event.preventDefault();
+        const action = padActionAt(event.target);
+        if (!action || active.current.has(`p${event.pointerId}`)) return;
+        event.currentTarget.setPointerCapture?.(event.pointerId);
+        active.current.set(`p${event.pointerId}`, action);
+        apply(action, 1);
+      }}
+      onPointerMove={(event) => {
+        if (event.pointerType === 'touch' && touchFirst.current) return;
+        const id = `p${event.pointerId}`;
+        const previous = active.current.get(id);
+        if (!previous) return;
+        event.preventDefault();
+        const next = keyAt(event.clientX, event.clientY, null);
+        if (!next || next === previous) return;
+        apply(previous, -1);
+        active.current.set(id, next);
+        apply(next, 1);
+      }}
+      onPointerUp={(event) => release(`p${event.pointerId}`)}
+      onPointerCancel={(event) => release(`p${event.pointerId}`)}
+      onLostPointerCapture={(event) => release(`p${event.pointerId}`)}
+      onContextMenu={(event) => event.preventDefault()}
+    >
+      {PAD_KEYS.map((key) => (
+        <button
+          key={key.action}
+          type="button"
+          className={`vault-key${key.className ? ` ${key.className}` : ''}`}
+          aria-label={key.hint}
+          data-vault-action={key.action}
+          draggable={false}
+          onDragStart={(event) => event.preventDefault()}
+        >
+          {key.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
 export function RuneVault() {
   const app = useApp();
   const [phase, setPhase] = useState<'intro' | 'playing'>('intro');
@@ -755,7 +1075,10 @@ export function RuneVault() {
   const [sprInput, setSprInput] = useState('');
   const [answered, setAnswered] = useState(0);
   const [correct, setCorrect] = useState(0);
-  const [mechanisms, setMechanisms] = useState(0);
+  const [vaultCoins, setVaultCoins] = useState<number>(() => loadVaultCoins());
+  const [roomProgress, setRoomProgress] = useState(0);
+  const [seenAtStart, setSeenAtStart] = useState<string[]>(() => loadVaultSeen());
+  const [questionLevel, setQuestionLevel] = useState<number>(() => arcadeLevel('vault'));
   const [message, setMessage] = useState<string | null>(null);
   const [best, setBest] = useState<number>(() => loadBest());
 
@@ -769,6 +1092,8 @@ export function RuneVault() {
   const gateRef = useRef(false);
   const questionOpenRef = useRef(false);
   const advancingRef = useRef(false);
+  /** The room whose rune has already been paid; a room pays at most once. */
+  const paidStageRef = useRef<number | null>(null);
   const keysRef = useRef<Keys>({ ...NO_KEYS });
   const stateRef = useRef<VaultState | null>(null);
   const camRef = useRef(0);
@@ -779,16 +1104,27 @@ export function RuneVault() {
   const triedRef = useRef(false);
   const sessionRef = useRef(newEventId());
   const messageTimer = useRef<number | null>(null);
+  /** Last time the pinned-crate hint was shown, so holding a shove cannot spam it. */
+  const pinnedAtRef = useRef(0);
+  const roomProgressRef = useRef(0);
+  const awardCoinsRef = useRef(app.actions.awardCoins);
   const advanceRef = useRef<() => void>(() => {});
   const openRef = useRef<() => void>(() => {});
+  useEffect(() => {
+    awardCoinsRef.current = app.actions.awardCoins;
+  }, [app.actions.awardCoins]);
 
   // Frozen at mount so answering a gate question cannot swap the items in
   // rooms the player has not reached yet.
   const [progressAtStart] = useState(() => app.progress);
-  const pool: RuneItem[] = useMemo(
-    () => (seed ? buildRunePool(app.questions, seed, 40, progressAtStart) : []),
-    [app.questions, seed, progressAtStart]
-  );
+  const pool: RuneItem[] = useMemo(() => {
+    if (!seed) return [];
+    // The room number resets, the question history does not. Take a fresh,
+    // level-appropriate slice first, then let the existing family/freshness
+    // builder interleave R&W and Math without near-duplicates.
+    const candidates = takeArcadeQuestions('vault', app.questions, 240, seed);
+    return buildRunePool(candidates, seed, 80, progressAtStart, seenAtStart);
+  }, [app.questions, seed, progressAtStart, seenAtStart]);
   const poolRef = useRef<RuneItem[]>([]);
   const poolIndexRef = useRef(0);
   useEffect(() => {
@@ -800,19 +1136,38 @@ export function RuneVault() {
     [app.questions, question]
   );
 
-  // The intro's "new each room" readout is drawn from a room rolled for this
-  // mount, so it is a real sample of the machinery rather than the same line
-  // every time the card is opened.
-  const previewRoom = useMemo(
-    () => generateRoom(1, `preview-${Math.random().toString(36).slice(2, 9)}`),
-    []
-  );
-
   const flash = useCallback((text: string) => {
     setMessage(text);
     if (messageTimer.current) window.clearTimeout(messageTimer.current);
     messageTimer.current = window.setTimeout(() => setMessage(null), 2800);
   }, []);
+
+  /**
+   * R is a full level reset, not a crate reset. It restores the player to the
+   * door, every crate and snake to its generated position, every lever to its
+   * resting state, closes the gate again and clears the current rune panel.
+   * The stage and the question history are deliberately untouched.
+   */
+  const resetLevel = useCallback(() => {
+    const current = roomRef.current;
+    if (!current) return;
+    stateRef.current = createVaultState(current);
+    gateRef.current = false;
+    setGateOpen(false);
+    setQuestion(null);
+    setFeedback(null);
+    setRoomProgress(0);
+    roomProgressRef.current = 0;
+    questionOpenRef.current = false;
+    camRef.current = 0;
+    triedRef.current = false;
+    pinnedAtRef.current = 0;
+    flash('Level reset — back to the door.');
+  }, [flash]);
+  const resetLevelRef = useRef(resetLevel);
+  useEffect(() => {
+    resetLevelRef.current = resetLevel;
+  }, [resetLevel]);
 
   useEffect(
     () => () => {
@@ -827,7 +1182,8 @@ export function RuneVault() {
     if (!room) return;
     roomRef.current = room;
     stateRef.current = createVaultState(room);
-    setMechanisms(0);
+    setRoomProgress(0);
+    roomProgressRef.current = 0;
     camRef.current = 0;
     gateRef.current = false;
     questionOpenRef.current = false;
@@ -836,6 +1192,7 @@ export function RuneVault() {
     setFeedback(null);
     advancingRef.current = false;
     triedRef.current = false;
+    pinnedAtRef.current = 0;
     stageStartRef.current = Date.now();
   }, [room]);
 
@@ -844,21 +1201,37 @@ export function RuneVault() {
     if (!question) keysRef.current = { ...NO_KEYS };
   }, [question]);
 
+  /**
+   * Pays the room that is open right now, once. Reaching the gate calls it
+   * through `advance`; leaving mid-room (the Leave vault button, a tab switch
+   * or a closed app) calls it too, so the rune that was actually answered is
+   * saved instead of lost. `paidStageRef` holds the stage already settled.
+   */
+  const settleRoom = useCallback(() => {
+    const current = roomRef.current?.stage;
+    if (current === undefined) return;
+    if (paidStageRef.current === current) return;
+    const answeredThisStage = stageAnsweredRef.current;
+    if (answeredThisStage < 1) return;
+    paidStageRef.current = current;
+    void app.actions.completeSession({
+      activityType: 'mini_game',
+      sessionId: `${sessionRef.current}:${current}`,
+      questions: answeredThisStage,
+      correct: stageCorrectRef.current,
+      timeSpentSeconds: Math.max(1, Math.round((Date.now() - stageStartRef.current) / 1000)),
+    });
+  }, [app.actions]);
+
+  useLeaveSave(() => {
+    if (phase === 'playing') settleRoom();
+  }, phase === 'playing');
+
   const advance = useCallback(() => {
     if (advancingRef.current || !roomRef.current) return;
     advancingRef.current = true;
     const current = roomRef.current.stage;
-    const answeredThisStage = stageAnsweredRef.current;
-    const correctThisStage = stageCorrectRef.current;
-    if (answeredThisStage > 0) {
-      void app.actions.completeSession({
-        activityType: 'mini_game',
-        sessionId: `${sessionRef.current}:${current}`,
-        questions: answeredThisStage,
-        correct: correctThisStage,
-        timeSpentSeconds: Math.max(1, Math.round((Date.now() - stageStartRef.current) / 1000)),
-      });
-    }
+    settleRoom();
     const nextBest = Math.max(best, current);
     setBest(nextBest);
     try {
@@ -873,7 +1246,7 @@ export function RuneVault() {
     setStage(next);
     setRoom(generateRoom(next, seed));
     flash(`Room ${next} — the vault goes deeper.`);
-  }, [app.actions, best, flash, seed]);
+  }, [best, flash, seed, settleRoom]);
 
   useEffect(() => {
     advanceRef.current = advance;
@@ -885,6 +1258,7 @@ export function RuneVault() {
     if (items.length === 0) return;
     const item = items[poolIndexRef.current % items.length];
     poolIndexRef.current += 1;
+    markVaultSeen(item.questionId);
     questionOpenRef.current = true;
     setQuestion(item);
     setFeedback(null);
@@ -906,11 +1280,15 @@ export function RuneVault() {
       if (isField(event.target)) return;
       const key = event.key.toLowerCase();
       if (
-        ['arrowleft', 'a', 'arrowright', 'd', 'arrowup', 'w', 'arrowdown', 's', ' '].includes(
+        ['arrowleft', 'a', 'arrowright', 'd', 'arrowup', 'w', 'arrowdown', 's', ' ', 'r'].includes(
           key
         )
       ) {
         event.preventDefault();
+      }
+      if (key === 'r') {
+        resetLevelRef.current();
+        return;
       }
       // Auto-repeat is not a release (see applyVaultKey): a held key must keep
       // climbing for as long as the player holds it.
@@ -964,17 +1342,35 @@ export function RuneVault() {
           { left: keys.left, right: keys.right, jump: keys.jump, down: keys.down },
           dt
         );
-        if (step.jumped) keys.jump = false;
+        // Do not clear `keys.jump` after a jump: a held key or thumb is a
+        // request to keep jumping, and on a rope it is how the climb continues.
+        // Releasing the key is what stops it (keyup/pointerup).
         if (step.lever) {
-          setMechanisms(state.pulled.size);
           flash(
             step.changed.includes('bridge')
               ? 'The drawbridge drops across the chasm.'
               : 'The portcullis grinds up into the ceiling.'
           );
         }
+        if (step.coins.length > 0) {
+          const found = step.coins.length;
+          setVaultCoins((previous) => {
+            const next = previous + found;
+            saveVaultCoins(next);
+            return next;
+          });
+          // One tick can collect several coins. Award the exact total once so a
+          // cloud run does not fire one RPC and one full account refresh per coin.
+          const coinKey = [...step.coins].sort().join('+');
+          void awardCoinsRef.current(found, `${sessionRef.current}:${room.stage}:${coinKey}`);
+          flash(found === 1 ? 'A vault coin joins your bank.' : `${found} vault coins join your bank.`);
+        }
         if (step.hurt) flash(HURT_TEXT[step.hurt]);
         else if (step.fell) flash('The dark sends you back to the door.');
+        else if (step.pinned && time - pinnedAtRef.current > 3) {
+          pinnedAtRef.current = time;
+          flash('That crate is pinned — press R to reset the level.');
+        }
 
         const gateCentre = room.gate.x + room.gate.w / 2;
         const playerCentre = player.x + PLAYER_W / 2;
@@ -991,6 +1387,13 @@ export function RuneVault() {
         Math.max(0, room.width - VIEW_W)
       );
       camRef.current += (target - camRef.current) * Math.min(1, dt * 6);
+      const nextProgress = Math.round(
+        Math.min(100, Math.max(0, ((player.x + PLAYER_W / 2) / (room.gate.x + room.gate.w / 2)) * 100))
+      );
+      if (nextProgress !== roomProgressRef.current) {
+        roomProgressRef.current = nextProgress;
+        setRoomProgress(nextProgress);
+      }
 
       if (embers.length < 70) {
         for (const torch of room.torches) {
@@ -1026,7 +1429,8 @@ export function RuneVault() {
         embers,
         state.crates,
         state.pulled,
-        state.snakes
+        state.snakes,
+        state.coins
       );
       frame = requestAnimationFrame(tick);
     };
@@ -1039,11 +1443,20 @@ export function RuneVault() {
   }, [flash, phase, room, seed]);
 
   const start = () => {
-    const nextSeed = `vault:${Date.now()}`;
+    // Time alone repeats if two runs start in the same millisecond; the extra
+    // roll makes every descent a different vault.
+    const nextSeed = `vault:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`;
+    noteArcadeRun('vault');
+    setQuestionLevel(arcadeLevel('vault'));
     sessionRef.current = newEventId();
     poolIndexRef.current = 0;
     stageAnsweredRef.current = 0;
     stageCorrectRef.current = 0;
+    paidStageRef.current = null;
+    setSeenAtStart(loadVaultSeen());
+    setVaultCoins(loadVaultCoins());
+    setRoomProgress(0);
+    roomProgressRef.current = 0;
     setSeed(nextSeed);
     setStage(1);
     setAnswered(0);
@@ -1064,6 +1477,19 @@ export function RuneVault() {
       if (ok) {
         stageCorrectRef.current += 1;
         setCorrect((n) => n + 1);
+      }
+      // Only the first answer can pay or raise the tier. A correct retry after
+      // a miss opens the gate, but it cannot erase the miss or earn the 3 coins.
+      const progress = markArcadeQuestion('vault', question.questionId, ok);
+      setQuestionLevel(progress.level);
+      if (ok) {
+        void awardCoinsRef.current(
+          ARCADE_COINS.firstTryQuestion,
+          `${sessionRef.current}:rune:${stage}:${question.questionId}`
+        );
+        if (progress.leveledUp) {
+          flash(`Clean rune — question tier ${progress.level} unlocked.`);
+        }
       }
     }
     if (!ok) {
@@ -1098,19 +1524,31 @@ export function RuneVault() {
           hold <strong>space</strong> on a rope or ladder to climb (▼ or <strong>S</strong> to come
           down). Shove crates in rows, throw levers for the drawbridge and the portcullis, mind the
           spikes, bear traps and snakes, and open each sealed gate by answering the rune above it.
-          Every room is generated fresh and packed harder than the last, and the snakes hunt you
-          from the moment you land. Falling or touching a trap only walks you back to the door.
+          Every room is generated fresh and packed harder than the last. Snakes stay coiled until
+          you move, then follow the connected floor at a steady crawl — they cannot climb ropes and
+          will not cross spikes or traps. Crates stop at spikes and traps, and they keep their
+          positions when a trap or a fall sends you back, just like a thrown lever. Press
+          <strong> R</strong> (or Reset level) to restore the whole room. Floating coins sit
+          on the harder line and go straight into your HDCoins bank when you touch them.
         </p>
         <div className="card-grid" style={{ margin: '12px 0' }}>
           <Stat label="Deepest room" value={best > 0 ? best : '—'} />
-          <Stat label="Reward" value="5–100 HDCoins" hint="Per room, five rewarded rooms a day" />
           <Stat
-            label="New each room"
-            value={describeRoom(previewRoom) || 'open floor'}
-            hint="Changes with every room and every run"
+            label="Question tier"
+            value={`${questionLevel}/10`}
+            hint={`${arcadeLevelLabel('vault')} · only clean first tries raise it`}
+          />
+          <Stat
+            label="Vault coins"
+            value={vaultCoins}
+            hint="1 each · 3 for a first-try rune"
           />
           <Stat label="Rooms" value="∞" hint="Procedural, never repeats exactly" />
         </div>
+        <p className="muted" style={{ marginTop: -2 }}>
+          Each room has one to five coins. Touching one pays 1 HDCoin; a gate answered
+          correctly on the first try pays {ARCADE_COINS.firstTryQuestion}.
+        </p>
         <Button onClick={start}>
           <Icon name="castle" size={14} /> Enter the vault
         </Button>
@@ -1124,13 +1562,15 @@ export function RuneVault() {
         <div className="row">
           <h2 style={{ margin: 0 }}>The Rune Vault</h2>
           <Badge tone="info">Room {stage}</Badge>
+          <Badge tone="neutral">Tier {questionLevel}</Badge>
           <Badge tone={correct > 0 ? 'good' : 'neutral'}>{correct} solved</Badge>
-          {mechanisms > 0 ? <Badge tone="neutral">{mechanisms} lever{mechanisms === 1 ? '' : 's'}</Badge> : null}
         </div>
         <Button
           size="sm"
           variant="outline"
           onClick={() => {
+            // Leaving mid-room still saves the rune that was answered.
+            settleRoom();
             setPhase('intro');
             setQuestion(null);
             setRoom(null);
@@ -1142,7 +1582,7 @@ export function RuneVault() {
 
       <GameShell
         title="The Rune Vault"
-        hint={`Room ${stage} · ${room ? describeRoom(room) : 'open floor'} · ${correct} solved`}
+        hint={`Room ${stage} · tier ${questionLevel} · ${correct} solved`}
       >
         <div className="vault-stage" ref={stageRef}>
           <canvas
@@ -1155,12 +1595,16 @@ export function RuneVault() {
 
           {message ? <div className="vault-flash">{message}</div> : null}
 
-          <div className="vault-hint">
-            {gateOpen
-              ? 'The gate is open — walk through.'
-              : room
-                ? describeRoom(room)
-                : 'Reach the rune gate.'}
+          <div
+            className={`vault-progress${gateOpen ? ' is-open' : ''}`}
+            role="progressbar"
+            aria-label={gateOpen ? 'Room complete — gate open' : 'Room progress'}
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={gateOpen ? 100 : roomProgress}
+            title={gateOpen ? 'Gate open — walk through' : `${roomProgress}% of the room`}
+          >
+            <span style={{ width: `${gateOpen ? 100 : roomProgress}%` }} />
           </div>
 
           {question && activeQuestion ? (
@@ -1177,71 +1621,18 @@ export function RuneVault() {
         </div>
 
         <div className="vault-controls">
-          <div className="vault-dpad">
-            <button
-              type="button"
-              className="vault-key"
-              aria-label="Move left"
-              onPointerDown={() => {
-                keysRef.current.left = true;
-              }}
-              onPointerUp={() => {
-                keysRef.current.left = false;
-              }}
-              onPointerLeave={() => {
-                keysRef.current.left = false;
-              }}
-            >
-              ◀
-            </button>
-            <button
-              type="button"
-              className="vault-key"
-              aria-label="Move right"
-              onPointerDown={() => {
-                keysRef.current.right = true;
-              }}
-              onPointerUp={() => {
-                keysRef.current.right = false;
-              }}
-              onPointerLeave={() => {
-                keysRef.current.right = false;
-              }}
-            >
-              ▶
-            </button>
-            <button
-              type="button"
-              className="vault-key is-jump"
-              aria-label="Jump"
-              onPointerDown={() => {
-                keysRef.current.jump = true;
-              }}
-              onPointerUp={() => {
-                keysRef.current.jump = false;
-              }}
-            >
-              Jump
-            </button>
-            <button
-              type="button"
-              className="vault-key"
-              aria-label="Climb down"
-              onPointerDown={() => {
-                keysRef.current.down = true;
-              }}
-              onPointerUp={() => {
-                keysRef.current.down = false;
-              }}
-              onPointerLeave={() => {
-                keysRef.current.down = false;
-              }}
-            >
-              ▼
-            </button>
-          </div>
+          <VaultPad onChange={(action, down) => (keysRef.current[action] = down)} />
+          <button
+            type="button"
+            className="btn btn-outline btn-sm vault-reset"
+            onClick={resetLevel}
+            title="Reset the entire level (R)"
+          >
+            Reset level
+          </button>
           <span className="muted vault-help">
-            {answered} answered · deepest room {Math.max(best, stage)} · WASD / arrows + space
+            {answered} answered · deepest room {Math.max(best, stage)} · WASD / arrows + space ·
+            R resets the level
           </span>
         </div>
       </GameShell>

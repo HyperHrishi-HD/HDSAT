@@ -1,6 +1,13 @@
 import { useState } from 'react';
 import { Badge, Button, Card, Icon, InfoTip, Stat } from '../components/ui';
-import { ACHIEVEMENTS, STORE_ITEMS, emblemFor, earnedEmblemIds } from '../lib/catalog';
+import {
+  ACHIEVEMENTS,
+  STORE_ITEMS,
+  emblemFor,
+  earnedEmblemIds,
+  visibleAchievements,
+} from '../lib/catalog';
+import { ARCADE_DAILY_COIN_CAP } from '../lib/arcadeCoins';
 import { DAILY_FLASHCARD_COIN_CAP, DAILY_QUESTION_COIN_CAP } from '../lib/storage';
 import { useApp } from '../lib/store';
 
@@ -13,6 +20,10 @@ export function RewardsPage() {
   const activeFlair = app.settings.activeFlair ?? null;
   const activeEmblem = emblemFor(activeFlair);
   const earnedEmblems = new Set(earnedEmblemIds(app.achievements, app.ownedItems));
+  // Ten rungs to start, one more revealed per badge: a wall of locked rows is
+  // not a ladder. Earned badges are always named, even past the window.
+  const shownAchievements = visibleAchievements(app.achievements);
+  const hiddenAchievements = ACHIEVEMENTS.length - shownAchievements.length;
 
   const handleBuy = async (itemId: string, cost: number, name: string) => {
     const res = await app.actions.purchase(itemId, cost);
@@ -56,8 +67,13 @@ export function RewardsPage() {
                     Due flashcard review: +1 HDCoin (up to {DAILY_FLASHCARD_COIN_CAP}/day).
                   </li>
                   <li>Streak milestone: +5 HDCoins once a day.</li>
-                  <li>Full adaptive simulation: +25 HDCoins.</li>
-                  <li>Achievements: +5 to +40 HDCoins each.</li>
+                  <li>
+                    Arcade events: 1 per asteroid, 2 per ship, 3 per first-try question; exact
+                    coins, up to {ARCADE_DAILY_COIN_CAP}/day.
+                  </li>
+                  <li>Practice Rush: +5 HDCoins for a completed run (up to 4 rewarded runs/day).</li>
+                  <li>Full adaptive simulation: up to 25 HDCoins, scaled by length and accuracy (2/day).</li>
+                  <li>Achievements: +5 to +500 HDCoins each, once.</li>
                 </ul>
               </InfoTip>
             </div>
@@ -167,9 +183,8 @@ export function RewardsPage() {
               </Button>
             ) : null}
           </div>
-          <p className="muted" style={{ marginTop: 4 }}>Each achievement earns its emblem.</p>
           <div className="stack" style={{ marginTop: 10 }}>
-            {ACHIEVEMENTS.map((ach) => {
+            {shownAchievements.map((ach) => {
               const earned = app.achievements.includes(ach.id);
               const equipped = activeFlair === ach.id;
               return (
@@ -180,7 +195,7 @@ export function RewardsPage() {
                         <Icon name={ach.icon} size={14} />
                       </span>
                       <strong>{ach.name}</strong>
-                      <Badge tone={earned ? 'good' : 'info'}>+{ach.rewardCoins}</Badge>
+                      <Badge tone={earned ? 'good' : 'info'}>+{ach.rewardCoins} HDCoins</Badge>
                     </div>
                     <div className="muted">{ach.description}</div>
                   </div>
@@ -196,6 +211,11 @@ export function RewardsPage() {
               );
             })}
           </div>
+          {hiddenAchievements > 0 ? (
+            <p className="muted" style={{ marginTop: 10, marginBottom: 0 }}>
+              {hiddenAchievements} more {hiddenAchievements === 1 ? 'achievement' : 'achievements'} · each unlock reveals the next.
+            </p>
+          ) : null}
         </Card>
       </div>
     </div>

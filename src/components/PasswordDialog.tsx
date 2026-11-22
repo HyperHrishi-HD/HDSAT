@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Alert, Button, Field, Toggle } from './ui';
 import * as cloud from '../lib/cloud';
+import * as emailAllowance from '../lib/emailAllowance';
 import { budgetAllows, queueEmail, removeQueuedEmail } from '../lib/emailQueue';
+import { useBackdropDismiss } from '../lib/useBackdropDismiss';
 import {
   PASSWORD_MIN_LENGTH,
   cooldownMessage,
@@ -30,8 +32,7 @@ interface PasswordDialogProps {
  * rather than being the rule itself.
  */
 export function PasswordDialog({ mode, email, onClose, onDone }: PasswordDialogProps) {
-  const [path, setPath] = useState<PasswordPath>('password');
-  const [current, setCurrent] = useState('');
+  const [path, setPath] = useState<PasswordPath>('password');  const [current, setCurrent] = useState('');
   const [next, setNext] = useState('');
   const [confirm, setConfirm] = useState('');
   const [signOutOthers, setSignOutOthers] = useState(true);
@@ -40,6 +41,9 @@ export function PasswordDialog({ mode, email, onClose, onDone }: PasswordDialogP
   const [message, setMessage] = useState<string | null>(null);
   const [cooldowns, setCooldowns] = useState(NO_WAIT);
   const [now, setNow] = useState(() => Date.now());
+  // Closes on a press that began outside the card; a text selection dragged
+  // past the edge leaves the dialog open.
+  const backdrop = useBackdropDismiss(onClose);
 
   useEffect(() => {
     const timer = window.setInterval(() => setNow(Date.now()), 1000);
@@ -76,10 +80,6 @@ export function PasswordDialog({ mode, email, onClose, onDone }: PasswordDialogP
       ...previous,
       [target]: { nextAllowedAt: null, retryAfterSeconds: 0 },
     }));
-  };
-
-  const handleBackdrop = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (event.target === event.currentTarget) onClose();
   };
 
   const changeWithCurrentPassword = async (event: React.FormEvent) => {
@@ -148,6 +148,11 @@ export function PasswordDialog({ mode, email, onClose, onDone }: PasswordDialogP
       setError(cooldownMessage('email', emailWait));
       return;
     }
+    const localWait = emailAllowance.emailAllowanceRemaining(email);
+    if (localWait > 0) {
+      setError(emailAllowance.oneEmailPerDayMessage(email, localWait));
+      return;
+    }
     setBusy(true);
     try {
       // The day's provider allowance covers recovery links. Out of allowance,
@@ -166,12 +171,15 @@ export function PasswordDialog({ mode, email, onClose, onDone }: PasswordDialogP
       // this address out for 24 hours.
       await cloud.requestPasswordReset(email);
       await cloud.recordEmailRequest(email, 'reset').catch(() => {});
+      emailAllowance.recordEmailSent(email);
       removeQueuedEmail(email, 'reset');
       setCooldowns((previous) => ({
         ...previous,
         email: { nextAllowedAt: null, retryAfterSeconds: 24 * 60 * 60 },
       }));
-      setMessage(`Recovery link sent to ${email}. It works once.`);
+      setMessage(
+        `Recovery link sent to ${email}. Only one is sent per day, so give it a few minutes before asking again.`
+      );
     } catch (err) {
       clearWait('email');
       setError((err as Error).message);
@@ -210,7 +218,7 @@ export function PasswordDialog({ mode, email, onClose, onDone }: PasswordDialogP
   };
 
   return (
-    <div className="modal-backdrop" role="presentation" onClick={handleBackdrop}>
+    <div className="modal-backdrop" role="presentation" {...backdrop}>
       <div
         className="modal-card"
         role="dialog"

@@ -1,4 +1,5 @@
 import { LEGAL_VERSION } from './legal';
+import { todayKey } from './storage';
 
 /**
  * Client-side data-rights helpers (access/portability). The export deliberately
@@ -357,7 +358,7 @@ export function buildAiSnapshot(input: AiSnapshotInput, now: Date = new Date()):
     .filter((attempt) => attempt.status !== 'incomplete')
     .slice(0, 8)
     .map((attempt) => ({
-      taken_on: attempt.createdAt.slice(0, 10),
+      taken_on: todayKey(new Date(attempt.createdAt)),
       assessment: attempt.assessment,
       total_estimate: attempt.totalEstimate,
       rw_estimate: attempt.rwEstimate,

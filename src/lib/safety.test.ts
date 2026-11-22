@@ -13,6 +13,9 @@ import {
 import { buildDataExport, exportFileName, validateConsent, type DataExportInput } from './dataRights';
 import { isMissingColumnError, isMissingRelationError, isMissingRoutineError } from './cloud';
 import {
+  EMAIL_CODE_WINDOW_MS,
+  EMAIL_RESEND_COOLDOWN_MS,
+  EMAIL_SENDS_PER_WINDOW,
   EMAIL_WINDOW_MS,
   canSendVerificationEmail,
   clearPendingAccount,
@@ -20,7 +23,8 @@ import {
   hasSeenIntro,
   loadPendingAccount,
   markIntroSeen,
-  savePendingAccount,
+  pendingCodeEndsAt,
+  recordVerificationSend,
 } from './storage';
 
 describe('signup consent gate (minors / COPPA)', () => {
@@ -178,29 +182,38 @@ describe('published policies cover the required disclosures', () => {
   });
 });
 
-describe('24-hour email confirmation cooldown and intro screen persistence', () => {
-  it('blocks duplicate confirmation emails to the same address within 24 hours and allows a different email or after 24h', () => {
+describe('email confirmation retry window and intro screen persistence', () => {
+  it('sends one code a day, keeps it valid for that day, and reopens the next', () => {
     clearPendingAccount();
     const t0 = 1_700_000_000_000;
     expect(canSendVerificationEmail('student@example.com', t0).allowed).toBe(true);
 
-    const saved = savePendingAccount({ email: 'student@example.com', displayName: 'Hrishi' }, t0);
+    const saved = recordVerificationSend('student@example.com', 'Hrishi', t0);
     expect(saved.expiresAt - saved.sentAt).toBe(EMAIL_WINDOW_MS);
+    // The code inside the record follows the mailer's 12-hour window.
+    expect(pendingCodeEndsAt(saved) - saved.sentAt).toBe(EMAIL_CODE_WINDOW_MS);
 
-    const withinWindow = canSendVerificationEmail('STUDENT@example.com', t0 + 2 * 60 * 60 * 1000);
-    expect(withinWindow.allowed).toBe(false);
-    expect(formatRemainingHours(withinWindow.remainingMs)).toBe('22h');
-
-    // A different email address is allowed immediately
-    expect(canSendVerificationEmail('other@example.com', t0 + 2 * 60 * 60 * 1000).allowed).toBe(
+    // Mail arrives late often enough that a second request is not a fix: the
+    // address waits out the same one-message-per-day allowance.
+    const tooSoon = canSendVerificationEmail('STUDENT@example.com', t0 + 30_000);
+    expect(tooSoon.allowed).toBe(false);
+    expect(tooSoon.reason).toBe('daily-cap');
+    expect(formatRemainingHours(tooSoon.remainingMs)).toBe('24h');
+    expect(canSendVerificationEmail('STUDENT@example.com', t0 + 10 * 60_000).allowed).toBe(false);
+    expect(canSendVerificationEmail('STUDENT@example.com', t0 + EMAIL_RESEND_COOLDOWN_MS).allowed).toBe(
       true
     );
 
-    // After 24 hours the window expires and the same address can send again
+    // A different email address is allowed immediately.
+    expect(canSendVerificationEmail('other@example.com', t0 + 30_000).allowed).toBe(true);
+
+    // The pending record lives out the send allowance so the counter survives.
     expect(loadPendingAccount(t0 + EMAIL_WINDOW_MS + 1)).toBeNull();
-    expect(canSendVerificationEmail('student@example.com', t0 + EMAIL_WINDOW_MS + 1).allowed).toBe(
-      true
-    );
+  });
+
+  it('allows exactly one send per address per day', () => {
+    expect(EMAIL_SENDS_PER_WINDOW).toBe(1);
+    expect(EMAIL_RESEND_COOLDOWN_MS).toBe(EMAIL_WINDOW_MS);
   });
 
   it('tracks first-run intro dismissal in localStorage', () => {

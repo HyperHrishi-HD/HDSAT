@@ -105,7 +105,9 @@ function renderLatex(latex: string, displayMode: boolean, index: number) {
           __html: katex.renderToString(latex, {
             throwOnError: false,
             displayMode,
-            output: 'html',
+            // The MathML half is visually hidden by katex.css and is what a
+            // screen reader reads; the HTML half alone is aria-hidden.
+            output: 'htmlAndMathml',
           }),
         }}
       />

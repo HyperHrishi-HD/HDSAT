@@ -456,7 +456,15 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
 
     const sat = buildTestPlan(questions, { assessment: 'SAT', seed: 'diff:sat' });
     const satMath = sat.sections.find((s) => s.section === 'Math')!;
-    expect(satMath.upper.questions.filter((q) => q.difficulty === 'Hard').length).toBeGreaterThan(6);
+    // The old expectation here was seven Hard items, which the bank only met
+    // because the expansion generator had promoted every M-SYS/M-GEO/M-ALE
+    // item to Hard. With the labels corrected, the genuinely Hard Math supply
+    // is two archetypes (systems and Vieta), and the engine refuses to repeat
+    // one archetype ten times to fill a quota. It fills the rest with Medium,
+    // so this checks that the corrected Hard items are used and the module is
+    // still complete. Adding more Hard families is a content task.
+    expect(satMath.upper.questions.filter((q) => q.difficulty === 'Hard').length).toBeGreaterThanOrEqual(2);
+    expect(satMath.upper.questions).toHaveLength(22);
   });
 });
 

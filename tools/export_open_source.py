@@ -60,6 +60,7 @@ import json
 import os
 import pathlib
 import random
+import re
 import shutil
 import subprocess
 import sys
@@ -180,10 +181,21 @@ def strip_admin(path: pathlib.Path) -> None:
     app = path / "src" / "App.tsx"
     if app.exists():
         text = app.read_text(encoding="utf-8")
-        text = text.replace("import { AdminPage } from './pages/Admin';\n", "")
-        text = text.replace(
-            '        <Route path="/admin" element={<AdminPage />} />\n', ""
+        # The console is a lazily loaded route, so both the import and the JSX
+        # block are removed. The route block is multi-line and matched as one.
+        text = re.sub(
+            r"^const AdminPage = lazy\(.*?\n",
+            "",
+            text,
+            flags=re.MULTILINE | re.DOTALL,
         )
+        text = re.sub(
+            r'\n\s*<Route\s+path="/admin"[\s\S]*?\}\s*/>',
+            "",
+            text,
+            count=1,
+        )
+        text = text.replace("import { AdminPage } from './pages/Admin';\n", "")
         app.write_text(text, encoding="utf-8")
     (path / "src" / "pages" / "Admin.tsx").unlink(missing_ok=True)
     for helper in (
@@ -248,10 +260,25 @@ VITE_APP_NAME=HDSAT
 """
 
 
-def build(out: pathlib.Path, sample: int) -> None:
-    if out.exists():
+def build(out: pathlib.Path, sample: int, keep_git: bool = False) -> None:
+    """Write the exported tree to `out`.
+
+    `keep_git` refreshes an existing checkout instead of replacing it: every
+    entry except `.git` is removed and rewritten, so the repository keeps its
+    history and `git add -A` records exactly what the export changed. Deleting
+    the whole directory cannot work there — Windows holds `.git` open.
+    """
+    if out.exists() and keep_git:
+        for child in out.iterdir():
+            if child.name == ".git":
+                continue
+            if child.is_dir():
+                shutil.rmtree(child, ignore_errors=True)
+            else:
+                child.unlink(missing_ok=True)
+    elif out.exists():
         shutil.rmtree(out)
-    out.mkdir(parents=True)
+    out.mkdir(parents=True, exist_ok=True)
 
     copied = 0
     for rel in tracked_files():
@@ -341,13 +368,18 @@ def main() -> None:
     parser.add_argument("--out", default="../HDSAT-open", help="target directory")
     parser.add_argument("--verify", action="store_true", help="typecheck the export")
     parser.add_argument("--sample", type=int, default=1000, help="bank size")
+    parser.add_argument(
+        "--keep-git",
+        action="store_true",
+        help="refresh an existing checkout in place, leaving .git alone",
+    )
     args = parser.parse_args()
     if args.verify:
         verify_export(args.sample)
         print("export verified and removed; rerun without --verify to keep it")
         return
     out = pathlib.Path(os.path.abspath(args.out))
-    build(out, sample=args.sample)
+    build(out, sample=args.sample, keep_git=args.keep_git)
     print(f"export at {out}")
 
 

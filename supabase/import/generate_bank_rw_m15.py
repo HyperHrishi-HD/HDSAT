@@ -274,11 +274,20 @@ def build_change(data, code, label, unit_phrase, short, decimals, subject, picke
             f"{top_country} had the largest increase, gaining "
             f"{unit_text(top_value, decimals, short)} between {start} and {end}."
         )
+        if fall_value >= 0:
+            fall_claim = (
+                f"{fall_country} had the largest increase, gaining "
+                f"{unit_text(fall_value, decimals, short)}."
+            )
+        else:
+            fall_claim = (
+                f"{fall_country} had the largest decrease, falling "
+                f"{unit_text(abs(fall_value), decimals, short)}."
+            )
         wrongs = [
             f"{second_country} had the largest increase, gaining "
             f"{unit_text(second_value, decimals, short)}.",
-            f"{fall_country} had the largest increase, gaining "
-            f"{unit_text(fall_value, decimals, short)}.",
+            fall_claim,
             f"{top_country} had the largest increase, gaining "
             f"{unit_text(wrong_number, decimals, short)}.",
         ]
@@ -296,7 +305,7 @@ def build_change(data, code, label, unit_phrase, short, decimals, subject, picke
         qid = f"RW-M15-WB-D{len(items):03d}-{code.split('.')[0][:4]}{start}"
         items.append(
             mc(
-                qid, RW, INFO, QUANT, HARD, stimulus, prompt, correct, wrongs,
+                qid, RW, INFO, QUANT, MEDIUM, stimulus, prompt, correct, wrongs,
                 explanation, rationales,
                 figure=figure_bars(pairs, f"Change in {label}, {start} to {end}", unit_phrase),
             )

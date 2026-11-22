@@ -5,7 +5,6 @@ import { AppealForm } from '../components/AppealForm';
 import {
   APPEAL_SLA_HOURS,
   COPYRIGHT_PATH,
-  CREATOR_GITHUB_URL,
   CREATOR_NAME,
   CREATOR_YOUTUBE_URL,
   CREDITS_PATH,
@@ -98,6 +97,13 @@ export function TermsPage() {
       <ul>
         <li>Give accurate registration details and keep your password confidential. You are responsible for activity under your account.</li>
         <li>One account per person. Do not share credentials, resell access, or create accounts by automated means.</li>
+        <li>
+          <strong>Signing in with Google.</strong> You may create an account with Google instead of a
+          password. Google shares only your email address, whether it has verified that address, and
+          the display name on that account; we never receive your Google password, contacts, mail,
+          files or Google activity, and we post nothing to Google. Keep access to that Google account —
+          it is what signs you back in to your saved progress.
+        </li>
         <li>You may delete your account at any time from <em>Account → Safety &amp; data rights</em>. Deletion is permanent and removes your practice history.</li>
       </ul>
 
@@ -190,11 +196,44 @@ export function PrivacyPage() {
         data.</strong> We do not collect precise location, contacts, photos, or device fingerprints.
       </p>
 
-      <h2>Guest mode</h2>
+      <h2>Guest mode: no server account</h2>
       <p>
-        If you use {SITE_NAME} without signing in, your practice history is stored only in your own browser
-        (<code>localStorage</code> key <code>hdsat.profile.v1</code>). It never reaches our servers unless you create an
-        account and choose to sync it. Clearing your browser data removes it.
+        If you use {SITE_NAME} without signing in, nothing is sent to our servers — no account, no email
+        address and no practice history. Everything lives in your own browser (<code>localStorage</code>
+        key <code>hdsat.profile.v1</code>), and clearing your browser data removes it. When you do create
+        an account, the progress already on this device is copied to it once so nothing is lost; until
+        then we have no record of you at all.
+      </p>
+
+      <h2>Signing in: email, Google, or a password</h2>
+      <ul>
+        <li>
+          <strong>An account is what gives you a server copy.</strong> Signing in by email and password,
+          or with Google, is the only way your practice, coins and test history are stored on our side,
+          so they survive a new device or a cleared browser.
+        </li>
+        <li>
+          <strong>Google sign-in takes nothing but the basics.</strong> If you choose Continue with
+          Google, Google tells us your email address, whether it has verified that address, and the
+          display name on the account. We do not receive your Google password, and we do not read your
+          Gmail, contacts, calendar, photos, files or Google activity. We post nothing to Google, we do
+          not use Google advertising, and we do not combine this with any other Google data. You can use
+          email and a password instead and every feature works the same.
+        </li>
+        <li>
+          <strong>Our email is only about your account.</strong> We write to you for a confirmation or
+          recovery code you asked for, and to reply when you contact us. No newsletters, no marketing,
+          no advertising, and your address is never sold, rented or shared with a third party for their
+          own use.
+        </li>
+      </ul>
+
+      <h2>Leaderboard and display name</h2>
+      <p>
+        Your display name is shown on the leaderboard only when you are signed in <em>and</em> you are in
+        the top five by lifetime HDCoins. Guests are never listed, because guest progress never leaves
+        the device, and students outside the top five are not shown by name. No email address, answer
+        history or individual score is ever public.
       </p>
 
       <h2>Why we use it, and the legal basis</h2>
@@ -287,6 +326,11 @@ export function CopyrightPage() {
         endorsed by or sponsored by the College Board. SAT, PSAT/NMSQT, PSAT 10 and PSAT 8/9 are trademarks of the
         College Board, used only to describe what our practice material prepares students for.
       </p>
+      <p>
+        This page is about the material we publish. Accounts are a separate matter: how your email address,
+        a Google sign-in and your practice data are handled is set out in the Terms of Service and the
+        Privacy &amp; Data Rights page.
+      </p>
 
       <h2>If you believe we are infringing your rights (takedown notice)</h2>
       <p>
@@ -363,10 +407,7 @@ export function CreditsPage() {
           </a>
         </li>
         <li>
-          <strong>Source Code &amp; Issue Tracker:</strong>{' '}
-          <a href={CREATOR_GITHUB_URL} target="_blank" rel="noopener noreferrer">
-            {CREATOR_GITHUB_URL}
-          </a>
+          <strong>Source Code:</strong> <span className="muted">Offline source package, not yet published.</span>
         </li>
       </ul>
 
@@ -404,10 +445,6 @@ export function CreditsPage() {
       </p>
 
       <h2>The Starting Page</h2>
-      <p className="muted">
-        The full-page introduction a blank browser lands on. Nothing changes if you open it — it is
-        the same page, with the same one-click way back in.
-      </p>
       <p style={{ margin: 0 }}>
         <Link to="/welcome" className="btn btn-outline btn-sm">
           View the starting page

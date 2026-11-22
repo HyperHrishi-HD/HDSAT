@@ -178,6 +178,30 @@ describe('question families', () => {
 });
 
 describe('practice draws fresh families first', () => {
+  it('spreads a session across skills instead of filling one', () => {
+    const questions: Question[] = [];
+    for (let i = 0; i < 24; i += 1) {
+      questions.push(
+        makeQuestion({
+          id: `SPREAD-${i}`,
+          section: 'Math',
+          domain: 'Algebra',
+          skill: `Skill ${i % 4}`,
+          prompt: `Case ${tag(i)}: 3x + ${i} = 20. What is x?`,
+        })
+      );
+    }
+    const session = buildPracticeSession(
+      questions,
+      { section: 'Math' },
+      { count: 12, seed: 'skill:spread' }
+    );
+    const counts = new Map<string, number>();
+    for (const q of session) counts.set(q.skill, (counts.get(q.skill) ?? 0) + 1);
+    expect(session).toHaveLength(12);
+    expect(Math.max(...counts.values())).toBeLessThanOrEqual(3);
+  });
+
   it('prefers an unseen family over a near-duplicate of an answered item', () => {
     const questions = [templateA1, templateA2, templateB1];
     const progress = { [templateA1.id]: progressFor(templateA1, 'correct', 1) };
@@ -273,6 +297,18 @@ describe('arcade pools', () => {
     });
     // The first thing Hrishi hands over belongs to a fresh family.
     expect([rwTwinA.id, rwTwinB.id]).not.toContain(pool[0]?.questionId);
+  });
+
+  it('prefers rune-vault items this browser has not seen before', () => {
+    const questions = [templateA1, templateA2, templateB1];
+    const pool = buildRunePool(questions, 'family:rune-seen', 10, {}, [templateB1.id]);
+    const mathIds = pool
+      .filter((item) => item.section === 'Math')
+      .map((item) => item.questionId);
+    // The seen item is still available when the section is short, but it waits
+    // behind a fresh item rather than becoming the next vault question.
+    expect(mathIds).toContain(templateB1.id);
+    expect(mathIds[0]).not.toBe(templateB1.id);
   });
 
   it('keeps rune-vault items family-unique and fresh-first', () => {

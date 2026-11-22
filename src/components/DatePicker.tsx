@@ -170,7 +170,7 @@ export function DatePicker({
         <Icon name="calendar-check" size={15} />
         <span className="dp-value">{label ?? placeholder}</span>
         <span className="dp-caret" aria-hidden="true">
-          {open ? '▴' : '▾'}
+          <Icon name={open ? 'chevron-up' : 'chevron-down'} size={13} />
         </span>
       </button>
 
@@ -183,7 +183,7 @@ export function DatePicker({
               onClick={() => shiftMonth(-1)}
               aria-label="Previous month"
             >
-              ‹
+              <Icon name="arrow-left" size={15} />
             </button>
             <div className="dp-selects">
               <select
@@ -217,7 +217,7 @@ export function DatePicker({
               onClick={() => shiftMonth(1)}
               aria-label="Next month"
             >
-              ›
+              <Icon name="arrow-right" size={15} />
             </button>
           </div>
 

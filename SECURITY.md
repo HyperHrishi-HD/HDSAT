@@ -56,6 +56,35 @@ It is a read-only check: run it after any migration. The 2026-11-03
    writes a graded attempt; their ceiling is the existing 100-coin reward and
    five rewarded sessions a day.
 
+### Backend edge audit (2026-10-27)
+
+The Flask edge serves the SPA and the read-only `/api/*` routes. Four real
+weaknesses were found and fixed in `backend/app.py`:
+
+1. **Rate-limit bypass by header.** `_client_ip()` trusted the *first*
+   `X-Forwarded-For` entry, which is whatever the caller typed. A script could
+   send a fresh made-up address on every request and get a fresh bucket, so the
+   limiter protected nothing. It now trusts the **last** hop, the one the nearest
+   proxy appended after seeing the real peer (with `X-Real-IP` and
+   `remote_addr` as fallbacks), and a regression test sends two different fake
+   first hops from one address.
+2. **Static flood.** Only `/api/*` was limited, so a script could saturate the
+   worker with asset URLs for free. Static GET/HEAD traffic now has its own
+   much larger bucket (600 requests/minute per address by default,
+   `HDSAT_STATIC_LIMIT`), separate from the 60/minute API bucket.
+3. **Path check before the safe join.** The SPA route tested `DIST_DIR / path`
+   directly. It now resolves the candidate and requires it to be inside `dist/`
+   before handing it to `send_from_directory`, so the existence check can never
+   disagree with the file server.
+4. **Cheap DoS on `/api/health`.** Every call parsed the 9 MB question bank from
+   disk. Parsed JSON is now cached by `(mtime, size)` and re-read only when a
+   deploy changes the file.
+
+Also added: `X-XSS-Protection: 0` (the legacy auditor is off), immutable caching
+for hashed `/assets/*`, and `no-store` on the HTML shell so a deploy is never
+hidden behind a cached page. The suite covering these rules is
+`backend/test_app.py` (22 tests).
+
 ### Anti-cheat boundary, stated plainly
 
 Grading itself is server-side: `submit_question_attempt` reads `question_keys`

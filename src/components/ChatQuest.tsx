@@ -1,9 +1,18 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useLeaveSave } from '../lib/leaveSave';
 import { StimulusView } from './FigureView';
 import { GameShell } from './GameShell';
 import { MathText } from './MathText';
 import { Badge, Button, Card, Icon, Stat } from './ui';
 import { buildChatPool, type ChatItem } from '../lib/arcadeGames';
+import { ARCADE_COINS, ARCADE_COIN_RULE } from '../lib/arcadeCoins';
+import {
+  arcadeLevel,
+  arcadeLevelLabel,
+  markArcadeQuestion,
+  noteArcadeRun,
+  takeArcadeQuestions,
+} from '../lib/arcadeProgress';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
 
@@ -269,6 +278,7 @@ export function ChatQuest() {
   const [answered, setAnswered] = useState(0);
   const [streak, setStreak] = useState(0);
   const [bestStreak, setBestStreak] = useState(0);
+  const [questionLevel, setQuestionLevel] = useState<number>(() => arcadeLevel('talk'));
   const [done, setDone] = useState(false);
   const bubbleId = useRef(0);
   const timers = useRef<number[]>([]);
@@ -291,10 +301,15 @@ export function ChatQuest() {
     return list[index];
   };
 
-  const pool: ChatItem[] = useMemo(
-    () => (seed ? buildChatPool(app.questions, seed, CONVERSATION_LENGTH, progressAtStart) : []),
-    [app.questions, seed, progressAtStart]
-  );
+  const pool: ChatItem[] = useMemo(() => {
+    if (!seed) return [];
+    // Hrishi's questions persist across sittings even though the eight-turn
+    // conversation starts over. Level and unseen history are shared with the
+    // rest of the Arcade.
+    const rw = app.questions.filter((question) => question.section === 'Reading and Writing');
+    const candidates = takeArcadeQuestions('talk', rw, 80, seed);
+    return buildChatPool(candidates, seed, CONVERSATION_LENGTH, progressAtStart);
+  }, [app.questions, seed, progressAtStart]);
   const current = pool[index] ?? null;
 
   const push = useCallback((from: Speaker, text: string, tone?: 'good' | 'bad') => {
@@ -321,7 +336,9 @@ export function ChatQuest() {
   }, [log, typing, index]);
 
   const begin = () => {
-    const nextSeed = `talk:${Date.now()}`;
+    const nextSeed = `talk:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`;
+    noteArcadeRun('talk');
+    setQuestionLevel(arcadeLevel('talk'));
     timers.current.forEach((id) => window.clearTimeout(id));
     timers.current = [];
     setSeed(nextSeed);
@@ -375,6 +392,15 @@ export function ChatQuest() {
     setStreak(nextStreak);
     setBestStreak((prev) => Math.max(prev, nextStreak));
 
+    const progress = markArcadeQuestion('talk', item.questionId, isCorrect);
+    setQuestionLevel(progress.level);
+    if (isCorrect) {
+      void app.actions.awardCoins(
+        ARCADE_COINS.tableCorrect,
+        `${sessionRef.current}:talk:${item.questionId}`
+      );
+    }
+
     setTyping(true);
     const reply = isCorrect
       ? chooseReply(
@@ -408,8 +434,13 @@ export function ChatQuest() {
     }
   };
 
-  useEffect(() => {
-    if (!done || awardedRef.current || answered === 0) return;
+  /**
+   * Pays the sitting exactly once. It runs when the last exchange lands, and
+   * again if the student leaves mid-conversation: switching tabs or closing the
+   * app should save the exchanges already answered, not throw them away.
+   */
+  const settleSitting = () => {
+    if (awardedRef.current || answered === 0) return;
     awardedRef.current = true;
     const timeSpent = Math.max(1, Math.round((Date.now() - startedRef.current) / 1000));
     void app.actions.completeSession({
@@ -419,7 +450,13 @@ export function ChatQuest() {
       correct,
       timeSpentSeconds: timeSpent,
     });
-  }, [answered, app.actions, correct, done]);
+  };
+
+  useEffect(() => {
+    if (done) settleSitting();
+  }, [answered, correct, done]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useLeaveSave(settleSitting, seed !== null && !done);
 
   if (!seed) {
     return (
@@ -433,9 +470,10 @@ export function ChatQuest() {
         </div>
         <p className="muted">
           Hrishi is at the back table with a stack of reading items and a cooling coffee. Answer
-          his cards by replying in the chat; he reacts to every choice, and the passage stays on
-          the table until you decide.
+          his cards by replying in the chat; every correct reply pays {ARCADE_COINS.tableCorrect}{' '}
+          HDCoin. The passage stays on the table until you decide.
         </p>
+        <p className="muted">Question tier {questionLevel}/10 · {arcadeLevelLabel('talk')} — clean first tries raise it.</p>
         <div className="talk-preview" aria-hidden="true">
           <div className="talk-preview-bubble">You made it. Sit — I saved the lamp.</div>
           <div className="talk-preview-bubble is-you">What are we working on?</div>
@@ -480,6 +518,7 @@ export function ChatQuest() {
             {progress} / {CONVERSATION_LENGTH}
           </Badge>
           <Badge tone={streak > 1 ? 'good' : 'neutral'}>Streak {streak}</Badge>
+          <Badge tone="neutral">Tier {questionLevel}</Badge>
           <Badge tone="neutral">{correct} correct</Badge>
         </div>
       </div>
@@ -515,6 +554,7 @@ export function ChatQuest() {
             />
             <Stat label="Best streak" value={bestStreak} />
           </div>
+          <p className="muted" style={{ marginTop: 8 }}>{ARCADE_COIN_RULE}</p>
           <div className="row" style={{ marginTop: 12 }}>
             <Button onClick={begin}>Talk again</Button>
             <Button
@@ -564,7 +604,7 @@ export function ChatQuest() {
           {awaitingNext ? (
             <div className="talk-next">
               <Button size="sm" onClick={() => advanceTurn(answered, correct)}>
-                Next card →
+                Next card
               </Button>
             </div>
           ) : null}

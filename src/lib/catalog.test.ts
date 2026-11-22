@@ -4,6 +4,7 @@
  * an emblem cannot be bought.
  */
 import { describe, expect, it } from 'vitest';
+import achievementSql from '../../supabase/migrations/20261104000100_achievement_ladder.sql?raw';
 import economySql from '../../supabase/migrations/20261025000200_emblems_earned.sql?raw';
 import {
   ACHIEVEMENTS,
@@ -14,7 +15,33 @@ import {
   emblemFor,
   itemById,
   normalizeAchievementIds,
+  visibleAchievements,
 } from './catalog';
+
+describe('achievement ladder reveal', () => {
+  it('opens with ten rungs and reveals one more per badge', () => {
+    const all = ACHIEVEMENTS.length;
+    expect(visibleAchievements([])).toHaveLength(10);
+    expect(visibleAchievements([])[0].id).toBe(ACHIEVEMENTS[0].id);
+    expect(visibleAchievements(['first-steps'])).toHaveLength(11);
+    expect(visibleAchievements(['first-steps', 'ten-questions', 'streak-3'])).toHaveLength(13);
+    // The last reveal cannot push past the end of the ladder.
+    const everything = visibleAchievements(ACHIEVEMENTS.map((a) => a.id));
+    expect(everything).toHaveLength(all);
+    expect(everything[everything.length - 1].id).toBe(ACHIEVEMENTS[all - 1].id);
+  });
+
+  it('never hides a badge the student actually earned', () => {
+    const late = ACHIEVEMENTS[ACHIEVEMENTS.length - 1];
+    const shown = visibleAchievements([late.id]);
+    expect(shown.some((a) => a.id === late.id)).toBe(true);
+    // A grant past the window adds its own row and still reveals one more rung.
+    expect(shown).toHaveLength(12);
+    expect(shown.slice(0, 11)).toEqual(ACHIEVEMENTS.slice(0, 11));
+    // Unknown / legacy ids are not achievements and reveal nothing on their own.
+    expect(visibleAchievements(['badge-navigator'])).toHaveLength(10);
+  });
+});
 
 describe('theme store', () => {
   it('sells themes only, climbing in unlock order with no repeated price', () => {
@@ -71,6 +98,23 @@ describe('earned emblems', () => {
     expect(emblemFor('not-an-item')).toBeNull();
     expect(itemById('badge-centurion')).toBeUndefined();
     expect(LEGACY_EMBLEMS['badge-centurion']?.icon).toBe('crown');
+  });
+
+  it('grants every rung of the ladder in the database too, at the same price', () => {
+    for (const achievement of ACHIEVEMENTS) {
+      const grant = achievementSql.match(
+        new RegExp(`grant_achievement_with_reward\\(p_user_id, '${achievement.id}',[^;]*?, (\\d+), p_local_date\\)`)
+      );
+      expect(grant, `missing server grant for ${achievement.id}`).toBeTruthy();
+      expect(Number(grant![1]), achievement.id).toBe(achievement.rewardCoins);
+    }
+  });
+
+  it('keeps the session coin band identical on both sides', () => {
+    // 5 + round(pow(roll, 2.6) * 45) is the client's low-biased 5-50 roll.
+    expect(achievementSql).toContain('5 + ROUND(POWER(random(), 2.6) * 45)::INTEGER');
+    expect(achievementSql).toContain('v_coverage := LEAST(1, v_questions::NUMERIC / 90)');
+    expect(achievementSql).toContain('ROUND(25 * v_coverage * v_accuracy)::INTEGER');
   });
 
   it('only equips emblems the student has actually earned', () => {

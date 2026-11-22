@@ -13,6 +13,14 @@ import { MathText } from './MathText';
 import { ReferenceWindow } from './ReferenceWindow';
 import { PaneSwitch, SplitWorkbench, useSplitPane } from './SplitWorkbench';
 import { Badge, Button, Card, Icon, Stat } from './ui';
+import { ARCADE_COINS, interceptorTargetCoins } from '../lib/arcadeCoins';
+import {
+  arcadeLevel,
+  arcadeLevelLabel,
+  markArcadeQuestion,
+  noteArcadeRun,
+  takeArcadeQuestions,
+} from '../lib/arcadeProgress';
 import {
   buildInterceptWave,
   makeRng,
@@ -182,7 +190,7 @@ export function CoordinateInterceptor() {
   const app = useApp();
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const boardRef = useRef<HTMLDivElement | null>(null);
-  const seedRef = useRef(`intercept:${Date.now()}`);
+  const seedRef = useRef(`intercept:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`);
 
   const [mode, setMode] = useState<'linear' | 'quadratic'>('linear');
   const [m, setM] = useState(0.5);
@@ -208,6 +216,7 @@ export function CoordinateInterceptor() {
   const [breakPick, setBreakPick] = useState<string | null>(null);
   const [breakScore, setBreakScore] = useState<'right' | 'wrong' | null>(null);
   const [pendingWave, setPendingWave] = useState(1);
+  const [questionLevel, setQuestionLevel] = useState<number>(() => arcadeLevel('interceptor'));
 
   const sessionRef = useRef<string>(newEventId());
   const scoreRef = useRef(0);
@@ -295,14 +304,17 @@ export function CoordinateInterceptor() {
       return next;
     });
     const timeSpent = Math.max(1, Math.round((Date.now() - startedRef.current) / 1000));
-    if (shotsRef.current > 0) {
+    const shots = shotsRef.current;
+    const hits = hitsRef.current;
+    // Coins were already paid per target and per clean math break. The
+    // completed run is recorded for the daily activity/streak, never as a
+    // second random payout.
+    if (shots > 0) {
       await app.actions.completeSession({
         activityType: 'mini_game',
         sessionId: sessionRef.current,
-        // One beam can intercept several targets, so the item count has to
-        // cover the interceptions too: hits can never exceed items.
-        questions: Math.max(3, shotsRef.current, hitsRef.current),
-        correct: hitsRef.current,
+        questions: Math.max(1, shots),
+        correct: Math.min(hits, Math.max(1, shots)),
         timeSpentSeconds: timeSpent,
       });
     }
@@ -340,10 +352,14 @@ export function CoordinateInterceptor() {
           !breakUsedRef.current.has(question.id)
       );
       if (pool.length === 0) return false;
-      // A break is still a study mode: draw from the same family-spaced pool as
-      // practice and the vault instead of a flat random pick, which could serve
-      // a near-duplicate of something answered an hour ago.
-      const ranked = preferFreshFamilies(pool, buildFamilyHistory(app.questions, app.progress));
+      // A break is still a study mode: use the shared arcade history so a
+      // question met in the vault does not reappear here, and draw from the
+      // current question tier rather than a flat random pick.
+      const candidates = takeArcadeQuestions('interceptor', pool, 16, seedRef.current);
+      const ranked = preferFreshFamilies(
+        candidates,
+        buildFamilyHistory(app.questions, app.progress)
+      );
       const window = ranked.slice(0, Math.min(12, ranked.length));
       const picked = window[Math.floor(Math.random() * window.length)];
       breakUsedRef.current.add(picked.id);
@@ -358,7 +374,9 @@ export function CoordinateInterceptor() {
   );
 
   const start = () => {
-    seedRef.current = `intercept:${Date.now()}`;
+    seedRef.current = `intercept:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`;
+    noteArcadeRun('interceptor');
+    setQuestionLevel(arcadeLevel('interceptor'));
     sessionRef.current = newEventId();
     runCompleteRef.current = false;
     scoreRef.current = 0;
@@ -422,9 +440,15 @@ export function CoordinateInterceptor() {
     setBreakPick(choiceId);
     const right = choiceId === question.correct_answer;
     setBreakScore(right ? 'right' : 'wrong');
+    const progress = markArcadeQuestion('interceptor', question.id, right);
+    setQuestionLevel(progress.level);
     if (right) {
       scoreRef.current += 15;
       setScore(scoreRef.current);
+      void app.actions.awardCoins(
+        ARCADE_COINS.firstTryQuestion,
+        `${sessionRef.current}:break:${question.id}`
+      );
     }
   };
 
@@ -455,6 +479,14 @@ export function CoordinateInterceptor() {
     shotsRef.current = nextShots;
     setShots(nextShots);
     beamRef.current = { at: performance.now(), aim: aimNow, hit: struck.length > 0 };
+    if (struck.length > 0) {
+      const coins = struck.reduce((sum, target) => sum + interceptorTargetCoins(target.kind), 0);
+      const key = [...struck.map((target) => target.id)].sort().join('+');
+      void app.actions.awardCoins(
+        coins,
+        `${sessionRef.current}:wave:${current.stage}:${key}`
+      );
+    }
 
     if (struck.length === 0) {
       setPulses((p) => p - 1);
@@ -507,47 +539,59 @@ export function CoordinateInterceptor() {
         setMessage('Out of pulses — fresh wave, fresh coordinates.');
       }, 700);
     }
-  }, [running, paused, pulses, tolerance, afterWave]);
+  },    [app.actions, running, paused, pulses, tolerance, afterWave]
+  );
 
   const toggleMode = useCallback(() => {
     setMode((value) => (value === 'linear' ? 'quadratic' : 'linear'));
   }, []);
 
-  // Keyboard aiming, while a run is live: W/S (or ↑/↓) tilt the line or open
-  // the parabola, A/D (or ←/→) slide it, Q/E — or Shift with ←/→ — raise the
-  // parabola's vertex, space swaps modes and Enter fires. Ignored inside fields
-  // and on focused buttons, so it can never steal a keystroke from an answer box
-  // or a tool window.
+  // Keyboard aiming, while a run is live: W/S (or ↑/↓) tilt the line or move
+  // the parabola, A/D (or ←/→) slide it, Q/E or Shift with any arrow change the
+  // parabola's width, space swaps modes and Enter fires. Shift+arrow is handled
+  // before the field guard; other keys stay out of answer boxes and tool windows,
+  // and a focused button keeps Space/Enter for its own activation.
   useEffect(() => {
     if (!running || paused) return;
     const onKey = (event: KeyboardEvent) => {
       const target = event.target as HTMLElement | null;
+      if (event.ctrlKey || event.metaKey || event.altKey) return;
+      const key = event.key.toLowerCase();
+      // Shift with any arrow changes the parabola's width, the same job Q/E
+      // does, so the hand can stay on the arrow cluster. Up/Right widen the
+      // curve and Down/Left tighten it. This runs before the field guard so it
+      // still works after the player has clicked the a slider (or any button,
+      // which used to swallow the arrow cluster).
+      if (
+        mode === 'quadratic' &&
+        event.shiftKey &&
+        (key === 'arrowleft' ||
+          key === 'arrowright' ||
+          key === 'arrowup' ||
+          key === 'arrowdown')
+      ) {
+        event.preventDefault();
+        const widen = key === 'arrowright' || key === 'arrowup';
+        setA((value) =>
+          clamp(Number((value + (widen ? STEP_A : -STEP_A)).toFixed(2)), A_MIN, A_MAX)
+        );
+        return;
+      }
+      // A focused slider or text field owns its own arrow keys after that. A
+      // focused button does not: space and Enter still belong to it so its
+      // native activation is not doubled.
       if (
         target &&
         (target.tagName === 'INPUT' ||
           target.tagName === 'TEXTAREA' ||
-          target.tagName === 'BUTTON' ||
           target.isContentEditable)
       ) {
         return;
       }
-      if (event.ctrlKey || event.metaKey || event.altKey) return;
-      const key = event.key.toLowerCase();
-      // Shift + ←/→ changes the parabola's width, the same job Q/E does, so the
-      // hand can stay on the arrow cluster.
       if (
-        mode === 'quadratic' &&
-        event.shiftKey &&
-        (key === 'arrowleft' || key === 'arrowright')
+        target?.tagName === 'BUTTON' &&
+        (event.key === ' ' || event.key === 'Enter')
       ) {
-        event.preventDefault();
-        setA((value) =>
-          clamp(
-            Number((value + (key === 'arrowright' ? STEP_A : -STEP_A)).toFixed(2)),
-            A_MIN,
-            A_MAX
-          )
-        );
         return;
       }
       if (key === 'arrowleft' || key === 'a') {
@@ -601,6 +645,17 @@ export function CoordinateInterceptor() {
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [running, paused, fire, mode, toggleMode]);
+
+  // Put the keyboard on the board when a run starts (and when a math break
+  // closes), not on the button that launched it. Without this a clicked button
+  // kept focus and the arrow cluster belonged to the button, not the game.
+  useEffect(() => {
+    if (!running || paused) return;
+    const frame = requestAnimationFrame(() =>
+      canvasRef.current?.focus({ preventScroll: true })
+    );
+    return () => cancelAnimationFrame(frame);
+  }, [running, paused]);
 
   // The board fills whatever box it has — inline, and edge to edge in full
   // screen — while keeping the plane square. It also re-measures when a break
@@ -1072,14 +1127,23 @@ export function CoordinateInterceptor() {
           match a, h and k. While you are learning, every target already on your aim is marked{' '}
           <strong>LOCK</strong> — including the first parabola waves; from wave eight the mark is
           gone. Silver ships nudge around their point on the curve, so a shot has to be timed. Drag
-          on the plane, use the sliders, or WASD / arrows, and press Enter to fire.
+          on the plane, use the sliders, or WASD / arrows, and press Enter to fire. In
+          quadratic mode, hold <strong>Shift</strong> with any arrow to change <strong>a</strong>.
         </p>
         <div className="card-grid" style={{ margin: '12px 0' }}>
           <Stat label="High score" value={best} hint={last > 0 ? `Last run ${last}` : 'No runs yet'} />
           <Stat label="Firing modes" value="2" hint="Linear and quadratic — space swaps" />
           <Stat label="Math breaks" value="Every 2–5 waves" hint="The clock pauses while you answer" />
-          <Stat label="Reward" value="5–100 HDCoins" hint="Scales with interceptions and accuracy" />
+          <Stat
+            label="Coins"
+            value="Per hit"
+            hint="1 asteroid · 2 ship · 3 clean break"
+          />
         </div>
+        <p className="muted" style={{ marginTop: -2 }}>
+          Question tier {questionLevel}/10 · {arcadeLevelLabel('interceptor')} — only a first-try
+          math break raises it.
+        </p>
         <Button onClick={start}>
           <Icon name="play" size={14} /> Start run
         </Button>
@@ -1104,9 +1168,8 @@ export function CoordinateInterceptor() {
           />
         </div>
         <p className="muted">
-          {hits >= 3
-            ? 'Nice run — the HDCoins for this run are already on your balance.'
-            : 'Intercept at least three targets to earn the mini-game reward.'}
+          Coins were paid as you hit: 1 per asteroid, 2 per silver ship, and 3 for each
+          first-try math break. There is no end-of-run bonus.
         </p>
         <div className="row">
           <Button onClick={start}>Play again</Button>
@@ -1136,6 +1199,7 @@ export function CoordinateInterceptor() {
           </Badge>
           <Badge tone="good">{score} pts</Badge>
           <Badge tone="neutral">Wave {currentWaveNumber}</Badge>
+          <Badge tone="neutral">Tier {questionLevel}</Badge>
           {wave.kind === 'parabola' ? <Badge tone="warn">Parabola</Badge> : null}
         </div>
         <Button size="sm" variant="outline" onClick={() => void endRun()}>
@@ -1149,7 +1213,7 @@ export function CoordinateInterceptor() {
           locksEnabled(waveNumber, wave.kind)
             ? `${locks}/${live} on curve`
             : `${live} target${live === 1 ? '' : 's'}`
-        } · ${mode === 'linear' ? 'linear' : 'quadratic'}`}
+        } · ${mode === 'linear' ? 'firing linear' : 'firing quadratic'}`}
       >
         {breakQuestion ? (
           <MathBreak
@@ -1184,9 +1248,12 @@ export function CoordinateInterceptor() {
                 width={VIEW_W}
                 height={VIEW_H}
                 tabIndex={0}
-                aria-label="Coordinate plane with asteroid and ship targets. Drag to aim the beam, use the sliders, or arrow keys plus Enter to fire. Space swaps linear and quadratic modes."
+                aria-label="Coordinate plane with asteroid and ship targets. Drag to aim the beam, use the sliders, or arrow keys plus Enter to fire. Space swaps linear and quadratic modes. In quadratic mode, Shift with any arrow changes a."
                 className="interceptor-canvas"
-                onPointerDown={onPointerDown}
+                onPointerDown={(event) => {
+                  event.currentTarget.focus({ preventScroll: true });
+                  onPointerDown(event);
+                }}
                 onPointerMove={onPointerMove}
                 onPointerUp={endDrag}
                 onPointerCancel={endDrag}
@@ -1241,7 +1308,7 @@ export function CoordinateInterceptor() {
                   <label className="field">
                     <span className="field-label">
                       a = <strong>{a.toFixed(2)}</strong>
-                      <span className="interceptor-key-hint"> Q/E · ⇧←/→</span>
+                      <span className="interceptor-key-hint"> Q/E · ⇧ arrows</span>
                     </span>
                     <input
                       type="range"

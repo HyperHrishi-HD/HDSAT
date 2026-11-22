@@ -20,9 +20,22 @@ import {
   questQuestionIds,
   saveQuestProgress,
 } from './daily';
-import { SESSION_LEDGER_KEY, awardSessionCoins, emptyProfile, sessionCoinReward } from './storage';
+import {
+  ARCADE_EVENT_LEDGER_KEY,
+  SESSION_LEDGER_KEY,
+  awardArcadeEventCoins,
+  awardSessionCoins,
+  emptyProfile,
+  sessionCoinReward,
+} from './storage';
+import {
+  ARCADE_COIN_MAX_EVENT,
+  ARCADE_DAILY_COIN_CAP,
+  clampArcadeCoins,
+} from './arcadeCoins';
 import {
   buildInterceptWave,
+  describeRoom,
   firstShipWave,
   generateRoom,
   targetPosition,
@@ -88,6 +101,16 @@ describe('question of the day', () => {
     expect(dailyHardQuestion(questions, 'SAT', '2026-10-22')?.id).toBe(first?.id);
   });
 
+  it('serves a genuinely Hard item on Friday 2026-11-13', () => {
+    // The old pick was RW-M15-WB-D130-SP2006, a one-step graph read that had
+    // been labelled Hard. Difficulty is now corrected at the source and the
+    // QOTD must not fall back to an easier cached item.
+    const friday = dailyHardQuestion(questions, 'SAT', '2026-11-13');
+    expect(friday).not.toBeNull();
+    expect(friday?.difficulty).toBe('Hard');
+    expect(friday?.id).not.toBe('RW-M15-WB-D130-SP2006');
+  });
+
   it('tracks dismissal and solving per date', () => {
     expect(isQuestionOfTheDayDismissed('2026-10-22')).toBe(false);
     dismissQuestionOfTheDay('2026-10-22');
@@ -101,51 +124,123 @@ describe('question of the day', () => {
 });
 
 describe('arcade session rewards mirror the cloud caps', () => {
-  it('pays a Practice Rush five coins for at most four runs a day', () => {
+  it('pays a Practice Rush for at most four runs a day', () => {
     let profile = emptyProfile();
     let paid = 0;
     for (let run = 0; run < 6; run += 1) {
       const outcome = awardSessionCoins(
         profile,
-        { activityType: 'practice_rush', questions: 10, correct: 6, sessionId: `r-${run}` },
+        {
+          activityType: 'practice_rush',
+          questions: 10,
+          correct: 6,
+          sessionId: `r-${run}`,
+          random: () => 0,
+        },
         new Date('2026-10-22T12:00:00')
       );
       profile = outcome.profile;
       paid += outcome.coinsAwarded;
     }
+    // Four rewarded runs at the 5-coin floor, then the cap stops paying.
     expect(paid).toBe(20);
     expect(profile.hdCoins).toBe(20);
   });
 
-  it('pays a mini-game from a 5-coin floor up to the 100-coin ceiling', () => {
-    const weak = awardSessionCoins(
-      emptyProfile(),
-      { activityType: 'mini_game', questions: 10, correct: 2, sessionId: 'weak' },
-      new Date('2026-10-22T12:00:00')
-    );
-    // 5 base + 6 correct + 6 volume + 0 accuracy
-    expect(weak.coinsAwarded).toBe(17);
-
-    const strong = awardSessionCoins(
-      emptyProfile(),
-      { activityType: 'mini_game', questions: 10, correct: 5, sessionId: 'strong' },
-      new Date('2026-10-22T12:00:00')
-    );
-    // 5 base + 15 correct + 6 volume + 0 accuracy
-    expect(strong.coinsAwarded).toBe(26);
-    expect(strong.profile.hdCoins).toBe(26);
+  it('pays Practice Rush a flat five, matching the cloud exactly', () => {
+    expect(
+      sessionCoinReward({ activityType: 'practice_rush', questions: 3, correct: 1 })
+    ).toBe(5);
+    expect(
+      sessionCoinReward({ activityType: 'practice_rush', questions: 30, correct: 30 })
+    ).toBe(5);
+    // Two answers are not a run, and neither is a run with no correct answer.
+    expect(
+      sessionCoinReward({ activityType: 'practice_rush', questions: 2, correct: 2 })
+    ).toBe(0);
+    expect(
+      sessionCoinReward({ activityType: 'practice_rush', questions: 10, correct: 0 })
+    ).toBe(0);
   });
 
-  it('caps a one-room vault session and never pays outside 5-100', () => {
-    expect(sessionCoinReward({ activityType: 'mini_game', questions: 1, correct: 1 })).toBe(12);
-    expect(sessionCoinReward({ activityType: 'mini_game', questions: 8, correct: 8 })).toBe(38);
-    expect(sessionCoinReward({ activityType: 'mini_game', questions: 30, correct: 30 })).toBe(100);
-    expect(sessionCoinReward({ activityType: 'mini_game', questions: 0, correct: 0 })).toBe(0);
-    for (let correct = 1; correct <= 24; correct += 1) {
-      const reward = sessionCoinReward({ activityType: 'mini_game', questions: 24, correct });
-      expect(reward).toBeGreaterThanOrEqual(5);
-      expect(reward).toBeLessThanOrEqual(100);
+  it('caps one arcade event at the largest legitimate payout', () => {
+    expect(ARCADE_COIN_MAX_EVENT).toBe(10);
+    expect(clampArcadeCoins(-5)).toBe(0);
+    expect(clampArcadeCoins(6.9)).toBe(6);
+    expect(clampArcadeCoins(1000)).toBe(10);
+    expect(clampArcadeCoins(Number.NaN)).toBe(0);
+  });
+
+  it('refuses to pay a run that is not a run', () => {
+    expect(sessionCoinReward({ activityType: 'mini_game', questions: 2, correct: 2 })).toBe(0);
+    expect(sessionCoinReward({ activityType: 'mini_game', questions: 20, correct: 0 })).toBe(0);
+    expect(sessionCoinReward({ activityType: 'practice_rush', questions: 1, correct: 1 })).toBe(0);
+    expect(sessionCoinReward({ activityType: 'full_simulation', questions: 2, correct: 2 })).toBe(0);
+  });
+
+  it('does not pay or count the same completed session twice', () => {
+    const args = {
+      activityType: 'practice_rush' as const,
+      questions: 10,
+      correct: 6,
+      sessionId: 'same-run',
+      random: () => 0,
+    };
+    const first = awardSessionCoins(emptyProfile(), args, new Date('2026-10-22T12:00:00'));
+    const replay = awardSessionCoins(first.profile, args, new Date('2026-10-22T12:01:00'));
+    expect(first.coinsAwarded).toBe(5);
+    expect(replay.coinsAwarded).toBe(0);
+    expect(replay.profile.dailyActivity['2026-10-22'].sessionsCompleted).toBe(1);
+    expect(replay.profile.hdCoins).toBe(5);
+  });
+
+  it('credits exact arcade events once and respects the daily arcade ceiling', () => {
+    let profile = emptyProfile();
+    const same = awardArcadeEventCoins(profile, 3, 'event-1', new Date('2026-10-22T12:00:00'));
+    profile = same.profile;
+    const replay = awardArcadeEventCoins(profile, 3, 'event-1', new Date('2026-10-22T12:01:00'));
+    expect(same.coinsAwarded).toBe(3);
+    expect(replay.coinsAwarded).toBe(0);
+    expect(replay.profile.hdCoins).toBe(3);
+
+    // The ledger stops at the cap even when every event has a fresh id.
+    for (let i = 0; i < 20; i += 1) {
+      profile = awardArcadeEventCoins(
+        profile,
+        10,
+        `event-${i + 2}`,
+        new Date('2026-10-22T12:00:00')
+      ).profile;
     }
+    expect(profile.dailyActivity['2026-10-22'].coinsEarned).toBe(ARCADE_DAILY_COIN_CAP);
+    expect(localStorage.getItem(ARCADE_EVENT_LEDGER_KEY)).toContain('2026-10-22');
+  });
+
+  it('records a completed mini-game session for the streak even though exact event coins are zero', () => {
+    const outcome = awardSessionCoins(
+      emptyProfile(),
+      {
+        activityType: 'mini_game',
+        questions: 1,
+        correct: 1,
+        sessionId: 'game-streak-1',
+        random: () => 0,
+      },
+      new Date('2026-11-07T12:00:00')
+    );
+    expect(outcome.coinsAwarded).toBe(0);
+    expect(outcome.profile.dailyActivity['2026-11-07'].sessionsCompleted).toBe(1);
+    expect(outcome.profile.currentStreak).toBe(1);
+    expect(outcome.profile.lastActiveDate).toBe('2026-11-07');
+  });
+
+  it('pays a full test up to 25, scaled by coverage and accuracy', () => {
+    expect(sessionCoinReward({ activityType: 'full_simulation', questions: 98, correct: 98 })).toBe(25);
+    expect(sessionCoinReward({ activityType: 'full_simulation', questions: 90, correct: 45 })).toBe(13);
+    // Answering three items and stopping is worth pennies, not the full 25.
+    expect(
+      sessionCoinReward({ activityType: 'full_simulation', questions: 3, correct: 3 })
+    ).toBeLessThanOrEqual(1);
   });
 
   it('resets the allowance on the next calendar day', () => {
@@ -153,13 +248,25 @@ describe('arcade session rewards mirror the cloud caps', () => {
     for (let run = 0; run < 4; run += 1) {
       profile = awardSessionCoins(
         profile,
-        { activityType: 'practice_rush', questions: 10, correct: 6, sessionId: `a-${run}` },
+        {
+          activityType: 'practice_rush',
+          questions: 10,
+          correct: 6,
+          sessionId: `a-${run}`,
+          random: () => 0,
+        },
         new Date('2026-10-22T12:00:00')
       ).profile;
     }
     const nextDay = awardSessionCoins(
       profile,
-      { activityType: 'practice_rush', questions: 10, correct: 6, sessionId: 'b-0' },
+      {
+        activityType: 'practice_rush',
+        questions: 10,
+        correct: 6,
+        sessionId: 'b-0',
+        random: () => 0,
+      },
       new Date('2026-10-23T09:00:00')
     );
     expect(nextDay.coinsAwarded).toBe(5);
@@ -222,19 +329,31 @@ describe('coordinate interceptor waves', () => {
     }
   });
 
-  it('turns every other wave from five into a parabola for the second firing mode', () => {
-    for (let wave = 5; wave <= 12; wave += 1) {
-      const design = buildInterceptWave(wave, 'curve-test');
-      expect(design.kind).toBe(wave % 2 === 1 ? 'parabola' : 'line');
-      if (design.kind === 'parabola') {
-        expect(Math.abs(design.a)).toBeGreaterThan(0);
-        expect(Number.isInteger(design.h)).toBe(true);
-        expect(Number.isInteger(design.k)).toBe(true);
-        // Every coordinate stays printed: three points are the minimum needed
-        // to recover a, h and k.
-        expect(design.targets.length).toBeGreaterThanOrEqual(3);
+  it('rolls the wave kind after the tutorial wave instead of alternating on a fixed beat', () => {
+    const kinds = new Set<string>();
+    const sequences = new Set<string>();
+    for (const seed of ['curve-a', 'curve-b', 'curve-c', 'curve-d', 'curve-e']) {
+      let sequence = '';
+      for (let wave = 2; wave <= 10; wave += 1) {
+        const design = buildInterceptWave(wave, seed);
+        kinds.add(design.kind);
+        sequence += design.kind === 'parabola' ? 'p' : 'l';
+        if (design.kind === 'parabola') {
+          expect(Math.abs(design.a)).toBeGreaterThan(0);
+          expect(Number.isInteger(design.h)).toBe(true);
+          expect(Number.isInteger(design.k)).toBe(true);
+          // Every coordinate stays printed: three points are the minimum needed
+          // to recover a, h and k.
+          expect(design.targets.length).toBeGreaterThanOrEqual(3);
+        }
       }
+      sequences.add(sequence);
     }
+    // Both firing modes still appear, but two runs do not march through them
+    // in the same order.
+    expect(kinds).toEqual(new Set(['line', 'parabola']));
+    expect(sequences.size).toBeGreaterThan(1);
+    expect(buildInterceptWave(1, 'curve-a').kind).toBe('line');
   });
 
   it('hits a drifting ship only when the beam meets it where it is', () => {
@@ -273,7 +392,7 @@ describe('coordinate interceptor waves', () => {
 
 describe('rune vault rooms', () => {
   it('gives every door a lever on the same screen and crates on real floor', () => {
-    for (let stage = 1; stage <= 14; stage += 1) {
+    for (let stage = 1; stage <= 30; stage += 1) {
       const room = generateRoom(stage, 'vault-test');
       expect(room.gate.x).toBeGreaterThan(room.width - 200);
       expect(room.platforms.some((p) => p.kind === 'ground' && p.w > 0)).toBe(true);
@@ -300,15 +419,29 @@ describe('rune vault rooms', () => {
     }
   });
 
-  it('holds the machinery back to room three and keeps rooms generous in width', () => {
-    expect(generateRoom(1, 'vault-test').doors).toHaveLength(0);
-    expect(generateRoom(2, 'vault-test').doors).toHaveLength(0);
-    expect(generateRoom(3, 'vault-test').doors.length).toBeGreaterThanOrEqual(1);
+  it('does not replay a fixed level script: room content changes with the seed', () => {
+    const layouts = new Set<string>();
+    const contents = new Set<string>();
+    for (let index = 0; index < 16; index += 1) {
+      const room = generateRoom(1, `variety-${index}`);
+      layouts.add(JSON.stringify(room.platforms.map((p) => [p.x, p.y, p.w])));
+      contents.add(describeRoom(room));
+    }
+    // Room one is no longer the same pit + rope + wall in the same order.
+    expect(layouts.size).toBeGreaterThan(10);
+    expect(contents.size).toBeGreaterThan(4);
+    // Two runs with different seeds are different rooms, and the same seed is
+    // still reproducible for tests and resumed runs.
+    expect(generateRoom(4, 'seed-a')).not.toEqual(generateRoom(4, 'seed-b'));
+    expect(generateRoom(4, 'seed-a')).toEqual(generateRoom(4, 'seed-a'));
+  });
+
+  it('keeps every room wide enough to play and ends the floor at the gate approach', () => {
     for (let stage = 1; stage <= 10; stage += 1) {
       const room = generateRoom(stage, 'vault-test');
       const lastPlatform = room.platforms.filter((p) => p.kind === 'ground').pop()!;
       expect(lastPlatform.x + lastPlatform.w).toBe(room.width);
-      expect(room.width).toBeGreaterThan(1300);
+      expect(room.width).toBeGreaterThan(1000);
     }
   });
 });

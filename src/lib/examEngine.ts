@@ -397,28 +397,23 @@ function takeMatching(
   };
   const isFreshContent = (q: Question) => !used.has(q.id) && !used.has(questionContentKey(q));
 
-  // Pass 1: unique ID, unique content, unique stimulus, unique template, preferred difficulty
+  // Difficulty first, freshness second.
+  //
+  // The old order walked the freshness passes outermost, so a fresh archetype
+  // at a *lower* difficulty beat a near-sibling at the preferred one. That was
+  // invisible while algebra supplied a large Hard family; once those routine
+  // systems were relabelled Medium the adaptive "upper" module filled every
+  // slot from Module 1's leftovers and came out with no Hard items at all,
+  // even with 282 hard items still in the pool. A module's difficulty curve is
+  // the reason the tier exists, so it now outranks template freshness; the
+  // freshness passes still run before any other difficulty is considered.
   for (const diff of preferredDiffs) {
-    const found = pool.find((q) => isFreshAll(q) && q.difficulty === diff && predicate(q));
-    if (found) {
-      markQuestionUsed(found, used);
-      return found;
-    }
-  }
-  // Pass 2: unique ID, unique content, unique stimulus, preferred difficulty
-  for (const diff of preferredDiffs) {
-    const found = pool.find((q) => isFreshStim(q) && q.difficulty === diff && predicate(q));
-    if (found) {
-      markQuestionUsed(found, used);
-      return found;
-    }
-  }
-  // Pass 3: unique ID, unique content, preferred difficulty
-  for (const diff of preferredDiffs) {
-    const found = pool.find((q) => isFreshContent(q) && q.difficulty === diff && predicate(q));
-    if (found) {
-      markQuestionUsed(found, used);
-      return found;
+    for (const isFresh of [isFreshAll, isFreshStim, isFreshContent]) {
+      const found = pool.find((q) => isFresh(q) && q.difficulty === diff && predicate(q));
+      if (found) {
+        markQuestionUsed(found, used);
+        return found;
+      }
     }
   }
   // Pass 4: any difficulty with unique stimulus & content
@@ -1107,67 +1102,78 @@ function diversifySequence(
   // a family the student has never met comes first. That is what stops a
   // practice set from handing out four rewordings of the same template while a
   // genuinely unseen question sits at the back of the draw.
+  const freshPool = preferFreshFamilies(unseen, options.family);
   const working = [
-    ...preferFreshFamilies(unseen, options.family),
+    ...freshPool,
     ...due,
     ...(options.allowScheduled ? scheduled : []),
   ];
+  const unseenCount = freshPool.length;
 
   const picked: Question[] = [];
   const usedIds = new Set<string>();
   const usedContent = new Set<string>();
   const usedTemplates = new Set<string>();
   const usedArchetypes = new Set<string>();
+  const usedSkills = new Map<string, number>();
+  const usedDomains = new Map<string, number>();
 
-  // Pass 1: strictly distinct archetype + template + content, avoiding consecutive same skill
-  for (let step = 0; step < count; step += 1) {
-    const prev = picked[picked.length - 1];
+  // Among equally eligible unseen items, take the one whose skill and domain
+  // are least represented so far. The old draw only stopped *adjacent*
+  // repeats, so five Math slots could still all be linear equations; scoring
+  // the whole session spreads them. Due reviews keep their original order.
+  const pickIndex = (accept: (q: Question) => boolean): number => {
     let bestIdx = -1;
+    let bestScore = Number.POSITIVE_INFINITY;
+    let firstReview = -1;
     for (let i = 0; i < working.length; i += 1) {
       const q = working[i];
-      if (usedIds.has(q.id)) continue;
+      if (usedIds.has(q.id) || !accept(q)) continue;
+      if (i < unseenCount) {
+        const score =
+          (usedSkills.get(q.skill) ?? 0) * 100 + (usedDomains.get(q.domain) ?? 0) * 12;
+        if (score < bestScore) {
+          bestScore = score;
+          bestIdx = i;
+        }
+      } else if (firstReview < 0) {
+        firstReview = i;
+      }
+    }
+    return bestIdx >= 0 ? bestIdx : firstReview;
+  };
+
+  for (let step = 0; step < count; step += 1) {
+    const prev = picked[picked.length - 1];
+    const unique = (q: Question) => {
       const cKey = questionContentKey(q);
       const sKey = questionStimulusKey(q);
-      const tKey = questionTemplateKey(q);
-      const aKey = questionArchetypeKey(q);
-      if (usedContent.has(cKey) || (sKey && usedContent.has(sKey))) continue;
-      if (usedTemplates.has(tKey) || usedArchetypes.has(aKey)) continue;
-      if (prev && prev.skill === q.skill && prev.difficulty === q.difficulty) continue;
-      bestIdx = i;
-      break;
-    }
-    // Relax consecutive-skill restriction if needed while keeping archetype unique
+      return (
+        !usedContent.has(cKey) &&
+        !(sKey && usedContent.has(sKey)) &&
+        !usedTemplates.has(questionTemplateKey(q)) &&
+        !usedArchetypes.has(questionArchetypeKey(q))
+      );
+    };
+    // Pass 1: unique family, and never the same skill twice in a row.
+    let bestIdx = pickIndex((q) => unique(q) && (!prev || prev.skill !== q.skill));
+    // Pass 2: keep the family unique; allow a repeated skill only when no
+    // different-skill item is left.
+    if (bestIdx < 0) bestIdx = pickIndex(unique);
+    // Pass 3: relax archetype on a very narrow pool, still no exact repeat.
     if (bestIdx < 0) {
-      for (let i = 0; i < working.length; i += 1) {
-        const q = working[i];
-        if (usedIds.has(q.id)) continue;
+      bestIdx = pickIndex((q) => {
         const cKey = questionContentKey(q);
         const sKey = questionStimulusKey(q);
-        const tKey = questionTemplateKey(q);
-        const aKey = questionArchetypeKey(q);
-        if (usedContent.has(cKey) || (sKey && usedContent.has(sKey))) continue;
-        if (usedTemplates.has(tKey) || usedArchetypes.has(aKey)) continue;
-        bestIdx = i;
-        break;
-      }
+        return (
+          !usedContent.has(cKey) &&
+          !(sKey && usedContent.has(sKey)) &&
+          (!prev || questionArchetypeKey(prev) !== questionArchetypeKey(q))
+        );
+      });
     }
-    // Relax archetype restriction if pool is small (e.g. narrow single-skill filter)
-    if (bestIdx < 0) {
-      for (let i = 0; i < working.length; i += 1) {
-        const q = working[i];
-        if (usedIds.has(q.id)) continue;
-        const cKey = questionContentKey(q);
-        const sKey = questionStimulusKey(q);
-        if (usedContent.has(cKey) || (sKey && usedContent.has(sKey))) continue;
-        if (prev && questionArchetypeKey(prev) === questionArchetypeKey(q)) continue;
-        bestIdx = i;
-        break;
-      }
-    }
-    // Final fallback: any unused ID
-    if (bestIdx < 0) {
-      bestIdx = working.findIndex((q) => !usedIds.has(q.id));
-    }
+    // Final fallback: any unused ID.
+    if (bestIdx < 0) bestIdx = working.findIndex((q) => !usedIds.has(q.id));
     if (bestIdx < 0) break;
 
     const chosen = working[bestIdx];
@@ -1178,6 +1184,8 @@ function diversifySequence(
     if (sKey) usedContent.add(sKey);
     usedTemplates.add(questionTemplateKey(chosen));
     usedArchetypes.add(questionArchetypeKey(chosen));
+    usedSkills.set(chosen.skill, (usedSkills.get(chosen.skill) ?? 0) + 1);
+    usedDomains.set(chosen.domain, (usedDomains.get(chosen.domain) ?? 0) + 1);
   }
 
   return picked;

@@ -5,9 +5,9 @@ Reads credentials from .pa/smtp_credentials (or the environment):
 
     SMTP_HOST=smtp-relay.brevo.com
     SMTP_PORT=587
-    SMTP_LOGIN=hdsystem29@gmail.com
+    SMTP_LOGIN=<relay-id>@smtp-brevo.com
     SMTP_PASSWORD=<Brevo SMTP key>
-    SMTP_SENDER=hdsystem29@gmail.com
+    SMTP_SENDER=<operator mailbox>
     SMTP_SENDER_NAME=HDSAT
 
 Also needs SUPABASE_ACCESS_TOKEN in .pa/supabase_credentials or the environment.
@@ -30,6 +30,7 @@ PROJECT_REF = "qijfmwjcaminecxmbtcf"
 TOKEN_FILE = ROOT / ".pa" / "supabase_credentials"
 SMTP_FILE = ROOT / ".pa" / "smtp_credentials"
 TEMPLATE = ROOT / "supabase" / "email-templates" / "confirmation.html"
+RECOVERY_TEMPLATE = ROOT / "supabase" / "email-templates" / "recovery.html"
 SITE_URL = "https://hdsat.pythonanywhere.com"
 ALLOW_LIST = ",".join(
     [
@@ -91,15 +92,21 @@ def main() -> None:
         )
     if not TEMPLATE.exists():
         sys.exit(f"missing template {TEMPLATE}")
+    if not RECOVERY_TEMPLATE.exists():
+        sys.exit(f"missing template {RECOVERY_TEMPLATE}")
 
     template = TEMPLATE.read_text(encoding="utf-8")
+    recovery = RECOVERY_TEMPLATE.read_text(encoding="utf-8")
     payload = {
         "site_url": SITE_URL,
         "uri_allow_list": ALLOW_LIST,
         "mailer_otp_length": 6,
-        # One day, so a code read on a phone after school still works at night.
-        # Supabase ties the emailed link's lifetime to the same value.
-        "mailer_otp_exp": 86400,
+        # Twelve hours. Supabase ties both the emailed one-time code and the
+        # recovery link's lifetime to this value. Twelve hours covers a student
+        # who reads the mail after school and again the next morning, while a
+        # link left in an old inbox stops being a standing key to the account.
+        # It must stay >= the 12 h copy in the templates and the app.
+        "mailer_otp_exp": 43200,
         # Accounts are usable before the address is verified ("light accounts"):
         # sign-up issues a session immediately and never spends a send, and the
         # code that lifts the light-account cap is an email OTP. Confirmation is
@@ -109,6 +116,8 @@ def main() -> None:
         "mailer_templates_confirmation_content": template,
         "mailer_subjects_magic_link": "Confirm your HDSAT email",
         "mailer_templates_magic_link_content": template,
+        "mailer_subjects_recovery": "Reset your HDSAT password",
+        "mailer_templates_recovery_content": recovery,
         "smtp_host": host,
         # The Management API expects a string here, not a number.
         "smtp_port": str(port),
@@ -131,8 +140,9 @@ def main() -> None:
         "smtp_user": user,
         "smtp_sender_name": sender_name,
         "mailer_otp_length": 6,
-        "mailer_otp_exp": 86400,
+        "mailer_otp_exp": 43200,
         "rate_limit_email_sent": 30,
+        "mailer_subjects_recovery": "Reset your HDSAT password",
         "site_url": SITE_URL,
         "mailer_autoconfirm": True,
         "mailer_subjects_magic_link": "Confirm your HDSAT email",
@@ -144,6 +154,9 @@ def main() -> None:
         print(f"  [{'PASS' if good else 'FAIL'}] {key} = {actual}")
         if not good:
             failures.append(key)
+    # Confirmation emails carry both entry paths (link and 6-digit code). The
+    # recovery email carries the link only: the app has no reset-code field, and
+    # mailing a code nothing can accept is worse than not sending one.
     for key in ("mailer_templates_confirmation_content", "mailer_templates_magic_link_content"):
         body = config.get(key) or ""
         has_token = "{{ .Token }}" in body
@@ -154,6 +167,11 @@ def main() -> None:
         )
         if not (has_token and has_link):
             failures.append(key)
+    recovery_body = config.get("mailer_templates_recovery_content") or ""
+    recovery_ok = "{{ .ConfirmationURL }}" in recovery_body and "12 hours" in recovery_body
+    print(f"  [{'PASS' if recovery_ok else 'FAIL'}] recovery template carries the link and 12 h copy")
+    if not recovery_ok:
+        failures.append("mailer_templates_recovery_content")
     if failures:
         sys.exit(f"SMTP verification failed: {', '.join(failures)}")
     print("SMTP AND EMAIL VERIFICATION CONFIGURED")

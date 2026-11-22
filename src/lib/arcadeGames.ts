@@ -4,6 +4,7 @@ import {
   questionFamilyKeys,
   seededShuffle,
 } from './examEngine';
+import { parseNumeric } from './grading';
 import type { Question, QuestionProgress } from './types';
 
 /**
@@ -55,6 +56,11 @@ export interface Rect {
   h: number;
 }
 
+/** Local collision test: arcadeGames must not import the physics module back. */
+function rectsOverlap(a: Rect, b: Rect): boolean {
+  return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+}
+
 export interface Torch {
   x: number;
   y: number;
@@ -71,6 +77,11 @@ export interface Platform extends Rect {
 export interface Crate extends Rect {
   id: string;
   vy: number;
+}
+
+/** A collectible coin floating over the harder part of a room. */
+export interface VaultCoin extends Rect {
+  id: string;
 }
 
 /**
@@ -112,15 +123,17 @@ export interface Hazard extends Rect {
   kind: HazardKind;
 }
 
-/** A snake that chases the player along its stretch of floor. */
+/**
+ * A ground-bound snake. It owns no patrol bounds: once the player moves it
+ * follows the connected floor in either direction, turning at pits, walls,
+ * crates, closed doors and hazards. It cannot climb, so its y never changes.
+ */
 export interface Snake {
   id: string;
   x: number;
   y: number;
   w: number;
   h: number;
-  from: number;
-  to: number;
   dir: 1 | -1;
   speed: number;
 }
@@ -139,6 +152,8 @@ export interface Room {
   walls: Wall[];
   hazards: Hazard[];
   snakes: Snake[];
+  /** Optional so hand-built test rooms and older saved rooms still type-check. */
+  coins?: VaultCoin[];
   spawn: { x: number; y: number };
   gate: Rect;
 }
@@ -259,14 +274,28 @@ export const WAVE_Y_LIMIT = 3;
  * coordinates — the exact skill "which point lies on the line" tests — and a
  * clear is always one line away.
  */
-/** Parabola presets whose integer points all fit on the board. */
-const WAVE_PARABOLAS = [
-  { a: -0.25, h: -1, k: 2 },
-  { a: -0.25, h: 1, k: 2 },
-  { a: 0.25, h: 0, k: -2 },
-  { a: 0.25, h: -1, k: -1 },
-  { a: -0.25, h: 0, k: 1 },
-];
+/**
+ * Every parabola whose integer points still fit on the board. Built rather than
+ * hand-listed: five presets meant the odd waves in every run drew from the same
+ * five curves, which read as a fixed level order. The generated set has thirty,
+ * and which one appears now depends only on the run's seed and the wave.
+ */
+const WAVE_PARABOLAS = (() => {
+  const out: { a: number; h: number; k: number }[] = [];
+  for (const a of [0.25, -0.25]) {
+    for (let h = -2; h <= 2; h += 1) {
+      for (let k = -1; k <= 1; k += 1) {
+        let points = 0;
+        for (let x = h - 4; x <= h + 4; x += 2) {
+          if (Math.abs(x) > WAVE_X_LIMIT) continue;
+          if (Math.abs(a * (x - h) ** 2 + k) <= WAVE_Y_LIMIT) points += 1;
+        }
+        if (points >= 3) out.push({ a, h, k });
+      }
+    }
+  }
+  return out;
+})();
 
 /** The wave a run's first silver ship appears in: three or four, never one. */
 export function firstShipWave(seed: string): number {
@@ -298,7 +327,10 @@ export function buildInterceptWave(
   seed = 'intercept',
   rng: () => number = makeRng(`${seed}:wave:${wave}`)
 ): InterceptWave {
-  const parabola = wave >= 5 && wave % 2 === 1;
+  // The first wave is always a line, because the linear mode is what the game
+  // teaches. After that the kind is rolled: the old odd-wave-only rule put a
+  // parabola at the same point in every single run.
+  const parabola = wave >= 2 && rng() < Math.min(0.7, 0.28 + wave * 0.06);
 
   if (parabola) {
     const preset = WAVE_PARABOLAS[Math.floor(rng() * WAVE_PARABOLAS.length)];
@@ -330,7 +362,7 @@ export function buildInterceptWave(
     };
   }
 
-  const wanted = Math.min(2 + Math.floor((wave + 1) / 2), 5);
+  const wanted = Math.min(5, 2 + Math.floor(wave / 2) + (rng() < 0.4 ? 1 : 0));
 
   const candidates = (m: number, b: number) => {
     const xs: number[] = [];
@@ -345,7 +377,7 @@ export function buildInterceptWave(
 
   for (let attempt = 0; attempt < 12; attempt += 1) {
     const m = WAVE_SLOPES[Math.floor(rng() * WAVE_SLOPES.length)];
-    const b = Math.round((rng() * 2 - 1) * 2);
+    const b = Math.floor(rng() * 7) - 3;
     const xs = candidates(m, b);
     if (xs.length < 2) continue;
     const picked = seededShuffle(xs, `${seed}:wave:${wave}:${m}:${b}`)
@@ -432,9 +464,9 @@ export function targetsOnAim(
  * asked two variants of the same template would feel broken even when the
  * generated numbers differ, so the pool never contains a family twice.
  */
-function uniqueFamilies(pool: Question[]): Question[] {
+function uniqueFamilies<T extends Question>(pool: T[]): T[] {
   const usedKeys = new Set<string>();
-  const out: Question[] = [];
+  const out: T[] = [];
   for (const q of pool) {
     const keys = questionFamilyKeys(q);
     if (keys.some((key) => usedKeys.has(key))) continue;
@@ -442,6 +474,59 @@ function uniqueFamilies(pool: Question[]): Question[] {
     out.push(q);
   }
   return out;
+}
+
+/**
+ * Round-robins a pool across skills while keeping the first item where it was.
+ * A conversation of eight draws used to be able to hand over six Words in
+ * Context items in a row, which made every sitting feel like the same drill
+ * even though the questions themselves were different. Grouping by skill keeps
+ * the fresh-first order inside each group and the pool's first choice first.
+ */
+function interleaveBySkill<T extends Question>(pool: T[]): T[] {
+  const order: string[] = [];
+  const groups = new Map<string, T[]>();
+  for (const question of pool) {
+    const skill = question.skill || 'Other';
+    if (!groups.has(skill)) {
+      groups.set(skill, []);
+      order.push(skill);
+    }
+    groups.get(skill)!.push(question);
+  }
+  if (groups.size <= 1) return pool.slice();
+  const out: T[] = [];
+  for (let index = 0; out.length < pool.length; index += 1) {
+    const remaining = order.filter((skill) => index < groups.get(skill)!.length);
+    if (remaining.length === 1) {
+      // Only one skill is left. Add one item if the boundary is safe, then
+      // stop: a trailing run of the same skill reads exactly like the repeats
+      // this ordering exists to prevent.
+      const last = out[out.length - 1];
+      const skill = remaining[0];
+      if (last && last.skill !== skill) out.push(groups.get(skill)![index]);
+      break;
+    }
+    let added = false;
+    for (const skill of order) {
+      const list = groups.get(skill)!;
+      if (index < list.length) {
+        out.push(list[index]);
+        added = true;
+      }
+    }
+    if (!added) break;
+  }
+  return out;
+}
+
+/**
+ * One item per family, then round-robin by skill. Arcade runs are short, so a
+ * single repeated family or a run of same-skill items is far more noticeable
+ * than in a long practice session.
+ */
+export function diversifyArcadePool<T extends Question>(pool: T[]): T[] {
+  return interleaveBySkill(uniqueFamilies(pool));
 }
 
 export function buildChatPool(
@@ -467,8 +552,8 @@ export function buildChatPool(
     eligible.filter((q) => !q.stimulus || q.stimulus.trim().length <= 40),
     `${seed}:prompt`
   );
-  const ordered = uniqueFamilies(
-    preferFreshFamilies([...withText, ...withoutText], history)
+  const ordered = interleaveBySkill(
+    uniqueFamilies(preferFreshFamilies([...withText, ...withoutText], history))
   );
   return ordered.slice(0, limit).map((q) => ({
     key: `chat-${q.id}`,
@@ -492,23 +577,35 @@ export function buildRunePool(
   questions: Question[],
   seed: string,
   perSection = 30,
-  progress: Record<string, QuestionProgress> = {}
+  progress: Record<string, QuestionProgress> = {},
+  seenIds: Iterable<string> = []
 ): RuneItem[] {
   const history = buildFamilyHistory(questions, progress);
-  const pick = (section: 'Reading and Writing' | 'Math') =>
-    uniqueFamilies(
-      preferFreshFamilies(
-        seededShuffle(
-          questions.filter(
-            (q) =>
-              q.section === section &&
-              (q.format === 'spr' ? q.acceptable_answers.length > 0 || q.correct_answer : Boolean(q.choices))
-          ),
-          `${seed}:${section}`
-        ),
-        history
-      )
-    ).slice(0, perSection);
+  const seen = new Set(seenIds);
+  const pick = (section: 'Reading and Writing' | 'Math') => {
+    const candidates = questions.filter(
+      (q) =>
+        q.section === section &&
+        (q.format === 'spr' ? q.acceptable_answers.length > 0 || q.correct_answer : Boolean(q.choices))
+    );
+    // A new run starts with items this browser has not met yet. The seen pool
+    // is only used to fill a shortlist after the fresh items run out; a player
+    // sees a duplicate only once every eligible question in that section has
+    // actually been served.
+    const fresh = seededShuffle(
+      candidates.filter((q) => !seen.has(q.id)),
+      `${seed}:${section}:fresh`
+    );
+    const reviewed = seededShuffle(
+      candidates.filter((q) => seen.has(q.id)),
+      `${seed}:${section}:reviewed`
+    );
+    const ordered = fresh.length >= perSection ? fresh : [...fresh, ...reviewed];
+    return interleaveBySkill(uniqueFamilies(preferFreshFamilies(ordered, history))).slice(
+      0,
+      perSection
+    );
+  };
 
   const rw = pick('Reading and Writing');
   const math = pick('Math');
@@ -552,7 +649,16 @@ export function checkSpr(item: RuneItem, value: string): boolean {
   const given = normaliseSpr(value);
   if (!given) return false;
   const accepted = [item.answer, ...item.acceptable].map(normaliseSpr).filter(Boolean);
-  return accepted.includes(given);
+  if (accepted.includes(given)) return true;
+  // A vault SPR is graded like the real thing: "9", "9.0" and "18/2" are the
+  // same answer. Comparing strings alone marked a correct entry wrong whenever
+  // the student typed an equivalent form.
+  const givenNumber = parseNumeric(given);
+  if (givenNumber === null) return false;
+  return accepted.some((candidate) => {
+    const target = parseNumeric(candidate);
+    return target !== null && Math.abs(givenNumber - target) < 1e-6;
+  });
 }
 
 /* --------------------------------------------------------------------------
@@ -560,16 +666,17 @@ export function checkSpr(item: RuneItem, value: string): boolean {
 -------------------------------------------------------------------------- */
 
 /**
- * The vault is a schedule with a dice roll inside it, not a dice roll dressed
- * as a schedule. Each mechanic has the room it first appears in, and every room
- * is built out of blocks that start on solid ground: a pit always has a run-up,
- * a lever always stands on floor, a rope always reaches past the ledge it
- * serves, and a wall is always climbable.
+ * The vault is a dice roll with physical guarantees, not a level list. Every
+ * room is built out of blocks that start on solid ground: a pit always has a
+ * run-up, a lever always stands on floor, a rope always reaches past the ledge
+ * it serves, and a wall is always climbable. What the blocks are, in what
+ * order, and how many of them is rolled fresh for every room and every run.
  *
- * Room one is not an empty corridor any more. The first descent already has a
- * chasm, a rope up to a ledge and a crate that gets you over a wall. Spikes,
- * machinery, bear traps and snakes join one at a time after that, and by the
- * tenth room everything is mixed.
+ * There is no unlock schedule. Every mechanic is in the draw from room one, and
+ * depth only raises the odds of the expensive, dangerous ones and lengthens the
+ * room. Two runs therefore do not descend through the same sequence of rooms,
+ * which is what the old "new mechanic in room N" table had turned the vault
+ * into.
  */
 type BlockKind =
   | 'flat'
@@ -588,18 +695,18 @@ const VAULT_HEIGHT = 460;
 const VAULT_SPAWN_X = 56;
 const WALL_HEIGHT = 112;
 
-/** The room each mechanic first appears in. */
-const BLOCK_FROM: Record<Exclude<BlockKind, 'flat'>, number> = {
-  pit: 1,
-  climb: 1,
-  wall: 1,
-  spikes: 2,
-  route: 2,
-  machine: 3,
-  highroute: 3,
-  trap: 4,
-  snake: 5,
-};
+/** Every mechanic a room can be built from. */
+const VAULT_MECHANICS: Exclude<BlockKind, 'flat'>[] = [
+  'pit',
+  'climb',
+  'wall',
+  'spikes',
+  'route',
+  'machine',
+  'highroute',
+  'trap',
+  'snake',
+];
 
 /** What this room actually contains, for the live hint under the title. */
 export function describeRoom(room: Room): string {
@@ -658,32 +765,102 @@ export function generateRoom(stage: number, seed: string): Room {
   };
 
   // --- what this room is made of -----------------------------------------
-  const unlocked = (Object.keys(BLOCK_FROM) as Exclude<BlockKind, 'flat'>[]).filter(
-    (kind) => stage >= BLOCK_FROM[kind]
-  );
-  const newest = unlocked.reduce((best, kind) =>
-    BLOCK_FROM[kind] > BLOCK_FROM[best] ? kind : best
-  );
-  const rest = seededShuffle(
-    unlocked.filter((kind) => kind !== newest),
-    `${seed}:order:${stage}`
-  );
-  // Rooms grow denser as the descent goes on: five pieces from the first room,
-  // one more every two rooms, capped so a single room never becomes a slog.
-  const want = Math.min(5 + Math.floor(stage / 2), 12);
-  const blocks: BlockKind[] = [newest, ...rest].slice(0, want);
-  // Pad with plain ground, never with a mechanic that is not unlocked yet.
-  while (blocks.length < want) blocks.push(rng() < 0.5 ? 'flat' : 'pit');
+  //
+  // A room is a budget, not a checklist. Every mechanic costs something, the
+  // budget grows with the descent, and the draw is weighted — so an early room
+  // is mostly floor with one obstacle, and a late room is machinery. The old
+  // version always appended every unlocked mechanic in a fixed order, which is
+  // why the descent read as a hand-built level list: room four always had the
+  // same four things in the same four slots.
+  //
+  // The mechanic that unlocks in this room is guaranteed a place (a new idea
+  // should actually appear when it is introduced); everything else is drawn.
+  const costs: Record<Exclude<BlockKind, 'flat'>, number> = {
+    pit: 1,
+    spikes: 1,
+    trap: 1,
+    wall: 2,
+    climb: 2,
+    route: 2,
+    machine: 3,
+    highroute: 3,
+    snake: 2,
+  };
+  // Every mechanic is available from the first room. The old build forced a
+  // fixed "this unlocks in room N" list, so two runs always descended through
+  // the same sequence: room 2 had spikes and a stepping route, room 3 had a
+  // lever, and so on. That is a level list with dice, not a procedural vault.
+  // Here the dice alone decide what a room is made of; depth only makes the
+  // expensive, dangerous pieces more likely and the room longer.
+  const allKinds = VAULT_MECHANICS;
+  const weights: Record<BlockKind, number> = {
+    flat: Math.max(0.7, 1.6 - stage * 0.06),
+    pit: 2.2,
+    spikes: 1.8 + Math.min(stage, 8) * 0.12,
+    trap: 1.1 + Math.min(stage, 8) * 0.13,
+    wall: 1.6,
+    climb: 1.5,
+    route: 1.2 + Math.min(stage, 8) * 0.06,
+    machine: 0.9 + Math.min(stage, 8) * 0.09,
+    highroute: 0.7 + Math.min(stage, 8) * 0.07,
+    snake: 0.8 + Math.min(stage, 8) * 0.09,
+  };
+
+  // 5 pieces in the first room, a little over one more per descent, plus a
+  // wide roll so two runs at the same depth are not the same length.
+  const budget = 5 + Math.round(stage * 1.35) + Math.round(rng() * 3.4);
+  const blocks: BlockKind[] = [];
+  let spent = 0;
+
+  const draw = (): BlockKind => {
+    const pool: BlockKind[] = [...allKinds, 'flat', 'flat'];
+    const total = pool.reduce((sum, kind) => sum + weights[kind], 0);
+    let ticket = rng() * total;
+    for (const kind of pool) {
+      ticket -= weights[kind];
+      if (ticket <= 0) return kind;
+    }
+    return 'flat';
+  };
+
+  // Bounded attempts: an unlucky draw of expensive pieces must not spin here.
+  for (let attempt = 0; attempt < 28 && spent < budget; attempt += 1) {
+    const kind = draw();
+    const cost = kind === 'flat' ? 1 : costs[kind];
+    if (spent + cost > budget + 1) continue;
+    blocks.push(kind);
+    spent += cost;
+  }
+  while (blocks.length < 3) blocks.push('flat');
+
+  // Nothing else is appended after the draw. A guaranteed wall or crate in
+  // every room was the second half of why the descent felt hand-built; a room
+  // with only slopes and a lever is a different room, not a broken one.
+
+  // The order is rolled separately from the contents.
+  const ordered = seededShuffle(blocks, `${seed}:order:${stage}`);
 
   let cursor = 0;
-  slab(cursor, 320);
-  cursor += 320;
+  slab(cursor, 260 + Math.round(rng() * 110));
+  cursor = ground[ground.length - 1].x + ground[ground.length - 1].w;
 
-  for (const kind of blocks) {
+  for (const kind of ordered) {
     switch (kind) {
       case 'flat': {
-        const w = 190 + Math.round(rng() * 80);
+        const w = 150 + Math.round(rng() * 130);
         slab(cursor, w);
+        // From the third room even a plain floor can carry a single low hazard,
+        // so "flat" is breathing space rather than a promise of nothing.
+        if (stage >= 3 && rng() < 0.34) {
+          hazards.push({
+            id: `spikes-${hazards.length}`,
+            kind: 'spikes',
+            x: cursor + Math.round(w * (0.34 + rng() * 0.3)),
+            y: groundY - 14,
+            w: 38 + Math.round(rng() * 30),
+            h: 14,
+          });
+        }
         cursor += w;
         break;
       }
@@ -698,13 +875,13 @@ export function generateRoom(stage: number, seed: string): Room {
         // A rope over a chasm. The ledge it serves is a bridge: the gap below
         // is wider than any jump, so the rope has a reason to exist and the
         // room cannot be walked through without it.
-        const approach = 230;
-        const gap = 205;
-        const landing = 90;
+        const approach = 200 + Math.round(rng() * 70);
+        const gap = 200 + Math.round(rng() * 40);
+        const landing = 80 + Math.round(rng() * 40);
         slab(cursor, approach);
         slab(cursor + approach + gap, landing);
-        const ladderX = cursor + 120;
-        const ledgeY = groundY - 236;
+        const ladderX = cursor + 96 + Math.round(rng() * 60);
+        const ledgeY = groundY - (206 + Math.round(rng() * 54));
         // The climb ends with the feet on the ledge's top edge, so the rope's
         // top is the ledge surface — not ten pixels above it, which left the
         // player hanging over a lip they could not stand on.
@@ -734,20 +911,22 @@ export function generateRoom(stage: number, seed: string): Room {
       case 'route': {
         // A stepping-stone route over a spike strip: the ground is passable
         // only with a running jump, and the platforms are the safe line.
-        const w = 430;
+        const w = 380 + Math.round(rng() * 110);
+        const spikeX = 116 + Math.round(rng() * 30);
+        const spikeW = 132 + Math.round(rng() * 30);
         slab(cursor, w);
         hazards.push({
           id: `spikes-${hazards.length}`,
           kind: 'spikes',
-          x: cursor + 132,
+          x: cursor + spikeX,
           y: groundY - 14,
-          w: 148,
+          w: spikeW,
           h: 14,
         });
         const steps = [
-          { dx: 40, top: 74, w: 100 },
-          { dx: 170, top: 128, w: 96 },
-          { dx: 300, top: 78, w: 104 },
+          { dx: 30 + Math.round(rng() * 18), top: 66 + Math.round(rng() * 18), w: 92 },
+          { dx: 150 + Math.round(rng() * 24), top: 118 + Math.round(rng() * 22), w: 90 },
+          { dx: 276 + Math.round(rng() * 34), top: 70 + Math.round(rng() * 18), w: 96 },
         ];
         for (const step of steps) {
           ground.push({
@@ -779,7 +958,7 @@ export function generateRoom(stage: number, seed: string): Room {
         // reached up a rope, crossed on a broken ledge. The first shelf carries
         // the climb; the second is a hop away and carries on past the spikes,
         // so the ladder has a job rather than standing in a corridor for show.
-        const w = 548;
+        const w = 470 + Math.round(rng() * 150);
         slab(cursor, w);
         const ladderX = cursor + 84;
         const ledgeY = groundY - 214;
@@ -821,9 +1000,9 @@ export function generateRoom(stage: number, seed: string): Room {
         break;
       }
       case 'wall': {
-        const w = 330;
+        const w = 280 + Math.round(rng() * 110);
         slab(cursor, w);
-        const wallX = cursor + 220;
+        const wallX = cursor + 170 + Math.round(rng() * 70);
         walls.push({
           id: `wall-${walls.length}`,
           x: wallX,
@@ -853,14 +1032,15 @@ export function generateRoom(stage: number, seed: string): Room {
         break;
       }
       case 'spikes': {
-        const w = 252;
+        const w = 210 + Math.round(rng() * 80);
         slab(cursor, w);
+        const spikeW = 44 + Math.round(rng() * 34);
         hazards.push({
           id: `spikes-${hazards.length}`,
           kind: 'spikes',
-          x: cursor + 118,
+          x: cursor + Math.round((w - spikeW) / 2),
           y: groundY - 14,
-          w: 52,
+          w: spikeW,
           h: 14,
         });
         cursor += w;
@@ -885,20 +1065,17 @@ export function generateRoom(stage: number, seed: string): Room {
         // they get faster with every descent after that — never faster than a
         // walk, so the chase is always something the player can break away
         // from.
-        const count = stage >= 7 ? 2 : 1;
-        const w = count === 2 ? 420 : 320;
+        const count = stage >= 7 && rng() < 0.65 ? 2 : 1;
+        const w = count === 2 ? 390 + Math.round(rng() * 60) : 300 + Math.round(rng() * 60);
         slab(cursor, w);
         const band = w / count;
         for (let index = 0; index < count; index += 1) {
-          const from = cursor + 24 + index * band;
           snakes.push({
             id: `snake-${snakes.length}`,
-            x: from + 30,
+            x: cursor + 48 + index * band,
             y: groundY - 18,
             w: 46,
             h: 16,
-            from,
-            to: from + band - 40,
             dir: 1,
             speed: 62 + Math.round(rng() * 18) + Math.min(stage * 4, 56),
           });
@@ -951,9 +1128,16 @@ export function generateRoom(stage: number, seed: string): Room {
     }
   }
 
+  // No crate rescue pass: a wall with a rope and a wall without one are both
+  // valid rooms, and forcing a crate into every room was making descents look
+  // alike. The crate that the wall block adds is still a real puzzle.
+
   // --- the gate approach -------------------------------------------------
-  slab(cursor, 260);
-  cursor += 260;
+  // A short room is still a playable room, but the gate needs a run-up and a
+  // screen of its own; the floor is extended rather than letting a lean draw
+  // put the gate on top of the last hazard.
+  slab(cursor, Math.max(240 + Math.round(rng() * 160), 1120 - cursor));
+  cursor = ground[ground.length - 1].x + ground[ground.length - 1].w;
   const width = cursor;
   const gate: Rect = { x: width - 118, y: groundY - 96, w: 54, h: 96 };
 
@@ -965,6 +1149,33 @@ export function generateRoom(stage: number, seed: string): Room {
     torchX += 236;
   }
   torches.push({ x: gate.x - 26, y: 232 });
+
+  // Floating coins are a reason to take the harder line. Short rooms carry one
+  // or two; only a genuinely long room can hold the full five. They sit above
+  // the floor or a raised shelf, never in a wall, and are re-created by the
+  // same deterministic room seed after a respawn.
+  const coins: VaultCoin[] = [];
+  const longRoom = width >= 2300;
+  const coinTarget = longRoom ? 3 + Math.floor(rng() * 3) : 1 + Math.floor(rng() * 2);
+  for (let attempt = 0; attempt < 100 && coins.length < coinTarget; attempt += 1) {
+    const x = width * 0.38 + rng() * Math.max(90, width * 0.56);
+    if (x > gate.x - 80) continue;
+    const support = ground
+      .filter((slab) => x >= slab.x + 24 && x <= slab.x + slab.w - 24)
+      .sort((a, b) => a.y - b.y)[0];
+    if (!support) continue;
+    const y = support.y - (58 + Math.round(rng() * 48));
+    const coin: VaultCoin = { id: `coin-${coins.length}`, x: Math.round(x), y: Math.round(y), w: 18, h: 18 };
+    if (coins.some((other) => Math.abs(other.x - coin.x) < 72)) continue;
+    if (walls.some((wall) => rectsOverlap(coin, wall))) continue;
+    coins.push(coin);
+  }
+  // A very lean draw can leave no safe shelf in the coin band. Put a single
+  // coin on the approach floor rather than making the short room coinless.
+  if (coins.length === 0) {
+    const fallbackX = Math.min(gate.x - 100, Math.max(260, width * 0.55));
+    coins.push({ id: 'coin-0', x: Math.round(fallbackX), y: groundY - 70, w: 18, h: 18 });
+  }
 
   return {
     stage,
@@ -980,6 +1191,7 @@ export function generateRoom(stage: number, seed: string): Room {
     walls,
     hazards,
     snakes,
+    coins,
     spawn: { x: VAULT_SPAWN_X, y: groundY - 44 },
     gate,
   };

@@ -487,20 +487,27 @@ def sweep_polynomial():
             for r3 in range(r2 + 1, 10):
                 zeros = sorted({r1, r2, r3})
                 answer = zeros[1]
-                wrongs = list(dict.fromkeys(
-                    [z for z in zeros if z != answer] + [answer + 1, answer - 1, answer + 2]
-                ))[:3]
-                wrongs = [w for w in wrongs if w != answer]
-                while len(wrongs) < 3:
-                    wrongs.append(answer + len(wrongs) + 2)
+                # A distractor must not be a zero. Every factor root makes the
+                # product zero, so using the other two roots as "wrong" answers
+                # produced an item with three correct choices. Walk outward
+                # from the key and skip anything in the zero set.
+                wrongs = []
+                for candidate in (
+                    answer + 1, answer - 1, answer + 2, answer - 2,
+                    zeros[2] + 1, zeros[0] - 1, zeros[2] + 2, zeros[0] - 2,
+                ):
+                    if candidate == answer or candidate in zeros or candidate in wrongs:
+                        continue
+                    wrongs.append(candidate)
+                    if len(wrongs) == 3:
+                        break
                 items.append(mc(
                     f"M-ALE-8{len(items)+6351:04d}", MATH, "Advanced Math", "Polynomial functions and zeros", D_M,
                     f"$$h(x) = (x - {r1})(x - {r2})(x - {r3})$$",
                     "Which value of $x$ is a zero of $h$?", f"${answer}$", [f"${w}$" for w in wrongs],
                     f"A zero of a factored polynomial is a root of any linear factor: $x = {answer}$ zeroes $(x - {answer})$, so $h({answer}) = 0$.",
-                    [f"Substituting $x = {wrongs[0]}$ leaves three nonzero factors, so it is not a zero.",
-                     "Only a value matching one of the literal factors can be a zero.",
-                     "Re-check each listed value against all three factors."],
+                    [f"Substituting $x = {w}$ leaves every factor nonzero, so $h({w})$ is not zero."
+                     for w in wrongs],
                 ))
     return items
 
@@ -972,68 +979,93 @@ def gen_cid_scaled():
     items = []
     passages = [
         ("Roman concrete harbor piers", "volcanic ash and lime", "seawater dissolves the ash to grow interlocking aluminum-tobermorite crystals that reinforce micro-cracks over centuries",
-         "exposure to seawater triggers crystal growth that strengthens Roman harbor concrete over time"),
+         "exposure to seawater triggers crystal growth that strengthens Roman harbor concrete over time",
+         "seawater could not trigger the crystal growth that strengthens the concrete"),
         ("high-Andean Polylepis forests", "gnarled bark layers", "trapping nocturnal cloud moisture and insulating trunk tissue against nightly sub-zero freezes above 4,000 meters",
-         "specialized bark structure enables Polylepis trees to retain moisture and survive extreme high-altitude cold"),
+         "specialized bark structure enables Polylepis trees to retain moisture and survive extreme high-altitude cold",
+         "the trees could not trap cloud moisture or insulate their trunks against freezing"),
         ("nineteenth-century lighthouse Fresnel lenses", "concentric stepped glass prisms", "bending oblique light rays into a single horizontal beam visible more than twenty nautical miles offshore",
-         "stepped prism rings allowed Fresnel lenses to concentrate light into a far-reaching beam without excessive weight"),
+         "stepped prism rings allowed Fresnel lenses to concentrate light into a far-reaching beam without excessive weight",
+         "the lenses could not bend oblique light into a far-reaching beam"),
         ("subterranean termite ventilation mounds", "solar-heated outer chimneys", "driving convective air currents that flush carbon dioxide from deep brood chambers without mechanical fans",
-         "temperature differences across mound walls power passive air circulation for the underground colony"),
+         "temperature differences across mound walls power passive air circulation for the underground colony",
+         "the mounds could not flush carbon dioxide from the brood chambers"),
         ("Early Modern Dutch fluyt cargo ships", "pear-shaped hull cross-sections", "maximizing hold volume below deck while minimizing the upper-deck width used by port authorities to assess toll duties",
-         "the fluyt's narrow upper deck and wide hold increased cargo capacity while reducing tax assessments"),
+         "the fluyt's narrow upper deck and wide hold increased cargo capacity while reducing tax assessments",
+         "the ships could not combine a wide hold with a narrow upper deck"),
         ("desert fog-basking beetles", "alternating hydrophilic and waxy wing bumps", "condensing wind-blown coastal mist into droplets that roll directly toward the insect's mouthparts",
-         "microscopic surface patterns on the beetle's back harvest drinking water from airborne fog"),
+         "microscopic surface patterns on the beetle's back harvest drinking water from airborne fog",
+         "the beetles could not condense fog into drinking water"),
         ("Renaissance Venetian glassmakers on Murano", "manganese dioxide additives", "neutralizing the greenish tint caused by iron impurities in river sand to yield crystal-clear cristallo vessels",
-         "chemical decolorizers allowed Murano artisans to produce transparent glass from iron-bearing sand"),
+         "chemical decolorizers allowed Murano artisans to produce transparent glass from iron-bearing sand",
+         "the glassmakers could not neutralize the green tint of iron-bearing sand"),
         ("boreal beaver meadow complexes", "abandoned multi-tiered timber dams", "slowing snowmelt runoff and trapping organic silt that sustains wetland sedges decades after the colony departs",
-         "beaver-engineered dam remnants continue to regulate water and build fertile meadow soils long after abandonment"),
+         "beaver-engineered dam remnants continue to regulate water and build fertile meadow soils long after abandonment",
+         "the dams could not slow snowmelt or trap organic silt"),
         ("transatlantic submarine telegraph cables", "gutta-percha latex insulation", "maintaining electrical resistance under cold, high-pressure abyssal seawater where natural rubber rapidly degraded",
-         "gutta-percha provided the durable underwater insulation needed for nineteenth-century ocean telegraphy"),
+         "gutta-percha provided the durable underwater insulation needed for nineteenth-century ocean telegraphy",
+         "the cables could not maintain insulation in deep seawater"),
         ("ancient Persian qanat water channels", "gently sloped underground galleries", "tapping upland alluvial aquifers and conveying water kilometers across arid plains with minimal evaporative loss",
-         "subsurface gravity channels enabled arid settlements to transport groundwater without surface evaporation"),
+         "subsurface gravity channels enabled arid settlements to transport groundwater without surface evaporation",
+         "the channels could not carry groundwater across arid plains without evaporation"),
     ]
+    def mechanism_clause(mech: str) -> str:
+        """A grammatical predicate for both a verb phrase and a full cause."""
+        if mech.startswith("seawater "):
+            return f"because {mech}"
+        return f"by {mech}"
+
+    def sentence(text: str) -> str:
+        return text[:1].upper() + text[1:]
+
     templates = [
-        (D_E, "Which choice best states the main idea of the text?",
-         "Because {mech}, {main}.",
-         ["{subj} were abandoned once modern synthetic substitutes became cheaper to manufacture.",
-          "Researchers have been unable to determine how {feat} functioned in historical settings.",
-          "{subj} perform poorly whenever ambient temperatures fluctuate by more than five degrees."]),
-        (D_E, "According to the text, what specific role do {feat} play in {subj}?",
-         "They function by {mech}.",
-         ["They prevent {subj} from interacting with surrounding moisture or air currents.",
-          "They serve primarily as decorative markers rather than functional components.",
-          "They reduce the lifespan of {subj} by accelerating surface wear."]),
-        (D_M, "Which detail from the text best explains why {subj} are effective?",
-         "The reliance on {feat}, which work by {mech}.",
-         ["The complete absence of {feat} in comparable systems from neighboring regions.",
-          "A recent regulatory ban on modifying {subj} without laboratory approval.",
-          "The fact that {subj} require continuous human recalibration every hour."]),
-        (D_M, "Which choice best summarizes the central finding described in the text?",
-         "Investigations of {subj} show that {main}.",
-         ["Studies of {subj} indicate that {feat} are largely ornamental and can be removed.",
-          "Historical records prove that {subj} were copied from twentieth-century industrial blueprints.",
-          "Field tests confirm that {subj} operate only in laboratory vacuum chambers."]),
-        (D_H, "Based on the text, what would most likely happen if {subj} lacked {feat}?",
-         "The mechanism of {mech} would fail, preventing the system from achieving the outcome whereby {main}.",
-         ["The system would operate at twice its normal efficiency due to reduced weight.",
-          "Surrounding environments would immediately convert {subj} into crystalline stone.",
-          "Observers would be unable to distinguish {subj} from modern electronic sensors."]),
+        (D_E, "Central Ideas and Details", "Which choice best states the main idea of the text?",
+         "{main}.",
+         ["{subj} are effective mainly for reasons that the passage does not connect to {feat}.",
+          "The passage shows that {feat} have little effect on how {subj} perform.",
+          "Researchers remain uncertain about whether {feat} play any role in {subj}."]),
+        (D_E, "Central Ideas and Details", "According to the text, what specific role do {feat} play in {subj}?",
+         "This feature works {clause}.",
+         ["It protects {subj} by blocking all contact with surrounding air and water.",
+          "It serves mainly as a decorative structure rather than a functional part.",
+          "It makes {subj} less durable by accelerating surface wear."]),
+        (D_M, "Central Ideas and Details", "Which detail from the text best explains why {subj} are effective?",
+         "The feature is essential because it works {clause}.",
+         ["The absence of {feat} in similar systems shows that it is unnecessary.",
+          "A recent regulation requires {subj} to be modified under laboratory supervision.",
+          "The passage notes that {subj} need continuous human adjustment to remain effective."]),
+        (D_M, "Central Ideas and Details", "Which choice best summarizes the central finding described in the text?",
+         "The findings show that {main}.",
+         ["Studies suggest that {feat} are largely ornamental and can be removed without consequence.",
+          "Historical records show that {subj} were copied from twentieth-century designs.",
+          "Field tests confirm that {subj} function only in controlled laboratory conditions."]),
+        (D_H, "Inferences", "Based on the text, what would most likely happen if {subj} lacked {feat}?",
+         "Without {feat}, {consequence}.",
+         ["{subj} would work more effectively without {feat} because the feature interferes with the process.",
+          "{subj} would fail immediately, but only in laboratory conditions.",
+          "The outcome described in the passage would occur regardless of whether {feat} were present."]),
     ]
-    for subj, feat, mech, main in passages:
-        for diff, prompt_t, corr_t, wrongs_t in templates:
+    for subj, feat, mech, main, consequence in passages:
+        clause = mechanism_clause(mech)
+        for diff, skill, prompt_t, corr_t, wrongs_t in templates:
             stim = (
                 f"Specialists studying {subj} have long noted the presence of {feat}. "
-                f"Detailed physical analyses now confirm that these features operate by {mech}. "
-                f"Consequently, {main}."
+                f"Detailed physical analyses now show that these features work {clause}. "
+                f"As a result, {main}."
             )
-            prompt = prompt_t.format(subj=subj, feat=feat, mech=mech, main=main)
-            corr = corr_t.format(subj=subj, feat=feat, mech=mech, main=main)
-            wrongs = [w.format(subj=subj, feat=feat, mech=mech, main=main) for w in wrongs_t]
+            fmt = {"subj": subj, "feat": feat, "clause": clause, "main": main, "consequence": consequence}
+            prompt = prompt_t.format(**fmt)
+            corr = sentence(corr_t.format(**fmt))
+            wrongs = [sentence(w.format(**fmt)) for w in wrongs_t]
             items.append(mc(
-                f"RW-INF-8{len(items)+8601:04d}", RW, "Information and Ideas", "Central Ideas and Details", diff,
+                f"RW-INF-8{len(items)+8601:04d}", RW, "Information and Ideas", skill, diff,
                 stim, prompt, corr, wrongs,
-                f"The passage explicitly links {feat} to {mech}, establishing that {main}.",
-                ["That statement contradicts or is unsupported by the passage's description." for _ in wrongs],
+                f"The passage explains that {feat} work {clause} and therefore {main}. {corr}",
+                [
+                    f"This choice conflicts with the passage's explanation of how {feat} works.",
+                    f"This choice adds a claim about {subj} that the passage does not support.",
+                    f"This choice misstates the relationship between {feat} and {subj}.",
+                ],
             ))
     return items
 

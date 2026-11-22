@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Alert, Button, Select } from './ui';
 import * as cloud from '../lib/cloud';
 import { useApp } from '../lib/store';
@@ -19,6 +19,21 @@ export function ReportQuestion({ questionId }: { questionId: string }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [sent, setSent] = useState(false);
+
+  // A practice or test runner reuses this control as the student moves through
+  // questions. Clear the whole report lifecycle on the next question so a
+  // previous "received" acknowledgement or half-written report never blocks a
+  // new report. Keyed call sites also remount, but the effect keeps the control
+  // safe anywhere it is rendered without a key.
+  useEffect(() => {
+    setOpen(false);
+    setReason(QUESTION_REPORT_REASONS[0].value);
+    setDetails('');
+    setContactEmail(app.user?.email ?? '');
+    setBusy(false);
+    setError(null);
+    setSent(false);
+  }, [questionId, app.user?.email]);
 
   if (sent) {
     return <span className="report-question">Report received — thank you. Our team will review this item.</span>;

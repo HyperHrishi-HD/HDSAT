@@ -48,8 +48,29 @@ export type IconName =
   | 'chat'
   | 'castle'
   | 'award'
+  | 'menu'
   | 'expand'
-  | 'collapse';
+  | 'collapse'
+  | 'chevron-down'
+  | 'chevron-up'
+  | 'close'
+  | 'clock'
+  | 'warning'
+  | 'note'
+  | 'exit'
+  | 'heart'
+  // Achievement glyphs: one per rung of the ladder, so two emblems never look
+  // alike in the top bar.
+  | 'sun'
+  | 'gem'
+  | 'key'
+  | 'medal'
+  | 'mountain'
+  | 'rocket'
+  | 'sprout'
+  | 'cairn'
+  | 'orbit'
+  | 'vault';
 
 export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
   const props = {
@@ -399,6 +420,86 @@ export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
           <path d="m9 14-1 8 4-2 4 2-1-8" />
         </svg>
       );
+    case 'sun':
+      return (
+        <svg {...props}>
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4" />
+        </svg>
+      );
+    case 'gem':
+      return (
+        <svg {...props}>
+          <path d="M8 3h8l4 6-8 12L4 9z" />
+          <path d="M4 9h16M9.5 9 12 21l2.5-12L12 3z" />
+        </svg>
+      );
+    case 'key':
+      return (
+        <svg {...props}>
+          <circle cx="8" cy="8" r="4" />
+          <path d="m11 11 9 9M17 17l2-2M14 14l2-2" />
+        </svg>
+      );
+    case 'medal':
+      return (
+        <svg {...props}>
+          <circle cx="12" cy="15" r="5" />
+          <path d="M8.5 10 6 3h5l1.5 4M15.5 10 18 3h-5l-1.5 4" />
+        </svg>
+      );
+    case 'mountain':
+      return (
+        <svg {...props}>
+          <path d="M2 19h20L14 5l-3.5 6.5L8 8z" />
+          <path d="m10.5 5.5 1.8 3" />
+        </svg>
+      );
+    case 'rocket':
+      return (
+        <svg {...props}>
+          <path d="M12 3c3.5 2 5 5.5 5 9l-3 3h-4l-3-3c0-3.5 1.5-7 5-9z" />
+          <circle cx="12" cy="10" r="1.6" />
+          <path d="M9 15c-1.5 1-2 2.5-2 4 1.5 0 3-.5 4-2M15 15c1.5 1 2 2.5 2 4-1.5 0-3-.5-4-2" />
+        </svg>
+      );
+    case 'sprout':
+      return (
+        <svg {...props}>
+          <path d="M12 21v-8" />
+          <path d="M12 13C12 9 9 7 4 7c0 4 3 6 8 6z" />
+          <path d="M12 13c0-4 3-6 8-6 0 4-3 6-8 6z" />
+        </svg>
+      );
+    case 'cairn':
+      return (
+        <svg {...props}>
+          <rect x="8" y="16" width="8" height="4" rx="2" />
+          <rect x="9" y="11" width="6" height="4" rx="2" />
+          <rect x="10" y="6" width="4" height="4" rx="2" />
+        </svg>
+      );
+    case 'orbit':
+      return (
+        <svg {...props}>
+          <circle cx="12" cy="12" r="3" />
+          <ellipse cx="12" cy="12" rx="10" ry="5" transform="rotate(-30 12 12)" />
+        </svg>
+      );
+    case 'vault':
+      return (
+        <svg {...props}>
+          <rect x="3" y="4" width="18" height="16" rx="2" />
+          <circle cx="12" cy="12" r="4" />
+          <path d="M12 8v1.5M12 14.5V16M8 12h1.5M14.5 12H16" />
+        </svg>
+      );
+    case 'menu':
+      return (
+        <svg {...props}>
+          <path d="M4 7h16M4 12h16M4 17h16" />
+        </svg>
+      );
     case 'expand':
       return (
         <svg {...props}>
@@ -409,6 +510,59 @@ export function Icon({ name, size = 15 }: { name: IconName; size?: number }) {
       return (
         <svg {...props}>
           <path d="M9 4v5H4M15 20v-5h5M20 9h-5V4M4 15h5v5" />
+        </svg>
+      );
+    case 'chevron-down':
+      return (
+        <svg {...props}>
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      );
+    case 'chevron-up':
+      return (
+        <svg {...props}>
+          <polyline points="18 15 12 9 6 15" />
+        </svg>
+      );
+    case 'close':
+      return (
+        <svg {...props}>
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+      );
+    case 'clock':
+      return (
+        <svg {...props}>
+          <circle cx="12" cy="12" r="9" />
+          <path d="M12 7v5l3 2" />
+        </svg>
+      );
+    case 'warning':
+      return (
+        <svg {...props}>
+          <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
+          <path d="M12 9v4M12 17h.01" />
+        </svg>
+      );
+    case 'note':
+      return (
+        <svg {...props}>
+          <path d="M15 3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10l6-6V5a2 2 0 0 0-2-2z" />
+          <path d="M15 21v-6h6M7 8h8M7 12h5" />
+        </svg>
+      );
+    case 'exit':
+      return (
+        <svg {...props}>
+          <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+          <polyline points="16 17 21 12 16 7" />
+          <line x1="21" y1="12" x2="9" y2="12" />
+        </svg>
+      );
+    case 'heart':
+      return (
+        <svg {...props}>
+          <path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z" />
         </svg>
       );
   }
@@ -665,7 +819,7 @@ export function MultiSelect({
         <span className="ms-summary">{summary}</span>
         {!allSelected ? <span className="ms-count">{checkedCount}</span> : null}
         <span className="ms-caret" aria-hidden="true">
-          ▾
+          <Icon name="chevron-down" size={12} />
         </span>
       </button>
       {open ? (
@@ -744,7 +898,12 @@ export function InfoTip({
         aria-expanded={open}
         title={label}
       >
-        <span className="info-tip-q">?</span>
+        <span className="info-tip-q" aria-hidden="true">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 11v5M12 8h.01" />
+          </svg>
+        </span>
         {label ? <span className="info-tip-label">{label}</span> : null}
       </button>
       {open ? <div className="info-tip-box">{children}</div> : null}
@@ -818,7 +977,7 @@ export function Alert({
       <span>{children}</span>
       {onDismiss ? (
         <button type="button" className="alert-close" onClick={onDismiss} aria-label="Dismiss">
-          ✕
+          <Icon name="close" size={14} />
         </button>
       ) : null}
     </div>

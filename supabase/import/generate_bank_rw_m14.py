@@ -345,8 +345,10 @@ def build_trend(code, label, unit_phrase, short, decimals, subject, series):
                     )
                 ),
             ]
+            direction = "higher" if change > 0 else "lower"
+            change_unit = "percentage points" if short == "%" else short
             explanation = (
-                f"The series ends {abs(change):.{decimals}f} {short} {verb} than it began, "
+                f"The series ends {abs(change):.{decimals}f} {change_unit} {direction} than it began, "
                 f"and the single move against the trend comes in {dip}."
             )
             rationales = [
@@ -369,7 +371,7 @@ def build_trend(code, label, unit_phrase, short, decimals, subject, series):
                 RW,
                 INFO,
                 QUANT,
-                MEDIUM if abs(change) < 15 else HARD,
+                MEDIUM,
                 (
                     f"{subject.capitalize()} is describing {the_label(label)} in {country} "
                     f"using World Bank figures for {years[0]} through {years[-1]}."
@@ -417,13 +419,12 @@ def build_comparison(code, label, unit_phrase, short, decimals, subject, series)
         )
         wrongs = [
             (
-                f"In {year}, {bottom}'s {label} was higher than {top}'s, though both "
-                f"appear in the table."
+                f"In {year}, {bottom} reported higher {label} than {top}."
             ),
             f"In {year}, {picked[2][0]} reported the highest {label} of the four countries.",
             (
                 f"In {year}, all four countries reported {the_label(label)} within one "
-                f"{('percentage point' if short == '%' else short)} of one another."
+                f"{('percentage point' if short == '%' else ('tonne' if short == 'tonnes' else short))} of one another."
             ),
         ]
         items.append(
@@ -612,7 +613,7 @@ def build_change(code, label, unit_phrase, short, decimals, subject, series):
                 RW,
                 INFO,
                 QUANT,
-                HARD,
+                MEDIUM,
                 (
                     f"{subject.capitalize()} is reviewing how {the_label(label)} changed in "
                     f"four countries between {start} and {end}, using World Bank figures."

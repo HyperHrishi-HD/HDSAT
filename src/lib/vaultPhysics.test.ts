@@ -15,6 +15,7 @@ import {
   JUMP_SPEED,
   PLAYER_H,
   PLAYER_W,
+  resetVaultCrates,
   stepVault,
   type VaultInput,
   type VaultState,
@@ -96,6 +97,30 @@ describe('vault physics', () => {
     expect(state.player.onGround).toBe(true);
   });
 
+  it('jumps again while jump stays held, and stops when it is released', () => {
+    const room = flatRoom();
+    const state = settle(createVaultState(room), room);
+    let jumps = 0;
+    let landed = false;
+    for (let i = 0; i < 240; i += 1) {
+      const step = stepVault(state, room, { ...IDLE, jump: true }, DT);
+      if (step.jumped) jumps += 1;
+      if (i > 10 && state.player.onGround) landed = true;
+    }
+    // A held jump is a request to keep hopping; 240 frames is long enough for
+    // at least two complete jumps on this room.
+    expect(landed).toBe(true);
+    expect(jumps).toBeGreaterThanOrEqual(2);
+    state.player.vy = 0;
+    state.player.y = room.groundY - PLAYER_H;
+    state.player.onGround = true;
+    let afterRelease = 0;
+    for (let i = 0; i < 30; i += 1) {
+      if (stepVault(state, room, IDLE, DT).jumped) afterRelease += 1;
+    }
+    expect(afterRelease).toBe(0);
+  });
+
   it('walks at the intended speed and stops at the room edge', () => {
     const room = flatRoom();
     const state = settle(createVaultState(room), room);
@@ -138,7 +163,12 @@ describe('vault physics', () => {
   });
 
   it('throws a lever on contact and opens its door exactly once', () => {
-    const room = generateRoom(4, 'lever-test');
+    // Machinery is a dice roll now, so find a real room that rolled one rather
+    // than assuming room four always has a lever.
+    let room = generateRoom(4, 'lever-test');
+    for (let index = 0; index < 80 && room.levers.length === 0; index += 1) {
+      room = generateRoom(4, `lever-test-${index}`);
+    }
     const lever = room.levers[0];
     expect(lever).toBeDefined();
     const state = settle(createVaultState(room), room);
@@ -294,12 +324,24 @@ describe('interceptor plane geometry', () => {
   });
 
   it('locks every target of a real parabola wave when the curve matches', () => {
-    const wave = buildInterceptWave(5, 'lock-check');
+    // A wave's kind is rolled from the run seed; find a seed that rolls the
+    // quadratic mode rather than relying on a fixed odd-wave rule.
+    let wave = buildInterceptWave(5, 'lock-check');
+    for (const seed of ['lock-a', 'lock-b', 'lock-c', 'lock-d', 'lock-e', 'lock-f']) {
+      const candidate = buildInterceptWave(5, seed);
+      if (candidate.kind === 'parabola') {
+        wave = candidate;
+        break;
+      }
+    }
     expect(wave.kind).toBe('parabola');
     expect(locksEnabled(5, wave.kind)).toBe(true);
     const aim = { mode: 'quadratic' as const, a: wave.a, h: wave.h, k: wave.k };
-    const locked = targetsOnAim(wave.targets, aim, toleranceFor(5), 0);
-    expect(locked.length).toBe(wave.targets.length);
+    const staticTargets = wave.targets.filter((target) => target.kind !== 'ship');
+    const locked = targetsOnAim(staticTargets, aim, toleranceFor(5), 0);
+    // A silver ship drifts around its anchor by design, so it is judged where it
+    // is drawn; the asteroids on the curve must all lock.
+    expect(locked.length).toBe(staticTargets.length);
   });
 });
 
@@ -370,51 +412,43 @@ describe('vault room layout', () => {
     }
   });
 
-  it('introduces one mechanic at a time after a real first room', () => {
-    const earliest: Record<string, number> = {
-      doors: 99,
-      ladders: 99,
-      walls: 99,
-      hazards: 99,
-      snakes: 99,
-      crates: 99,
-    };
-    for (let stage = 1; stage <= 12; stage += 1) {
-      const room = generateRoom(stage, 'schedule');
-      if (room.doors.length > 0) earliest.doors = Math.min(earliest.doors, stage);
-      if (room.ladders.length > 0) earliest.ladders = Math.min(earliest.ladders, stage);
-      if (room.walls.length > 0) earliest.walls = Math.min(earliest.walls, stage);
-      if (room.hazards.length > 0) earliest.hazards = Math.min(earliest.hazards, stage);
-      if (room.snakes.length > 0) earliest.snakes = Math.min(earliest.snakes, stage);
-      if (room.crates.length > 0) earliest.crates = Math.min(earliest.crates, stage);
-
-      expect(room.stage).toBe(stage);
+  it('draws every mechanic at any depth instead of unlocking them on a script', () => {
+    const seen = new Set<string>();
+    for (let stage = 1; stage <= 8; stage += 1) {
+      for (let index = 0; index < 14; index += 1) {
+        const room = generateRoom(stage, `mix-${stage}-${index}`);
+        expect(room.stage).toBe(stage);
+        if (room.doors.length > 0) seen.add('doors');
+        if (room.ladders.length > 0) seen.add('ladders');
+        if (room.walls.length > 0) seen.add('walls');
+        if (room.hazards.length > 0) seen.add('hazards');
+        if (room.snakes.length > 0) seen.add('snakes');
+        if (room.crates.length > 0) seen.add('crates');
+        // The safety invariants hold regardless of the draw.
+        for (const hazard of room.hazards) {
+          expect(hazard.x, `stage ${stage}: hazard on the doorstep`).toBeGreaterThan(
+            room.spawn.x + 120
+          );
+        }
+      }
     }
-    // The first descent already has rope work, a wall and a pit; the lethal
-    // and mechanical pieces join in the rooms after it.
-    expect(earliest.ladders).toBe(1);
-    expect(earliest.walls).toBe(1);
-    // A crate only exists where a wall needs a step, so whether room one rolls
-    // one depends on that wall's flavour; by room two it always can.
-    expect(earliest.crates).toBeGreaterThanOrEqual(1);
-    expect(earliest.crates).toBeLessThanOrEqual(2);
-    expect(earliest.hazards).toBe(2);
-    expect(earliest.doors).toBe(3);
-    expect(earliest.snakes).toBe(5);
+    // Nothing is held back to a later room, so a short run can already have
+    // met ropes, walls, hazards, snakes and machinery.
+    expect(seen.size).toBeGreaterThanOrEqual(5);
   });
 
-  it('makes the first room a real room, not an empty corridor', () => {
-    for (const seed of ['first', 'alpha', 'bravo']) {
+  it('makes the first room a real room with a safe doorstep', () => {
+    for (const seed of ['first', 'alpha', 'bravo', 'charlie', 'delta']) {
       const room = generateRoom(1, seed);
-      expect(room.doors).toHaveLength(0);
-      expect(room.hazards).toHaveLength(0);
-      expect(room.snakes).toHaveLength(0);
-      // Room one is still the on-ramp, but it teaches by doing: a wall to get
-      // over and a ledge to climb to.
-      expect(room.walls.length).toBeGreaterThanOrEqual(1);
-      expect(room.ladders.length).toBeGreaterThanOrEqual(1);
-      expect(room.platforms.some((p) => p.kind === 'ledge')).toBe(true);
-      // And every crate it starts with is there to solve that wall.
+      expect(room.platforms.length).toBeGreaterThan(1);
+      expect(room.width).toBeGreaterThan(1000);
+      expect(room.gate.x).toBeGreaterThan(room.spawn.x + 300);
+      for (const hazard of room.hazards) {
+        expect(hazard.x, `seed ${seed}: hazard on the doorstep`).toBeGreaterThan(
+          room.spawn.x + 120
+        );
+      }
+      // Every crate that was rolled is there to solve a wall.
       for (const crate of room.crates) {
         const wall = room.walls.find((w) => crate.x < w.x && crate.x + crate.w > w.x - 240);
         expect(wall, `seed ${seed}: crate at ${crate.x} serves no wall`).toBeTruthy();
@@ -481,6 +515,20 @@ describe('vault hazards and climbing', () => {
     run(state, room, { right: true }, 6);
     expect(state.player.onGround).toBe(true);
     expect(state.player.y + PLAYER_H).toBeCloseTo(ledge.y, 0);
+  });
+
+  it('keeps hopping while jump is held, without a new key press', () => {
+    const room = generateRoom(1, 'hold-jump');
+    const state = settle(createVaultState(room), room);
+    let jumps = 0;
+    for (let i = 0; i < 240; i += 1) {
+      const step = stepVault(state, room, { ...IDLE, jump: true }, DT);
+      if (step.jumped) jumps += 1;
+    }
+    // A held jump is a request to keep jumping: the player hops again the
+    // moment they land, which is what a phone thumb on the Jump key expects.
+    expect(jumps).toBeGreaterThan(2);
+    expect(state.player.onGround || state.player.vy !== 0).toBe(true);
   });
 
   it('climbs to the ledge with the held key auto-repeating', () => {
@@ -576,14 +624,14 @@ describe('vault hazards and climbing', () => {
     expect(keys.jump).toBe(false);
   });
 
-  it('does not re-jump from an auto-repeat after a jump was consumed', () => {
+  it('keeps a held jump through auto-repeat and clears only on release', () => {
     const keys: VaultInput = { left: false, right: false, jump: false, down: false };
     applyVaultKey(keys, 'ArrowUp', true, false);
     expect(keys.jump).toBe(true);
-    keys.jump = false; // the jump was used
     applyVaultKey(keys, 'ArrowUp', true, true);
-    expect(keys.jump).toBe(false);
+    expect(keys.jump).toBe(true);
     applyVaultKey(keys, 'ArrowUp', false);
+    expect(keys.jump).toBe(false);
     applyVaultKey(keys, 'ArrowUp', true, false);
     expect(keys.jump).toBe(true);
   });
@@ -683,20 +731,294 @@ describe('vault hazards and climbing', () => {
     expect(state.player.x).toBe(room.spawn.x);
   });
 
-  it('chases a player who stands still across the floor', () => {
-    const room = findRoom(8, (r) => r.snakes.length > 0 && r.snakes[0].to - r.snakes[0].from > 150);
+  it('holds its snakes until the player first moves, then chases at one steady speed', () => {
+    const room = flatRoom();
+    room.crates = [];
+    room.snakes = [
+      {
+        id: 'snake-test',
+        x: 700,
+        y: room.groundY - 18,
+        w: 46,
+        h: 16,
+        dir: 1,
+        speed: 72,
+      },
+    ];
     const state = settle(createVaultState(room), room);
     const snake = state.snakes[0];
-    // Stand still, well along the snake's own stretch of floor but out of its
-    // reach for the next half second (so it closes the gap without biting).
-    state.player.x = Math.min(snake.to - PLAYER_W - 2, state.snakes[0].x + 150);
+    const start = snake.x;
+
+    // A quiet room stays quiet: standing still never pulls a snake off its coil.
+    settle(state, room, 30);
+    expect(state.snakesAwake).toBe(false);
+    expect(snake.x).toBe(start);
+
+    // One deliberate step wakes the room. The player is to the right and the
+    // floor is clear, so the snake follows at exactly its own speed — not the
+    // old half-speed "waiting" crawl.
+    state.player.x = 1000;
+    run(state, room, { right: true }, 1);
+    expect(state.snakesAwake).toBe(true);
+    const afterWake = snake.x;
+    run(state, room, IDLE, 30);
+    expect(snake.x).toBeCloseTo(afterWake + snake.speed * 30 * DT, 3);
+  });
+
+  it('will not let a snake cross a spike bed', () => {
+    const room = flatRoom();
+    room.crates = [];
+    room.hazards = [
+      { id: 'spikes-test', kind: 'spikes', x: 600, y: room.groundY - 14, w: 80, h: 14 },
+    ];
+    room.snakes = [
+      {
+        id: 'snake-test',
+        x: 700,
+        y: room.groundY - 18,
+        w: 46,
+        h: 16,
+        dir: -1,
+        speed: 90,
+      },
+    ];
+    const state = settle(createVaultState(room), room);
+    state.player.x = 500;
     state.player.y = room.groundY - PLAYER_H;
     state.player.vy = 0;
-    const gap = () => Math.abs(state.snakes[0].x + state.snakes[0].w / 2 - (state.player.x + PLAYER_W / 2));
-    const before = gap();
-    settle(state, room, 30);
-    expect(state.player.x).not.toBe(room.spawn.x);
-    expect(gap()).toBeLessThan(before - 20);
+    state.snakesAwake = true;
+    run(state, room, IDLE, 180);
+    const snake = state.snakes[0];
+    expect(snake.x).toBeGreaterThanOrEqual(680);
+    expect(snake.x + snake.w).toBeGreaterThan(680);
+  });
+
+  it('crosses an open drawbridge and turns back at the same gap when it is raised', () => {
+    const room = flatRoom();
+    room.platforms = [
+      { id: 'ground-a', kind: 'ground', x: 0, y: 400, w: 500, h: 60 },
+      { id: 'ground-b', kind: 'ground', x: 620, y: 400, w: 580, h: 60 },
+    ];
+    room.crates = [];
+    room.doors = [
+      {
+        id: 'bridge-test',
+        kind: 'bridge',
+        x: 500,
+        y: 400,
+        w: 120,
+        h: 12,
+        leverId: 'lever-test',
+        solidWhenPulled: true,
+      },
+    ];
+    room.snakes = [
+      {
+        id: 'snake-test',
+        x: 300,
+        y: 382,
+        w: 46,
+        h: 16,
+        dir: 1,
+        speed: 100,
+      },
+    ];
+    const state = settle(createVaultState(room), room);
+    state.player.x = 1000;
+    state.player.y = room.groundY - PLAYER_H;
+    state.player.vy = 0;
+    state.snakesAwake = true;
+
+    // Raised bridge: the floor ends at 500, so the snake turns before it.
+    run(state, room, IDLE, 120);
+    expect(state.snakes[0].x + state.snakes[0].w).toBeLessThan(540);
+
+    // Lowered bridge: the same floor is connected, and the snake crosses it.
+    state.pulled.add('lever-test');
+    run(state, room, IDLE, 240);
+    expect(state.snakes[0].x).toBeGreaterThan(620);
+    expect(state.snakes[0].y).toBe(382);
+  });
+
+  it('stops a two-crate row before a spike without trapping the player, and reset restores it', () => {
+    const room = flatRoom();
+    room.platforms = [
+      { id: 'ground-0', kind: 'ground', x: 0, y: 400, w: 1200, h: 60 },
+    ];
+    room.crates = [
+      { id: 'crate-a', x: 300, y: 360, w: 40, h: 40, vy: 0 },
+      { id: 'crate-b', x: 340, y: 360, w: 40, h: 40, vy: 0 },
+    ];
+    room.hazards = [
+      { id: 'spikes-test', kind: 'spikes', x: 400, y: 386, w: 60, h: 14 },
+    ];
+    const state = settle(createVaultState(room), room);
+    state.player.x = 250;
+    state.player.y = 356;
+    state.player.vy = 0;
+    run(state, room, { right: true }, 120);
+
+    // Solid spike: the lead crate stops at its lip, and nothing shares a tile
+    // with the hazard. The player is still behind the crates, not inside them.
+    for (const crate of state.crates) {
+      expect(crate.x + crate.w).toBeLessThanOrEqual(400.5);
+      expect(crate.x + crate.w <= 400 || crate.y + crate.h <= 386).toBe(true);
+    }
+    expect(state.player.x + PLAYER_W).toBeLessThanOrEqual(state.crates[0].x + 0.5);
+    expect(state.player.x).toBeGreaterThan(250);
+
+    // Backing away is always possible, so a blocked shove is not a physical
+    // trap. The HUD reset then restores the original puzzle.
+    run(state, room, { left: true }, 30);
+    expect(state.player.x).toBeLessThan(250);
+    resetVaultCrates(state, room);
+    expect(state.crates.map((crate) => crate.x)).toEqual(
+      room.crates.map((crate) => crate.x)
+    );
+  });
+
+  it('starts a two-crate row moving on the first continuous shove', () => {
+    const room = flatRoom();
+    room.platforms = [{ id: 'ground-0', kind: 'ground', x: 0, y: 400, w: 1200, h: 60 }];
+    room.crates = [
+      { id: 'crate-a', x: 300, y: 360, w: 40, h: 40, vy: 0 },
+      { id: 'crate-b', x: 340, y: 360, w: 40, h: 40, vy: 0 },
+    ];
+    const state = settle(createVaultState(room), room);
+    state.player.x = 250;
+    state.player.y = 356;
+    state.player.vy = 0;
+
+    const rowX: number[] = [];
+    for (let i = 0; i < 90; i += 1) {
+      stepVault(state, room, { ...IDLE, right: true }, DT);
+      rowX.push(state.crates[0].x);
+    }
+    // The row must not wait for a backing-off run-up. It starts moving while
+    // the key is still held and never moves backwards during the shove.
+    expect(rowX[29]).toBeGreaterThan(300);
+    for (let i = 1; i < rowX.length; i += 1) {
+      expect(rowX[i]).toBeGreaterThanOrEqual(rowX[i - 1] - 0.001);
+    }
+    expect(state.crates[1].x - state.crates[0].x).toBeCloseTo(40, 1);
+  });
+
+  it('leaves a snake still when it is pinned from both sides', () => {
+    const room = flatRoom();
+    room.crates = [
+      { id: 'crate-pin', x: 590, y: 350, w: 70, h: 50, vy: 0 },
+    ];
+    room.snakes = [
+      {
+        id: 'snake-pinned',
+        x: 600,
+        y: room.groundY - 18,
+        w: 46,
+        h: 16,
+        dir: 1,
+        speed: 90,
+      },
+    ];
+    const state = settle(createVaultState(room), room);
+    const snake = state.snakes[0];
+    const start = snake.x;
+    state.player.x = 100;
+    state.player.y = room.groundY - PLAYER_H;
+    state.player.vy = 0;
+    state.snakesAwake = true;
+
+    const dirs = new Set<number>();
+    for (let i = 0; i < 90; i += 1) {
+      stepVault(state, room, IDLE, DT);
+      dirs.add(snake.dir);
+    }
+    // No left-right vibration: the snake has nowhere legal to go, so it waits.
+    expect(dirs.size).toBe(1);
+    expect(snake.x).toBeCloseTo(start, 1);
+  });
+
+  it('collects a floating coin once and removes it from the room state', () => {
+    const room = flatRoom();
+    room.crates = [];
+    const state = settle(createVaultState(room), room);
+    state.coins = [{ id: 'coin-test', x: 70, y: 366, w: 18, h: 18 }];
+    state.player.x = 60;
+    state.player.y = 356;
+    state.player.vy = 0;
+
+    const step = stepVault(state, room, IDLE, DT);
+    expect(step.coins).toEqual(['coin-test']);
+    expect(state.coins).toHaveLength(0);
+    const again = stepVault(state, room, IDLE, DT);
+    expect(again.coins).toHaveLength(0);
+  });
+
+  it('puts every crate back at its generated position on demand', () => {
+    const room = flatRoom();
+    const state = createVaultState(room);
+    state.crates[0].x = 900;
+    resetVaultCrates(state, room);
+    expect(state.crates[0].x).toBe(room.crates[0].x);
+    expect(state.crates[0].y).toBe(room.crates[0].y);
+  });
+
+  it('keeps every crate where it was after a trap sends the player back', () => {
+    const room = flatRoom();
+    room.hazards = [{ id: 'trap-test', kind: 'trap', x: 90, y: 386, w: 60, h: 14 }];
+    const state = settle(createVaultState(room), room);
+    state.crates[0].x = 700;
+    state.crates[0].y = 360;
+    state.crates[0].vy = 0;
+    state.player.x = 100;
+    state.player.y = 356;
+    state.player.vy = 0;
+
+    const step = stepVault(state, room, IDLE, DT);
+    expect(step.hurt).toBe('trap');
+    expect(state.player.x).toBe(room.spawn.x);
+    expect(state.crates[0].x).toBe(700);
+  });
+
+  it('only moves a crate that blocks the respawn point, leaving the rest saved', () => {
+    const room = flatRoom();
+    room.crates = [
+      { id: 'crate-door', x: room.spawn.x, y: 360, w: 40, h: 40, vy: 0 },
+      { id: 'crate-away', x: 700, y: 360, w: 40, h: 40, vy: 0 },
+    ];
+    room.hazards = [{ id: 'trap-test', kind: 'trap', x: 90, y: 386, w: 60, h: 14 }];
+    const state = settle(createVaultState(room), room);
+    state.player.x = 100;
+    state.player.y = 356;
+    state.player.vy = 0;
+
+    const step = stepVault(state, room, IDLE, DT);
+    expect(step.hurt).toBe('trap');
+    expect(state.crates[1].x).toBe(700);
+    // The door crate is opened clear of the player, not reset across the room.
+    expect(Math.abs(state.crates[0].x - room.spawn.x)).toBeGreaterThan(PLAYER_W);
+    expect(
+      state.crates[0].x + state.crates[0].w <= room.spawn.x ||
+        state.crates[0].x >= room.spawn.x + PLAYER_W
+    ).toBe(true);
+  });
+
+  it('reports a blocked shove as pinned so the HUD can offer the reset', () => {
+    const room = flatRoom();
+    room.walls = [{ id: 'wall-test', x: 400, y: 288, w: 16, h: 112 }];
+    const state = settle(createVaultState(room), room);
+    state.crates[0].x = 360;
+    state.crates[0].y = 360;
+    state.crates[0].vy = 0;
+    state.player.x = 330;
+    state.player.y = 356;
+    state.player.vy = 0;
+
+    let pinned = false;
+    for (let i = 0; i < 60; i += 1) {
+      pinned = stepVault(state, room, { ...IDLE, right: true }, DT).pinned || pinned;
+    }
+    expect(pinned).toBe(true);
+    expect(state.crates[0].x + state.crates[0].w).toBeLessThanOrEqual(400.5);
   });
 
   it('sends every snake back to its starting point after a bite', () => {

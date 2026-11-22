@@ -6,15 +6,15 @@
  *   - Hashed build assets (/assets/index-<hash>.js|css, fonts) are immutable,
  *     so they are served cache-first and only ever re-fetched when the hash
  *     changes.
- *   - Navigations are network-first with the cached shell as the fallback, so a
- *     deploy is picked up on the next load while an offline phone still gets
- *     the app.
+ *   - Navigations prefer the live shell and only fall back to the cached one
+ *     offline. Serving a cached shell first leaves the tab pointing at asset
+ *     hashes the latest deploy has deleted, which breaks the app until reload.
  *   - Everything else — /api/ on the Python host, Supabase auth and REST, the
  *     Desmos iframe — is never cached and never replayed. A stale sign-in
  *     response or a stale saved answer would be worse than being offline.
  */
 
-const VERSION = 'hdsat-v1';
+const VERSION = 'hdsat-v14';
 const SHELL_CACHE = `${VERSION}-shell`;
 const ASSET_CACHE = `${VERSION}-assets`;
 
@@ -88,26 +88,33 @@ self.addEventListener('fetch', (event) => {
   }
   if (bypasses(url, request)) return;
 
-  // Navigations: fresh shell when the network is there, cached shell when not.
+  // Navigations: use the live shell when reachable, so a deploy is picked up
+  // immediately. The cached shell is only for offline use; serving it first
+  // can point a tab at asset hashes that no longer exist on the server.
   if (request.mode === 'navigate') {
     event.respondWith(
       (async () => {
+        const cache = await caches.open(SHELL_CACHE);
         try {
-          const response = await fetch(request);
-          const cache = await caches.open(SHELL_CACHE);
-          cache.put('/index.html', response.clone()).catch(() => undefined);
-          return response;
+          const controller = new AbortController();
+          const timer = setTimeout(() => controller.abort(), 2500);
+          const response = await fetch(request, { signal: controller.signal });
+          clearTimeout(timer);
+          if (response?.ok) {
+            await cache.put('/index.html', response.clone()).catch(() => undefined);
+          }
+          if (response) return response;
         } catch {
-          const cache = await caches.open(SHELL_CACHE);
-          return (
-            (await cache.match('/index.html')) ||
-            (await cache.match('/')) ||
-            new Response('HDSAT is offline and has not been opened on this device yet.', {
-              status: 503,
-              headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-            })
-          );
+          // Offline or slow origin: fall through to the cached shell.
         }
+        const cached = (await cache.match('/index.html')) || (await cache.match('/'));
+        return (
+          cached ||
+          new Response('HDSAT is offline and has not been opened on this device yet.', {
+            status: 503,
+            headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+          })
+        );
       })()
     );
     return;

@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FigureView, StimulusView } from './FigureView';
 import { FloatingToolWindow } from './FloatingToolWindow';
 import { DesmosFrame } from './MathTools';
 import { MathText } from './MathText';
 import { ReferenceWindow } from './ReferenceWindow';
-import { Badge, Button, Card } from './ui';
+import { Badge, Button, Card, Icon } from './ui';
 import {
   dailyHardQuestion,
   isQuestionOfTheDayExpanded,
@@ -13,9 +14,16 @@ import {
   setQuestionOfTheDayExpanded,
 } from '../lib/daily';
 import { useApp } from '../lib/store';
+import type { Difficulty } from '../lib/types';
+
+function difficultyTone(difficulty: Difficulty): 'good' | 'info' | 'warn' {
+  if (difficulty === 'Hard') return 'warn';
+  if (difficulty === 'Easy') return 'good';
+  return 'info';
+}
 
 /**
- * One Hard item per calendar day, the same one everywhere it appears.
+ * One item per calendar day, the same one everywhere it appears.
  *
  * `compact` is the Dashboard: a single-line strip that expands in place, so the
  * question never pushes the rest of the page down. `full` is the Arcade card.
@@ -28,6 +36,7 @@ export function QuestionOfTheDay({
   onDismiss?: () => void;
 }) {
   const app = useApp();
+  const navigate = useNavigate();
   // The pick is cached per date inside dailyHardQuestion, so progress changing
   // as the student answers cannot swap the card out from under them.
   const question = useMemo(
@@ -99,7 +108,6 @@ export function QuestionOfTheDay({
           {question.choices.map((choice) => {
             const chosen = response === choice.id;
             const isKey = choice.id === question.correct_answer;
-            const mark = feedback ? (isKey ? ' ✓' : chosen ? ' ✗' : '') : '';
             return (
               <button
                 key={choice.id}
@@ -118,7 +126,15 @@ export function QuestionOfTheDay({
                 }
               >
                 <strong>{choice.id}.</strong> <MathText text={choice.text} />
-                {mark}
+                {feedback && (isKey || chosen) ? (
+                  <span
+                    className={`choice-feedback-mark ${isKey ? 'is-correct' : 'is-wrong'}`}
+                    role="img"
+                    aria-label={isKey ? 'Correct answer' : 'Your answer, incorrect'}
+                  >
+                    <Icon name={isKey ? 'check' : 'close'} size={14} />
+                  </span>
+                ) : null}
               </button>
             );
           })}
@@ -200,22 +216,33 @@ export function QuestionOfTheDay({
             }
           >
             <Badge tone="warn">Daily</Badge>
+            <Badge tone={difficultyTone(question.difficulty)}>{question.difficulty}</Badge>
             <strong>Question of the Day</strong>
             <span className="qotd-strip-scope">{scope}</span>
             {solved ? <Badge tone="good">Solved</Badge> : null}
             <span className="qotd-strip-toggle">{expanded ? 'Close' : 'Open'}</span>
           </button>
-          {onDismiss ? (
+          <div className="qotd-strip-actions">
             <button
               type="button"
-              className="link-button qotd-strip-hide"
-              aria-label="Hide the Question of the Day on the Dashboard"
-              title="Hide on Dashboard (it stays in the Arcade)"
-              onClick={onDismiss}
+              className="link-button qotd-strip-quests"
+              onClick={() => navigate('/arcade')}
+              title="Open today's Daily Quests in the Arcade"
             >
-              Hide
+              Daily quests
             </button>
-          ) : null}
+            {onDismiss ? (
+              <button
+                type="button"
+                className="link-button qotd-strip-hide"
+                aria-label="Hide the Question of the Day on the Dashboard"
+                title="Hide on Dashboard (it stays in the Arcade)"
+                onClick={onDismiss}
+              >
+                Hide
+              </button>
+            ) : null}
+          </div>
         </div>
         {expanded ? <div className="qotd-strip-body">{body}</div> : null}
       </Card>
@@ -226,7 +253,7 @@ export function QuestionOfTheDay({
     <Card className="qotd-card">
       <div className="row-between" style={{ marginBottom: 8 }}>
         <div className="row">
-          <Badge tone="warn">Hard</Badge>
+          <Badge tone={difficultyTone(question.difficulty)}>{question.difficulty}</Badge>
           <h3 style={{ margin: 0 }}>Question of the Day</h3>
         </div>
         <Badge tone="info">

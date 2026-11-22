@@ -8,7 +8,9 @@ import {
   QUEST_MATH_COUNT,
   QUEST_RW_COUNT,
   loadQuestState,
+  questFocus,
   questQuestionIds,
+  questUserKey,
   saveQuestProgress,
   type QuestDefinition,
   type QuestState,
@@ -31,6 +33,7 @@ export function DailyQuests() {
   const [busy, setBusy] = useState(false);
   const sessionRef = useRef<string>(newEventId());
   const date = todayKey();
+  const seed = questUserKey(app.user?.id);
 
   const byId = useMemo(() => {
     const map = new Map<string, Question>();
@@ -38,10 +41,35 @@ export function DailyQuests() {
     return map;
   }, [app.questions]);
 
+  // Built from this student's own history, so the three quests differ for every
+  // account and follow what they actually need that day.
+  const focus = useMemo(
+    () => questFocus(app.questions, app.progress, { testDate: app.settings.testDate }),
+    [app.questions, app.progress, app.settings.testDate]
+  );
+
   const questQuestions = (questId: string): Question[] =>
-    questQuestionIds(app.questions, questId, app.settings.assessment, date, app.progress)
+    questQuestionIds(app.questions, questId, app.settings.assessment, date, app.progress, {
+      seed,
+      testDate: app.settings.testDate,
+    })
       .map((id) => byId.get(id))
       .filter((q): q is Question => Boolean(q));
+
+  /** One short line saying why today's draw looks the way it does. */
+  const reason = (questId: string): string => {
+    const weak = focus.weakDomains.slice(0, 2).join(' · ');
+    if (questId === 'precision') {
+      return weak ? `Your weakest areas: ${weak}.` : 'Mixed items at your current level.';
+    }
+    if (questId === 'gauntlet') {
+      if (focus.daysToTest !== null && focus.daysToTest <= 10) {
+        return `${focus.daysToTest} day${focus.daysToTest === 1 ? '' : 's'} to your test — hardest items first.`;
+      }
+      return weak ? `Hard items, weighted to ${weak}.` : 'The hardest items first.';
+    }
+    return weak ? `A mixed set, leaning on ${weak}.` : 'A mixed set to open the day.';
+  };
 
   const answeredToday = useMemo(
     () =>
@@ -69,9 +97,7 @@ export function DailyQuests() {
           </Badge>
         </div>
         <p className="muted" style={{ marginTop: 0 }}>
-          Each quest is {QUEST_RW_COUNT} Reading &amp; Writing plus {QUEST_MATH_COUNT} Math items,
-          drawn fresh on this calendar day. Quests reset at midnight and stop after{' '}
-          {DAILY_QUEST_QUESTION_CAP} answers, so the Arcade never turns into a grind.
+          {QUEST_RW_COUNT} Reading &amp; Writing + {QUEST_MATH_COUNT} Math per quest · resets at midnight.
         </p>
 
         <div className="stack">
@@ -96,7 +122,7 @@ export function DailyQuests() {
                     )}
                   </div>
                   <p className="muted" style={{ margin: '2px 0 8px' }}>
-                    {quest.blurb}
+                    {reason(quest.id)}
                   </p>
                   <ProgressBar value={answered} max={Math.max(1, total)} />
                 </div>
@@ -159,7 +185,7 @@ export function DailyQuests() {
         const completedAt = isLast ? new Date().toISOString() : prev.completedAt;
         if (isLast && !prev.completedAt) {
           // One reward per quest per day, recorded through the same session path
-          // the cloud uses (4 HDCoins, five rewarded arcade runs a day).
+          // the cloud uses (a 5–50 HDCoin roll, five rewarded game sessions a day).
           void app.actions.completeSession({
             activityType: 'mini_game',
             sessionId: `${sessionRef.current}:${activeQuest.id}`,

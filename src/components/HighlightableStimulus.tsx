@@ -8,6 +8,7 @@ import {
   type MouseEvent,
   type ReactNode,
 } from 'react';
+import { Icon } from './ui';
 
 export type HighlightColor = 'yellow' | 'blue' | 'pink';
 
@@ -47,6 +48,11 @@ const FrozenSurface = memo(
 const BLOCK_ANCESTOR_SELECTOR =
   'p, li, td, th, div.stimulus-text-heading, div.figure-caption';
 
+// SVG text is not HTML: wrapping a graph label in <mark> leaves an element the
+// browser cannot render inside <text>, so the label disappears. MathML has the
+// same problem and is already skipped as the hidden duplicate of KaTeX output.
+const UNSUPPORTED_TEXT_SELECTOR = '.katex-mathml, svg';
+
 function closestBlock(node: Node, root: HTMLElement): Element | null {
   const el =
     node.nodeType === Node.ELEMENT_NODE ? (node as Element) : node.parentElement;
@@ -59,10 +65,10 @@ function closestBlock(node: Node, root: HTMLElement): Element | null {
  * the visible spans. Only the visible copy may be mapped or wrapped, or every
  * offset shifts by the duplicated text.
  */
-function isHiddenMathCopy(node: Node): boolean {
+function isUnsupportedTextNode(node: Node): boolean {
   const el =
     node.nodeType === Node.ELEMENT_NODE ? (node as Element) : node.parentElement;
-  return Boolean(el?.closest('.katex-mathml'));
+  return Boolean(el?.closest(UNSUPPORTED_TEXT_SELECTOR));
 }
 
 interface TextMapEntry {
@@ -84,7 +90,7 @@ function buildTextMap(root: HTMLElement): { fullText: string; entries: TextMapEn
   while (current) {
     const textNode = current as Text;
     const raw = textNode.nodeValue ?? '';
-    if (raw.length > 0 && !isHiddenMathCopy(textNode)) {
+    if (raw.length > 0 && !isUnsupportedTextNode(textNode)) {
       const block = closestBlock(textNode, root);
       if (
         prevBlock &&
@@ -114,7 +120,7 @@ function collectTextSlicesInRange(
   let current = walker.nextNode();
   while (current) {
     const textNode = current as Text;
-    if (!isHiddenMathCopy(textNode) && range.intersectsNode(textNode)) {
+    if (!isUnsupportedTextNode(textNode) && range.intersectsNode(textNode)) {
       const length = textNode.nodeValue?.length ?? 0;
       const start = textNode === range.startContainer ? range.startOffset : 0;
       const end = textNode === range.endContainer ? range.endOffset : length;
@@ -128,6 +134,16 @@ function collectTextSlicesInRange(
     current = walker.nextNode();
   }
   return slices;
+}
+
+/**
+ * A selection that starts in, ends in or crosses a chart would otherwise be
+ * partly highlightable: the SVG label is skipped, but the stored selection text
+ * still contains it. Reject the whole gesture so a graph never loses a label
+ * and the saved record always matches the text that was actually wrapped.
+ */
+function selectionTouchesSvg(root: HTMLElement, range: Range): boolean {
+  return [...root.querySelectorAll('svg')].some((svg) => range.intersectsNode(svg));
 }
 
 /**
@@ -289,6 +305,10 @@ export function HighlightableStimulus({
       setSelection(null);
       return;
     }
+    if (selectionTouchesSvg(root, range)) {
+      setSelection(null);
+      return;
+    }
     const text = current.toString().trim();
     if (!text) {
       setSelection(null);
@@ -439,7 +459,7 @@ export function HighlightableStimulus({
             title="Highlight and add a note"
             onClick={() => createHighlight(lastColor, true)}
           >
-            ✎ Note
+            <Icon name="note" size={12} /> Note
           </button>
         </div>
       ) : null}
@@ -453,20 +473,9 @@ export function HighlightableStimulus({
         >
           <div className="hl-note-head">
             <strong>Highlight</strong>
-            <span className="hl-note-head-actions">
-              <button
-                type="button"
-                className="hl-note-remove-x"
-                onClick={deleteHighlight}
-                aria-label="Remove this highlight"
-                title="Remove this highlight"
-              >
-                ✕
-              </button>
-              <button type="button" onClick={() => setEditor(null)} aria-label="Close note">
-                ✕
-              </button>
-            </span>
+            <button type="button" onClick={() => setEditor(null)} aria-label="Close note">
+              <Icon name="close" size={14} />
+            </button>
           </div>
 
           <div className="hl-editor-colors" role="group" aria-label="Highlight colour">

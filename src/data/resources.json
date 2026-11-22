@@ -32,12 +32,12 @@
     },
     {
       "id": "R-003",
-      "title": "Digital SAT Suite: what to expect",
+      "title": "The SAT: structure, timing and scoring",
       "provider": "College Board",
-      "url": "https://satsuite.collegeboard.org/digital/what-to-expect",
+      "url": "https://satsuite.collegeboard.org/sat",
       "type": "reference",
       "cost": "free",
-      "description": "Official structure: module lengths, timing, adaptive second modules and the built-in calculator.",
+      "description": "Official overview of the digital SAT: the two sections, module timing, adaptive second modules and how the 400-1600 total is built. Start here for the shape of the test.",
       "tags": [
         "sat",
         "structure",
@@ -46,12 +46,12 @@
     },
     {
       "id": "R-004",
-      "title": "PSAT/NMSQT and PSAT 10 overview",
+      "title": "PSAT/NMSQT: what is on the test",
       "provider": "College Board",
-      "url": "https://satsuite.collegeboard.org/psat-nmsqt",
+      "url": "https://satsuite.collegeboard.org/in-school-assessments/whats-on-the-test/psat-nmsqt",
       "type": "reference",
       "cost": "free",
-      "description": "Assessment structure, timing and scoring for the PSAT/NMSQT; a useful companion for PSAT 10 and PSAT 8/9 practice.",
+      "description": "Official breakdown of the PSAT/NMSQT reading, writing and math content, including how it differs from the SAT. The National Merit route runs through this test.",
       "tags": [
         "psat",
         "structure",
@@ -60,12 +60,12 @@
     },
     {
       "id": "R-005",
-      "title": "SAT Suite Question Bank",
+      "title": "SAT Suite Question Bank: student guide",
       "provider": "College Board",
-      "url": "https://satsuitequestionbank.collegeboard.org/",
+      "url": "https://satsuite.collegeboard.org/practice/student-question-bank",
       "type": "reference",
       "cost": "free",
-      "description": "Searchable bank of real released questions. Read-only: College Board's terms do not permit re-hosting these items, so HDSAT links to it instead of importing it.",
+      "description": "How to filter official SAT Suite questions by section, domain, skill and difficulty. A few thousand real items, free, with answer explanations.",
       "tags": [
         "sat",
         "question-bank",
@@ -103,12 +103,12 @@
     },
     {
       "id": "R-008",
-      "title": "Digital SAT Math reference sheet",
+      "title": "Printable SAT practice tests",
       "provider": "College Board",
-      "url": "https://satsuite.collegeboard.org/media/pdf/digital-sat-math-reference-sheet.pdf",
+      "url": "https://satsuite.collegeboard.org/practice/practice-tests/paper",
       "type": "reference",
       "cost": "free",
-      "description": "The reference sheet provided inside the digital test. HDSAT renders the same formulas in its in-test reference panel.",
+      "description": "Downloadable full-length practice tests with answer keys and scoring guides. Each math module reproduces the reference sheet the digital test provides.",
       "tags": [
         "math",
         "formulas",
@@ -255,6 +255,1290 @@
         "sat",
         "logistics",
         "official"
+      ]
+    },
+    {
+      "id": "R-019",
+      "title": "College Board: full-length practice tests",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/practice/practice-tests",
+      "type": "reference",
+      "cost": "free",
+      "description": "Official hub for full-length practice, with free downloadable paper tests plus scoring guides and answer explanations. The digital versions run in Bluebook.",
+      "tags": [
+        "sat",
+        "psat",
+        "full-length",
+        "official",
+        "practice-tests"
+      ]
+    },
+    {
+      "id": "R-020",
+      "title": "College Board: testing accommodations",
+      "provider": "College Board",
+      "url": "https://accommodations.collegeboard.org/how-accommodations-work/about-accommodations",
+      "type": "reference",
+      "cost": "free",
+      "description": "How approved accommodations are arranged for the SAT and PSAT, and what documentation the school submits. Worth reading before registration, not after.",
+      "tags": [
+        "sat",
+        "psat",
+        "accessibility",
+        "official",
+        "logistics"
+      ]
+    },
+    {
+      "id": "R-021",
+      "title": "BigFuture: college and career planning",
+      "provider": "College Board",
+      "url": "https://bigfuture.collegeboard.org/",
+      "type": "reference",
+      "cost": "free",
+      "description": "Free planning tools for college lists, scholarships, majors and careers. Useful once scores are moving and the next question is where to apply.",
+      "tags": [
+        "college-planning",
+        "scholarships",
+        "official"
+      ]
+    },
+    {
+      "id": "R-022",
+      "title": "Khan Academy: SAT Math",
+      "provider": "Khan Academy / College Board",
+      "url": "https://www.khanacademy.org/test-prep/sat-math",
+      "type": "course",
+      "cost": "free",
+      "description": "The math half of the official SAT course, split by domain so a missed skill can be drilled on its own: algebra, advanced math, problem solving and data analysis.",
+      "tags": [
+        "sat",
+        "math",
+        "algebra",
+        "advanced-math",
+        "problem-solving"
+      ]
+    },
+    {
+      "id": "R-023",
+      "title": "Khan Academy: SAT Reading and Writing",
+      "provider": "Khan Academy / College Board",
+      "url": "https://www.khanacademy.org/test-prep/sat-reading-and-writing",
+      "type": "course",
+      "cost": "free",
+      "description": "The reading and writing half of the official course: comprehension, evidence, rhetoric and Standard English conventions, with passage practice.",
+      "tags": [
+        "sat",
+        "reading",
+        "writing",
+        "grammar",
+        "evidence"
+      ]
+    },
+    {
+      "id": "R-024",
+      "title": "OpenStax Algebra and Trigonometry 2e",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/algebra-and-trigonometry-2e",
+      "type": "textbook",
+      "cost": "free",
+      "description": "Free online textbook that covers functions, equations and trigonometry with worked examples. A deeper reference when a single explanation is not enough.",
+      "tags": [
+        "math",
+        "algebra",
+        "functions",
+        "trigonometry",
+        "textbook",
+        "open-license"
+      ]
+    },
+    {
+      "id": "R-025",
+      "title": "OpenStax Calculus Volume 1",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/calculus-volume-1",
+      "type": "textbook",
+      "cost": "free",
+      "description": "Free limits, derivatives and integration textbook. Beyond the SAT itself, but it is the natural next step for a student who finishes the algebra strand early.",
+      "tags": [
+        "math",
+        "calculus",
+        "textbook",
+        "open-license"
+      ]
+    },
+    {
+      "id": "R-026",
+      "title": "OpenStax Biology 2e",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/biology-2e",
+      "type": "textbook",
+      "cost": "free",
+      "description": "Free introductory biology text with clear expository prose. Long-form science reading is the cheapest way to raise reading stamina on dense passages.",
+      "tags": [
+        "reading",
+        "science",
+        "biology",
+        "textbook",
+        "open-license"
+      ]
+    },
+    {
+      "id": "R-027",
+      "title": "OpenStax Chemistry 2e",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/chemistry-2e",
+      "type": "textbook",
+      "cost": "free",
+      "description": "Free general chemistry text with worked examples and end-of-chapter exercises. Good practice for quantitative reasoning inside a science context.",
+      "tags": [
+        "reading",
+        "science",
+        "chemistry",
+        "textbook",
+        "open-license"
+      ]
+    },
+    {
+      "id": "R-028",
+      "title": "OpenStax College Physics 2e",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/college-physics-2e",
+      "type": "textbook",
+      "cost": "free",
+      "description": "Free algebra-based physics text. The word problems are close cousins of SAT math in the wild: rate, unit and proportional reasoning under a real context.",
+      "tags": [
+        "math",
+        "science",
+        "physics",
+        "problem-solving",
+        "textbook",
+        "open-license"
+      ]
+    },
+    {
+      "id": "R-029",
+      "title": "OpenStax U.S. History",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/us-history",
+      "type": "textbook",
+      "cost": "free",
+      "description": "Free chronological U.S. history text with primary-source excerpts. Useful background for the history and social-science passages the reading section draws on.",
+      "tags": [
+        "reading",
+        "history",
+        "textbook",
+        "open-license"
+      ]
+    },
+    {
+      "id": "R-030",
+      "title": "LibreTexts Mathematics",
+      "provider": "LibreTexts",
+      "url": "https://math.libretexts.org/",
+      "type": "textbook",
+      "cost": "free",
+      "description": "Open library of mathematics textbooks and course notes, searchable by topic. Every shelf states its own licence, so check it before reusing anything.",
+      "tags": [
+        "math",
+        "reference",
+        "textbook",
+        "open-license"
+      ]
+    },
+    {
+      "id": "R-031",
+      "title": "UNC Writing Center: tips and tools",
+      "provider": "UNC at Chapel Hill Writing Center",
+      "url": "https://writingcenter.unc.edu/tips-and-tools/",
+      "type": "course",
+      "cost": "free",
+      "description": "Short public handouts on thesis statements, evidence, revision and sentence-level clarity. Written for university students, still readable in ten minutes.",
+      "tags": [
+        "writing",
+        "essays",
+        "argument",
+        "revision"
+      ]
+    },
+    {
+      "id": "R-032",
+      "title": "Purplemath: algebra lessons",
+      "provider": "Purplemath",
+      "url": "https://www.purplemath.com/",
+      "type": "course",
+      "cost": "free",
+      "description": "Plain-language algebra lessons that name the mistakes students actually make, with worked examples for each technique. Good for a stuck afternoon.",
+      "tags": [
+        "math",
+        "algebra",
+        "worked-examples"
+      ]
+    },
+    {
+      "id": "R-033",
+      "title": "Math is Fun: algebra",
+      "provider": "Math is Fun",
+      "url": "https://www.mathsisfun.com/algebra/",
+      "type": "course",
+      "cost": "free",
+      "description": "Visual, unhurried explanations of equations, exponents, polynomials and functions. The fastest way to rebuild a shaky foundation without a textbook.",
+      "tags": [
+        "math",
+        "algebra",
+        "functions",
+        "foundations"
+      ]
+    },
+    {
+      "id": "R-034",
+      "title": "Paul's Online Math Notes",
+      "provider": "Paul Dawkins, Lamar University",
+      "url": "https://tutorial.math.lamar.edu/",
+      "type": "reference",
+      "cost": "free",
+      "description": "Free algebra, trigonometry and calculus notes with fully worked practice problems and solutions. Dense, but the examples are the point.",
+      "tags": [
+        "math",
+        "algebra",
+        "trigonometry",
+        "worked-examples",
+        "reference"
+      ]
+    },
+    {
+      "id": "R-035",
+      "title": "Desmos Scientific Calculator",
+      "provider": "Desmos",
+      "url": "https://www.desmos.com/scientific",
+      "type": "tool",
+      "cost": "free",
+      "description": "The non-graphing calculator for fractions, exponents, logs and trigonometry. Same engine family as the in-test calculator, so the keys feel familiar.",
+      "tags": [
+        "math",
+        "calculator",
+        "tool"
+      ]
+    },
+    {
+      "id": "R-036",
+      "title": "GeoGebra Calculator Suite",
+      "provider": "GeoGebra",
+      "url": "https://www.geogebra.org/calculator",
+      "type": "tool",
+      "cost": "free",
+      "description": "Graphing, algebra, geometry and table views in one free workspace. Handy for seeing why two forms of the same function behave differently.",
+      "tags": [
+        "math",
+        "calculator",
+        "graphing",
+        "geometry",
+        "tool"
+      ]
+    },
+    {
+      "id": "R-037",
+      "title": "Wolfram|Alpha",
+      "provider": "Wolfram Research",
+      "url": "https://www.wolframalpha.com/",
+      "type": "tool",
+      "cost": "free",
+      "description": "Computational engine for checking a result or seeing a problem solved step by step. Free for basic queries; use it to verify, not to skip the work.",
+      "tags": [
+        "math",
+        "reference",
+        "tool"
+      ]
+    },
+    {
+      "id": "R-038",
+      "title": "Anki: spaced-repetition flashcards",
+      "provider": "Anki (Ankitects)",
+      "url": "https://apps.ankiweb.net/",
+      "type": "tool",
+      "cost": "free",
+      "description": "Free desktop and Android flashcard app that schedules reviews by recall strength. Pairs with the vocabulary deck already inside HDSAT.",
+      "tags": [
+        "vocabulary",
+        "flashcards",
+        "spaced-repetition",
+        "tool"
+      ]
+    },
+    {
+      "id": "R-039",
+      "title": "OpenStax Elementary Algebra 2e",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/elementary-algebra-2e",
+      "type": "textbook",
+      "cost": "free",
+      "description": "A free, peer-reviewed first algebra course: linear equations, graphing, systems, polynomials and factoring, with worked examples and exercises throughout.",
+      "tags": [
+        "math",
+        "algebra",
+        "textbook"
+      ]
+    },
+    {
+      "id": "R-040",
+      "title": "OpenStax Precalculus 2e",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/precalculus-2e",
+      "type": "textbook",
+      "cost": "free",
+      "description": "Functions, trigonometry, sequences and analytic geometry at the level just above the SAT Math section, useful for reading what a hard question is built on.",
+      "tags": [
+        "math",
+        "functions",
+        "trigonometry"
+      ]
+    },
+    {
+      "id": "R-041",
+      "title": "OpenStax Introductory Statistics 2e",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/introductory-statistics-2e",
+      "type": "textbook",
+      "cost": "free",
+      "description": "The statistics behind the SAT's data questions: distributions, sampling, probability and how to read a study's claim.",
+      "tags": [
+        "math",
+        "statistics",
+        "data"
+      ]
+    },
+    {
+      "id": "R-042",
+      "title": "OpenStax Calculus Volume 2",
+      "provider": "OpenStax (Rice University)",
+      "url": "https://openstax.org/details/books/calculus-volume-2",
+      "type": "textbook",
+      "cost": "free",
+      "description": "Not SAT content, but the clearest free treatment of series and integration for a student who wants to go past the test.",
+      "tags": [
+        "math",
+        "extension"
+      ]
+    },
+    {
+      "id": "R-043",
+      "title": "MIT OpenCourseWare: Single Variable Calculus",
+      "provider": "MIT",
+      "url": "https://ocw.mit.edu/courses/18-01sc-single-variable-calculus-fall-2010/",
+      "type": "course",
+      "cost": "free",
+      "description": "Full MIT lectures, notes, problem sets and exams, free and without registration. A stretch goal rather than SAT revision.",
+      "tags": [
+        "math",
+        "extension",
+        "video"
+      ]
+    },
+    {
+      "id": "R-044",
+      "title": "MIT OpenCourseWare: Linear Algebra",
+      "provider": "MIT",
+      "url": "https://ocw.mit.edu/courses/18-06sc-linear-algebra-fall-2011/",
+      "type": "course",
+      "cost": "free",
+      "description": "Strang's lectures and problems. Systems of equations seen properly, which sharpens the SAT treatment of them.",
+      "tags": [
+        "math",
+        "systems",
+        "video"
+      ]
+    },
+    {
+      "id": "R-045",
+      "title": "Mathplanet: Pre-Algebra",
+      "provider": "Mathplanet",
+      "url": "https://www.mathplanet.com/education/pre-algebra",
+      "type": "course",
+      "cost": "free",
+      "description": "Short lessons with examples and video on integers, fractions, ratios and percentages: the arithmetic the SAT assumes rather than tests.",
+      "tags": [
+        "math",
+        "foundations"
+      ]
+    },
+    {
+      "id": "R-046",
+      "title": "Mathplanet: Algebra 1",
+      "provider": "Mathplanet",
+      "url": "https://www.mathplanet.com/education/algebra-1",
+      "type": "course",
+      "cost": "free",
+      "description": "A full Algebra 1 course: equations, inequalities, functions, exponents and polynomials, in the order a school year covers them.",
+      "tags": [
+        "math",
+        "algebra",
+        "course"
+      ]
+    },
+    {
+      "id": "R-047",
+      "title": "Mathplanet: Algebra 2",
+      "provider": "Mathplanet",
+      "url": "https://www.mathplanet.com/education/algebra-2",
+      "type": "course",
+      "cost": "free",
+      "description": "Quadratics, logarithms, sequences and probability, explained in short pages with worked examples.",
+      "tags": [
+        "math",
+        "algebra",
+        "quadratics"
+      ]
+    },
+    {
+      "id": "R-048",
+      "title": "Mathplanet: Geometry",
+      "provider": "Mathplanet",
+      "url": "https://www.mathplanet.com/education/geometry",
+      "type": "course",
+      "cost": "free",
+      "description": "Angles, triangle congruence, similarity, circles, area and volume, with diagrams: the geometry the SAT asks about indirectly.",
+      "tags": [
+        "math",
+        "geometry"
+      ]
+    },
+    {
+      "id": "R-049",
+      "title": "Kuta Software: free worksheets",
+      "provider": "Kuta Software",
+      "url": "https://www.kutasoftware.com/free.html",
+      "type": "reference",
+      "cost": "free",
+      "description": "Printable practice worksheets with answer keys on algebra, geometry and trigonometry. Useful for paper drilling away from a screen.",
+      "tags": [
+        "math",
+        "worksheets",
+        "drill"
+      ]
+    },
+    {
+      "id": "R-050",
+      "title": "Open Textbook Library",
+      "provider": "University of Minnesota",
+      "url": "https://open.umn.edu/opentextbooks",
+      "type": "reference",
+      "cost": "free",
+      "description": "A searchable catalogue of hundreds of peer-reviewed open textbooks, including maths, statistics and writing, free to read and download.",
+      "tags": [
+        "reference",
+        "textbook",
+        "catalogue"
+      ]
+    },
+    {
+      "id": "R-051",
+      "title": "Purdue OWL: General Writing",
+      "provider": "Purdue University",
+      "url": "https://owl.purdue.edu/owl/general_writing/index.html",
+      "type": "course",
+      "cost": "free",
+      "description": "The hub for clear-sentence advice: structure, paragraphs, concision, punctuation and common errors, from a university writing centre.",
+      "tags": [
+        "reading",
+        "writing",
+        "grammar"
+      ]
+    },
+    {
+      "id": "R-052",
+      "title": "Purdue OWL: Commas",
+      "provider": "Purdue University",
+      "url": "https://owl.purdue.edu/owl/general_writing/punctuation/commas/index.html",
+      "type": "reference",
+      "cost": "free",
+      "description": "Exactly when a comma is required, optional or wrong, with examples. The SAT's Boundaries questions are largely this page.",
+      "tags": [
+        "reading",
+        "grammar",
+        "punctuation"
+      ]
+    },
+    {
+      "id": "R-053",
+      "title": "Purdue OWL: Conciseness",
+      "provider": "Purdue University",
+      "url": "https://owl.purdue.edu/owl/general_writing/academic_writing/conciseness/index.html",
+      "type": "reference",
+      "cost": "free",
+      "description": "How to cut a sentence to its point without losing meaning: the skill behind most improved-sentence questions.",
+      "tags": [
+        "reading",
+        "writing",
+        "revision"
+      ]
+    },
+    {
+      "id": "R-054",
+      "title": "Purdue OWL: Transitions and transitional devices",
+      "provider": "Purdue University",
+      "url": "https://owl.purdue.edu/owl/general_writing/mechanics/transitions_and_transitional_devices/index.html",
+      "type": "reference",
+      "cost": "free",
+      "description": "A classified list of connectives with the logic each one signals: contrast, addition, cause, sequence. Direct help with Transitions items.",
+      "tags": [
+        "reading",
+        "grammar",
+        "transitions"
+      ]
+    },
+    {
+      "id": "R-055",
+      "title": "Yale Poorvu Center: Writing",
+      "provider": "Yale University",
+      "url": "https://poorvucenter.yale.edu/writing",
+      "type": "course",
+      "cost": "free",
+      "description": "Short guides on argument, evidence, thesis statements and revision from Yale's writing centre.",
+      "tags": [
+        "reading",
+        "writing",
+        "argument"
+      ]
+    },
+    {
+      "id": "R-056",
+      "title": "UNC Writing Center: Evidence",
+      "provider": "University of North Carolina",
+      "url": "https://writingcenter.unc.edu/tips-and-tools/evidence/",
+      "type": "course",
+      "cost": "free",
+      "description": "What counts as evidence in an argument and how to present it, which is what Command of Evidence questions are asking about.",
+      "tags": [
+        "reading",
+        "evidence",
+        "writing"
+      ]
+    },
+    {
+      "id": "R-057",
+      "title": "Project Gutenberg",
+      "provider": "Project Gutenberg",
+      "url": "https://www.gutenberg.org/",
+      "type": "reference",
+      "cost": "free",
+      "description": "Over 70,000 free public-domain books, readable in the browser. Long-form reading practice that costs nothing and needs no account.",
+      "tags": [
+        "reading",
+        "extensive-reading",
+        "books"
+      ]
+    },
+    {
+      "id": "R-058",
+      "title": "Poetry Foundation",
+      "provider": "Poetry Foundation",
+      "url": "https://www.poetryfoundation.org/",
+      "type": "reference",
+      "cost": "free",
+      "description": "Poems, biographies and criticism, free. Good practice for the density and figurative language of the SAT's literary passages.",
+      "tags": [
+        "reading",
+        "poetry",
+        "literature"
+      ]
+    },
+    {
+      "id": "R-059",
+      "title": "CommonLit: Text Library",
+      "provider": "CommonLit",
+      "url": "https://www.commonlit.org/text-library",
+      "type": "course",
+      "cost": "free",
+      "description": "A free library of short nonfiction and literary texts with comprehension questions, searchable by year and topic.",
+      "tags": [
+        "reading",
+        "comprehension",
+        "passages"
+      ]
+    },
+    {
+      "id": "R-060",
+      "title": "College Board: Bluebook practice tests",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/practice/practice-tests/bluebook",
+      "type": "reference",
+      "cost": "free",
+      "description": "The official adaptive practice tests in Bluebook, the same app the real digital SAT runs in. Six full tests are free.",
+      "tags": [
+        "sat",
+        "practice-test",
+        "official"
+      ]
+    },
+    {
+      "id": "R-061",
+      "title": "College Board: SAT test dates and deadlines",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/sat/dates-deadlines",
+      "type": "reference",
+      "cost": "free",
+      "description": "Registration windows and score-release dates, including the waitlist option, for planning a study schedule backwards from a test day.",
+      "tags": [
+        "sat",
+        "planning",
+        "official"
+      ]
+    },
+    {
+      "id": "R-062",
+      "title": "College Board: what's on the SAT",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/sat/whats-on-the-test",
+      "type": "reference",
+      "cost": "free",
+      "description": "The authoritative section and domain list for the digital SAT, with the skill descriptions the questions are written against.",
+      "tags": [
+        "sat",
+        "specification",
+        "official"
+      ]
+    },
+    {
+      "id": "R-063",
+      "title": "BigFuture: plan for college",
+      "provider": "College Board",
+      "url": "https://bigfuture.collegeboard.org/plan-for-college",
+      "type": "reference",
+      "cost": "free",
+      "description": "College search, majors and application planning. Free, with optional sign-in for saved lists.",
+      "tags": [
+        "planning",
+        "college",
+        "official"
+      ]
+    },
+    {
+      "id": "R-064",
+      "title": "GeoGebra Geometry",
+      "provider": "GeoGebra",
+      "url": "https://www.geogebra.org/geometry",
+      "type": "tool",
+      "cost": "free",
+      "description": "A free geometry workspace for constructing and measuring figures, which makes circle and triangle questions concrete.",
+      "tags": [
+        "math",
+        "geometry",
+        "tool"
+      ]
+    },
+    {
+      "id": "R-065",
+      "title": "The Learning Scientists",
+      "provider": "The Learning Scientists",
+      "url": "https://www.learningscientists.org/",
+      "type": "course",
+      "cost": "free",
+      "description": "Evidence-based study techniques (retrieval practice, spacing, interleaving) with downloadable summaries. Explains why a review schedule works.",
+      "tags": [
+        "study-skills",
+        "memory",
+        "research"
+      ]
+    },
+    {
+      "id": "R-066",
+      "title": "Math is Fun: Geometry",
+      "provider": "Math is Fun",
+      "url": "https://www.mathsisfun.com/geometry/",
+      "type": "course",
+      "cost": "free",
+      "description": "Plain-language geometry with diagrams and small interactive illustrations: angles, circles, area, volume and the Pythagorean theorem.",
+      "tags": [
+        "math",
+        "geometry"
+      ]
+    },
+    {
+      "id": "R-067",
+      "title": "Paul's Online Math Notes: Algebra",
+      "provider": "Paul Dawkins, Lamar University",
+      "url": "https://tutorial.math.lamar.edu/classes/alg/Alg.aspx",
+      "type": "reference",
+      "cost": "free",
+      "description": "Complete algebra notes with worked examples and practice problems, written for students who want the full derivation rather than a shortcut.",
+      "tags": [
+        "math",
+        "algebra",
+        "reference"
+      ]
+    },
+    {
+      "id": "R-068",
+      "title": "Desmos 3D",
+      "provider": "Desmos",
+      "url": "https://www.desmos.com/3d",
+      "type": "tool",
+      "cost": "free",
+      "description": "A free 3D graphing tool for visualising surfaces and planes; useful for making volume and coordinate questions concrete.",
+      "tags": [
+        "math",
+        "tool",
+        "visualisation"
+      ]
+    },
+    {
+      "id": "R-069",
+      "title": "Practice and Preparation: the official hub",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/practice",
+      "type": "reference",
+      "cost": "free",
+      "description": "One page that links every official practice tool: Bluebook tests, the question bank and score review.",
+      "tags": [
+        "sat",
+        "official",
+        "practice-tests",
+        "planning"
+      ]
+    },
+    {
+      "id": "R-070",
+      "title": "Download the Bluebook testing app",
+      "provider": "College Board",
+      "url": "https://bluebook.collegeboard.org/students/download-bluebook",
+      "type": "tool",
+      "cost": "free",
+      "description": "The app used for official practice tests and for the digital test itself. Install it early.",
+      "tags": [
+        "sat",
+        "official",
+        "tool",
+        "digital"
+      ]
+    },
+    {
+      "id": "R-071",
+      "title": "Official SAT Question of the Day",
+      "provider": "College Board",
+      "url": "https://qotd.collegeboard.org/",
+      "type": "tool",
+      "cost": "free",
+      "description": "One official question a day, with streaks. A free account keeps the history.",
+      "tags": [
+        "sat",
+        "official",
+        "drill",
+        "digital"
+      ]
+    },
+    {
+      "id": "R-072",
+      "title": "Registering with testing accommodations",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/sat/registration/additional-registration-options/accommodations",
+      "type": "reference",
+      "cost": "free",
+      "description": "How accommodations are requested, approved and confirmed for test day.",
+      "tags": [
+        "sat",
+        "official",
+        "accessibility",
+        "logistics"
+      ]
+    },
+    {
+      "id": "R-073",
+      "title": "How SAT scores are calculated",
+      "provider": "College Board",
+      "url": "https://satsuite.collegeboard.org/scores/what-scores-mean/how-scores-calculated",
+      "type": "reference",
+      "cost": "free",
+      "description": "The adaptive modules, the 400-1600 scale and how raw answers become section scores.",
+      "tags": [
+        "sat",
+        "official",
+        "structure",
+        "digital"
+      ]
+    },
+    {
+      "id": "R-074",
+      "title": "Free full-length SAT practice test",
+      "provider": "The Princeton Review",
+      "url": "https://www.princetonreview.com/college/free-sat-practice-test",
+      "type": "course",
+      "cost": "free",
+      "description": "A timed full test with an instant score report. A free account is required.",
+      "tags": [
+        "sat",
+        "practice-tests",
+        "full-length"
+      ]
+    },
+    {
+      "id": "R-075",
+      "title": "Free SAT practice tests and section drills",
+      "provider": "Magoosh",
+      "url": "https://sat.magoosh.com/practice_tests/free",
+      "type": "course",
+      "cost": "free",
+      "description": "Full-length or single-section practice with estimated scores and a breakdown by skill.",
+      "tags": [
+        "sat",
+        "practice-tests",
+        "full-length",
+        "math",
+        "reading"
+      ]
+    },
+    {
+      "id": "R-076",
+      "title": "SAT practice test with answer explanations",
+      "provider": "Mometrix Test Preparation",
+      "url": "https://www.mometrix.com/academy/sat-practice-test/",
+      "type": "course",
+      "cost": "free",
+      "description": "A free online practice set, plus links to separate math and reading practice.",
+      "tags": [
+        "sat",
+        "practice-tests",
+        "math",
+        "reading"
+      ]
+    },
+    {
+      "id": "R-077",
+      "title": "Digital SAT practice tests and printable PDFs",
+      "provider": "Test Ninjas",
+      "url": "https://test-ninjas.com/digital-sat-practice-tests",
+      "type": "course",
+      "cost": "free",
+      "description": "Module-by-module digital practice with PDFs. Explanations need a free account.",
+      "tags": [
+        "sat",
+        "practice-tests",
+        "full-length",
+        "digital"
+      ]
+    },
+    {
+      "id": "R-078",
+      "title": "Free adaptive digital SAT practice",
+      "provider": "Test Ninjas",
+      "url": "https://test-ninjas.com/free-sat-practice",
+      "type": "tool",
+      "cost": "free",
+      "description": "Daily questions and a short adaptive set, good for a five-minute session.",
+      "tags": [
+        "sat",
+        "drill",
+        "digital",
+        "practice-tests"
+      ]
+    },
+    {
+      "id": "R-079",
+      "title": "Full-length SAT practice tests",
+      "provider": "Quad Education",
+      "url": "https://www.quadeducationgroup.com/sat-practice-tests",
+      "type": "course",
+      "cost": "free",
+      "description": "Downloadable practice tests with explanations, built to the digital format.",
+      "tags": [
+        "sat",
+        "practice-tests",
+        "full-length"
+      ]
+    },
+    {
+      "id": "R-080",
+      "title": "SAT practice test archive",
+      "provider": "E Math Academy",
+      "url": "https://www.emathacademy.com/sat-practice-tests.html",
+      "type": "course",
+      "cost": "free",
+      "description": "Print-ready practice tests, answer keys and scoring sheets in one place.",
+      "tags": [
+        "sat",
+        "practice-tests",
+        "worksheets"
+      ]
+    },
+    {
+      "id": "R-081",
+      "title": "Are free adaptive digital tests actually adaptive?",
+      "provider": "Piqosity",
+      "url": "https://www.piqosity.com/2024/02/01/digital-sat-practice-tests-free-full-length-adaptive/",
+      "type": "reference",
+      "cost": "free",
+      "description": "Explains what adaptive means on the digital SAT and how free tests compare.",
+      "tags": [
+        "sat",
+        "practice-tests",
+        "digital",
+        "structure"
+      ]
+    },
+    {
+      "id": "R-082",
+      "title": "SAT Math course",
+      "provider": "Khan Academy",
+      "url": "https://www.khanacademy.org/test-prep/v2-sat-math",
+      "type": "course",
+      "cost": "free",
+      "description": "The official math course: lessons, worked examples and skill practice by domain.",
+      "tags": [
+        "sat",
+        "math",
+        "official",
+        "drill"
+      ]
+    },
+    {
+      "id": "R-083",
+      "title": "Get ready for SAT Reading and Writing",
+      "provider": "Khan Academy",
+      "url": "https://www.khanacademy.org/test-prep/get-ready-for-sat-prep-reading-and-writing",
+      "type": "course",
+      "cost": "free",
+      "description": "A gentler on-ramp for students who want the basics before the full course.",
+      "tags": [
+        "sat",
+        "reading",
+        "writing",
+        "foundations"
+      ]
+    },
+    {
+      "id": "R-084",
+      "title": "Reference information on the digital SAT math test",
+      "provider": "Khan Academy",
+      "url": "https://www.khanacademy.org/test-prep/v2-sat-math/x0fcc98a58ba3bea7:about-the-digital-sat/x0fcc98a58ba3bea7:preparing-for-the-sat/a/reference-information-on-the-digital-sat-math-test",
+      "type": "reference",
+      "cost": "free",
+      "description": "What the in-test reference sheet contains, and what it deliberately leaves out.",
+      "tags": [
+        "sat",
+        "math",
+        "formulas",
+        "official"
+      ]
+    },
+    {
+      "id": "R-085",
+      "title": "SAT Math articles and sample problems",
+      "provider": "The College Panda",
+      "url": "https://www.thecollegepanda.com/categories/sat-math/",
+      "type": "course",
+      "cost": "free",
+      "description": "Free strategy articles from a well-known SAT math author. Some predates the digital test.",
+      "tags": [
+        "sat",
+        "math",
+        "algebra",
+        "advanced-math"
+      ]
+    },
+    {
+      "id": "R-086",
+      "title": "Free SAT resources preview",
+      "provider": "1600.io",
+      "url": "https://1600.io/p/sat-resources-free-trial",
+      "type": "course",
+      "cost": "free",
+      "description": "Sample chapters and explanations from the Orange Book series, free with an account.",
+      "tags": [
+        "sat",
+        "math",
+        "reading",
+        "video"
+      ]
+    },
+    {
+      "id": "R-087",
+      "title": "SAT math facts and formulas",
+      "provider": "Erik Jacobsen (Erik the Red)",
+      "url": "https://www.erikthered.com/tutor/",
+      "type": "reference",
+      "cost": "free",
+      "description": "Condensed formula sheets and quizzes. Check that a sheet matches the digital test.",
+      "tags": [
+        "sat",
+        "math",
+        "formulas",
+        "reference"
+      ]
+    },
+    {
+      "id": "R-088",
+      "title": "Digital SAT practice by topic",
+      "provider": "SATPanda",
+      "url": "https://www.satpanda.com/",
+      "type": "tool",
+      "cost": "free",
+      "description": "Topic drills and mock tests with explanations. Third-party questions, not official ones.",
+      "tags": [
+        "sat",
+        "drill",
+        "question-bank",
+        "digital"
+      ]
+    },
+    {
+      "id": "R-089",
+      "title": "SAT Bootcamp practice tests",
+      "provider": "Schoolhouse.world",
+      "url": "https://schoolhouse.world/sat-bootcamp/practice-tests",
+      "type": "course",
+      "cost": "free",
+      "description": "Free timed math and reading/writing sets, organised by domain. Tutoring is free too.",
+      "tags": [
+        "sat",
+        "practice-tests",
+        "full-length",
+        "math",
+        "reading"
+      ]
+    },
+    {
+      "id": "R-090",
+      "title": "Official question bank, browsable",
+      "provider": "SATQuestionBank.org",
+      "url": "https://satquestionbank.org/",
+      "type": "tool",
+      "cost": "free",
+      "description": "A third-party front end for the College Board question bank, easier to filter by skill.",
+      "tags": [
+        "sat",
+        "question-bank",
+        "drill",
+        "official"
+      ]
+    },
+    {
+      "id": "R-091",
+      "title": "Digital SAT Math practice-test walkthroughs",
+      "provider": "Scalar Learning",
+      "url": "https://www.youtube.com/playlist?list=PLZBnAG03572oS5Q86ZoTdLVp-RUboVb4l",
+      "type": "reference",
+      "cost": "free",
+      "description": "A teacher solves full digital math modules on screen, question by question.",
+      "tags": [
+        "sat",
+        "math",
+        "video",
+        "worked-examples"
+      ]
+    },
+    {
+      "id": "R-092",
+      "title": "Desmos for digital SAT Math",
+      "provider": "The Admission Hackers",
+      "url": "https://www.youtube.com/playlist?list=PLf3ypEs9Kobgascv5bwpOadB0UiVI5IQS",
+      "type": "reference",
+      "cost": "free",
+      "description": "Short lessons on solving SAT problems in Desmos instead of by hand.",
+      "tags": [
+        "sat",
+        "math",
+        "calculator",
+        "graphing",
+        "video"
+      ]
+    },
+    {
+      "id": "R-093",
+      "title": "SAT Math concept summaries",
+      "provider": "The Admission Hackers",
+      "url": "https://www.youtube.com/playlist?list=PLJEsnzUGdlBOeK1ClXZT3dGztgxqLXi61",
+      "type": "reference",
+      "cost": "free",
+      "description": "Every math topic on the test, summarised in a few minutes each.",
+      "tags": [
+        "sat",
+        "math",
+        "video",
+        "formulas"
+      ]
+    },
+    {
+      "id": "R-094",
+      "title": "All of SAT Reading and Writing in 22 minutes",
+      "provider": "SAT (YouTube)",
+      "url": "https://www.youtube.com/watch?v=jTkfge6FeE8",
+      "type": "reference",
+      "cost": "free",
+      "description": "A fast tour of the reading and writing skills and the strategies for each.",
+      "tags": [
+        "sat",
+        "reading",
+        "writing",
+        "video"
+      ]
+    },
+    {
+      "id": "R-095",
+      "title": "All SAT punctuation rules in 15 minutes",
+      "provider": "SAT Writing (YouTube)",
+      "url": "https://www.youtube.com/watch?v=WCHyeJKWD84",
+      "type": "reference",
+      "cost": "free",
+      "description": "Commas, colons, dashes and boundaries in one sitting, aimed at the test.",
+      "tags": [
+        "sat",
+        "writing",
+        "grammar",
+        "punctuation",
+        "video"
+      ]
+    },
+    {
+      "id": "R-096",
+      "title": "Reading and Writing walkthroughs on real modules",
+      "provider": "MyGuru Tutoring",
+      "url": "https://www.youtube.com/playlist?list=PLE39rYnOi8ZongqglV5YsPny4DhyNnrc1",
+      "type": "reference",
+      "cost": "free",
+      "description": "A tutor works through Bluebook reading and writing modules, reasoning out loud.",
+      "tags": [
+        "sat",
+        "reading",
+        "writing",
+        "video",
+        "worked-examples"
+      ]
+    },
+    {
+      "id": "R-097",
+      "title": "Desmos cheat sheet for the digital SAT",
+      "provider": "Acely",
+      "url": "https://acely.com/sat-prep/desmos-cheat-sheet",
+      "type": "reference",
+      "cost": "free",
+      "description": "Which problems to hand to Desmos, and the keystrokes that solve them.",
+      "tags": [
+        "sat",
+        "math",
+        "calculator",
+        "graphing",
+        "reference"
+      ]
+    },
+    {
+      "id": "R-098",
+      "title": "Free Desmos course for SAT Math",
+      "provider": "Aniko",
+      "url": "https://www.aniko.ai/free-resources/sat/courses/desmos",
+      "type": "course",
+      "cost": "free",
+      "description": "Thirty short lessons and practice sets on calculator-first solving.",
+      "tags": [
+        "sat",
+        "math",
+        "calculator",
+        "graphing"
+      ]
+    },
+    {
+      "id": "R-099",
+      "title": "Printable SAT formula sheet",
+      "provider": "Mashup Math",
+      "url": "https://mashupmath.com/sat-formula-sheet",
+      "type": "reference",
+      "cost": "free",
+      "description": "A two-page formula reference, with notes on when each formula is worth using.",
+      "tags": [
+        "sat",
+        "math",
+        "formulas",
+        "worksheets"
+      ]
+    },
+    {
+      "id": "R-100",
+      "title": "Desmos on the digital SAT",
+      "provider": "Desmos",
+      "url": "https://www.desmos.com/testing/digital-sat",
+      "type": "tool",
+      "cost": "free",
+      "description": "The exact calculator build the test uses, so practice matches test day.",
+      "tags": [
+        "sat",
+        "math",
+        "calculator",
+        "graphing",
+        "official"
+      ]
+    },
+    {
+      "id": "R-101",
+      "title": "Brief overview of punctuation",
+      "provider": "Purdue OWL",
+      "url": "https://owl.purdue.edu/owl/general_writing/punctuation/punctuation/index.html",
+      "type": "reference",
+      "cost": "free",
+      "description": "Commas, semicolons, colons and dashes, which is most of the writing section.",
+      "tags": [
+        "grammar",
+        "writing",
+        "punctuation",
+        "conventions"
+      ]
+    },
+    {
+      "id": "R-102",
+      "title": "Making subjects and verbs agree",
+      "provider": "Purdue OWL",
+      "url": "https://owl.purdue.edu/owl/general_writing/grammar/subject_verb_agreement.html",
+      "type": "reference",
+      "cost": "free",
+      "description": "The agreement rules the test leans on, including the tricky interrupting phrases.",
+      "tags": [
+        "grammar",
+        "writing",
+        "conventions",
+        "reference"
+      ]
+    },
+    {
+      "id": "R-103",
+      "title": "Sentence structure exercises",
+      "provider": "Purdue OWL",
+      "url": "https://owl.purdue.edu/owl_exercises/sentence_structure/index.html",
+      "type": "tool",
+      "cost": "free",
+      "description": "Self-marking exercises on fragments, run-ons, clauses and sentence variety.",
+      "tags": [
+        "grammar",
+        "writing",
+        "conventions",
+        "drill"
+      ]
+    },
+    {
+      "id": "R-104",
+      "title": "Complete SAT and ACT grammar rules",
+      "provider": "Erica L. Meltzer, The Critical Reader",
+      "url": "https://thecriticalreader.com/complete-sat-grammar-rules/",
+      "type": "reference",
+      "cost": "free",
+      "description": "Every rule the writing section tests, in one continuously updated page.",
+      "tags": [
+        "sat",
+        "writing",
+        "grammar",
+        "conventions",
+        "reference"
+      ]
+    },
+    {
+      "id": "R-105",
+      "title": "Adaptive SAT practice and diagnostics",
+      "provider": "Test Innovators",
+      "url": "https://testinnovators.com/sat",
+      "type": "course",
+      "cost": "free",
+      "description": "An adaptive test engine with targeted question sets; check what is free.",
+      "tags": [
+        "sat",
+        "practice-tests",
+        "digital",
+        "drill"
       ]
     }
   ]

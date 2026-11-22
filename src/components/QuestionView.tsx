@@ -30,11 +30,12 @@ export function QuestionView({
   showMeta = true,
   timeSpentSeconds,
   typicalSeconds,
+  beforeSubmit,
 }: {
   question: Question;
   index: number;
   /** Omit to show the position without advertising the size of the working set. */
-  total?: number;
+  total?: number | string;
   response: string | null;
   onResponseChange: (value: string) => void;
   eliminated?: string[];
@@ -51,6 +52,11 @@ export function QuestionView({
   timeSpentSeconds?: number;
   /** Comparable typical time for this section and difficulty, in seconds. */
   typicalSeconds?: number;
+  /**
+   * Rendered above Check answer. Custom practice uses it for the confidence
+   * pick; every other runner passes nothing and is unchanged.
+   */
+  beforeSubmit?: React.ReactNode;
 }) {
   const [showRationales, setShowRationales] = useState(false);
   const eliminatedSet = new Set(eliminated ?? []);
@@ -261,6 +267,7 @@ export function QuestionView({
 
       {!feedback && onSubmit ? (
         <div className="question-actions">
+          {beforeSubmit}
           <Button onClick={onSubmit} disabled={disabled || !response}>
             Check answer
           </Button>
@@ -275,7 +282,7 @@ export function QuestionView({
         <span>
           {question.domain} · {question.skill} · <code>{question.id}</code>
         </span>
-        <ReportQuestion questionId={question.id} />
+        <ReportQuestion key={question.id} questionId={question.id} />
       </footer>
     </article>
   );

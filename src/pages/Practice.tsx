@@ -1,10 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { MathText } from '../components/MathText';
 import { DesmosPane } from '../components/MathTools';
 import { ReferenceWindow } from '../components/ReferenceWindow';
 import { PaneSwitch, SplitWorkbench, useSplitPane } from '../components/SplitWorkbench';
 import { QuestionView, type Feedback } from '../components/QuestionView';
-import { Badge, Button, Card, EmptyState, InfoTip, MultiSelect, Select, Stat, Toggle } from '../components/ui';
+import {
+  Badge,
+  Button,
+  Card,
+  EmptyState,
+  Field,
+  Icon,
+  InfoTip,
+  MultiSelect,
+  Select,
+  Stat,
+  Toggle,
+} from '../components/ui';
 import { datasetLabel } from '../lib/catalog';
 import { buildPracticeSession, filterQuestions, formatClock } from '../lib/examEngine';
 import { poolReadiness } from '../lib/review';
@@ -12,6 +25,14 @@ import { clearPracticeSession, loadPracticeSession, savePracticeSession } from '
 import { newEventId } from '../lib/storage';
 import { typicalSeconds } from '../lib/timing';
 import { useApp } from '../lib/store';
+
+type Confidence = 'sure' | 'unsure' | 'guess';
+
+const CONFIDENCE_LABEL: Record<Confidence, string> = {
+  sure: 'Sure',
+  unsure: 'Unsure',
+  guess: 'Guess',
+};
 import type { Assessment, Difficulty, Question, Section } from '../lib/types';
 
 type TabMode = 'custom' | 'assistant';
@@ -21,20 +42,33 @@ export function PracticePage() {
   const [searchParams] = useSearchParams();
   const [tab, setTab] = useState<TabMode>('custom');
 
-  // Custom practice configuration
+  // Custom practice configuration. A recommended-session link carries its
+  // domain into this screen, so "drill Advanced Math" opens with Advanced Math
+  // already selected instead of asking the student to choose it again.
+  const domainParam = searchParams.get('domain')?.trim() ?? '';
+  const sectionParam = searchParams.get('section')?.trim() ?? '';
+  const countParam = Number.parseInt(searchParams.get('count') ?? '', 10);
+  const domainQuestion = domainParam
+    ? app.questions.find((q) => q.domain === domainParam)
+    : undefined;
+  const sectionFromUrl: Section | 'all' =
+    sectionParam === 'Math' || sectionParam === 'Reading and Writing'
+      ? sectionParam
+      : domainQuestion?.section ?? 'all';
   const [assessment, setAssessment] = useState<Assessment>(app.settings.assessment);
-  const [section, setSection] = useState<Section | 'all'>('all');
-  const [domains, setDomains] = useState<string[]>([]);
+  const [section, setSection] = useState<Section | 'all'>(sectionFromUrl);
+  const [domains, setDomains] = useState<string[]>(() =>
+    domainParam ? [domainParam] : []
+  );
   const [difficulties, setDifficulties] = useState<Difficulty[]>([]);
   const [sourceId, setSourceId] = useState<string>('all');
-  const [count, setCount] = useState<number>(10);
-  // "Other…" is a direct picker: the chosen items ARE the session, so it is the
-  // only length option that bypasses the count and the review schedule.
-  const [countOther, setCountOther] = useState<boolean>(false);
-  const [picked, setPicked] = useState<string[]>([]);
-  const [pickerDomain, setPickerDomain] = useState<string>('all');
-  const [pickerSkill, setPickerSkill] = useState<string>('all');
-  const [pickerDifficulty, setPickerDifficulty] = useState<Difficulty | 'all'>('all');
+  // How many items this session draws, typed directly. There is no preset menu:
+  // five fixed sizes never covered the session a student actually wanted.
+  const [count, setCount] = useState<number>(() =>
+    Number.isFinite(countParam) && countParam >= 1 && countParam <= 50
+      ? countParam
+      : 10
+  );
   const [onlyIncorrect, setOnlyIncorrect] = useState<boolean>(searchParams.get('mode') === 'incorrect');
   const [onlySaved, setOnlySaved] = useState<boolean>(searchParams.get('mode') === 'saved');
   const [excludeCorrect, setExcludeCorrect] = useState<boolean>(app.settings.excludePreviouslyCorrect);
@@ -50,15 +84,57 @@ export function PracticePage() {
   const [flagged, setFlagged] = useState<Record<string, boolean>>({});
   const [feedbackMap, setFeedbackMap] = useState<Record<string, Feedback>>({});
   const [sessionDone, setSessionDone] = useState<boolean>(false);
+  /**
+   * Custom practice only: how sure the student was before checking. It is a
+   * self-report kept for the session summary, not part of the attempt, so it
+   * cannot affect grading, mastery or a synced record.
+   */
+  const [confidence, setConfidence] = useState<Record<string, Confidence>>({});
   const [showCalc, setShowCalc] = useState<boolean>(false);
   const split = useSplitPane('hdsat.split.practice', { ratio: 46, minRatio: 30, maxRatio: 70 });
   const [showRef, setShowRef] = useState<boolean>(false);
   const [elapsedSeconds, setElapsedSeconds] = useState<number>(0);
   const [timings, setTimings] = useState<Record<string, number>>({});
   const [readyNotice, setReadyNotice] = useState<string | null>(null);
+
+  const resetCustomFilters = () => {
+    setAssessment(app.settings.assessment);
+    setSection('all');
+    setDomains([]);
+    setDifficulties([]);
+    setSourceId('all');
+    setOnlyIncorrect(false);
+    setOnlySaved(false);
+    setExcludeCorrect(false);
+    setExcludeReleased(false);
+  };
   const questionStartRef = useRef<number>(Date.now());
   const resumedRef = useRef(false);
   const wantsResume = searchParams.get('resume') === '1';
+
+  useEffect(() => {
+    if (!domainParam) {
+      setDomains([]);
+      return;
+    }
+    const match = app.questions.find((q) => q.domain === domainParam);
+    setDomains([domainParam]);
+    setSection(match?.section ?? 'all');
+  }, [domainParam, app.questions]);
+
+  useEffect(() => {
+    if (Number.isFinite(countParam) && countParam >= 1 && countParam <= 50) {
+      setCount(countParam);
+    }
+  }, [countParam]);
+
+  useEffect(() => {
+    if (domainParam) return;
+    if (sectionParam === 'Math' || sectionParam === 'Reading and Writing') {
+      setSection(sectionParam);
+      setDomains([]);
+    }
+  }, [domainParam, sectionParam]);
 
   const domainOptions = useMemo(() => {
     const set = new Set<string>();
@@ -102,30 +178,12 @@ export function PracticePage() {
     ]
   );
 
-  const pickerDomainOptions = useMemo(() => {
-    const set = new Set<string>();
-    matchingPool.forEach((q) => set.add(q.domain));
-    return Array.from(set);
-  }, [matchingPool]);
-
-  const pickerSkillOptions = useMemo(() => {
-    const set = new Set<string>();
-    matchingPool.forEach((q) => {
-      if (pickerDomain === 'all' || q.domain === pickerDomain) set.add(q.skill);
-    });
-    return Array.from(set);
-  }, [matchingPool, pickerDomain]);
-
-  const pickerMatches = useMemo(
-    () =>
-      matchingPool.filter(
-        (q) =>
-          (pickerDomain === 'all' || q.domain === pickerDomain) &&
-          (pickerSkill === 'all' || q.skill === pickerSkill) &&
-          (pickerDifficulty === 'all' || q.difficulty === pickerDifficulty)
-      ),
-    [matchingPool, pickerDomain, pickerSkill, pickerDifficulty]
-  );
+  /** The length this session will ask for, after clamping to what is ready. */
+  const [customMode, setCustomMode] = useState(false);
+  const [customLength, setCustomLength] = useState('');
+  const customCount = Number.parseInt(customLength, 10);
+  const customValid = Number.isFinite(customCount) && customCount >= 1;
+  const requestedCount = customMode ? (customValid ? customCount : 0) : count;
 
   // Practice may draw unseen items plus items whose review date has arrived.
   // Anything else waits, unless the student hand-picked the drill.
@@ -135,6 +193,8 @@ export function PracticePage() {
     [matchingPool, app.progress]
   );
   const readyCount = allowScheduled ? matchingPool.length : readiness.ready;
+  const showsWholeBank =
+    app.questions.length > 0 && matchingPool.length === app.questions.length;
 
   // Restore a session that survived a refresh or a closed tab.
   useEffect(() => {
@@ -210,43 +270,9 @@ export function PracticePage() {
 
   const startCustomSession = () => {
     const now = new Date();
-    if (countOther) {
-      const byId = new Map(app.questions.map((q) => [q.id, q]));
-      const pickedQuestions = picked
-        .map((id) => byId.get(id))
-        .filter((q): q is Question => Boolean(q));
-      if (pickedQuestions.length === 0) {
-        setReadyNotice('Pick at least one question, or choose a session length instead.');
-        return;
-      }
-      const sessionKey = newEventId();
-      setReadyNotice(null);
-      setSessionId(sessionKey);
-      setSessionQuestions(pickedQuestions);
-      setCurrentIndex(0);
-      setResponses({});
-      setEliminated({});
-      setFlagged({});
-      setFeedbackMap({});
-      setTimings({});
-      setSessionDone(false);
-      setElapsedSeconds(0);
-      questionStartRef.current = Date.now();
-      savePracticeSession({
-        version: 1,
-        sessionId: sessionKey,
-        questionIds: pickedQuestions.map((q) => q.id),
-        index: 0,
-        responses: {},
-        flagged: {},
-        feedback: {},
-        elapsedSeconds: 0,
-        assessment,
-        startedAt: now.toISOString(),
-        updatedAt: now.toISOString(),
-      });
-      return;
-    }
+    // A typed length goes through the same builder as a preset one; it is the
+    // number that differs, not the rules about unseen work and reviews.
+    const wanted = Math.max(1, Math.round(requestedCount || 1));
     const chosen = buildPracticeSession(
       app.questions,
       {
@@ -261,7 +287,7 @@ export function PracticePage() {
         excludeReleasedPracticeSet: excludeReleased,
       },
       {
-        count: Math.min(count, Math.max(1, readyCount)),
+        count: Math.min(wanted, Math.max(1, readyCount)),
         progress: app.progress,
         savedIds: app.saved,
         seed: `custom:${Date.now()}`,
@@ -283,6 +309,7 @@ export function PracticePage() {
     setFlagged({});
     setFeedbackMap({});
     setTimings({});
+    setConfidence({});
     setSessionDone(false);
     setElapsedSeconds(0);
     questionStartRef.current = Date.now();
@@ -436,7 +463,11 @@ export function PracticePage() {
         <Card>
           <div className="row-between">
             <h2>Custom Practice</h2>
-            <Badge tone="info">{matchingPool.length} matching items</Badge>
+            <Badge tone="info">
+              {showsWholeBank
+                ? `${app.questions.length.toLocaleString()} items`
+                : `${matchingPool.length.toLocaleString()} of ${app.questions.length.toLocaleString()} items`}
+            </Badge>
           </div>
 
           <div className="card-grid" style={{ marginTop: 12 }}>
@@ -491,27 +522,57 @@ export function PracticePage() {
                 ...app.sources.map((s) => ({ value: s.source_id, label: datasetLabel(s) })),
               ]}
             />
+            {/* Five quick sizes and an "Other…" that is an empty box: the
+                student types the number they want, nothing else. */}
             <Select
-              label="Session Length"
-              value={countOther ? 'other' : String(count)}
-              onChange={(v) => {
-                if (v === 'other') {
-                  setCountOther(true);
+              label="Session length"
+              value={customMode ? 'custom' : String(count)}
+              onChange={(value) => {
+                if (value === 'custom') {
+                  setCustomMode(true);
                   return;
                 }
-                setCountOther(false);
-                setCount(Number(v));
+                setCustomMode(false);
+                setCount(Number(value));
               }}
               options={[
+                // A deep link may request a count that is not one of the five
+                // presets. Keep that number visible and selected rather than
+                // silently letting the browser fall back to five.
+                ...[5, 10, 15, 22, 27].includes(count)
+                  ? []
+                  : [{ value: String(count), label: `${count} questions` }],
                 { value: '5', label: '5 questions' },
                 { value: '10', label: '10 questions' },
                 { value: '15', label: '15 questions' },
                 { value: '22', label: '22 questions' },
-                { value: '25', label: '25 questions' },
                 { value: '27', label: '27 questions' },
-                { value: 'other', label: 'Other…' },
+                { value: 'custom', label: 'Other…' },
               ]}
             />
+            {customMode ? (
+              <Field
+                label="How many questions?"
+                hint={`Enter a number from 1 to ${Math.max(1, readyCount)}.`}
+              >
+                <input
+                  type="number"
+                  inputMode="numeric"
+                  min={1}
+                  max={Math.max(1, readyCount)}
+                  placeholder="Enter a number"
+                  value={customLength}
+                  onChange={(e) => setCustomLength(e.target.value)}
+                  onBlur={() => {
+                    const parsed = Number.parseInt(customLength, 10);
+                    if (!Number.isFinite(parsed)) return;
+                    setCustomLength(
+                      String(Math.min(Math.max(1, parsed), Math.max(1, readyCount)))
+                    );
+                  }}
+                />
+              </Field>
+            ) : null}
           </div>
 
           <div className="grid-2" style={{ marginTop: 8 }}>
@@ -539,11 +600,7 @@ export function PracticePage() {
                 onChange={setOnlyIncorrect}
                 label="Incorrect-only drill"
               />
-              <Toggle
-                checked={onlySaved}
-                onChange={setOnlySaved}
-                label="Saved questions only"
-              />
+              <Toggle checked={onlySaved} onChange={setOnlySaved} label="Saved questions only" />
               <Toggle
                 checked={timedPerQuestion}
                 onChange={setTimedPerQuestion}
@@ -552,114 +609,33 @@ export function PracticePage() {
             </div>
           </div>
 
-          {countOther ? (
-            <div className="picker-block">
-              <div className="row-between">
-                <h3 style={{ margin: 0 }}>Pick questions</h3>
-                <Badge tone={picked.length > 0 ? 'good' : 'info'}>{picked.length} selected</Badge>
-              </div>
-              <div className="card-grid" style={{ marginTop: 10 }}>
-                <Select
-                  label="Domain"
-                  value={pickerDomain}
-                  onChange={(v) => {
-                    setPickerDomain(v);
-                    setPickerSkill('all');
-                  }}
-                  options={[
-                    { value: 'all', label: 'All domains' },
-                    ...pickerDomainOptions.map((d) => ({ value: d, label: d })),
-                  ]}
-                />
-                <Select
-                  label="Skill"
-                  value={pickerSkill}
-                  onChange={setPickerSkill}
-                  options={[
-                    { value: 'all', label: 'All skills' },
-                    ...pickerSkillOptions.map((s) => ({ value: s, label: s })),
-                  ]}
-                />
-                <Select
-                  label="Difficulty"
-                  value={pickerDifficulty}
-                  onChange={(v) => setPickerDifficulty(v as Difficulty | 'all')}
-                  options={[
-                    { value: 'all', label: 'Any difficulty' },
-                    { value: 'Easy', label: 'Easy' },
-                    { value: 'Medium', label: 'Medium' },
-                    { value: 'Hard', label: 'Hard' },
-                  ]}
-                />
-              </div>
-              <div className="row" style={{ marginTop: 10 }}>
-                <Button
-                  size="sm"
-                  variant="outline"
-                  onClick={() =>
-                    setPicked((prev) =>
-                      Array.from(new Set([...prev, ...pickerMatches.slice(0, 60).map((q) => q.id)]))
-                    )
-                  }
-                  disabled={pickerMatches.length === 0}
-                >
-                  Add all shown
-                </Button>
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  onClick={() => setPicked([])}
-                  disabled={picked.length === 0}
-                >
-                  Clear
-                </Button>
-                <span className="muted">
-                  {pickerMatches.length} shown{pickerMatches.length > 80 ? ' · first 80 listed' : ''}
-                </span>
-              </div>
-              <div className="picker-list">
-                {pickerMatches.slice(0, 80).map((q) => {
-                  const on = picked.includes(q.id);
-                  return (
-                    <label key={q.id} className={`picker-row${on ? ' is-picked' : ''}`}>
-                      <input
-                        type="checkbox"
-                        checked={on}
-                        onChange={() =>
-                          setPicked((prev) =>
-                            on ? prev.filter((id) => id !== q.id) : [...prev, q.id]
-                          )
-                        }
-                      />
-                      <span className="picker-meta">
-                        {q.section === 'Math' ? 'Math' : 'R&W'} · {q.difficulty}
-                      </span>
-                      <span className="picker-prompt">{q.prompt}</span>
-                    </label>
-                  );
-                })}
-              </div>
-            </div>
-          ) : null}
-
           <div className="row-between" style={{ marginTop: 14 }}>
             <span className="muted">
-              {countOther
-                ? `${picked.length} picked · ${pickerMatches.length} shown`
-                : matchingPool.length === 0
+              {matchingPool.length === 0
                 ? 'No questions match these filters yet.'
-                : `${Math.min(count, readyCount)} ready${
+                : `${Math.min(requestedCount, readyCount)} ready${
                     !allowScheduled && readiness.due > 0 ? ` · ${readiness.due} due for review` : ''
                   }`}
             </span>
             <Button
               icon="play"
               onClick={startCustomSession}
-              disabled={countOther ? picked.length === 0 : readyCount === 0}
+              disabled={readyCount === 0 || (customMode && !customValid)}
             >
               Start session
             </Button>
           </div>
+          {matchingPool.length === 0 ? (
+            <EmptyState
+              title="No questions match those filters"
+              body="Try a broader filter or a shorter session."
+              action={
+                <Button variant="outline" size="sm" onClick={resetCustomFilters}>
+                  Reset filters
+                </Button>
+              }
+            />
+          ) : null}
           {readyNotice ? (
             <p className="muted" style={{ margin: '8px 0 0' }}>
               {readyNotice}
@@ -694,8 +670,13 @@ export function PracticePage() {
                   <PaneSwitch side={split.side} onClick={split.toggleSide} />
                 </>
               ) : null}
-              <Button size="sm" variant="subtle" onClick={() => app.actions.toggleSaved(currentQuestion.id)}>
-                {app.saved.includes(currentQuestion.id) ? 'Saved ★' : 'Save ☆'}
+              <Button
+                size="sm"
+                variant="subtle"
+                icon="bookmark"
+                onClick={() => app.actions.toggleSaved(currentQuestion.id)}
+              >
+                {app.saved.includes(currentQuestion.id) ? 'Saved' : 'Save'}
               </Button>
               <Button size="sm" variant="danger" onClick={finishCustomSession}>
                 End session
@@ -789,6 +770,24 @@ export function PracticePage() {
                 }
               }}
               disabled={Boolean(feedbackMap[currentQuestion.id])}
+              beforeSubmit={
+                <div className="confidence-pick" role="group" aria-label="How sure are you?">
+                  <span className="confidence-label">Before you check</span>
+                  {(['sure', 'unsure', 'guess'] as const).map((level) => (
+                    <button
+                      key={level}
+                      type="button"
+                      className={`confidence-btn${(confidence[currentQuestion.id] ?? 'unsure') === level ? ' is-active' : ''}`}
+                      aria-pressed={(confidence[currentQuestion.id] ?? 'unsure') === level}
+                      onClick={() =>
+                        setConfidence((prev) => ({ ...prev, [currentQuestion.id]: level }))
+                      }
+                    >
+                      {CONFIDENCE_LABEL[level]}
+                    </button>
+                  ))}
+                </div>
+              }
             />
 
             <div className="row-between" style={{ marginTop: 14 }}>
@@ -849,32 +848,151 @@ export function PracticePage() {
             </div>
           </div>
 
-          <div className="card-grid" style={{ marginTop: 12 }}>
-            <Stat
-              label="Correct"
-              value={`${Object.values(feedbackMap).filter((f) => f.isCorrect).length} / ${sessionQuestions.length}`}
-            />
-            <Stat
-              label="Accuracy"
-              value={
-                Object.keys(feedbackMap).length > 0
-                  ? `${Math.round(
-                      (Object.values(feedbackMap).filter((f) => f.isCorrect).length /
-                        Object.keys(feedbackMap).length) *
-                        100
-                    )}%`
-                  : '0%'
-              }
-            />
-            <Stat label="Total Time" value={formatClock(elapsedSeconds)} />
-          </div>
+          {(() => {
+            const answered = Object.keys(feedbackMap);
+            const correct = answered.filter((id) => feedbackMap[id]?.isCorrect).length;
+            const missed = sessionQuestions.filter(
+              (q) => feedbackMap[q.id] && !feedbackMap[q.id].isCorrect
+            );
+            return (
+              <>
+                <div className="card-grid" style={{ marginTop: 12 }}>
+                  <Stat
+                    label="Correct"
+                    value={`${correct} / ${sessionQuestions.length}`}
+                    hint={`${answered.length} of ${sessionQuestions.length} answered`}
+                  />
+                  <Stat
+                    label="Accuracy"
+                    value={
+                      answered.length > 0 ? `${Math.round((correct / answered.length) * 100)}%` : '0%'
+                    }
+                    hint={answered.length > 0 ? `of ${answered.length} answered` : undefined}
+                  />
+                  <Stat label="Total Time" value={formatClock(elapsedSeconds)} />
+                </div>
+
+                {missed.length > 0 ? (
+                  <div className="calibration" style={{ marginTop: 12 }}>
+                    <div className="row-between">
+                      <strong>Items to review</strong>
+                      <span className="muted">{missed.length} missed</span>
+                    </div>
+                    <div className="stack" style={{ marginTop: 8 }}>
+                      {missed.map((q) => (
+                        <div key={q.id} className="muted-block">
+                          <div className="row" style={{ gap: 8 }}>
+                            <Badge tone="neutral">{q.section}</Badge>
+                            <span className="mono">{q.id}</span>
+                          </div>
+                          <p style={{ margin: '6px 0 0' }}>
+                            <MathText text={q.prompt} />
+                          </p>
+                          <p className="muted" style={{ margin: '4px 0 0' }}>
+                            Your answer: {responses[q.id] || '—'} · Key:{' '}
+                            {feedbackMap[q.id]?.correctAnswer || '—'}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                {sessionQuestions.some((q) => flagged[q.id]) ? (
+                  <div className="calibration review-flagged" style={{ marginTop: 12 }}>
+                    <div className="row-between">
+                      <strong>Flagged for review</strong>
+                      <span className="muted">
+                        {sessionQuestions.filter((q) => flagged[q.id]).length} flagged in this session
+                      </span>
+                    </div>
+                    <div className="stack" style={{ marginTop: 8 }}>
+                      {sessionQuestions.map((q, index) => {
+                        if (!flagged[q.id]) return null;
+                        const itemFeedback = feedbackMap[q.id];
+                        return (
+                          <div key={`flagged-${q.id}`} className="muted-block flagged-row">
+                            <div className="flagged-row-main">
+                              <div className="row" style={{ gap: 8 }}>
+                                <Badge tone="neutral">Item {index + 1}</Badge>
+                                <span className="flagged-status">
+                                  <Icon name="flag" size={12} />
+                                  {itemFeedback
+                                    ? itemFeedback.isCorrect
+                                      ? 'Correct'
+                                      : 'Incorrect'
+                                    : 'Unanswered'}
+                                </span>
+                              </div>
+                              <p style={{ margin: '6px 0 0' }}>
+                                <MathText text={q.prompt} />
+                              </p>
+                            </div>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => {
+                                setSessionDone(false);
+                                setCurrentIndex(index);
+                                setReadyNotice(`Reviewing flagged item ${index + 1}.`);
+                                window.scrollTo(0, 0);
+                              }}
+                            >
+                              Review item
+                            </Button>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                ) : null}
+              </>
+            );
+          })()}
+
+          {(() => {
+            const answered = Object.keys(feedbackMap);
+            if (answered.length === 0) return null;
+            const rows = (['sure', 'unsure', 'guess'] as const).map((level) => {
+              const ids = answered.filter((id) => (confidence[id] ?? 'unsure') === level);
+              return {
+                level,
+                count: ids.length,
+                right: ids.filter((id) => feedbackMap[id]?.isCorrect).length,
+              };
+            });
+            if (rows.every((row) => row.count === 0)) return null;
+            const sureWrong = rows[0].count - rows[0].right;
+            return (
+              <div className="calibration">
+                <div className="row-between">
+                  <strong>How your confidence landed</strong>
+                  <span className="muted">Self-report, not graded</span>
+                </div>
+                <div className="calibration-rows">
+                  {rows.map((row) => (
+                    <div key={row.level} className="calibration-row">
+                      <span>{CONFIDENCE_LABEL[row.level]}</span>
+                      <span className="muted">
+                        {row.count === 0 ? '—' : `${row.right} of ${row.count} right`}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+                <p className="muted" style={{ margin: '8px 0 0' }}>
+                  {sureWrong > 0
+                    ? `${sureWrong} item${sureWrong === 1 ? '' : 's'} felt certain and was wrong — those are the ones worth another look.`
+                    : 'Nothing you were sure of came back wrong this session.'}
+                </p>
+              </div>
+            );
+          })()}
         </Card>
       ) : null}
 
       {tab === 'assistant' ? (
         <Card>
           <h2>Study Coach</h2>
-          <p className="muted">Picks your next drill from your own history.</p>
 
           {studyCoachPlan.length === 0 ? (
             <EmptyState title="No domains found" body="Select an assessment to view domain diagnostics." />

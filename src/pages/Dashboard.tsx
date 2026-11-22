@@ -159,9 +159,6 @@ export function DashboardPage() {
                 simulations. Change your target assessment in Account Preferences.
               </InfoTip>
             </div>
-            <p className="muted">
-              Track your study streak, domain accuracy, and recent practice simulations.
-            </p>
           </div>
           <Badge tone="info">{app.settings.assessment}</Badge>
         </div>

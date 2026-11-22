@@ -29,7 +29,7 @@ DATA_DIR = ROOT_DIR / "src" / "data"
 
 # Compliance defaults surfaced by /api/legal so the published policies can be
 # audited from the running deployment without reading the bundle.
-LEGAL_VERSION = os.environ.get("HDSAT_LEGAL_VERSION", "1.3")
+LEGAL_VERSION = os.environ.get("HDSAT_LEGAL_VERSION", "1.4")
 MIN_AGE = 13
 APPEAL_SLA_HOURS = 72
 POLICY_PATHS = {
@@ -68,24 +68,40 @@ MAX_CONTENT_LENGTH = 1024 * 1024
 REDIRECT_EXEMPT_PATHS = frozenset({"/api/health"})
 
 # Sliding-window rate limiting state. Bounded so a hostile client cannot grow
-# the process by rotating addresses.
+# the process by rotating addresses. API and static traffic use separate
+# buckets: a page needs dozens of assets, an API call is cheap to flood.
 MAX_TRACKED_CLIENTS = 4096
 _RATE_BUCKETS: dict[str, list[float]] = {}
+_STATIC_BUCKETS: dict[str, list[float]] = {}
 
 
 def reset_rate_limits() -> None:
     """Clear limiter state. Used by tests and after a deploy-time restart."""
     _RATE_BUCKETS.clear()
+    _STATIC_BUCKETS.clear()
+
+
+# Parsed JSON keyed by (mtime, size). `/api/health` reads the 9 MB question
+# bank, and a flood of health checks should not turn into a flood of JSON
+# parses; the file is only re-read after a deploy changes it.
+_JSON_CACHE: dict[Path, tuple[int, int, Any]] = {}
 
 
 def _load_json(path: Path, default: Any) -> Any:
-    if not path.exists():
+    try:
+        stat = path.stat()
+    except OSError:
         return default
+    cached = _JSON_CACHE.get(path)
+    if cached is not None and cached[0] == stat.st_mtime_ns and cached[1] == stat.st_size:
+        return cached[2]
     try:
         with path.open("r", encoding="utf-8") as handle:
-            return json.load(handle)
+            data = json.load(handle)
     except Exception:
         return default
+    _JSON_CACHE[path] = (stat.st_mtime_ns, stat.st_size, data)
+    return data
 
 
 def _is_development() -> bool:
@@ -125,22 +141,46 @@ def _rate_limit_config() -> tuple[int, float]:
 
 
 def _client_ip() -> str:
+    """The closest address a proxy vouches for, never one a client typed.
+
+    PythonAnywhere terminates TLS in a proxy that appends the observed peer to
+    `X-Forwarded-For`. Reading the FIRST entry — as this used to — let anyone
+    send a fresh made-up address on every request and get a fresh rate-limit
+    bucket, which is a one-header bypass of the whole limiter. The LAST entry is
+    the hop the nearest proxy actually saw; earlier entries are whatever the
+    client claimed. `X-Real-IP`, when present, is set by the proxy the same way.
+    """
     forwarded = request.headers.get("X-Forwarded-For", "")
     if forwarded:
-        first = forwarded.split(",")[0].strip()
-        if first:
-            return first
+        hops = [hop.strip() for hop in forwarded.split(",") if hop.strip()]
+        if hops:
+            return hops[-1]
+    real_ip = request.headers.get("X-Real-IP", "").strip()
+    if real_ip:
+        return real_ip
     return request.remote_addr or "unknown"
 
 
-def _prune_buckets(cutoff: float) -> None:
-    """Keep the bucket map bounded by dropping expired, then oldest, clients."""
-    if len(_RATE_BUCKETS) <= MAX_TRACKED_CLIENTS:
+def _static_limit_config() -> tuple[int, float]:
+    try:
+        limit = int(os.environ.get("HDSAT_STATIC_LIMIT", "600"))
+    except (TypeError, ValueError):
+        limit = 600
+    try:
+        window = float(os.environ.get("HDSAT_STATIC_WINDOW", "60"))
+    except (TypeError, ValueError):
+        window = 60.0
+    return max(1, limit), max(1.0, window)
+
+
+def _prune_buckets(buckets: dict[str, list[float]], cutoff: float) -> None:
+    """Keep a bucket map bounded by dropping expired, then oldest, clients."""
+    if len(buckets) <= MAX_TRACKED_CLIENTS:
         return
-    for key in [k for k, stamps in _RATE_BUCKETS.items() if not stamps or stamps[-1] <= cutoff]:
-        _RATE_BUCKETS.pop(key, None)
-    while len(_RATE_BUCKETS) > MAX_TRACKED_CLIENTS:
-        _RATE_BUCKETS.pop(next(iter(_RATE_BUCKETS)), None)
+    for key in [k for k, stamps in buckets.items() if not stamps or stamps[-1] <= cutoff]:
+        buckets.pop(key, None)
+    while len(buckets) > MAX_TRACKED_CLIENTS:
+        buckets.pop(next(iter(buckets)), None)
 
 
 def create_app() -> Flask:
@@ -174,6 +214,31 @@ def create_app() -> Flask:
             return redirect(_https_url(), code=308)
 
         if not is_api:
+            # Static traffic gets its own, much larger allowance. Without it a
+            # script could saturate the worker with asset URLs while every one
+            # of its requests stayed under the API limiter.
+            if request.method in {"GET", "HEAD"}:
+                limit, window = _static_limit_config()
+                ip = _client_ip()
+                now = time.monotonic()
+                cutoff = now - window
+                stamps = [stamp for stamp in _STATIC_BUCKETS.get(ip, []) if stamp > cutoff]
+                if len(stamps) >= limit:
+                    retry_after = max(1, int(math.ceil(window - (now - stamps[0]))))
+                    _STATIC_BUCKETS[ip] = stamps
+                    response = jsonify(
+                        {
+                            "error": "rate_limited",
+                            "message": "Too many requests. Please slow down and try again shortly.",
+                            "retry_after_seconds": retry_after,
+                        }
+                    )
+                    response.status_code = 429
+                    response.headers["Retry-After"] = str(retry_after)
+                    return response
+                stamps.append(now)
+                _STATIC_BUCKETS[ip] = stamps
+                _prune_buckets(_STATIC_BUCKETS, cutoff)
             return None
 
         limit, window = _rate_limit_config()
@@ -200,13 +265,16 @@ def create_app() -> Flask:
 
         stamps.append(now)
         _RATE_BUCKETS[ip] = stamps
-        _prune_buckets(cutoff)
+        _prune_buckets(_RATE_BUCKETS, cutoff)
         return None
 
     @app.after_request
     def add_security_headers(response):
         response.headers.setdefault("Content-Security-Policy", CONTENT_SECURITY_POLICY)
         response.headers.setdefault("X-Content-Type-Options", "nosniff")
+        # The legacy XSS auditor added an execution primitive of its own and is
+        # off in every current browser; the CSP above is the real control.
+        response.headers.setdefault("X-XSS-Protection", "0")
         response.headers.setdefault("X-Frame-Options", "SAMEORIGIN")
         response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
         response.headers.setdefault(
@@ -228,6 +296,14 @@ def create_app() -> Flask:
                 used = len(_RATE_BUCKETS.get(_client_ip(), []))
                 response.headers["X-RateLimit-Limit"] = str(limit)
                 response.headers["X-RateLimit-Remaining"] = str(max(0, limit - used))
+        elif request.path.startswith("/assets/"):
+            # Vite emits content-hashed filenames, so this exact file can never
+            # change. Long-lived caching keeps the shell fast; a new deploy
+            # links a new hash.
+            response.headers.setdefault("Cache-Control", "public, max-age=31536000, immutable")
+        elif response.mimetype == "text/html":
+            # A cached shell is how a student keeps loading last week's build.
+            response.headers.setdefault("Cache-Control", "no-store")
         return response
 
     @app.errorhandler(413)
@@ -329,9 +405,16 @@ def create_app() -> Flask:
         if path.startswith("api/"):
             return jsonify({"error": "Not found", "path": f"/{path}"}), 404
 
-        candidate = DIST_DIR / path
-        if path and candidate.exists() and candidate.is_file():
-            return send_from_directory(str(DIST_DIR), path)
+        # Resolve inside dist/ explicitly. `send_from_directory` already refuses
+        # traversal, but the existence check above it must not be the thing that
+        # decides, so the resolved path is compared to the served root.
+        try:
+            root = DIST_DIR.resolve()
+            candidate = (DIST_DIR / path).resolve() if path else root
+        except (OSError, ValueError):
+            return jsonify({"error": "Not found"}), 404
+        if path and candidate.is_file() and root in candidate.parents:
+            return send_from_directory(str(root), str(candidate.relative_to(root)))
 
         index_file = DIST_DIR / "index.html"
         if index_file.exists():

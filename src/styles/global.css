@@ -98,7 +98,65 @@
 
 * { box-sizing: border-box; }
 
-html, body, #root { height: 100%; }
+/* ---------- scrollbars ---------- */
+/* One glass rail for every scroll surface: the page, long cards, the drawer and
+   the side panes. The thumb is mixed from the active theme accent, so it matches
+   a blue, sage, amber or plum theme instead of being a fixed purple. Browsers
+   without the WebKit pseudo-elements get the standard thin properties. */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.022);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 46%, transparent),
+    color-mix(in srgb, var(--accent) 30%, transparent)
+  );
+  background-clip: padding-box;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.45),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.35);
+}
+::-webkit-scrollbar-thumb:hover {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 66%, transparent),
+    color-mix(in srgb, var(--accent) 50%, transparent)
+  );
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:active {
+  background-image: linear-gradient(
+    180deg,
+    color-mix(in srgb, var(--accent) 80%, transparent),
+    color-mix(in srgb, var(--accent) 62%, transparent)
+  );
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--accent) 48%, transparent) rgba(255, 255, 255, 0.03);
+  }
+}
+
+/* The canvas follows the visual viewport. A plain 100% froze at the layout
+   viewport, which left a bare strip under a scrolled phone page while the
+   browser's toolbars were collapsing — the gradient stopped short of the
+   bottom of the screen. `min-height` only ever grows, so nothing can shrink. */
+html, body, #root { min-height: 100%; }
+body { min-height: 100dvh; }
+#root { min-height: 100dvh; }
 
 /* A route change only replaces the page inside the persistent shell. On
    ChromeOS the compositor can briefly paint a layer before the new route has
@@ -161,7 +219,7 @@ a { color: var(--accent); }
 code { font-family: var(--mono); background: var(--surface-2); padding: 1px 5px; border-radius: 5px; font-size: 0.85em; }
 
 /* ---------- shell ---------- */
-.app-shell { display: grid; grid-template-columns: 236px 1fr; min-height: 100%; background-color: var(--bg, #f6f8fb); }
+.app-shell { display: grid; grid-template-columns: 236px 1fr; min-height: 100vh; min-height: 100dvh; background-color: var(--bg, #f6f8fb); }
 .app-shell.is-sidebar-hidden { grid-template-columns: minmax(0, 1fr); }
 .app-shell.is-sidebar-hidden .sidebar { display: none; }
 .sidebar {
@@ -223,7 +281,8 @@ code { font-family: var(--mono); background: var(--surface-2); padding: 1px 5px;
 .pill .ui-icon { color: var(--accent); }
 .pill strong { color: var(--ink); }
 .content { padding: 22px; max-width: 1120px; width: 100%; background-color: var(--bg, #f6f8fb); }
-.mobile-nav { display: none; }
+/* The phone drawer is built for the phone layout only. */
+.drawer-layer { display: none; }
 
 /* The Dashboard's index of every section. Auto-fit means one row on a laptop,
    two columns on a phone, and no horizontal squeeze at 320px. */
@@ -862,16 +921,12 @@ canvas.plot { width: 100%; height: 260px; background: var(--surface); border: 1p
   .app-shell { grid-template-columns: 1fr; }
   .sidebar { display: none; }
   .sidebar-toggle { display: none; }
-  .content { padding: 16px 14px 76px; }
+  .mobile-menu-toggle { display: inline-flex; }
+  .content { padding: 16px 14px calc(28px + env(safe-area-inset-bottom, 0px)); }
   .calc-grid { grid-template-columns: 1fr; }
-  .mobile-nav {
-    display: flex; position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface);
-    border-top: 1px solid var(--line); z-index: 20; justify-content: space-around; padding: 6px 4px;
-  }
-  .mobile-link { font-size: 0.7rem; color: var(--muted); text-decoration: none; padding: 6px 4px; }
-  .mobile-link.is-active { color: var(--accent); font-weight: 700; }
+  .drawer-layer { display: block; }
   .questisticon, .question-source { font-size: 0.7rem; }
-  .legal-foot { padding-bottom: 84px; }
+  .legal-foot { padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* ==========================================================================
@@ -2557,48 +2612,135 @@ mark.bb-hl[data-has-note='true']::after {
   height: 24px;
 }
 
-/* Bottom tabs: comfortable icon/label rhythm, icons alone when tight. */
-.mobile-nav {
-  gap: 2px;
-  padding: 7px 8px calc(7px + env(safe-area-inset-bottom, 0px));
+/* ==========================================================================
+ * Phone navigation drawer — the desk sidebar, as a glass panel
+ * ========================================================================== */
+/* The phone's menu button only exists below the desk breakpoint. */
+.mobile-menu-toggle {
+  display: none;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  padding: 0;
 }
-.mobile-link {
-  flex: 1 1 0;
-  min-width: 0;
-  min-height: 46px;
+/* Declared after the base rule: the phone breakpoint lives earlier in this
+   file, and a later `display: none` would otherwise win at equal specificity. */
+@media (max-width: 900px) {
+  .mobile-menu-toggle { display: inline-flex; }
+}
+
+.drawer-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  visibility: hidden;
+  /* Hold the closing frame on screen, then take the whole layer out of the tab
+     order and the hit-test tree in one step. */
+  transition: visibility 0s linear 320ms;
+  pointer-events: none;
+}
+.drawer-layer.is-open {
+  visibility: visible;
+  transition-delay: 0s;
+  pointer-events: auto;
+}
+
+.drawer-scrim {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(6, 10, 16, 0.46);
+  -webkit-backdrop-filter: blur(7px);
+  backdrop-filter: blur(7px);
+  opacity: 0;
+  cursor: default;
+  transition: opacity 260ms ease;
+}
+.drawer-layer.is-open .drawer-scrim { opacity: 1; }
+
+.drawer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: min(302px, 84vw);
   display: flex;
   flex-direction: column;
+  gap: 16px;
+  padding: 18px 14px calc(20px + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  /* Two translucent layers, never an opaque one: the panel has to let the
+     blurred page through or the blur behind it does nothing. */
+  background:
+    linear-gradient(
+      168deg,
+      color-mix(in srgb, var(--accent) 14%, transparent),
+      transparent 58%
+    ),
+    color-mix(in srgb, var(--surface) 78%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(140%);
+  backdrop-filter: blur(22px) saturate(140%);
+  border-right: 1px solid var(--line);
+  border-radius: 0 20px 20px 0;
+  box-shadow: 0 26px 60px rgba(6, 12, 22, 0.34);
+  transform: translate3d(-102%, 0, 0);
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.drawer-layer.is-open .drawer { transform: translate3d(0, 0, 0); }
+
+.drawer-head {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 6px 4px;
-  line-height: 1.1;
-  font-size: 0.68rem;
-  letter-spacing: 0.01em;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 2px 4px 12px;
+  border-bottom: 1px solid var(--line);
 }
-.mobile-link .ui-icon { flex-shrink: 0; }
-.mobile-link span {
-  max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+.drawer-brand { min-width: 0; }
+.drawer-brand span { min-width: 0; }
+
+.drawer-close {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface-2);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 140ms ease, border-color 140ms ease, background 140ms ease;
 }
-.mobile-nav.is-icon-only .mobile-link span { display: none; }
-.mobile-nav.is-icon-only .mobile-link { padding: 13px 4px; gap: 0; }
-/* Eight tabs: the words stay, two lines deep, whenever a thumb-width is left. */
-.mobile-nav.is-compact .mobile-link {
-  gap: 3px;
-  padding: 5px 2px;
-  font-size: 0.55rem;
-  line-height: 1.05;
-  letter-spacing: 0;
+.drawer-close:hover {
+  color: var(--ink);
+  border-color: var(--accent);
 }
-.mobile-nav.is-compact .mobile-link span {
-  white-space: normal;
-  overflow: visible;
-  text-overflow: clip;
-  word-break: break-word;
-  text-align: center;
+
+.drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.drawer-nav .nav-link {
+  min-height: 46px;
+  padding: 10px 13px;
+  font-size: 0.95rem;
+  border-radius: 11px;
+}
+.drawer-nav .nav-link .ui-icon { width: 18px; height: 18px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer,
+  .drawer-scrim,
+  .drawer-layer { transition: none; }
 }
 
 /* ==========================================================================
@@ -4209,15 +4351,17 @@ explanation can never be clipped by the panel again. */
 .qotd-strip-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  flex-wrap: wrap;
+  gap: 0 8px;
   padding: 4px 10px 4px 12px;
 }
 .qotd-strip-main {
   display: flex;
   align-items: center;
   gap: 10px;
-  flex: 1;
+  flex: 1 1 260px;
   min-width: 0;
+  overflow: hidden;
   padding: 6px 2px;
   border: 0;
   background: none;
@@ -4226,7 +4370,16 @@ explanation can never be clipped by the panel again. */
   text-align: left;
   cursor: pointer;
 }
-.qotd-strip-main strong { font-size: 0.88rem; white-space: nowrap; }
+/* The title is the only part that may give way. Everything else keeps its
+   intrinsic width, so a narrow phone shrinks the words instead of letting the
+   row spill under the controls beside it. */
+.qotd-strip-main strong {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
 .qotd-strip-scope {
   min-width: 0;
   overflow: hidden;
@@ -4236,6 +4389,7 @@ explanation can never be clipped by the panel again. */
   color: var(--muted);
 }
 .qotd-strip-toggle {
+  flex-shrink: 0;
   margin-left: auto;
   font-size: 0.78rem;
   font-weight: 600;
@@ -4243,9 +4397,31 @@ explanation can never be clipped by the panel again. */
 }
 .qotd-strip-main:hover .qotd-strip-toggle { text-decoration: underline; }
 .qotd-strip-hide { font-size: 0.74rem; color: var(--muted); }
+.qotd-strip-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 12px;
+  margin-left: auto;
+}
 .qotd-strip-body { border-top: 1px solid var(--line); padding: 14px 16px 16px; }
 @media (max-width: 640px) {
   .qotd-strip-scope { display: none; }
+}
+/* Phone: the toggle keeps the first row, and "Daily quests" / "Hide" move to
+   their own row. On a 360px screen they used to sit on top of each other. */
+@media (max-width: 760px) {
+  .qotd-strip-row { padding: 4px 12px 9px; }
+  .qotd-strip-main { flex-basis: 100%; padding: 8px 0 7px; }
+  .qotd-strip-actions {
+    flex-basis: 100%;
+    margin-left: 0;
+    justify-content: flex-start;
+    gap: 16px;
+    padding-top: 7px;
+    border-top: 1px dashed var(--line);
+  }
+  .qotd-strip-hide { margin-left: auto; }
 }
 
 @media (max-width: 640px) {
@@ -5025,9 +5201,9 @@ explanation can never be clipped by the panel again. */
 .install-row .muted { margin: 0; }
 
 @supports (padding: max(0px)) {
-  .mobile-nav {
-    padding-left: max(8px, env(safe-area-inset-left));
-    padding-right: max(8px, env(safe-area-inset-right));
+  .drawer {
+    padding-top: max(18px, env(safe-area-inset-top));
+    padding-left: max(14px, env(safe-area-inset-left));
   }
   .game-shell.is-fullscreen,
   .game-shell:fullscreen {
@@ -5056,17 +5232,17 @@ explanation can never be clipped by the panel again. */
   .content {
     padding-left: max(14px, env(safe-area-inset-left));
     padding-right: max(14px, env(safe-area-inset-right));
-    padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+    padding-bottom: calc(28px + env(safe-area-inset-bottom, 0px));
   }
 }
 
 /* Touch: no grey flash on tap, no 300ms wait, and no double-tap zoom on a
    control that is meant to be pressed twice in a row (the vault's jump). */
-button, .btn, .nav-link, .mobile-link, .rush-option, .seg-btn, summary {
+button, .btn, .nav-link, .rush-option, .seg-btn, summary {
   -webkit-tap-highlight-color: transparent;
 }
 @media (hover: none) {
-  button, .btn, .nav-link, .mobile-link { touch-action: manipulation; }
+  button, .btn, .nav-link { touch-action: manipulation; }
 }
 
 /* A fingertip is not a cursor. The small controls keep their look and gain a
@@ -5338,31 +5514,11 @@ button, .btn, .nav-link, .mobile-link, .rush-option, .seg-btn, summary {
   }
   .content {
     padding: 16px max(14px, env(safe-area-inset-right))
-      calc(76px + env(safe-area-inset-bottom, 0px))
+      calc(28px + env(safe-area-inset-bottom, 0px))
       max(14px, env(safe-area-inset-left));
     margin-inline: auto;
   }
-  .mobile-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 20;
-    justify-content: space-around;
-    padding: 6px 4px calc(7px + env(safe-area-inset-bottom, 0px));
-    background: var(--surface);
-    border-top: 1px solid var(--line);
-  }
-  .mobile-link {
-    min-height: 46px;
-    padding: 6px 4px;
-    font-size: 0.68rem;
-    color: var(--muted);
-    text-decoration: none;
-  }
-  .mobile-link.is-active { color: var(--accent); font-weight: 700; }
-  .legal-foot { padding-bottom: calc(84px + env(safe-area-inset-bottom, 0px)); }
+  .legal-foot { padding-bottom: calc(24px + env(safe-area-inset-bottom, 0px)); }
 }
 
 /* ==========================================================================
@@ -6013,6 +6169,34 @@ button, .btn, .nav-link, .mobile-link, .rush-option, .seg-btn, summary {
 }
 
 .auth-consent-links a:hover { color: #ffffff; }
+
+/* The new-account screen's optional study preferences. Same panel language as
+   the consent box above it, so the second half of the form still reads as one
+   card rather than a second, unrelated dialog. */
+.auth-prefs {
+  min-width: 0;
+  margin: 2px 0 2px;
+  padding: 8px 11px 6px;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.auth-prefs legend {
+  padding: 0 4px;
+  color: rgba(238, 245, 255, 0.6);
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.02em;
+}
+
+.auth-backdrop .auth-card .auth-prefs .field-label {
+  color: rgba(238, 245, 255, 0.7);
+  font-size: 0.7rem;
+}
 
 .auth-switch {
   margin: 1px 0 0;

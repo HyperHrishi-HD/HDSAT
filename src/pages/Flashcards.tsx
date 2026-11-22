@@ -1,4 +1,5 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { Link, useSearchParams } from 'react-router-dom';
 import { MathText } from '../components/MathText';
 import { Badge, Button, Card, EmptyState, InfoTip, Select, Stat } from '../components/ui';
 import { isDue } from '../lib/sm2';
@@ -13,16 +14,41 @@ const DECKS: Record<DeckId, { label: string; blurb: string }> = {
   },
   math_formula: {
     label: 'Math Formulas & Identities',
-    blurb: 'SAT formulas, identities, geometry, trigonometry and statistics, rendered in KaTeX.'
+    blurb: 'SAT formulas, identities, geometry, trigonometry and statistics, rendered in KaTeX.',
   },
 };
 
+/** Domains that belong to the Math deck when a cross-link supplies only a domain. */
+const MATH_DOMAINS = new Set([
+  'Algebra',
+  'Advanced Math',
+  'Problem-Solving and Data Analysis',
+  'Geometry and Trigonometry',
+]);
+
 export function FlashcardsPage() {
   const app = useApp();
-  const [activeDeck, setActiveDeck] = useState<DeckId>('vocabulary');
+  const [searchParams] = useSearchParams();
+  const domainParam = searchParams.get('domain')?.trim() ?? '';
+  const sectionParam = searchParams.get('section')?.trim() ?? '';
+  const deckParam = searchParams.get('deck')?.trim() ?? '';
+  const initialDeck: DeckId =
+    deckParam === 'math_formula' || deckParam === 'vocabulary'
+      ? deckParam
+      : sectionParam === 'Math' || MATH_DOMAINS.has(domainParam)
+      ? 'math_formula'
+      : 'vocabulary';
+
+  const [activeDeck, setActiveDeck] = useState<DeckId>(initialDeck);
   const [queueMode, setQueueMode] = useState<'due' | 'all'>('due');
+  const [browseView, setBrowseView] = useState<'list' | 'study'>('list');
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   const [revealed, setRevealed] = useState<boolean>(false);
+  const [browseSearch, setBrowseSearch] = useState('');
+  // A fresh draw each time the deck or queue changes, and a manual reshuffle.
+  // The order has to survive grading a card, so it lives in a memo keyed by a
+  // seed rather than being drawn on every render.
+  const [shuffleSeed, setShuffleSeed] = useState(0);
 
   const cardsOfDeck = useMemo(
     () => app.flashcards.filter((card) => card.deck === activeDeck),
@@ -30,14 +56,39 @@ export function FlashcardsPage() {
   );
   const otherDeck: DeckId = activeDeck === 'vocabulary' ? 'math_formula' : 'vocabulary';
 
+  useEffect(() => {
+    setActiveDeck(initialDeck);
+    setCurrentIndex(0);
+    setRevealed(false);
+  }, [initialDeck]);
+
+  /** Fisher-Yates, so every card is equally likely to be first. */
+  const shuffledDeck = useMemo(() => {
+    const copy = [...cardsOfDeck];
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copy[i], copy[j]] = [copy[j], copy[i]];
+    }
+    return copy;
+  }, [cardsOfDeck, shuffleSeed]);
+
   const filteredCards = useMemo(() => {
-    return cardsOfDeck.filter((card) => {
+    return shuffledDeck.filter((card) => {
       if (queueMode === 'due') {
         return isDue(app.flashcardProgress[card.id]);
       }
       return true;
     });
-  }, [cardsOfDeck, app.flashcardProgress, queueMode]);
+  }, [shuffledDeck, app.flashcardProgress, queueMode]);
+
+  const browseCards = useMemo(() => {
+    const query = browseSearch.trim().toLowerCase();
+    if (!query) return filteredCards;
+    return filteredCards.filter((card) => {
+      const searchable = [card.front, card.back, ...(card.tags ?? [])].join(' ').toLowerCase();
+      return searchable.includes(query);
+    });
+  }, [filteredCards, browseSearch]);
 
   const currentCard = filteredCards[currentIndex] ?? filteredCards[0] ?? null;
 
@@ -56,15 +107,47 @@ export function FlashcardsPage() {
 
   const switchDeck = (deck: DeckId) => {
     setActiveDeck(deck);
+    setShuffleSeed((seed) => seed + 1);
     setCurrentIndex(0);
     setRevealed(false);
+    setBrowseSearch('');
+    if (queueMode === 'all') setBrowseView('list');
+  };
+
+  const reshuffle = () => {
+    setShuffleSeed((seed) => seed + 1);
+    setCurrentIndex(0);
+    setRevealed(false);
+  };
+
+  const openCard = (indexInFiltered: number) => {
+    setCurrentIndex(indexInFiltered);
+    setRevealed(false);
+    setBrowseView('study');
+    window.scrollTo(0, 0);
   };
 
   const handleGrade = async (quality: number) => {
     if (!currentCard) return;
     await app.actions.reviewFlashcard(currentCard.id, quality);
     setRevealed(false);
-    setCurrentIndex((i) => (i + 1 >= Math.max(1, filteredCards.length - 1) ? 0 : i));
+    // In the due queue the graded card usually leaves the list, so the next
+    // card slides into the same position; in Browse All the list is stable and
+    // the next one is one step ahead.
+    if (queueMode === 'due') {
+      setCurrentIndex(0);
+    } else {
+      setCurrentIndex((i) => (i + 1) % Math.max(1, filteredCards.length));
+    }
+  };
+
+  const toggleQueue = (value: 'due' | 'all') => {
+    setQueueMode(value);
+    setShuffleSeed((seed) => seed + 1);
+    setCurrentIndex(0);
+    setRevealed(false);
+    setBrowseSearch('');
+    setBrowseView(value === 'all' ? 'list' : 'study');
   };
 
   return (
@@ -98,20 +181,42 @@ export function FlashcardsPage() {
           </div>
         </div>
 
-        <div className="row" style={{ marginTop: 8 }}>
+        <div className="report-cross-links" aria-label="Study the same material another way">
+          <span className="muted">More ways to study:</span>
+          <Link to={domainParam ? `/practice?domain=${encodeURIComponent(domainParam)}&count=10` : '/practice'}>
+            Practice 10 questions
+          </Link>
+          <Link to={domainParam ? `/bank?domain=${encodeURIComponent(domainParam)}` : '/bank'}>
+            Open the question bank
+          </Link>
+          <Link to="/arcade">Skill mini-games</Link>
+        </div>
+
+        <div className="flashcard-toolbar">
           <Select
-            label="Study Queue"
+            label="Study queue"
             value={queueMode}
-            onChange={(v) => {
-              setQueueMode(v as 'due' | 'all');
-              setCurrentIndex(0);
-              setRevealed(false);
-            }}
+            onChange={(value) => toggleQueue(value as 'due' | 'all')}
             options={[
-              { value: 'due', label: 'Next' },
-              { value: 'all', label: 'Browse All' },
+              { value: 'due', label: 'Next due' },
+              { value: 'all', label: 'Browse all' },
             ]}
           />
+          {queueMode === 'all' ? (
+            <div className="field" style={{ marginBottom: 0 }}>
+              <span className="field-label">Find a card</span>
+              <input
+                type="search"
+                value={browseSearch}
+                onChange={(event) => setBrowseSearch(event.target.value)}
+                placeholder="Search this deck"
+                aria-label="Search all cards in this deck"
+              />
+            </div>
+          ) : null}
+          <Button variant="outline" size="sm" onClick={reshuffle} icon="refresh">
+            Shuffle
+          </Button>
         </div>
 
         <div className="card-grid" style={{ marginTop: 12 }}>
@@ -121,21 +226,66 @@ export function FlashcardsPage() {
         </div>
       </Card>
 
-      {!currentCard ? (
+      {queueMode === 'all' && browseView === 'list' ? (
+        <Card>
+          <div className="flashcard-index-head">
+            <div>
+              <h2 style={{ margin: 0 }}>All cards</h2>
+              <p className="muted" style={{ margin: '2px 0 0' }}>
+                {browseCards.length.toLocaleString()} of {filteredCards.length.toLocaleString()} cards
+                shown
+              </p>
+            </div>
+            <Badge tone="info">{DECKS[activeDeck].label}</Badge>
+          </div>
+
+          {browseCards.length === 0 ? (
+            <EmptyState
+              title="No cards match that search"
+              body="Try a shorter word or clear the search."
+              action={
+                <Button variant="outline" onClick={() => setBrowseSearch('')}>
+                  Clear search
+                </Button>
+              }
+            />
+          ) : (
+            <div className="flashcard-grid">
+              {browseCards.map((card) => {
+                const index = filteredCards.findIndex((item) => item.id === card.id);
+                const stage = app.flashcardProgress[card.id]?.stage ?? 'new';
+                return (
+                  <button
+                    key={card.id}
+                    type="button"
+                    className="flashcard-tile"
+                    onClick={() => openCard(Math.max(0, index))}
+                  >
+                    <strong>{card.front}</strong>
+                    <span>{card.tags?.slice(0, 2).join(' · ') || DECKS[activeDeck].label}</span>
+                    <div className="flashcard-tile-stage">
+                      <span>{stage}</span>
+                      <span>Open card</span>
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </Card>
+      ) : !currentCard ? (
         <Card>
           <EmptyState
-            title="Nothing next"
+            title="Nothing due right now"
             body={
               queueMode === 'due'
-                ? `Switch to Browse All to review ahead, or open the ${
-                    DECKS[otherDeck].label
-                  } deck.`
-                : 'This deck has no cards.'
+                ? `You are caught up on ${DECKS[activeDeck].label}. Browse all, or switch to ${DECKS[otherDeck].label}.`
+                : 'This deck has no cards yet.'
             }
             action={
               queueMode === 'due' ? (
-                <Button onClick={() => setQueueMode('all')} variant="outline">
-                  Browse All Cards
+                <Button onClick={() => toggleQueue('all')} variant="outline">
+                  Browse all cards
                 </Button>
               ) : undefined
             }
@@ -150,14 +300,23 @@ export function FlashcardsPage() {
                 <Badge key={t}>{t}</Badge>
               ))}
             </div>
-            <span className="muted">
-              Card {Math.min(currentIndex + 1, filteredCards.length).toLocaleString()} · Stage:{' '}
-              <strong>{app.flashcardProgress[currentCard.id]?.stage ?? 'new'}</strong>
-            </span>
+            <div className="row">
+              {queueMode === 'all' ? (
+                <Button variant="ghost" size="sm" onClick={() => setBrowseView('list')}>
+                  All cards
+                </Button>
+              ) : null}
+              <span className="muted">
+                Card {Math.min(currentIndex + 1, filteredCards.length).toLocaleString()} of{' '}
+                {filteredCards.length.toLocaleString()} · Stage:{' '}
+                <strong>{app.flashcardProgress[currentCard.id]?.stage ?? 'new'}</strong>
+              </span>
+            </div>
           </div>
 
           <div
-            className="flashcard"
+            key={currentCard.id}
+            className={`flashcard${revealed ? ' is-revealed' : ''}`}
             onClick={() => setRevealed((r) => !r)}
             style={{ cursor: 'pointer' }}
             role="button"

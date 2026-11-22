@@ -8,8 +8,132 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <meta name="theme-color" content="#1f5fd0" />
-    <meta name="color-scheme" content="light" />
+    <meta
+      id="theme-color-light"
+      name="theme-color"
+      content="#f6f8fb"
+      media="(prefers-color-scheme: light)"
+    />
+    <meta
+      id="theme-color-dark"
+      name="theme-color"
+      content="#0f1216"
+      media="(prefers-color-scheme: dark)"
+    />
+    <meta id="color-scheme-meta" name="color-scheme" content="light dark" />
+    <!-- Paint the stored appearance before the bundle loads, so a dark-mode
+         device never flashes a white page first. main.tsx re-applies the same
+         rule from src/lib/themeMode.ts once React takes over. -->
+    <style>
+      /* Painted by the parser, before any stylesheet arrives. Without this the
+         canvas is the browser's default white for a frame on every reload and
+         every return to the tab, which is exactly the flash that is unbearable
+         in dark mode.
+
+         The colour goes on <html>, <body> and #root: a browser restoring a
+         backgrounded tab may repaint any of those layers from its own snapshot
+         before the stylesheet is consulted, and a transparent one comes back
+         white. They are the same colour, so no seam shows at the edges. */
+      html,
+      body,
+      #prepaint,
+      #root { background-color: #f6f8fb; }
+      html[data-mode='dark'],
+      html[data-mode='dark'] body,
+      html[data-mode='dark'] #prepaint,
+      html[data-mode='dark'] #root { background-color: #0f1216; }
+      #prepaint { color: #f6f8fb; }
+      html[data-mode='dark'] #prepaint { color: #0f1216; }
+      /* Before the stored choice is read (a streamed head, a restored tab), the
+         device preference is the best guess. A dark phone therefore never gets
+         a white frame even before the inline script runs, and an explicit
+         Light choice still wins once data-mode='light' is set. */
+      @media (prefers-color-scheme: dark) {
+        html:not([data-mode='light']),
+        html:not([data-mode='light']) body,
+        html:not([data-mode='light']) #prepaint,
+        html:not([data-mode='light']) #root { background-color: #0f1216; }
+        html:not([data-mode='light']) #prepaint { color: #0f1216; }
+      }
+      /* Declaring the scheme here, not only from the script, tells the browser
+         how to paint its own canvas (form controls, scrollbars and the blank
+         frame a restored tab shows before the document commits). On a
+         Chromebook that is the difference between a dark frame and a white
+         one, and it is in effect from the first byte of the document. */
+      html { color-scheme: light; }
+      html[data-mode='dark'] { color-scheme: dark; }
+      @media (prefers-color-scheme: dark) {
+        html:not([data-mode='light']) { color-scheme: dark; }
+      }
+      body { margin: 0; }
+      #root { min-height: 100%; position: relative; z-index: 1; }
+      /* A dedicated opaque layer under React. ChromeOS restores a backgrounded
+         tab from a compositor snapshot before the stylesheet is guaranteed to
+         have painted; this layer gives it the correct colour even when #root
+         has not mounted yet. */
+      #prepaint {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        contain: strict;
+      }
+      /* A background alone is not a contentful paint. Chromium can therefore
+         keep its own white canvas until React has painted, which is the frame
+         a restored ChromeOS tab shows first. This one-pixel SVG is the same
+         colour as #prepaint, so it is invisible, but it is real image content:
+         it gives the browser a contentful frame immediately, before the bundle
+         or the React skeleton exists. */
+      #prepaint svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 1px;
+        height: 1px;
+      }
+      /* No elastic overscroll glow over the document. ChromeOS draws it in the
+         platform colour, which reads as a white flick at the edge of a dark
+         page. */
+      html, body { overscroll-behavior: none; }
+    </style>
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('hdsat.theme-mode.v1');
+          var mode = stored === 'light' || stored === 'dark' ? stored : 'system';
+          var dark =
+            mode === 'dark' ||
+            (mode === 'system' &&
+              typeof matchMedia === 'function' &&
+              matchMedia('(prefers-color-scheme: dark)').matches);
+          document.documentElement.setAttribute('data-mode', dark ? 'dark' : 'light');
+          document.documentElement.style.colorScheme = dark ? 'dark' : 'light';
+          // Also paint the document canvas directly. Some mobile browsers
+          // repaint from the compositor when a tab is restored, before the
+          // stylesheet is consulted; an inline colour keeps that frame dark.
+          document.documentElement.style.backgroundColor = dark ? '#0f1216' : '#f6f8fb';
+          if (document.body) document.body.style.backgroundColor = dark ? '#0f1216' : '#f6f8fb';
+          var scheme = document.getElementById('color-scheme-meta');
+          if (scheme) scheme.setAttribute('content', dark ? 'dark' : 'light');
+          // The stylesheet's `!important` token rule still wins once it loads,
+          // so an owned theme's tint paints over this neutral fallback.
+          var lightTheme = document.getElementById('theme-color-light');
+          var darkTheme = document.getElementById('theme-color-dark');
+          if (lightTheme) lightTheme.setAttribute('content', dark ? '#0f1216' : '#f6f8fb');
+          if (darkTheme) darkTheme.setAttribute('content', dark ? '#0f1216' : '#f6f8fb');
+          // An owned store theme is part of the first paint too, otherwise the
+          // app opens in HDSAT Blue and repaints a beat later.
+          var raw = localStorage.getItem('hdsat.profile.v1');
+          var theme = raw ? (JSON.parse(raw) || {}).settings || {} : {};
+          var owned = ['oxford-navy', 'forest-sage', 'warm-amber', 'plum-ink',
+            'slate-mono', 'teal-current', 'rose-quartz', 'royal-obsidian'];
+          if (owned.indexOf(theme.activeTheme) !== -1) {
+            document.documentElement.setAttribute('data-theme', theme.activeTheme);
+          }
+        } catch (e) {}
+      })();
+    </script>
     <meta name="format-detection" content="telephone=no" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
@@ -27,6 +151,11 @@
     <title>HDSAT</title>
   </head>
   <body>
+    <div id="prepaint" aria-hidden="true">
+      <svg width="1" height="1" viewBox="0 0 1 1" focusable="false" role="presentation">
+        <rect width="1" height="1" fill="currentColor" />
+      </svg>
+    </div>
     <div id="root"></div>
     <noscript>
       HDSAT needs JavaScript. Enable it in your browser settings and reload this

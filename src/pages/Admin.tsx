@@ -2,6 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Badge, Icon, type IconName } from '../components/ui';
 import * as cloud from '../lib/cloud';
+import { contentHealth } from '../lib/contentHealth';
 import { sha256Hex } from '../lib/sha256';
 import { useApp } from '../lib/store';
 
@@ -191,6 +192,13 @@ export function AdminPage() {
 
   const challengeRun = useRef(0);
   const liveToken = useRef('');
+
+  // This route is mounted outside <Layout>, so it does not inherit the shell's
+  // lazy-bank effect. Start the same load once the console is unlocked; the
+  // metrics below must never read an empty array as "0 questions".
+  useEffect(() => {
+    if (access === 'ok') app.actions.ensureBank();
+  }, [access, app.actions.ensureBank]);
 
   const reload = () => setReloadToken((token) => token + 1);
 
@@ -954,8 +962,14 @@ export function AdminPage() {
                       value={String(openAppeals)}
                       tone={openAppeals > 0 ? 'warn' : undefined}
                     />
-                    <Metric label="Questions" value={app.questions.length.toLocaleString()} />
-                    <Metric label="Flashcards" value={app.flashcards.length.toLocaleString()} />
+                    <Metric
+                      label="Questions"
+                      value={app.bankReady ? app.questions.length.toLocaleString() : '…'}
+                    />
+                    <Metric
+                      label="Flashcards"
+                      value={app.bankReady ? app.flashcards.length.toLocaleString() : '…'}
+                    />
                   </div>
 
                   <div className="adm-columns">
@@ -1376,27 +1390,35 @@ export function AdminPage() {
                       <ul className="adm-checks">
                         <li>
                           <span>Questions</span>
-                          <strong>{app.questions.length.toLocaleString()}</strong>
+                          <strong>
+                            {app.bankReady ? app.questions.length.toLocaleString() : 'Loading…'}
+                          </strong>
                         </li>
                         <li>
                           <span>Reading &amp; Writing</span>
                           <strong>
-                            {app.questions
-                              .filter((question) => question.section === 'Reading and Writing')
-                              .length.toLocaleString()}
+                            {app.bankReady
+                              ? app.questions
+                                  .filter((question) => question.section === 'Reading and Writing')
+                                  .length.toLocaleString()
+                              : '…'}
                           </strong>
                         </li>
                         <li>
                           <span>Math</span>
                           <strong>
-                            {app.questions
-                              .filter((question) => question.section === 'Math')
-                              .length.toLocaleString()}
+                            {app.bankReady
+                              ? app.questions
+                                  .filter((question) => question.section === 'Math')
+                                  .length.toLocaleString()
+                              : '…'}
                           </strong>
                         </li>
                         <li>
                           <span>Flashcards</span>
-                          <strong>{app.flashcards.length.toLocaleString()}</strong>
+                          <strong>
+                            {app.bankReady ? app.flashcards.length.toLocaleString() : 'Loading…'}
+                          </strong>
                         </li>
                       </ul>
                     </section>
@@ -1422,6 +1444,68 @@ export function AdminPage() {
                       </ul>
                     </section>
                   </div>
+
+                  {!app.bankReady ? (
+                    <section className="adm-card" style={{ marginTop: 14 }}>
+                      <p className="adm-dim" style={{ margin: 0 }}>
+                        Loading question bank and content health…
+                      </p>
+                    </section>
+                  ) : (() => {
+                    const health = contentHealth(app.questions);
+                    const rw = health.sections.find((entry) => entry.section === 'Reading and Writing');
+                    const math = health.sections.find((entry) => entry.section === 'Math');
+                    const defects =
+                      health.missingExplanation +
+                      health.missingKey +
+                      health.missingPrompt +
+                      health.multipleChoiceWithoutChoices;
+                    return (
+                      <section className="adm-card" style={{ marginTop: 14 }}>
+                        <div className="adm-card-head">
+                          <h2>Duplicates &amp; coverage</h2>
+                          <span className="adm-dim">
+                            {health.total.toLocaleString()} items · largest family{' '}
+                            {health.largestFamily}
+                          </span>
+                        </div>
+                        <ul className="adm-checks">
+                          <li>
+                            <span>Reading &amp; Writing / Math</span>
+                            <strong>
+                              {(rw?.count ?? 0).toLocaleString()} / {(math?.count ?? 0).toLocaleString()}
+                            </strong>
+                          </li>
+                          <li>
+                            <span>Section gap</span>
+                            <Badge tone={health.parityGap === 0 ? 'good' : 'warn'}>
+                              {health.parityGap === 0 ? 'Balanced' : `${health.parityGap} short`}
+                            </Badge>
+                          </li>
+                          <li>
+                            <span>Items in a shared family</span>
+                            <strong>
+                              {health.duplicateItems.toLocaleString()} across{' '}
+                              {health.duplicateFamilies.toLocaleString()} families
+                            </strong>
+                          </li>
+                          <li>
+                            <span>Incomplete items</span>
+                            <Badge tone={defects === 0 ? 'good' : 'warn'}>
+                              {defects === 0 ? 'None' : `${defects} to fix`}
+                            </Badge>
+                          </li>
+                          <li>
+                            <span>Figure / stimulus</span>
+                            <strong>
+                              {health.withFigure.toLocaleString()} /{' '}
+                              {health.withStimulus.toLocaleString()}
+                            </strong>
+                          </li>
+                        </ul>
+                      </section>
+                    );
+                  })()}
                 </>
               ) : null}
             </>

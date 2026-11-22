@@ -21,6 +21,7 @@ const markWelcomeSeen = vi.fn();
 const openAuthModal = vi.fn();
 
 vi.mock('../lib/storage', () => ({
+  hasStoredProfile: () => true,
   markEntered: () => markEntered(),
   markWelcomeSeen: () => markWelcomeSeen(),
 }));
@@ -30,6 +31,7 @@ vi.mock('../lib/store', () => ({
 }));
 
 const { WelcomePage } = await import('./Welcome');
+const { App } = await import('../App');
 const { MOTTOS, nextMotto } = await import('../lib/motto');
 
 type MinimalApp = Record<string, unknown>;
@@ -40,6 +42,7 @@ let root: Root;
 
 beforeEach(() => {
   appState = {
+    ready: true,
     user: null,
     cloudConfigured: true,
     authModalOpen: false,
@@ -50,6 +53,7 @@ beforeEach(() => {
   markWelcomeSeen.mockClear();
   openAuthModal.mockClear();
   window.localStorage.clear();
+  window.location.hash = '';
   container = document.createElement('div');
   document.body.appendChild(container);
   root = createRoot(container);
@@ -139,7 +143,23 @@ describe('starting homepage', () => {
     };
     render();
     expect(container.textContent).toContain('Start now');
+    expect(container.textContent).toContain('Back to app');
+    expect(button('Sign in')).toBeUndefined();
     expect(container.textContent).not.toContain('app shell');
+  });
+
+  it('does not redirect a signed-in /welcome route to the dashboard', () => {
+    appState = {
+      ...appState,
+      user: { id: 'u1', email: 'student@example.com', displayName: 'Hrishi' },
+    };
+    window.location.hash = '#/welcome';
+
+    act(() => root.render(<App />));
+
+    expect(container.textContent).toContain('Practice the way');
+    expect(container.textContent).toContain('Back to app');
+    expect(container.querySelector('.app-shell')).toBeNull();
   });
 
   it('enters the app when a visitor signs in from here', () => {

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthModal } from '../components/AuthModal';
 import { BrandMark } from '../components/BrandMark';
+import { WelcomeCarousel } from '../components/WelcomeCarousel';
 import {
   COPYRIGHT_PATH,
   CREATOR_NAME,
@@ -60,13 +61,19 @@ export function WelcomePage() {
           <BrandMark size={34} title="HDSAT" />
           <strong>HDSAT</strong>
         </span>
-        <button
-          type="button"
-          className="btn btn-outline btn-sm"
-          onClick={() => app.actions.openAuthModal('signin')}
-        >
-          Sign in
-        </button>
+        {app.user ? (
+          <Link to="/" className="btn btn-outline btn-sm">
+            Back to app
+          </Link>
+        ) : (
+          <button
+            type="button"
+            className="btn btn-outline btn-sm"
+            onClick={() => app.actions.openAuthModal('signin')}
+          >
+            Sign in
+          </button>
+        )}
       </header>
 
       <main className="welcome-hero">
@@ -105,6 +112,8 @@ export function WelcomePage() {
             I have an account
           </button>
         </div>
+
+        <WelcomeCarousel />
 
         <p className="welcome-motto" key={motto}>
           <span aria-hidden="true">“</span>

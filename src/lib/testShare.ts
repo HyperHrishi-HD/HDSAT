@@ -1,3 +1,4 @@
+import { todayKey } from './storage';
 import type { TestAttempt } from './types';
 
 /**
@@ -60,7 +61,7 @@ export function buildSharedSummary(attempt: TestAttempt): SharedTestSummary {
   return {
     version: SHARE_VERSION,
     assessment: ASSESSMENTS.includes(attempt.assessment) ? attempt.assessment : 'SAT',
-    date: attempt.createdAt.slice(0, 10),
+    date: todayKey(new Date(attempt.createdAt)),
     rw: optionalScore(attempt.rwEstimate, 200, 800),
     math: optionalScore(attempt.mathEstimate, 200, 800),
     total: optionalScore(attempt.totalEstimate, 400, 1600),

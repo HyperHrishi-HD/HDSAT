@@ -4,7 +4,7 @@ import { FloatingToolWindow } from '../components/FloatingToolWindow';
 import { DesmosFrame } from '../components/MathTools';
 import { ReferenceWindow } from '../components/ReferenceWindow';
 import { QuestionView, type Feedback } from '../components/QuestionView';
-import { Badge, Button, Card, EmptyState, Field, InfoTip, Select, Toggle } from '../components/ui';
+import { Badge, Button, Card, EmptyState, Field, Icon, InfoTip, Select, Toggle } from '../components/ui';
 import { datasetLabel } from '../lib/catalog';
 import { filterQuestions, templateMasteryIds } from '../lib/examEngine';
 import { useApp } from '../lib/store';
@@ -12,18 +12,27 @@ import type { Assessment, Difficulty, Question, Section } from '../lib/types';
 
 export function QuestionBankPage() {
   const app = useApp();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const requestedDomain = searchParams.get('domain')?.trim() ?? '';
+  const requestedSection = searchParams.get('section')?.trim() ?? '';
+  const initialSection: Section | 'all' =
+    requestedSection === 'Math' || requestedSection === 'Reading and Writing'
+      ? requestedSection
+      : 'all';
   const [assessment, setAssessment] = useState<string>('all');
-  const [section, setSection] = useState<Section | 'all'>('all');
-  const [domain, setDomain] = useState<string>('all');
+  const [section, setSection] = useState<Section | 'all'>(initialSection);
+  const [domain, setDomain] = useState<string>(requestedDomain || 'all');
   const [difficulty, setDifficulty] = useState<Difficulty | 'all'>('all');
   const [sourceId, setSourceId] = useState<string>('all');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [search, setSearch] = useState<string>('');
-  const [onlySaved, setOnlySaved] = useState<boolean>(searchParams.get('saved') === '1');
+  const savedParam = searchParams.get('saved');
+  const [onlySaved, setOnlySaved] = useState<boolean>(savedParam === '1');
   const [excludeReleased, setExcludeReleased] = useState<boolean>(app.settings.excludeReleasedPracticeSet);
-  const [excludeCorrect, setExcludeCorrect] = useState<boolean>(false);
+  const [excludeCorrect, setExcludeCorrect] = useState<boolean>(
+    app.settings.excludePreviouslyCorrect
+  );
 
   const [selectedQuestionId, setSelectedQuestionId] = useState<string | null>(null);
   const [showCalc, setShowCalc] = useState<boolean>(false);
@@ -36,6 +45,48 @@ export function QuestionBankPage() {
   // made this page stall, so rows are revealed in pages instead.
   const PAGE_SIZE = 60;
   const [visibleCount, setVisibleCount] = useState<number>(PAGE_SIZE);
+
+  // Keep the URL in step with the switch, so a refresh or a copied link shows
+  // the same view instead of restoring a stale saved-only filter.
+  const applySavedOnly = (next: boolean) => {
+    setOnlySaved(next);
+    setSearchParams(
+      (prev) => {
+        const params = new URLSearchParams(prev);
+        if (next) params.set('saved', '1');
+        else params.delete('saved');
+        return params;
+      },
+      { replace: true }
+    );
+  };
+
+  // The Dashboard's "View saved" link lands here with ?saved=1. Reading it once
+  // at mount is not enough when the query changes without a remount, so keep the
+  // toggle in step with the link. Manual changes go through applySavedOnly.
+  useEffect(() => {
+    setOnlySaved(savedParam === '1');
+  }, [savedParam]);
+
+  useEffect(() => {
+    if (!requestedDomain) {
+      setDomain('all');
+      return;
+    }
+    const match = app.questions.find((q) => q.domain === requestedDomain);
+    setDomain(requestedDomain);
+    if (match) setSection(match.section);
+  }, [requestedDomain, app.questions]);
+
+  useEffect(() => {
+    if (requestedDomain) return;
+    if (requestedSection === 'Math' || requestedSection === 'Reading and Writing') {
+      setSection(requestedSection);
+      setDomain('all');
+      return;
+    }
+    if (!requestedSection) setSection('all');
+  }, [requestedDomain, requestedSection]);
 
   const domains = useMemo(() => {
     const s = new Set<string>();
@@ -112,7 +163,10 @@ export function QuestionBankPage() {
     statusFilter !== 'all' ||
     search.trim() !== '' ||
     onlySaved ||
-    excludeCorrect;
+    excludeCorrect ||
+    excludeReleased;
+  const showsWholeBank =
+    app.questions.length > 0 && filteredQuestions.length === app.questions.length;
 
   // A new filter starts a fresh page of results.
   useEffect(() => {
@@ -186,7 +240,11 @@ export function QuestionBankPage() {
             </InfoTip>
           </div>
           <Badge tone="info">
-            {hasFilters ? `${filteredQuestions.length} matching` : `${app.questions.length} items`}
+            {showsWholeBank
+              ? `${app.questions.length.toLocaleString()} items`
+              : hasFilters
+              ? `${filteredQuestions.length.toLocaleString()} of ${app.questions.length.toLocaleString()} items`
+              : `${filteredQuestions.length.toLocaleString()} items`}
           </Badge>
         </div>
 
@@ -270,7 +328,7 @@ export function QuestionBankPage() {
         <div className="row" style={{ gap: 20 }}>
           <Toggle
             checked={onlySaved}
-            onChange={setOnlySaved}
+            onChange={applySavedOnly}
             label="Saved only"
           />
           <Toggle
@@ -289,26 +347,36 @@ export function QuestionBankPage() {
       {filteredQuestions.length === 0 ? (
         <Card>
           <EmptyState
-            title="No matching questions"
-            body="Adjust your search query or filters to view items in the HDSAT Question Bank."
+            title={onlySaved ? 'No saved questions yet' : 'No matching questions'}
+            body={
+              onlySaved
+                ? 'The Saved only switch is on. Use Bookmark on any question and it appears here.'
+                : 'Adjust your search query or filters to view items in the HDSAT Question Bank.'
+            }
             action={
-              <Button
-                variant="outline"
-                onClick={() => {
-                  setAssessment('all');
-                  setSection('all');
-                  setDomain('all');
-                  setDifficulty('all');
-                  setSourceId('all');
-                  setStatusFilter('all');
-                  setSearch('');
-                  setOnlySaved(false);
-                  setExcludeCorrect(false);
-                  setExcludeReleased(false);
-                }}
-              >
-                Reset all filters
-              </Button>
+              onlySaved ? (
+                <Button variant="outline" onClick={() => applySavedOnly(false)}>
+                  Show all questions
+                </Button>
+              ) : (
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setAssessment('all');
+                    setSection('all');
+                    setDomain('all');
+                    setDifficulty('all');
+                    setSourceId('all');
+                    setStatusFilter('all');
+                    setSearch('');
+                    applySavedOnly(false);
+                    setExcludeCorrect(false);
+                    setExcludeReleased(false);
+                  }}
+                >
+                  Reset all filters
+                </Button>
+              )
             }
           />
         </Card>
@@ -341,7 +409,8 @@ export function QuestionBankPage() {
                         onClick={() => setSelectedQuestionId(q.id)}
                       >
                         <td className="mono">
-                          <strong>{q.id}</strong> {isSaved ? '★' : ''}
+                          <strong>{q.id}</strong>{' '}
+                          {isSaved ? <Icon name="bookmark" size={11} /> : null}
                         </td>
                         <td>
                           <div>{q.domain}</div>
@@ -415,9 +484,10 @@ export function QuestionBankPage() {
                     <Button
                       size="sm"
                       variant="outline"
+                      icon="bookmark"
                       onClick={() => app.actions.toggleSaved(activeQuestion.id)}
                     >
-                      {app.saved.includes(activeQuestion.id) ? 'Saved ★' : 'Bookmark ☆'}
+                      {app.saved.includes(activeQuestion.id) ? 'Saved' : 'Bookmark'}
                     </Button>
                     {feedbackMap[activeQuestion.id] ? (
                       <Button
@@ -465,7 +535,7 @@ export function QuestionBankPage() {
                 <QuestionView
                   question={activeQuestion}
                   index={filteredQuestions.findIndex((q) => q.id === activeQuestion.id)}
-                  total={hasFilters ? filteredQuestions.length : undefined}
+                  total={filteredQuestions.length}
                   response={responses[activeQuestion.id] ?? null}
                   onResponseChange={(val) =>
                     setResponses((prev) => ({

@@ -25,7 +25,8 @@ declare global {
   var IS_REACT_ACT_ENVIRONMENT: boolean | undefined;
 }
 globalThis.IS_REACT_ACT_ENVIRONMENT = true;
-import { StimulusView } from './FigureView';
+import { FigureView, StimulusView } from './FigureView';
+import type { Question } from '../lib/types';
 
 const NOTES_A = [
   'While researching bioluminescent dinoflagellate defense mechanisms (study note set 8), a student has taken the following notes:',
@@ -44,10 +45,33 @@ const NOTES_B = [
   '• Converting the central corridor reduced cross-city commute times by 42% within the first year of operation.',
 ].join('\n');
 
+const FIGURE_QUESTION = {
+  figure_metadata: {
+    type: 'coordinate_plane',
+    caption: 'A line passes through the origin.',
+    x_label: 'x',
+    y_label: 'y',
+    points: [{ x: 1, y: 2, label: 'P' }],
+  },
+  stimulus: 'The graph shows point P on a coordinate plane.',
+} as unknown as Question;
+
 type Controls = {
   setQuestion: (key: string, stimulus: string) => void;
   records: Record<string, HighlightRecord[]>;
 };
+
+function FigureHarness() {
+  const [records, setRecords] = useState<HighlightRecord[]>([]);
+  return (
+    <HighlightableStimulus questionKey="figure-q" records={records} onChange={setRecords}>
+      <FigureView question={FIGURE_QUESTION} />
+      <div className="bb-stimulus-text">
+        <StimulusView stimulus="The graph shows point P on a coordinate plane." />
+      </div>
+    </HighlightableStimulus>
+  );
+}
 
 function Harness({ controls }: { controls: Controls }) {
   const [question, setQuestion] = useState({ key: 'q1', stimulus: NOTES_A });
@@ -96,6 +120,37 @@ function selectAcrossBullets(startIndex: number, startChars: number, endIndex: n
   selection.addRange(range);
   act(() => {
     items[startIndex].dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+  });
+}
+
+function selectNode(node: Node) {
+  const range = document.createRange();
+  range.selectNodeContents(node);
+  const selection = window.getSelection()!;
+  selection.removeAllRanges();
+  selection.addRange(range);
+  const target = node.nodeType === Node.ELEMENT_NODE ? (node as Element) : node.parentElement;
+  act(() => {
+    target?.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+  });
+}
+
+function selectAcrossNodes(start: Node, end: Node) {
+  const range = document.createRange();
+  range.setStart(start, 0);
+  range.setEnd(end, Math.min(8, end.textContent?.length ?? 0));
+  const selection = window.getSelection()!;
+  selection.removeAllRanges();
+  selection.addRange(range);
+  const target = start.nodeType === Node.ELEMENT_NODE ? (start as Element) : start.parentElement;
+  act(() => {
+    target?.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+  });
+}
+
+function renderFigure() {
+  act(() => {
+    root.render(<FigureHarness />);
   });
 }
 
@@ -199,5 +254,58 @@ describe('highlighting across bulleted notes', () => {
     expect(marks()).toHaveLength(0);
     expect(listItems()).toEqual(pristine);
     expect(controls.records.q1 ?? []).not.toContainEqual(expect.objectContaining({ id }));
+  });
+});
+
+describe('highlighting figures', () => {
+  it('does not wrap SVG labels in an HTML mark', () => {
+    renderFigure();
+    const label = surface().querySelector('svg text') as SVGTextElement;
+    const before = label.textContent;
+
+    selectNode(label.firstChild!);
+
+    expect(document.querySelector('.hl-toolbar')).toBeNull();
+    expect(surface().querySelector('svg mark')).toBeNull();
+    expect(label.textContent).toBe(before);
+  });
+
+  it('rejects a selection that crosses from the chart into the text', () => {
+    renderFigure();
+    const label = surface().querySelector('svg text')!;
+    const paragraph = surface().querySelector('.bb-stimulus-text p')!;
+
+    selectAcrossNodes(label.firstChild!, firstTextNode(paragraph));
+
+    expect(document.querySelector('.hl-toolbar')).toBeNull();
+    expect(surface().querySelector('svg mark')).toBeNull();
+    expect(label.textContent).not.toBe('');
+  });
+
+  it('highlights the text below the chart without touching the chart', () => {
+    renderFigure();
+    const label = surface().querySelector('svg text')!;
+    const before = label.textContent;
+    const paragraph = surface().querySelector('.bb-stimulus-text p')!;
+
+    selectNode(paragraph);
+    expect(document.querySelector('.hl-toolbar')).not.toBeNull();
+    click('.hl-swatch-yellow');
+
+    expect(paragraph.querySelector('mark.bb-hl')).not.toBeNull();
+    expect(surface().querySelector('svg mark')).toBeNull();
+    expect(label.textContent).toBe(before);
+  });
+
+  it('shows one close button in the note editor', () => {
+    renderFigure();
+    const paragraph = surface().querySelector('.bb-stimulus-text p')!;
+
+    selectNode(paragraph);
+    click('.hl-note-btn');
+
+    expect(document.querySelector('.hl-note-editor')).not.toBeNull();
+    expect(document.querySelectorAll('.hl-note-head button')).toHaveLength(1);
+    expect(document.querySelector('.hl-note-head button')?.getAttribute('aria-label')).toBe('Close note');
   });
 });

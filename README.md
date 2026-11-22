@@ -15,8 +15,8 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
 - **HDCoins Economy, Streaks & Achievements:** Duplicate-resistant, anti-farming reward ledger enforced identically in local Guest Mode and Supabase SECURITY DEFINER RPCs, with a lifetime-earned total that purchases never reduce.
 - **Leaderboard:** a compact Dashboard card with the five students holding the most HDCoins. It returns a display name, coin balance, best streak and attempt count only — never an email, an id or any answer — and only a signed-in student can call it. An address used as a display name is replaced with "Student" inside Postgres.
 - **Guest Mode & Cloud Sync:** Full local persistence (`localStorage` key `hdsat.profile.v1`) with idempotent replay into a signed-in Supabase account.
-- **Accounts usable before the email is confirmed:** sign-up issues a session immediately, so a mail-provider quota can never lock a student out. An address that has not entered its emailed 6-digit code is a **light account** (the email carries both a link and a 6-digit code, both valid for 24 hours): progress, coins, streaks, flashcards and test scores sync, while the two per-answer ledgers (`question_attempts` payload, `test_responses`) are trimmed in Postgres. A confirm strip never appears in the timed runner, and the 300/day Brevo budget stops at 280 with a plain "come back tomorrow" message.
-- **Starting homepage:** a full-page hero shown only before this browser has any profile and no account is signed in; one click enters the app for good. A different original motto rotates on every visit, the brand mark carries a slow glow, and two drifting light pools sit behind the content (all motion stops for `prefers-reduced-motion`). Credits links back to it.
+- **Accounts usable before the email is confirmed:** sign-up issues a session immediately, so a mail-provider quota can never lock a student out. An address that has not entered its emailed 6-digit code is a **light account** (the email carries both a link and a 6-digit code, both valid for 12 hours): progress, coins, streaks, flashcards and test scores sync, while the two per-answer ledgers (`question_attempts` payload, `test_responses`) are trimmed in Postgres. A confirm strip never appears in the timed runner, and the 300/day Brevo budget stops at 280 with a plain "come back tomorrow" message.
+- **Starting homepage:** a full-page hero shown only before this browser has any profile and no account is signed in; one click enters the app for good. A different original motto rotates on every visit, a flat product preview shows the study desk, and all decorative motion respects `prefers-reduced-motion`. Credits links back to it.
 
 ---
 
@@ -42,9 +42,9 @@ HDSAT is a minimalist, responsive digital SAT and PSAT preparation application s
 │   │   ├── QuestionView.tsx    # Digital testing question view (stimulus, tables, MC cross-out, SPR)
 │   │   └── ui.tsx              # Minimalist UI primitives
 │   ├── data/
-│   │   ├── questionBank.json   # Generated verified question bank (7,290 items)
-│   │   ├── flashcards.json     # Generated SM-2 study deck (46 cards)
-│   │   └── resources.json      # Curated study resource library (18 verified links)
+│   │   ├── questionBank.json   # Generated verified question bank (7,132 items)
+│   │   ├── flashcards.json     # Generated SM-2 study deck (1,804 cards)
+│   │   └── resources.json      # Curated study resource library (105 verified links)
 │   ├── lib/
 │   │   ├── catalog.ts          # Achievements & HDCoins store catalog
 │   │   ├── cloud.ts            # Supabase Auth, snapshot loader, RPC wrappers, idempotent guest sync
@@ -146,6 +146,7 @@ Target project: `qijfmwjcaminecxmbtcf` (`https://supabase.com/dashboard/project/
 1. Open the **Supabase SQL Editor** for project `qijfmwjcaminecxmbtcf` (or use `supabase db push`).
 2. Run `supabase/migrations/20261014000100_init_hdsat_schema.sql` to create all 16 tables, Row Level Security (RLS) policies, `on_auth_user_created` profile/stats triggers, and `SECURITY DEFINER` RPCs (`verify_question_answer`, `submit_question_attempt`, `submit_flashcard_review`, `complete_activity_session`, `purchase_cosmetic_item`, `grade_module_responses`).
 3. Run `supabase/seed/0001_seed_hdsat.sql` to upsert the verified `dataset_sources`, `questions`, `question_keys`, and `flashcards` records.
+   - The bundle is the source of truth, but the server grades signed-in answers against `question_keys`. After any edit to `src/data/questionBank.json`, run `python tools/sync_live_bank.py --apply`; it patches only the divergent choices, difficulty labels and keys, then proves the live copy matches. Skipping it is how a corrected question keeps being marked wrong for signed-in students.
 4. Run `supabase/migrations/20261017000100_safety_compliance.sql`, `20261020000100_cosmetic_price_ladder.sql`, `20261023000100_admin_console.sql` (admin console, notifications, triage RPCs) and `20261024000100_admin_human_check.sql` (self-hosted human check). After the build that uses it is deployed, run `20261024000200_admin_captcha_cleanup.sql` to drop the old arithmetic-captcha path. Then `20261025000200_emblems_earned.sql` (emblems are earned, not bought), `20261026000200_password_change_limits.sql` (password/recovery cooldowns), `20261026000300_email_request_limits.sql` (one confirmation email and one recovery link per address per day), `20261026000400_admin_attempt_log.sql` (wrong-passcode rows per device), `20261026000500_light_accounts.sql` (verification flag, storage caps for unverified accounts, mail budget), `20261026000600_coin_category_fix.sql` (the `achievement_reward` coin category) and `20261027000100_test_goal.sql` (dashboard test-date goal). `python .pa/apply_round2_migrations.py` applies and verifies the whole set.
 5. In **Authentication → Providers → Email**, ensure Email/Password sign-in is enabled.
 6. Set the operator passcode once, in the SQL editor (or with a service key). Only a bcrypt hash is stored; the plaintext never enters this repository, the bundle or the browser:
@@ -184,15 +185,15 @@ python tools/admin_triage.py reply report <uuid> --body "Thanks — fixed in ton
 
 HDSAT strictly prohibits scraping or re-hosting copyrighted College Board Bluebook or SAT Suite Question Bank items without a redistribution license. Instead, official College Board resources are linked in `src/data/resources.json`, and the in-app bank ships two explicitly documented open-licensed (`CC-BY-4.0`) sources:
 
-1. **`hdsat-open-core-2026` — HDSAT Open Core Curated Bank (`CC-BY-4.0`, 31 items):**
+1. **`hdsat-open-core-2026` — HDSAT Open Core Curated Bank (`CC-BY-4.0`, 7,125 items):**
    Original practice questions authored for HDSAT against the public Digital SAT Suite domain and skill blueprint (`is_official_college_board = false`, `is_released_practice_set = false`).
-2. **`hdsat-benchmark-sim-1` — HDSAT Benchmark Simulation Set A (`CC-BY-4.0`, 5 items):**
+2. **`hdsat-benchmark-sim-1` — HDSAT Benchmark Simulation Set A (`CC-BY-4.0`, 7 items):**
    Original practice questions reserved as a designated benchmark simulation set (`is_official_college_board = false`, `is_released_practice_set = true`) so students can toggle "Exclude Benchmark Simulation Set" during routine drills.
 
 **Current Verified Counts:**
-- **Questions:** 7,290 total (2,514 Reading and Writing, 4,776 Math; multiple-choice and student-produced response `spr`). Authored items come from `supabase/import/generate_bank_expansion.py`, the volume tier from `generate_bank_scale.py`, and the R2-M10 Reading & Writing expansion from `generate_bank_rw_m10.py` plus the 2026-10-29 second batch from `generate_bank_rw_m10b.py` (Words in Context, Boundaries, Transitions, passages, Rhetorical Synthesis, quantitative-evidence tables and charts). `merge_bank_m10.py` adds a batch to the shipped bank and writes its own seed; nothing existing is rewritten.
+- **Questions:** 7,132 total (2,626 Reading and Writing, 4,506 Math; multiple-choice and student-produced response `spr`). Authored items come from `supabase/import/generate_bank_expansion.py`, the volume tier from `generate_bank_scale.py`, and the R2-M10 Reading & Writing expansion from `generate_bank_rw_m10.py` plus the 2026-10-29 second batch from `generate_bank_rw_m10b.py` (Words in Context, Boundaries, Transitions, passages, Rhetorical Synthesis, quantitative-evidence tables and charts). `merge_bank_m10.py` adds a batch to the shipped bank and writes its own seed; nothing existing is rewritten.
 - **Flashcards:** 1,804 total (1,678 vocabulary entries + 126 math formulas, `CC-BY-4.0`; the vocabulary corpus derives from the CC0-dedicated *A New Word Every Day* word list, recorded in `flashcards.json` → `vocabulary_source`, plus authored SAT words).
-- **Study Resources:** 18 verified links (College Board official specifications, Khan Academy, Desmos, OpenStax CC BY 4.0 textbooks, Purdue OWL).
+- **Study Resources:** 105 verified links (College Board official specifications, Khan Academy, Desmos, OpenStax CC BY 4.0 textbooks, Purdue OWL).
 
 ### Running the Validator & Importer
 
@@ -262,5 +263,5 @@ PYTHONPATH=. .venv/bin/pytest -v
 
 ## Current Limitations
 
-- **Question Bank Size vs. Full Blueprint Length:** A full-length official Digital SAT requires 54 Reading & Writing items (27 per module) and 44 Math items (22 per module), plus an additional second-stage routing pool (81 R&W / 66 Math unique items). The bank's original, licensed pool now exceeds those minimums (2,514 R&W / 4,776 Math unique items), so every assessment fills the full blueprint with a fresh randomized mix per run and no repeats within a single test. Proportional scaling with a transparent coverage notice remains the fallback if the bank is later trimmed.
+- **Question Bank Size vs. Full Blueprint Length:** A full-length official Digital SAT requires 54 Reading & Writing items (27 per module) and 44 Math items (22 per module), plus an additional second-stage routing pool (81 R&W / 66 Math unique items). The bank's original, licensed pool now exceeds those minimums (2,626 R&W / 4,506 Math unique items), so every assessment fills the full blueprint with a fresh randomized mix per run and no repeats within a single test. Proportional scaling with a transparent coverage notice remains the fallback if the bank is later trimmed.
 - **Estimated Scaled Scores:** Adaptive simulation scores (400–1600) are practice estimates calculated from raw accuracy and Stage-2 module tier routing, not official College Board equated scores.

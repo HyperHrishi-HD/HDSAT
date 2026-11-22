@@ -8,12 +8,21 @@ import * as cloud from '../lib/cloud';
 import { buildAiSnapshot, buildDataExport, downloadExport } from '../lib/dataRights';
 import { LEGAL_VERSION, SITE_NAME } from '../lib/legal';
 import { PASSWORD_RECOVERY_FLAG } from '../lib/password';
-import { formatRemainingHours } from '../lib/storage';
+import { formatRemainingHours, pendingCodeEndsAt } from '../lib/storage';
 import { useApp } from '../lib/store';
+import type { ThemeMode } from '../lib/themeMode';
+import { useThemeMode } from '../lib/useThemeMode';
 import type { Assessment } from '../lib/types';
+
+const THEME_CHOICES: { value: ThemeMode; label: string }[] = [
+  { value: 'system', label: 'System' },
+  { value: 'light', label: 'Light' },
+  { value: 'dark', label: 'Dark' },
+];
 
 export function AccountPage() {
   const app = useApp();
+  const [themeMode, setThemeMode] = useThemeMode();
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
   const [nameDraft, setNameDraft] = useState('');
@@ -22,9 +31,7 @@ export function AccountPage() {
   const [deleting, setDeleting] = useState(false);
   const [exportMessage, setExportMessage] = useState<string | null>(null);
   const [aiMessage, setAiMessage] = useState<string | null>(null);
-  const [reports, setReports] = useState<{ id: string; question_id: string; reason: string; created_at: string }[] | null>(
-    null
-  );
+  const [reports, setReports] = useState<cloud.MyReport[] | null>(null);
   const [passwordDialog, setPasswordDialog] = useState<'change' | 'recover' | null>(null);
 
   // A confirmation link that failed (expired, already used, wrong origin)
@@ -205,13 +212,37 @@ export function AccountPage() {
         </div>
       </Card>
 
+      <Card>
+        <div className="row-between">
+          <div>
+            <h2 style={{ margin: 0 }}>Appearance</h2>
+          </div>
+          <div className="theme-mode-toggle" role="group" aria-label="Appearance">
+            {THEME_CHOICES.map((choice) => (
+              <button
+                key={choice.value}
+                type="button"
+                className={`btn btn-sm ${
+                  themeMode === choice.value ? 'btn-primary' : 'btn-outline'
+                }`}
+                aria-pressed={themeMode === choice.value}
+                onClick={() => setThemeMode(choice.value)}
+              >
+                {choice.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </Card>
+
       {statusMessage ? <Alert tone="notice">{statusMessage}</Alert> : null}
       {app.accountStatus === 'pending' && app.pendingAccount ? (
         <Alert tone="info">
           <div>
             <strong>
               Confirm {app.pendingAccount.email} (
-              {formatRemainingHours(Math.max(0, app.pendingAccount.expiresAt - Date.now()))} left)
+              {formatRemainingHours(Math.max(0, pendingCodeEndsAt(app.pendingAccount) - Date.now()))}{' '}
+              left)
             </strong>
             <p style={{ margin: '6px 0 0' }}>
               Study now; this device keeps your work. HDCoins stay provisional until you confirm.
@@ -285,7 +316,7 @@ export function AccountPage() {
 
               <div className="stack" style={{ marginTop: 8 }}>
                 <h3>Sync this device</h3>
-                <p className="muted">Moves local attempts, saved questions and reviews into your account once.</p>
+                <p className="muted">Import this browser&apos;s progress once.</p>
                 <div className="row">
                   <Button onClick={app.actions.syncGuestData} disabled={app.syncing}>
                     {app.syncing ? 'Syncing…' : 'Sync device'}
@@ -299,7 +330,6 @@ export function AccountPage() {
           ) : (
             <div>
               <h2>Sign in or create an account</h2>
-              <p className="muted">One form for both. Sign in, or create an account on first use.</p>
 
               {!app.cloudConfigured ? (
                 <div className="muted-block">
@@ -334,7 +364,7 @@ export function AccountPage() {
                   <strong>Confirm your email</strong>
                   <p className="muted" style={{ margin: '6px 0 10px' }}>
                     {app.pendingAccount.email} ·{' '}
-                    {formatRemainingHours(Math.max(0, app.pendingAccount.expiresAt - Date.now()))}{' '}
+                    {formatRemainingHours(Math.max(0, pendingCodeEndsAt(app.pendingAccount) - Date.now()))}{' '}
                     left
                   </p>
                   <div className="row">
@@ -410,7 +440,6 @@ export function AccountPage() {
 
           <div className="muted-block" style={{ marginTop: 14 }}>
             <h3>This device</h3>
-            <p className="muted">Guest progress is stored in this browser.</p>
             <Button variant="danger" size="sm" onClick={app.actions.resetGuestProgress}>
               Reset local progress
             </Button>
@@ -423,7 +452,7 @@ export function AccountPage() {
         <div className="row-between">
           <div>
             <h2>Safety &amp; Data Rights</h2>
-            <p className="muted">Export, delete or appeal — no email required.</p>
+            <p className="muted">Export, delete or appeal.</p>
           </div>
           <Badge tone="info">Policy v{LEGAL_VERSION}</Badge>
         </div>
@@ -439,7 +468,7 @@ export function AccountPage() {
 
           <div className="muted-block">
             <h3>AI snapshot</h3>
-            <p className="muted">Copies a tutor-ready brief. No answer keys.</p>
+            <p className="muted">Tutor-ready brief. No answer keys.</p>
             <Button variant="outline" size="sm" onClick={() => void handleAiSnapshot()}>
               Copy snapshot
             </Button>
@@ -502,36 +531,75 @@ export function AccountPage() {
               </p>
             ) : reports === null ? (
               <div className="row-between">
-                <p className="muted" style={{ margin: 0 }}>
-                  Loading…
-                </p>
+                <span
+                  className="sk-line"
+                  style={{ width: 'min(220px, 48%)' }}
+                  aria-label="Loading reports"
+                />
                 <Button variant="outline" size="sm" onClick={loadReports}>
                   Refresh reports
                 </Button>
               </div>
             ) : reports.length === 0 ? (
-              <p className="muted" style={{ margin: 0 }}>
-                No reports filed.
-              </p>
+              <div className="empty" style={{ textAlign: 'left', padding: '4px 0' }}>
+                <h3>No question reports yet</h3>
+                <p>
+                  If an item looks wrong or incomplete, open it in the bank and use Report question.
+                  We keep your report and its reply here.
+                </p>
+                <a href="#/bank" className="btn btn-outline btn-sm">
+                  Browse the bank
+                </a>
+              </div>
             ) : (
-              <table>
-                <thead>
-                  <tr>
-                    <th>Question</th>
-                    <th>Reason</th>
-                    <th>Filed</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {reports.map((r) => (
-                    <tr key={r.id}>
-                      <td className="mono">{r.question_id}</td>
-                      <td>{r.reason.replace(/_/g, ' ')}</td>
-                      <td>{new Date(r.created_at).toLocaleDateString()}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div className="stack">
+                {reports.map((r) => {
+                  const tone =
+                    r.status === 'resolved'
+                      ? 'good'
+                      : r.status === 'dismissed'
+                      ? 'neutral'
+                      : r.status === 'received'
+                      ? 'warn'
+                      : 'info';
+                  return (
+                    <div key={r.id} className="muted-block">
+                      <div className="row" style={{ gap: 8, flexWrap: 'wrap' }}>
+                        <span className="mono">{r.question_id}</span>
+                        <Badge tone="neutral">{r.reason.replace(/_/g, ' ')}</Badge>
+                        <Badge tone={tone}>{r.status.replace(/_/g, ' ')}</Badge>
+                        <span className="muted">{new Date(r.created_at).toLocaleDateString()}</span>
+                      </div>
+                      {r.details ? (
+                        <p className="muted" style={{ margin: '6px 0 0' }}>
+                          {r.details}
+                        </p>
+                      ) : null}
+                      {r.reply ? (
+                        <div
+                          style={{
+                            marginTop: 8,
+                            paddingLeft: 10,
+                            borderLeft: '2px solid var(--line, rgba(127,127,127,0.35))',
+                          }}
+                        >
+                          <strong>{r.reply.title}</strong>
+                          <p style={{ margin: '4px 0 0', whiteSpace: 'pre-wrap' }}>{r.reply.body}</p>
+                          <p className="muted" style={{ margin: '4px 0 0' }}>
+                            {new Date(r.reply.created_at).toLocaleDateString()}
+                          </p>
+                        </div>
+                      ) : (
+                        <p className="muted" style={{ margin: '6px 0 0' }}>
+                          {r.status === 'resolved'
+                            ? 'Closed without a written reply.'
+                            : 'No reply yet.'}
+                        </p>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
             )}
           </div>
         </details>

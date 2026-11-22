@@ -777,3 +777,67 @@ no gap-hiding wrappers). Verified at 390×844 and 844×390, plus exit full scree
 
 **Intro.** "New each room" now shows a room rolled for this mount, so the
 readout is a real sample rather than the same fixed preview line.
+
+## 2026-11-05 — dark mode, a longer shelf, modals that forgive a drag
+
+**Dark mode is a token flip, not a second stylesheet per component.**
+`data-mode` goes on `<html>` before the first paint (`index.html` inline script)
+and `src/lib/themeMode.ts` keeps it there. Every surface that was written
+against `--bg/--surface/--ink/--line/--accent` needed no rule of its own; the
+literal colours that predate the tokens are remapped in `src/styles/dark.css`,
+which loads after `global.css`. The accent gets *lighter* at night, because the
+light-theme blues drop below a readable ratio on a dark surface; each of the
+eight store themes has a dark variant that keeps its hue.
+
+Three states, stored per device (`hdsat.theme-mode.v1`): System (default),
+Light, Dark. The switch lives in Account → Appearance and is the only control
+that writes the choice; `useResolvedTheme()` exists separately from
+`useThemeMode()` so a device that flips at sunset repaints *and* refreshes the
+copy in the card without a reload. Figures, the chart paper and the maths
+reference keep a white backing at night — their SVG ink is dark by design and a
+dark paper would erase the drawing.
+
+**Modals forgive a drag.** A click is dispatched on the nearest common ancestor
+of press and release, so selecting text inside the sign-in card and letting go
+outside it used to close the card mid-selection. `useBackdropDismiss` remembers
+where the press started; AuthModal, PasswordDialog and the missed log use it.
+Escape still closes all of them.
+
+**Resources shelf: 18 → 38.** Every entry is a free, live page, checked with a
+request rather than assumed: College Board practice tests / accommodations /
+BigFuture, the Khan SAT Math and R&W courses, six more OpenStax titles, UNC's
+writing centre, Purplemath, Math is Fun, Paul's Online Notes, LibreTexts,
+Desmos scientific, GeoGebra, Wolfram|Alpha, Anki. Four older links were dead and
+were repointed (the SAT overview, the PSAT page, the question-bank guide and the
+printable practice tests).
+
+**Email confirmation retry window.** One message per address in any rolling 24
+hours, code or link, written only after the provider accepted it. The code and
+the link stay valid for **12 hours** (`mailer_otp_exp = 43200`), long enough for
+a student who reads mail after school to use it the next morning. The
+forgot-password email has its own branded template with the same 12-hour,
+single-use link. `recordVerificationSend` is the only device writer, and
+`record_email_request` in
+`supabase/migrations/20261031000100_email_retry_window.sql` is the authoritative
+one.
+
+Tests: 325 passing (12 new for dark mode and backdrop dismissal).
+
+## Supabase keep-alive (2026-11-22) — do not delete
+
+The free Supabase project pauses after about a week without user-database
+activity. That is fixed inside Postgres, not by an outside cron:
+`supabase/migrations/20261122000100_supabase_keepalive.sql` installs `pg_cron`
++ `pg_net` and two jobs. `hdsat-supabase-keepalive` (`17 */6 * * *`) makes a real
+PostgREST table read (`/rest/v1/questions?select=id&limit=1`) and records HTTP
+200 in `net._http_response`; `hdsat-keepalive-cleanup` (`43 3 * * 0`) deletes
+responses older than three days. The publishable key sits in
+`public.keepalive_config` (RLS on, no policies, revoked from `anon` and
+`authenticated`), written by `python tools/apply_keepalive.py`, which prints no
+secrets. Verify with `select jobname, schedule, active from cron.job` plus the
+newest `net._http_response` row.
+
+Brevo is a separate clock: a **Free plan** account unused for **4 months** is
+deleted (30/15/7/1-day email warnings), but any automatic or transactional send
+counts as activity. Confirmation codes only go out when a student signs up, so
+log in to Brevo at least once a term to reset the inactivity period.

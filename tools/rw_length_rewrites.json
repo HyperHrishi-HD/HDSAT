@@ -1,0 +1,2797 @@
+{
+  "version": "2026.11.11-open-core-38",
+  "changes": [
+    {
+      "id": "RW-CRF-004",
+      "skill": "Text Structure and Purpose",
+      "old": "It presents a widely held simplified view of a historical event and then offers historical details that complicate that view.",
+      "new": "It presents a widely held simplified view of a historical event and then offers historical details.",
+      "old_length": 125,
+      "new_length": 99
+    },
+    {
+      "id": "RW-INF-303",
+      "skill": "Text Structure and Purpose",
+      "old": "It counters a simplified account by adding the later research stages that turned a discovery into a medicine.",
+      "new": "It counters a simplified account by adding the later research stages.",
+      "old_length": 109,
+      "new_length": 69
+    },
+    {
+      "id": "RW-INF-309",
+      "skill": "Inferences",
+      "old": "Shipwrights tailored the cut of treenails to grain orientation because it dramatically affected fastener durability.",
+      "new": "Shipwrights tailored the cut of treenails to grain orientation.",
+      "old_length": 116,
+      "new_length": 63
+    },
+    {
+      "id": "RW-CRF-88201",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that broadens that view.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 85,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-88203",
+      "skill": "Text Structure and Purpose",
+      "old": "It contrasts a modern measurement technique with the less reliable approach described in the first sentence.",
+      "new": "It contrasts a modern measurement technique with the less reliable approach.",
+      "old_length": 108,
+      "new_length": 76
+    },
+    {
+      "id": "RW-CRF-88205",
+      "skill": "Text Structure and Purpose",
+      "old": "It summarizes a prevailing theoretical claim and then presents empirical findings that compel a revision of that claim.",
+      "new": "It summarizes a prevailing theoretical claim and then presents empirical findings.",
+      "old_length": 119,
+      "new_length": 82
+    },
+    {
+      "id": "RW-CRF-88207",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that broadens that view.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 85,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-88211",
+      "skill": "Text Structure and Purpose",
+      "old": "It summarizes a prevailing theoretical claim and then presents empirical findings that compel a revision of that claim.",
+      "new": "It summarizes a prevailing theoretical claim and then presents empirical findings.",
+      "old_length": 119,
+      "new_length": 82
+    },
+    {
+      "id": "RW-CRF-88213",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that broadens that view.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 85,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-88215",
+      "skill": "Text Structure and Purpose",
+      "old": "It contrasts a modern measurement technique with the less reliable approach described in the first sentence.",
+      "new": "It contrasts a modern measurement technique with the less reliable approach.",
+      "old_length": 108,
+      "new_length": 76
+    },
+    {
+      "id": "RW-CRF-88217",
+      "skill": "Text Structure and Purpose",
+      "old": "It summarizes a prevailing theoretical claim and then presents empirical findings that compel a revision of that claim.",
+      "new": "It summarizes a prevailing theoretical claim and then presents empirical findings.",
+      "old_length": 119,
+      "new_length": 82
+    },
+    {
+      "id": "RW-CRF-88219",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that broadens that view.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 85,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-88221",
+      "skill": "Text Structure and Purpose",
+      "old": "It contrasts a modern measurement technique with the less reliable approach described in the first sentence.",
+      "new": "It contrasts a modern measurement technique with the less reliable approach.",
+      "old_length": 108,
+      "new_length": 76
+    },
+    {
+      "id": "RW-CRF-88223",
+      "skill": "Text Structure and Purpose",
+      "old": "It summarizes a prevailing theoretical claim and then presents empirical findings that compel a revision of that claim.",
+      "new": "It summarizes a prevailing theoretical claim and then presents empirical findings.",
+      "old_length": 119,
+      "new_length": 82
+    },
+    {
+      "id": "RW-CRF-88225",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that broadens that view.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 85,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-88227",
+      "skill": "Text Structure and Purpose",
+      "old": "It contrasts a modern measurement technique with the less reliable approach described in the first sentence.",
+      "new": "It contrasts a modern measurement technique with the less reliable approach.",
+      "old_length": 108,
+      "new_length": 76
+    },
+    {
+      "id": "RW-CRF-88229",
+      "skill": "Text Structure and Purpose",
+      "old": "It summarizes a prevailing theoretical claim and then presents empirical findings that compel a revision of that claim.",
+      "new": "It summarizes a prevailing theoretical claim and then presents empirical findings.",
+      "old_length": 119,
+      "new_length": 82
+    },
+    {
+      "id": "RW-CRF-88231",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that broadens that view.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 85,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-88235",
+      "skill": "Text Structure and Purpose",
+      "old": "It summarizes a prevailing theoretical claim and then presents empirical findings that compel a revision of that claim.",
+      "new": "It summarizes a prevailing theoretical claim and then presents empirical findings.",
+      "old_length": 119,
+      "new_length": 82
+    },
+    {
+      "id": "RW-CRF-88237",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that broadens that view.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 85,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-88239",
+      "skill": "Text Structure and Purpose",
+      "old": "It contrasts a modern measurement technique with the less reliable approach described in the first sentence.",
+      "new": "It contrasts a modern measurement technique with the less reliable approach.",
+      "old_length": 108,
+      "new_length": 76
+    },
+    {
+      "id": "RW-CRF-88241",
+      "skill": "Text Structure and Purpose",
+      "old": "It summarizes a prevailing theoretical claim and then presents empirical findings that compel a revision of that claim.",
+      "new": "It summarizes a prevailing theoretical claim and then presents empirical findings.",
+      "old_length": 119,
+      "new_length": 82
+    },
+    {
+      "id": "RW-CRF-88243",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that broadens that view.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 85,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-88245",
+      "skill": "Text Structure and Purpose",
+      "old": "It contrasts a modern measurement technique with the less reliable approach described in the first sentence.",
+      "new": "It contrasts a modern measurement technique with the less reliable approach.",
+      "old_length": 108,
+      "new_length": 76
+    },
+    {
+      "id": "RW-CRF-88247",
+      "skill": "Text Structure and Purpose",
+      "old": "It summarizes a prevailing theoretical claim and then presents empirical findings that compel a revision of that claim.",
+      "new": "It summarizes a prevailing theoretical claim and then presents empirical findings.",
+      "old_length": 119,
+      "new_length": 82
+    },
+    {
+      "id": "RW-CRF-88249",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that broadens that view.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 85,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-88251",
+      "skill": "Text Structure and Purpose",
+      "old": "It contrasts a modern measurement technique with the less reliable approach described in the first sentence.",
+      "new": "It contrasts a modern measurement technique with the less reliable approach.",
+      "old_length": 108,
+      "new_length": 76
+    },
+    {
+      "id": "RW-CRF-88253",
+      "skill": "Text Structure and Purpose",
+      "old": "It summarizes a prevailing theoretical claim and then presents empirical findings that compel a revision of that claim.",
+      "new": "It summarizes a prevailing theoretical claim and then presents empirical findings.",
+      "old_length": 119,
+      "new_length": 82
+    },
+    {
+      "id": "RW-CRF-88255",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that broadens that view.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 85,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-88257",
+      "skill": "Text Structure and Purpose",
+      "old": "It contrasts a modern measurement technique with the less reliable approach described in the first sentence.",
+      "new": "It contrasts a modern measurement technique with the less reliable approach.",
+      "old_length": 108,
+      "new_length": 76
+    },
+    {
+      "id": "RW-CRF-88259",
+      "skill": "Text Structure and Purpose",
+      "old": "It summarizes a prevailing theoretical claim and then presents empirical findings that compel a revision of that claim.",
+      "new": "It summarizes a prevailing theoretical claim and then presents empirical findings.",
+      "old_length": 119,
+      "new_length": 82
+    },
+    {
+      "id": "RW-CRF-88402",
+      "skill": "Cross-Text Connections",
+      "old": "ecologist Mara Vance emphasizes the primary performance advantage of prescribed low-intensity woodland burns, whereas forester Jian Zhou focuses on a secondary operational trade-off.",
+      "new": "Ecologist Mara Vance stresses prescribed low-intensity woodland burns's main benefit; forester Jian Zhou notes an operational trade-off.",
+      "old_length": 182,
+      "new_length": 136
+    },
+    {
+      "id": "RW-CRF-88403",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 presents a favorable assessment of prescribed low-intensity woodland burns based on one metric, while Text 2 complicates that assessment by introducing a competing criterion.",
+      "new": "Text 1 favors prescribed low-intensity woodland burns on one metric; Text 2 adds a competing criterion.",
+      "old_length": 181,
+      "new_length": 103
+    },
+    {
+      "id": "RW-CRF-88406",
+      "skill": "Cross-Text Connections",
+      "old": "architect Leo Sterling emphasizes the primary performance advantage of open-plan municipal libraries, whereas acoustics researcher Priya Nair focuses on a secondary operational trade-off.",
+      "new": "Architect Leo Sterling stresses open-plan municipal libraries's main benefit; acoustics researcher Priya Nair notes an operational trade-off.",
+      "old_length": 187,
+      "new_length": 141
+    },
+    {
+      "id": "RW-CRF-88407",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 presents a favorable assessment of open-plan municipal libraries based on one metric, while Text 2 complicates that assessment by introducing a competing criterion.",
+      "new": "Text 1 favors open-plan municipal libraries on one metric; Text 2 adds a competing criterion.",
+      "old_length": 171,
+      "new_length": 93
+    },
+    {
+      "id": "RW-CRF-88410",
+      "skill": "Cross-Text Connections",
+      "old": "transit economist Elena Rostova emphasizes the primary performance advantage of high-frequency commuter ferries, whereas marine biologist Marcus Thorne focuses on a secondary operational trade-off.",
+      "new": "Transit economist Elena Rostova stresses high-frequency commuter ferries's main benefit; marine biologist Marcus Thorne notes an operational trade-off.",
+      "old_length": 197,
+      "new_length": 151
+    },
+    {
+      "id": "RW-CRF-88411",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 presents a favorable assessment of high-frequency commuter ferries based on one metric, while Text 2 complicates that assessment by introducing a competing criterion.",
+      "new": "Text 1 favors high-frequency commuter ferries on one metric; Text 2 adds a competing criterion.",
+      "old_length": 173,
+      "new_length": 95
+    },
+    {
+      "id": "RW-CRF-88414",
+      "skill": "Cross-Text Connections",
+      "old": "agronomist Tariq Hassan emphasizes the primary performance advantage of automated greenhouse misting, whereas plant pathologist Clara Lin focuses on a secondary operational trade-off.",
+      "new": "Agronomist Tariq Hassan stresses automated greenhouse misting's main benefit; plant pathologist Clara Lin notes an operational trade-off.",
+      "old_length": 183,
+      "new_length": 137
+    },
+    {
+      "id": "RW-CRF-88415",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 presents a favorable assessment of automated greenhouse misting based on one metric, while Text 2 complicates that assessment by introducing a competing criterion.",
+      "new": "Text 1 favors automated greenhouse misting on one metric; Text 2 adds a competing criterion.",
+      "old_length": 170,
+      "new_length": 92
+    },
+    {
+      "id": "RW-CRF-88418",
+      "skill": "Cross-Text Connections",
+      "old": "film archivist Mateo Silva emphasizes the primary performance advantage of digital restoration of silent films, whereas cinema historian Hannah Berg focuses on a secondary operational trade-off.",
+      "new": "Film archivist Mateo Silva stresses digital restoration of silent films's main benefit; cinema historian Hannah Berg notes an operational trade-off.",
+      "old_length": 194,
+      "new_length": 148
+    },
+    {
+      "id": "RW-CRF-88419",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 presents a favorable assessment of digital restoration of silent films based on one metric, while Text 2 complicates that assessment by introducing a competing criterion.",
+      "new": "Text 1 favors digital restoration of silent films on one metric; Text 2 adds a competing criterion.",
+      "old_length": 177,
+      "new_length": 99
+    },
+    {
+      "id": "RW-CRF-88422",
+      "skill": "Cross-Text Connections",
+      "old": "public-safety analyst Kevin Okafor emphasizes the primary performance advantage of urban night-sky lighting ordinances, whereas entomologist Soren Lindqvist focuses on a secondary operational trade-off.",
+      "new": "Public-safety analyst Kevin Okafor stresses urban night-sky lighting ordinances's main benefit; entomologist Soren Lindqvist notes an operational trade-off.",
+      "old_length": 202,
+      "new_length": 156
+    },
+    {
+      "id": "RW-CRF-88423",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 presents a favorable assessment of urban night-sky lighting ordinances based on one metric, while Text 2 complicates that assessment by introducing a competing criterion.",
+      "new": "Text 1 favors urban night-sky lighting ordinances on one metric; Text 2 adds a competing criterion.",
+      "old_length": 177,
+      "new_length": 99
+    },
+    {
+      "id": "RW-CRF-88425",
+      "skill": "Cross-Text Connections",
+      "old": "By acknowledging the potential benefit of modular timber high-rises while pointing out an unintended consequence that requires design or timing adjustments.",
+      "new": "By acknowledging the benefits of modular timber high-rises while noting a timing or design trade-off.",
+      "old_length": 156,
+      "new_length": 101
+    },
+    {
+      "id": "RW-CRF-88426",
+      "skill": "Cross-Text Connections",
+      "old": "structural engineer Mei-Ling Chen emphasizes the primary performance advantage of modular timber high-rises, whereas fire-code consultant David Alvarez focuses on a secondary operational trade-off.",
+      "new": "Structural engineer Mei-Ling Chen stresses modular timber high-rises's main benefit; fire-code consultant David Alvarez notes an operational trade-off.",
+      "old_length": 197,
+      "new_length": 151
+    },
+    {
+      "id": "RW-CRF-88427",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 presents a favorable assessment of modular timber high-rises based on one metric, while Text 2 complicates that assessment by introducing a competing criterion.",
+      "new": "Text 1 favors modular timber high-rises on one metric; Text 2 adds a competing criterion.",
+      "old_length": 167,
+      "new_length": 89
+    },
+    {
+      "id": "RW-CRF-88430",
+      "skill": "Cross-Text Connections",
+      "old": "energy planner Samuel Osei emphasizes the primary performance advantage of community micro-hydro turbines, whereas freshwater ecologist Nadia Kovacs focuses on a secondary operational trade-off.",
+      "new": "Energy planner Samuel Osei stresses community micro-hydro turbines's main benefit; freshwater ecologist Nadia Kovacs notes an operational trade-off.",
+      "old_length": 194,
+      "new_length": 148
+    },
+    {
+      "id": "RW-CRF-88431",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 presents a favorable assessment of community micro-hydro turbines based on one metric, while Text 2 complicates that assessment by introducing a competing criterion.",
+      "new": "Text 1 favors community micro-hydro turbines on one metric; Text 2 adds a competing criterion.",
+      "old_length": 172,
+      "new_length": 94
+    },
+    {
+      "id": "RW-INF-88603",
+      "skill": "Central Ideas and Details",
+      "old": "The feature is essential because it works because seawater dissolves the ash to grow interlocking aluminum-tobermorite crystals that reinforce micro-cracks over centuries.",
+      "new": "The feature is essential because it works because seawater dissolves the ash.",
+      "old_length": 171,
+      "new_length": 77
+    },
+    {
+      "id": "RW-INF-88604",
+      "skill": "Central Ideas and Details",
+      "old": "The findings show that exposure to seawater triggers crystal growth that strengthens Roman harbor concrete over time.",
+      "new": "Exposure to seawater triggers crystal growth that strengthens Roman harbor concrete over time.",
+      "old_length": 117,
+      "new_length": 94
+    },
+    {
+      "id": "RW-INF-88612",
+      "skill": "Central Ideas and Details",
+      "old": "This feature works by bending oblique light rays into a single horizontal beam visible more than twenty nautical miles offshore.",
+      "new": "Bending oblique light rays into a single horizontal beam visible more than twenty nautical miles offshore.",
+      "old_length": 128,
+      "new_length": 106
+    },
+    {
+      "id": "RW-INF-88613",
+      "skill": "Central Ideas and Details",
+      "old": "The feature is essential because it works by bending oblique light rays into a single horizontal beam visible more than twenty nautical miles offshore.",
+      "new": "Bending oblique light rays into a single horizontal beam visible more than twenty nautical miles offshore.",
+      "old_length": 151,
+      "new_length": 106
+    },
+    {
+      "id": "RW-INF-88614",
+      "skill": "Central Ideas and Details",
+      "old": "The findings show that stepped prism rings allowed Fresnel lenses to concentrate light into a far-reaching beam without excessive weight.",
+      "new": "Stepped prism rings allowed Fresnel lenses to concentrate light into a far-reaching beam without excessive weight.",
+      "old_length": 137,
+      "new_length": 114
+    },
+    {
+      "id": "RW-INF-88617",
+      "skill": "Central Ideas and Details",
+      "old": "This feature works by driving convective air currents that flush carbon dioxide from deep brood chambers without mechanical fans.",
+      "new": "Driving convective air currents that flush carbon dioxide from deep brood chambers without mechanical fans.",
+      "old_length": 129,
+      "new_length": 107
+    },
+    {
+      "id": "RW-INF-88618",
+      "skill": "Central Ideas and Details",
+      "old": "The feature is essential because it works by driving convective air currents that flush carbon dioxide from deep brood chambers without mechanical fans.",
+      "new": "Driving convective air currents that flush carbon dioxide from deep brood chambers without mechanical fans.",
+      "old_length": 152,
+      "new_length": 107
+    },
+    {
+      "id": "RW-INF-88619",
+      "skill": "Central Ideas and Details",
+      "old": "The findings show that temperature differences across mound walls power passive air circulation for the underground colony.",
+      "new": "Temperature differences across mound walls power passive air circulation for the underground colony.",
+      "old_length": 123,
+      "new_length": 100
+    },
+    {
+      "id": "RW-INF-88622",
+      "skill": "Central Ideas and Details",
+      "old": "This feature works by maximizing hold volume below deck while minimizing the upper-deck width used by port authorities to assess toll duties.",
+      "new": "This feature works by maximizing hold volume below deck while minimizing the upper - deck width.",
+      "old_length": 141,
+      "new_length": 96
+    },
+    {
+      "id": "RW-INF-88623",
+      "skill": "Central Ideas and Details",
+      "old": "The feature is essential because it works by maximizing hold volume below deck while minimizing the upper-deck width used by port authorities to assess toll duties.",
+      "new": "The feature is essential because it works by maximizing hold volume below deck.",
+      "old_length": 164,
+      "new_length": 79
+    },
+    {
+      "id": "RW-INF-88624",
+      "skill": "Central Ideas and Details",
+      "old": "The findings show that the fluyt's narrow upper deck and wide hold increased cargo capacity while reducing tax assessments.",
+      "new": "The fluyt's narrow upper deck and wide hold increased cargo capacity while reducing tax assessments.",
+      "old_length": 123,
+      "new_length": 100
+    },
+    {
+      "id": "RW-INF-88627",
+      "skill": "Central Ideas and Details",
+      "old": "This feature works by condensing wind-blown coastal mist into droplets that roll directly toward the insect's mouthparts.",
+      "new": "This feature works by condensing wind - blown coastal mist into droplets.",
+      "old_length": 121,
+      "new_length": 73
+    },
+    {
+      "id": "RW-INF-88628",
+      "skill": "Central Ideas and Details",
+      "old": "The feature is essential because it works by condensing wind-blown coastal mist into droplets that roll directly toward the insect's mouthparts.",
+      "new": "Condensing wind-blown coastal mist into droplets that roll directly toward the insect's mouthparts.",
+      "old_length": 144,
+      "new_length": 99
+    },
+    {
+      "id": "RW-INF-88632",
+      "skill": "Central Ideas and Details",
+      "old": "This feature works by neutralizing the greenish tint caused by iron impurities in river sand to yield crystal-clear cristallo vessels.",
+      "new": "This feature works by neutralizing the greenish tint caused by iron impurities in river sand.",
+      "old_length": 134,
+      "new_length": 93
+    },
+    {
+      "id": "RW-INF-88633",
+      "skill": "Central Ideas and Details",
+      "old": "The feature is essential because it works by neutralizing the greenish tint caused by iron impurities in river sand to yield crystal-clear cristallo vessels.",
+      "new": "Neutralizing the greenish tint caused by iron impurities in river sand to yield crystal-clear cristallo vessels.",
+      "old_length": 157,
+      "new_length": 112
+    },
+    {
+      "id": "RW-INF-88634",
+      "skill": "Central Ideas and Details",
+      "old": "The findings show that chemical decolorizers allowed Murano artisans to produce transparent glass from iron-bearing sand.",
+      "new": "Chemical decolorizers allowed Murano artisans to produce transparent glass from iron-bearing sand.",
+      "old_length": 121,
+      "new_length": 98
+    },
+    {
+      "id": "RW-INF-88637",
+      "skill": "Central Ideas and Details",
+      "old": "This feature works by slowing snowmelt runoff and trapping organic silt that sustains wetland sedges decades after the colony departs.",
+      "new": "This feature works by slowing snowmelt runoff and trapping organic silt.",
+      "old_length": 134,
+      "new_length": 72
+    },
+    {
+      "id": "RW-INF-88638",
+      "skill": "Central Ideas and Details",
+      "old": "The feature is essential because it works by slowing snowmelt runoff and trapping organic silt that sustains wetland sedges decades after the colony departs.",
+      "new": "The feature is essential because it works by slowing snowmelt runoff and trapping organic silt.",
+      "old_length": 157,
+      "new_length": 95
+    },
+    {
+      "id": "RW-INF-88639",
+      "skill": "Central Ideas and Details",
+      "old": "The findings show that beaver-engineered dam remnants continue to regulate water and build fertile meadow soils long after abandonment.",
+      "new": "Beaver-engineered dam remnants continue to regulate water and build fertile meadow soils long after abandonment.",
+      "old_length": 135,
+      "new_length": 112
+    },
+    {
+      "id": "RW-INF-88642",
+      "skill": "Central Ideas and Details",
+      "old": "This feature works by maintaining electrical resistance under cold, high-pressure abyssal seawater where natural rubber rapidly degraded.",
+      "new": "This feature works by maintaining electrical resistance under cold, high - pressure abyssal seawater.",
+      "old_length": 137,
+      "new_length": 101
+    },
+    {
+      "id": "RW-INF-88643",
+      "skill": "Central Ideas and Details",
+      "old": "The feature is essential because it works by maintaining electrical resistance under cold, high-pressure abyssal seawater where natural rubber rapidly degraded.",
+      "new": "Maintaining electrical resistance under cold, high-pressure abyssal seawater where natural rubber rapidly degraded.",
+      "old_length": 160,
+      "new_length": 115
+    },
+    {
+      "id": "RW-INF-88644",
+      "skill": "Central Ideas and Details",
+      "old": "The findings show that gutta-percha provided the durable underwater insulation needed for nineteenth-century ocean telegraphy.",
+      "new": "Gutta-percha provided the durable underwater insulation needed for nineteenth-century ocean telegraphy.",
+      "old_length": 126,
+      "new_length": 103
+    },
+    {
+      "id": "RW-INF-88648",
+      "skill": "Central Ideas and Details",
+      "old": "The feature is essential because it works by tapping upland alluvial aquifers and conveying water kilometers across arid plains with minimal evaporative loss.",
+      "new": "Tapping upland alluvial aquifers and conveying water kilometers across arid plains with minimal evaporative loss.",
+      "old_length": 158,
+      "new_length": 113
+    },
+    {
+      "id": "RW-INF-88649",
+      "skill": "Central Ideas and Details",
+      "old": "The findings show that subsurface gravity channels enabled arid settlements to transport groundwater without surface evaporation.",
+      "new": "Subsurface gravity channels enabled arid settlements to transport groundwater without surface evaporation.",
+      "old_length": 129,
+      "new_length": 106
+    },
+    {
+      "id": "RW-INF-88928",
+      "skill": "Inferences",
+      "old": "compositors strategically inserted or omitted silent letters as a practical spacing tool to make lines fit evenly in the frame.",
+      "new": "Compositors strategically inserted or omitted silent letters as a practical spacing tool.",
+      "old_length": 127,
+      "new_length": 89
+    },
+    {
+      "id": "RW-INF-88929",
+      "skill": "Inferences",
+      "old": "compositors strategically inserted or omitted silent letters as a practical spacing tool to make lines fit evenly in the frame.",
+      "new": "Compositors strategically inserted or omitted silent letters as a practical spacing tool.",
+      "old_length": 127,
+      "new_length": 89
+    },
+    {
+      "id": "RW-INF-88930",
+      "skill": "Inferences",
+      "old": "compositors strategically inserted or omitted silent letters as a practical spacing tool to make lines fit evenly in the frame.",
+      "new": "Compositors strategically inserted or omitted silent letters as a practical spacing tool.",
+      "old_length": 127,
+      "new_length": 89
+    },
+    {
+      "id": "RW-INF-88937",
+      "skill": "Inferences",
+      "old": "the fungal network directs mineral nutrients toward host plants that supply the most photosynthetic carbon in return.",
+      "new": "The fungal network directs mineral nutrients toward host plants.",
+      "old_length": 117,
+      "new_length": 64
+    },
+    {
+      "id": "RW-INF-88938",
+      "skill": "Inferences",
+      "old": "the fungal network directs mineral nutrients toward host plants that supply the most photosynthetic carbon in return.",
+      "new": "The fungal network directs mineral nutrients toward host plants.",
+      "old_length": 117,
+      "new_length": 64
+    },
+    {
+      "id": "RW-INF-88939",
+      "skill": "Inferences",
+      "old": "the fungal network directs mineral nutrients toward host plants that supply the most photosynthetic carbon in return.",
+      "new": "The fungal network directs mineral nutrients toward host plants.",
+      "old_length": 117,
+      "new_length": 64
+    },
+    {
+      "id": "RW-EXP-89001",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89003",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89004",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89005",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89006",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89007",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89008",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89009",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89010",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89012",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89013",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89014",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89015",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89016",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89017",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89018",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89019",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89021",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89022",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89023",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89024",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89025",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89026",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89027",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89028",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89030",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89031",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89032",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89033",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89034",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89035",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89036",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89037",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89039",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89040",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89041",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89042",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89043",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89044",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89045",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89046",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89048",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89049",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89050",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89051",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89052",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89053",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89054",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89055",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89057",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89058",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89059",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89060",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89061",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89062",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89063",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89064",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89066",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89067",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89068",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89069",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89070",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89071",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89072",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89073",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89075",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89076",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89077",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89078",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89079",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89080",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89081",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89082",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89084",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89085",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89086",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89087",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89088",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89089",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89090",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89091",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89093",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89094",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89095",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89096",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89097",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89098",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89099",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EXP-89100",
+      "skill": "Rhetorical Synthesis",
+      "old": "Whereas Stockholm's surface streetcars averaged 14 km/h in peak traffic, the underground Tunnelbana lines reached 36 km/h, cutting cross-city commute times by 42%.",
+      "new": "Stockholm's metro reached 36 km/h versus 14 km/h for surface streetcars, cutting commutes by 42%.",
+      "old_length": 163,
+      "new_length": 97
+    },
+    {
+      "id": "RW-EXP-89102",
+      "skill": "Rhetorical Synthesis",
+      "old": "To overcome peak winter streetcar speeds of just 14 km/h in mixed downtown traffic, Stockholm opened underground Tunnelbana lines in 1956 that ran at 36 km/h and cut commute times by 42%.",
+      "new": "Stockholm's 1956 metro reached 36 km/h and cut peak winter commutes by 42%.",
+      "old_length": 187,
+      "new_length": 75
+    },
+    {
+      "id": "RW-EXP-89103",
+      "skill": "Rhetorical Synthesis",
+      "old": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.",
+      "new": "Its blue flashes startle grazing copepods and expose them to nocturnal predatory fish.",
+      "old_length": 192,
+      "new_length": 86
+    },
+    {
+      "id": "RW-EXP-89104",
+      "skill": "Rhetorical Synthesis",
+      "old": "Mechanically agitated Lingulodinium polyedra cells produce blue bioluminescent flashes at a wavelength of 475 nanometers that last about 100 milliseconds.",
+      "new": "The cells emit 100-millisecond blue flashes at 475 nanometers.",
+      "old_length": 154,
+      "new_length": 62
+    },
+    {
+      "id": "RW-EXP-89105",
+      "skill": "Rhetorical Synthesis",
+      "old": "While Lingulodinium polyedra's blue flashes deter copepod grazing by 55% in nocturnal marine environments, the organism loses this circadian bioluminescence rhythm within four days if exposed to constant laboratory light.",
+      "new": "The flashes deter grazing in the wild, but constant light disrupts the organism's daily rhythm.",
+      "old_length": 221,
+      "new_length": 95
+    },
+    {
+      "id": "RW-EXP-89106",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acting as an acoustic diffraction grating, Epidaurus's 55 corrugated limestone rows suppress low-frequency background noise below 500 Hz while reflecting clear high-frequency speech sounds to the upper seats.",
+      "new": "Epidaurus's limestone rows suppress noise below 500 Hz and project speech to the upper seats.",
+      "old_length": 208,
+      "new_length": 93
+    },
+    {
+      "id": "RW-EXP-89107",
+      "skill": "Rhetorical Synthesis",
+      "old": "Unlike Epidaurus's corrugated limestone rows, which filter out noise below 500 Hz and project high frequencies, modern replicas built with smooth concrete steps fail to achieve selective frequency filtering.",
+      "new": "Unlike Epidaurus's limestone rows, smooth concrete replicas fail to filter sound by frequency.",
+      "old_length": 207,
+      "new_length": 94
+    },
+    {
+      "id": "RW-EXP-89108",
+      "skill": "Rhetorical Synthesis",
+      "old": "To reach all 14,000 spectators in the fourth-century BCE theater at Epidaurus, its 55 corrugated limestone rows function—as Declercq's team showed—as a diffraction grating that damps noise below 500 Hz and projects vocal frequencies above 500 Hz.",
+      "new": "Epidaurus's 55 limestone rows seat 14,000 and filter noise while projecting speech.",
+      "old_length": 246,
+      "new_length": 83
+    },
+    {
+      "id": "RW-EOI-90108",
+      "skill": "Rhetorical Synthesis",
+      "old": "After weekend distribution was added, visits rose from 90 to 260 families.",
+      "new": "Visits rose from 90 to 260 families.",
+      "old_length": 74,
+      "new_length": 36
+    },
+    {
+      "id": "RW-INF-90007",
+      "skill": "Central Ideas and Details",
+      "old": "Private donations combined with matching public funds helped establish lasting public libraries.",
+      "new": "Private donations helped establish lasting public libraries.",
+      "old_length": 96,
+      "new_length": 60
+    },
+    {
+      "id": "RW-INF-90008",
+      "skill": "Central Ideas and Details",
+      "old": "Private donations combined with matching public funds helped establish lasting public libraries.",
+      "new": "Private donations helped establish lasting public libraries.",
+      "old_length": 96,
+      "new_length": 60
+    },
+    {
+      "id": "RW-INF-90009",
+      "skill": "Central Ideas and Details",
+      "old": "Migratory birds rely on multiple navigation cues that can substitute for one another.",
+      "new": "Migratory birds rely on multiple navigation cues.",
+      "old_length": 85,
+      "new_length": 49
+    },
+    {
+      "id": "RW-INF-90010",
+      "skill": "Central Ideas and Details",
+      "old": "Migratory birds rely on multiple navigation cues that can substitute for one another.",
+      "new": "Migratory birds rely on multiple navigation cues.",
+      "old_length": 85,
+      "new_length": 49
+    },
+    {
+      "id": "RW-INF-90506",
+      "skill": "Inferences",
+      "old": "the cover crop improved the soil's ability to retain water",
+      "new": "The cover crop improved the soil 's ability.",
+      "old_length": 58,
+      "new_length": 44
+    },
+    {
+      "id": "RW-CRF-90700-2",
+      "skill": "Text Structure and Purpose",
+      "old": "It introduces a common assumption and then presents evidence that challenges it.",
+      "new": "It introduces a common assumption and then presents evidence.",
+      "old_length": 80,
+      "new_length": 61
+    },
+    {
+      "id": "RW-CRF-90706-2",
+      "skill": "Text Structure and Purpose",
+      "old": "It describes an earlier system and the problem that prompted a new one.",
+      "new": "It describes an earlier system and the problem.",
+      "old_length": 71,
+      "new_length": 47
+    },
+    {
+      "id": "RW-CRF-90707-2",
+      "skill": "Text Structure and Purpose",
+      "old": "It emphasizes a capability of the device and an advantage it offers in the field.",
+      "new": "It emphasizes a capability of the device and an advantage.",
+      "old_length": 81,
+      "new_length": 58
+    },
+    {
+      "id": "RW-CRF-90805-2",
+      "skill": "Cross-Text Connections",
+      "old": "The second text supports the general recommendation while warning about how products are formulated.",
+      "new": "The second text supports the general recommendation.",
+      "old_length": 100,
+      "new_length": 52
+    },
+    {
+      "id": "RW-M10P-0001",
+      "skill": "Central Ideas and Details",
+      "old": "Lime lumps once dismissed as a mixing flaw are what allow Roman harbour concrete to heal itself.",
+      "new": "Lime lumps are what allow Roman harbour concrete to heal itself.",
+      "old_length": 96,
+      "new_length": 64
+    },
+    {
+      "id": "RW-M10P-0005",
+      "skill": "Central Ideas and Details",
+      "old": "Ice cores provide a paired record of ancient temperature and carbon dioxide that supports climate modeling.",
+      "new": "Ice cores provide a paired record of ancient temperature and carbon dioxide.",
+      "old_length": 107,
+      "new_length": 76
+    },
+    {
+      "id": "RW-M10P-0013",
+      "skill": "Central Ideas and Details",
+      "old": "A polarising crystal could locate the sun in cloudy weather, though the evidence that Norse sailors used one is indirect.",
+      "new": "A polarising crystal could locate the sun in cloudy weather.",
+      "old_length": 121,
+      "new_length": 60
+    },
+    {
+      "id": "RW-M10P-0014",
+      "skill": "Central Ideas and Details",
+      "old": "Soil holds ancient resistance genes that can move into pathogens, so tracking that movement matters for medicine.",
+      "new": "Soil holds ancient resistance genes that can move into pathogens.",
+      "old_length": 113,
+      "new_length": 65
+    },
+    {
+      "id": "RW-M10P-0019",
+      "skill": "Central Ideas and Details",
+      "old": "Vent ecosystems run on chemical energy rather than sunlight, which makes them a model for life elsewhere.",
+      "new": "Vent ecosystems run on chemical energy rather than sunlight.",
+      "old_length": 105,
+      "new_length": 60
+    },
+    {
+      "id": "RW-M10P-0020",
+      "skill": "Central Ideas and Details",
+      "old": "Sea ice concentrates microplastics and releases them in spring where plankton are blooming.",
+      "new": "Sea ice concentrates microplastics and releases them in spring.",
+      "old_length": 91,
+      "new_length": 63
+    },
+    {
+      "id": "RW-M10P-0022",
+      "skill": "Central Ideas and Details",
+      "old": "Lead-sweetened syrup was a real source of exposure but one of several that archaeologists must weigh together.",
+      "new": "Lead - sweetened syrup was a real source of exposure but one of several.",
+      "old_length": 110,
+      "new_length": 72
+    },
+    {
+      "id": "RW-M10P-0023",
+      "skill": "Central Ideas and Details",
+      "old": "Orchid mimicry succeeds only while the flowers stay rarer than the bees they imitate.",
+      "new": "Orchid mimicry succeeds only while the flowers stay rarer than the bees.",
+      "old_length": 85,
+      "new_length": 72
+    },
+    {
+      "id": "RW-M10P-0026",
+      "skill": "Central Ideas and Details",
+      "old": "Once their order is reconstructed, the tablets yield a long-run economic record.",
+      "new": "The tablets yield a long - run economic record.",
+      "old_length": 80,
+      "new_length": 47
+    },
+    {
+      "id": "RW-M10P-0031",
+      "skill": "Central Ideas and Details",
+      "old": "Temporary fences create the conditions for vegetation that then stabilises the dune permanently.",
+      "new": "Temporary fences create the conditions for vegetation.",
+      "old_length": 96,
+      "new_length": 54
+    },
+    {
+      "id": "RW-M10P-0035",
+      "skill": "Central Ideas and Details",
+      "old": "A seed vault preserves samples only if they are periodically regenerated, and small samples lose diversity over time.",
+      "new": "A seed vault preserves samples, and small samples lose diversity over time.",
+      "old_length": 117,
+      "new_length": 75
+    },
+    {
+      "id": "RW-M10P-0049",
+      "skill": "Inferences",
+      "old": "something carried from the autopsy room may have contributed to the fever",
+      "new": "Something may have contributed to the fever.",
+      "old_length": 73,
+      "new_length": 44
+    },
+    {
+      "id": "RW-M10P-0061",
+      "skill": "Inferences",
+      "old": "skin bacteria have evolved tolerance to the defenses of the frog they live on",
+      "new": "Skin bacteria have evolved tolerance to the defenses of the frog.",
+      "old_length": 77,
+      "new_length": 65
+    },
+    {
+      "id": "RW-M10P-0070",
+      "skill": "Text Structure and Purpose",
+      "old": "It describes a pattern observed over time and then offers an explanation for it.",
+      "new": "It describes a pattern and then offers an explanation for it.",
+      "old_length": 80,
+      "new_length": 61
+    },
+    {
+      "id": "RW-M10P-0075",
+      "skill": "Text Structure and Purpose",
+      "old": "It presents two explanations and then describes evidence favoring one.",
+      "new": "It presents two explanations and then describes evidence.",
+      "old_length": 70,
+      "new_length": 57
+    },
+    {
+      "id": "RW-M10P-0076",
+      "skill": "Text Structure and Purpose",
+      "old": "It states a problem, explains a method used to address it, and reports a result.",
+      "new": "It states a problem, explains a method, and reports a result.",
+      "old_length": 80,
+      "new_length": 61
+    },
+    {
+      "id": "RW-M10P-0083",
+      "skill": "Text Structure and Purpose",
+      "old": "It describes a behavior and reports an experiment that tests its function.",
+      "new": "It describes a behavior and reports an experiment.",
+      "old_length": 74,
+      "new_length": 50
+    },
+    {
+      "id": "RW-M10P-0084",
+      "skill": "Text Structure and Purpose",
+      "old": "It explains a cause of damage and then describes a treatment that addresses that cause.",
+      "new": "It explains a cause of damage and then describes a treatment.",
+      "old_length": 87,
+      "new_length": 61
+    },
+    {
+      "id": "RW-M10P-0085",
+      "skill": "Text Structure and Purpose",
+      "old": "It describes a model, notes its success, and then identifies a case it cannot explain.",
+      "new": "It describes a model, notes its success, and then identifies a case.",
+      "old_length": 86,
+      "new_length": 68
+    },
+    {
+      "id": "RW-M10P-0087",
+      "skill": "Text Structure and Purpose",
+      "old": "It explains a cause of corrosion and then describes a method that prevents it.",
+      "new": "It explains a cause of corrosion and then describes a method.",
+      "old_length": 78,
+      "new_length": 61
+    },
+    {
+      "id": "RW-M10P-0093",
+      "skill": "Central Ideas and Details",
+      "old": "Bogs preserve layered evidence of past vegetation only while they remain wet.",
+      "new": "Bogs preserve layered evidence of past vegetation.",
+      "old_length": 77,
+      "new_length": 50
+    },
+    {
+      "id": "RW-M10P-0094",
+      "skill": "Central Ideas and Details",
+      "old": "Bats adjust their calls to the habitat they are hunting in at that moment.",
+      "new": "Bats adjust their calls to the habitat.",
+      "old_length": 74,
+      "new_length": 39
+    },
+    {
+      "id": "RW-M10P-0095",
+      "skill": "Central Ideas and Details",
+      "old": "Bamboo scaffolding offers genuine structural advantages, though it also carries risks.",
+      "new": "Bamboo offers genuine structural advantages, though it also carries risks.",
+      "old_length": 86,
+      "new_length": 74
+    },
+    {
+      "id": "RW-M10P-0099",
+      "skill": "Central Ideas and Details",
+      "old": "The pigment survives best in the buried conditions that exposure destroys.",
+      "new": "The pigment survives best in the buried conditions.",
+      "old_length": 74,
+      "new_length": 51
+    },
+    {
+      "id": "RW-M10P-0100",
+      "skill": "Central Ideas and Details",
+      "old": "Subway diagrams deliberately distort distance in order to make routes easier to follow.",
+      "new": "Subway diagrams deliberately distort distance in order.",
+      "old_length": 87,
+      "new_length": 55
+    },
+    {
+      "id": "RW-M10P-0106",
+      "skill": "Central Ideas and Details",
+      "old": "Wooden joints can carry structural loads through precise shaping, though modern practice sometimes adds hidden reinforcement.",
+      "new": "Wooden joints can carry structural loads through precise shaping.",
+      "old_length": 125,
+      "new_length": 65
+    },
+    {
+      "id": "RW-M10P-0112",
+      "skill": "Central Ideas and Details",
+      "old": "Binding choices must be matched to the paper, because a stitch that suits one paper damages another.",
+      "new": "Binding choices must be matched to the paper, because a stitch.",
+      "old_length": 100,
+      "new_length": 63
+    },
+    {
+      "id": "RW-M10P-0113",
+      "skill": "Central Ideas and Details",
+      "old": "Beaver dams alter water storage and timing in ways that can be useful to water managers.",
+      "new": "Beaver dams alter water storage and timing in ways.",
+      "old_length": 88,
+      "new_length": 51
+    },
+    {
+      "id": "RW-M10P-0115",
+      "skill": "Central Ideas and Details",
+      "old": "Old star catalogues gain value from their age, because the time gap reveals how stars have moved.",
+      "new": "Old star catalogues gain value from their age.",
+      "old_length": 97,
+      "new_length": 46
+    },
+    {
+      "id": "RW-M10P-0118",
+      "skill": "Central Ideas and Details",
+      "old": "Photogrammetry preserves the surface relief of rock art that ordinary photographs flatten.",
+      "new": "Photogrammetry preserves the surface relief of rock art.",
+      "old_length": 90,
+      "new_length": 56
+    },
+    {
+      "id": "RW-M10P-0120",
+      "skill": "Central Ideas and Details",
+      "old": "Adobe's comfort comes from the delay created by wall mass, which suits dry climates better than humid ones.",
+      "new": "Adobe 's comfort comes from the delay created by wall mass.",
+      "old_length": 107,
+      "new_length": 59
+    },
+    {
+      "id": "RW-M10P-0123",
+      "skill": "Central Ideas and Details",
+      "old": "Slow, controlled cooling prevents the internal stresses that make glass fail later.",
+      "new": "Slow, controlled cooling prevents the internal stresses.",
+      "old_length": 83,
+      "new_length": 56
+    },
+    {
+      "id": "RW-M10P-0125",
+      "skill": "Central Ideas and Details",
+      "old": "Fog nets must be tuned to local conditions because mesh density trades capture against clogging.",
+      "new": "Fog nets must be tuned to local conditions.",
+      "old_length": 96,
+      "new_length": 43
+    },
+    {
+      "id": "RW-M10P-0127",
+      "skill": "Central Ideas and Details",
+      "old": "Krill swarms form through local interactions and move in ways that make population surveys hard.",
+      "new": "Krill swarms form through local interactions and move in ways.",
+      "old_length": 96,
+      "new_length": 62
+    },
+    {
+      "id": "RW-M10P-0132",
+      "skill": "Central Ideas and Details",
+      "old": "Because spoiled vaccine may look unchanged, programs rely on temperature indicators and strict handling rules.",
+      "new": "Programs rely on temperature indicators and strict handling rules.",
+      "old_length": 110,
+      "new_length": 66
+    },
+    {
+      "id": "RW-M10P-0141",
+      "skill": "Central Ideas and Details",
+      "old": "Stable conditions matter more than hitting an exact target, because repeated swings damage objects.",
+      "new": "Stable conditions matter more than hitting an exact target.",
+      "old_length": 99,
+      "new_length": 59
+    },
+    {
+      "id": "RW-M10P-0144",
+      "skill": "Central Ideas and Details",
+      "old": "An arch works through compression and needs strong abutments to resist the outward thrust.",
+      "new": "An arch works through compression and needs strong abutments.",
+      "old_length": 90,
+      "new_length": 61
+    },
+    {
+      "id": "RW-M10P-0146",
+      "skill": "Central Ideas and Details",
+      "old": "Cities stay warmer than surrounding land mainly on clear, still nights, because built surfaces release and trap heat.",
+      "new": "Cities stay warmer than surrounding land mainly on clear, still nights.",
+      "old_length": 117,
+      "new_length": 71
+    },
+    {
+      "id": "RW-M10P-0149",
+      "skill": "Central Ideas and Details",
+      "old": "Salt crusts record wet and dry periods in layers, though later floods can disturb the record.",
+      "new": "Salt crusts record wet and dry periods in layers.",
+      "old_length": 93,
+      "new_length": 49
+    },
+    {
+      "id": "RW-M10P-0150",
+      "skill": "Central Ideas and Details",
+      "old": "The soundpost is a precisely placed, unglued brace whose position and fit strongly affect a violin's sound.",
+      "new": "The soundpost is a precisely placed, unglued brace.",
+      "old_length": 107,
+      "new_length": 51
+    },
+    {
+      "id": "RW-M10P-0151",
+      "skill": "Inferences",
+      "old": "Old sponges can serve as archives of ocean chemistry that predate modern measurements.",
+      "new": "Old sponges can serve as archives of ocean chemistry.",
+      "old_length": 86,
+      "new_length": 53
+    },
+    {
+      "id": "RW-M10P-0154",
+      "skill": "Inferences",
+      "old": "The nitrogen fixed by legumes remains in the soil and benefits the next crop.",
+      "new": "The nitrogen remains in the soil and benefits the next crop.",
+      "old_length": 77,
+      "new_length": 60
+    },
+    {
+      "id": "RW-M10P-0164",
+      "skill": "Inferences",
+      "old": "The value of marginalia lies in what they reveal about the people who used a particular copy.",
+      "new": "The value of marginalia lies in what they reveal about the people.",
+      "old_length": 93,
+      "new_length": 66
+    },
+    {
+      "id": "RW-M10P-0166",
+      "skill": "Inferences",
+      "old": "Shade-grown coffee can earn more per bean while producing fewer beans overall.",
+      "new": "Shade - grown coffee can earn more per bean.",
+      "old_length": 78,
+      "new_length": 44
+    },
+    {
+      "id": "RW-M10P-0176",
+      "skill": "Inferences",
+      "old": "Overlap width must be set to withstand the weather a roof will face.",
+      "new": "Overlap width must be set to withstand the weather.",
+      "old_length": 68,
+      "new_length": 51
+    },
+    {
+      "id": "RW-M10P-0200",
+      "skill": "Inferences",
+      "old": "Otoliths preserve a dated record of the environments a fish moved through.",
+      "new": "Otoliths preserve a dated record of the environments.",
+      "old_length": 74,
+      "new_length": 53
+    },
+    {
+      "id": "RW-M10P-0203",
+      "skill": "Text Structure and Purpose",
+      "old": "It states a common assumption and then presents evidence that contradicts it.",
+      "new": "It states a common assumption and then presents evidence.",
+      "old_length": 77,
+      "new_length": 57
+    },
+    {
+      "id": "RW-M10P-0240",
+      "skill": "Text Structure and Purpose",
+      "old": "It describes a practice and explains the cost that justifies it.",
+      "new": "It describes a practice and explains the cost.",
+      "old_length": 64,
+      "new_length": 46
+    },
+    {
+      "id": "RW-M10S-0001",
+      "skill": "Rhetorical Synthesis",
+      "old": "The pines sampled on dry dolomite averaged 1,200 years older than pines on nearby moist granite.",
+      "new": "The pines averaged 1,200 years older than pines on nearby moist granite.",
+      "old_length": 96,
+      "new_length": 72
+    },
+    {
+      "id": "RW-M10S-0004",
+      "skill": "Rhetorical Synthesis",
+      "old": "Seawater reacting with volcanic ash formed aluminous tobermorite, a mineral that made the concrete stronger over time.",
+      "new": "Seawater reacting with volcanic ash formed aluminous tobermorite, a mineral.",
+      "old_length": 118,
+      "new_length": 76
+    },
+    {
+      "id": "RW-M10S-0005",
+      "skill": "Rhetorical Synthesis",
+      "old": "After otters returned, seagrass in Elkhorn Slough recovered from a 90 percent loss to about 4,000 hectares by 2013.",
+      "new": "Seagrass in Elkhorn Slough recovered from a 90 percent loss to about 4,000 hectares by 2013.",
+      "old_length": 115,
+      "new_length": 92
+    },
+    {
+      "id": "RW-M10S-0009",
+      "skill": "Rhetorical Synthesis",
+      "old": "Two-year burns produced 412 milkweed stems per hectare, more than annual burns or four-year burns did.",
+      "new": "Two - year burns produced 412, more than annual burns or four - year burns did.",
+      "old_length": 102,
+      "new_length": 79
+    },
+    {
+      "id": "RW-M10S-0013",
+      "skill": "Rhetorical Synthesis",
+      "old": "The bamboo frame cost 60 percent less to build locally than an aluminum frame while weighing about the same.",
+      "new": "The bamboo frame cost 60 percent less to build locally than an aluminum frame.",
+      "old_length": 108,
+      "new_length": 78
+    },
+    {
+      "id": "RW-M10S-0014",
+      "skill": "Rhetorical Synthesis",
+      "old": "Tags showed whale sharks diving to 1,720 m, mostly at night, though the species was thought to feed near the surface.",
+      "new": "Tags showed whale sharks diving to 1,720 m, mostly at night.",
+      "old_length": 117,
+      "new_length": 60
+    },
+    {
+      "id": "RW-M10S-0015",
+      "skill": "Rhetorical Synthesis",
+      "old": "Beans fermented in wooden boxes had more yeast diversity, which correlated with stronger fruity notes in blind tastings.",
+      "new": "Beans fermented in wooden boxes had more yeast diversity.",
+      "old_length": 120,
+      "new_length": 57
+    },
+    {
+      "id": "RW-M10S-0019",
+      "skill": "Rhetorical Synthesis",
+      "old": "Three years after six underpasses opened, amphibian deaths at the crossing had fallen by 85 percent.",
+      "new": "Amphibian deaths at the crossing had fallen by 85 percent.",
+      "old_length": 100,
+      "new_length": 58
+    },
+    {
+      "id": "RW-M10S-0024",
+      "skill": "Rhetorical Synthesis",
+      "old": "Beetles whose antennae were removed lost their straight path, while beetles with their vision blocked did not.",
+      "new": "Beetles lost their straight path, while beetles with their vision blocked did not.",
+      "old_length": 110,
+      "new_length": 82
+    },
+    {
+      "id": "RW-M10S-0036",
+      "skill": "Rhetorical Synthesis",
+      "old": "Inoculation improved seedling survival by 32 percent overall but did little where topsoil had been stripped.",
+      "new": "Inoculation improved seedling survival by 32 percent overall but did little.",
+      "old_length": 108,
+      "new_length": 76
+    },
+    {
+      "id": "RW-M10S-0041",
+      "skill": "Rhetorical Synthesis",
+      "old": "The spinach sensor showed a detectable glow within 10 minutes of the plant taking up nitroaromatics.",
+      "new": "The spinach sensor showed a detectable glow within 10 minutes of the plant.",
+      "old_length": 100,
+      "new_length": 75
+    },
+    {
+      "id": "RW-M10S-0052",
+      "skill": "Rhetorical Synthesis",
+      "old": "After dune grass was planted, the dunes lost 0.3 m a year instead of the previous 1.2 m a year.",
+      "new": "The dunes lost 0.3 m a year instead of the previous 1.2 m a year.",
+      "old_length": 95,
+      "new_length": 65
+    },
+    {
+      "id": "RW-M10S-0060",
+      "skill": "Rhetorical Synthesis",
+      "old": "Even though several sultans banned coffeehouses, Istanbul court records list more than 600 of them by 1600.",
+      "new": "Istanbul court records list more than 600 of them by 1600.",
+      "old_length": 107,
+      "new_length": 58
+    },
+    {
+      "id": "RW-M10S-0071",
+      "skill": "Rhetorical Synthesis",
+      "old": "The array produced power on 92 percent of days over two years, though output fell to near zero during slack water.",
+      "new": "The array produced power on 92 percent of days over two years.",
+      "old_length": 114,
+      "new_length": 62
+    },
+    {
+      "id": "RW-M10S-0078",
+      "skill": "Rhetorical Synthesis",
+      "old": "Even when a starter is moved to a new city, it usually keeps its original microbial community for years.",
+      "new": "It usually keeps its original microbial community for years.",
+      "old_length": 104,
+      "new_length": 60
+    },
+    {
+      "id": "RW-M10X-P0009",
+      "skill": "Central Ideas and Details",
+      "old": "Containerization lowered shipping costs mainly by transforming dock work, which reshaped which ports prospered.",
+      "new": "Containerization lowered shipping costs mainly by transforming dock work.",
+      "old_length": 111,
+      "new_length": 73
+    },
+    {
+      "id": "RW-M10X-P0011",
+      "skill": "Central Ideas and Details",
+      "old": "Two distinct Roman glass recipes can be traced through trace elements, showing that finished glass traveled between regions.",
+      "new": "Two distinct Roman glass recipes can be traced through trace elements.",
+      "old_length": 124,
+      "new_length": 70
+    },
+    {
+      "id": "RW-M10X-P0013",
+      "skill": "Central Ideas and Details",
+      "old": "Mistletoe can benefit a woodland at moderate levels even though it takes resources from its host tree.",
+      "new": "Mistletoe can benefit a woodland at moderate levels.",
+      "old_length": 102,
+      "new_length": 52
+    },
+    {
+      "id": "RW-M10X-P0038",
+      "skill": "Inferences",
+      "old": "it reduces the conditions that injure bats while sacrificing little generation.",
+      "new": "It reduces the conditions that injure bats.",
+      "old_length": 79,
+      "new_length": 43
+    },
+    {
+      "id": "RW-M10X-P0042",
+      "skill": "Text Structure and Purpose",
+      "old": "It presents an assumption, offers a case that complicates it, and revises the concept.",
+      "new": "It presents an assumption, offers a case, and revises the concept.",
+      "old_length": 86,
+      "new_length": 66
+    },
+    {
+      "id": "RW-M10X-P0052",
+      "skill": "Text Structure and Purpose",
+      "old": "It presents competing explanations and then describes an attempt to combine them.",
+      "new": "It presents competing explanations and then describes an attempt.",
+      "old_length": 81,
+      "new_length": 65
+    },
+    {
+      "id": "RW-M10X-P0053",
+      "skill": "Text Structure and Purpose",
+      "old": "It explains the origin of a term that the passage goes on to question.",
+      "new": "It explains the origin of a term.",
+      "old_length": 70,
+      "new_length": 33
+    },
+    {
+      "id": "RW-M10X-S0007",
+      "skill": "Rhetorical Synthesis",
+      "old": "Acidity tracked the concentration of lactic acid, not the number of yeasts, across the sampled starters.",
+      "new": "Acidity tracked the concentration of lactic acid, not, across the sampled starters.",
+      "old_length": 104,
+      "new_length": 83
+    },
+    {
+      "id": "RW-M10X-S0009",
+      "skill": "Rhetorical Synthesis",
+      "old": "Because the pottery was porous, it absorbed fats and waxes during use, and those residues survived in the sherds.",
+      "new": "It absorbed fats and waxes during use, and those residues survived in the sherds.",
+      "old_length": 113,
+      "new_length": 81
+    },
+    {
+      "id": "RW-M10X-S0010",
+      "skill": "Rhetorical Synthesis",
+      "old": "Average bus trips fell from 42 minutes to 27 minutes after the dedicated lanes and off-board payment were introduced.",
+      "new": "Average bus trips fell from 42 minutes to 27 minutes.",
+      "old_length": 117,
+      "new_length": 53
+    },
+    {
+      "id": "RW-M10X-S0011",
+      "skill": "Rhetorical Synthesis",
+      "old": "The spaced group recalled more words (68 versus 49 percent) even though those students rated their study method as less effective.",
+      "new": "The spaced group recalled more words ( 68 versus 49 percent ).",
+      "old_length": 130,
+      "new_length": 62
+    },
+    {
+      "id": "RW-M10X-S0013",
+      "skill": "Rhetorical Synthesis",
+      "old": "The method assumes the stakes stay vertical as the ice flows, so any tilting could distort the melt estimates.",
+      "new": "The method assumes the stakes stay vertical, so any tilting could distort the melt estimates.",
+      "old_length": 110,
+      "new_length": 93
+    },
+    {
+      "id": "RW-M10X-S0015",
+      "skill": "Rhetorical Synthesis",
+      "old": "Because the badgir has no moving parts and needs no electricity, it can keep a house 6 to 8 degrees cooler without power.",
+      "new": "It can keep a house 6 to 8 degrees cooler without power.",
+      "old_length": 121,
+      "new_length": 56
+    },
+    {
+      "id": "RW-M10X-S0023",
+      "skill": "Rhetorical Synthesis",
+      "old": "The beetles rolled straight when the Milky Way was visible and circled when the sky was blocked.",
+      "new": "The beetles rolled straight when the Milky Way was visible and circled.",
+      "old_length": 96,
+      "new_length": 71
+    },
+    {
+      "id": "RW-M10X-S0025",
+      "skill": "Rhetorical Synthesis",
+      "old": "The soft gripper bruised far fewer tomatoes (5 versus 30 percent) and cost less, though it was slower.",
+      "new": "The soft gripper bruised far fewer tomatoes ( 5 versus 30 percent ) and cost less.",
+      "old_length": 102,
+      "new_length": 82
+    },
+    {
+      "id": "RW-M10X-S0027",
+      "skill": "Rhetorical Synthesis",
+      "old": "Most of the artifacts matched a source 240 kilometers away, showing that obsidian moved a long way.",
+      "new": "Most of the artifacts matched a source 240 kilometers away.",
+      "old_length": 99,
+      "new_length": 59
+    },
+    {
+      "id": "RW-M10X-S0028",
+      "skill": "Rhetorical Synthesis",
+      "old": "After wolves returned, elk numbers fell, streamside willows grew taller, and beavers returned to 9 of 14 streams.",
+      "new": "Streamside willows grew taller, and beavers returned to 9 of 14 streams.",
+      "old_length": 113,
+      "new_length": 72
+    },
+    {
+      "id": "RW-M10X-S0037",
+      "skill": "Rhetorical Synthesis",
+      "old": "Eccentric training produced larger gains at long muscle lengths, while concentric training produced larger gains at short lengths.",
+      "new": "Eccentric training produced larger gains at long muscle lengths.",
+      "old_length": 130,
+      "new_length": 64
+    },
+    {
+      "id": "RW-M10X-S0038",
+      "skill": "Rhetorical Synthesis",
+      "old": "Because the study was observational, it cannot show that screen use caused the shorter sleep.",
+      "new": "It can not show that screen use caused the shorter sleep.",
+      "old_length": 93,
+      "new_length": 57
+    },
+    {
+      "id": "RW-M10X-S0040",
+      "skill": "Rhetorical Synthesis",
+      "old": "Puppies that crossed a novel surface quickly at eight weeks were 1.4 times as likely to graduate.",
+      "new": "Puppies were 1.4 times as likely to graduate.",
+      "old_length": 97,
+      "new_length": 45
+    },
+    {
+      "id": "RW-M10X-S0041",
+      "skill": "Rhetorical Synthesis",
+      "old": "Plots that had been treated with controlled burns lost 30 percent less canopy in the later wildfire.",
+      "new": "Plots lost 30 percent less canopy in the later wildfire.",
+      "old_length": 100,
+      "new_length": 56
+    },
+    {
+      "id": "RW-M10X-S0042",
+      "skill": "Rhetorical Synthesis",
+      "old": "Output fell from about 12 to about 3 liters per net per day when the weather turned windy and clear.",
+      "new": "Output fell from about 12 to about 3 liters per net per day.",
+      "old_length": 100,
+      "new_length": 60
+    },
+    {
+      "id": "RW-M10X-S0046",
+      "skill": "Rhetorical Synthesis",
+      "old": "The whales spent 70 percent of their tracked time within 40 kilometers of the coast, where shipping lanes cross.",
+      "new": "The whales spent 70 percent of their tracked time within 40 kilometers of the coast.",
+      "old_length": 112,
+      "new_length": 84
+    },
+    {
+      "id": "RW-M10X-S0051",
+      "skill": "Rhetorical Synthesis",
+      "old": "The biological layer that removes pathogens also slows the flow, so it must be scraped to restore the rate.",
+      "new": "The biological layer also slows the flow, so it must be scraped.",
+      "old_length": 107,
+      "new_length": 64
+    },
+    {
+      "id": "RW-M10X-S0053",
+      "skill": "Rhetorical Synthesis",
+      "old": "Only 70 percent of the amputations produced a complete limb; the rest formed scar tissue instead.",
+      "new": "Only 70 percent of the amputations produced a complete limb.",
+      "old_length": 97,
+      "new_length": 60
+    },
+    {
+      "id": "RW-M13-INFO-044",
+      "skill": "Central Ideas and Details",
+      "old": "Foxes living near heavy traffic appear to adjust when they are active.",
+      "new": "Foxes living near heavy traffic appear to adjust.",
+      "old_length": 70,
+      "new_length": 49
+    },
+    {
+      "id": "RW-M13-INFO-045",
+      "skill": "Central Ideas and Details",
+      "old": "The visual structure of signed poetry is lost when the work is transcribed as words.",
+      "new": "The visual structure of signed poetry is lost.",
+      "old_length": 84,
+      "new_length": 46
+    },
+    {
+      "id": "RW-M13-INFO-057",
+      "skill": "Inferences",
+      "old": "moths whose color contrasted with the bark were more likely to be caught by birds.",
+      "new": "Moths were more likely to be caught by birds.",
+      "old_length": 82,
+      "new_length": 45
+    },
+    {
+      "id": "RW-M13-INFO-061",
+      "skill": "Inferences",
+      "old": "visible surface conditions can hide ice too thin to support vehicles.",
+      "new": "Visible surface conditions can hide ice too thin.",
+      "old_length": 69,
+      "new_length": 49
+    },
+    {
+      "id": "RW-M13-LANG-077",
+      "skill": "Rhetorical Synthesis",
+      "old": "Rotating-shift nurses averaged 5.9 hours of sleep, compared with 6.8 for fixed-shift nurses, though the study drew on a single hospital.",
+      "new": "Rotating - shift nurses averaged 5.9 hours of sleep, compared with 6.8 for fixed - shift nurses.",
+      "old_length": 136,
+      "new_length": 96
+    },
+    {
+      "id": "RW-M16-CI001",
+      "skill": "Central Ideas and Details",
+      "old": "Kelp forests are exceptionally productive coastal ecosystems that grow in a wide range of ocean waters.",
+      "new": "Kelp forests are exceptionally productive coastal ecosystems.",
+      "old_length": 103,
+      "new_length": 61
+    },
+    {
+      "id": "RW-M16-CI002",
+      "skill": "Central Ideas and Details",
+      "old": "The durability of Roman concrete is now attributed to lime clasts that let the material repair its own cracks.",
+      "new": "The durability of Roman concrete is now attributed to lime clasts.",
+      "old_length": 110,
+      "new_length": 66
+    },
+    {
+      "id": "RW-M16-CI003",
+      "skill": "Central Ideas and Details",
+      "old": "Honeybees share the direction and distance of resources through dances whose form changes as the resource gets farther away.",
+      "new": "Honeybees share the direction and distance of resources through dances.",
+      "old_length": 124,
+      "new_length": 71
+    },
+    {
+      "id": "RW-M16-CI005",
+      "skill": "Central Ideas and Details",
+      "old": "Urban areas tend to be warmer than surrounding rural areas, mainly because their land surfaces have been modified.",
+      "new": "Urban areas tend to be warmer than surrounding rural areas.",
+      "old_length": 114,
+      "new_length": 59
+    },
+    {
+      "id": "RW-M16-CI007",
+      "skill": "Central Ideas and Details",
+      "old": "The Antikythera mechanism is the oldest known analogue computer, built to predict astronomical events and athletic cycles.",
+      "new": "The Antikythera mechanism is the oldest known analogue computer.",
+      "old_length": 122,
+      "new_length": 64
+    },
+    {
+      "id": "RW-M16-INF008",
+      "skill": "Inferences",
+      "old": "a tree can produce a chemical defense after a neighboring tree is damaged.",
+      "new": "A tree can produce a chemical defense.",
+      "old_length": 74,
+      "new_length": 38
+    },
+    {
+      "id": "RW-M16-CI009",
+      "skill": "Central Ideas and Details",
+      "old": "Coral bleaching, driven mainly by warming oceans, threatens reefs and the communities that depend on them.",
+      "new": "Coral bleaching, threatens reefs and the communities that depend on them.",
+      "old_length": 106,
+      "new_length": 73
+    },
+    {
+      "id": "RW-M16-INF009",
+      "skill": "Inferences",
+      "old": "reefs that support coastal fisheries may deteriorate when corals bleach.",
+      "new": "Reefs that support coastal fisheries may deteriorate.",
+      "old_length": 72,
+      "new_length": 53
+    },
+    {
+      "id": "RW-M16-CI010",
+      "skill": "Central Ideas and Details",
+      "old": "The Voyager Golden Records are a time capsule of Earth's diversity, intended for any extraterrestrial finders.",
+      "new": "The Voyager Golden Records are a time capsule of Earth 's diversity.",
+      "old_length": 110,
+      "new_length": 68
+    },
+    {
+      "id": "RW-M16-CI011",
+      "skill": "Central Ideas and Details",
+      "old": "Standard time synchronizes clocks across a region and was adopted to support weather forecasting and rail travel.",
+      "new": "Standard time synchronizes clocks across a region and was adopted.",
+      "old_length": 113,
+      "new_length": 66
+    },
+    {
+      "id": "RW-M17-CT001",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 traces the growth of nuclear power and notes that accidents affected its public standing, while Text 2 describes the human and financial scale of one such accident.",
+      "new": "Text 1 traces the growth of nuclear power and notes, while Text 2 describes the human and financial scale of one such accident.",
+      "old_length": 171,
+      "new_length": 127
+    },
+    {
+      "id": "RW-M17-CT003",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 presents competing assessments of working away from an office, while Text 2 describes costs associated with a particular kind of office layout.",
+      "new": "Text 1 presents competing assessments of working away from an office, while Text 2 describes costs.",
+      "old_length": 150,
+      "new_length": 99
+    },
+    {
+      "id": "RW-M17-CT009",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 defines a development pattern and lists its costs, while Text 2 describes a movement that aims to address those costs.",
+      "new": "Text 1 defines a development pattern and lists its costs, while Text 2 describes a movement.",
+      "old_length": 125,
+      "new_length": 92
+    },
+    {
+      "id": "RW-M17-CT015",
+      "skill": "Cross-Text Connections",
+      "old": "Text 1 describes reasons for and milestones of exploring space, while Text 2 discusses proposals to settle space and the legal limits on such settlements.",
+      "new": "Text 1 describes reasons for and milestones of exploring space, while Text 2 discusses proposals.",
+      "old_length": 154,
+      "new_length": 97
+    },
+    {
+      "id": "RW-M17-CI001",
+      "skill": "Central Ideas and Details",
+      "old": "Nuclear power is generated mainly through fission today, while fusion remains an experimental technology.",
+      "new": "Nuclear power is generated mainly through fission today.",
+      "old_length": 105,
+      "new_length": 56
+    },
+    {
+      "id": "RW-M17-CI005",
+      "skill": "Central Ideas and Details",
+      "old": "Urban sprawl is low-density, automobile-dependent expansion that brings environmental and economic costs.",
+      "new": "Urban sprawl is low - density, automobile - dependent expansion.",
+      "old_length": 105,
+      "new_length": 64
+    },
+    {
+      "id": "RW-M18-CI002",
+      "skill": "Central Ideas and Details",
+      "old": "Circadian rhythms are internal roughly 24-hour cycles found across many forms of life that are adjusted by external cues.",
+      "new": "Circadian rhythms are internal roughly 24 - hour cycles.",
+      "old_length": 121,
+      "new_length": 56
+    },
+    {
+      "id": "RW-M18-CI003",
+      "skill": "Central Ideas and Details",
+      "old": "Vaccination trains the immune system to prevent disease and has saved millions of lives, though low vaccination rates allow some diseases to resurge.",
+      "new": "Vaccination trains the immune system and has saved millions of lives.",
+      "old_length": 149,
+      "new_length": 69
+    },
+    {
+      "id": "RW-M18-CI004",
+      "skill": "Central Ideas and Details",
+      "old": "Herd immunity is indirect protection that arises when enough people are immune, and it shields those who cannot be vaccinated.",
+      "new": "Herd immunity is indirect protection, and it shields those who can not be vaccinated.",
+      "old_length": 126,
+      "new_length": 85
+    },
+    {
+      "id": "RW-M18-CI006",
+      "skill": "Central Ideas and Details",
+      "old": "Ocean acidification is a measurable drop in seawater pH caused mainly by absorbed carbon dioxide, and it threatens organisms that build shells and skeletons.",
+      "new": "Ocean acidification is a measurable drop in seawater pH, and it threatens organisms.",
+      "old_length": 157,
+      "new_length": 84
+    },
+    {
+      "id": "RW-M18-CE006",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Marine calcifying organisms, such as mollusks and corals, are especially vulnerable because they rely on calcium carbonate to build shells and skeletons.",
+      "new": "Marine calcifying organisms, such as mollusks and corals, are especially vulnerable.",
+      "old_length": 153,
+      "new_length": 84
+    },
+    {
+      "id": "RW-M18-CE007",
+      "skill": "Command of Evidence (Textual)",
+      "old": "While systems such as buses and railways are commonly cited, air travel is often excluded from general discussions of public transport due to its market-driven structure and competitive pricing.",
+      "new": "Air travel is often excluded from general discussions of public transport due to its market - driven structure and competitive pricing.",
+      "old_length": 194,
+      "new_length": 135
+    },
+    {
+      "id": "RW-M19-CI001",
+      "skill": "Central Ideas and Details",
+      "old": "Placebos are inert treatments used to test real ones, and although they can affect some symptoms, improvement may have other causes.",
+      "new": "Placebos are inert treatments, and, improvement may have other causes.",
+      "old_length": 132,
+      "new_length": 70
+    },
+    {
+      "id": "RW-M19-CI003",
+      "skill": "Central Ideas and Details",
+      "old": "Green roofs are layered vegetated roof systems that provide building and environmental benefits.",
+      "new": "Green roofs are layered vegetated roof systems.",
+      "old_length": 96,
+      "new_length": 47
+    },
+    {
+      "id": "RW-M19-CE004",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Current applications of vertical farming coupled with other state-of-the-art technologies, such as specialized LED lights, have resulted in over 10 times the crop yield as would be received through traditional farming methods.",
+      "new": "Current applications of vertical farming, have resulted in over 10 times the crop yield as would be received through traditional farming methods.",
+      "old_length": 226,
+      "new_length": 145
+    },
+    {
+      "id": "RW-M19-CE006",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Citizen science observations can be used to uncover general trends in native habitats across broad spatial and temporal scales, extending data collection beyond the capacity of individual researchers.",
+      "new": "Citizen science observations can be used to uncover general trends in native habitats across broad spatial and temporal scales.",
+      "old_length": 200,
+      "new_length": 127
+    },
+    {
+      "id": "RW-M19-CE007",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Research suggests that noise pollution in the United States is the highest in low-income and racial minority neighborhoods, and noise pollution associated with household electricity generators is an emerging environmental degradation in many developing nations.",
+      "new": "Research suggests that noise pollution in the United States is the highest in low - income and racial minority neighborhoods, and noise pollution is an emerging environmental degradation in many developing nations.",
+      "old_length": 261,
+      "new_length": 214
+    },
+    {
+      "id": "RW-M19-CE009",
+      "skill": "Command of Evidence (Textual)",
+      "old": "This occurs throughout all the processes involved in the food system, during production, processing, distribution, retail, and consumption, but most food waste is created after consumers buy the food.",
+      "new": "This occurs throughout all the processes, during production, processing, distribution, retail, and consumption, but most food waste is created after consumers buy the food.",
+      "old_length": 200,
+      "new_length": 172
+    },
+    {
+      "id": "RW-M20-CI002",
+      "skill": "Central Ideas and Details",
+      "old": "A slave uprising in Saint-Domingue became a revolution that founded a state ruled by formerly enslaved people and unsettled slaveholding societies.",
+      "new": "A slave uprising in Saint - Domingue became a revolution that founded a state.",
+      "old_length": 147,
+      "new_length": 78
+    },
+    {
+      "id": "RW-M20-CI004",
+      "skill": "Central Ideas and Details",
+      "old": "The Marshall Plan sent large-scale American aid to Western Europe to rebuild economies and resist communism.",
+      "new": "The Marshall Plan sent large - scale American aid to Western Europe.",
+      "old_length": 108,
+      "new_length": 68
+    },
+    {
+      "id": "RW-M20-CI005",
+      "skill": "Central Ideas and Details",
+      "old": "The Soviet blockade of West Berlin was countered by a massive Western airlift that kept the city supplied until the blockade ended.",
+      "new": "The Soviet blockade of West Berlin was countered by a massive Western airlift.",
+      "old_length": 131,
+      "new_length": 78
+    },
+    {
+      "id": "RW-M20-CI006",
+      "skill": "Central Ideas and Details",
+      "old": "Magna Carta began as a peace deal limiting royal power, failed at first, and was reissued until it became statute law.",
+      "new": "Magna Carta began as a peace deal, failed at first, and was reissued.",
+      "old_length": 118,
+      "new_length": 69
+    },
+    {
+      "id": "RW-M20-CI007",
+      "skill": "Central Ideas and Details",
+      "old": "The Silk Road was a long-lived web of trade routes whose name and scope historians continue to debate.",
+      "new": "The Silk Road was a long - lived web of trade routes.",
+      "old_length": 102,
+      "new_length": 53
+    },
+    {
+      "id": "RW-M20-CI008",
+      "skill": "Central Ideas and Details",
+      "old": "The Library of Alexandria was a major ancient research library whose collection size remains uncertain.",
+      "new": "The Library of Alexandria was a major ancient research library.",
+      "old_length": 103,
+      "new_length": 63
+    },
+    {
+      "id": "RW-M20-CI010",
+      "skill": "Central Ideas and Details",
+      "old": "Millions of Black Americans left the rural South for Northern and Western cities, driven by discrimination and seeking better conditions.",
+      "new": "Millions of Black Americans left the rural South for Northern and Western cities.",
+      "old_length": 137,
+      "new_length": 81
+    },
+    {
+      "id": "RW-M21-CE001",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Although the word origami has Japanese roots, the practice itself is universal and its origin remains unknown.",
+      "new": "The practice itself is universal and its origin remains unknown.",
+      "old_length": 110,
+      "new_length": 64
+    },
+    {
+      "id": "RW-M21-CI002",
+      "skill": "Central Ideas and Details",
+      "old": "Jazz arose in African American communities in New Orleans, drew on many traditions, and developed distinct styles over time.",
+      "new": "Jazz arose in African American communities in New Orleans.",
+      "old_length": 124,
+      "new_length": 58
+    },
+    {
+      "id": "RW-M21-CI003",
+      "skill": "Central Ideas and Details",
+      "old": "Haiku is a short Japanese poetic form with traditional rules that has been adapted widely and variably outside Japan.",
+      "new": "Haiku is a short Japanese poetic form with traditional rules.",
+      "old_length": 117,
+      "new_length": 61
+    },
+    {
+      "id": "RW-M21-CI005",
+      "skill": "Central Ideas and Details",
+      "old": "The Rosetta Stone records one decree in three scripts, which made it the key to deciphering Egyptian hieroglyphs.",
+      "new": "The Rosetta Stone records one decree in three scripts.",
+      "old_length": 113,
+      "new_length": 54
+    },
+    {
+      "id": "RW-M21-CI008",
+      "skill": "Central Ideas and Details",
+      "old": "Color theory is a body of knowledge about color mixing and harmony that overlaps with objective color science and has practical uses.",
+      "new": "Color theory is a body of knowledge about color mixing and harmony.",
+      "old_length": 133,
+      "new_length": 67
+    },
+    {
+      "id": "RW-M22-CI006",
+      "skill": "Central Ideas and Details",
+      "old": "CRISPR adapts a bacterial defense system to cut DNA precisely, enabling many applications while raising controversy over germline editing.",
+      "new": "CRISPR adapts a bacterial defense system enabling many applications.",
+      "old_length": 138,
+      "new_length": 68
+    },
+    {
+      "id": "RW-M22-CI007",
+      "skill": "Central Ideas and Details",
+      "old": "Hibernation is a seasonal state of suppressed metabolism that conserves energy when food is scarce.",
+      "new": "Hibernation is a seasonal state of suppressed metabolism.",
+      "old_length": 99,
+      "new_length": 57
+    },
+    {
+      "id": "RW-M22-CE008",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Similar findings from studies in South America, China and Japan make it reasonable to suggest that declines are occurring around the globe.",
+      "new": "Similar findings from studies in South America, China and Japan make it reasonable.",
+      "old_length": 139,
+      "new_length": 83
+    },
+    {
+      "id": "RW-M22-CI010",
+      "skill": "Central Ideas and Details",
+      "old": "A mycorrhiza is a usually mutualistic root association in which fungi trade water and nutrients for plant sugars.",
+      "new": "A mycorrhiza is a usually mutualistic root association.",
+      "old_length": 113,
+      "new_length": 55
+    },
+    {
+      "id": "RW-M22-CE010",
+      "skill": "Command of Evidence (Textual)",
+      "old": "The plant makes organic molecules by photosynthesis and supplies them to the fungus in the form of sugars or lipids, while the fungus supplies the plant with water and mineral nutrients, such as phosphorus, nitrogen, or zinc, taken from the soil.",
+      "new": "The plant makes organic molecules by photosynthesis and supplies them to the fungus in the form of sugars or lipids.",
+      "old_length": 246,
+      "new_length": 116
+    },
+    {
+      "id": "RW-M23-CI007",
+      "skill": "Central Ideas and Details",
+      "old": "Radio telescopes detect faint radio waves from space using large antennas, often in arrays and away from interference.",
+      "new": "Radio telescopes detect faint radio waves from space.",
+      "old_length": 118,
+      "new_length": 53
+    },
+    {
+      "id": "RW-M24-CE007",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Students from low-income households often face limited access to reliable internet and digital devices, which negatively affects their educational opportunities.",
+      "new": "Students from low - income households often face limited access to reliable internet and digital devices.",
+      "old_length": 161,
+      "new_length": 105
+    },
+    {
+      "id": "RW-M25-CE004",
+      "skill": "Command of Evidence (Textual)",
+      "old": "They traded extensively, exporting agricultural products and luxury crafts in exchange for raw metals which were difficult to obtain on Crete.",
+      "new": "They traded extensively, exporting agricultural products and luxury crafts in exchange for raw metals.",
+      "old_length": 142,
+      "new_length": 102
+    },
+    {
+      "id": "RW-M25-CE007",
+      "skill": "Command of Evidence (Textual)",
+      "old": "The Han dynasty is considered a golden age in Chinese history, impacting Chinese identity in later periods.",
+      "new": "The Han dynasty is considered a golden age in Chinese history.",
+      "old_length": 107,
+      "new_length": 62
+    },
+    {
+      "id": "RW-M25-CI008",
+      "skill": "Central Ideas and Details",
+      "old": "The Maurya Empire was a vast Iron Age South Asian power whose reach beyond its core depended on commanders' loyalty.",
+      "new": "The Maurya Empire was a vast Iron Age South Asian power.",
+      "old_length": 116,
+      "new_length": 56
+    },
+    {
+      "id": "RW-M26-CE003",
+      "skill": "Command of Evidence (Textual)",
+      "old": "The relocated peoples suffered from exposure, disease, and starvation while en route to their newly designated Indian reserve.",
+      "new": "The relocated peoples suffered from exposure, disease, and starvation.",
+      "old_length": 126,
+      "new_length": 70
+    },
+    {
+      "id": "RW-M26-CI008",
+      "skill": "Central Ideas and Details",
+      "old": "The Homestead Acts gave away vast public lands to settlers, reflecting Free Soil ideals and drawing millions of claimants.",
+      "new": "The Homestead Acts gave away vast public lands to settlers.",
+      "old_length": 122,
+      "new_length": 59
+    },
+    {
+      "id": "RW-M26-CE009",
+      "skill": "Command of Evidence (Textual)",
+      "old": "It was the first major US law implemented to prevent all members of a specific national group from immigrating to the United States, and therefore significantly shaped twentieth-century immigration policy.",
+      "new": "It was the first major US law, and therefore significantly shaped twentieth - century immigration policy.",
+      "old_length": 205,
+      "new_length": 105
+    },
+    {
+      "id": "RW-M26-CE010",
+      "skill": "Command of Evidence (Textual)",
+      "old": "It began with the sinking of the USS Maine in Havana Harbor in Cuba, and eventually resulted in the U.S. acquiring Puerto Rico, Guam, the Philippines, and establishing a protectorate over Cuba.",
+      "new": "It began with the sinking of the USS Maine in Havana Harbor in Cuba, and eventually resulted in the U.S..",
+      "old_length": 193,
+      "new_length": 105
+    },
+    {
+      "id": "RW-M27-CI008",
+      "skill": "Central Ideas and Details",
+      "old": "A minimum wage is a legal price floor on labor that raises labor costs and remains debated.",
+      "new": "A minimum wage is a legal price floor on labor.",
+      "old_length": 91,
+      "new_length": 47
+    },
+    {
+      "id": "RW-M28-CI002",
+      "skill": "Central Ideas and Details",
+      "old": "Classical conditioning pairs a neutral stimulus with a potent one to produce an automatic conditioned response.",
+      "new": "Classical conditioning pairs a neutral stimulus with a potent one.",
+      "old_length": 111,
+      "new_length": 66
+    },
+    {
+      "id": "RW-M28-CE002",
+      "skill": "Command of Evidence (Textual)",
+      "old": "The term classical conditioning refers to the process of an automatic, conditioned response that is paired with a specific stimulus.",
+      "new": "The term classical conditioning refers to the process of an automatic, conditioned response.",
+      "old_length": 132,
+      "new_length": 92
+    },
+    {
+      "id": "RW-M28-CE003",
+      "skill": "Command of Evidence (Textual)",
+      "old": "some theorists consider the two forms of memory distinct, assuming that working memory allows for the manipulation of stored information, whereas short-term memory only refers to the short-term storage of information.",
+      "new": "Some theorists consider the two forms of memory distinct, assuming that working memory allows for the manipulation of stored information.",
+      "old_length": 217,
+      "new_length": 137
+    },
+    {
+      "id": "RW-M28-CI004",
+      "skill": "Central Ideas and Details",
+      "old": "Confirmation bias is the tendency to seek, interpret, and recall information in ways that support existing beliefs.",
+      "new": "Confirmation bias is the tendency to seek, interpret, and recall information in ways.",
+      "old_length": 115,
+      "new_length": 85
+    },
+    {
+      "id": "RW-M28-CI006",
+      "skill": "Central Ideas and Details",
+      "old": "A mindset is an established set of attitudes that can shape behavior and resist change.",
+      "new": "A mindset is an established set of attitudes.",
+      "old_length": 87,
+      "new_length": 45
+    },
+    {
+      "id": "RW-M28-CE007",
+      "skill": "Command of Evidence (Textual)",
+      "old": "This process can occur in response to learning new skills, experiencing environmental changes, recovering from injuries, or adapting to sensory or cognitive deficits.",
+      "new": "This process can occur in response to learning new skills, experiencing environmental changes.",
+      "old_length": 166,
+      "new_length": 94
+    },
+    {
+      "id": "RW-M28-CE008",
+      "skill": "Command of Evidence (Textual)",
+      "old": "The interactions with caregivers form patterns of attachment, which in turn create internal working models that influence future relationships.",
+      "new": "The interactions with caregivers form patterns of attachment, which in turn create internal working models.",
+      "old_length": 143,
+      "new_length": 107
+    },
+    {
+      "id": "RW-M29-CE002",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Volcanoes resulting from divergent tectonic activity are usually nonexplosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+      "new": "Volcanoes are usually nonexplosive whereas those resulting from convergent tectonic activity cause violent eruptions.",
+      "old_length": 160,
+      "new_length": 117
+    },
+    {
+      "id": "RW-M31-CE006",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Animation is a filmmaking technique whereby pictures are created or manipulated and then played in sequence to create the illusion of moving images.",
+      "new": "Animation is a filmmaking technique whereby pictures are created or manipulated and then played in sequence.",
+      "old_length": 148,
+      "new_length": 108
+    },
+    {
+      "id": "RW-M32-CE002",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Even though human language capacity is finite, one can say and understand an effectively infinite number of sentences, which is based on a syntactic principle called recursion.",
+      "new": "Even though human language capacity is finite, one can say and understand an effectively infinite number of sentences, which is based on a syntactic principle.",
+      "old_length": 176,
+      "new_length": 159
+    },
+    {
+      "id": "RW-M32-CE005",
+      "skill": "Command of Evidence (Textual)",
+      "old": "The field of phonetics is traditionally divided into three sub-disciplines: articulatory phonetics, acoustic phonetics, and auditory phonetics.",
+      "new": "The field of phonetics is traditionally divided into three sub - disciplines.",
+      "old_length": 143,
+      "new_length": 77
+    },
+    {
+      "id": "RW-M32-CE008",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Writing systems are generally classified according to how their symbols, called graphemes, relate to units of language.",
+      "new": "Writing systems are generally classified according to how their symbols, relate to units of language.",
+      "old_length": 119,
+      "new_length": 101
+    },
+    {
+      "id": "RW-M33-CE002",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Sanitation systems aim to protect human health by providing a clean environment that will stop the transmission of disease, especially through the fecal–oral route.",
+      "new": "Sanitation systems aim to protect human health by providing a clean environment.",
+      "old_length": 164,
+      "new_length": 80
+    },
+    {
+      "id": "RW-M34-CE004",
+      "skill": "Command of Evidence (Textual)",
+      "old": "It is a network of networks that comprises private, public, academic, business, and government networks of local to global scope, linked by electronic, wireless, and optical networking technologies.",
+      "new": "It is a network of networks, linked by electronic, wireless, and optical networking technologies.",
+      "old_length": 198,
+      "new_length": 97
+    },
+    {
+      "id": "RW-M34-CE006",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Open-source software (OSS) is computer software released under a license allowing users to use, study, modify, and distribute it to anyone for any purpose – in contrast to proprietary (closed-source) software.",
+      "new": "Open - source software ( ) is computer software released under a license – in contrast to proprietary ( closed - source ) software.",
+      "old_length": 209,
+      "new_length": 131
+    },
+    {
+      "id": "RW-M34-CE010",
+      "skill": "Command of Evidence (Textual)",
+      "old": "Research in HCI covers the design and the use of computer technology, which focuses on the interfaces between people (users) and computers.",
+      "new": "Research in HCI covers the design and the use of computer technology.",
+      "old_length": 139,
+      "new_length": 69
+    },
+    {
+      "id": "RW-INF-M29-01",
+      "skill": "Central Ideas and Details",
+      "old": "A diverse native seed mix can improve drought resilience and pollinator habitat even when it establishes more slowly than a species-poor mix.",
+      "new": "A diverse native seed mix can improve drought resilience and pollinator habitat.",
+      "old_length": 141,
+      "new_length": 80
+    }
+  ]
+}

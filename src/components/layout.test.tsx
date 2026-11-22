@@ -48,6 +48,7 @@ function baseApp(overrides: MinimalApp = {}): MinimalApp {
       openAuthModal: () => {},
       closeAuthModal: () => {},
       flushQueuedEmails: async () => {},
+      ensureBank: () => {},
     },
     ...overrides,
   };
@@ -69,6 +70,7 @@ function render() {
 
 beforeEach(() => {
   appState = baseApp();
+  window.localStorage.clear();
   container = document.createElement('div');
   document.body.appendChild(container);
   root = createRoot(container);
@@ -138,4 +140,76 @@ describe('app shell', () => {
     expect(container.querySelector('.flair-chip')).toBeNull();
   });
 
+  it('holds the route behind the Skullet skeleton until the bank is ready', () => {
+    appState = baseApp({ bankReady: false });
+    render();
+
+    expect(container.textContent).not.toContain('home');
+    expect(container.querySelector('[skullet-reveal]')).not.toBeNull();
+    expect(container.querySelector('.route-skeleton')).not.toBeNull();
+  });
+
+  it('hides and restores the desktop menu from the top bar', () => {
+    render();
+    const shell = container.querySelector('.app-shell')!;
+    const toggle = container.querySelector('.sidebar-toggle') as HTMLButtonElement;
+
+    expect(shell.classList.contains('is-sidebar-hidden')).toBe(false);
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    expect(toggle.getAttribute('aria-controls')).toBe('app-sidebar');
+
+    act(() => {
+      toggle.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+
+    expect(shell.classList.contains('is-sidebar-hidden')).toBe(true);
+    expect(toggle.getAttribute('aria-expanded')).toBe('false');
+    expect(window.localStorage.getItem('hdsat.sidebar.hidden.v1')).toBe('1');
+
+    act(() => {
+      toggle.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+
+    expect(shell.classList.contains('is-sidebar-hidden')).toBe(false);
+    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    expect(window.localStorage.getItem('hdsat.sidebar.hidden.v1')).toBeNull();
+  });
+
+  it('keeps the menu control icon-only and names both states', () => {
+    appState = baseApp({
+      mode: 'cloud',
+      accountStatus: 'cloud',
+      user: { email: 'student@example.com', displayName: 'Hrishi' },
+    });
+    render();
+    const toggle = container.querySelector('.sidebar-toggle') as HTMLButtonElement;
+
+    expect(toggle.querySelector('.sidebar-toggle-label')).toBeNull();
+    expect(toggle.textContent?.trim()).toBe('');
+    expect(toggle.querySelector('svg path')?.getAttribute('d')).toBe(
+      'M4 7h16M4 12h16M4 17h16'
+    );
+    expect(toggle.getAttribute('aria-label')).toBe('Hide navigation menu');
+    expect(toggle.getAttribute('title')).toBe('Hide navigation menu');
+
+    act(() => {
+      toggle.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    });
+
+    expect(toggle.textContent?.trim()).toBe('');
+    expect(toggle.getAttribute('aria-label')).toBe('Show navigation menu');
+    expect(toggle.getAttribute('title')).toBe('Show navigation menu');
+  });
+
+  it('remembers a hidden desktop menu on the next visit', () => {
+    window.localStorage.setItem('hdsat.sidebar.hidden.v1', '1');
+    render();
+
+    expect(container.querySelector('.app-shell')!.classList.contains('is-sidebar-hidden')).toBe(
+      true
+    );
+    expect(
+      container.querySelector('.sidebar-toggle')!.getAttribute('aria-expanded')
+    ).toBe('false');
+  });
 });

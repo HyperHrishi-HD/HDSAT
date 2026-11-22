@@ -10,6 +10,7 @@ import {
   chooseRushQuestion,
   describeRushKey,
   describeRushMix,
+  emptyRushHistory,
   emptyRushServed,
   parseRushDuration,
   rushAnswerPoints,
@@ -23,6 +24,7 @@ import {
   type RushDuration,
   type RushServed,
 } from '../lib/rush';
+import { useLeaveSave } from '../lib/leaveSave';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
 import type { Question, Section } from '../lib/types';
@@ -58,6 +60,7 @@ export function PracticeRush({ onFinished }: { onFinished?: () => void } = {}) {
   const sessionIdRef = useRef<string>(newEventId());
   const servedRef = useRef<RushServed>(emptyRushServed());
   const usedRef = useRef<Set<string>>(new Set());
+  const historyRef = useRef(emptyRushHistory());
   const recordedRef = useRef<boolean>(false);
   const answerStartRef = useRef<number>(Date.now());
 
@@ -68,27 +71,21 @@ export function PracticeRush({ onFinished }: { onFinished?: () => void } = {}) {
   const record = app.rushScores[rushKey] ?? null;
   const mix = rushDifficultyMix(elapsed);
 
-  useEffect(() => {
-    if (!active) return;
-    const timer = window.setInterval(() => setElapsed((seconds) => seconds + 1), 1000);
-    return () => window.clearInterval(timer);
-  }, [active]);
-
-  useEffect(() => {
-    if (!active || duration === 'free') return;
-    if (elapsed >= duration) {
-      setActive(false);
-      setFinished(true);
-    }
-  }, [active, duration, elapsed]);
-
-  useEffect(() => {
-    if (!finished || recordedRef.current) return;
+  /**
+   * Settles the run exactly once: the personal best, then the session payout.
+   * Called when the clock runs out, when the pool runs dry, and when the game is
+   * left or the page is closed mid-run, so a run that was actually sat is never
+   * thrown away. `recordedRef` keeps it to one payout per run.
+   */
+  const settleRun = () => {
+    if (recordedRef.current) return;
+    if (attempted < 1) return;
     recordedRef.current = true;
     onFinished?.();
-    if (attempted < RUSH_MIN_ATTEMPTS_FOR_RECORD) return;
-    const outcome = app.actions.recordRushScore(rushKey, score);
-    setNewBest(outcome.improved);
+    if (attempted >= RUSH_MIN_ATTEMPTS_FOR_RECORD) {
+      const outcome = app.actions.recordRushScore(rushKey, score);
+      setNewBest(outcome.improved);
+    }
     void app.actions.completeSession({
       activityType: 'practice_rush',
       sessionId: sessionIdRef.current,
@@ -96,7 +93,29 @@ export function PracticeRush({ onFinished }: { onFinished?: () => void } = {}) {
       correct,
       timeSpentSeconds: elapsed,
     });
+  };
+
+  useEffect(() => {
+    if (finished) settleRun();
   }, [finished]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Leaving the game saves the run; switching to another browser tab only
+  // pauses the clock, because the run is still open when the student returns.
+  const backgrounded = useLeaveSave(settleRun, active && !finished);
+
+  useEffect(() => {
+    if (!active || backgrounded) return;
+    const timer = window.setInterval(() => setElapsed((seconds) => seconds + 1), 1000);
+    return () => window.clearInterval(timer);
+  }, [active, backgrounded]);
+
+  useEffect(() => {
+    if (!active || backgrounded || duration === 'free') return;
+    if (elapsed >= duration) {
+      setActive(false);
+      setFinished(true);
+    }
+  }, [active, backgrounded, duration, elapsed]);
 
   const start = () => {
     const built = buildPracticeSession(
@@ -121,8 +140,17 @@ export function PracticeRush({ onFinished }: { onFinished?: () => void } = {}) {
     const nextPool = banded.length > 0 ? banded : built;
     servedRef.current = emptyRushServed();
     usedRef.current = new Set();
+    historyRef.current = emptyRushHistory();
     recordedRef.current = false;
-    const first = chooseRushQuestion(nextPool, difficulty, 0, servedRef.current, usedRef.current);
+    const first = chooseRushQuestion(
+      nextPool,
+      difficulty,
+      0,
+      servedRef.current,
+      usedRef.current,
+      Math.random,
+      historyRef.current
+    );
     if (!first) return;
     usedRef.current.add(first.id);
     sessionIdRef.current = newEventId();
@@ -174,7 +202,9 @@ export function PracticeRush({ onFinished }: { onFinished?: () => void } = {}) {
       difficulty,
       elapsed,
       servedRef.current,
-      usedRef.current
+      usedRef.current,
+      Math.random,
+      historyRef.current
     );
     if (next) {
       usedRef.current.add(next.id);
@@ -191,10 +221,7 @@ export function PracticeRush({ onFinished }: { onFinished?: () => void } = {}) {
         <div className="row-between">
           <div>
             <h2>Practice Rush</h2>
-            <p className="muted">
-              High-tempo SAT skill sprint. Answer as many questions accurately as you can before the
-              clock expires.
-            </p>
+            <p className="muted">High-tempo SAT skill sprint.</p>
           </div>
           <Badge tone="info">Mixed bank draw</Badge>
         </div>
