@@ -1,13 +1,27 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Alert, Button, Field, Select, Toggle } from './ui';
+import {
+  ArrowRight,
+  Eye,
+  EyeOff,
+  KeyRound,
+  Lock,
+  Mail,
+  ShieldCheck,
+  UserRound,
+  X,
+} from 'lucide-react';
+import { BrandMark } from './BrandMark';
+import { Select, Toggle } from './ui';
 import * as cloud from '../lib/cloud';
 import { validateConsent } from '../lib/dataRights';
 import { AGE_BANDS, COPYRIGHT_PATH, LEGAL_VERSION, MIN_AGE, PRIVACY_PATH, TERMS_PATH } from '../lib/legal';
 import { formatCooldown } from '../lib/password';
-import { formatRemainingHours } from '../lib/storage';
+import { formatRemainingHours, pendingCodeEndsAt } from '../lib/storage';
+import * as emailAllowance from '../lib/emailAllowance';
 import { budgetAllows, queueEmail, removeQueuedEmail } from '../lib/emailQueue';
 import { useApp } from '../lib/store';
+import { useBackdropDismiss } from '../lib/useBackdropDismiss';
 
 /**
  * One entry point for accounts.
@@ -27,8 +41,10 @@ export function AuthModal() {
   const [guardianConsent, setGuardianConsent] = useState(false);
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [googleBusy, setGoogleBusy] = useState(false);
   const [verifyCode, setVerifyCode] = useState('');
   const [verifying, setVerifying] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
 
@@ -56,11 +72,15 @@ export function AuthModal() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [app.authModalOpen, app.actions]);
 
+  // Pressing outside closes the card; dragging a selection out of it does not.
+  // Declared before the early return so the hook order never changes.
+  const backdrop = useBackdropDismiss(app.actions.closeAuthModal);
+
   if (!app.authModalOpen) return null;
 
   const targetEmail = email.trim() || app.pendingAccount?.email || '';
   const remainingMs = app.pendingAccount
-    ? Math.max(0, app.pendingAccount.expiresAt - Date.now())
+    ? Math.max(0, pendingCodeEndsAt(app.pendingAccount) - Date.now())
     : 0;
   const isVerify = app.authModalView === 'verify';
 
@@ -75,6 +95,14 @@ export function AuthModal() {
   const sendRecoveryLink = async (address: string) => {
     if (!address) {
       setFormError('Enter your email address first.');
+      return;
+    }
+    // Same daily allowance as the confirmation code: one message per address,
+    // whichever button sent it. Checked locally first so the answer is instant
+    // even when the network is slow, then confirmed against the database.
+    const localWait = emailAllowance.emailAllowanceRemaining(address);
+    if (localWait > 0) {
+      setStatusMessage(emailAllowance.oneEmailPerDayMessage(address, localWait));
       return;
     }
     const wait = await cloud.emailRequestWait(address, 'reset').catch(() => 0);
@@ -97,8 +125,30 @@ export function AuthModal() {
     }
     await cloud.requestPasswordReset(address);
     await cloud.recordEmailRequest(address, 'reset').catch(() => {});
+    emailAllowance.recordEmailSent(address);
     removeQueuedEmail(address, 'reset');
-    setStatusMessage('Recovery link sent. Open it to set a new password.');
+    setStatusMessage(
+      'Recovery link sent. It works for 12 hours and can be used once. It can take a few minutes — only one is sent per day, so check spam before asking again.'
+    );
+  };
+
+  const handleGoogle = async () => {
+    setFormError(null);
+    setStatusMessage(null);
+    setGoogleBusy(true);
+    try {
+      // This navigates to Google and back to Account; the button stays in its
+      // pending state until the page leaves or the provider returns an error.
+      await cloud.signInWithGoogle();
+    } catch (err) {
+      setGoogleBusy(false);
+      const message = (err as Error).message;
+      setFormError(
+        /provider is not enabled|unsupported provider/i.test(message)
+          ? 'Google sign-in is not enabled on this deployment yet. Use email or Guest Mode, or ask the operator to enable the Google provider.'
+          : message
+      );
+    }
   };
 
   const handleForgotPassword = async () => {
@@ -211,9 +261,11 @@ export function AuthModal() {
     }
     try {
       await app.actions.resendVerification(targetEmail);
-      setStatusMessage('Confirmation email sent. The 6-digit code works for 24 hours.');
+      setStatusMessage('Confirmation email sent. The 6-digit code works for 12 hours.');
     } catch (err) {
-      setFormError((err as Error).message);
+      // A cooldown or the day's cap is guidance, not a failed action: the
+      // account already works, so this stays a notice rather than a red alarm.
+      setStatusMessage((err as Error).message);
     }
   };
 
@@ -232,225 +284,368 @@ export function AuthModal() {
 
   return (
     <div
-      className="modal-backdrop"
+      className="modal-backdrop auth-backdrop"
       role="dialog"
       aria-modal="true"
-      aria-label={isVerify ? 'Confirm your email' : 'Sign in or create an account'}
-      onClick={(e) => {
-        if (e.target === e.currentTarget) app.actions.closeAuthModal();
-      }}
+      aria-labelledby="auth-modal-title"
+      {...backdrop}
     >
-      <div className={`modal-card auth-modal-card${isVerify ? ' auth-modal-confirm' : ''}`}>
-        <div className="row-between" style={{ marginBottom: 8 }}>
-          <div>
-            <h2 style={{ margin: 0 }}>
-              {isVerify ? 'Confirm your email' : 'Sign in or create an account'}
-            </h2>
-            <p className="muted" style={{ margin: '4px 0 0' }}>
-              {isVerify ? 'The code works for 24 hours.' : 'Sync across devices.'}
-            </p>
-          </div>
-          <Button variant="ghost" size="sm" onClick={app.actions.closeAuthModal}>
-            Close
-          </Button>
-        </div>
+      <div className="auth-ambient" aria-hidden="true">
+        <span className="auth-aurora auth-aurora-top" />
+        <span className="auth-aurora auth-aurora-bottom" />
+        <span className="auth-aurora auth-aurora-left" />
+        <span className="auth-aurora auth-aurora-right" />
+        <span className="auth-noise" />
+      </div>
 
-        {statusMessage ? <Alert tone="notice">{statusMessage}</Alert> : null}
-        {formError ? <Alert tone="error">{formError}</Alert> : null}
+      <div className="auth-stage">
+        <div className={`auth-glass${isVerify ? ' is-confirm' : ''}`}>
+          {/* Kept outside the scrolling card so it remains reachable on a
+              short phone screen. */}
+          <button
+            type="button"
+            className="auth-close"
+            onClick={app.actions.closeAuthModal}
+            aria-label="Close sign-in window"
+          >
+            <X size={16} aria-hidden="true" />
+          </button>
 
-        {!app.cloudConfigured ? (
-          <div className="muted-block">
-            <p style={{ margin: 0 }}>
-              Cloud authentication is not configured in this build. You can continue studying in
-              Guest Mode on this device.
-            </p>
-          </div>
-        ) : isVerify ? (
-          <form onSubmit={handleVerify} className="stack">
-            {app.user ? (
-              <p className="muted" style={{ margin: 0 }}>
-                You are signed in. Confirming lifts the light-account limit: full answer history and
-                test detail are kept in the cloud.
+          <div className="auth-card">
+            <header className="auth-head">
+              <div className="auth-brand">
+                <BrandMark size={38} />
+                <span className="auth-brand-name">HDSAT</span>
+              </div>
+              <h2 id="auth-modal-title">
+                {isVerify ? 'Check your email' : 'Welcome back'}
+              </h2>
+              <p className="auth-subtitle">
+                {isVerify
+                  ? 'Enter the 6-digit code we sent to finish signing in.'
+                  : 'Sign in to sync your practice, coins and test history.'}
               </p>
-            ) : null}
-            <Field label="Email Address">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                autoComplete="email"
-                required
-              />
-            </Field>
-            <Field label="6-digit code">
-              <input
-                type="text"
-                inputMode="numeric"
-                value={verifyCode}
-                onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                placeholder="123456"
-                autoComplete="one-time-code"
-                autoFocus
-                required
-              />
-            </Field>
-            <div className="row">
-              <Button type="submit" disabled={verifying}>
-                {verifying ? 'Confirming…' : app.user ? 'Confirm' : 'Confirm & Sign In'}
-              </Button>
-              <Button type="button" variant="outline" onClick={() => void handleResend()}>
-                Resend
-              </Button>
-              {app.user ? (
-                <Button type="button" variant="ghost" onClick={app.actions.closeAuthModal}>
-                  Later
-                </Button>
-              ) : null}
-            </div>
-            {app.pendingAccount && remainingMs > 0 ? (
-              <p className="muted" style={{ margin: 0 }}>
-                {app.pendingAccount.email} · {formatRemainingHours(remainingMs)} left
-              </p>
-            ) : null}
-            <p className="auth-switch">
-              <button
-                type="button"
-                className="link-button"
-                onClick={() => void handleRecoveryFromVerify()}
-                disabled={verifying}
-              >
-                Email me a recovery link
-              </button>
-              <span className="muted"> · </span>
-              <button
-                type="button"
-                className="link-button"
-                onClick={() => {
-                  setFormError(null);
-                  setStatusMessage(null);
-                  if (app.user) app.actions.closeAuthModal();
-                  else app.actions.openAuthModal('signin');
-                }}
-              >
-                {app.user ? 'Close' : 'Back to sign in'}
-              </button>
-            </p>
-          </form>
-        ) : (
-          <form onSubmit={handleSubmit}>
-            <Field label="Email Address">
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="you@example.com"
-                required
-                autoComplete="email"
-              />
-            </Field>
-            <Field label="Password" hint="At least 6 characters.">
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                required
-                autoComplete="current-password"
-              />
-            </Field>
-            <p style={{ margin: '0 0 10px' }}>
-              <button
-                type="button"
-                className="link-button"
-                onClick={() => void handleForgotPassword()}
-                disabled={busy}
-              >
-                Forgot password?
-              </button>
-            </p>
-            <Field label="Display name">
-              <input
-                type="text"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                placeholder="e.g. Hrishi"
-                autoComplete="nickname"
-              />
-            </Field>
+            </header>
 
-            <details className="auth-details">
-              <summary>New account? Age &amp; policy consent</summary>
-              <Select
-                label="Your age group"
-                value={ageBand}
-                onChange={setAgeBand}
-                options={[{ value: '', label: 'Select your age group…' }, ...AGE_BANDS]}
-              />
-              {ageBand.length > 0 && ageBand !== '18+' ? (
-                <div className="muted-block" style={{ marginBottom: 10 }}>
-                  <p className="muted" style={{ marginTop: 0, marginBottom: 6 }}>
-                    Students aged {MIN_AGE}–17 require parent or guardian consent.
+            {statusMessage ? (
+              <div className="auth-status" role="status">
+                {statusMessage}
+              </div>
+            ) : null}
+            {formError ? (
+              <div className="auth-error" role="alert">
+                {formError}
+              </div>
+            ) : null}
+
+            {!app.cloudConfigured ? (
+              <div className="auth-empty">
+                <p>
+                  Cloud authentication is not configured in this build. You can continue studying in
+                  Guest Mode on this device.
+                </p>
+                <button
+                  type="button"
+                  className="auth-submit"
+                  onClick={() => {
+                    app.actions.continueAsGuest();
+                    app.actions.closeAuthModal();
+                  }}
+                >
+                  <span>Continue in Guest Mode</span>
+                  <ArrowRight size={15} aria-hidden="true" />
+                </button>
+              </div>
+            ) : isVerify ? (
+              <form onSubmit={handleVerify} className="auth-form">
+                {app.user ? (
+                  <p className="auth-note">
+                    You are signed in. Confirming lifts the light-account limit: full answer history
+                    and test detail are kept in the cloud.
                   </p>
-                  <Toggle
-                    checked={guardianConsent}
-                    onChange={setGuardianConsent}
-                    label="My parent or guardian agrees to the Terms and Privacy Policy"
-                  />
+                ) : null}
+
+                <label className="auth-field">
+                  <span className="auth-label">Email address</span>
+                  <span className="auth-input-wrap">
+                    <Mail className="auth-input-icon" size={16} aria-hidden="true" />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      autoComplete="email"
+                      required
+                    />
+                  </span>
+                </label>
+
+                <label className="auth-field">
+                  <span className="auth-label">6-digit code</span>
+                  <span className="auth-input-wrap">
+                    <KeyRound className="auth-input-icon" size={16} aria-hidden="true" />
+                    <input
+                      className="auth-code-input"
+                      type="text"
+                      inputMode="numeric"
+                      value={verifyCode}
+                      onChange={(e) => setVerifyCode(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                      placeholder="123456"
+                      autoComplete="one-time-code"
+                      autoFocus
+                      required
+                    />
+                  </span>
+                </label>
+
+                <button className="auth-submit" type="submit" disabled={verifying}>
+                  {verifying ? (
+                    <span className="auth-spinner" aria-label="Confirming" />
+                  ) : (
+                    <>
+                      <span>{app.user ? 'Confirm email' : 'Confirm & Sign In'}</span>
+                      <ArrowRight size={15} aria-hidden="true" />
+                    </>
+                  )}
+                </button>
+
+                <div className="auth-action-row">
+                  <button
+                    type="button"
+                    className="auth-secondary"
+                    onClick={() => void handleResend()}
+                    disabled={verifying}
+                  >
+                    Resend code
+                  </button>
+                  <button
+                    type="button"
+                    className="auth-text-button"
+                    onClick={() => void handleRecoveryFromVerify()}
+                    disabled={verifying}
+                  >
+                    Email me a recovery link
+                  </button>
                 </div>
-              ) : null}
-              <Toggle
-                checked={acceptedTerms}
-                onChange={setAcceptedTerms}
-                label={`I accept the Terms of Service & Privacy Policy (v${LEGAL_VERSION})`}
-              />
-              <p className="muted" style={{ marginBottom: 8 }}>
-                <Link to={TERMS_PATH} onClick={app.actions.closeAuthModal}>
-                  Terms
-                </Link>{' '}
-                ·{' '}
-                <Link to={PRIVACY_PATH} onClick={app.actions.closeAuthModal}>
-                  Privacy
-                </Link>{' '}
-                ·{' '}
-                <Link to={COPYRIGHT_PATH} onClick={app.actions.closeAuthModal}>
-                  Copyright
-                </Link>
-              </p>
-            </details>
 
-            <div className="row" style={{ marginTop: 12 }}>
-              <Button type="submit" disabled={busy}>
-                {busy ? 'Checking…' : 'Continue'}
-              </Button>
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  app.actions.continueAsGuest();
-                  app.actions.closeAuthModal();
-                }}
-              >
-                Continue in Guest Mode
-              </Button>
-            </div>
+                {app.pendingAccount && remainingMs > 0 ? (
+                  <p className="auth-meta">
+                    {app.pendingAccount.email} · {formatRemainingHours(remainingMs)} left
+                  </p>
+                ) : null}
 
-            <p className="auth-switch">
-              <button
-                type="button"
-                className="link-button"
-                onClick={() =>
-                  openVerify(
-                    email.trim(),
-                    'Enter the 6-digit code from your confirmation email.'
-                  )
-                }
-              >
-                Have a confirmation code?
-              </button>
-            </p>
-          </form>
-        )}
+                <p className="auth-switch">
+                  <button
+                    type="button"
+                    className="auth-text-button"
+                    onClick={() => {
+                      setFormError(null);
+                      setStatusMessage(null);
+                      if (app.user) app.actions.closeAuthModal();
+                      else app.actions.openAuthModal('signin');
+                    }}
+                  >
+                    {app.user ? 'Close' : 'Back to sign in'}
+                  </button>
+                </p>
+              </form>
+            ) : (
+              <form onSubmit={handleSubmit} className="auth-form">
+                <label className="auth-field">
+                  <span className="auth-label">Email address</span>
+                  <span className="auth-input-wrap">
+                    <Mail className="auth-input-icon" size={16} aria-hidden="true" />
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      placeholder="you@example.com"
+                      required
+                      autoComplete="email"
+                    />
+                  </span>
+                </label>
+
+                <label className="auth-field">
+                  <span className="auth-label">Password</span>
+                  <span className="auth-input-wrap">
+                    <Lock className="auth-input-icon" size={16} aria-hidden="true" />
+                    <input
+                      className="auth-password-input"
+                      type={showPassword ? 'text' : 'password'}
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      placeholder="At least 6 characters"
+                      required
+                      autoComplete="current-password"
+                    />
+                    <button
+                      type="button"
+                      className="auth-eye"
+                      onClick={() => setShowPassword((value) => !value)}
+                      aria-label={showPassword ? 'Hide password' : 'Show password'}
+                      aria-pressed={showPassword}
+                    >
+                      {showPassword ? (
+                        <EyeOff size={16} aria-hidden="true" />
+                      ) : (
+                        <Eye size={16} aria-hidden="true" />
+                      )}
+                    </button>
+                  </span>
+                </label>
+
+                <div className="auth-form-meta">
+                  <button
+                    type="button"
+                    className="auth-text-button"
+                    onClick={() => void handleForgotPassword()}
+                    disabled={busy}
+                  >
+                    Forgot password?
+                  </button>
+                </div>
+
+                <button className="auth-submit" type="submit" disabled={busy}>
+                  {busy ? (
+                    <span className="auth-spinner" aria-label="Signing in" />
+                  ) : (
+                    <>
+                      <span>Continue</span>
+                      <ArrowRight size={15} aria-hidden="true" />
+                    </>
+                  )}
+                </button>
+
+                <div className="auth-divider" aria-hidden="true">
+                  <span>or</span>
+                </div>
+
+                <button
+                  type="button"
+                  className="auth-google"
+                  onClick={() => void handleGoogle()}
+                  disabled={googleBusy || busy}
+                >
+                  <svg className="auth-google-mark" viewBox="0 0 24 24" aria-hidden="true">
+                    <path
+                      fill="#4285F4"
+                      d="M21.35 12.2c0-.7-.06-1.37-.18-2.02H12v3.82h5.26a4.5 4.5 0 0 1-1.95 2.95v2.45h3.16c1.85-1.7 2.88-4.2 2.88-7.2Z"
+                    />
+                    <path
+                      fill="#34A853"
+                      d="M12 21.7c2.63 0 4.84-.87 6.45-2.36l-3.16-2.45c-.87.58-1.99.93-3.29.93-2.53 0-4.68-1.71-5.45-4.01H3.28v2.52A9.75 9.75 0 0 0 12 21.7Z"
+                    />
+                    <path
+                      fill="#FBBC05"
+                      d="M6.55 13.81a5.86 5.86 0 0 1 0-3.62V7.67H3.28a9.75 9.75 0 0 0 0 8.66l3.27-2.52Z"
+                    />
+                    <path
+                      fill="#EA4335"
+                      d="M12 6.18c1.43 0 2.72.49 3.73 1.46l2.8-2.8A9.38 9.38 0 0 0 12 2.3a9.75 9.75 0 0 0-8.72 5.37l3.27 2.52C7.32 7.89 9.47 6.18 12 6.18Z"
+                    />
+                  </svg>
+                  <span>{googleBusy ? 'Opening Google…' : 'Continue with Google'}</span>
+                </button>
+                <p className="auth-provider-note">
+                  Google verifies your email automatically. Use Google only if you are 13 or older
+                  and accept the Terms and Privacy Policy.
+                </p>
+
+                <label className="auth-field">
+                  <span className="auth-label">
+                    Display name <span className="auth-optional">optional</span>
+                  </span>
+                  <span className="auth-input-wrap">
+                    <UserRound className="auth-input-icon" size={16} aria-hidden="true" />
+                    <input
+                      type="text"
+                      value={displayName}
+                      onChange={(e) => setDisplayName(e.target.value)}
+                      placeholder="e.g. Hrishi"
+                      autoComplete="nickname"
+                    />
+                  </span>
+                </label>
+
+                <details className="auth-details">
+                  <summary>New account? Age &amp; policy consent</summary>
+                  <Select
+                    label="Your age group"
+                    value={ageBand}
+                    onChange={setAgeBand}
+                    mode="dropdown"
+                    options={[{ value: '', label: 'Select your age group…' }, ...AGE_BANDS]}
+                  />
+                  {ageBand.length > 0 && ageBand !== '18+' ? (
+                    <div className="auth-consent-box">
+                      <p>
+                        Students aged {MIN_AGE}–17 require parent or guardian consent.
+                      </p>
+                      <Toggle
+                        checked={guardianConsent}
+                        onChange={setGuardianConsent}
+                        label="My parent or guardian agrees to the Terms and Privacy Policy"
+                      />
+                    </div>
+                  ) : null}
+                  <Toggle
+                    checked={acceptedTerms}
+                    onChange={setAcceptedTerms}
+                    label={`I accept the Terms of Service & Privacy Policy (v${LEGAL_VERSION})`}
+                  />
+                  <p className="auth-consent-links">
+                    <Link to={TERMS_PATH} onClick={app.actions.closeAuthModal}>
+                      Terms
+                    </Link>
+                    {' · '}
+                    <Link to={PRIVACY_PATH} onClick={app.actions.closeAuthModal}>
+                      Privacy
+                    </Link>
+                    {' · '}
+                    <Link to={COPYRIGHT_PATH} onClick={app.actions.closeAuthModal}>
+                      Copyright
+                    </Link>
+                  </p>
+                </details>
+
+                <p className="auth-switch auth-switch-left">
+                  <button
+                    type="button"
+                    className="auth-text-button"
+                    onClick={() =>
+                      openVerify(
+                        email.trim(),
+                        'Enter the 6-digit code from your confirmation email.'
+                      )
+                    }
+                  >
+                    Have a confirmation code?
+                  </button>
+                </p>
+
+                <div className="auth-guest">
+                  <span className="auth-guest-rule" aria-hidden="true" />
+                  <button
+                    type="button"
+                    className="auth-secondary auth-secondary-wide"
+                    onClick={() => {
+                      app.actions.continueAsGuest();
+                      app.actions.closeAuthModal();
+                    }}
+                  >
+                    Continue in Guest Mode
+                  </button>
+                </div>
+
+                <p className="auth-privacy-line">
+                  <ShieldCheck size={13} aria-hidden="true" />
+                  <span>Your practice stays private. Guest progress stays on this device.</span>
+                </p>
+              </form>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
