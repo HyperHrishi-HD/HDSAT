@@ -259,3 +259,35 @@ Nothing in this section has been applied. It is the material for the three defer
 - **R&W volume.** 2,326 more R&W items are needed for 5k/5k. Authoring runs at roughly 160 items per reviewed batch; the merge path (`merge_bank_m10.py --incoming …`) is the safe way to add each one.
 - **Duplicate debt in the old bank.** `tools/content_qa.py` reports 481 exact duplicate stems and about 5,000 near-duplicate pairs across the pre-existing generated tiers (the new batch contributes none). They are parameter variants from earlier volume sweeps. Cleaning means archiving ids, which would remove items students may have practiced — waiting on the owner's call.
 - **Public-source items.** Copying released College Board questions into a public bank is a licensing problem, and the openly licensed SAT-style R&W corpora that exist are small and uneven. Original items in the official formats remain the safe path; a licensed export can be imported unchanged with `--file` if one is ever obtained.
+
+## 8. Round notes (2026-11-22) — phone drawer, sign-in split, policy v1.4
+
+- **Policy is v1.4 (last updated November 22, 2026).** Privacy now says plainly
+  that guest mode sends nothing to a server; that an account (email/password or
+  Google) is what creates the server copy; that Google sign-in yields only the
+  address, its verification state and the display name — never the password,
+  mail, contacts or Google activity — and that we post nothing back to Google;
+  that account email carries no newsletters, marketing or third party sharing;
+  and that a display name appears on the leaderboard only when the student is
+  signed in **and** in the top five by lifetime HDCoins. Terms gained the same
+  Google paragraph in §2, Copyright points accounts at Terms and Privacy.
+  `backend/app.py` reports 1.4 from `/api/legal`.
+- **Phone navigation is a drawer.** The five-slot bottom bar is gone; the top
+  bar's menu button opens the same nine sections as the desk sidebar in a glass
+  panel (blurred scrim, Escape/scrim/route change close it, page scroll locked
+  while open). Rows below `900px` keep their safe-area padding without the old
+  76px tab-bar reserve.
+- **Question of the Day strip no longer overlaps.** The title is the only part
+  that shrinks; "Daily quests" and "Hide" move to their own row at `≤760px`.
+- **Sign-in is two screens.** Display name sits above email; the old
+  "New account? Age & policy consent" bar is gone. A sign-in that matches no
+  account opens the account-creation screen (name, email, password, age band,
+  guardian consent, policy acceptance, optional default assessment + reserve
+  benchmark items), which applies its preferences on success.
+- **Canvas and scrollbars.** `min-height: 100dvh` on the html/body/#root/app
+  shell stops the gradient strip short of a scrolled phone screen; the themed
+  glass scrollbar is a 9px accent rail, and the dark theme no longer sets
+  `scrollbar-color` (which suppressed the WebKit pseudo-elements).
+- **Google consent screen fixed at the source:** the OAuth app was still in
+  *Testing*, so Google rendered "continue to <supabase host>". Published to
+  production; the chooser now reads "to continue to **HDSAT**".
