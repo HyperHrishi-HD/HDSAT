@@ -5,7 +5,10 @@
   "description": "HDSAT - minimalist digital SAT and PSAT preparation platform",
   "type": "module",
   "scripts": {
+    "ensure:collegeboard": "node tools/ensure_collegeboard_bank.mjs",
+    "predev": "node tools/ensure_collegeboard_bank.mjs",
     "dev": "vite",
+    "prebuild": "node tools/ensure_collegeboard_bank.mjs",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --port 4173",
     "typecheck": "tsc --noEmit",

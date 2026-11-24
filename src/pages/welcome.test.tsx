@@ -127,12 +127,12 @@ describe('starting homepage', () => {
     expect(container.textContent).toContain('app shell');
   });
 
-  it('offers sign-in without entering first', () => {
+  it('opens the new-account screen without entering first', () => {
     render();
     act(() => {
-      button('I have an account')!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      button('Sign up')!.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
-    expect(openAuthModal).toHaveBeenCalledWith('signin');
+    expect(openAuthModal).toHaveBeenCalledWith('signup');
     expect(markEntered).not.toHaveBeenCalled();
   });
 

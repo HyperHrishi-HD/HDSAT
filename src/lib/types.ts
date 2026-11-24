@@ -28,6 +28,12 @@ export interface Question {
   license: string;
   attribution: string;
   is_released_practice_set: boolean;
+  /** College Board items that also appear in an official full-length test. */
+  in_practice_test?: boolean;
+  /** A figure is referenced but the payload has no image, SVG or table. */
+  unusable?: boolean;
+  /** College Board's finer 1-7 difficulty band, when supplied. */
+  score_band?: number | null;
   correct_answer: string;
   acceptable_answers: string[];
   explanation: string;
@@ -56,11 +62,15 @@ export interface QuestionBank {
 
 export interface Flashcard {
   id: string;
-  deck: 'vocabulary' | 'math_formula';
+  deck: 'vocabulary' | 'math_formula' | 'nawl' | 'ngsl' | 'official_context';
   front: string;
   back: string;
   latex?: string;
   tags: string[];
+  /** Human-readable source and licence for generated deck cards. */
+  source?: string;
+  /** 'wordnet' | 'original' | 'official-question' for generated examples. */
+  example_source?: string;
 }
 
 export interface StudyResource {
@@ -138,6 +148,8 @@ export interface TestModuleResult {
 
 export interface PausedTestState {
   seed: string;
+  /** Planner that built the saved attempt; absent on pre-v2 attempts. */
+  algorithmVersion?: 1 | 2;
   excludeReleased: boolean;
   sectionIndex: number;
   stageNumber: 1 | 2;

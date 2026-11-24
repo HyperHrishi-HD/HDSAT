@@ -108,15 +108,93 @@ describe('question bank integrity', () => {
     const probability = questions.find((question) => question.id === 'M-DAT-76026');
     expect(probability, 'M-DAT-76026 is missing').toBeDefined();
     expect(probability?.prompt).not.toMatch(/answer as a fraction/i);
+    expect(probability?.prompt).toMatch(/at least three decimal places/i);
     expect(checkAnswer(probability!, '1/12')).toBe(true);
     expect(checkAnswer(probability!, '0.083')).toBe(true);
     expect(checkAnswer(probability!, '0.0833')).toBe(true);
+    expect(checkAnswer(probability!, '0.08333')).toBe(true);
     expect(checkAnswer(probability!, '.083')).toBe(true);
+    expect(checkAnswer(probability!, '0.08')).toBe(false);
+    expect(checkAnswer(probability!, '0.084')).toBe(false);
 
     const russian = questions.find((question) => question.id === 'RW-INF-319');
     expect(russian, 'RW-INF-319 is missing').toBeDefined();
     expect(russian?.stimulus).not.toMatch(/[\u0400-\u04FF]/);
     expect(russian?.stimulus).toContain('most falls happen');
+  });
+
+  it('keeps the 2026-11-23 full-test report repairs in place', () => {
+    const get = (id: string) => {
+      const question = questions.find((item) => item.id === id);
+      expect(question, `${id} is missing`).toBeDefined();
+      return question!;
+    };
+    const choiceTexts = (question: Question) => (question.choices ?? []).map((choice) => choice.text);
+
+    const fieldStation = get('RW-SEC-9003');
+    expect(fieldStation.correct_answer).toBe('C');
+    expect(choiceTexts(fieldStation)).not.toContain('—');
+    expect(fieldStation.stimulus).toMatch(/failed breaker/);
+
+    const assumption = get('RW-SEC-9033');
+    expect(assumption.correct_answer).toBe('C');
+    expect(choiceTexts(assumption)).not.toContain('—');
+    expect(assumption.stimulus).toMatch(/shipping costs/);
+
+    const copper = get('RW-SEC-89358');
+    expect(copper.correct_answer).toBe('C');
+    expect(choiceTexts(copper).every((text) => /recut several times/.test(text))).toBe(true);
+
+    expect(get('RW-INF-002').stimulus).toMatch(/_{2,}/);
+    expect(get('RW-CRF-88406').stimulus).toMatch(/(^|\n)Text 2\n/);
+    expect(get('RW-CRF-88420').stimulus).toMatch(/(^|\n)Text 2\n/);
+    expect(get('M13-DATA-B001').skill).not.toBe('Percentages');
+    expect(get('M13-DATA-B001').stimulus).not.toMatch(/stage carpenter/i);
+    expect(get('M13-DATA-L000').stimulus).not.toMatch(/trend in the values/i);
+    expect(get('RW-EXP-89022').explanation).toMatch(/two distinct defenses/i);
+    for (const id of ['RW-M17-CT001', 'RW-M17-CT002', 'RW-M24-CI002', 'RW-M24-INF002', 'RW-M24-TS002']) {
+      expect(get(id).stimulus, `${id} has an unescaped currency span`).toContain('\\$');
+    }
+
+    const coverCrop = get('RW-INF-003');
+    expect(coverCrop.explanation).not.toMatch(/keyed choice|,\s+The\b/);
+    for (const id of ['RW-INF-002', 'RW-INF-003', 'RW-INF-88807', 'RW-INF-88808', 'RW-INF-88809', 'RW-CRF-88420']) {
+      const question = get(id);
+      const keyLength = plain(
+        (question.choices ?? []).find((choice) => choice.id === question.correct_answer)?.text ?? ''
+      ).length;
+      const longestWrong = Math.max(
+        ...(question.choices ?? [])
+          .filter((choice) => choice.id !== question.correct_answer)
+          .map((choice) => plain(choice.text).length)
+      );
+      expect(keyLength, `${id} key is the unique longest choice`).toBeLessThanOrEqual(longestWrong);
+    }
+  });
+
+  it('gives every inference completion prompt an actual blank', () => {
+    const missing = questions
+      .filter(
+        (question) =>
+          question.skill === 'Inferences' &&
+          /completes?\s+the\s+text/i.test(question.prompt) &&
+          !/_{2,}/.test(question.stimulus ?? '')
+      )
+      .map((question) => question.id);
+    expect(missing).toEqual([]);
+  });
+
+  it('keeps every cross-text heading on its own line', () => {
+    const heading = (text: string, number: 1 | 2) =>
+      new RegExp(`(^|\\n)Text ${number}(?:\\s*:|\\s*(?:\\n|$))`).test(text);
+    const broken = questions
+      .filter(
+        (question) =>
+          question.skill === 'Cross-Text Connections' &&
+          (!heading(question.stimulus ?? '', 1) || !heading(question.stimulus ?? '', 2))
+      )
+      .map((question) => question.id);
+    expect(broken).toEqual([]);
   });
 
   it('never offers two mathematically equal numeric choices', () => {

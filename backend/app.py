@@ -42,17 +42,17 @@ POLICY_PATHS = {
 # A single Content-Security-Policy string so tests can assert on it and the
 # deployed header can be diffed against source. `unsafe-eval` is deliberately
 # absent: nothing in the bundle needs it. `frame-src`/`script-src` allow the
-# official College Board Desmos calculator, which the study workspace embeds.
-# The operator console's human check is computed locally, so no third-party
-# script or frame origin is needed.
+# official College Board Desmos calculator, which the study workspace embeds,
+# plus Google Identity Services for the Google sign-in button. The operator
+# console's human check is computed locally.
 CONTENT_SECURITY_POLICY = (
     "default-src 'self'; "
-    "script-src 'self' 'unsafe-inline' https://www.desmos.com; "
-    "style-src 'self' 'unsafe-inline'; "
-    "img-src 'self' data: blob:; "
-    "font-src 'self' data:; "
-    "frame-src https://www.desmos.com; "
-    "connect-src 'self' https://*.supabase.co wss://*.supabase.co; "
+    "script-src 'self' 'unsafe-inline' https://www.desmos.com https://accounts.google.com; "
+    "style-src 'self' 'unsafe-inline' https://accounts.google.com; "
+    "img-src 'self' data: blob: https://accounts.google.com https://www.gstatic.com; "
+    "font-src 'self' data: https://fonts.gstatic.com; "
+    "frame-src https://www.desmos.com https://accounts.google.com; "
+    "connect-src 'self' https://*.supabase.co wss://*.supabase.co https://accounts.google.com; "
     "object-src 'none'; "
     "base-uri 'self'; "
     "form-action 'self'; "
@@ -281,7 +281,9 @@ def create_app() -> Flask:
             "Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=(), usb=()"
         )
         response.headers.setdefault("X-Permitted-Cross-Domain-Policies", "none")
-        response.headers.setdefault("Cross-Origin-Opener-Policy", "same-origin")
+        # Google Identity Services completes in a popup and hands the credential
+        # back through the opener; `same-origin` severs that link silently.
+        response.headers.setdefault("Cross-Origin-Opener-Policy", "same-origin-allow-popups")
         response.headers.setdefault("Cross-Origin-Resource-Policy", "same-origin")
         # Only meaningful over TLS, and harmless when PythonAnywhere terminates it.
         response.headers.setdefault(
@@ -321,7 +323,13 @@ def create_app() -> Flask:
     @app.get("/robots.txt")
     def robots_txt():
         """Keep crawlers out of the operator console."""
-        body = "User-agent: *\nDisallow: /admin\nAllow: /\n"
+        body = (
+            "User-agent: *\n"
+            "Disallow: /admin\n"
+            "Allow: /\n"
+            "\n"
+            "Sitemap: https://hdsat.pythonanywhere.com/sitemap.xml\n"
+        )
         return Response(body, mimetype="text/plain")
 
     @app.get("/api/legal")

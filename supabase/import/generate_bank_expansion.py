@@ -867,7 +867,7 @@ def gen_prose():
          "Equipment is never itemized; the passage evaluates the fairness of the story."],
     )
     add(4, "Cross-Text Connections", "Hard",
-        "Text 1: Agronomist Isabel Ferro maintains that no-till farms build soil carbon fastest when residue from the previous grain crop is left standing; the stalks act as miniature snow fences that raise winter soil moisture.\nText 2: Soil chemist Nowsherwan Ali counters that on the clay-heavy fields he studies, standing residue keeps the surface so wet and cold each spring that nitrogen mineralization begins two weeks late, costing more yield than the added moisture is worth.",
+        "Text 1\nAgronomist Isabel Ferro maintains that no-till farms build soil carbon fastest when residue from the previous grain crop is left standing; the stalks act as miniature snow fences that raise winter soil moisture.\n\nText 2\nSoil chemist Nowsherwan Ali counters that on the clay-heavy fields he studies, standing residue keeps the surface so wet and cold each spring that nitrogen mineralization begins two weeks late, costing more yield than the added moisture is worth.",
         "Based on the texts, how would Ali most likely respond to Ferro?",
         "He would agree that standing residue raises winter moisture but argue that on wet clay soils that same moisture delays spring nitrogen release and lowers yields.",
         ["He would dispute that residue affects soil moisture at all, since his fields are clay.",
@@ -1041,7 +1041,7 @@ def gen_prose():
         ["Condition documentation fits either acquisition route.", "The mirror being lent in 1968 does not establish how it was acquired in 1974.", "An insurance value does not show a purchase occurred the year before."],
     )
     add(19, "Cross-Text Connections", "Medium",
-        "Text 1: Nocturnist Omar Haddad writes that fall-prevention rounds at midnight are missing the point: большинстве falls happen at 5-6 a.m., so the fix is protecting the 5:30 medication walk, not adding midnight checks.\nText 2: Orthopedic data analyst Jena Fox replies that in her system's log, falls cluster at the midnight-to-2 a.m. shift handover, when two different teams each assume the other has done hourly rounds.",
+        "Text 1\nNocturnist Omar Haddad writes that fall-prevention rounds at midnight are missing the point: most falls happen at 5-6 a.m., so the fix is protecting the 5:30 medication walk, not adding midnight checks.\n\nText 2\nOrthopedic data analyst Jena Fox replies that in her system's log, falls cluster at the midnight-to-2 a.m. shift handover, when two different teams each assume the other has done hourly rounds.",
         "Based on the texts, how would Fox most likely respond to Haddad?",
         "By citing her handover-hour data to argue that midnight checks would catch the falls Haddad's own timing analysis might miss.",
         ["By agreeing that both 5:30 and midnight rounds are worthless investments.",

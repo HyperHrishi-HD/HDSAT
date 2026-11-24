@@ -176,6 +176,7 @@ export function AdminPage() {
   const [busy, setBusy] = useState(false);
   const [pendingConfirm, setPendingConfirm] = useState<{
     prompt: string;
+    confirmLabel?: string;
     run: () => Promise<void>;
   } | null>(null);
 
@@ -417,6 +418,16 @@ export function AdminPage() {
           olderThanDays: 7,
         });
         setActionMessage(`Deleted ${deleted} old report(s).`);
+      },
+    });
+
+  const fixReportStats = (row: cloud.AdminReportRow) =>
+    setPendingConfirm({
+      confirmLabel: 'Remove attempt',
+      prompt: `Remove ${row.reporter_name ?? 'this student'}'s latest attempt on ${row.question_id} from their score and accuracy? Only do this when the report was a real content problem.`,
+      run: async () => {
+        const result = await cloud.adminFixReportStats(adminToken, row.id);
+        setActionMessage(result.message);
       },
     });
 
@@ -762,7 +773,7 @@ export function AdminPage() {
           disabled={busy}
           onClick={() => void runAction(null, pendingConfirm.run)}
         >
-          Delete
+          {pendingConfirm.confirmLabel ?? 'Delete'}
         </button>
         <button
           type="button"
@@ -1098,20 +1109,33 @@ export function AdminPage() {
                                 <Badge tone={statusTone(row.status)}>{statusLabel(row.status)}</Badge>
                               </td>
                               <td>
-                                <button
-                                  type="button"
-                                  className="adm-row-action"
-                                  onClick={() =>
-                                    openReply(
-                                      'report',
-                                      row.id,
-                                      `Report ${shortId(row.id)}`,
-                                      row.contact_email ?? row.reporter_email
-                                    )
-                                  }
-                                >
-                                  Reply
-                                </button>
+                                <div className="adm-row-actions">
+                                  <button
+                                    type="button"
+                                    className="adm-row-action"
+                                    onClick={() =>
+                                      openReply(
+                                        'report',
+                                        row.id,
+                                        `Report ${shortId(row.id)}`,
+                                        row.contact_email ?? row.reporter_email
+                                      )
+                                    }
+                                  >
+                                    Reply
+                                  </button>
+                                  {row.status !== 'dismissed' ? (
+                                    <button
+                                      type="button"
+                                      className="adm-row-action"
+                                      disabled={busy}
+                                      title="Remove this student's last attempt from their score after fixing the question"
+                                      onClick={() => fixReportStats(row)}
+                                    >
+                                      Fix stats
+                                    </button>
+                                  ) : null}
+                                </div>
                               </td>
                             </tr>
                           ))}

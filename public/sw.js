@@ -14,7 +14,7 @@
  *     response or a stale saved answer would be worse than being offline.
  */
 
-const VERSION = 'hdsat-v14';
+const VERSION = 'hdsat-v15';
 const SHELL_CACHE = `${VERSION}-shell`;
 const ASSET_CACHE = `${VERSION}-assets`;
 
@@ -96,16 +96,17 @@ self.addEventListener('fetch', (event) => {
       (async () => {
         const cache = await caches.open(SHELL_CACHE);
         try {
-          const controller = new AbortController();
-          const timer = setTimeout(() => controller.abort(), 2500);
-          const response = await fetch(request, { signal: controller.signal });
-          clearTimeout(timer);
+          // No short timeout here. A slow Python host used to fall back to the
+          // previous shell after 2.5 s; that shell points at hashed assets the
+          // latest deploy has deleted, which renders a blank page. Wait for the
+          // live document and bypass the HTTP cache so a deploy is picked up.
+          const response = await fetch(request, { cache: 'no-store' });
           if (response?.ok) {
             await cache.put('/index.html', response.clone()).catch(() => undefined);
           }
           if (response) return response;
         } catch {
-          // Offline or slow origin: fall through to the cached shell.
+          // Offline: fall through to the cached shell.
         }
         const cached = (await cache.match('/index.html')) || (await cache.match('/'));
         return (

@@ -107,9 +107,9 @@ export function WelcomePage() {
           <button
             type="button"
             className="btn btn-outline welcome-cta"
-            onClick={() => app.actions.openAuthModal('signin')}
+            onClick={() => app.actions.openAuthModal('signup')}
           >
-            I have an account
+            Sign up
           </button>
         </div>
 

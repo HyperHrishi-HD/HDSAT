@@ -97,7 +97,7 @@ def test_security_headers_present_on_all_responses():
         assert "camera=()" in res.headers["Permissions-Policy"]
         assert res.headers["X-Permitted-Cross-Domain-Policies"] == "none"
         assert res.headers["Strict-Transport-Security"].startswith("max-age=")
-        assert res.headers["Cross-Origin-Opener-Policy"] == "same-origin"
+        assert res.headers["Cross-Origin-Opener-Policy"] == "same-origin-allow-popups"
         assert res.headers["Cross-Origin-Resource-Policy"] == "same-origin"
     assert client.get("/api/health").headers["Cache-Control"] == "no-store"
 
@@ -162,7 +162,9 @@ def test_csp_allows_desmos_and_blocks_objects():
         assert csp == CONTENT_SECURITY_POLICY
         assert "https://www.desmos.com" in csp
         assert "frame-src https://www.desmos.com" in csp
-        assert "google.com" not in csp
+        assert "https://accounts.google.com" in csp
+        assert "frame-src https://www.desmos.com https://accounts.google.com" in csp
+        assert "style-src 'self' 'unsafe-inline' https://accounts.google.com" in csp
         assert "object-src 'none'" in csp
         assert "unsafe-eval" not in csp
 
@@ -285,3 +287,4 @@ def test_robots_txt_disallows_the_operator_console():
     body = res.data.decode("utf-8")
     assert "User-agent: *" in body
     assert "Disallow: /admin" in body
+    assert "Sitemap: https://hdsat.pythonanywhere.com/sitemap.xml" in body

@@ -841,3 +841,159 @@ Brevo is a separate clock: a **Free plan** account unused for **4 months** is
 deleted (30/15/7/1-day email warnings), but any automatic or transactional send
 counts as activity. Confirmation codes only go out when a student signs up, so
 log in to Brevo at least once a term to reset the inactivity period.
+
+## Question reports closed (2026-11-22)
+
+Both open reports were real content defects, fixed in the live rows and in the
+seed sources (`0001_seed_hdsat.sql`, `import/expansion/extra_questions.json`):
+`M-DAT-76026` now offers "a fraction, or a decimal rounded to at least three decimal places" and its key
+carries `1/12`, `0.083`, `0.0833`, `0.08333`, `0.083333` plus the same decimals without the leading zero (`.083`, `.0833`, `.08333`, `.083333`); `0.08`, `0.084`, `0.333333` and `1/3` are rejected — server grading is exact
+string, so decimals must be in the key; `RW-INF-319` had a stray Russian word
+("большинстве") replaced with "most". All three reports are resolved.
+
+`admin_fix_report_stats(p_token, p_report_id)` in
+`supabase/migrations/20261122000200_report_stat_correction.sql` is the explicit
+"this item was wrong" action: it removes the reporter's latest attempt from
+`user_stats`, the progress row and the nearest `daily_activity` day, then
+resolves the report. The console exposes it as **Fix stats** on each report row;
+dismissing a report never touches a score.
+
+Sign-in no longer sends a mistyped password into account creation. Supabase
+returns the same error for an unknown address and a wrong password, so the form
+says "Incorrect email or password" and offers **Create an account** as its own
+button. The sign-in screen also lost its unused display-name field.
+
+Homepage metadata now has a descriptive title, canonical URL and Open Graph
+tags; `public/robots.txt` and `public/sitemap.xml` cover
+`https://hdsat.pythonanywhere.com/` for Search Console.
+
+## Production deploy, Google sign-in and cache recovery (2026-11-22)
+
+Production at https://hdsat.pythonanywhere.com serves the current shell
+(`index-DTXQ-n1A.js` / `index-GUhcvskv.css`, verified 200) and `sw.js`
+`hdsat-v15`; `/robots.txt` includes the sitemap and the Flask CSP allows
+Google's GIS script/style/font/connect/frame origins with
+`Cross-Origin-Opener-Policy: same-origin-allow-popups`.
+
+Google sign-in uses the HDSAT-owned Google Web client
+`316522461982-dbg6c9qordk9979002ot52l9ih0nmrf4.apps.googleusercontent.com`
+and the GIS ID-token flow (`src/lib/googleIdentity.ts`,
+`GoogleSignInButton.tsx`): the button is Google's official one, the popup
+consent screen shows **HDSAT** (branding verified), and Supabase's Google
+provider is configured with the same client ID, so the ID token audience
+matches. The Supabase OAuth redirect remains as a fallback via the "Trouble
+with the popup? Use Google's redirect" link; the consent screen for that path
+is also HDSAT. Google's client origins are saved for production and
+localhost:5188. The GIS popup could not be exercised in Freebuff's embedded
+Chromium (it stays inert there even on a bare page); the official button and
+branding were verified, and the redirect fallback was verified to reach Google
+with the HDSAT client ID.
+
+A stale service worker could serve the previous shell for up to 2.5 s on a
+slow load; because the deploy removes old hashed assets, that rendered a blank
+page. `public/sw.js` now waits for the live navigation response (cache:
+'no-store') and only falls back to the cached shell when offline; `VERSION` is
+`hdsat-v15`, and the Flask HTML response is already `no-store`.
+
+The admin **Fix stats** action was exercised end-to-end on a disposable auth
+user (signed-out, stale-token and valid-token paths); it cleared stats 1->0,
+the progress row and the daily 1->0 and resolved the report. The RPC bug
+(`daily_activity` has no `id`) was fixed to match on `(user_id, activity_date)`.
+The real reporter's invalid `0.333333` attempt was removed per the owner's
+request: stats 215/88/209 -> 214/88/208, 2026-11-21 daily 11/7 -> 10/7,
+progress row removed; the report stays resolved. Backend `pytest` 22/22 and
+the Vite production build pass.
+
+## Google button fit (2026-11-22)
+
+Google's Sign in with Google widget renders the visible 40px button **plus a
+hidden 44px helper iframe in the same wrapper**, so the wrapper is ~79px tall.
+The auth card centred that wrapper in a 44px slot, which pushed the visible
+button out of its slot. `.auth-google-gsi-slot` therefore anchors the wrapper
+at the top and clips the helper iframe below instead of centring it.
+
+A returning visitor with a Google session gets GIS's personalised
+"Continue as …" chip. That chip is laid out wider than its iframe and clipped on
+a narrow card, and Google offers no API to switch it off. Google documents the
+one guaranteed way out: **the personalised button is never shown at
+`data-size="medium"` or `small`** (also not for `type=icon` or width < 200px;
+see /identity/gsi/web/guides/personalized-button). HDSAT therefore renders the
+button at `size: 'medium'` (32px) with its normal dark pill, so the plain
+"Continue with Google" button always matches the card exactly. The scaling
+layer tested earlier was deleted: it only reacted when the host grew, and a
+genuinely widened 396px stub did fit itself (scale 0.9419 on a 373px card, no
+CSS touched), but it cannot see a chip clipped *inside* the cross-origin
+iframe — the owner's screenshot showed exactly that. Size medium removes the
+variable instead of measuring it. `auth-google-gsi` now only top-anchors the
+button and clips the hidden helper iframe below it. GIS keeps the width it was
+rendered at, so the component redraws when the host width changes (>8px) via a
+`ResizeObserver` plus a window `resize` listener; the drawer is idempotent, so
+repeated signals are ignored. Verified live: at 390px the button and the email
+field are both 321.1px wide and 31.5px tall; after a viewport change the widget
+redraws at 326/367 to match the new card and the hidden 44px helper iframe stays
+clipped. Production shell `index-BO713Ylu.js` / `index-aZFsuUub.css`, both 200.
+
+`src/components/GoogleSignInButton.test.tsx` mounts the real component against
+a stubbed GIS that injects a widened 396px wrapper, and asserts the request is
+`size: 'medium'` and that the wrapper is passed through untouched (no
+transform, no `--gis-scale`, no fitting layer).
+
+## Google OAuth state (checked 2026-11-22, project hdsat-515502)
+
+- Audience: **In production**, External, **1 user / 100 user cap**.
+  The cap is lifetime (never daily, never resettable) and only limits apps
+  presenting the unverified screen for **unapproved sensitive/restricted
+  scopes**. Data Access currently lists **no scopes at all** (empty
+  non-sensitive, sensitive and restricted tables), so the cap does not gate
+  HDSAT sign-ins.
+- Branding: app name HDSAT, logo uploaded, home/privacy/terms URLs set,
+  authorized domains `hdsat.pythonanywhere.com` and the Supabase project.
+  Status: **"Your branding is not being shown to users."** The two verification
+  issues are exactly: (1) the home page URL is not registered to the owner
+  (verify it in Search Console, then wait 24h), and (2) the logo "does not
+  uniquely identify your brand and identity." Neither blocks sign-in, and the
+  consent screen correctly shows `hdsat.pythonanywhere.com` plus the policy
+  links. Brand verification is optional unless the name/logo must appear.
+- Search Console: no verification meta tag or HTML file exists in the repo, so
+the property is not verified yet. `robots.txt` points at `sitemap.xml` and the
+canonical/OG tags are in `index.html`; submitting the sitemap from a verified
+property is the next discoverability step.
+
+## 2026-11-24 — Pass 3 finalised, live data repaired, official bank seeded
+
+**Shipped in this pass (all committed together).**
+
+- **Question-report repairs.** All 14 reports from 2026-11-23 are fixed in the bundle
+  and live: three P0 keys (`RW-SEC-9003`, `RW-SEC-9033`, `RW-SEC-89358`), the missing
+  inference blanks (88 items now end in `______`), the glued `Text 2` headings (39
+  items), the `M13-DATA-B` context/skill retag, `RW-INF-003`'s explanation and the
+  longest-choice rebalance. `supabase/migrations/20261123000100_question_report_repairs.sql`
+  and `supabase/seed/0099_question_report_repairs.sql` carry the 172 changed rows;
+  `tools/verify_report_artifacts.py` proves both artifacts match the bank field-for-field.
+- **Engine v2.** Full tests now use 25 + 2 R&W and 20 + 2 Math operational/pretest
+  splits, strict R&W domain blocks, SEC ordered by difficulty only, task-family caps
+  (one per module, two per plan), Math neighbour spacing, and a tiered preference for
+  clean official items with a 20% curated filler ceiling. Saved attempts replay v1 via
+  `algorithmVersion`, so a resumed test keeps its original plan.
+- **Official College Board pool.** `public/collegeBoardBank.json` (gitignored) is merged
+  at load; 3,663 rows and keys are now also seeded into the live `questions` /
+  `question_keys` tables so cloud grading and sync cover them. The HTML stimulus path is
+  sanitised in `sanitizeHtml`.
+- **Pass 3 product work.** Flashcards Browse All pagination and the NAWL/NGSL/official
+  decks, Interceptor accuracy by successful pulses, retry-missed session length,
+  three-column Dashboard with the 29-skill heatmap and the 7-day window, guest-merge
+  consent, Google Identity Services sign-in with redirect fallback, and policy v1.4.
+
+**Verified (this session).** Typecheck 0; Vitest **449 passed, 8 skipped, exit 0**
+(serial — parallel workers abort when the system drive is nearly full); build 0;
+pytest 22/22; content QA 0 errors; report artifacts PASS; live bank re-sync reports
+**0 remaining differences** (13,689 questions and keys).
+
+**Remaining server step.** `questions.in_practice_test`, `unusable` and `score_band` are
+not in the live schema (management token is still 401, so no DDL). The bundled JSON
+carries them and the app filters correctly; apply
+`supabase/migrations/20261124000100_collegeboard_sat.sql` with a fresh token when one is
+available.
+
+**Left for the owner.** The 14 reports are still `status = received`; their fixes are
+live, but closing them sends notifications, so use `tools/admin_triage.py` when ready.

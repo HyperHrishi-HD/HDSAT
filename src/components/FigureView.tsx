@@ -1,5 +1,6 @@
 import { useId } from 'react';
-import { MathText } from './MathText';
+import { MathText, sanitizeHtml } from './MathText';
+import { hasHtmlMarkup } from '../lib/questionSources';
 import type { Question } from '../lib/types';
 
 export interface TableFigureMeta {
@@ -593,6 +594,17 @@ export function FigureView({ question }: { question: Question }) {
  */
 export function StimulusView({ stimulus }: { stimulus: string | null }) {
   if (!stimulus || !stimulus.trim()) return null;
+
+  // College Board passages arrive as semantic HTML (paragraphs, MathML, tables,
+  // SVG figures). Preserve that markup instead of flattening it to plain text.
+  if (hasHtmlMarkup(stimulus)) {
+    return (
+      <div
+        className="stimulus-rendered stimulus-html"
+        dangerouslySetInnerHTML={{ __html: sanitizeHtml(stimulus) }}
+      />
+    );
+  }
 
   const lines = stimulus.split('\n');
   const blocks: React.ReactNode[] = [];

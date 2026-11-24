@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useId, useRef, useState } from 'react';
 
 export type IconName =
   | 'dashboard'
@@ -685,6 +685,147 @@ export function Field({
       {children}
       {hint ? <span className="field-hint">{hint}</span> : null}
     </label>
+  );
+}
+
+/**
+ * A themed listbox, for values that should not open the browser's own menu.
+ *
+ * The native <select> popup is drawn by the operating system: a different
+ * control in every browser, and on Windows a small black-and-white list that
+ * ignores the app's palette entirely. This trigger and panel are ordinary
+ * elements, so they follow the theme and stay usable from the keyboard
+ * (arrows, Home/End, Enter, Escape) without a pointer.
+ */
+export function MenuSelect({
+  value,
+  onChange,
+  options,
+  label,
+  placeholder = 'Select…',
+}: {
+  value: string;
+  onChange: (value: string) => void;
+  options: { value: string; label: string; hint?: string }[];
+  label: string;
+  placeholder?: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const selectedIndex = options.findIndex((option) => option.value === value);
+  const [activeIndex, setActiveIndex] = useState(selectedIndex >= 0 ? selectedIndex : 0);
+  const wrapRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const listId = useId();
+  const selected = selectedIndex >= 0 ? options[selectedIndex] : null;
+
+  useEffect(() => {
+    if (open) setActiveIndex(selectedIndex >= 0 ? selectedIndex : 0);
+  }, [open, selectedIndex]);
+
+  useEffect(() => {
+    if (!open) return;
+    const onPointerDown = (event: Event) => {
+      const target = event.target as Node | null;
+      if (target && wrapRef.current?.contains(target)) return;
+      setOpen(false);
+    };
+    document.addEventListener('mousedown', onPointerDown, true);
+    document.addEventListener('touchstart', onPointerDown, true);
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown, true);
+      document.removeEventListener('touchstart', onPointerDown, true);
+    };
+  }, [open]);
+
+  const choose = (index: number) => {
+    const option = options[index];
+    if (!option) return;
+    onChange(option.value);
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
+
+  const onKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (!open) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowUp' || event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        setOpen(true);
+      }
+      return;
+    }
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      setActiveIndex((index) => (index + 1) % options.length);
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      setActiveIndex((index) => (index - 1 + options.length) % options.length);
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      setActiveIndex(0);
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      setActiveIndex(options.length - 1);
+    } else if (event.key === 'Enter' || event.key === ' ') {
+      event.preventDefault();
+      choose(activeIndex);
+    } else if (event.key === 'Escape') {
+      event.preventDefault();
+      setOpen(false);
+      triggerRef.current?.focus();
+    } else if (event.key === 'Tab') {
+      setOpen(false);
+    }
+  };
+
+  return (
+    <div className="field menu-select" ref={wrapRef}>
+      <span className="field-label">{label}</span>
+      <button
+        ref={triggerRef}
+        type="button"
+        className={`msel-trigger${open ? ' is-open' : ''}`}
+        onClick={() => setOpen((value) => !value)}
+        onKeyDown={onKeyDown}
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-controls={open ? listId : undefined}
+        aria-activedescendant={open ? `${listId}-${activeIndex}` : undefined}
+      >
+        <span className={`msel-value${selected ? '' : ' is-placeholder'}`}>
+          {selected?.label ?? placeholder}
+        </span>
+        <span className="msel-caret" aria-hidden="true">
+          <Icon name={open ? 'chevron-up' : 'chevron-down'} size={14} />
+        </span>
+      </button>
+      {open ? (
+        <div className="msel-panel" role="listbox" id={listId} aria-label={label}>
+          {options.map((option, index) => {
+            const isSelected = option.value === value;
+            return (
+              <div
+                key={option.value}
+                id={`${listId}-${index}`}
+                role="option"
+                aria-selected={isSelected}
+                className={`msel-option${index === activeIndex ? ' is-active' : ''}${
+                  isSelected ? ' is-selected' : ''
+                }`}
+                onMouseDown={(event) => event.preventDefault()}
+                onClick={() => choose(index)}
+                onMouseEnter={() => setActiveIndex(index)}
+              >
+                <span className="msel-option-label">
+                  {option.label}
+                  {option.hint ? <em>{option.hint}</em> : null}
+                </span>
+                {isSelected ? <Icon name="check" size={14} /> : null}
+              </div>
+            );
+          })}
+        </div>
+      ) : null}
+    </div>
   );
 }
 

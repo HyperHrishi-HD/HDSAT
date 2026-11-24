@@ -1,0 +1,1142 @@
+{
+  "generated_at": "2026-11-23",
+  "reports": [
+    {
+      "id": "e657818f-b371-48dc-b516-dbf2abf08d68",
+      "question_id": "M13-DATA-T004",
+      "reason": "other",
+      "details": "question 3 number 17. same exact question type as previous reported. even t he (f(9)) asking is same bruh. this is sad lowk",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-23T00:36:19.225653+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "ec1af164-9391-46ff-966f-1b4706170276",
+      "question_id": "M13-DATA-T005",
+      "reason": "other",
+      "details": "table question 2. you can see last previous question 14 and this is 15. same exact type of question one after another. this shows the real duplication and lazy production of these questions instead of getting real sat questions. it also shows the defect of the algorithm where these too were together??? but yeah",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-23T00:33:19.134661+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "f96c382a-b65e-4de5-958a-19ec0793303c",
+      "question_id": "M13-DATA-T001",
+      "reason": "other",
+      "details": "tbale linear function question 1. im just marking this for my next prompt report",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-23T00:31:59.385385+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "d6560df1-dde4-4a72-9b8f-6f3c1f596524",
+      "question_id": "M13-DATA-B001",
+      "reason": "other",
+      "details": "same duplicate problems with questions. different story and values but the question types are same repeated and boring. also volume percent of questions per module you can search online feel inaccurate",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-23T00:16:27.365836+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "c6b5b78e-7545-47c4-8c87-0d2e84951c04",
+      "question_id": "M13-DATA-E006",
+      "reason": "other",
+      "details": "not a problem but problem with these test questions algorithm i mentioned before same in maths. so i got three xponential table questions in a row at start by chance. thats the problem this randomized or non efficient method of questions etc causing random inconsistencies with how accurate it is to the real sat. \n\nALSO, i found that many questions were easy which is accurate to sat math however some do need to be actually hard. but the thing is that, all the questions that ever exsisted here in hdsat are all repeats of the same question type with different values. kinda lame in inaccurate compared to real sat. may need to fix all of that perfectly next.",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-23T00:11:35.344316+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "d6f616ee-89c7-462d-8ff6-735e5b280e3f",
+      "question_id": "RW-EXP-89022",
+      "reason": "incorrect_answer",
+      "details": "i just dont understand this question answers. i dont know if they are wrong or not",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-22T23:28:57.28905+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "58716e21-ffdb-414d-84b6-9cdf4eff996d",
+      "question_id": "RW-INF-002",
+      "reason": "unclear_formatting",
+      "details": "This question is missing the blank line at end of passage that would normally be with inference questions and is different cause not left/hanging",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-22T23:28:06.048767+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "44056818-c64d-46cf-989c-6c112c453af6",
+      "question_id": "RW-INF-003",
+      "reason": "other",
+      "details": "Not necessarily a problem but these types of \"hard\" questions are easily cheatbale because there is one long answer that ends up to be the right choice. you need to do a lot more work in the questions somehow but idk",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-22T23:23:40.606578+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "20a1ead2-d3c6-4e7d-9a23-8ee314f609f5",
+      "question_id": "RW-INF-88807",
+      "reason": "other",
+      "details": "Yo i got this same question in the last module (currently in englihs m2). so the question adaptive algorithm or whatever doesnt work? i cant have repeating right...",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-22T23:22:18.693644+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "23524bce-3799-44ba-b379-0d01b2b42f01",
+      "question_id": "RW-SEC-89358",
+      "reason": "other",
+      "details": "Questions 11-13 in this specific mock test( all grammer etc qestions) are here in middle instead of end. pls research and tell me if that is correct framework for question order because i reported before also but idk",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-22T23:20:09.340559+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "74da108c-81bc-4098-b4c2-1d1c6f629ab3",
+      "question_id": "RW-CRF-88420",
+      "reason": "other",
+      "details": "\"Text 2\" not bolded and in subheading",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-22T23:13:38.828129+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "39dd5b91-5fb8-4445-b2a6-d3a65b5bd6bd",
+      "question_id": "RW-SEC-9003",
+      "reason": "other",
+      "details": "same problem with this one as my previous report q12 where this is in the wrong place",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-22T22:51:33.105899+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "cdfa83fc-fa0b-4770-9ed1-de659ffc47e0",
+      "question_id": "RW-SEC-9033",
+      "reason": "other",
+      "details": "not a problem with question i think but the question will never be placed here like around question 12, these types of questions will be near end, no?",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-22T22:50:29.348428+00:00",
+      "user_id": "aa70e762"
+    },
+    {
+      "id": "cf6e3cf4-a816-48ea-85f1-0b2480cf4b00",
+      "question_id": "RW-CRF-88406",
+      "reason": "unclear_formatting",
+      "details": "The \"text 2\" text is not bolded and it is connected with the text 1 paragraph that may lead to confustion",
+      "contact_email": "h***@gmail.com",
+      "status": "received",
+      "created_at": "2026-11-22T22:42:02.352498+00:00",
+      "user_id": "aa70e762"
+    }
+  ],
+  "questions": [
+    {
+      "id": "M13-DATA-B001",
+      "external_id": "HDSAT-M13-DATA-B001",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Problem-Solving and Data Analysis",
+      "skill": "Percentages",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "A stage carpenter is comparing weekly counts at a roof brace for a coastal boardwalk. The bar graph shows bike rentals recorded over the periods shown.",
+      "prompt": "How many more rentals were recorded in Thu than in Mon?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "66"
+        },
+        {
+          "id": "B",
+          "text": "28"
+        },
+        {
+          "id": "C",
+          "text": "18"
+        },
+        {
+          "id": "D",
+          "text": "42"
+        }
+      ],
+      "figure_metadata": {
+        "type": "bar_chart",
+        "series": [
+          {
+            "label": "Mon",
+            "value": 24
+          },
+          {
+            "label": "Tue",
+            "value": 36
+          },
+          {
+            "label": "Wed",
+            "value": 30
+          },
+          {
+            "label": "Thu",
+            "value": 42
+          }
+        ],
+        "caption": "Bike rentals",
+        "x_label": "Period",
+        "y_label": "Number of rentals"
+      },
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-24T19:12:38.948419+00:00",
+      "updated_at": "2026-10-24T19:12:38.948419+00:00"
+    },
+    {
+      "id": "M13-DATA-E006",
+      "external_id": "HDSAT-M13-DATA-E006",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Advanced Math",
+      "skill": "Exponential growth and decay",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "A horticulturist is tracking a culture in a raised planter for a farm cooperative. The table shows values of an exponential function g.",
+      "prompt": "By what factor does g(x) change each time x increases by 1?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "14"
+        },
+        {
+          "id": "B",
+          "text": "3"
+        },
+        {
+          "id": "C",
+          "text": "7"
+        },
+        {
+          "id": "D",
+          "text": "2"
+        }
+      ],
+      "figure_metadata": {
+        "rows": [
+          [
+            "0",
+            "7"
+          ],
+          [
+            "1",
+            "14"
+          ],
+          [
+            "2",
+            "28"
+          ],
+          [
+            "3",
+            "56"
+          ]
+        ],
+        "type": "table",
+        "caption": "Function g",
+        "headers": [
+          "x",
+          "g(x)"
+        ]
+      },
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-24T19:12:38.948419+00:00",
+      "updated_at": "2026-10-24T19:12:38.948419+00:00"
+    },
+    {
+      "id": "M13-DATA-T001",
+      "external_id": "HDSAT-M13-DATA-T001",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Algebra",
+      "skill": "Linear functions: slope and intercepts",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "A stage carpenter is recording output from a roof brace for a coastal boardwalk. The table shows values of a linear function f.",
+      "prompt": "What is the value of f(9)?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "27"
+        },
+        {
+          "id": "B",
+          "text": "19"
+        },
+        {
+          "id": "C",
+          "text": "35"
+        },
+        {
+          "id": "D",
+          "text": "38"
+        }
+      ],
+      "figure_metadata": {
+        "rows": [
+          [
+            "1",
+            "11"
+          ],
+          [
+            "2",
+            "14"
+          ],
+          [
+            "3",
+            "17"
+          ],
+          [
+            "4",
+            "20"
+          ]
+        ],
+        "type": "table",
+        "caption": "Function f",
+        "headers": [
+          "x",
+          "f(x)"
+        ]
+      },
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-24T19:12:38.948419+00:00",
+      "updated_at": "2026-10-24T19:12:38.948419+00:00"
+    },
+    {
+      "id": "M13-DATA-T004",
+      "external_id": "HDSAT-M13-DATA-T004",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Algebra",
+      "skill": "Linear functions: slope and intercepts",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "A land surveyor is recording output from a tarp cover for a city plaza. The table shows values of a linear function f.",
+      "prompt": "What is the value of f(9)?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "74"
+        },
+        {
+          "id": "B",
+          "text": "71"
+        },
+        {
+          "id": "C",
+          "text": "54"
+        },
+        {
+          "id": "D",
+          "text": "37"
+        }
+      ],
+      "figure_metadata": {
+        "rows": [
+          [
+            "1",
+            "23"
+          ],
+          [
+            "2",
+            "29"
+          ],
+          [
+            "3",
+            "35"
+          ],
+          [
+            "4",
+            "41"
+          ]
+        ],
+        "type": "table",
+        "caption": "Function f",
+        "headers": [
+          "x",
+          "f(x)"
+        ]
+      },
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-24T19:12:38.948419+00:00",
+      "updated_at": "2026-10-24T19:12:38.948419+00:00"
+    },
+    {
+      "id": "M13-DATA-T005",
+      "external_id": "HDSAT-M13-DATA-T005",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Math",
+      "domain": "Algebra",
+      "skill": "Linear functions: slope and intercepts",
+      "difficulty": "Medium",
+      "format": "multiple_choice",
+      "stimulus": "A set builder is recording output from a corner brace for a sports pavilion. The table shows values of a linear function f.",
+      "prompt": "What is the value of f(9)?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "86"
+        },
+        {
+          "id": "B",
+          "text": "63"
+        },
+        {
+          "id": "C",
+          "text": "83"
+        },
+        {
+          "id": "D",
+          "text": "43"
+        }
+      ],
+      "figure_metadata": {
+        "rows": [
+          [
+            "1",
+            "27"
+          ],
+          [
+            "2",
+            "34"
+          ],
+          [
+            "3",
+            "41"
+          ],
+          [
+            "4",
+            "48"
+          ]
+        ],
+        "type": "table",
+        "caption": "Function f",
+        "headers": [
+          "x",
+          "f(x)"
+        ]
+      },
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-24T19:12:38.948419+00:00",
+      "updated_at": "2026-10-24T19:12:38.948419+00:00"
+    },
+    {
+      "id": "RW-CRF-88406",
+      "external_id": "HDSAT-RW-CRF-88406",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Craft and Structure",
+      "skill": "Cross-Text Connections",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "Text 1\nIn a study of open-plan municipal libraries, architect Leo Sterling argues that removing interior walls fosters collaborative civic engagement. According to architect Leo Sterling, expanding this practice across comparable sites would yield immediate, measurable gains. Text 2\nEvaluating the same open-plan municipal libraries, acoustics researcher Priya Nair observes that unpartitioned reading halls raise ambient noise enough to reduce comprehension on complex tasks. Consequently, acoustics researcher Priya Nair cautions against adopting the practice without targeted safeguards.",
+      "prompt": "Based on the texts, on what point do architect Leo Sterling and acoustics researcher Priya Nair most clearly differ regarding open-plan municipal libraries?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "Both authors conclude that open-plan municipal libraries is obsolete compared with nineteenth-century methods."
+        },
+        {
+          "id": "B",
+          "text": "architect Leo Sterling emphasizes the primary performance advantage of open-plan municipal libraries, whereas acoustics researcher Priya Nair focuses on a secondary operational trade-off."
+        },
+        {
+          "id": "C",
+          "text": "architect Leo Sterling studies only laboratory models, whereas acoustics researcher Priya Nair refuses to consider empirical data."
+        },
+        {
+          "id": "D",
+          "text": "architect Leo Sterling opposes open-plan municipal libraries on financial grounds, whereas acoustics researcher Priya Nair supports it unconditionally."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-19T01:01:29.773302+00:00",
+      "updated_at": "2026-10-19T01:02:34.045648+00:00"
+    },
+    {
+      "id": "RW-CRF-88420",
+      "external_id": "HDSAT-RW-CRF-88420",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Craft and Structure",
+      "skill": "Cross-Text Connections",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "Text 1\nIn a study of digital restoration of silent films, film archivist Mateo Silva argues that frame-interpolation algorithms make damaged reels accessible to modern audiences. According to film archivist Mateo Silva, expanding this practice across comparable sites would yield immediate, measurable gains. Text 2\nEvaluating the same digital restoration of silent films, cinema historian Hannah Berg observes that smoothing original frame rates erases the deliberate rhythmic cranking choices of early camera operators. Consequently, cinema historian Hannah Berg cautions against adopting the practice without targeted safeguards.",
+      "prompt": "If cinema historian Hannah Berg's findings are accurate, what implication follows for the implementation of digital restoration of silent films advocated by film archivist Mateo Silva?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "The benefits described by film archivist Mateo Silva are mathematically impossible to measure."
+        },
+        {
+          "id": "B",
+          "text": "Achieving the benefits film archivist Mateo Silva describes without incurring the costs cinema historian Hannah Berg identifies requires modifying how digital restoration of silent films is executed."
+        },
+        {
+          "id": "C",
+          "text": "cinema historian Hannah Berg's concern applies only to systems that have already been decommissioned."
+        },
+        {
+          "id": "D",
+          "text": "digital restoration of silent films can be deployed at maximum scale without any monitoring or mitigation."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-19T01:01:29.773302+00:00",
+      "updated_at": "2026-10-19T01:02:34.045648+00:00"
+    },
+    {
+      "id": "RW-EXP-89022",
+      "external_id": "HDSAT-RW-EXP-89022",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Expression of Ideas",
+      "skill": "Rhetorical Synthesis",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "While researching bioluminescent dinoflagellate defense mechanisms (study note set 3), a student has taken the following notes:\n• Lingulodinium polyedra is a marine dinoflagellate species that emits brief blue light flashes when mechanically agitated.\n• Laboratory shear-flow experiments show that a single cell flash lasts approximately 100 milliseconds at 475 nanometers wavelength.\n• When grazing copepods disturb the water, the resulting flashes startle the copepods and reduce their feeding rates by 55%.\n• The flashes also illuminate the copepods, making them visible to nocturnal predatory fish from up to two meters away.\n• Cultures kept under constant light lose their circadian bioluminescence rhythm within four days.",
+      "prompt": "The student wants to explain how bioluminescence protects Lingulodinium polyedra in two distinct ways. Which choice most effectively uses relevant information from the notes to accomplish this goal?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "Nocturnal predatory fish can spot illuminated prey from distances of up to two meters in dark water."
+        },
+        {
+          "id": "B",
+          "text": "Laboratory cultures of Lingulodinium polyedra lose their circadian rhythm if kept under constant illumination for four days."
+        },
+        {
+          "id": "C",
+          "text": "When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish."
+        },
+        {
+          "id": "D",
+          "text": "Lingulodinium polyedra emits 100-millisecond flashes at a wavelength of 475 nanometers when mechanically agitated."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-19T01:01:31.097422+00:00",
+      "updated_at": "2026-10-19T01:02:35.266448+00:00"
+    },
+    {
+      "id": "RW-INF-002",
+      "external_id": "HDSAT-RW-INF-002",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Information and Ideas",
+      "skill": "Inferences",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "In medieval European scriptoria, parchment made from calfskin (vellum) was prized for illuminated manuscripts because its smooth, low-lipid surface accepted gold leaf and mineral pigments evenly. However, archival multispectral imaging of twelfth-century parish registries—documents intended for routine administrative tracking rather than liturgical display—shows that scribes overwhelmingly selected coarser sheepskin parchment, which split easily if scraped to remove ink.",
+      "prompt": "Which choice most logically completes the text?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "Because parish registries did not require decorative illumination, scribes prioritized sheepskin's resistance to undetected erasure and lower cost over vellum's smooth finish."
+        },
+        {
+          "id": "B",
+          "text": "Multispectral imaging cannot distinguish between calfskin and sheepskin in illuminated liturgical manuscripts."
+        },
+        {
+          "id": "C",
+          "text": "Twelfth-century scribes lacked access to mineral pigments when compiling administrative parish registries."
+        },
+        {
+          "id": "D",
+          "text": "Vellum manuscripts deteriorated more rapidly in parish archives than sheepskin registries did."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-16T22:51:50.051386+00:00",
+      "updated_at": "2026-10-19T01:02:31.29413+00:00"
+    },
+    {
+      "id": "RW-INF-003",
+      "external_id": "HDSAT-RW-INF-003",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Information and Ideas",
+      "skill": "Command of Evidence (Quantitative)",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "Agronomists tested four cover-crop mixtures across 120 days to evaluate soil nitrogen retention and late-season weed suppression in upper Midwest plots. The researchers concluded that pairing a legume with a cereal grass allows farmers to capture nearly the full weed-suppression benefit of the grass without sacrificing the high nitrogen retention of the legume.",
+      "prompt": "Which choice most effectively uses data from the table to support the researchers' conclusion?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "The Clover + Winter Rye mix achieved 86% weed suppression (close to Winter Rye's 89%) while retaining 64 kg/ha of nitrogen (close to Crimson Clover's 68 kg/ha)."
+        },
+        {
+          "id": "B",
+          "text": "Tillage Radish retained 51 kg/ha of nitrogen and suppressed 72% of weeds, outperforming Winter Rye in nitrogen retention."
+        },
+        {
+          "id": "C",
+          "text": "Crimson Clover retained 68 kg/ha of nitrogen, the highest amount of any treatment in the 120-day trial."
+        },
+        {
+          "id": "D",
+          "text": "Winter Rye alone suppressed 89% of weeds, whereas Crimson Clover alone suppressed only 54% of weeds."
+        }
+      ],
+      "figure_metadata": {
+        "rows": [
+          [
+            "Crimson Clover (legume)",
+            "68",
+            "54%"
+          ],
+          [
+            "Winter Rye (cereal grass)",
+            "42",
+            "89%"
+          ],
+          [
+            "Clover + Winter Rye (50/50)",
+            "64",
+            "86%"
+          ],
+          [
+            "Tillage Radish (brassica)",
+            "51",
+            "72%"
+          ]
+        ],
+        "type": "table",
+        "caption": "120-Day Cover Crop Trial Results",
+        "headers": [
+          "Cover Crop Treatment",
+          "Soil Nitrogen Retained (kg/ha)",
+          "Weed Suppression (%)"
+        ]
+      },
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-16T22:51:50.051386+00:00",
+      "updated_at": "2026-10-19T01:02:31.29413+00:00"
+    },
+    {
+      "id": "RW-INF-88807",
+      "external_id": "HDSAT-RW-INF-88807",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Information and Ideas",
+      "skill": "Command of Evidence (Textual)",
+      "difficulty": "Hard",
+      "format": "multiple_choice",
+      "stimulus": "In a recent study, ornithologist Farah Al-Mansoor argues that urban blackbirds shift their dawn chorus to higher acoustic frequencies to avoid masking by low-frequency traffic rumble (dataset series 3).",
+      "prompt": "Which finding from the research team's records, if true, would most directly support ornithologist Farah Al-Mansoor's claim?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "Recordings from 40 city parks show an average minimum song frequency of 2.4 kHz, compared with 1.8 kHz in quiet rural forests 30 kilometers away."
+        },
+        {
+          "id": "B",
+          "text": "Blackbirds in both city parks and rural forests begin singing approximately thirty minutes before civil sunrise."
+        },
+        {
+          "id": "C",
+          "text": "Plumage reflectance measurements did not differ significantly between urban and rural adult males."
+        },
+        {
+          "id": "D",
+          "text": "Clutch sizes in suburban gardens averaged 4.1 eggs per nest across the three-year observation window."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-19T01:01:30.550086+00:00",
+      "updated_at": "2026-10-19T01:02:34.733109+00:00"
+    },
+    {
+      "id": "RW-SEC-89358",
+      "external_id": "HDSAT-RW-SEC-89358",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Standard English Conventions",
+      "skill": "Boundaries",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "Copper printing plates wear down after roughly two thousand impressions—a feature documented across three seasons—____",
+      "prompt": "Which choice completes the text so that it conforms to Standard English?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "; so editions of ten thousand prints become practical without recutting."
+        },
+        {
+          "id": "B",
+          "text": "editions of ten thousand prints become practical without recutting."
+        },
+        {
+          "id": "C",
+          "text": "so editions of ten thousand prints become practical without recutting."
+        },
+        {
+          "id": "D",
+          "text": "and, editions of ten thousand prints become practical without recutting."
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-19T01:01:31.729044+00:00",
+      "updated_at": "2026-10-19T01:02:35.858527+00:00"
+    },
+    {
+      "id": "RW-SEC-9003",
+      "external_id": "HDSAT-RW-SEC-9003",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Standard English Conventions",
+      "skill": "Boundaries",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "The field station lost power for six hours ______ the backup generator kept the freezers running.",
+      "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+      "choices": [
+        {
+          "id": "A",
+          "text": "—"
+        },
+        {
+          "id": "B",
+          "text": ","
+        },
+        {
+          "id": "C",
+          "text": ";"
+        },
+        {
+          "id": "D",
+          "text": ":"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-19T01:01:56.322451+00:00",
+      "updated_at": "2026-10-19T01:02:58.944168+00:00"
+    },
+    {
+      "id": "RW-SEC-9033",
+      "external_id": "HDSAT-RW-SEC-9033",
+      "assessments": [
+        "SAT",
+        "PSAT/NMSQT",
+        "PSAT 10",
+        "PSAT 8/9"
+      ],
+      "section": "Reading and Writing",
+      "domain": "Standard English Conventions",
+      "skill": "Boundaries",
+      "difficulty": "Easy",
+      "format": "multiple_choice",
+      "stimulus": "The plan rested on a single assumption ______ that demand would stay flat.",
+      "prompt": "Which choice completes the text so that it conforms to the conventions of Standard English?",
+      "choices": [
+        {
+          "id": "A",
+          "text": ";"
+        },
+        {
+          "id": "B",
+          "text": "—"
+        },
+        {
+          "id": "C",
+          "text": ","
+        },
+        {
+          "id": "D",
+          "text": ":"
+        }
+      ],
+      "figure_metadata": null,
+      "source_id": "hdsat-open-core-2026",
+      "source_name": "HDSAT Open Core Curated Bank",
+      "license": "CC-BY-4.0",
+      "attribution": "HDSAT Open Core Curated Bank (CC-BY-4.0)",
+      "is_released_practice_set": false,
+      "status": "active",
+      "validation_notes": null,
+      "created_at": "2026-10-19T01:01:57.083392+00:00",
+      "updated_at": "2026-10-19T01:02:59.640624+00:00"
+    }
+  ],
+  "keys": [
+    {
+      "question_id": "M13-DATA-B001",
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "Thu recorded 42 and Mon recorded 24, so the difference is 18 rentals.",
+      "distractor_rationales": {
+        "A": "Adding the two bars gives a total, not the gap between them.",
+        "B": "This is ten more than the gap; subtracting the two bar heights gives 18.",
+        "D": "This is the taller bar by itself, without comparing it to the shorter one."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-24T19:12:38.948419+00:00"
+    },
+    {
+      "question_id": "M13-DATA-E006",
+      "correct_answer": "D",
+      "acceptable_answers": [
+        "D"
+      ],
+      "explanation": "Dividing consecutive values always gives 2, so g multiplies by 2 for each one-unit increase in x.",
+      "distractor_rationales": {
+        "A": "This is the first value after zero, not the ratio between steps.",
+        "B": "This adds one to the multiplier; the ratio of consecutive values is 2.",
+        "C": "This is the starting value g(0), not the repeated factor."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-24T19:12:38.948419+00:00"
+    },
+    {
+      "question_id": "M13-DATA-T001",
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "Each increase of 1 in x raises f(x) by 3, so f(9) = 3(9) + 8 = 35.",
+      "distractor_rationales": {
+        "A": "This leaves out the starting value of 8 that the table already shows.",
+        "B": "Subtracting the starting value doubles back instead of continuing the pattern.",
+        "D": "This is three too high; the pattern steps by exactly 3 each time."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-24T19:12:38.948419+00:00"
+    },
+    {
+      "question_id": "M13-DATA-T004",
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B"
+      ],
+      "explanation": "Each increase of 1 in x raises f(x) by 6, so f(9) = 6(9) + 17 = 71.",
+      "distractor_rationales": {
+        "A": "This is three too high; the pattern steps by exactly 6 each time.",
+        "C": "This leaves out the starting value of 17 that the table already shows.",
+        "D": "Subtracting the starting value doubles back instead of continuing the pattern."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-24T19:12:38.948419+00:00"
+    },
+    {
+      "question_id": "M13-DATA-T005",
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "Each increase of 1 in x raises f(x) by 7, so f(9) = 7(9) + 20 = 83.",
+      "distractor_rationales": {
+        "A": "This is three too high; the pattern steps by exactly 7 each time.",
+        "B": "This leaves out the starting value of 20 that the table already shows.",
+        "D": "Subtracting the starting value doubles back instead of continuing the pattern."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-24T19:12:38.948419+00:00"
+    },
+    {
+      "question_id": "RW-CRF-88406",
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B"
+      ],
+      "explanation": "Text 1 highlights how removing interior walls fosters collaborative civic engagement, whereas Text 2 notes that unpartitioned reading halls raise ambient noise enough to reduce comprehension on complex tasks. 'architect Leo Sterling emphasizes the primary performance advantage of open-plan municipal libraries, whereas acoustics researcher Priya Nair focuses on a secondary operational trade-off.' accurately synthesizes how the two perspectives relate.",
+      "distractor_rationales": {
+        "A": "“Both authors conclude that open-plan municipal libraries is obsolete compared with nineteenth-century methods.” overstates or misstates the disagreement between the two authors.",
+        "C": "“architect Leo Sterling studies only laboratory models, whereas acoustics researcher Priya Nair refuses to consider empirical data.” overstates or misstates the disagreement between the two authors.",
+        "D": "“architect Leo Sterling opposes open-plan municipal libraries on financial grounds, whereas acoustics researcher Priya Nair supports it unconditionally.” overstates or misstates the disagreement between the two authors."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-19T01:03:09.95016+00:00"
+    },
+    {
+      "question_id": "RW-CRF-88420",
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B"
+      ],
+      "explanation": "Text 1 highlights how frame-interpolation algorithms make damaged reels accessible to modern audiences, whereas Text 2 notes that smoothing original frame rates erases the deliberate rhythmic cranking choices of early camera operators. 'Achieving the benefits film archivist Mateo Silva describes without incurring the costs cinema historian Hannah Berg identifies requires modifying how digital restoration of silent films is executed.' accurately synthesizes how the two perspectives relate.",
+      "distractor_rationales": {
+        "A": "“The benefits described by film archivist Mateo Silva are mathematically impossible to measure.” overstates or misstates the disagreement between the two authors.",
+        "C": "“cinema historian Hannah Berg's concern applies only to systems that have already been decommissioned.” overstates or misstates the disagreement between the two authors.",
+        "D": "“digital restoration of silent films can be deployed at maximum scale without any monitoring or mitigation.” overstates or misstates the disagreement between the two authors."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-19T01:03:09.95016+00:00"
+    },
+    {
+      "question_id": "RW-EXP-89022",
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "The question asks to fulfill a specific rhetorical goal using the bulleted notes; 'When disturbed by grazing copepods, Lingulodinium polyedra emits blue flashes that both directly startle the copepods—cutting feeding by 55%—and expose the grazers to nocturnal predatory fish.' is the only choice that satisfies every part of that goal accurately.",
+      "distractor_rationales": {
+        "A": "“Nocturnal predatory fish can spot illuminated prey from distances of up to two meters in dark water.” does not accomplish the stated goal: it either leaves out a required detail or emphasizes a tangential note.",
+        "B": "“Laboratory cultures of Lingulodinium polyedra lose their circadian rhythm if kept under constant illumination for four days.” does not accomplish the stated goal: it either leaves out a required detail or emphasizes a tangential note.",
+        "D": "“Lingulodinium polyedra emits 100-millisecond flashes at a wavelength of 475 nanometers when mechanically agitated.” does not accomplish the stated goal: it either leaves out a required detail or emphasizes a tangential note."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-19T01:03:10.45858+00:00"
+    },
+    {
+      "question_id": "RW-INF-002",
+      "correct_answer": "A",
+      "acceptable_answers": [
+        "A"
+      ],
+      "explanation": "The passage contrasts vellum (prized for decorative illumination) with sheepskin (used for administrative registries and prone to splitting if someone tried to scrape off ink). Thus, for administrative records where preventing tampering mattered more than gold leaf, sheepskin was advantageous.",
+      "distractor_rationales": {
+        "B": "Multispectral imaging was successfully used to identify the parchment type.",
+        "C": "The passage notes registries were not intended for liturgical display, not that pigments were unavailable.",
+        "D": "Durability over centuries is not compared in the passage."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-16T22:51:50.051386+00:00"
+    },
+    {
+      "question_id": "RW-INF-003",
+      "correct_answer": "A",
+      "acceptable_answers": [
+        "A"
+      ],
+      "explanation": "To support the claim that the pairing captures nearly the full weed-suppression benefit of the cereal grass without sacrificing the legume's nitrogen retention, The keyed choice directly cites the 50/50 mix's metrics (86% and 64 kg/ha) alongside the single-crop benchmarks (89% and 68 kg/ha).",
+      "distractor_rationales": {
+        "B": "Focuses on Tillage Radish, which is neither the legume nor the cereal grass in the conclusion.",
+        "C": "Cites only Crimson Clover's nitrogen retention.",
+        "D": "Mentions only the single-crop extremes without citing the paired mixture."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-16T22:51:50.051386+00:00"
+    },
+    {
+      "question_id": "RW-INF-88807",
+      "correct_answer": "A",
+      "acceptable_answers": [
+        "A"
+      ],
+      "explanation": "To support ornithologist Farah Al-Mansoor's claim that urban blackbirds shift their dawn chorus to higher acoustic frequencies to avoid masking by low-frequency traffic rumble, the evidence must directly connect the proposed cause and effect, which 'Recordings from 40 city parks show an average minimum song frequency of 2.4 kHz, compared with 1.8 kHz in quiet rural forests 30 kilometers away.' does.",
+      "distractor_rationales": {
+        "B": "“Blackbirds in both city parks and rural forests begin singing approximately thirty minutes before civil sunrise.” is topically related, but it does not address the specific causal claim made by the researcher.",
+        "C": "“Plumage reflectance measurements did not differ significantly between urban and rural adult males.” is topically related, but it does not address the specific causal claim made by the researcher.",
+        "D": "“Clutch sizes in suburban gardens averaged 4.1 eggs per nest across the three-year observation window.” is topically related, but it does not address the specific causal claim made by the researcher."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-19T01:03:09.95016+00:00"
+    },
+    {
+      "question_id": "RW-SEC-89358",
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "After the second em-dash closes the parenthetical interrupting phrase, 'so' introduces the resulting independent clause.",
+      "distractor_rationales": {
+        "A": "“; so editions of ten thousand prints become practical without recutting.” would not form a correct sentence boundary here; it creates a comma splice, fragment, run-on, or unnecessary break.",
+        "B": "“editions of ten thousand prints become practical without recutting.” would not form a correct sentence boundary here; it creates a comma splice, fragment, run-on, or unnecessary break.",
+        "D": "“and, editions of ten thousand prints become practical without recutting.” would not form a correct sentence boundary here; it creates a comma splice, fragment, run-on, or unnecessary break."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-19T01:03:10.973202+00:00"
+    },
+    {
+      "question_id": "RW-SEC-9003",
+      "correct_answer": "C",
+      "acceptable_answers": [
+        "C"
+      ],
+      "explanation": "The two clauses are independent, so a semicolon marks the boundary. Reread the sentence with the chosen answer in place to confirm it fits.",
+      "distractor_rationales": {
+        "A": "“—” would not form a correct sentence boundary here; it creates a comma splice, fragment, run-on, or unnecessary break.",
+        "B": "“,” would not form a correct sentence boundary here; it creates a comma splice, fragment, run-on, or unnecessary break.",
+        "D": "“:” would not form a correct sentence boundary here; it creates a comma splice, fragment, run-on, or unnecessary break."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-19T01:03:28.214511+00:00"
+    },
+    {
+      "question_id": "RW-SEC-9033",
+      "correct_answer": "B",
+      "acceptable_answers": [
+        "B"
+      ],
+      "explanation": "A dash introduces the assumption that the plan depends on. Reread the sentence with the chosen answer in place to confirm it fits.",
+      "distractor_rationales": {
+        "A": "“;” would not form a correct sentence boundary here; it creates a comma splice, fragment, run-on, or unnecessary break.",
+        "C": "“,” would not form a correct sentence boundary here; it creates a comma splice, fragment, run-on, or unnecessary break.",
+        "D": "“:” would not form a correct sentence boundary here; it creates a comma splice, fragment, run-on, or unnecessary break."
+      },
+      "scoring_metadata": null,
+      "updated_at": "2026-10-19T01:03:28.214511+00:00"
+    }
+  ]
+}

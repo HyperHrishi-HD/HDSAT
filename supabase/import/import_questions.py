@@ -81,17 +81,17 @@ QUESTIONS = [
         "skill": "Inferences",
         "difficulty": "Medium",
         "format": "multiple_choice",
-        "stimulus": "In medieval European scriptoria, parchment made from calfskin (vellum) was prized for illuminated manuscripts because its smooth, low-lipid surface accepted gold leaf and mineral pigments evenly. However, archival multispectral imaging of twelfth-century parish registries—documents intended for routine administrative tracking rather than liturgical display—shows that scribes overwhelmingly selected coarser sheepskin parchment, which split easily if scraped to remove ink.",
+        "stimulus": "In medieval European scriptoria, parchment made from calfskin (vellum) was prized for illuminated manuscripts because its smooth, low-lipid surface accepted gold leaf and mineral pigments evenly. However, archival multispectral imaging of twelfth-century parish registries—documents intended for routine administrative tracking rather than liturgical display—shows that scribes overwhelmingly selected coarser sheepskin parchment, which split easily if scraped to remove ink, ______",
         "prompt": "Which choice most logically completes the text?",
         "choices": [
-            {"id": "A", "text": "Because parish registries did not require decorative illumination, scribes prioritized sheepskin's resistance to undetected erasure and lower cost over vellum's smooth finish."},
+            {"id": "A", "text": "because registries were administrative, scribes chose sheepskin's tamper resistance and lower cost."},
             {"id": "B", "text": "Twelfth-century scribes lacked access to mineral pigments when compiling administrative parish registries."},
             {"id": "C", "text": "Vellum manuscripts deteriorated more rapidly in parish archives than sheepskin registries did."},
             {"id": "D", "text": "Multispectral imaging cannot distinguish between calfskin and sheepskin in illuminated liturgical manuscripts."}
         ],
         "correct_answer": "A",
         "acceptable_answers": ["A"],
-        "explanation": "The passage contrasts vellum (prized for decorative illumination) with sheepskin (used for administrative registries and prone to splitting if someone tried to scrape off ink). Thus, for administrative records where preventing tampering mattered more than gold leaf, sheepskin was advantageous.",
+        "explanation": "The passage contrasts vellum (prized for decorative illumination) with sheepskin (used for administrative registries and prone to splitting if someone tried to scrape off ink). The correct completion explains why administrative use favoured the coarser, harder-to-erase sheepskin.",
         "distractor_rationales": {
             "B": "The passage notes registries were not intended for liturgical display, not that pigments were unavailable.",
             "C": "Durability over centuries is not compared in the passage.",
@@ -122,18 +122,18 @@ QUESTIONS = [
         },
         "prompt": "Which choice most effectively uses data from the table to support the researchers' conclusion?",
         "choices": [
-            {"id": "A", "text": "The Clover + Winter Rye mix achieved 86% weed suppression (close to Winter Rye's 89%) while retaining 64 kg/ha of nitrogen (close to Crimson Clover's 68 kg/ha)."},
-            {"id": "B", "text": "Winter Rye alone suppressed 89% of weeds, whereas Crimson Clover alone suppressed only 54% of weeds."},
-            {"id": "C", "text": "Tillage Radish retained 51 kg/ha of nitrogen and suppressed 72% of weeds, outperforming Winter Rye in nitrogen retention."},
-            {"id": "D", "text": "Crimson Clover retained 68 kg/ha of nitrogen, the highest amount of any treatment in the 120-day trial."}
+            {"id": "A", "text": "The Clover + Rye mix reached 86% suppression and retained 64 kg/ha, close to both single-crop benchmarks."},
+            {"id": "B", "text": "Tillage Radish retained 51 kg/ha and suppressed 72% of weeds, outperforming Winter Rye in nitrogen retention."},
+            {"id": "C", "text": "Crimson Clover retained 68 kg/ha, the highest nitrogen retention among all four treatments in the trial."},
+            {"id": "D", "text": "Winter Rye alone suppressed 89% of weeds, whereas Crimson Clover alone suppressed only 54% of weeds."}
         ],
         "correct_answer": "A",
         "acceptable_answers": ["A"],
-        "explanation": "To support the claim that the pairing captures nearly the full weed-suppression benefit of the cereal grass without sacrificing the legume's nitrogen retention, Choice A directly cites the 50/50 mix's metrics (86% and 64 kg/ha) alongside the single-crop benchmarks (89% and 68 kg/ha).",
+        "explanation": "The 50/50 mix reaches 86% weed suppression, close to Winter Rye's 89%, and retains 64 kg/ha, close to Crimson Clover's 68 kg/ha. It therefore keeps most of both single-crop benefits; the other choices cite only one crop or an irrelevant treatment.",
         "distractor_rationales": {
-            "B": "Mentions only the single-crop extremes without citing the paired mixture.",
-            "C": "Focuses on Tillage Radish, which is neither the legume nor the cereal grass in the conclusion.",
-            "D": "Cites only Crimson Clover's nitrogen retention."
+            "B": "Tillage Radish is neither the legume nor the cereal grass in the conclusion.",
+            "C": "Cites only Crimson Clover's nitrogen retention.",
+            "D": "Mentions only the single-crop extremes without citing the paired mixture."
         },
         "source_id": "hdsat-open-core-2026"
     },

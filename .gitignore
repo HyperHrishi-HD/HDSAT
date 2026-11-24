@@ -18,6 +18,11 @@ venv/
 .pa/
 hdsat-deploy.zip
 
+# College Board question content is downloaded locally and never committed.
+tools/.collegeboard/
+public/collegeBoardBank.json
+supabase/import/collegeboard/
+
 supabase/.temp/
 supabase/import/expansion/
 
@@ -34,3 +39,8 @@ tools/.audit.json
 # PythonAnywhere site checkpoints (58 MB snapshots, kept local)
 checkpoints/
 checkpoint-run.log
+
+# Raw licensed flashcard source downloads (generated artifacts are committed)
+tools/.flashcard-cache/
+# Official Words-in-Context flashcard prompts/rationales: deployment-side only, never committed.
+public/officialContextCards.json

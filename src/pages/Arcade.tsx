@@ -15,6 +15,7 @@ import { ARCADE_COINS } from '../lib/arcadeCoins';
 import { diversifyArcadePool } from '../lib/arcadeGames';
 import { arcadeLevel, markArcadeQuestion, noteArcadeRun, takeArcadeQuestions } from '../lib/arcadeProgress';
 import { SKILL_GAME_MODES, matchesSkillGame, skillGameById, type SkillGameId } from '../lib/arcadeModes';
+import { isCollegeBoardQuestion, isServableCollegeBoardQuestion } from '../lib/questionSources';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
 
@@ -83,6 +84,7 @@ export function buildSprintPool(
       // so a Reading & Writing comprehension item could appear mid-sprint.
       q.section === 'Math' &&
       q.format === 'multiple_choice' &&
+      (!isCollegeBoardQuestion(q) || isServableCollegeBoardQuestion(q)) &&
       q.choices &&
       q.choices.length === 4 &&
       !q.figure_metadata
@@ -112,6 +114,7 @@ function buildTransitionsPool(questions: ReturnType<typeof useApp>['questions'],
     (q) =>
       q.skill === 'Transitions' &&
       q.format === 'multiple_choice' &&
+      (!isCollegeBoardQuestion(q) || isServableCollegeBoardQuestion(q)) &&
       q.choices &&
       (q.choices as unknown[]).length >= 3
   );
@@ -170,6 +173,7 @@ function buildSkillPool(
     (q) =>
       matchesSkillGame(q, mode) &&
       q.format === 'multiple_choice' &&
+      (!isCollegeBoardQuestion(q) || isServableCollegeBoardQuestion(q)) &&
       Array.isArray(q.choices) &&
       q.choices.length >= 3
   );
@@ -210,10 +214,10 @@ const DESMOS_LAB_LESSONS: DesmosChallenge[] = [
     f2: '2x - 2',
     prompt:
       'Plot $f(x) = x^2 - 4x + 3$ and $g(x) = 2x - 2$ in the graphing calculator below. Which is the larger $x$-coordinate where the two graphs intersect?',
-    expectedAnswer: '3',
+    expectedAnswer: '5',
     hint: 'Set x^2 - 4x + 3 = 2x - 2, or graph both functions in Desmos and read the intersection points.',
     explanation:
-      'Solving gives $(x-1)(x-3)=0$, so the intersections are $(1,0)$ and $(3,4)$; the larger $x$-coordinate is $3$.',
+      'Solving gives $(x-1)(x-5)=0$, so the intersections are $(1,0)$ and $(5,8)$; the larger $x$-coordinate is $5$.'
   },
   {
     id: 'DL-2',
@@ -804,7 +808,7 @@ export function ArcadePage() {
 
                   {lastFeedback ? (
                     <p className="muted" style={{ marginTop: 10 }}>
-                      {lastFeedback}
+                      <MathText text={lastFeedback} />
                     </p>
                   ) : null}
                 </Card>

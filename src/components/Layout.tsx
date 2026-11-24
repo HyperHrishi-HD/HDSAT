@@ -5,6 +5,7 @@ import { beginThemeTransition } from '../lib/themeMode';
 import { useApp } from '../lib/store';
 import { AuthModal } from './AuthModal';
 import { BrandMark } from './BrandMark';
+import { GuestMergePrompt } from './GuestMergePrompt';
 import { Skeleton } from 'skullet/react';
 import { PageSkeleton, skeletonVariantForPath } from './Skeleton';
 import { VerifyEmailBanner } from './VerifyEmailBanner';
@@ -531,6 +532,7 @@ export function Layout() {
         </aside>
       </div>
       <AuthModal />
+      <GuestMergePrompt />
     </div>
   );
 }

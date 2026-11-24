@@ -202,9 +202,15 @@
 :root[data-mode='dark'] .bb-cell-flag { color: var(--bad); }
 :root[data-mode='dark'] .bb-frame-rule { background: var(--line); }
 :root[data-mode='dark'] .bb-frame-rule.is-dashed {
-  height: 0;
-  background: none;
-  border-top: 2px dashed #4a5464;
+  height: 2px;
+  border-top: 0;
+  background-image: repeating-linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 52%, transparent) 0px,
+    color-mix(in srgb, var(--accent) 52%, transparent) 6px,
+    transparent 6px,
+    transparent 12px
+  );
 }
 :root[data-mode='dark'] .bb-tier-badge { border-color: var(--line); }
 :root[data-mode='dark'] .bb-tool-btn { color: var(--ink-2); }

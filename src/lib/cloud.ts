@@ -243,6 +243,23 @@ export async function signInWithGoogle(): Promise<void> {
   if (error) throw error;
 }
 
+/**
+ * Completes sign-in from a Google Identity Services ID token. The token is
+ * verified by Supabase against the same OAuth client, so this never redirects
+ * through the project's Supabase Auth host. Google has already verified the
+ * address, which is why the caller marks the profile confirmed afterwards.
+ */
+export async function signInWithGoogleIdToken(credential: string) {
+  const supabase = client();
+  const { data, error } = await supabase.auth.signInWithIdToken({
+    provider: 'google',
+    token: credential,
+  });
+  if (error) throw error;
+  if (!data.session) throw new Error('Google did not return a sign-in session.');
+  return data;
+}
+
 export async function signOutCloud() {
   const supabase = getSupabase();
   if (!supabase) return;
@@ -1328,6 +1345,45 @@ export async function adminSetReportStatus(
     p_status: status,
   });
   if (error) throw error;
+}
+
+export interface AdminStatFix {
+  changed: boolean;
+  attempts_removed?: number;
+  correct_removed?: number;
+  message: string;
+}
+
+/**
+ * Removes the reporter's most recent attempt on a question after the operator
+ * confirms the item itself was wrong. The score and accuracy totals, the
+ * progress row and that day's activity are corrected server-side, so the
+ * browser never recalculates or writes a student's stats by hand.
+ */
+export async function adminFixReportStats(
+  token: string,
+  reportId: string
+): Promise<AdminStatFix> {
+  const supabase = client();
+  const { data, error } = await supabase.rpc('admin_fix_report_stats', {
+    p_token: token,
+    p_report_id: reportId,
+  });
+  if (error) {
+    if (isMissingRoutineError(error.message, 'admin_fix_report_stats')) {
+      throw new Error(
+                  'Stat correction is not installed in this deployment yet. Apply supabase/migrations/20261122000200_report_stat_correction.sql.'
+      );
+    }
+    throw error;
+  }
+  const payload = (data ?? {}) as Partial<AdminStatFix>;
+  return {
+    changed: Boolean(payload.changed),
+    attempts_removed: Number(payload.attempts_removed ?? 0),
+    correct_removed: Number(payload.correct_removed ?? 0),
+    message: String(payload.message ?? 'No change was needed.'),
+  };
 }
 
 export async function adminBatchDeleteReports(

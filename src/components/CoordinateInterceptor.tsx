@@ -31,6 +31,8 @@ import {
 } from '../lib/arcadeGames';
 import { useCanvasFit } from '../lib/canvasFit';
 import { buildFamilyHistory, preferFreshFamilies } from '../lib/examEngine';
+import { isCollegeBoardQuestion, isServableCollegeBoardQuestion } from '../lib/questionSources';
+import { interceptorAccuracy } from '../lib/arcadeAccuracy';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
 import type { Question } from '../lib/types';
@@ -205,6 +207,9 @@ export function CoordinateInterceptor() {
   const [last, setLast] = useState<number>(() => loadNumber(LAST_KEY));
   const [hits, setHits] = useState(0);
   const [shots, setShots] = useState(0);
+  // A pulse is one trigger pull and may clear several targets. Accuracy is
+  // successful pulses / pulses fired; targets hit stays a separate stat.
+  const [successfulShots, setSuccessfulShots] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(RUN_SECONDS);
   const [running, setRunning] = useState(false);
   const [finished, setFinished] = useState(false);
@@ -222,6 +227,7 @@ export function CoordinateInterceptor() {
   const scoreRef = useRef(0);
   const hitsRef = useRef(0);
   const shotsRef = useRef(0);
+  const successfulShotsRef = useRef(0);
   const runCompleteRef = useRef(false);
   const startedRef = useRef(0);
   const nextBreakRef = useRef(3);
@@ -305,7 +311,9 @@ export function CoordinateInterceptor() {
     });
     const timeSpent = Math.max(1, Math.round((Date.now() - startedRef.current) / 1000));
     const shots = shotsRef.current;
-    const hits = hitsRef.current;
+    // One trigger pull can clear more than one target; count successful pulls,
+    // not targets, or a multi-kill pulse would exceed 100% accuracy.
+    const successful = successfulShotsRef.current;
     // Coins were already paid per target and per clean math break. The
     // completed run is recorded for the daily activity/streak, never as a
     // second random payout.
@@ -314,7 +322,7 @@ export function CoordinateInterceptor() {
         activityType: 'mini_game',
         sessionId: sessionRef.current,
         questions: Math.max(1, shots),
-        correct: Math.min(hits, Math.max(1, shots)),
+        correct: successful,
         timeSpentSeconds: timeSpent,
       });
     }
@@ -347,6 +355,7 @@ export function CoordinateInterceptor() {
         (question) =>
           question.section === 'Math' &&
           question.format === 'multiple_choice' &&
+          (!isCollegeBoardQuestion(question) || isServableCollegeBoardQuestion(question)) &&
           Array.isArray(question.choices) &&
           question.choices.length === 4 &&
           !breakUsedRef.current.has(question.id)
@@ -382,6 +391,7 @@ export function CoordinateInterceptor() {
     scoreRef.current = 0;
     hitsRef.current = 0;
     shotsRef.current = 0;
+    successfulShotsRef.current = 0;
     startedRef.current = Date.now();
     particlesRef.current = [];
     floatsRef.current = [];
@@ -402,6 +412,7 @@ export function CoordinateInterceptor() {
     setScore(0);
     setHits(0);
     setShots(0);
+    setSuccessfulShots(0);
     setSecondsLeft(RUN_SECONDS);
     setMessage(null);
     setBreakQuestion(null);
@@ -480,6 +491,8 @@ export function CoordinateInterceptor() {
     setShots(nextShots);
     beamRef.current = { at: performance.now(), aim: aimNow, hit: struck.length > 0 };
     if (struck.length > 0) {
+      successfulShotsRef.current += 1;
+      setSuccessfulShots(successfulShotsRef.current);
       const coins = struck.reduce((sum, target) => sum + interceptorTargetCoins(target.kind), 0);
       const key = [...struck.map((target) => target.id)].sort().join('+');
       void app.actions.awardCoins(
@@ -1160,11 +1173,16 @@ export function CoordinateInterceptor() {
         </div>
         <div className="card-grid" style={{ margin: '12px 0' }}>
           <Stat label="Score" value={score} hint={score >= best ? 'New high score' : `Best ${best}`} />
-          <Stat label="Targets hit" value={hits} />
+          <Stat label="Targets hit" value={hits} hint="A pulse can clear several" />
           <Stat label="Shots fired" value={shots} />
           <Stat
             label="Accuracy"
-            value={shots > 0 ? `${Math.round((hits / shots) * 100)}%` : '—'}
+            value={
+              shots > 0 && successfulShots >= 0
+                ? `${interceptorAccuracy(shots, successfulShots)}%`
+                : '—'
+            }
+            hint={`${successfulShots} successful pulse${successfulShots === 1 ? '' : 's'}`}
           />
         </div>
         <p className="muted">

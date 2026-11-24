@@ -1,8 +1,14 @@
 import { compareReviewOrder, isReviewDue } from './review';
+import {
+  isAssemblyEligible,
+  isCollegeBoardQuestion,
+  isServableCollegeBoardQuestion,
+} from './questionSources';
 import type {
   Assessment,
   Difficulty,
   Question,
+  QuestionFormat,
   QuestionProgress,
   Section,
   TestModuleResult,
@@ -33,6 +39,7 @@ export const SECTION_ORDER: Section[] = ['Reading and Writing', 'Math'];
 export const ROUTING_THRESHOLD = 0.6;
 
 const DIFFICULTY_WEIGHT: Record<Difficulty, number> = { Easy: 0, Medium: 1, Hard: 2 };
+const DIFFICULTY_BANDS: Difficulty[] = ['Easy', 'Medium', 'Hard'];
 
 export function hashSeed(seed: string): number {
   let h = 2166136261;
@@ -54,6 +61,26 @@ export function seededShuffle<T>(items: T[], seed: string): T[] {
     out[j] = tmp;
   }
   return out;
+}
+
+/**
+ * Keeps official College Board items ahead of curated items inside one draw
+ * tier. The curated pool remains the fallback, so a missing domain/skill or
+ * a small clean official supply cannot prevent a full module from filling.
+ * Both halves stay seeded, so replays remain deterministic.
+ */
+function preferOfficialWithin(questions: Question[], seed: string): Question[] {
+  // Keep the existing deterministic draw byte-for-byte when the supplemental
+  // official pool is absent (the curated bank and its saved-attempt replays).
+  if (!questions.some((question) => isCollegeBoardQuestion(question))) {
+    return seededShuffle(questions, seed);
+  }
+  const official = questions.filter((question) => isServableCollegeBoardQuestion(question));
+  const curated = questions.filter((question) => !isCollegeBoardQuestion(question));
+  return [
+    ...seededShuffle(official, `${seed}:official`),
+    ...seededShuffle(curated, `${seed}:curated`),
+  ];
 }
 
 export type ModuleTier = 'module1' | 'upper' | 'lower';
@@ -78,6 +105,50 @@ export interface SectionPlan {
   targetItems: number;
 }
 
+export type PlanAlgorithmVersion = 1 | 2;
+
+export type ModuleRelaxation =
+  | 'module-family-cap'
+  | 'plan-family-cap'
+  | 'skill-fallback'
+  | 'format-fallback';
+
+const MODULE_RELAXATION_ORDER: ModuleRelaxation[] = [
+  'module-family-cap',
+  'plan-family-cap',
+  'skill-fallback',
+  'format-fallback',
+];
+
+/** Per-module selection facts, used by tests and the operator console. */
+export interface ModuleDiagnostics {
+  tier: ModuleTier;
+  operational: number;
+  pretest: number;
+  domainCounts: Record<string, number>;
+  /** Difficulty counts for operational items only. */
+  difficultyCounts: Record<Difficulty, number>;
+  /** Bands present in the eligible pool but absent from the administered module. */
+  missingDifficulties: Difficulty[];
+  /** True when Hard is allowed and present in the pool but absent from this module. */
+  missingHard: boolean;
+  /** Constraints relaxed while filling this module, in canonical order. */
+  relaxations: ModuleRelaxation[];
+  /** Extra members of a task family beyond the first, per module. */
+  taskFamilyRepeats: number;
+  shortfalls: string[];
+}
+
+export interface SectionDiagnostics {
+  section: Section;
+  modules: ModuleDiagnostics[];
+}
+
+export interface PlanDiagnostics {
+  algorithmVersion: PlanAlgorithmVersion;
+  sections: SectionDiagnostics[];
+}
+
 export interface TestPlan {
   assessment: string;
   createdAt: string;
@@ -85,6 +156,9 @@ export interface TestPlan {
   warnings: string[];
   seed: string;
   breakMinutes: number;
+  /** Which selection algorithm built this plan. Saved attempts replay their own version. */
+  algorithmVersion?: PlanAlgorithmVersion;
+  diagnostics?: PlanDiagnostics;
 }
 
 export interface TestPlanOptions {
@@ -99,6 +173,8 @@ export interface TestPlanOptions {
    * when the leftover supply cannot fill every adaptive module.
    */
   seenQuestionIds?: Iterable<string>;
+  /** Defaults to v2. Paused attempts pass the version they were created with. */
+  algorithm?: PlanAlgorithmVersion;
 }
 
 /**
@@ -265,6 +341,70 @@ export function questionFamilyKeys(q: Question): string[] {
   return keys;
 }
 
+const taskFamilyKeyCache = new WeakMap<Question, string>();
+
+function normaliseTaskText(text: string): string {
+  return text
+    .trim()
+    .toLowerCase()
+    .replace(/\d+(?:\.\d+)?/g, '#')
+    .replace(/\s+/g, ' ');
+}
+
+function finalSentence(text: string | null): string {
+  const parts = (text ?? '')
+    .trim()
+    .split(/(?<=[.!?])\s+/)
+    .map((part) => part.trim())
+    .filter(Boolean);
+  return parts[parts.length - 1] ?? '';
+}
+
+function figureSignature(meta: unknown): string {
+  if (!meta || typeof meta !== 'object') return '';
+  const figure = meta as { type?: string; rows?: unknown[]; series?: unknown[] };
+  if (figure.type === 'table') {
+    const rows = Array.isArray(figure.rows) ? figure.rows : [];
+    const first = rows[0];
+    const width = Array.isArray(first) ? first.length : 0;
+    return `table:${rows.length}x${width}`;
+  }
+  if (figure.type === 'bar_chart' || figure.type === 'line_chart') {
+    return `${figure.type}:${Array.isArray(figure.series) ? figure.series.length : 0}`;
+  }
+  return figure.type ?? '';
+}
+
+/**
+ * Task family: the layer that catches a generated template whose context
+ * sentence was paraphrased. The ordinary template key includes the whole
+ * stimulus, so `M13-DATA-T000..T007` (one table, eight unrelated context
+ * sentences) look like eight different questions to it.
+ *
+ * Math ignores the opening context sentence and keys on the skill, the prompt
+ * and the final (task-bearing) sentence plus the figure shape. R&W keeps the
+ * passage identity, because two prompts on one passage are already one family.
+ *
+ * Full-test planning uses this key; practice, rush, daily and mastery keep the
+ * existing `questionFamilyKeys` so their behaviour does not change.
+ */
+export function questionTaskFamilyKey(q: Question): string {
+  const cached = taskFamilyKeyCache.get(q);
+  if (cached !== undefined) return cached;
+  const prompt = normaliseTaskText(q.prompt);
+  // R&W has one question per passage, so the passage is the family. That also
+  // catches the bank's few multiple-prompt variants on one passage, which a
+  // prompt-sensitive key would treat as unrelated questions.
+  const key =
+    q.section === 'Reading and Writing'
+      ? `task:rw:${q.skill}:${questionStimulusKey(q) ?? ''}`
+      : `task:math:${q.skill}:${prompt}:${normaliseTaskText(finalSentence(q.stimulus))}:${figureSignature(
+          q.figure_metadata
+        )}`;
+  taskFamilyKeyCache.set(q, key);
+  return key;
+}
+
 /**
  * Indexes what the student has already been shown, by family. Only attempted
  * questions contribute, so an untouched bank has an empty history.
@@ -310,6 +450,42 @@ export function buildFamilyHistoryFromIds(
     }
   }
   return { lastSeen };
+}
+
+/**
+ * Family history for full-test planning: the ordinary keys plus the task
+ * family, so a generated sibling counts as "seen" even when its context
+ * sentence was rewritten.
+ */
+export function buildPlanFamilyHistoryFromIds(
+  all: Question[],
+  ids: Iterable<string>,
+  attemptedAt: string = new Date().toISOString()
+): FamilyHistory {
+  const lastSeen = new Map<string, number>();
+  const wanted = ids instanceof Set ? (ids as Set<string>) : new Set(ids);
+  if (wanted.size === 0) return { lastSeen };
+  const parsed = Date.parse(attemptedAt);
+  const when = Number.isFinite(parsed) ? parsed : Date.now();
+  for (const question of all) {
+    if (!wanted.has(question.id)) continue;
+    for (const key of [...questionFamilyKeys(question), questionTaskFamilyKey(question)]) {
+      lastSeen.set(key, Math.max(lastSeen.get(key) ?? 0, when));
+    }
+  }
+  return { lastSeen };
+}
+
+export function isPlanFamilyFresh(
+  q: Question,
+  history: FamilyHistory,
+  now: number = Date.now()
+): boolean {
+  if (history.lastSeen.size === 0) return true;
+  const cutoff = now - FAMILY_COOLDOWN_DAYS * 24 * 60 * 60 * 1000;
+  return [...questionFamilyKeys(q), questionTaskFamilyKey(q)].every(
+    (key) => (history.lastSeen.get(key) ?? 0) < cutoff
+  );
 }
 
 /**
@@ -535,6 +711,7 @@ const RW_SKILL_RANK: Record<string, number> = {
   'Text Structure and Purpose': 1,
   'Cross-Text Connections': 2,
   'Central Ideas and Details': 3,
+  'Command of Evidence': 4,
   'Command of Evidence (Textual)': 4,
   'Command of Evidence (Quantitative)': 4,
   Inferences: 5,
@@ -544,7 +721,7 @@ const RW_SKILL_RANK: Record<string, number> = {
   'Rhetorical Synthesis': 9,
 };
 
-function buildRwModuleQuestions(
+function buildRwModuleQuestionsV1(
   pool: Question[],
   used: Set<string>,
   tier: ModuleTier,
@@ -569,7 +746,7 @@ function buildRwModuleQuestions(
         picked.push(q);
       }
     }
-    return orderModuleQuestions(picked, 'Reading and Writing');
+    return orderModuleQuestions(picked, 'Reading and Writing', 1);
   }
 
   // Group slots by domain so we can assign intra-domain difficulty curves
@@ -667,7 +844,7 @@ function isTrigQuestion(q: Question): boolean {
   );
 }
 
-function buildMathModuleQuestions(
+function buildMathModuleQuestionsV1(
   pool: Question[],
   used: Set<string>,
   tier: ModuleTier,
@@ -755,6 +932,828 @@ function buildMathModuleQuestions(
   return orderModuleQuestions(picked, 'Math');
 }
 
+/* ------------------------------------------------------------------------ *
+ * v2: operational blueprint, task-family caps, supply-aware difficulty
+ *
+ * The official module is 25 operational + 2 pretest for R&W and 20 + 2 for
+ * Math. Quotas below describe the operational items only; the two pretest
+ * items are extra and sit inside the same domain/skill blocks. That is what
+ * keeps Expression of Ideas at 12 per test instead of 14, and Algebra/PSDA at
+ * 14/6 instead of 16/8.
+ * ------------------------------------------------------------------------ */
+
+const RW_OPERATIONAL_SLOTS_V2: RwSlotSpec[] = [
+  { domain: 'Craft and Structure', skillMatch: (s) => s === 'Words in Context', count: 4 },
+  { domain: 'Craft and Structure', skillMatch: (s) => s === 'Text Structure and Purpose', count: 2 },
+  { domain: 'Craft and Structure', skillMatch: (s) => s === 'Cross-Text Connections', count: 1 },
+  { domain: 'Information and Ideas', skillMatch: (s) => s === 'Central Ideas and Details', count: 3 },
+  {
+    domain: 'Information and Ideas',
+    skillMatch: (s) => s.startsWith('Command of Evidence'),
+    count: 2,
+  },
+  { domain: 'Information and Ideas', skillMatch: (s) => s === 'Inferences', count: 1 },
+  { domain: 'Standard English Conventions', skillMatch: (s) => s === 'Boundaries', count: 3 },
+  {
+    domain: 'Standard English Conventions',
+    skillMatch: (s) => s === 'Form, Structure, and Sense',
+    count: 3,
+  },
+  { domain: 'Expression of Ideas', skillMatch: (s) => s === 'Transitions', count: 3 },
+  { domain: 'Expression of Ideas', skillMatch: (s) => s === 'Rhetorical Synthesis', count: 3 },
+];
+
+const RW_OPERATIONAL_TARGET_V2 = 25;
+
+const MATH_OPERATIONAL_SLOTS_V2: { domain: string; count: number; spr: number }[] = [
+  { domain: 'Algebra', count: 7, spr: 1 },
+  { domain: 'Advanced Math', count: 7, spr: 2 },
+  { domain: 'Problem-Solving and Data Analysis', count: 3, spr: 1 },
+  { domain: 'Geometry and Trigonometry', count: 3, spr: 1 },
+];
+
+const MATH_OPERATIONAL_TARGET_V2 = 20;
+const TASK_FAMILY_PER_MODULE = 1;
+const TASK_FAMILY_PER_PLAN = 2;
+/**
+ * Tier 1 is the official College Board pool. Tier 2 (the curated bank) fills
+ * only slots Tier 1 cannot fill and is capped at this share of a module. It is
+ * a filler ceiling, not a quota: when official rows can fill the module, no
+ * curated row is forced in.
+ */
+const TIER2_FILL_SHARE_PER_MODULE = 0.2;
+const CAP_RELAX_ATTEMPTS = [
+  { moduleFamily: false, planFamily: false },
+  { moduleFamily: true, planFamily: false },
+  { moduleFamily: true, planFamily: true },
+] as const;
+
+interface ModulePickState {
+  used: Set<string>;
+  moduleFamilyCounts: Map<string, number>;
+  planFamilyCounts: Map<string, number>;
+  skillCounts: Map<string, number>;
+  seen: Set<string>;
+  hardPicked: number;
+  tier2Picked: number;
+  tier2Cap: number;
+  relaxations: Set<ModuleRelaxation>;
+}
+
+interface ModuleBuildV2 {
+  questions: Question[];
+  unscoredIds: string[];
+  diagnostics: ModuleDiagnostics;
+}
+
+function newPickState(seen: Set<string>, tier2Cap = Number.POSITIVE_INFINITY): ModulePickState {
+  return {
+    used: new Set<string>(),
+    moduleFamilyCounts: new Map<string, number>(),
+    planFamilyCounts: new Map<string, number>(),
+    skillCounts: new Map<string, number>(),
+    seen,
+    hardPicked: 0,
+    tier2Picked: 0,
+    tier2Cap,
+    relaxations: new Set<ModuleRelaxation>(),
+  };
+}
+
+/** A second adaptive branch keeps module 1 out, but resets per-module caps. */
+function branchPickState(base: ModulePickState): ModulePickState {
+  return {
+    used: new Set<string>(base.used),
+    moduleFamilyCounts: new Map<string, number>(),
+    planFamilyCounts: new Map<string, number>(base.planFamilyCounts),
+    skillCounts: new Map<string, number>(),
+    seen: base.seen,
+    hardPicked: 0,
+    tier2Picked: 0,
+    tier2Cap: base.tier2Cap,
+    relaxations: new Set<ModuleRelaxation>(),
+  };
+}
+
+function noteRelaxation(state: ModulePickState, relaxation: ModuleRelaxation): void {
+  state.relaxations.add(relaxation);
+}
+
+function noteCapRelaxations(
+  state: ModulePickState,
+  question: Question,
+  moduleRelaxed: boolean,
+  planRelaxed: boolean
+): void {
+  const family = questionTaskFamilyKey(question);
+  if (
+    moduleRelaxed &&
+    (state.moduleFamilyCounts.get(family) ?? 0) >= TASK_FAMILY_PER_MODULE
+  ) {
+    noteRelaxation(state, 'module-family-cap');
+  }
+  if (planRelaxed && (state.planFamilyCounts.get(family) ?? 0) >= TASK_FAMILY_PER_PLAN) {
+    noteRelaxation(state, 'plan-family-cap');
+  }
+}
+
+function markPickedV2(q: Question, state: ModulePickState): void {
+  state.used.add(q.id);
+  state.used.add(questionContentKey(q));
+  const stimKey = questionStimulusKey(q);
+  if (stimKey) state.used.add(stimKey);
+  state.used.add(questionTemplateKey(q));
+  const family = questionTaskFamilyKey(q);
+  state.moduleFamilyCounts.set(family, (state.moduleFamilyCounts.get(family) ?? 0) + 1);
+  state.planFamilyCounts.set(family, (state.planFamilyCounts.get(family) ?? 0) + 1);
+  state.skillCounts.set(q.skill, (state.skillCounts.get(q.skill) ?? 0) + 1);
+  if (q.difficulty === 'Hard') state.hardPicked += 1;
+  if (!isCollegeBoardQuestion(q)) state.tier2Picked += 1;
+}
+
+function isAvailableV2(
+  q: Question,
+  state: ModulePickState,
+  relaxModuleFamily: boolean,
+  relaxPlanFamily: boolean
+): boolean {
+  if (state.used.has(q.id) || state.used.has(questionContentKey(q))) return false;
+  if (!isCollegeBoardQuestion(q) && state.tier2Picked >= state.tier2Cap) return false;
+  const stimKey = questionStimulusKey(q);
+  if (stimKey && state.used.has(stimKey)) return false;
+  if (state.used.has(questionTemplateKey(q))) return false;
+  const family = questionTaskFamilyKey(q);
+  if (
+    !relaxModuleFamily &&
+    (state.moduleFamilyCounts.get(family) ?? 0) >= TASK_FAMILY_PER_MODULE
+  ) {
+    return false;
+  }
+  if (!relaxPlanFamily && (state.planFamilyCounts.get(family) ?? 0) >= TASK_FAMILY_PER_PLAN) {
+    return false;
+  }
+  return true;
+}
+
+/**
+ * Deterministic best candidate. Difficulty fit dominates; family repetition,
+ * skill saturation, freshness and a seeded tie-break order the rest.
+ */
+function chooseV2(
+  pool: Question[],
+  state: ModulePickState,
+  predicate: (q: Question) => boolean,
+  preferred: Difficulty[],
+  seed: string,
+  options: { relaxModuleFamily?: boolean; relaxPlanFamily?: boolean; hardCap?: number } = {}
+): Question | null {
+  let best: Question | null = null;
+  let bestScore = Number.POSITIVE_INFINITY;
+  for (const q of pool) {
+    if (!predicate(q)) continue;
+    if (!isAvailableV2(q, state, Boolean(options.relaxModuleFamily), Boolean(options.relaxPlanFamily))) {
+      continue;
+    }
+    if (options.hardCap !== undefined && q.difficulty === 'Hard' && state.hardPicked >= options.hardCap) {
+      continue;
+    }
+    const family = questionTaskFamilyKey(q);
+    const preferredIndex = preferred.indexOf(q.difficulty);
+    const difficultyScore =
+      preferredIndex >= 0 ? preferredIndex : preferred.length + (DIFFICULTY_WEIGHT[q.difficulty] ?? 1);
+    const score =
+      (isCollegeBoardQuestion(q) ? 0 : 1000) +
+      difficultyScore * 100 +
+      (state.moduleFamilyCounts.get(family) ?? 0) * 30 +
+      (state.planFamilyCounts.get(family) ?? 0) * 10 +
+      (state.skillCounts.get(q.skill) ?? 0) * 4 +
+      (state.seen.has(q.id) ? 20 : 0) +
+      (hashSeed(`${seed}:${q.id}`) % 1000) / 1000;
+    if (score < bestScore) {
+      bestScore = score;
+      best = q;
+    }
+  }
+  return best;
+}
+
+function tryPickV2(
+  pool: Question[],
+  state: ModulePickState,
+  predicate: (q: Question) => boolean,
+  preferred: Difficulty[],
+  seed: string,
+  options: { relaxModuleFamily?: boolean; relaxPlanFamily?: boolean; hardCap?: number } = {}
+): Question | null {
+  for (const difficulty of preferred) {
+    const found = chooseV2(
+      pool,
+      state,
+      (q) => predicate(q) && q.difficulty === difficulty,
+      // The predicate already fixes the band; only that band can score.
+      [difficulty],
+      seed,
+      options
+    );
+    if (found) return found;
+  }
+  return chooseV2(pool, state, predicate, preferred, seed, options);
+}
+
+function canPickV2(q: Question, state: ModulePickState, hardCap: number): boolean {
+  return q.difficulty !== 'Hard' || state.hardPicked < hardCap;
+}
+
+function fillRwOperationalV2(
+  pool: Question[],
+  state: ModulePickState,
+  tier: ModuleTier,
+  seed: string,
+  maxHard: number
+): { picked: Question[]; shortfalls: string[] } {
+  const picked: Question[] = [];
+  const shortfalls: string[] = [];
+  for (const slot of RW_OPERATIONAL_SLOTS_V2) {
+    for (let i = 0; i < slot.count; i += 1) {
+      const prefs = tierDifficultyOrder(tier, i, slot.count);
+      const attempts = [
+        ...CAP_RELAX_ATTEMPTS.map((relax) => ({ exactSkill: true, ...relax })),
+        ...CAP_RELAX_ATTEMPTS.map((relax) => ({ exactSkill: false, ...relax })),
+      ].map(({ exactSkill, moduleFamily, planFamily }) => ({
+        predicate: (q: Question) =>
+          q.domain === slot.domain && (!exactSkill || slot.skillMatch(q.skill)),
+        relaxSkill: !exactSkill,
+        relaxModuleFamily: moduleFamily,
+        relaxPlanFamily: planFamily,
+      }));
+      let found: Question | null = null;
+      for (const attempt of attempts) {
+        found = tryPickV2(pool, state, attempt.predicate, prefs, seed, {
+          hardCap: maxHard,
+          relaxModuleFamily: attempt.relaxModuleFamily,
+          relaxPlanFamily: attempt.relaxPlanFamily,
+        });
+        if (found) {
+          if (attempt.relaxSkill && !slot.skillMatch(found.skill)) {
+            noteRelaxation(state, 'skill-fallback');
+          }
+          noteCapRelaxations(
+            state,
+            found,
+            attempt.relaxModuleFamily,
+            attempt.relaxPlanFamily
+          );
+          break;
+        }
+      }
+      if (!found) {
+        shortfalls.push(
+          `${slot.domain}: ${slot.count - i} operational slot(s) unfilled (skill ${slot.skillMatch.name || 'group'})`
+        );
+        break;
+      }
+      if (!prefs.includes(found.difficulty)) {
+        shortfalls.push(
+          `${slot.domain}: no ${prefs.join('/')} candidate for slot ${i + 1}; used ${found.difficulty}`
+        );
+      }
+      markPickedV2(found, state);
+      picked.push(found);
+    }
+  }
+  return { picked, shortfalls };
+}
+
+function mathFormatSequence(slot: { count: number; spr: number }): QuestionFormat[] {
+  const sprPositions = new Set<number>();
+  for (let i = 0; i < slot.spr; i += 1) {
+    sprPositions.add(Math.min(slot.count - 1, Math.round(((i + 1) * slot.count) / (slot.spr + 1))));
+  }
+  return Array.from({ length: slot.count }, (_, index) =>
+    sprPositions.has(index) ? 'spr' : 'multiple_choice'
+  );
+}
+
+function fillMathOperationalV2(
+  pool: Question[],
+  state: ModulePickState,
+  tier: ModuleTier,
+  seed: string,
+  maxHard: number
+): { picked: Question[]; shortfalls: string[] } {
+  const picked: Question[] = [];
+  const shortfalls: string[] = [];
+  for (const slot of MATH_OPERATIONAL_SLOTS_V2) {
+    const formats = mathFormatSequence(slot);
+    for (let i = 0; i < slot.count; i += 1) {
+      const desiredFormat = formats[i];
+      const prefs = tierDifficultyOrder(tier, i, slot.count);
+      let found = tryPickV2(
+        pool,
+        state,
+        (q) => q.domain === slot.domain && q.format === desiredFormat,
+        prefs,
+        seed,
+        { hardCap: maxHard }
+      );
+      if (!found) {
+        found = tryPickV2(pool, state, (q) => q.domain === slot.domain, prefs, seed, {
+          hardCap: maxHard,
+        });
+        if (found) noteRelaxation(state, 'format-fallback');
+      }
+      if (!found) {
+        found = tryPickV2(pool, state, (q) => q.domain === slot.domain, prefs, seed, {
+          hardCap: maxHard,
+          relaxModuleFamily: true,
+          relaxPlanFamily: true,
+        });
+        if (found) {
+          noteRelaxation(state, 'format-fallback');
+          noteCapRelaxations(state, found, true, true);
+        }
+      }
+      if (!found) {
+        shortfalls.push(`${slot.domain}: ${slot.count - i} operational slot(s) unfilled`);
+        break;
+      }
+      if (!prefs.includes(found.difficulty)) {
+        shortfalls.push(
+          `${slot.domain}: no ${prefs.join('/')} candidate for slot ${i + 1}; used ${found.difficulty}`
+        );
+      }
+      markPickedV2(found, state);
+      picked.push(found);
+    }
+  }
+  return { picked, shortfalls };
+}
+
+function selectPretestV2(
+  pool: Question[],
+  state: ModulePickState,
+  operational: Question[],
+  count: number,
+  seed: string,
+  maxHard: number
+): { questions: Question[]; shortfalls: string[] } {
+  if (count <= 0) return { questions: [], shortfalls: [] };
+  const domainTotals = new Map<string, number>();
+  for (const q of operational) {
+    domainTotals.set(q.domain, (domainTotals.get(q.domain) ?? 0) + 1);
+  }
+  const domains = [...domainTotals.entries()].sort((a, b) => b[1] - a[1]).map(([domain]) => domain);
+  const questions: Question[] = [];
+  const shortfalls: string[] = [];
+  for (const domain of domains) {
+    if (questions.length >= count) break;
+    const found = tryPickV2(
+      pool,
+      state,
+      (q) => q.domain === domain && canPickV2(q, state, maxHard),
+      ['Medium', 'Easy', 'Hard'],
+      `${seed}:pretest:${domain}`,
+      { hardCap: maxHard }
+    );
+    if (found) {
+      markPickedV2(found, state);
+      questions.push(found);
+    }
+  }
+  while (questions.length < count) {
+    const found = tryPickV2(
+      pool,
+      state,
+      (q) => canPickV2(q, state, maxHard),
+      ['Medium', 'Easy', 'Hard'],
+      `${seed}:pretest:fill:${questions.length}`,
+      { hardCap: maxHard }
+    );
+    if (!found) break;
+    markPickedV2(found, state);
+    questions.push(found);
+  }
+  if (questions.length < count) {
+    shortfalls.push(`pretest: ${count - questions.length} slot(s) unfilled`);
+  }
+  return { questions, shortfalls };
+}
+
+function moduleDiagnosticsV2(
+  tier: ModuleTier,
+  questions: Question[],
+  unscoredIds: string[],
+  shortfalls: string[],
+  pool: Question[],
+  maxHard: number,
+  relaxations: Set<ModuleRelaxation>
+): ModuleDiagnostics {
+  const unscored = new Set(unscoredIds);
+  const operational = questions.filter((q) => !unscored.has(q.id));
+  const domainCounts: Record<string, number> = {};
+  const difficultyCounts: Record<Difficulty, number> = { Easy: 0, Medium: 0, Hard: 0 };
+  const familyCounts = new Map<string, number>();
+  for (const q of operational) {
+    domainCounts[q.domain] = (domainCounts[q.domain] ?? 0) + 1;
+    difficultyCounts[q.difficulty] += 1;
+  }
+  for (const q of questions) {
+    const family = questionTaskFamilyKey(q);
+    familyCounts.set(family, (familyCounts.get(family) ?? 0) + 1);
+  }
+  let taskFamilyRepeats = 0;
+  for (const count of familyCounts.values()) taskFamilyRepeats += Math.max(0, count - 1);
+
+  const administered = new Set(questions.map((q) => q.difficulty));
+  const available = new Set<Difficulty>();
+  for (const q of pool) {
+    if (q.difficulty === 'Hard' && maxHard <= 0) continue;
+    available.add(q.difficulty);
+  }
+  const missingDifficulties = DIFFICULTY_BANDS.filter(
+    (difficulty) => available.has(difficulty) && !administered.has(difficulty)
+  );
+  return {
+    tier,
+    operational: operational.length,
+    pretest: questions.length - operational.length,
+    domainCounts,
+    difficultyCounts,
+    missingDifficulties,
+    missingHard: missingDifficulties.includes('Hard'),
+    relaxations: MODULE_RELAXATION_ORDER.filter((relaxation) => relaxations.has(relaxation)),
+    taskFamilyRepeats,
+    shortfalls,
+  };
+}
+
+function orderMathV2(questions: Question[]): Question[] {
+  const buckets: Question[][] = [[], [], []];
+  for (const q of questions) {
+    buckets[DIFFICULTY_ORDER[q.difficulty] ?? 1].push(q);
+  }
+  const ordered: Question[] = [];
+  for (const bucket of buckets) {
+    const remaining = bucket.slice();
+    while (remaining.length > 0) {
+      const prev = ordered[ordered.length - 1];
+      let index = -1;
+      if (prev) {
+        const prevFamily = questionTaskFamilyKey(prev);
+        index = remaining.findIndex(
+          (q) =>
+            q.domain !== prev.domain &&
+            q.skill !== prev.skill &&
+            questionTaskFamilyKey(q) !== prevFamily
+        );
+        if (index < 0) {
+          index = remaining.findIndex(
+            (q) => q.skill !== prev.skill && questionTaskFamilyKey(q) !== prevFamily
+          );
+        }
+        if (index < 0) {
+          index = remaining.findIndex((q) => questionTaskFamilyKey(q) !== prevFamily);
+        }
+        if (index < 0) index = remaining.findIndex((q) => q.domain !== prev.domain);
+      }
+      if (index < 0) index = 0;
+      ordered.push(remaining.splice(index, 1)[0]);
+    }
+  }
+  return ordered;
+}
+
+function buildScaledModuleV2(
+  pool: Question[],
+  state: ModulePickState,
+  tier: ModuleTier,
+  target: number,
+  seed: string,
+  maxHard: number,
+  order: (questions: Question[]) => Question[]
+): ModuleBuildV2 {
+  const picked: Question[] = [];
+  const shortfalls: string[] = [];
+  for (let i = 0; i < target; i += 1) {
+    const prefs = tierDifficultyOrder(tier, i, target);
+    let found: Question | null = null;
+    for (const relax of CAP_RELAX_ATTEMPTS) {
+      found = tryPickV2(pool, state, () => true, prefs, `${seed}:small:${i}`, {
+        hardCap: maxHard,
+        relaxModuleFamily: relax.moduleFamily,
+        relaxPlanFamily: relax.planFamily,
+      });
+      if (found) {
+        noteCapRelaxations(state, found, relax.moduleFamily, relax.planFamily);
+        break;
+      }
+    }
+    if (!found) {
+      shortfalls.push(`${target - i} scaled-down slot(s) unfilled`);
+      break;
+    }
+    markPickedV2(found, state);
+    picked.push(found);
+  }
+  const questions = order(picked);
+  return {
+    questions,
+    unscoredIds: [],
+    diagnostics: moduleDiagnosticsV2(
+      tier,
+      questions,
+      [],
+      shortfalls,
+      pool,
+      maxHard,
+      state.relaxations
+    ),
+  };
+}
+
+function buildRwModuleQuestionsV2(
+  pool: Question[],
+  state: ModulePickState,
+  tier: ModuleTier,
+  target: number,
+  seed: string,
+  maxHard = Number.POSITIVE_INFINITY
+): ModuleBuildV2 {
+  if (target < 27) {
+    return buildScaledModuleV2(pool, state, tier, target, seed, maxHard, (picked) =>
+      orderModuleQuestions(picked, 'Reading and Writing', 2)
+    );
+  }
+
+  const operational = fillRwOperationalV2(pool, state, tier, seed, maxHard);
+  const pretest =
+    operational.picked.length >= RW_OPERATIONAL_TARGET_V2
+      ? selectPretestV2(
+          pool,
+          state,
+          operational.picked,
+          target - RW_OPERATIONAL_TARGET_V2,
+          seed,
+          maxHard
+        )
+      : { questions: [], shortfalls: [] };
+  const questions = orderModuleQuestions(
+    [...operational.picked, ...pretest.questions],
+    'Reading and Writing',
+    2
+  );
+  const unscoredIds = pretest.questions.map((q) => q.id);
+  return {
+    questions,
+    unscoredIds,
+    diagnostics: moduleDiagnosticsV2(
+      tier,
+      questions,
+      unscoredIds,
+      [...operational.shortfalls, ...pretest.shortfalls],
+      pool,
+      maxHard,
+      state.relaxations
+    ),
+  };
+}
+
+function buildMathModuleQuestionsV2(
+  pool: Question[],
+  state: ModulePickState,
+  tier: ModuleTier,
+  target: number,
+  assessment: string,
+  seed: string,
+  maxHard = Number.POSITIVE_INFINITY
+): ModuleBuildV2 {
+  const filteredPool = assessment === 'PSAT 8/9' ? pool.filter((q) => !isTrigQuestion(q)) : pool;
+  if (target < 22) {
+    return buildScaledModuleV2(
+      filteredPool,
+      state,
+      tier,
+      target,
+      seed,
+      maxHard,
+      orderMathV2
+    );
+  }
+
+  const operational = fillMathOperationalV2(filteredPool, state, tier, seed, maxHard);
+  const pretest =
+    operational.picked.length >= MATH_OPERATIONAL_TARGET_V2
+      ? selectPretestV2(
+          filteredPool,
+          state,
+          operational.picked,
+          target - MATH_OPERATIONAL_TARGET_V2,
+          seed,
+          maxHard
+        )
+      : { questions: [], shortfalls: [] };
+  const questions = orderMathV2([...operational.picked, ...pretest.questions]);
+  const unscoredIds = pretest.questions.map((q) => q.id);
+  return {
+    questions,
+    unscoredIds,
+    diagnostics: moduleDiagnosticsV2(
+      tier,
+      questions,
+      unscoredIds,
+      [...operational.shortfalls, ...pretest.shortfalls],
+      filteredPool,
+      maxHard,
+      state.relaxations
+    ),
+  };
+}
+
+function buildSectionModuleV2(
+  section: Section,
+  pool: Question[],
+  state: ModulePickState,
+  tier: ModuleTier,
+  target: number,
+  assessment: string,
+  seed: string,
+  maxHard: number
+): ModuleBuildV2 {
+  return section === 'Reading and Writing'
+    ? buildRwModuleQuestionsV2(pool, state, tier, target, seed, maxHard)
+    : buildMathModuleQuestionsV2(pool, state, tier, target, assessment, seed, maxHard);
+}
+
+function buildTestPlanV2(all: Question[], options: TestPlanOptions): TestPlan {
+  const seed = options.seed ?? 'hdsat-test';
+  const warnings: string[] = [];
+  const sections: SectionPlan[] = [];
+  const diagnostics: PlanDiagnostics = { algorithmVersion: 2, sections: [] };
+  const assessmentStr = String(options.assessment);
+  const difficultyPolicy = assessmentDifficultyPolicy(assessmentStr);
+  const seen = new Set(options.seenQuestionIds ?? []);
+  const family = buildPlanFamilyHistoryFromIds(all, seen);
+
+  for (const section of SECTION_ORDER) {
+    const spec = SECTION_SPECS[section];
+    const target = Math.max(4, Math.min(spec.fullItems, options.itemCap ?? spec.fullItems));
+    const maxHard = maxHardForModule(assessmentStr, target);
+    const eligible = all.filter(
+      (q) =>
+        q.section === section &&
+        assessmentMatches(q, assessmentStr) &&
+        (difficultyPolicy.hardAllowed || q.difficulty !== 'Hard') &&
+        isAssemblyEligible(q) &&
+        !(options.excludeReleasedPracticeSet && q.is_released_practice_set) &&
+        !(assessmentStr === 'PSAT 8/9' && section === 'Math' && isTrigQuestion(q))
+    );
+
+    // Module 1 and one adaptive branch are actually administered, so the
+    // planner needs two modules of unique items, not three. Upper and lower
+    // are drawn independently from the same post-module-1 pool.
+    const needed = target * 2;
+    const untouched = eligible.filter((q) => !seen.has(q.id));
+    const fresh = untouched.filter((q) => isPlanFamilyFresh(q, family));
+    const similar = untouched.filter((q) => !isPlanFamilyFresh(q, family));
+    const repeated = eligible.filter((q) => seen.has(q.id));
+    let poolSources: Question[][];
+    if (fresh.length >= needed) {
+      poolSources = [fresh];
+    } else if (fresh.length + similar.length >= needed) {
+      poolSources = [fresh, similar];
+    } else {
+      warnings.push(
+        `${section}: fresh-item mode found only ${fresh.length + similar.length} unanswered item(s) for this assessment, so ${Math.min(
+          repeated.length,
+          needed - fresh.length - similar.length
+        )} previously attempted item(s) are repeated to fill the adaptive modules.`
+      );
+      poolSources = [fresh, similar, repeated];
+    }
+    const pool = poolSources.flatMap((source, idx) =>
+      preferOfficialWithin(source, `${seed}:${section}:v2:${idx}`)
+    );
+
+    // The 20% ceiling applies only when an official Tier 1 pool is present.
+    // Curated-only deployments keep the pre-integration v2 behaviour; the
+    // supplemental asset is allowed to be missing without shrinking tests.
+    const hasOfficialPool = pool.some((q) => isCollegeBoardQuestion(q));
+    const tier2Cap = hasOfficialPool
+      ? Math.max(0, Math.floor(target * TIER2_FILL_SHARE_PER_MODULE))
+      : Number.POSITIVE_INFINITY;
+    const module1State = newPickState(seen, tier2Cap);
+    const module1 = buildSectionModuleV2(
+      section,
+      pool,
+      module1State,
+      'module1',
+      target,
+      assessmentStr,
+      `${seed}:${section}:module1`,
+      maxHard
+    );
+
+    const upperState = branchPickState(module1State);
+    const upper = buildSectionModuleV2(
+      section,
+      pool,
+      upperState,
+      'upper',
+      target,
+      assessmentStr,
+      `${seed}:${section}:upper`,
+      maxHard
+    );
+
+    const lowerState = branchPickState(module1State);
+    const lower = buildSectionModuleV2(
+      section,
+      pool,
+      lowerState,
+      'lower',
+      target,
+      assessmentStr,
+      `${seed}:${section}:lower`,
+      maxHard
+    );
+
+    const minutesFor = (items: number) =>
+      items >= target ? spec.fullMinutes : Math.max(4, Math.round(spec.fullMinutes * (items / target)));
+
+    if (module1.questions.length < target) {
+      warnings.push(
+        `${section}: only ${pool.length} eligible item(s) available, so each module uses ${module1.questions.length} of ${target} items with proportionally shortened timers.`
+      );
+    }
+    if (upper.questions.length < target || lower.questions.length < target) {
+      warnings.push(
+        `${section}: the adaptive second module cannot be filled at full length from the current bank (upper ${upper.questions.length}, lower ${lower.questions.length} of ${target}).`
+      );
+    }
+    const shortfalls = [
+      ...module1.diagnostics.shortfalls,
+      ...upper.diagnostics.shortfalls,
+      ...lower.diagnostics.shortfalls,
+    ];
+    if (shortfalls.length > 0) {
+      warnings.push(`${section}: blueprint shortfall - ${shortfalls[0]}`);
+    }
+
+    sections.push({
+      section,
+      availableItems: pool.length,
+      targetItems: target,
+      module1: buildModulePlan(
+        section,
+        'module1',
+        module1.questions,
+        target,
+        minutesFor(module1.questions.length),
+        seed,
+        module1.unscoredIds
+      ),
+      upper: buildModulePlan(
+        section,
+        'upper',
+        upper.questions,
+        target,
+        minutesFor(upper.questions.length),
+        seed,
+        upper.unscoredIds
+      ),
+      lower: buildModulePlan(
+        section,
+        'lower',
+        lower.questions,
+        target,
+        minutesFor(lower.questions.length),
+        seed,
+        lower.unscoredIds
+      ),
+    });
+    diagnostics.sections.push({
+      section,
+      modules: [module1.diagnostics, upper.diagnostics, lower.diagnostics],
+    });
+  }
+
+  return {
+    assessment: assessmentStr,
+    createdAt: new Date().toISOString(),
+    sections,
+    warnings,
+    seed,
+    breakMinutes: SECTION_BREAK_MINUTES,
+    algorithmVersion: 2,
+    diagnostics,
+  };
+}
+
+/** Default entry point. `algorithm: 1` replays the original planner for saved attempts. */
+export function buildTestPlan(all: Question[], options: TestPlanOptions): TestPlan {
+  return (options.algorithm ?? 2) === 1 ? buildTestPlanV1(all, options) : buildTestPlanV2(all, options);
+}
+
 function pickUnscoredIds(questions: Question[], count: number, seed: string): string[] {
   if (questions.length <= count) return [];
   const shuffled = seededShuffle(questions, `${seed}:unscored`);
@@ -767,22 +1766,24 @@ function buildModulePlan(
   questions: Question[],
   targetItems: number,
   minutes: number,
-  seed: string
+  seed: string,
+  unscoredIds?: string[]
 ): ModulePlan {
   const spec = SECTION_SPECS[section];
   const unscoredCount = questions.length >= spec.fullItems ? spec.unscoredItems : 0;
+  const chosen = unscoredIds ?? pickUnscoredIds(questions, unscoredCount, `${seed}:${section}:${tier}`);
   return {
     id: `${section === 'Math' ? 'math' : 'rw'}-${tier}`,
     section,
     tier,
     questions,
-    unscoredQuestionIds: pickUnscoredIds(questions, unscoredCount, `${seed}:${section}:${tier}`),
+    unscoredQuestionIds: chosen.slice(0, unscoredCount),
     targetItems,
     minutes,
   };
 }
 
-export function buildTestPlan(all: Question[], options: TestPlanOptions): TestPlan {
+function buildTestPlanV1(all: Question[], options: TestPlanOptions): TestPlan {
   const seed = options.seed ?? 'hdsat-test';
   const warnings: string[] = [];
   const sections: SectionPlan[] = [];
@@ -802,6 +1803,10 @@ export function buildTestPlan(all: Question[], options: TestPlanOptions): TestPl
         q.section === section &&
         assessmentMatches(q, assessmentStr) &&
         (difficultyPolicy.hardAllowed || q.difficulty !== 'Hard') &&
+        isAssemblyEligible(q) &&
+        // v1 is only used to replay attempts saved before the official pool
+        // existed. Keep its exact curated draw so a resumed test is unchanged.
+        !isCollegeBoardQuestion(q) &&
         !(options.excludeReleasedPracticeSet && q.is_released_practice_set) &&
         !(assessmentStr === 'PSAT 8/9' && section === 'Math' && isTrigQuestion(q))
     );
@@ -833,26 +1838,26 @@ export function buildTestPlan(all: Question[], options: TestPlanOptions): TestPl
       poolSources = [fresh, similar, repeated];
     }
     const pool = poolSources.flatMap((source, idx) =>
-      seededShuffle(source, `${seed}:${section}:${idx}`)
+      preferOfficialWithin(source, `${seed}:${section}:${idx}`)
     );
 
     const usedM1 = new Set<string>();
     const module1 =
       section === 'Reading and Writing'
-        ? buildRwModuleQuestions(pool, usedM1, 'module1', target, `${seed}:${section}:module1`, maxHard)
-        : buildMathModuleQuestions(pool, usedM1, 'module1', target, assessmentStr, maxHard);
+        ? buildRwModuleQuestionsV1(pool, usedM1, 'module1', target, `${seed}:${section}:module1`, maxHard)
+        : buildMathModuleQuestionsV1(pool, usedM1, 'module1', target, assessmentStr, maxHard);
 
     const usedUpper = new Set<string>(usedM1);
     const upper =
       section === 'Reading and Writing'
-        ? buildRwModuleQuestions(pool, usedUpper, 'upper', target, `${seed}:${section}:upper`, maxHard)
-        : buildMathModuleQuestions(pool, usedUpper, 'upper', target, assessmentStr, maxHard);
+        ? buildRwModuleQuestionsV1(pool, usedUpper, 'upper', target, `${seed}:${section}:upper`, maxHard)
+        : buildMathModuleQuestionsV1(pool, usedUpper, 'upper', target, assessmentStr, maxHard);
 
     const usedLower = new Set<string>(usedUpper);
     const lower =
       section === 'Reading and Writing'
-        ? buildRwModuleQuestions(pool, usedLower, 'lower', target, `${seed}:${section}:lower`, maxHard)
-        : buildMathModuleQuestions(pool, usedLower, 'lower', target, assessmentStr, maxHard);
+        ? buildRwModuleQuestionsV1(pool, usedLower, 'lower', target, `${seed}:${section}:lower`, maxHard)
+        : buildMathModuleQuestionsV1(pool, usedLower, 'lower', target, assessmentStr, maxHard);
 
     const coverageRatio = module1.length / target;
     const minutesFor = (items: number) =>
@@ -888,6 +1893,7 @@ export function buildTestPlan(all: Question[], options: TestPlanOptions): TestPl
     warnings,
     seed,
     breakMinutes: SECTION_BREAK_MINUTES,
+    algorithmVersion: 1,
   };
 }
 
@@ -898,8 +1904,8 @@ export function routeModule(module1Correct: number, module1Total: number): 'uppe
 
 /* ------------------------------------------------------------------------
  * Module flow ordering:
- * - Reading & Writing: canonical 4-domain sequence whose band boundaries may
- *   drift by up to three items (see interleaveDomainBands):
+ * - Reading & Writing: canonical 4-domain sequence. v2 builds strict domain
+ *   blocks; the legacy interleave helper remains only for saved v1 attempts:
  *     0: Craft and Structure (Words in Context -> Text Structure and Purpose -> Cross-Text Connections)
  *     1: Information and Ideas (Central Ideas and Details -> Command of Evidence -> Inferences)
  *     2: Standard English Conventions (Boundaries -> Form, Structure, and Sense)
@@ -918,7 +1924,11 @@ export const RW_DOMAIN_ORDER: Record<string, number> = {
 
 const DIFFICULTY_ORDER: Record<Difficulty, number> = { Easy: 0, Medium: 1, Hard: 2 };
 
-export function orderModuleQuestions(questions: Question[], section: Section): Question[] {
+export function orderModuleQuestions(
+  questions: Question[],
+  section: Section,
+  algorithmVersion: PlanAlgorithmVersion = 2
+): Question[] {
   if (section === 'Reading and Writing') {
     return questions
       .map((q, i) => ({ q, i }))
@@ -926,6 +1936,15 @@ export function orderModuleQuestions(questions: Question[], section: Section): Q
         const dA = RW_DOMAIN_ORDER[a.q.domain] ?? 1;
         const dB = RW_DOMAIN_ORDER[b.q.domain] ?? 1;
         if (dA !== dB) return dA - dB;
+        // Standard English Conventions is ordered by difficulty only, across
+        // Boundaries and Form, Structure, and Sense. The other three domains
+        // keep their skill groups and scale within each group.
+        if (algorithmVersion === 2 && a.q.domain === 'Standard English Conventions') {
+          const diffA = DIFFICULTY_ORDER[a.q.difficulty] ?? 1;
+          const diffB = DIFFICULTY_ORDER[b.q.difficulty] ?? 1;
+          if (diffA !== diffB) return diffA - diffB;
+          return a.i - b.i;
+        }
         const sA = RW_SKILL_RANK[a.q.skill] ?? 99;
         const sB = RW_SKILL_RANK[b.q.skill] ?? 99;
         if (sA !== sB) return sA - sB;
@@ -1064,6 +2083,13 @@ export function filterQuestions(
     if (filters.difficulty && filters.difficulty !== 'all' && q.difficulty !== filters.difficulty) return false;
     if (difficultySet.size > 0 && !difficultySet.has(q.difficulty)) return false;
     if (filters.sourceId && filters.sourceId !== 'all' && q.source_id !== filters.sourceId) return false;
+    // Practice-test overlap is review-only in a mixed draw; choosing the
+    // official dataset explicitly opens the full official bank for deliberate
+    // practice. Unusable rows stay out either way.
+    if (isCollegeBoardQuestion(q)) {
+      if (q.unusable) return false;
+      if (q.in_practice_test && filters.sourceId !== 'collegeboard-sat') return false;
+    }
     if (filters.onlySaved && !savedSet.has(q.id)) return false;
     if (filters.onlyIncorrect && progress[q.id]?.lastIsCorrect !== false) return false;
     if (filters.excludePreviouslyCorrect && (progress[q.id]?.correctCount ?? 0) > 0) return false;
@@ -1131,7 +2157,8 @@ function diversifySequence(
       if (usedIds.has(q.id) || !accept(q)) continue;
       if (i < unseenCount) {
         const score =
-          (usedSkills.get(q.skill) ?? 0) * 100 + (usedDomains.get(q.domain) ?? 0) * 12;
+          (usedSkills.get(q.skill) ?? 0) * 100 +
+          (usedDomains.get(q.domain) ?? 0) * 12;
         if (score < bestScore) {
           bestScore = score;
           bestIdx = i;
@@ -1203,6 +2230,9 @@ export function buildPracticeSession(
   const seed =
     options.seed ??
     `practice:${Date.now()}:${Math.random().toString(36).slice(2, 10)}`;
+  // Drills keep their existing source-neutral selection. The official dataset
+  // is available through the source filter; selecting All blends both pools
+  // without turning every drill into an official-only set.
   const progress = options.progress ?? {};
   const family = buildFamilyHistory(all, progress);
   const draw = { now: options.now, allowScheduled: options.allowScheduled, family };

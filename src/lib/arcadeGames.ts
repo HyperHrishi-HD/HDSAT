@@ -5,6 +5,7 @@ import {
   seededShuffle,
 } from './examEngine';
 import { parseNumeric } from './grading';
+import { isCollegeBoardQuestion, isServableCollegeBoardQuestion } from './questionSources';
 import type { Question, QuestionProgress } from './types';
 
 /**
@@ -539,6 +540,7 @@ export function buildChatPool(
     (q) =>
       q.section === 'Reading and Writing' &&
       q.format === 'multiple_choice' &&
+      (!isCollegeBoardQuestion(q) || isServableCollegeBoardQuestion(q)) &&
       !q.figure_metadata &&
       Boolean(q.choices) &&
       (q.choices as ArcadeChoice[]).length === 4
@@ -586,6 +588,7 @@ export function buildRunePool(
     const candidates = questions.filter(
       (q) =>
         q.section === section &&
+        (!isCollegeBoardQuestion(q) || isServableCollegeBoardQuestion(q)) &&
         (q.format === 'spr' ? q.acceptable_answers.length > 0 || q.correct_answer : Boolean(q.choices))
     );
     // A new run starts with items this browser has not met yet. The seen pool

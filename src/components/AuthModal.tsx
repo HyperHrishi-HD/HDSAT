@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -12,7 +12,9 @@ import {
   X,
 } from 'lucide-react';
 import { BrandMark } from './BrandMark';
-import { Select, Toggle } from './ui';
+import { DatePicker } from './DatePicker';
+import { GoogleSignInButton } from './GoogleSignInButton';
+import { MenuSelect, Select, Toggle } from './ui';
 import * as cloud from '../lib/cloud';
 import { validateConsent } from '../lib/dataRights';
 import { AGE_BANDS, COPYRIGHT_PATH, LEGAL_VERSION, MIN_AGE, PRIVACY_PATH, TERMS_PATH } from '../lib/legal';
@@ -42,6 +44,7 @@ export function AuthModal() {
   const [acceptedTerms, setAcceptedTerms] = useState(false);
   const [busy, setBusy] = useState(false);
   const [googleBusy, setGoogleBusy] = useState(false);
+  const [googleFallback, setGoogleFallback] = useState(false);
   const [verifyCode, setVerifyCode] = useState('');
   const [verifying, setVerifying] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -51,8 +54,8 @@ export function AuthModal() {
   // second one appears only when the email turns out to be new.
   const [mode, setMode] = useState<'signin' | 'signup'>('signin');
   const [prefAssessment, setPrefAssessment] = useState(app.settings?.assessment ?? 'SAT');
-  const [prefReserve, setPrefReserve] = useState(
-    Boolean(app.settings?.excludeReleasedPracticeSet)
+  const [prefTestDate, setPrefTestDate] = useState<string | null>(
+    app.settings?.testDate ?? null
   );
 
   useEffect(() => {
@@ -79,16 +82,22 @@ export function AuthModal() {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, [app.authModalOpen, app.actions]);
 
-  // Every open starts on the sign-in screen, whatever the last visit ended on.
-  useEffect(() => {
+  // Every open starts on the screen it was called for, whatever the last visit
+  // ended on: the homepage's Sign up button goes straight to account creation,
+  // while an ordinary sign-in call still opens the sign-in form.
+  useLayoutEffect(() => {
     if (!app.authModalOpen) return;
-    setMode('signin');
+    setMode(app.authModalView === 'signup' ? 'signup' : 'signin');
     setFormError(null);
     setStatusMessage(null);
+    setGoogleFallback(false);
     // Start from what this browser already studies, so the optional box is a
     // confirmation rather than a form to fill in.
     setPrefAssessment(app.settings?.assessment ?? 'SAT');
-    setPrefReserve(Boolean(app.settings?.excludeReleasedPracticeSet));
+    setPrefTestDate(app.settings?.testDate ?? null);
+    // Deliberately keyed on open only: applying the signup preferences changes
+    // settings, and that must not clear the confirmation message that follows.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [app.authModalOpen]);
 
   // Pressing outside closes the card; dragging a selection out of it does not.
@@ -172,6 +181,26 @@ export function AuthModal() {
     }
   };
 
+  const handleGoogleCredential = async (credential: string) => {
+    setFormError(null);
+    setStatusMessage(null);
+    setGoogleBusy(true);
+    try {
+      await cloud.signInWithGoogleIdToken(credential);
+      await app.actions.completeGoogleSignIn();
+      app.actions.closeAuthModal();
+    } catch (err) {
+      const message = (err as Error).message;
+      setFormError(
+        /invalid.*token|audience|provider is not enabled|unsupported provider/i.test(message)
+          ? 'Google could not finish signing you in. Try again, or use your email and password.'
+          : message
+      );
+    } finally {
+      setGoogleBusy(false);
+    }
+  };
+
   const handleForgotPassword = async () => {
     setFormError(null);
     setStatusMessage(null);
@@ -217,13 +246,12 @@ export function AuthModal() {
         return;
       }
 
-      // No account answered to that password: creating one is its own screen,
-      // with the age/policy consent and the optional study preferences.
-      setStatusMessage(
-        'That email is not registered yet. Finish this step to create it — or go back and check your password.'
-      );
-      setBusy(false);
-      setMode('signup');
+      // Supabase answers the same way for a wrong password and an address it
+      // has never seen, so this must not guess. Sending a mistyped password
+      // into account creation is how duplicate accounts get made; the sign-in
+      // screen says the password is wrong and offers creation as its own,
+      // explicit next step.
+      setFormError('Incorrect email or password. Check the password and try again.');
     } catch (err) {
       setFormError((err as Error).message);
     } finally {
@@ -263,14 +291,15 @@ export function AuthModal() {
       );
       app.actions.updateSettings({
         assessment: prefAssessment,
-        excludeReleasedPracticeSet: prefReserve,
+        testDate: prefTestDate,
       });
       // The cloud profile keeps its own copy of the goal; the local write above
       // cannot reach it while the modal still holds the guest render.
-      if (prefAssessment !== app.settings?.assessment) {
-        await cloud
-          .setTestGoalCloud(prefAssessment, app.settings?.testDate ?? null)
-          .catch(() => {});
+      if (
+        prefAssessment !== app.settings?.assessment ||
+        (prefTestDate ?? null) !== (app.settings?.testDate ?? null)
+      ) {
+        await cloud.setTestGoalCloud(prefAssessment, prefTestDate).catch(() => {});
       }
       setPassword('');
       setStatusMessage(result.message);
@@ -579,12 +608,12 @@ export function AuthModal() {
                   </span>
                 </label>
 
-                <Select
+                <MenuSelect
                   label="Your age group"
                   value={ageBand}
                   onChange={setAgeBand}
-                  mode="dropdown"
-                  options={[{ value: '', label: 'Select your age group…' }, ...AGE_BANDS]}
+                  placeholder="Select your age group…"
+                  options={AGE_BANDS}
                 />
                 {ageBand.length > 0 && ageBand !== '18+' ? (
                   <div className="auth-consent-box">
@@ -630,11 +659,19 @@ export function AuthModal() {
                       { value: 'PSAT 8/9', label: 'PSAT 8/9' },
                     ]}
                   />
-                  <Toggle
-                    checked={prefReserve}
-                    onChange={setPrefReserve}
-                    label="Reserve Benchmark Simulation Set items for a full test"
-                  />
+                  <div className="field" role="group" aria-labelledby="auth-test-date-label">
+                    <span className="field-label" id="auth-test-date-label">
+                      Test date <span className="auth-optional">optional</span>
+                    </span>
+                    <DatePicker
+                      value={prefTestDate}
+                      min="2026-01-01"
+                      max="2035-12-31"
+                      placeholder="Pick your test day"
+                      onChange={setPrefTestDate}
+                    />
+                    <span className="field-hint">Shown on the Dashboard as your goal.</span>
+                  </div>
                 </fieldset>
 
                 <button className="auth-submit" type="submit" disabled={busy}>
@@ -664,24 +701,9 @@ export function AuthModal() {
               </form>
             ) : (
               <form onSubmit={handleSubmit} className="auth-form">
-                {/* The name comes first so the two identity fields read as one
-                    block; it is only a label, never an identifier. */}
-                <label className="auth-field">
-                  <span className="auth-label">
-                    Display name <span className="auth-optional">optional</span>
-                  </span>
-                  <span className="auth-input-wrap">
-                    <UserRound className="auth-input-icon" size={16} aria-hidden="true" />
-                    <input
-                      type="text"
-                      value={displayName}
-                      onChange={(e) => setDisplayName(e.target.value)}
-                      placeholder="e.g. Hrishi"
-                      autoComplete="nickname"
-                    />
-                  </span>
-                </label>
-
+                {/* A display name belongs to account creation, not to signing
+                    in: an existing account already has one, and a field here
+                    would look like it changes it. */}
                 <label className="auth-field">
                   <span className="auth-label">Email address</span>
                   <span className="auth-input-wrap">
@@ -752,39 +774,62 @@ export function AuthModal() {
                   <span>or</span>
                 </div>
 
-                <button
-                  type="button"
-                  className="auth-google"
-                  onClick={() => void handleGoogle()}
-                  disabled={googleBusy || busy}
-                >
-                  <svg className="auth-google-mark" viewBox="0 0 24 24" aria-hidden="true">
-                    <path
-                      fill="#4285F4"
-                      d="M21.35 12.2c0-.7-.06-1.37-.18-2.02H12v3.82h5.26a4.5 4.5 0 0 1-1.95 2.95v2.45h3.16c1.85-1.7 2.88-4.2 2.88-7.2Z"
+                {googleFallback ? (
+                  <button
+                    type="button"
+                    className="auth-google"
+                    onClick={() => void handleGoogle()}
+                    disabled={googleBusy || busy}
+                  >
+                    <svg className="auth-google-mark" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        fill="#4285F4"
+                        d="M21.35 12.2c0-.7-.06-1.37-.18-2.02H12v3.82h5.26a4.5 4.5 0 0 1-1.95 2.95v2.45h3.16c1.85-1.7 2.88-4.2 2.88-7.2Z"
+                      />
+                      <path
+                        fill="#34A853"
+                        d="M12 21.7c2.63 0 4.84-.87 6.45-2.36l-3.16-2.45c-.87.58-1.99.93-3.29.93-2.53 0-4.68-1.71-5.45-4.01H3.28v2.52A9.75 9.75 0 0 0 12 21.7Z"
+                      />
+                      <path
+                        fill="#FBBC05"
+                        d="M6.55 13.81a5.86 5.86 0 0 1 0-3.62V7.67H3.28a9.75 9.75 0 0 0 0 8.66l3.27-2.52Z"
+                      />
+                      <path
+                        fill="#EA4335"
+                        d="M12 6.18c1.43 0 2.72.49 3.73 1.46l2.8-2.8A9.38 9.38 0 0 0 12 2.3a9.75 9.75 0 0 0-8.72 5.37l3.27 2.52C7.32 7.89 9.47 6.18 12 6.18Z"
+                      />
+                    </svg>
+                    <span>{googleBusy ? 'Opening Google…' : 'Continue with Google'}</span>
+                  </button>
+                ) : (
+                  <>
+                    <GoogleSignInButton
+                      onCredential={(credential) => void handleGoogleCredential(credential)}
+                      onUnavailable={() => setGoogleFallback(true)}
+                      disabled={googleBusy || busy}
                     />
-                    <path
-                      fill="#34A853"
-                      d="M12 21.7c2.63 0 4.84-.87 6.45-2.36l-3.16-2.45c-.87.58-1.99.93-3.29.93-2.53 0-4.68-1.71-5.45-4.01H3.28v2.52A9.75 9.75 0 0 0 12 21.7Z"
-                    />
-                    <path
-                      fill="#FBBC05"
-                      d="M6.55 13.81a5.86 5.86 0 0 1 0-3.62V7.67H3.28a9.75 9.75 0 0 0 0 8.66l3.27-2.52Z"
-                    />
-                    <path
-                      fill="#EA4335"
-                      d="M12 6.18c1.43 0 2.72.49 3.73 1.46l2.8-2.8A9.38 9.38 0 0 0 12 2.3a9.75 9.75 0 0 0-8.72 5.37l3.27 2.52C7.32 7.89 9.47 6.18 12 6.18Z"
-                    />
-                  </svg>
-                  <span>{googleBusy ? 'Opening Google…' : 'Continue with Google'}</span>
-                </button>
+                    <button
+                      type="button"
+                      className="auth-text-button auth-google-redirect"
+                      onClick={() => void handleGoogle()}
+                      disabled={googleBusy || busy}
+                    >
+                      Trouble with the popup? Use Google&apos;s redirect
+                    </button>
+                  </>
+                )}
+                {googleBusy ? (
+                  <p className="auth-provider-note" role="status">
+                    Finishing Google sign-in…
+                  </p>
+                ) : null}
                 <p className="auth-provider-note">
                   Google verifies your email automatically. Use Google only if you are {MIN_AGE} or
                   older and accept the Terms and Privacy Policy. Keep that Google account — it is how
                   you sign back in to your saved progress.
                 </p>
 
-                <p className="auth-switch auth-switch-left">
+                <div className="auth-action-row">
                   <button
                     type="button"
                     className="auth-text-button"
@@ -797,7 +842,18 @@ export function AuthModal() {
                   >
                     Have a confirmation code?
                   </button>
-                </p>
+                  <button
+                    type="button"
+                    className="auth-text-button"
+                    onClick={() => {
+                      setMode('signup');
+                      setFormError(null);
+                      setStatusMessage(null);
+                    }}
+                  >
+                    Create an account
+                  </button>
+                </div>
 
                 <div className="auth-guest">
                   <span className="auth-guest-rule" aria-hidden="true" />

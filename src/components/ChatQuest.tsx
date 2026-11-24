@@ -13,6 +13,7 @@ import {
   noteArcadeRun,
   takeArcadeQuestions,
 } from '../lib/arcadeProgress';
+import { isCollegeBoardQuestion, isServableCollegeBoardQuestion } from '../lib/questionSources';
 import { newEventId } from '../lib/storage';
 import { useApp } from '../lib/store';
 
@@ -306,7 +307,11 @@ export function ChatQuest() {
     // Hrishi's questions persist across sittings even though the eight-turn
     // conversation starts over. Level and unseen history are shared with the
     // rest of the Arcade.
-    const rw = app.questions.filter((question) => question.section === 'Reading and Writing');
+    const rw = app.questions.filter(
+      (question) =>
+        question.section === 'Reading and Writing' &&
+        (!isCollegeBoardQuestion(question) || isServableCollegeBoardQuestion(question))
+    );
     const candidates = takeArcadeQuestions('talk', rw, 80, seed);
     return buildChatPool(candidates, seed, CONVERSATION_LENGTH, progressAtStart);
   }, [app.questions, seed, progressAtStart]);

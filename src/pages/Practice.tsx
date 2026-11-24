@@ -20,6 +20,7 @@ import {
 } from '../components/ui';
 import { datasetLabel } from '../lib/catalog';
 import { buildPracticeSession, filterQuestions, formatClock } from '../lib/examEngine';
+import { retryMissedLength } from '../lib/practiceLength';
 import { poolReadiness } from '../lib/review';
 import { clearPracticeSession, loadPracticeSession, savePracticeSession } from '../lib/session';
 import { newEventId } from '../lib/storage';
@@ -70,6 +71,10 @@ export function PracticePage() {
       : 10
   );
   const [onlyIncorrect, setOnlyIncorrect] = useState<boolean>(searchParams.get('mode') === 'incorrect');
+  // Once the student edits the length themselves, the automatic missed-count
+  // value must stop following the filter. The same ref lets the query-string
+  // retry entry point and the custom toggle share one initialisation path.
+  const autoLengthRef = useRef(searchParams.get('mode') === 'incorrect');
   const [onlySaved, setOnlySaved] = useState<boolean>(searchParams.get('mode') === 'saved');
   const [excludeCorrect, setExcludeCorrect] = useState<boolean>(app.settings.excludePreviouslyCorrect);
   const [excludeReleased, setExcludeReleased] = useState<boolean>(app.settings.excludeReleasedPracticeSet);
@@ -193,6 +198,22 @@ export function PracticePage() {
     [matchingPool, app.progress]
   );
   const readyCount = allowScheduled ? matchingPool.length : readiness.ready;
+
+  // Retry-missed entry points start at exactly the missed pool that is eligible
+  // under the current filters. The normal length control still clamps to its
+  // existing 1–50 range and remains editable afterwards.
+  useEffect(() => {
+    if (!onlyIncorrect) {
+      autoLengthRef.current = false;
+      return;
+    }
+    if (!autoLengthRef.current) return;
+    const next = retryMissedLength(matchingPool.length, matchingPool.length);
+    if (next === null) return;
+    setCustomMode(false);
+    if (next !== count) setCount(next);
+  }, [onlyIncorrect, matchingPool.length, count]);
+
   const showsWholeBank =
     app.questions.length > 0 && matchingPool.length === app.questions.length;
 
@@ -528,6 +549,7 @@ export function PracticePage() {
               label="Session length"
               value={customMode ? 'custom' : String(count)}
               onChange={(value) => {
+                autoLengthRef.current = false;
                 if (value === 'custom') {
                   setCustomMode(true);
                   return;
@@ -562,7 +584,10 @@ export function PracticePage() {
                   max={Math.max(1, readyCount)}
                   placeholder="Enter a number"
                   value={customLength}
-                  onChange={(e) => setCustomLength(e.target.value)}
+                  onChange={(e) => {
+                    autoLengthRef.current = false;
+                    setCustomLength(e.target.value);
+                  }}
                   onBlur={() => {
                     const parsed = Number.parseInt(customLength, 10);
                     if (!Number.isFinite(parsed)) return;
@@ -597,7 +622,10 @@ export function PracticePage() {
             <div>
               <Toggle
                 checked={onlyIncorrect}
-                onChange={setOnlyIncorrect}
+                onChange={(value) => {
+                  autoLengthRef.current = value;
+                  setOnlyIncorrect(value);
+                }}
                 label="Incorrect-only drill"
               />
               <Toggle checked={onlySaved} onChange={setOnlySaved} label="Saved questions only" />

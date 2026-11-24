@@ -87,13 +87,46 @@ SETTINGS = [
 
 UNITS = ["centimeters", "inches", "meters", "feet"]
 
+T_CONTEXTS = [
+    "A data analyst is reviewing a table of values for a linear model.",
+    "A research assistant is checking a table of measurements for a calibration report.",
+    "A quality-control technician is reading a table of readings from a production trial.",
+    "A planning analyst is examining a table of values from a forecasting exercise.",
+    "A lab assistant is recording a table of measurements for a methods report.",
+    "A systems analyst is reviewing a table of values from a simulation.",
+    "A field researcher is checking a table of readings from a survey.",
+    "A data coordinator is preparing a table of values for a summary report.",
+]
+E_CONTEXTS = [
+    "A data analyst is reviewing a table of growth measurements for a biology report.",
+    "A research assistant is checking a table of population counts from a field study.",
+    "A lab technician is reading a table of readings from a growth trial.",
+    "A planning analyst is examining a table of values from a demographic model.",
+    "A field researcher is recording a table of counts for an ecology report.",
+    "A systems analyst is reviewing a table of values from a growth simulation.",
+    "A data coordinator is preparing a table of measurements for a summary report.",
+    "A quality-control technician is checking a table of readings from a batch test.",
+]
+
 
 def ctx(i, verb="is laying out"):
-    """A fresh three-pool context so no two stems share a frame."""
+    """A fresh three-pool context so no two geometry stems share a frame."""
     maker = MAKERS[i % len(MAKERS)]
     obj = OBJECTS[(i * 5) % len(OBJECTS)]
     place = SETTINGS[(i * 7) % len(SETTINGS)]
     return f"{maker} {verb} {obj} for {place}."
+
+
+def data_context(i, kind, label=None):
+    """A grammatical, task-relevant context for a table/chart item."""
+    if kind == "T":
+        return T_CONTEXTS[i % len(T_CONTEXTS)]
+    if kind == "E":
+        return E_CONTEXTS[i % len(E_CONTEXTS)]
+    subject = label or "the values"
+    if kind == "L":
+        return f"A program analyst is reviewing the trend in {subject} over time."
+    return f"A program analyst is reviewing {subject} for a planning report."
 
 
 def geometry(shape, labels, caption="Note: Figure not drawn to scale."):
@@ -556,7 +589,7 @@ def gen_tables_and_charts(items):
         qid = f"M13-DATA-T{index:03d}"
         add(
             items, qid, ALG, "Linear functions: slope and intercepts", D_M,
-            f"{ctx(index, 'is recording output from')} The table shows values of a linear function f.",
+            f"{data_context(index, 'T')} The table shows values of a linear function f.",
             "What is the value of f(9)?",
             str(m * 9 + b),
             [str(m * 9), str(m * 9 + b + 3), str(m * 9 - b)],
@@ -579,8 +612,7 @@ def gen_tables_and_charts(items):
         qid = f"M13-DATA-E{index:03d}"
         add(
             items, qid, ADV, "Exponential growth and decay", D_M,
-            f"{ctx(index + 2, 'is tracking a culture in')} The table shows values of an exponential "
-            f"function g.",
+            f"{data_context(index, 'E')} The table shows values of an exponential function g.",
             "By what factor does g(x) change each time x increases by 1?",
             str(factor),
             [str(start), str(factor + 1), str(start * factor)],
@@ -609,8 +641,8 @@ def gen_tables_and_charts(items):
         diff = values[hi] - values[lo]
         qid = f"M13-DATA-B{index:03d}"
         add(
-            items, qid, PSDA, "Percentages", D_M,
-            f"{ctx(index, 'is comparing weekly counts at')} The bar graph shows {label.lower()} "
+            items, qid, PSDA, "One-variable data: distributions and measures of center and spread", D_M,
+            f"{data_context(index, 'B', label.lower())} The bar graph shows {label.lower()} "
             f"recorded over the periods shown.",
             f"How many more {unit} were recorded in {cats[hi]} than in {cats[lo]}?",
             str(diff),
@@ -641,7 +673,7 @@ def gen_tables_and_charts(items):
         qid = f"M13-DATA-L{index:03d}"
         add(
             items, qid, PSDA, "Percentages", D_H if index % 2 == 0 else D_M,
-            f"{ctx(index + 4, 'is reviewing a trend for')} The line graph shows {label.lower()} over "
+            f"{data_context(index, 'L', label.lower())} The line graph shows {label.lower()} over "
             f"the periods shown.",
             f"From {cats[0]} to {cats[-1]}, the value increased by what percent?",
             f"{pct}%",

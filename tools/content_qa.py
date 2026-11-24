@@ -33,6 +33,7 @@ import pathlib
 import re
 import sys
 from collections import Counter, defaultdict
+from html.parser import HTMLParser
 
 DEFAULT_BANK = pathlib.Path(__file__).resolve().parent.parent / "src" / "data" / "questionBank.json"
 
@@ -73,9 +74,53 @@ def ascii_text(value: object) -> str:
     return str(value).encode("ascii", "replace").decode("ascii")
 
 
+class _VisibleText(HTMLParser):
+    """Extract rendered text from the HTML/MathML stimuli in the official bank.
+
+    Comparing raw tag names and SVG path coordinates made the near-duplicate
+    scan spend minutes on markup that a student never sees. The QA comparison
+    is about the rendered question, so use text nodes and ignore style/script
+    payloads.
+    """
+
+    SKIP_TAGS = {"script", "style"}
+
+    def __init__(self) -> None:
+        super().__init__(convert_charrefs=True)
+        self.parts: list[str] = []
+        self._skip_depth = 0
+
+    def handle_starttag(self, tag: str, attrs: list[tuple[str, str | None]]) -> None:
+        if tag.lower() in self.SKIP_TAGS:
+            self._skip_depth += 1
+
+    def handle_endtag(self, tag: str) -> None:
+        if tag.lower() in self.SKIP_TAGS and self._skip_depth:
+            self._skip_depth -= 1
+
+    def handle_data(self, data: str) -> None:
+        if not self._skip_depth:
+            self.parts.append(data)
+
+
+def visible_text(value: object) -> str:
+    """Return text nodes from HTML/MathML, or the original plain text."""
+    raw = ascii_text(value or "")
+    if "<" not in raw:
+        return raw
+    parser = _VisibleText()
+    try:
+        parser.feed(raw)
+        parser.close()
+    except Exception:
+        # Content QA must still inspect malformed content rather than aborting.
+        return raw
+    return " ".join(parser.parts)
+
+
 def normalise(text: object) -> str:
     """Lowercase, strip markup punctuation and collapse whitespace."""
-    raw = ascii_text(text or "").lower()
+    raw = visible_text(text).lower()
     raw = raw.replace("\\(", " ").replace("\\)", " ").replace("$", " ")
     # Keep math operators: without them, equations that differ only by sign
     # (x - 5 versus x + 5) collapse into the same stem.
@@ -91,7 +136,7 @@ def choice_key(text: object) -> str:
     Boundaries item, where ", but", "but" and "; but" are three different
     choices that all collapse to "but" if the marks are discarded.
     """
-    raw = ascii_text(text or "").lower()
+    raw = visible_text(text).lower()
     raw = raw.replace("\\(", " ").replace("\\)", " ").replace("$", " ")
     # Apostrophes are kept: "committee's" and "committees'" are different
     # possessives, and stripping the mark made every possessive set look like
@@ -116,6 +161,31 @@ def stem_of(question: dict) -> str:
     """One comparable string for an item: its stimulus plus its prompt."""
     parts = [question.get("stimulus") or "", question.get("prompt") or ""]
     return normalise(" ".join(part for part in parts if part))
+
+
+def content_signature(question: dict) -> tuple[object, ...]:
+    """Identify an item beyond its shared prompt.
+
+    Official math sets intentionally reuse a generic prompt (for example
+    "Which system has no solution?") while giving different equations. Those
+    are distinct questions, not duplicate content. The duplicate-stem gate
+    therefore compares the answer choices and key as well as the rendered stem.
+    """
+    choices = question.get("choices") or []
+    if isinstance(choices, list):
+        choice_text = tuple(
+            (str(choice.get("id") or ""), choice_key(choice.get("text")))
+            for choice in choices
+            if isinstance(choice, dict)
+        )
+    else:
+        choice_text = ()
+    return (
+        str(question.get("format") or ""),
+        str(question.get("correct_answer") or "").strip(),
+        choice_text,
+        str(question.get("acceptable_answers") or ()),
+    )
 
 
 class Report:
@@ -324,7 +394,7 @@ def check_bank(
 
     # --- Per-item checks -----------------------------------------------------
     id_counts: Counter[str] = Counter()
-    stem_counts: dict[tuple[str, str], list[str]] = defaultdict(list)
+    stem_counts: dict[tuple[object, ...], list[str]] = defaultdict(list)
 
     metadata_problems: dict[str, list[str]] = defaultdict(list)
     metadata_messages: dict[str, str] = {}
@@ -338,6 +408,8 @@ def check_bank(
     rationale_choice_refs: list[str] = []
     figure_problems: dict[str, list[str]] = defaultdict(list)
     figure_messages: dict[str, str] = defaultdict(str)
+    text_problems: dict[str, list[str]] = defaultdict(list)
+    text_messages: dict[str, str] = defaultdict(str)
 
     key_letters: dict[tuple[str, str, str], Counter[str]] = defaultdict(Counter)
     key_group_sizes: Counter[tuple[str, str, str]] = Counter()
@@ -411,7 +483,35 @@ def check_bank(
         stem = stem_of(question)
         prompt = normalise(question.get("prompt"))
         if stem:
-            stem_counts[(section, stem)].append(label)
+            stem_counts[(section, stem, content_signature(question))].append(label)
+
+        # --- Text shape ------------------------------------------------------
+        # An inference prompt that asks the student to complete the text needs
+        # an actual blank in the stimulus. This shipped 88 times because the
+        # passage had a closing period instead.
+        if field("skill") == "Inferences" and re.search(
+            r"completes?\s+the\s+text", field("prompt"), re.IGNORECASE
+        ):
+            if not re.search(r"_{2,}", field("stimulus")):
+                text_problems["text.completes_without_blank"].append(label)
+                text_messages["text.completes_without_blank"] = (
+                    "Inferences prompt asks the student to complete the text, but the stimulus has no blank"
+                )
+        # Cross-text headings must be line-start headings (or "Text 1:" inline)
+        # so StimulusView bolds them instead of gluing Text 2 to Text 1.
+        if field("skill") == "Cross-Text Connections":
+            # Plain stimuli use line-start headings. Official HTML stimuli put
+            # the same headings inside <strong>/<p> elements (often with a
+            # paired_passage span), so accept a heading immediately after a tag
+            # boundary as well as a newline.
+            heading = r"(?:^|\n|>)(?:\s|&nbsp;)*Text {n}(?:\s|&nbsp;)*(?=:|<|\n|$)"
+            if not re.search(heading.format(n=1), field("stimulus")) or not re.search(
+                heading.format(n=2), field("stimulus")
+            ):
+                text_problems["text.cross_heading"].append(label)
+                text_messages["text.cross_heading"] = (
+                    "Cross-Text Connections item needs Text 1 and Text 2 headings"
+                )
 
         # --- Answer key ------------------------------------------------------
         key = str(question.get("correct_answer") or "").strip()
@@ -523,7 +623,7 @@ def check_bank(
 
     duplicate_stems = 0
     duplicate_examples: list[str] = []
-    for (_, _), ids in stem_counts.items():
+    for _key, ids in stem_counts.items():
         if len(ids) > 1:
             duplicate_stems += len(ids) - 1
             if len(duplicate_examples) < sample:
@@ -631,6 +731,17 @@ def check_bank(
             category,
             "error",
             figure_messages.get(category, "figure cannot render"),
+            ids,
+            count=len(ids),
+        )
+
+    for category, ids in text_problems.items():
+        if not ids:
+            continue
+        report.add(
+            category,
+            "error",
+            text_messages.get(category, "text shape problem"),
             ids,
             count=len(ids),
         )

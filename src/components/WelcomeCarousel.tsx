@@ -121,8 +121,21 @@ export function WelcomeCarousel() {
   const [hovered, setHovered] = useState(false);
   const [keyboardFocused, setKeyboardFocused] = useState(false);
   const [tabHidden, setTabHidden] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
   const rootRef = useRef<HTMLElement>(null);
+  // A swipe owns the pointer between press and release. The card's own click
+  // is suppressed only when that gesture actually turned into a swipe, so a
+  // normal tap still selects or advances a slide.
+  const dragRef = useRef<{
+    pointerId: number;
+    startX: number;
+    startY: number;
+    dx: number;
+    dy: number;
+    horizontal: boolean;
+  } | null>(null);
+  const suppressClickRef = useRef(false);
 
   const reducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
   const coarsePointer = useMediaQuery('(pointer: coarse)');
@@ -158,14 +171,65 @@ export function WelcomeCarousel() {
   }, []);
 
   useEffect(() => {
-    if (reducedMotion || paused || hovered || keyboardFocused || tabHidden) return;
+    if (reducedMotion || paused || hovered || keyboardFocused || tabHidden || dragging) return;
     const timer = window.setTimeout(() => {
       setActive((current) => (current + 1) % COUNT);
     }, AUTOPLAY_MS);
     return () => window.clearTimeout(timer);
-  }, [active, hovered, keyboardFocused, paused, reducedMotion, tabHidden]);
+  }, [active, dragging, hovered, keyboardFocused, paused, reducedMotion, tabHidden]);
+
+  const clearDrag = () => {
+    sceneRef.current?.style.removeProperty('--drag-x');
+    sceneRef.current?.style.removeProperty('--drag-rotate');
+  };
+
+  const finishDrag = (pointerId?: number) => {
+    const drag = dragRef.current;
+    if (!drag || (pointerId !== undefined && drag.pointerId !== pointerId)) return;
+    dragRef.current = null;
+    setDragging(false);
+    clearDrag();
+    if (drag.horizontal && Math.abs(drag.dx) >= 42) {
+      // A click follows pointerup on the card the gesture began on. It must not
+      // also count as a tap and undo the slide change.
+      suppressClickRef.current = true;
+      window.setTimeout(() => {
+        suppressClickRef.current = false;
+      }, 400);
+      go(drag.dx < 0 ? 1 : -1);
+    }
+  };
+
+  const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    dragRef.current = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      dx: 0,
+      dy: 0,
+      horizontal: false,
+    };
+    setDragging(true);
+  };
 
   const handlePointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
+    const drag = dragRef.current;
+    if (drag && drag.pointerId === event.pointerId) {
+      drag.dx = event.clientX - drag.startX;
+      drag.dy = event.clientY - drag.startY;
+      if (!drag.horizontal && Math.abs(drag.dx) > 8 && Math.abs(drag.dx) > Math.abs(drag.dy)) {
+        drag.horizontal = true;
+      }
+      if (drag.horizontal) {
+        // Follow the finger just enough to feel connected, then spring back or
+        // commit. touch-action: pan-y leaves vertical page scrolling alone.
+        const pull = Math.max(-72, Math.min(72, drag.dx * 0.32));
+        sceneRef.current?.style.setProperty('--drag-x', `${pull.toFixed(1)}px`);
+        sceneRef.current?.style.setProperty('--drag-rotate', `${(pull * 0.06).toFixed(2)}deg`);
+        return;
+      }
+    }
     if (coarsePointer || reducedMotion) return;
     const rect = event.currentTarget.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
@@ -182,6 +246,9 @@ export function WelcomeCarousel() {
 
   const handlePointerLeave = () => {
     if (coarsePointer) return;
+    // A mouse that leaves mid-drag ends the gesture instead of leaving the
+    // scene permanently pulled to one side.
+    finishDrag();
     setHovered(false);
     resetTilt();
   };
@@ -199,6 +266,13 @@ export function WelcomeCarousel() {
   };
 
   const selectSlide = (index: number) => {
+    if (suppressClickRef.current) return;
+    // A tap on the slide already in front advances the tour; a tap on a side
+    // slide brings that one forward. Both work with touch and with a mouse.
+    if (index === active) {
+      go(1);
+      return;
+    }
     setActive(index);
     // A pointer click should not leave focus on a card and pause the tour after
     // the cursor leaves. Keyboard users never reach these cards; the dots and
@@ -228,11 +302,14 @@ export function WelcomeCarousel() {
       </div>
 
       <div
-        className="welcome-carousel-viewport"
+        className={`welcome-carousel-viewport${dragging ? ' is-dragging' : ''}`}
+        onPointerDown={handlePointerDown}
         onPointerMove={handlePointerMove}
+        onPointerUp={(event) => finishDrag(event.pointerId)}
+        onPointerCancel={(event) => finishDrag(event.pointerId)}
       >
         <div className="welcome-carousel-stage">
-          <div className="welcome-carousel-scene" ref={sceneRef}>
+          <div className={`welcome-carousel-scene${dragging ? ' is-dragging' : ''}`} ref={sceneRef}>
             {WELCOME_SLIDES.map((slide, index) => {
               const position = positionFor(index, active);
               const isActive = position === 'active';
@@ -267,7 +344,9 @@ export function WelcomeCarousel() {
           type="button"
           className="welcome-carousel-arrow is-prev"
           aria-label="Previous screenshot"
-          onClick={() => go(-1)}
+          onClick={() => {
+            if (!suppressClickRef.current) go(-1);
+          }}
         >
           <ChevronLeft size={18} strokeWidth={2.2} aria-hidden="true" />
         </button>
@@ -275,7 +354,9 @@ export function WelcomeCarousel() {
           type="button"
           className="welcome-carousel-arrow is-next"
           aria-label="Next screenshot"
-          onClick={() => go(1)}
+          onClick={() => {
+            if (!suppressClickRef.current) go(1);
+          }}
         >
           <ChevronRight size={18} strokeWidth={2.2} aria-hidden="true" />
         </button>

@@ -405,6 +405,8 @@ def composition(q):
     k = float(m.group(1))
     g = funcs["g"]
     f = funcs["f"]
+    if g is None or f is None:
+        return None
     if g.free_symbols - {X} or f.free_symbols - {X}:
         return None
     try:
@@ -1042,7 +1044,11 @@ def main() -> int:
                 findings.append({"id": q["id"], "kind": "prose-in-math", "detail": seg[:70]})
                 break
 
-        target, mode, family = family_answer(q)
+        try:
+            target, mode, family = family_answer(q)
+        except Exception as error:  # a broken family must not abort the whole audit
+            findings.append({"id": q["id"], "kind": "audit-error", "detail": repr(error)})
+            continue
         if family and mode == "degenerate":
             findings.append({"id": q["id"], "kind": "system-degenerate", "detail": q.get("stimulus")})
         if family:

@@ -356,6 +356,65 @@ class MetadataTests(unittest.TestCase):
         self.assertIn("rationale.choice_reference", categories(report, "warn"))
 
 
+class TextShapeTests(unittest.TestCase):
+    def _inference(self, question_id: str = "I-1", stimulus: str = "The study found a pattern.") -> dict:
+        return item(
+            question_id,
+            section="Reading and Writing",
+            domain="Information and Ideas",
+            skill="Inferences",
+            stimulus=stimulus,
+            prompt="Which choice most logically completes the text?",
+        )
+
+    def test_inference_completion_without_blank_is_an_error(self):
+        report = qa.check_bank(bank(self._inference()))
+        self.assertIn("text.completes_without_blank", categories(report, "error"))
+
+    def test_inference_completion_with_blank_passes(self):
+        report = qa.check_bank(bank(self._inference(stimulus="The study found a pattern, ______")))
+        self.assertNotIn("text.completes_without_blank", categories(report, "error"))
+
+    def test_inline_cross_text_heading_is_an_error(self):
+        question = item(
+            "X-1",
+            section="Reading and Writing",
+            domain="Craft and Structure",
+            skill="Cross-Text Connections",
+            stimulus="Text 1\nOne view. Text 2\nAnother view.",
+            prompt="How do the two texts relate?",
+        )
+        report = qa.check_bank(bank(question))
+        self.assertIn("text.cross_heading", categories(report, "error"))
+
+    def test_line_start_cross_text_headings_pass(self):
+        question = item(
+            "X-2",
+            section="Reading and Writing",
+            domain="Craft and Structure",
+            skill="Cross-Text Connections",
+            stimulus="Text 1\nOne view.\n\nText 2\nAnother view.",
+            prompt="How do the two texts relate?",
+        )
+        report = qa.check_bank(bank(question))
+        self.assertNotIn("text.cross_heading", categories(report, "error"))
+
+    def test_html_cross_text_headings_with_nbsp_pass(self):
+        question = item(
+            "X-3",
+            section="Reading and Writing",
+            domain="Craft and Structure",
+            skill="Cross-Text Connections",
+            stimulus=(
+                '<p><strong>Text 1&nbsp;</strong></p><p>One view.</p>'
+                '<p><strong>Text 2&nbsp;</strong></p><p>Another view.</p>'
+            ),
+            prompt="How do the two texts relate?",
+        )
+        report = qa.check_bank(bank(question))
+        self.assertNotIn("text.cross_heading", categories(report, "error"))
+
+
 class ReportTests(unittest.TestCase):
     def test_json_report_shape(self):
         report = qa.check_bank(bank(item("J-1"), item("J-1")))

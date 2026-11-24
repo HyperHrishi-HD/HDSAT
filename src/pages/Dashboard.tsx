@@ -11,6 +11,11 @@ import {
   isQuestionOfTheDayDismissed,
   isQuestionOfTheDaySolved,
 } from '../lib/daily';
+import {
+  HEATMAP_DIFFICULTIES,
+  buildMasteryHeatmap,
+  heatmapAccuracy,
+} from '../lib/masteryHeatmap';
 import { DASHBOARD_SECTIONS } from '../lib/sections';
 import { formatClock } from '../lib/examEngine';
 import { loadPracticeSession, practiceResumeSummary } from '../lib/session';
@@ -91,9 +96,17 @@ export function DashboardPage() {
     [app.progress]
   );
 
+  // The Activity widget is intentionally a seven-day window. Keep the goal,
+  // today line and title in sync with that same window.
+  const activityDays = app.dailyActivity.slice(-7);
   const maxDailyQuestions = useMemo(
-    () => Math.max(5, ...app.dailyActivity.map((d) => d.questionsCompleted)),
-    [app.dailyActivity]
+    () => Math.max(5, ...activityDays.map((d) => d.questionsCompleted)),
+    [activityDays]
+  );
+
+  const heatmap = useMemo(
+    () => buildMasteryHeatmap(app.questions, app.progress, app.settings.assessment),
+    [app.questions, app.progress, app.settings.assessment]
   );
 
   const todayActivity = app.dailyActivity[app.dailyActivity.length - 1];
@@ -261,8 +274,8 @@ export function DashboardPage() {
         </Card>
       </div>
 
-      <div className="grid-2">
-        <Card>
+      <div className="dash-content-grid">
+        <Card className="dash-mastery">
           <div className="row-between" style={{ marginBottom: 8 }}>
             <h3>Domain Mastery</h3>
           </div>
@@ -289,11 +302,89 @@ export function DashboardPage() {
           </div>
         </Card>
 
-        <div className="stack">
+        <Card className="dash-heatmap">
+          <div className="row-between" style={{ marginBottom: 10 }}>
+            <div>
+              <h3>Mastery Heatmap</h3>
+              <p className="muted" style={{ margin: 0 }}>
+                Accuracy by skill and difficulty, from your recorded attempts.
+              </p>
+            </div>
+            <Badge tone="info">29 skills</Badge>
+          </div>
+          <div className="heatmap-scroll">
+            <div className="mastery-heatmap" role="table" aria-label="Mastery heatmap by skill and difficulty">
+              <div className="heatmap-row heatmap-header" role="row">
+                <span role="columnheader">Skill</span>
+                {HEATMAP_DIFFICULTIES.map((difficulty) => (
+                  <span key={difficulty} role="columnheader">
+                    {difficulty}
+                  </span>
+                ))}
+              </div>
+              {heatmap.map((domain) => (
+                <div className="heatmap-domain" key={domain.domain}>
+                  <div className="heatmap-domain-head">
+                    <strong>{domain.domain}</strong>
+                    <span>{domain.section === 'Math' ? 'Math' : 'R&W'}</span>
+                  </div>
+                  {domain.rows.map((row) => (
+                    <div className="heatmap-row" key={row.skill} role="row">
+                      <span className="heatmap-skill" role="rowheader" title={row.skill}>
+                        {row.skill}
+                      </span>
+                      {HEATMAP_DIFFICULTIES.map((difficulty) => {
+                        const cell = row.cells[difficulty];
+                        const accuracy = heatmapAccuracy(cell);
+                        const heat = accuracy === null ? 0 : Math.max(7, Math.min(100, accuracy));
+                        return (
+                          <span
+                            key={difficulty}
+                            role="cell"
+                            className={`heatmap-cell${accuracy === null ? ' is-empty' : ''}${accuracy !== null && accuracy >= 65 ? ' is-high' : ''}`}
+                            style={{
+                              background:
+                                accuracy === null
+                                  ? undefined
+                                  : `color-mix(in srgb, var(--accent) ${heat}%, var(--surface-2))`,
+                            }}
+                            title={
+                              accuracy === null
+                                ? `${row.skill} · ${difficulty}: no attempts yet`
+                                : `${row.skill} · ${difficulty}: ${cell.correct}/${cell.attempts} correct (${accuracy}%)`
+                            }
+                            aria-label={
+                              accuracy === null
+                                ? `${row.skill}, ${difficulty}, no attempts`
+                                : `${row.skill}, ${difficulty}, ${accuracy} percent from ${cell.attempts} attempts`
+                            }
+                          >
+                            {accuracy === null ? '–' : `${accuracy}%`}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="heatmap-legend" aria-label="Heatmap legend">
+            <span>No attempts</span>
+            <span className="heatmap-legend-swatch is-empty" />
+            <span>Low</span>
+            <span className="heatmap-legend-swatch is-low" />
+            <span className="heatmap-legend-swatch is-mid" />
+            <span className="heatmap-legend-swatch is-high" />
+            <span>High</span>
+          </div>
+        </Card>
+
+        <div className="dash-side stack">
           <Card>
             <div className="row-between" style={{ marginBottom: 10 }}>
               <div>
-                <h3>14-Day Activity</h3>
+                <h3>7-Day Activity</h3>
                 <p className="muted">
                   Today: {todayActivity?.questionsCompleted ?? 0} questions ·{' '}
                   {todayActivity?.flashcardsReviewed ?? 0} flashcards
@@ -301,8 +392,8 @@ export function DashboardPage() {
               </div>
               <Badge tone={goal.tone}>{goal.label}</Badge>
             </div>
-            <div className="sparkline" aria-label="14-day question activity chart">
-              {app.dailyActivity.map((day) => {
+            <div className="sparkline" aria-label="7-day question activity chart">
+              {activityDays.map((day) => {
                 const heightPct =
                   day.questionsCompleted > 0
                     ? Math.max(12, Math.round((day.questionsCompleted / maxDailyQuestions) * 100))
@@ -318,7 +409,7 @@ export function DashboardPage() {
               })}
             </div>
             <div className="chart-axis">
-              <span>{app.dailyActivity[0]?.date ?? ''}</span>
+              <span>{activityDays[0]?.date ?? ''}</span>
               <span>Today ({todayActivity?.date ?? ''})</span>
             </div>
           </Card>
@@ -334,7 +425,12 @@ export function DashboardPage() {
             {latestTest ? (
               <div className="stack">
                 {app.testAttempts.slice(0, 3).map((attempt) => (
-                  <div key={attempt.id} className="muted-block row-between">
+                  <Link
+                    key={attempt.id}
+                    to={`/test?attempt=${encodeURIComponent(attempt.id)}`}
+                    className="muted-block row-between dash-sim-link"
+                    aria-label={`Review the simulation from ${attempt.createdAt.slice(0, 10)}`}
+                  >
                     <div>
                       <strong>{attempt.assessment}</strong>
                       <div className="muted">{attempt.createdAt.slice(0, 10)}</div>
@@ -348,15 +444,17 @@ export function DashboardPage() {
                         {attempt.modules.reduce((a, m) => a + m.total, 0)} raw
                       </span>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             ) : (
               <p className="muted">No completed simulations yet.</p>
             )}
           </Card>
+        </div>
+      </div>
 
-        <Card>
+      <Card>
           <div className="row-between">
             <div>
               <h3>Saved &amp; Missed</h3>
@@ -377,8 +475,6 @@ export function DashboardPage() {
               </div>
             </div>
           </Card>
-        </div>
-      </div>
 
       <Leaderboard />
     </div>

@@ -421,6 +421,34 @@ export function CreditsPage() {
         ))}
       </ul>
 
+      <h2>Flashcard Vocabulary Sources</h2>
+      <ul>
+        <li>
+          <strong>New Academic Word List (NAWL), 12th edition lemmatized teaching list:</strong>{' '}
+          CC BY-SA 4.0. <a href="https://www.newgeneralservicelist.com/new-general-service-list" target="_blank" rel="noopener noreferrer">newgeneralservicelist.com</a>.
+          Attribution: New General Service List Project.
+        </li>
+        <li>
+          <strong>New General Service List (NGSL) 1.2, ranks beyond 500:</strong>{' '}
+          CC BY-SA 4.0. <a href="https://www.newgeneralservicelist.com/new-general-service-list" target="_blank" rel="noopener noreferrer">newgeneralservicelist.com</a>.
+          Attribution: New General Service List Project.
+        </li>
+        <li>
+          <strong>Open English WordNet 2025:</strong> definitions and usage examples, CC BY 4.0.{' '}
+          <a href="https://en-word.net/" target="_blank" rel="noopener noreferrer">en-word.net</a>.
+          The underlying Princeton WordNet 3.0 database is also licensed CC BY 4.0.
+        </li>
+        <li>
+          <strong>Tatoeba English sentence export:</strong> example sentences, CC0 1.0.{' '}
+          <a href="https://downloads.tatoeba.org/exports/per_language/eng/eng_sentences.tsv.bz2" target="_blank" rel="noopener noreferrer">downloads.tatoeba.org</a>.
+        </li>
+        <li>
+          <strong>Words from Real Questions:</strong> target words and short context mined from the locally imported
+          released College Board Words-in-Context items. The prompt and rationale asset is generated locally for the
+          deployment and is not redistributed in the reference repository. College Board is not affiliated with this site.
+        </li>
+      </ul>
+
       <h2>Open-Source Software &amp; Embedded Tools</h2>
       <ul>
         <li>

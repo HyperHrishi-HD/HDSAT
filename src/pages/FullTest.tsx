@@ -113,6 +113,8 @@ export function FullTestPage() {
     [searchParams]
   );
   const [shareNotice, setShareNotice] = useState<string | null>(null);
+  const [resumeNotice, setResumeNotice] = useState<string | null>(null);
+  const openedAttemptParam = useRef<string | null>(null);
 
   const [assessment, setAssessment] = useState<string>(() =>
     app.settings.assessment === 'PSAT 8/9' ? 'PSAT 8/9' : app.settings.assessment === 'SAT' ? 'SAT' : BLENDED_PSAT
@@ -233,6 +235,7 @@ export function FullTestPage() {
     attemptCreatedAtRef.current = new Date().toISOString();
     setPriorElapsedSeconds(0);
     setInitialSeenQuestionIds(seenQuestionIds);
+    setResumeNotice(null);
     setTestPlan(plan);
     setCompletedModules([]);
     setFinishedAttempt(null);
@@ -455,6 +458,7 @@ export function FullTestPage() {
       durationSeconds: priorElapsedSeconds + currentRunDuration,
       pausedState: {
         seed: testPlan.seed,
+        algorithmVersion: testPlan.algorithmVersion,
         excludeReleased,
         sectionIndex: activeStage.sectionIndex,
         stageNumber: activeStage.stageNumber,
@@ -589,6 +593,7 @@ export function FullTestPage() {
       excludeReleasedPracticeSet: ps.excludeReleased,
       seed: ps.seed,
       seenQuestionIds: ps.seenQuestionIds ?? [],
+      algorithm: ps.algorithmVersion ?? 1,
     });
     const secPlan = plan.sections[ps.sectionIndex] ?? plan.sections[0];
     if (!secPlan) return;
@@ -598,6 +603,29 @@ export function FullTestPage() {
         : ps.tier === 'lower'
         ? secPlan.lower
         : secPlan.module1;
+    // A rebuilt plan must still contain what the student already answered.
+    // The version stamp above makes this true for every saved attempt; this
+    // guard is the safety net for a bank update during an unfinished run.
+    const planIds = new Set(
+      plan.sections.flatMap((section) =>
+        [section.module1, section.upper, section.lower].flatMap((module) =>
+          module.questions.map((question) => question.id)
+        )
+      )
+    );
+    const savedIds = [
+      ...Object.keys(ps.responses ?? {}),
+      ...(attempt.modules ?? []).flatMap((module) =>
+        module.responses.map((response) => response.questionId)
+      ),
+    ];
+    if (savedIds.some((id) => !planIds.has(id))) {
+      setResumeNotice(
+        'This saved simulation was built with an earlier question set and cannot be resumed safely. Start a new simulation to continue.'
+      );
+      return;
+    }
+    setResumeNotice(null);
 
     clientSessionIdRef.current = attempt.id;
     sessionStartRef.current = Date.now();
@@ -649,6 +677,19 @@ export function FullTestPage() {
     setFinishedAttempt(attempt);
     setReviewQuestionId(null);
   };
+
+  // Dashboard's Recent Simulations links here with ?attempt=<id>. Open the
+  // saved report (or resume an unfinished run) exactly once per URL id, after
+  // the persisted attempts have loaded. The ref prevents a re-render from
+  // reopening a report the student has since closed.
+  useEffect(() => {
+    const attemptId = searchParams.get('attempt');
+    if (!attemptId || openedAttemptParam.current === attemptId) return;
+    const attempt = app.testAttempts.find((entry) => entry.id === attemptId);
+    if (!attempt) return;
+    openedAttemptParam.current = attemptId;
+    openPastAttempt(attempt);
+  }, [app.testAttempts, openPastAttempt, searchParams]);
 
   const currentQuestion = activeStage ? activeStage.plan.questions[currentIndex] ?? null : null;
   const deleteTarget = app.testAttempts.find((attempt) => attempt.id === deleteTargetId) ?? null;
@@ -1604,6 +1645,11 @@ export function FullTestPage() {
 
           {app.testAttempts.length > 0 || app.scoreLog.length > 0 ? (
             <div className="attempts-block">
+              {resumeNotice ? (
+                <p className="muted" style={{ margin: '0 0 10px' }}>
+                  {resumeNotice}
+                </p>
+              ) : null}
               <div className="row-between attempts-head">
                 <h3 style={{ margin: 0 }}>Past simulations</h3>
                 <div className="row attempts-head-actions">

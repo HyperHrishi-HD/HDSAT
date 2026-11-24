@@ -206,26 +206,22 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
           expect(sec.module1.minutes).toBe(sec.section === 'Reading and Writing' ? 32 : 35);
 
           const m1Ids = new Set(sec.module1.questions.map((q) => q.id));
-          const upIds = sec.upper.questions.map((q) => q.id);
-          expect(upIds.some((id) => m1Ids.has(id))).toBe(false);
-          const runQuestions = [
-            ...sec.module1.questions,
-            ...sec.upper.questions,
-            ...sec.lower.questions,
-          ];
-          const runIds = runQuestions.map((q) => q.id);
-          expect(new Set(runIds).size).toBe(runIds.length);
-
-          // Also guarantee no duplicate stimulus/prompt content across the section modules
-          const contentKeys = runQuestions.map(
-            (q) => `${(q.stimulus ?? '').trim()}||${q.prompt.trim()}||${JSON.stringify(q.figure_metadata ?? null)}`
-          );
-          expect(new Set(contentKeys).size).toBe(contentKeys.length);
-
-          // And no shared passage stimulus in Reading & Writing across modules
-          if (sec.section === 'Reading and Writing') {
-            const stims = runQuestions.map((q) => (q.stimulus ?? '').trim()).filter(Boolean);
-            expect(new Set(stims).size).toBe(stims.length);
+          // Module 1 is disjoint from each adaptive branch. Upper and lower are
+          // alternatives, so they may share items; only one is administered.
+          for (const branch of [sec.upper, sec.lower]) {
+            expect(branch.questions.some((q) => m1Ids.has(q.id))).toBe(false);
+          }
+          for (const mod of [sec.module1, sec.upper, sec.lower]) {
+            const ids = mod.questions.map((q) => q.id);
+            expect(new Set(ids).size).toBe(ids.length);
+            const contentKeys = mod.questions.map(
+              (q) => `${(q.stimulus ?? '').trim()}||${q.prompt.trim()}||${JSON.stringify(q.figure_metadata ?? null)}`
+            );
+            expect(new Set(contentKeys).size).toBe(contentKeys.length);
+            if (sec.section === 'Reading and Writing') {
+              const stims = mod.questions.map((q) => (q.stimulus ?? '').trim()).filter(Boolean);
+              expect(new Set(stims).size).toBe(stims.length);
+            }
           }
         }
       }
@@ -240,30 +236,18 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
     expect(idOf('sim:1700000000')).not.toBe(idOf('sim:1700005000'));
   });
 
-  it('keeps the R&W domain order and skill sequence while letting the four domain bands drift by up to three items', () => {
+  it('keeps strict R&W domain blocks, SEC difficulty order, and the operational blueprint', () => {
     const domainOrder = [
       'Craft and Structure',
       'Information and Ideas',
       'Standard English Conventions',
       'Expression of Ideas',
     ];
-    const expectedCounts: Record<string, number> = {
+    const expectedOperational: Record<string, number> = {
       'Craft and Structure': 7,
       'Information and Ideas': 6,
-      'Standard English Conventions': 7,
-      'Expression of Ideas': 7,
-    };
-    const nominalStart: Record<string, number> = {
-      'Craft and Structure': 1,
-      'Information and Ideas': 8,
-      'Standard English Conventions': 14,
-      'Expression of Ideas': 21,
-    };
-    const nominalEnd: Record<string, number> = {
-      'Craft and Structure': 7,
-      'Information and Ideas': 13,
-      'Standard English Conventions': 20,
-      'Expression of Ideas': 27,
+      'Standard English Conventions': 6,
+      'Expression of Ideas': 6,
     };
     const skillRank: Record<string, number> = {
       'Words in Context': 0,
@@ -279,7 +263,7 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
       'Rhetorical Synthesis': 9,
     };
     const diffRank = (d: string) => ({ Easy: 0, Medium: 1, Hard: 2 }[d] ?? 1);
-    let sawDrift = false;
+    const skillDomains = ['Craft and Structure', 'Information and Ideas', 'Expression of Ideas'];
 
     for (const seed of ['bands:a', 'bands:b', 'bands:c', 'bands:d', 'bands:e', 'bands:f']) {
       const plan = buildTestPlan(questions, {
@@ -291,28 +275,39 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
       for (const mod of [sec.module1, sec.upper, sec.lower]) {
         const qs = mod.questions;
         expect(qs).toHaveLength(27);
-        const firstSeen = domainOrder.map((d) => qs.findIndex((q) => q.domain === d));
-        expect(firstSeen[0]).toBe(0);
+        const unscored = new Set(mod.unscoredQuestionIds);
+        const operational = qs.filter((q) => !unscored.has(q.id));
+        expect(operational).toHaveLength(25);
 
-        for (let d = 0; d < domainOrder.length; d += 1) {
-          const domain = domainOrder[d];
-          const indices = qs.map((q, i) => (q.domain === domain ? i : -1)).filter((i) => i >= 0);
-          expect(indices).toHaveLength(expectedCounts[domain]);
+        // Domains are contiguous and follow the official sequence exactly.
+        const positions = qs.map((q) => domainOrder.indexOf(q.domain));
+        for (let i = 1; i < positions.length; i += 1) {
+          expect(positions[i]).toBeGreaterThanOrEqual(positions[i - 1]);
+        }
+        expect(positions[0]).toBe(0);
+        expect(positions[positions.length - 1]).toBe(3);
 
-          const start = indices[0] + 1;
-          const end = indices[indices.length - 1] + 1;
-          // Band edges drift at most three items from the nominal window
-          expect(start).toBeGreaterThanOrEqual(nominalStart[domain] - 3);
-          expect(start).toBeLessThanOrEqual(nominalStart[domain] + 3);
-          expect(end).toBeGreaterThanOrEqual(nominalEnd[domain] - 3);
-          expect(end).toBeLessThanOrEqual(nominalEnd[domain] + 3);
-          if (start !== nominalStart[domain] || end !== nominalEnd[domain]) sawDrift = true;
+        // Quotas describe operational items only; the two pretest items are extra.
+        const counts: Record<string, number> = {
+          'Craft and Structure': 0,
+          'Information and Ideas': 0,
+          'Standard English Conventions': 0,
+          'Expression of Ideas': 0,
+        };
+        for (const q of operational) counts[q.domain] += 1;
+        expect(counts).toEqual(expectedOperational);
 
-          // First appearances still follow the canonical domain order
-          if (d > 0) expect(firstSeen[d]).toBeGreaterThan(firstSeen[d - 1]);
+        // SEC is difficulty-only, across both skills.
+        const secItems = qs.filter((q) => q.domain === 'Standard English Conventions');
+        for (let i = 1; i < secItems.length; i += 1) {
+          expect(diffRank(secItems[i].difficulty)).toBeGreaterThanOrEqual(
+            diffRank(secItems[i - 1].difficulty)
+          );
+        }
 
-          // Within a domain, skill rank and per-skill difficulty never regress
-          const own = indices.map((i) => qs[i]);
+        // The other three domains keep skill groups, each ascending by difficulty.
+        for (const domain of skillDomains) {
+          const own = qs.filter((q) => q.domain === domain);
           for (let i = 1; i < own.length; i += 1) {
             const prevRank = skillRank[own[i - 1].skill] ?? 99;
             const rank = skillRank[own[i].skill] ?? 99;
@@ -337,7 +332,6 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
         }
       }
     }
-    expect(sawDrift).toBe(true);
   });
 
   it('enforces the 22-item Math domain matrix, ~75% MC / ~25% SPR intermixing, continuous difficulty curve, and PSAT 8/9 trig exclusion', () => {
@@ -419,7 +413,11 @@ describe('adaptive exam engine & exact SAT blueprint', () => {
     );
     expect(secondRun.warnings).toEqual([]);
     expect(secondIds.some((id) => attempted.includes(id))).toBe(false);
-    expect(new Set(secondIds).size).toBe(secondIds.length);
+    for (const sec of secondRun.sections) {
+      for (const mod of [sec.module1, sec.upper, sec.lower]) {
+        expect(new Set(mod.questions.map((q) => q.id)).size).toBe(mod.questions.length);
+      }
+    }
   });
 
   it('warns and repeats old items only when the unseen supply cannot fill every module', () => {

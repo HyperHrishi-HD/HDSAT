@@ -5,6 +5,7 @@ import {
   seededShuffle,
 } from './examEngine';
 import { isReviewDue } from './review';
+import { isCollegeBoardQuestion, isServableCollegeBoardQuestion } from './questionSources';
 import { todayKey } from './storage';
 import type { Assessment, Question, QuestionProgress } from './types';
 
@@ -284,7 +285,11 @@ export function questQuestionIds(
   const cached = (assignment.quests[questId] ?? []).filter((id) => known.has(id));
   if (cached.length > 0) return cached;
 
-  const eligible = questions.filter((q) => q.assessments.includes(assessment));
+  const eligible = questions.filter(
+    (q) =>
+      q.assessments.includes(assessment) &&
+      (!isCollegeBoardQuestion(q) || isServableCollegeBoardQuestion(q))
+  );
   const history = buildFamilyHistory(questions, progress);
   const focus = questFocus(questions, progress, options);
   const weakDomains = new Set(focus.weakDomains);
@@ -348,11 +353,20 @@ export function dailyHardQuestion(
     // A cached pick can predate a difficulty correction in the bank. Never keep
     // serving an easier item under the QOTD's "Hard" promise just because it
     // was selected yesterday.
-    if (cached && cached.difficulty === 'Hard' && cached.assessments.includes(assessment)) {
+    if (
+      cached &&
+      cached.difficulty === 'Hard' &&
+      cached.assessments.includes(assessment) &&
+      (!isCollegeBoardQuestion(cached) || isServableCollegeBoardQuestion(cached))
+    ) {
       return cached;
     }
   }
-  const eligible = questions.filter((q) => q.assessments.includes(assessment));
+  const eligible = questions.filter(
+    (q) =>
+      q.assessments.includes(assessment) &&
+      (!isCollegeBoardQuestion(q) || isServableCollegeBoardQuestion(q))
+  );
   const hard = eligible.filter((q) => q.difficulty === 'Hard');
   const pool = hard.length > 0 ? hard : eligible;
   if (pool.length === 0) return null;

@@ -37,6 +37,42 @@ interface BankData {
 let bankPromise: Promise<BankData> | null = null;
 
 /**
+ * The official College Board pool is a deployment-side asset, deliberately
+ * kept out of the repository and out of the startup bundle. A missing or
+ * unavailable supplemental asset must never prevent the curated bank loading.
+ */
+async function loadCollegeBoardBank(): Promise<BankData | null> {
+  if (typeof fetch !== 'function') return null;
+  try {
+    const response = await fetch(`${import.meta.env.BASE_URL}collegeBoardBank.json`, {
+      cache: 'no-cache',
+    });
+    if (!response.ok) return null;
+    const data = (await response.json()) as BankData;
+    if (!Array.isArray(data.questions) || data.questions.length === 0) return null;
+    return data;
+  } catch {
+    return null;
+  }
+}
+
+function mergeBanks(curated: BankData, official: BankData | null): BankData {
+  if (!official) return curated;
+  const knownIds = new Set(curated.questions.map((question) => question.id));
+  const knownSources = new Set(curated.sources.map((source) => source.source_id));
+  const questions = official.questions.filter((question) => !knownIds.has(question.id));
+  return {
+    ...curated,
+    bank_version: `${curated.bank_version}+cb-${questions.length}`,
+    sources: [
+      ...curated.sources,
+      ...official.sources.filter((source) => !knownSources.has(source.source_id)),
+    ],
+    questions: [...curated.questions, ...questions],
+  };
+}
+
+/**
  * The bank is a separate chunk, not part of the startup script. It is the one
  * large asset in the app, and keeping it out of the entry bundle means a repeat
  * visit can reuse the cached bank while a code change only invalidates the much
@@ -44,14 +80,45 @@ let bankPromise: Promise<BankData> | null = null;
  */
 function loadBank(): Promise<BankData> {
   if (!bankPromise) {
-    bankPromise = import('../data/questionBank.json').then(
-      (module) => (module.default ?? module) as unknown as BankData
-    );
+    bankPromise = Promise.all([
+      import('../data/questionBank.json').then(
+        (module) => (module.default ?? module) as unknown as BankData
+      ),
+      loadCollegeBoardBank(),
+    ]).then(([curated, official]) => mergeBanks(curated, official));
   }
   return bankPromise;
 }
 const deck = flashcardsJson as unknown as { cards: Flashcard[] };
 const library = resourcesJson as unknown as { resources: StudyResource[] };
+
+/**
+ * Official Words-in-Context cards are generated locally from the imported
+ * College Board bank and served as a deployment-side asset. They are not
+ * committed to the reference repo, so a missing file is a normal, quiet
+ * fallback rather than a startup failure.
+ */
+async function loadOfficialFlashcardDeck(): Promise<Flashcard[]> {
+  if (typeof fetch !== 'function') return [];
+  try {
+    const response = await fetch(`${import.meta.env.BASE_URL}officialContextCards.json`, {
+      cache: 'no-cache',
+    });
+    if (!response.ok) return [];
+    const data = (await response.json()) as { cards?: Flashcard[] };
+    if (!Array.isArray(data.cards)) return [];
+    return data.cards.filter(
+      (card) =>
+        card &&
+        typeof card.id === 'string' &&
+        card.deck === 'official_context' &&
+        typeof card.front === 'string' &&
+        typeof card.back === 'string'
+    );
+  } catch {
+    return [];
+  }
+}
 
 export type Mode = 'guest' | 'cloud';
 
@@ -120,12 +187,20 @@ export interface AppValue {
   error: string | null;
   notice: string | null;
   authModalOpen: boolean;
-  authModalView: 'signin' | 'verify';
+  authModalView: 'signin' | 'signup' | 'verify';
+  /** Present when guest work can be merged into the account only after consent. */
+  guestMergePrompt: {
+    userId: string;
+    attempts: number;
+    saved: number;
+    flashcards: number;
+  } | null;
   actions: {
-    openAuthModal: (view?: 'signin' | 'verify') => void;
+    openAuthModal: (view?: 'signin' | 'signup' | 'verify') => void;
     closeAuthModal: () => void;
     signIn: (email: string, password: string) => Promise<void>;
     attemptSignIn: (email: string, password: string) => Promise<cloud.SignInAttempt>;
+    completeGoogleSignIn: () => Promise<void>;
     signUp: (
       email: string,
       password: string,
@@ -173,6 +248,10 @@ export interface AppValue {
      */
     flushQueuedEmails: () => Promise<void>;
     syncGuestData: () => Promise<void>;
+    /** Merge this browser's guest history after the student explicitly accepts. */
+    acceptGuestMerge: () => Promise<void>;
+    /** Leave guest history on this device and never ask for this account again. */
+    declineGuestMerge: () => void;
     updateSettings: (patch: Partial<UserSettings>) => void;
     /** Rename the signed-in student, or the name remembered for a pending signup. */
     updateDisplayName: (name: string) => Promise<void>;
@@ -200,6 +279,7 @@ function emptyActivitySeries(source: Record<string, DailyActivity>, days = 14): 
 export function AppProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<LocalProfile>(() => local.loadProfile());
   const [bank, setBank] = useState<BankData | null>(null);
+  const [flashcards, setFlashcards] = useState<Flashcard[]>(deck.cards);
   const [snapshot, setSnapshot] = useState<cloud.CloudSnapshot | null>(null);
   // The last snapshot before the current one. Cloud achievements are announced
   // from this diff, not from the local profile: the local bonus is invisible in
@@ -224,7 +304,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   const [error, setError] = useState<string | null>(null);
   const [notice, setNotice] = useState<string | null>(null);
   const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [authModalView, setAuthModalView] = useState<'signin' | 'verify'>('signin');
+  const [authModalView, setAuthModalView] = useState<'signin' | 'signup' | 'verify'>('signin');
+  const [guestMergePrompt, setGuestMergePrompt] = useState<AppValue['guestMergePrompt']>(null);
 
   // Module submissions run many attempts in one loop (27 R&W / 22 Math items),
   // so mutating actions must read the freshest profile rather than the closure
@@ -233,8 +314,20 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
 
   // Auth events can fire before the import callback below is created, so the
   // handler reads it through a ref instead of a stale closure.
-  const importLocalRef = useRef<(userId: string) => Promise<void>>(async () => {});
+  const importLocalRef = useRef<(userId: string) => void>(() => {});
   const importingRef = useRef<Set<string>>(new Set());
+
+  useEffect(() => {
+    let active = true;
+    void loadOfficialFlashcardDeck().then((officialCards) => {
+      if (!active || officialCards.length === 0) return;
+      const known = new Set(deck.cards.map((card) => card.id));
+      setFlashcards([...deck.cards, ...officialCards.filter((card) => !known.has(card.id))]);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const persist = useCallback((next: LocalProfile) => {
     profileRef.current = next;
@@ -428,7 +521,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
         : profile.attempts.filter((a) => a.isCorrect).length;
     const mastered = Object.values(progress).filter((p) => p.status === 'mastered').length;
     const now = Date.now();
-    const dueCards = deck.cards.filter((card) => {
+    const dueCards = flashcards.filter((card) => {
       const state = flashcardProgress[card.id];
       return !state || new Date(state.nextDueAt).getTime() <= now;
     }).length;
@@ -442,7 +535,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       dueCards,
       testsTaken: completedTests.length,
     };
-  }, [mode, snapshot, profile, progress, flashcardProgress, testAttempts]);
+  }, [mode, snapshot, profile, progress, flashcardProgress, testAttempts, flashcards]);
 
   const submitAttempt = useCallback<AppValue['actions']['submitAttempt']>(
     async (question, response, meta) => {
@@ -900,28 +993,37 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   );
 
   /**
-   * First meaningful sign-in imports this device's guest history exactly once.
-   * Replays are idempotent, but the guard keeps later logins from re-uploading
-   * a long local history on every device that happens to share a browser.
+   * Guest history is never merged silently. A sign-in only asks once per
+   * account; accepting performs the same idempotent sync as before, and
+   * declining records that choice so the prompt does not return on every visit.
    */
-  const importLocalHistoryOnce = useCallback(
+  const mergeLocalHistory = useCallback(
     async (userId: string) => {
       if (typeof localStorage === 'undefined') return;
-      const key = `hdsat.imported.${userId}`;
+      const importedKey = `hdsat.imported.${userId}`;
+      const declinedKey = `hdsat.import-declined.${userId}`;
       if (
-        localStorage.getItem(key) ||
-        profileRef.current.attempts.length === 0 ||
+        localStorage.getItem(importedKey) ||
+        localStorage.getItem(declinedKey) ||
         importingRef.current.has(userId)
+      ) {
+        return;
+      }
+      const localProfile = profileRef.current;
+      if (
+        localProfile.attempts.length === 0 &&
+        localProfile.saved.length === 0 &&
+        Object.keys(localProfile.flashcards).length === 0
       ) {
         return;
       }
       importingRef.current.add(userId);
       try {
         setSyncMessage('Importing your device practice history into your account...');
-        const report = await cloud.syncGuestProfile(profileRef.current, (done, total) =>
+        const report = await cloud.syncGuestProfile(localProfile, (done, total) =>
           setSyncMessage(`Importing device history: ${done} of ${total} attempts...`)
         );
-        localStorage.setItem(key, new Date().toISOString());
+        localStorage.setItem(importedKey, new Date().toISOString());
         await refreshSnapshot();
         setNotice(
           `Imported ${report.attempts} practice attempt(s), ${report.saved} saved question(s) and ${report.flashcards} flashcard review(s) from this device.`
@@ -935,6 +1037,36 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     },
     [refreshSnapshot]
   );
+
+  const importLocalHistoryOnce = useCallback((userId: string) => {
+    if (typeof localStorage === 'undefined') return;
+    const importedKey = `hdsat.imported.${userId}`;
+    const declinedKey = `hdsat.import-declined.${userId}`;
+    if (localStorage.getItem(importedKey) || localStorage.getItem(declinedKey)) return;
+    const localProfile = profileRef.current;
+    const counts = {
+      attempts: localProfile.attempts.length,
+      saved: localProfile.saved.length,
+      flashcards: Object.keys(localProfile.flashcards).length,
+    };
+    if (counts.attempts === 0 && counts.saved === 0 && counts.flashcards === 0) return;
+    setGuestMergePrompt({ userId, ...counts });
+  }, []);
+
+  const acceptGuestMerge = useCallback(async () => {
+    const prompt = guestMergePrompt;
+    if (!prompt) return;
+    setGuestMergePrompt(null);
+    await mergeLocalHistory(prompt.userId);
+  }, [guestMergePrompt, mergeLocalHistory]);
+
+  const declineGuestMerge = useCallback(() => {
+    const prompt = guestMergePrompt;
+    if (!prompt || typeof localStorage === 'undefined') return;
+    localStorage.setItem(`hdsat.import-declined.${prompt.userId}`, new Date().toISOString());
+    setGuestMergePrompt(null);
+    setNotice('Guest history stays on this device. Your account was not changed.');
+  }, [guestMergePrompt]);
 
   const signIn = useCallback(
     async (email: string, password: string) => {
@@ -1172,6 +1304,18 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     [importLocalHistoryOnce, refreshSnapshot]
   );
 
+  const completeGoogleSignIn = useCallback(async () => {
+    setError(null);
+    // Google has already proven the address. Marking it here keeps the profile
+    // out of the light-account state, exactly as the redirect flow did on mount.
+    await cloud.markEmailVerified().catch(() => {});
+    await refreshSnapshot();
+    const userId = await cloud.getUserId();
+    if (userId) await importLocalHistoryOnce(userId);
+    setPendingAccount(null);
+    local.clearPendingAccount();
+  }, [importLocalHistoryOnce, refreshSnapshot]);
+
   const signOut = useCallback(async () => {
     await cloud.signOutCloud();
     setUser(null);
@@ -1255,7 +1399,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     licensingNote: bank?.licensing_note ?? '',
     sources: bank?.sources ?? [],
     questions: bank?.questions ?? [],
-    flashcards: deck.cards,
+    flashcards,
     resources: library.resources,
     hdCoins: mode === 'cloud' && snapshot ? snapshot.stats.hdCoins : profile.hdCoins,
     lifetimeCoins:
@@ -1283,6 +1427,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     notice,
     authModalOpen,
     authModalView,
+    guestMergePrompt,
     actions: {
       openAuthModal: (view = 'signin') => {
         setAuthModalView(view);
@@ -1293,6 +1438,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       },
       signIn,
       attemptSignIn,
+      completeGoogleSignIn,
       signUp,
       signOut,
       continueAsGuest: () => {
@@ -1313,6 +1459,8 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
       resendVerification,
       flushQueuedEmails,
       syncGuestData,
+      acceptGuestMerge,
+      declineGuestMerge,
       updateSettings,
       updateDisplayName,
       dismissMessages: () => {
