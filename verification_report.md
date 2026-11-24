@@ -287,3 +287,85 @@ a fresh token is the remaining server step and is idempotent.
 The 14 question reports remain at `status = received`. Their fixes are live and verified,
 but closing them sends student-facing notifications and is an operator action, so it is
 left for the owner to run with `python tools/admin_triage.py`.
+
+## Radar and catalogue count — 2026-11-24
+
+Owner asked for the oversized heatmap to become a radar chart, for the bank count to be
+explained and corrected, and for a physical test of the whole app before another deploy.
+
+### Mastery radar
+
+- `src/components/MasteryRadar.tsx` draws one SVG radar over the same eight domains and
+the same `buildMasteryHeatmap` attempt records. Radius is accuracy; a wider octagon is
+stronger mastery.
+- `buildMasteryRadar()` collapses the 29 skill rows per domain and keeps the old
+Easy/Medium/Hard split behind an All/Easy/Medium/Hard control, so the information the
+three heatmap columns carried is still available.
+- A legend lists every domain with its accuracy (or an em dash), the chart has `<title>`
+and `<desc>` text plus per-point tooltips, and the empty state explains that the shape
+fills in as attempts arrive.
+- Measured at 1440 px: the card is 453 px, the SVG 400 × 356, all eight labels inside the
+viewBox with no pairwise overlap. At 390 px: SVG 316 × 281, legend drops to one column,
+document `scrollWidth` 381 against the 390 px viewport (no page overflow).
+- The old `.heatmap-*` styles and DOM were removed; no page still references a heatmap.
+
+### Catalogue count
+
+- The Bank page previously read **11,668 items** while Admin and the store held 13,687.
+Cause: `filterQuestions` reserves the **2,019** official rows flagged `in_practice_test`
+for full simulations unless the College Board source is chosen explicitly. 10,024 curated
++ 3,663 official = 13,687; 13,687 − 2,019 = 11,668.
+- The Bank catalogue now passes `includePracticeTestOverlap: true`, so every item is
+browsable and the badge reads **13,687 items**. Practice draws leave the flag unset, so
+the 2,019 reserved items stay out of mixed sessions exactly as before. The flag is
+covered in `collegeBoard.test.tsx`.
+- `/api/health` now reports `official_question_count` and `total_question_count`
+(3,663 + 10,024 = 13,687) from the tiny `src/data/officialBankManifest.json` written by
+`tools/ensure_collegeboard_bank.mjs`; Flask does not parse the 26 MB pool.
+
+### Physical walkthrough (guest, local dev server)
+
+| area | result |
+| --- | --- |
+| Dashboard radar | populated with 4 real attempts: 50% overall, Expression 100%, Algebra 100%, Conventions 0%, Advanced Math 0%; Hard slice recalculated to 1 attempt |
+| Practice | 10-question session started; 4 answered with feedback and explanations; completion screen showed 2/10 correct, 50% of 4 answered, 2 missed items, confidence panel |
+| Flashcards | Vocabulary card revealed and graded Good (next card 1,652); official “Words from Real Questions” deck switched to 267 cards |
+| Full test | Module 1 R&W launched with a 31:59 clock; answer selection, Save & exit dialog, saved simulation row and Delete simulation all worked |
+| Arcade | Coordinate Interceptor started (900 × 480 canvas, End run present) and ended cleanly |
+| Account / Rewards / Resources | rendered with real data (12 HDCoins, 1/31 badges, 105 resources); Admin correctly gated to sign-in for a guest |
+| Console | only the pre-existing React Router future-flag warnings; no application errors |
+
+The preview click helper did not deliver pointer events to some choice buttons (the
+element was confirmed on top with `elementFromPoint`, and the same click helper did
+start the session). Those option clicks were dispatched as DOM mouse events; the app's
+own handlers then ran normally, so this is an automation limitation rather than a UI
+fault.
+
+### Gate
+
+| check | result |
+| --- | --- |
+| `npm run typecheck` | exit 0 |
+| `npx vitest run --no-file-parallelism` | **50 files passed, 2 skipped; 450 tests passed, 8 skipped (458)** — exit 0 |
+| `python -m pytest backend/test_app.py -q` | 22 passed — exit 0 |
+| `npm run build` | exit 0; `assets/index-BUZ_TkgM.js`, service worker `hdsat-v15` |
+| `python tools/content_qa.py --bank src/data/questionBank.json --fail-on error` | 10,024 items, 0 errors, PASS |
+| `python tools/content_qa.py --bank public/collegeBoardBank.json --fail-on error` | 3,663 items, 0 errors, PASS |
+| `python tools/verify_report_artifacts.py` | PASS |
+
+### Deploy
+
+- `python .pa/deploy.py`: **103 files / 62,797 KiB** uploaded, webapp reloaded.
+- `/api/health` → 200 with `question_count` 10,024, `official_question_count` 3,663,
+`total_question_count` 13,687, `dist_ready` true.
+- Live shell serves `assets/index-BUZ_TkgM.js` (200); `/#/bank` badge reads **13,687
+items**, “Question 1 of 13687”; `/#/dashboard` renders the eight-axis radar with the
+empty-state message for a fresh guest.
+
+### Not covered
+
+- No signed-in cloud round trip: no account credentials were used, so guest→sign-in,
+cloud grading and two-account isolation were not re-exercised in this pass.
+- No complete 98-question simulation; only Module 1 start/save/delete was exercised.
+- The Welcome carousel screenshots under `public/welcome/screens/` are older product
+shots (they predate the three-column dashboard); they were not regenerated.

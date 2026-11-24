@@ -1003,3 +1003,31 @@ same session) with a fresh token when one is available.
 
 **Left for the owner.** The 14 reports are still `status = received`; their fixes are
 live, but closing them sends notifications, so use `tools/admin_triage.py` when ready.
+
+## 2026-11-24 — Mastery radar and a truthful catalogue count
+
+- **Heatmap → radar.** The 29-skill × difficulty table is gone. `MasteryRadar.tsx` plots
+the same eight domains and the same progress records as one SVG octagon (radius =
+accuracy), with an All/Easy/Medium/Hard control and a per-domain legend. The data layer
+is still `buildMasteryHeatmap`; `buildMasteryRadar()` adds the domain roll-up and is
+unit-tested. Desktop SVG 400 × 356 with no label overlap; 390 px phone SVG 316 × 281
+with `scrollWidth` 381 against 390 (no page overflow).
+- **Why the Bank said 11,668.** `filterQuestions` reserves the 2,019 official rows with
+`in_practice_test` for full simulations. 10,024 curated + 3,663 official = 13,687, and
+13,687 − 2,019 = 11,668. The Bank catalogue now passes
+`includePracticeTestOverlap: true` and reads **13,687 items**; practice draws keep the
+reservation. `/api/health` now reports `official_question_count` 3,663 and
+`total_question_count` 13,687 from `src/data/officialBankManifest.json`, a tiny derived
+file written by `tools/ensure_collegeboard_bank.mjs` so Flask never parses the 26 MB
+pool.
+- **Verified (this session).** Typecheck 0; Vitest **450 passed, 8 skipped, exit 0**
+(50 files passed, 2 skipped); pytest 22/22; build 0 (`index-BUZ_TkgM.js`); content QA
+0 errors on both banks; report artifacts PASS. Guest walkthrough covered the populated
+radar and its difficulty slices, a 4-answer practice session to completion, flashcard
+reveal/grade and the 267-card official deck, Full test Module 1 start/save/delete, the
+Interceptor canvas and end-run, Account/Rewards/Resources and the Admin sign-in gate.
+- **Deployed.** 103 files / 62,797 KiB; live health reports the three counts; `/#/bank`
+serves **13,687 items** with the new shell, and `/#/dashboard` renders the radar.
+- **Still open.** No signed-in cloud round trip or complete 98-question run in this
+pass. The Welcome carousel screenshots predate the three-column dashboard and were not
+regenerated.

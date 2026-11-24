@@ -11,11 +11,8 @@ import {
   isQuestionOfTheDayDismissed,
   isQuestionOfTheDaySolved,
 } from '../lib/daily';
-import {
-  HEATMAP_DIFFICULTIES,
-  buildMasteryHeatmap,
-  heatmapAccuracy,
-} from '../lib/masteryHeatmap';
+import { MasteryRadar } from '../components/MasteryRadar';
+import { buildMasteryHeatmap } from '../lib/masteryHeatmap';
 import { DASHBOARD_SECTIONS } from '../lib/sections';
 import { formatClock } from '../lib/examEngine';
 import { loadPracticeSession, practiceResumeSummary } from '../lib/session';
@@ -302,82 +299,17 @@ export function DashboardPage() {
           </div>
         </Card>
 
-        <Card className="dash-heatmap">
+        <Card className="dash-radar">
           <div className="row-between" style={{ marginBottom: 10 }}>
             <div>
-              <h3>Mastery Heatmap</h3>
+              <h3>Mastery Radar</h3>
               <p className="muted" style={{ margin: 0 }}>
-                Accuracy by skill and difficulty, from your recorded attempts.
+                Accuracy by domain, from your recorded attempts. A wider shape is stronger mastery.
               </p>
             </div>
-            <Badge tone="info">29 skills</Badge>
+            <Badge tone="info">8 domains</Badge>
           </div>
-          <div className="heatmap-scroll">
-            <div className="mastery-heatmap" role="table" aria-label="Mastery heatmap by skill and difficulty">
-              <div className="heatmap-row heatmap-header" role="row">
-                <span role="columnheader">Skill</span>
-                {HEATMAP_DIFFICULTIES.map((difficulty) => (
-                  <span key={difficulty} role="columnheader">
-                    {difficulty}
-                  </span>
-                ))}
-              </div>
-              {heatmap.map((domain) => (
-                <div className="heatmap-domain" key={domain.domain}>
-                  <div className="heatmap-domain-head">
-                    <strong>{domain.domain}</strong>
-                    <span>{domain.section === 'Math' ? 'Math' : 'R&W'}</span>
-                  </div>
-                  {domain.rows.map((row) => (
-                    <div className="heatmap-row" key={row.skill} role="row">
-                      <span className="heatmap-skill" role="rowheader" title={row.skill}>
-                        {row.skill}
-                      </span>
-                      {HEATMAP_DIFFICULTIES.map((difficulty) => {
-                        const cell = row.cells[difficulty];
-                        const accuracy = heatmapAccuracy(cell);
-                        const heat = accuracy === null ? 0 : Math.max(7, Math.min(100, accuracy));
-                        return (
-                          <span
-                            key={difficulty}
-                            role="cell"
-                            className={`heatmap-cell${accuracy === null ? ' is-empty' : ''}${accuracy !== null && accuracy >= 65 ? ' is-high' : ''}`}
-                            style={{
-                              background:
-                                accuracy === null
-                                  ? undefined
-                                  : `color-mix(in srgb, var(--accent) ${heat}%, var(--surface-2))`,
-                            }}
-                            title={
-                              accuracy === null
-                                ? `${row.skill} · ${difficulty}: no attempts yet`
-                                : `${row.skill} · ${difficulty}: ${cell.correct}/${cell.attempts} correct (${accuracy}%)`
-                            }
-                            aria-label={
-                              accuracy === null
-                                ? `${row.skill}, ${difficulty}, no attempts`
-                                : `${row.skill}, ${difficulty}, ${accuracy} percent from ${cell.attempts} attempts`
-                            }
-                          >
-                            {accuracy === null ? '–' : `${accuracy}%`}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="heatmap-legend" aria-label="Heatmap legend">
-            <span>No attempts</span>
-            <span className="heatmap-legend-swatch is-empty" />
-            <span>Low</span>
-            <span className="heatmap-legend-swatch is-low" />
-            <span className="heatmap-legend-swatch is-mid" />
-            <span className="heatmap-legend-swatch is-high" />
-            <span>High</span>
-          </div>
+          <MasteryRadar domains={heatmap} />
         </Card>
 
         <div className="dash-side stack">

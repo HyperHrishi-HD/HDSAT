@@ -102,6 +102,11 @@ describe.skipIf(!integrationEnabled)('official College Board integration', () =>
     expect(isServableCollegeBoardQuestion(practice)).toBe(false);
     expect(isServableCollegeBoardQuestion(clean)).toBe(true);
     expect(filterQuestions(official!.questions, {})).not.toContainEqual(practice);
+    // The Bank catalogue opts in so every item is browsable; practice draws
+    // keep the reservation because they do not pass this flag.
+    expect(
+      filterQuestions(official!.questions, { includePracticeTestOverlap: true })
+    ).toContainEqual(practice);
   });
 
   it('renders official HTML, MathML, SVG and tables without flattening them', () => {

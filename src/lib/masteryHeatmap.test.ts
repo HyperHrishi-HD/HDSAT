@@ -3,6 +3,7 @@ import {
   HEATMAP_DOMAINS,
   HEATMAP_SKILLS,
   buildMasteryHeatmap,
+  buildMasteryRadar,
   canonicalHeatmapSkill,
   heatmapAccuracy,
 } from './masteryHeatmap';
@@ -69,6 +70,37 @@ describe('mastery heatmap', () => {
     expect(canonicalHeatmapSkill('Advanced Math', 'Quadratic functions')).toBe(
       'Quadratic functions and factoring'
     );
+  });
+
+  it('collapses the heatmap into one radar axis per domain, sliced by difficulty', () => {
+    const rows = buildMasteryHeatmap(
+      [
+        question({ id: 'a', skill: 'Command of Evidence (Quantitative)', domain: 'Information and Ideas', section: 'Reading and Writing', difficulty: 'Hard' }),
+        question({ id: 'b', skill: 'Command of Evidence (Textual)', domain: 'Information and Ideas', section: 'Reading and Writing', difficulty: 'Hard' }),
+        question({ id: 'c', skill: 'Quadratic functions', domain: 'Advanced Math', difficulty: 'Medium' }),
+      ],
+      { a: progress(2, 1), b: progress(3, 3), c: progress(1, 1) },
+      'SAT'
+    );
+    const all = buildMasteryRadar(rows);
+    expect(all).toHaveLength(8);
+    expect(all.find((axis) => axis.domain === 'Information and Ideas')).toMatchObject({
+      attempts: 5,
+      correct: 4,
+      accuracy: 80,
+    });
+    expect(all.find((axis) => axis.domain === 'Advanced Math')).toMatchObject({
+      attempts: 1,
+      correct: 1,
+      accuracy: 100,
+    });
+    const hard = buildMasteryRadar(rows, 'Hard').find(
+      (axis) => axis.domain === 'Information and Ideas'
+    )!;
+    expect(hard).toMatchObject({ attempts: 5, correct: 4, accuracy: 80 });
+    expect(
+      buildMasteryRadar(rows, 'Easy').find((axis) => axis.domain === 'Algebra')!.accuracy
+    ).toBeNull();
   });
 
   it('does not include questions from another assessment', () => {

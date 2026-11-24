@@ -203,3 +203,44 @@ export function heatmapAccuracy(cell: HeatmapCell): number | null {
   if (cell.attempts <= 0) return null;
   return Math.round((Math.max(0, Math.min(cell.correct, cell.attempts)) / cell.attempts) * 100);
 }
+
+export interface MasteryRadarAxis {
+  domain: string;
+  section: 'Reading and Writing' | 'Math';
+  attempts: number;
+  correct: number;
+  accuracy: number | null;
+}
+
+/**
+ * Collapse the per-skill heatmap rows into one accuracy value per domain, the
+ * shape the dashboard radar plots. `difficulty: 'all'` keeps every attempt;
+ * a single difficulty slices the same records the old three columns showed.
+ */
+export function buildMasteryRadar(
+  domains: MasteryHeatmapDomain[],
+  difficulty: Difficulty | 'all' = 'all'
+): MasteryRadarAxis[] {
+  return domains.map((domain) => {
+    let attempts = 0;
+    let correct = 0;
+    for (const row of domain.rows) {
+      const cells =
+        difficulty === 'all'
+          ? HEATMAP_DIFFICULTIES.map((entry) => row.cells[entry])
+          : [row.cells[difficulty]];
+      for (const cell of cells) {
+        if (!cell) continue;
+        attempts += cell.attempts;
+        correct += Math.max(0, Math.min(cell.correct, cell.attempts));
+      }
+    }
+    return {
+      domain: domain.domain,
+      section: domain.section,
+      attempts,
+      correct,
+      accuracy: attempts > 0 ? Math.round((correct / attempts) * 100) : null,
+    };
+  });
+}

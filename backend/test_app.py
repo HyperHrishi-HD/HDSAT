@@ -34,6 +34,8 @@ def test_health_endpoint():
     data = res.get_json()
     assert data["status"] == "ok"
     assert data["question_count"] >= 36
+    assert data["official_question_count"] >= 0
+    assert data["total_question_count"] == data["question_count"] + data["official_question_count"]
     assert data["flashcard_count"] >= 46
     assert data["resource_count"] >= 18
     assert data["dist_ready"] is True

@@ -11,13 +11,16 @@
  *
  * Run automatically by `npm run dev` and `npm run build` (predev/prebuild).
  */
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const OUTPUT = join(ROOT, 'public', 'collegeBoardBank.json');
+// Tiny derived counts for /api/health: the Flask app must not parse the 26 MB
+// official bank just to report how many official items the deployment serves.
+const MANIFEST = join(ROOT, 'src', 'data', 'officialBankManifest.json');
 const HARVEST = join(ROOT, 'tools', '.collegeboard', 'cb_sat_bank.json');
 const HARVEST_REPORT = join(ROOT, 'tools', '.collegeboard', 'harvest_report.json');
 const SOURCE_ID = 'collegeboard-sat';
@@ -64,6 +67,21 @@ function validate(path) {
   return parsed;
 }
 
+function writeManifest(parsed) {
+  const questions = parsed.questions;
+  const manifest = {
+    bank_version: parsed.bank_version ?? 'unknown',
+    question_count: questions.length,
+    reserved_question_count: questions.filter((question) => question.in_practice_test).length,
+    unusable_question_count: questions.filter((question) => question.unusable).length,
+    catalog_question_count: questions.filter(
+      (question) => !question.in_practice_test && !question.unusable
+    ).length,
+    generated_at: new Date().toISOString(),
+  };
+  writeFileSync(MANIFEST, `${JSON.stringify(manifest, null, 2)}\n`);
+}
+
 function pythonCommand() {
   const candidates =
     process.platform === 'win32' ? ['python', 'py', 'python3'] : ['python3', 'python'];
@@ -83,6 +101,7 @@ function run(command, args) {
 
 if (existsSync(OUTPUT)) {
   const parsed = validate(OUTPUT);
+  writeManifest(parsed);
   console.log(
     `[collegeboard] Official bank ready: ${parsed.questions.length} questions at public/collegeBoardBank.json`
   );
@@ -113,6 +132,7 @@ if (existsSync(HARVEST_REPORT)) {
 if (!existsSync(HARVEST)) fail(`harvester did not write ${HARVEST}.`);
 run(python, ['tools/collegeboard_normalize.py']);
 const parsed = validate(OUTPUT);
+writeManifest(parsed);
 console.log(
   `[collegeboard] Generated official bank: ${parsed.questions.length} questions at public/collegeBoardBank.json`
 );

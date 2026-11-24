@@ -2041,6 +2041,12 @@ export interface PracticeFilters {
   onlySaved?: boolean;
   excludePreviouslyCorrect?: boolean;
   excludeReleasedPracticeSet?: boolean;
+  /**
+   * Catalog browsing shows every item, including official rows reserved for a
+   * full simulation. Practice draws leave this unset, so those items stay out
+   * of a mixed session until a test deliberately uses them.
+   */
+  includePracticeTestOverlap?: boolean;
 }
 
 export interface PracticeSessionOptions {
@@ -2088,7 +2094,13 @@ export function filterQuestions(
     // practice. Unusable rows stay out either way.
     if (isCollegeBoardQuestion(q)) {
       if (q.unusable) return false;
-      if (q.in_practice_test && filters.sourceId !== 'collegeboard-sat') return false;
+      if (
+        q.in_practice_test &&
+        filters.sourceId !== 'collegeboard-sat' &&
+        !filters.includePracticeTestOverlap
+      ) {
+        return false;
+      }
     }
     if (filters.onlySaved && !savedSet.has(q.id)) return false;
     if (filters.onlyIncorrect && progress[q.id]?.lastIsCorrect !== false) return false;

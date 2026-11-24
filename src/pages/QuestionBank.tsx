@@ -117,6 +117,10 @@ export function QuestionBankPage() {
         onlySaved,
         excludePreviouslyCorrect: excludeCorrect,
         excludeReleasedPracticeSet: excludeReleased,
+        // The catalog is for browsing and review, so it lists the official
+        // items a full simulation reserves as well. Practice draws keep that
+        // reservation because they leave this flag unset.
+        includePracticeTestOverlap: true,
       },
       app.progress,
       app.saved

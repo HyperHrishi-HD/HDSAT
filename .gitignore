@@ -21,6 +21,7 @@ hdsat-deploy.zip
 # College Board question content is downloaded locally and never committed.
 tools/.collegeboard/
 public/collegeBoardBank.json
+src/data/officialBankManifest.json
 supabase/import/collegeboard/
 
 supabase/.temp/

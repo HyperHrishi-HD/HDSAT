@@ -371,9 +371,9 @@ html.theme-switching body *::after {
 .muted-block { background: var(--surface-2); border-radius: var(--radius); padding: 12px; }
 .grid-2 { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
 
-/* Dashboard: Mastery → Heatmap → compressed activity column, with Saved &
-   Missed staying a bottom row. The heatmap scrolls inside its card on narrow
-   screens instead of forcing the whole page sideways. */
+/* Dashboard: Mastery → Radar → compressed activity column, with Saved &
+   Missed staying a bottom row. The radar is one fixed-viewBox SVG, so it
+   scales inside its card instead of forcing the whole page sideways. */
 .dash-content-grid {
   display: grid;
   gap: 14px;
@@ -384,75 +384,39 @@ html.theme-switching body *::after {
 .dash-mastery .stack { gap: 7px; }
 .dash-mastery .row-between { gap: 8px; }
 .dash-mastery .progress { min-height: 5px; }
-.dash-heatmap { min-width: 0; }
-.heatmap-scroll { overflow-x: auto; overscroll-behavior-inline: contain; padding-bottom: 2px; }
-.mastery-heatmap { min-width: 440px; }
-.heatmap-row {
+.dash-radar { min-width: 0; }
+.mastery-radar { display: flex; flex-direction: column; gap: 6px; }
+.radar-difficulty { max-width: 340px; }
+.radar-difficulty .seg-btn { min-width: 52px; padding: 5px 9px; font-size: 0.76rem; }
+.radar-svg { display: block; width: 100%; max-width: 400px; height: auto; margin: 0 auto; }
+.radar-ring { fill: none; stroke: var(--line); stroke-width: 1; }
+.radar-ring.is-outer { stroke-dasharray: 3 4; }
+.radar-spoke { stroke: var(--line); stroke-width: 1; opacity: 0.75; }
+.radar-area {
+  fill: color-mix(in srgb, var(--accent) 16%, transparent);
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+.radar-point { fill: var(--accent); stroke: var(--surface); stroke-width: 1.5; }
+.radar-point.is-empty { fill: var(--surface-2); stroke: var(--line); }
+.radar-axis-label { fill: var(--ink-2); font-size: 10.5px; font-weight: 650; }
+.radar-axis-label.is-empty { fill: var(--muted); font-weight: 500; }
+.radar-tick { fill: var(--muted); font-size: 8.5px; }
+.radar-summary { margin: 0; color: var(--muted); font-size: 0.76rem; text-align: center; }
+.radar-legend {
   display: grid;
-  grid-template-columns: minmax(148px, 1.6fr) repeat(3, minmax(48px, 1fr));
-  gap: 4px;
-  align-items: stretch;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 3px 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.heatmap-header {
-  position: sticky;
-  top: 0;
-  z-index: 1;
-  padding: 4px 0 6px;
-  background: var(--surface);
-  color: var(--muted);
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.heatmap-header span:not(:first-child) { text-align: center; }
-.heatmap-domain { border-top: 1px solid var(--line); padding-top: 5px; margin-top: 5px; }
-.heatmap-domain-head {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 8px;
-  padding: 4px 2px 5px;
-  font-size: 0.74rem;
-}
-.heatmap-domain-head span { color: var(--muted); font-size: 0.67rem; }
-.heatmap-skill {
-  align-self: center;
-  overflow: hidden;
-  padding: 2px 1px;
-  color: var(--ink-2);
-  font-size: 0.73rem;
-  line-height: 1.25;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.heatmap-cell {
-  display: grid;
-  min-height: 25px;
-  place-items: center;
-  border: 1px solid color-mix(in srgb, var(--line) 70%, transparent);
-  border-radius: 5px;
-  color: var(--ink);
-  font-size: 0.7rem;
-  font-variant-numeric: tabular-nums;
-  line-height: 1;
-}
-.heatmap-cell.is-empty { background: var(--surface-2); color: var(--muted); }
-.heatmap-cell.is-high { color: var(--accent-ink); font-weight: 700; }
-.heatmap-legend {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 5px;
-  padding-top: 8px;
-  color: var(--muted);
-  font-size: 0.68rem;
-}
-.heatmap-legend-swatch { width: 13px; height: 9px; border: 1px solid var(--line); border-radius: 3px; }
-.heatmap-legend-swatch.is-empty { background: var(--surface-2); }
-.heatmap-legend-swatch.is-low { background: color-mix(in srgb, var(--accent) 18%, var(--surface-2)); }
-.heatmap-legend-swatch.is-mid { background: color-mix(in srgb, var(--accent) 45%, var(--surface-2)); }
-.heatmap-legend-swatch.is-high { background: var(--accent); }
+.radar-legend li { display: flex; align-items: center; gap: 6px; min-width: 0; font-size: 0.73rem; color: var(--ink-2); }
+.radar-legend-dot { width: 7px; height: 7px; flex: 0 0 auto; border-radius: 50%; background: var(--accent); }
+.radar-legend-dot.is-empty { background: var(--surface-2); border: 1px solid var(--line); }
+.radar-legend-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.radar-legend-value { margin-left: auto; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .dash-side { min-width: 0; }
 .dash-sim-link { color: var(--ink); text-decoration: none; transition: border-color 140ms ease-out, background 140ms ease-out; }
 .dash-sim-link:hover { border-color: var(--accent-border); background: var(--accent-soft); }
@@ -463,12 +427,9 @@ html.theme-switching body *::after {
 @media (max-width: 820px) {
   .dash-content-grid { grid-template-columns: minmax(0, 1fr); }
   .dash-side { grid-column: auto; grid-template-columns: minmax(0, 1fr); }
-  .mastery-heatmap { min-width: 440px; }
 }
 @media (max-width: 460px) {
-  .heatmap-row { grid-template-columns: minmax(132px, 1.5fr) repeat(3, minmax(44px, 1fr)); }
-  .mastery-heatmap { min-width: 420px; }
-  .heatmap-skill { font-size: 0.7rem; }
+  .radar-legend { grid-template-columns: minmax(0, 1fr); }
 }
 .spacer { flex: 1; }
 

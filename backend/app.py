@@ -357,7 +357,12 @@ def create_app() -> Flask:
         bank = _load_json(DATA_DIR / "questionBank.json", {})
         cards = _load_json(DATA_DIR / "flashcards.json", {})
         resources = _load_json(DATA_DIR / "resources.json", {})
+        official = _load_json(DATA_DIR / "officialBankManifest.json", {})
         questions = bank.get("questions", [])
+        # The curated file and the official pool are separate assets. The
+        # manifest is a small derived count so health can report the whole
+        # catalogue without parsing the 26 MB official bank.
+        official_count = int(official.get("question_count") or 0)
         return jsonify(
             {
                 "status": "ok",
@@ -365,6 +370,8 @@ def create_app() -> Flask:
                 "environment": os.environ.get("HDSAT_ENV", "production"),
                 "bank_version": bank.get("bank_version", "unknown"),
                 "question_count": len(questions),
+                "official_question_count": official_count,
+                "total_question_count": len(questions) + official_count,
                 "flashcard_count": len(cards.get("cards", [])),
                 "resource_count": len(resources.get("resources", [])),
                 "dist_ready": (DIST_DIR / "index.html").exists(),
