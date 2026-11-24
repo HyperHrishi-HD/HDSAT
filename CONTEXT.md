@@ -979,6 +979,10 @@ property is the next discoverability step.
   at load; 3,663 rows and keys are now also seeded into the live `questions` /
   `question_keys` tables so cloud grading and sync cover them. The HTML stimulus path is
   sanitised in `sanitizeHtml`.
+- **Flashcard catalogue.** The live `flashcards` table was still at 1,793 rows; the
+  missing 3,475 (NAWL, NGSL and the 267 official Words-in-Context cards) are now seeded,
+  so `flashcard_progress`'s foreign key and cloud review work for every card in the
+  5,268-card runtime deck.
 - **Pass 3 product work.** Flashcards Browse All pagination and the NAWL/NGSL/official
   decks, Interceptor accuracy by successful pulses, retry-missed session length,
   three-column Dashboard with the 29-skill heatmap and the 7-day window, guest-merge
@@ -990,10 +994,12 @@ pytest 22/22; content QA 0 errors; report artifacts PASS; live bank re-sync repo
 **0 remaining differences** (13,689 questions and keys).
 
 **Remaining server step.** `questions.in_practice_test`, `unusable` and `score_band` are
-not in the live schema (management token is still 401, so no DDL). The bundled JSON
-carries them and the app filters correctly; apply
-`supabase/migrations/20261124000100_collegeboard_sat.sql` with a fresh token when one is
-available.
+not in the live schema (management token is still 401, so no DDL), and the `flashcards`
+`deck_type` CHECK still permits only `vocabulary` / `formula`, so the new decks are
+stored as `vocabulary`. The bundled JSON carries the real deck and flags, and the client
+renders from it; apply
+`supabase/migrations/20261124000100_collegeboard_sat.sql` (and widen `deck_type` in the
+same session) with a fresh token when one is available.
 
 **Left for the owner.** The 14 reports are still `status = received`; their fixes are
 live, but closing them sends notifications, so use `tools/admin_triage.py` when ready.

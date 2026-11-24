@@ -259,6 +259,10 @@ project was repaired and verified by read-back:
 - **Official College Board bank seeded**: dataset source row plus **3,663 questions and
   3,663 keys**, so cloud grading and device sync cover the supplemental pool the client
   now loads. Verified live: `source_id=collegeboard-sat` → 3,663, keys → 3,663.
+- **Flashcard catalogue seeded**: the live `flashcards` table held 1,793 rows, so the
+  NAWL/NGSL decks and the 267 official cards had no foreign-key target and could not
+  sync. Insert-only upsert added the missing **3,475** rows; live now holds **5,268**,
+  matching the runtime deck exactly.
 - The three P0 items now return their repaired content from the database:
   `RW-SEC-9003` colon-before-list (choices `; , : .`), `RW-SEC-9033` colon list,
   `RW-SEC-89358` a true consequence, and `RW-INF-002` now ends in a blank.
@@ -266,10 +270,11 @@ project was repaired and verified by read-back:
 **Database limitation.** `questions.in_practice_test`, `questions.unusable` and
 `questions.score_band` are not present in the live schema: adding columns needs the
 management API, and the stored personal access token still returns `401 Invalid access
-token`. Those three fields are display/filter metadata that the bundled JSON carries, so
-the app behaves correctly; applying
-`supabase/migrations/20261124000100_collegeboard_sat.sql` with a fresh token is the
-remaining server step and is idempotent.
+token`. The `flashcards.deck_type` CHECK likewise still allows only `vocabulary` and
+`formula`, so the new decks are stored under `vocabulary`. Both are display/filter
+metadata that the bundled JSON carries, so the app behaves correctly; applying
+`supabase/migrations/20261124000100_collegeboard_sat.sql` (and widening `deck_type`) with
+a fresh token is the remaining server step and is idempotent.
 
 ### Deploy and push
 
